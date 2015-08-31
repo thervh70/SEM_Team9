@@ -3,4 +3,11 @@
   <groupId>nl.tudelft.ti2206.group9</groupId>
   <artifactId>ti2206-sem-group-9</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<version>4.12</version>
+  	</dependency>
+  </dependencies>
 </project>
