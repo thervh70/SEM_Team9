@@ -1,7 +1,7 @@
 language: java
 
 # Build using Maven, running test suites
-mvn test
+script: mvn test
 
 # setting the Slack email notification level to none
 
