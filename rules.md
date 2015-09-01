@@ -2,13 +2,13 @@
 
 ##### Commit
 
-- Mention issue number
+- Mention issue number in commit message (if available)
 
 - Check if build passes
 
 - Update issue if needed
 
-
+- By default: commit to branch other than master (some exceptions accepted)
 
 ##### Pull request
 
