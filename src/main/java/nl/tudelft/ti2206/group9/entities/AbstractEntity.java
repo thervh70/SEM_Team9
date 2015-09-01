@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.entities;
 
+import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -12,7 +13,7 @@ public abstract class AbstractEntity {
 	private Point3D center;
 	/** Size of the bounding box of this Entity */
 	private Point3D size;
-	
+
 	/**
 	 * Default constructor.
 	 * @param center center of the bounding box
@@ -35,7 +36,7 @@ public abstract class AbstractEntity {
 		final Point3D thisSize = new Point3D(this.getSize());
 		final Point3D otherCenter = new Point3D(other.getCenter());
 		final Point3D otherSize = new Point3D(other.getSize());
-		
+
 		if (thisCenter.getX() + thisSize.getX() / 2
 		 >= otherCenter.getX() - otherSize.getX() / 2
 		 && thisCenter.getX() - thisSize.getX() / 2
@@ -49,9 +50,22 @@ public abstract class AbstractEntity {
 		 && thisCenter.getZ() - thisSize.getZ() / 2
 		 <= otherCenter.getZ() + otherSize.getZ() / 2) {
 			collision(other);
+			other.collision(this);
 		}
 	}
-	
+
+	/** Used to remove the entity from the Track. */
+	public void selfDestruct() {
+		final AbstractEntity self = this;
+		new Thread(new Runnable() {
+			public void run() {
+				synchronized (State.getTrack()) {
+					State.getTrack().removeEntity(self);
+				}
+			}
+		}).start();
+	}
+
 	/**
 	 * Called when this entity collides with <code>collidee</code>.
 	 * (Called by {@link #checkCollision(AbstractEntity)}.
@@ -94,5 +108,5 @@ public abstract class AbstractEntity {
 	public String toString() {
 		return "AbstractEntity [center=" + center + ", size=" + size + "]";
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.group9;
+package nl.tudelft.ti2206.group9.level;
 
 /**
  * This utility class stores the State of the game,
@@ -15,6 +15,9 @@ public final class State {
 	/** Current distance run, reset every run */
 	private static int distance;
 	
+	/** Current track, contains all entities */
+	private static Track track = new Track();
+	
 	/** Cannot be constructed. */
 	private State() { }
 	
@@ -26,6 +29,7 @@ public final class State {
 	
 	/** Reset data that should be reset every run. */
 	public static void reset() {
+		track = new Track();
 		score = 0;
 		distance = 0;
 	}
@@ -91,6 +95,20 @@ public final class State {
 	 */
 	public static void setDistance(final int distance) {
 		State.distance = distance;
+	}
+
+	/**
+	 * @return the track
+	 */
+	public static Track getTrack() {
+		return track;
+	}
+
+	/**
+	 * @param track the track to set
+	 */
+	public static void setTrack(Track track) {
+		State.track = track;
 	}
 
 	/** 

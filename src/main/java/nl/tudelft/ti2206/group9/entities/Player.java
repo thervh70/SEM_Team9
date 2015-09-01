@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.entities;
 
-import nl.tudelft.ti2206.group9.State;
+import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**

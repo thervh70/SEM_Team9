@@ -45,6 +45,27 @@ public class Point3D {
 	public Point3D(final Point3D point) {
 		set(point);
 	}
+
+	/**
+	 * @param x the amount of units to add to x
+	 */
+	public void addX(final double x) {
+		this.x += x;
+	}
+
+	/**
+	 * @param y the amount of units to add to y
+	 */
+	public void addY(final double y) {
+		this.y += y;
+	}
+
+	/**
+	 * @param z the amount of units to add to z
+	 */
+	public void addZ(final double z) {
+		this.z += z;
+	}
 	
 	/**
 	 * @return the x
