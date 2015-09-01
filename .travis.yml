@@ -1,7 +1,19 @@
 language: java
 
-# Build using Maven, running test suites
-script: mvn test
+# Communicate with Octopull
+before_install:
+  - "[ \"$BUILD_PR_BRANCH\" = \"true\" ] && git checkout $TRAVIS_BRANCH && echo \"OCTOPULL_SHA=$(git rev-parse HEAD)\"; true"
+env:
+  - BUILD_PR_BRANCH=true
+  - BUILD_PR_BRANCH=false
+matrix:
+  allow_failures:
+    - env:
+      - BUILD_PR_BRANCH=true
+after_script:
+  - echo "== CHECKSTYLE_RESULT ==" && cat "target/checkstyle-result.xml" && echo "== END_CHECKSTYLE_RESULT =="
+  - echo "== PMD_RESULT ==" && cat "target/pmd.xml" && echo "== END_PMD_RESULT =="
+  - echo "== FINDBUGS_RESULT ==" && cat "target/findbugsXml.xml" && echo "== END_FINDBUGS_RESULT =="
 
 # setting the Slack email notification level to none
 
@@ -10,3 +22,5 @@ notifications:
   slack: semteam9:Zrf7NDsECoPyuR05XePB0EtV
 
   email: false
+  webhooks:
+    - http://octopull.rmhartog.me/api/travis/webhook
