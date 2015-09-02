@@ -5,6 +5,7 @@ package nl.tudelft.ti2206.group9;
 
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Point3D;
@@ -18,6 +19,7 @@ public final class Main {
 	public static final int TRACKLENGTH = 50;
 	public static final int TICK = 100;
 	public static final double COINCHANCE = 0.07;
+	public static final double OBSTACLECHANCE = 0.07;
 
 	private static char[] track;
 
@@ -36,6 +38,10 @@ public final class Main {
 			if (Math.random() < COINCHANCE) {
 				State.getTrack().addEntity(
 						new Coin(new Point3D(TRACKLENGTH, 0, 0)));
+			} else if (Math.random() < OBSTACLECHANCE) {
+				State.getTrack().addEntity(new Obstacle(
+						new Point3D(TRACKLENGTH, 0, 0),
+						Point3D.UNITCUBE));
 			}
 			State.getTrack().moveTrack(1);
 			trackRender();
@@ -60,6 +66,9 @@ public final class Main {
 			}
 			if (entity instanceof Coin) {
 				track[(int) entity.getCenter().getX()] = 'o';
+			}
+			if (entity instanceof Obstacle) {
+				track[(int) entity.getCenter().getX()] = '#';
 			}
 		}
 	}

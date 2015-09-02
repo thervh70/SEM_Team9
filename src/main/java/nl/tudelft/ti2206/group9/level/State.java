@@ -33,6 +33,12 @@ public final class State {
 		score = 0;
 		distance = 0;
 	}
+	
+	/** Player dies */
+	public static void die() {
+		System.out.println("Ghagha, you ish ded.");
+		System.exit(0);
+	}
 
 	/**
 	 * @param amount the amount of score to add

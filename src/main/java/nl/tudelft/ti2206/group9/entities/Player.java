@@ -27,7 +27,9 @@ public class Player extends AbstractEntity {
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
 		}
-		
+		if (collidee instanceof Obstacle) {
+			State.die();
+		}
 	}
 
 }
