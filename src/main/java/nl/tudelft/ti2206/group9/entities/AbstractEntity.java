@@ -72,7 +72,7 @@ public abstract class AbstractEntity {
 	 * (Called by {@link #checkCollision(AbstractEntity)}.
 	 * @param collidee
 	 */
-	public abstract void collision(AbstractEntity collidee);
+	public abstract void collision(final AbstractEntity collidee);
 
 	/**
 	 * @return the center
