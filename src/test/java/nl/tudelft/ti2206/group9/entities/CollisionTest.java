@@ -28,6 +28,15 @@ public class CollisionTest {
 	}
 
 	@Test
+	public void testCollisionCoinCoin() {
+		int oldscore = State.getScore();
+		int oldcoins = State.getCoins();
+		coin.collision(new Coin(Point3D.ZERO));
+		assertEquals(oldscore, State.getScore());
+		assertEquals(oldcoins, State.getCoins());
+	}
+
+	@Test
 	public void testCollisionCoinPlayer() {
 		int oldscore = State.getScore();
 		int oldcoins = State.getCoins();
