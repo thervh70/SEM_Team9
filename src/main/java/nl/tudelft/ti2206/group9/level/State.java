@@ -107,7 +107,7 @@ public final class State {
 	/**
 	 * @param track the track to set
 	 */
-	public static void setTrack(Track track) {
+	public static void setTrack(final Track track) {
 		State.track = track;
 	}
 
