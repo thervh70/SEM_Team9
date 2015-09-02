@@ -44,9 +44,13 @@ public final class Main {
 						Point3D.UNITCUBE));
 			}
 			State.getTrack().moveTrack(1);
+			if (!State.getTrack().getPlayer().isAlive()) {
+				System.out.println("Ghagha, you ish ded.");
+				break;
+			}
 			trackRender();
-			System.out.println("\n\n\n\n\n\n\n\n" + new String(track)
-				+ " score: " + State.getScore());
+			System.out.println(new String(track)
+				+ " score: " + State.getScore() + "\n\n\n\n\n\n\n\n");
 		}
 
 	}

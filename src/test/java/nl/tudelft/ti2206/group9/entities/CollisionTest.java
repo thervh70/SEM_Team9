@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.group9.entities;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -53,8 +54,7 @@ public class CollisionTest {
 	@Test
 	public void testCollisionPlayerObstacle() {
 		player.collision(obstacle);
-		// Erhm... Static methods can't be verified? 
-		// I can't check whether State.die() has been called or not...
+		assertFalse(player.isAlive());
 	}
 
 }

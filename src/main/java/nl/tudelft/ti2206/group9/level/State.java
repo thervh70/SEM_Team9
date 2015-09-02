@@ -32,12 +32,7 @@ public final class State {
 		track = new Track();
 		score = 0;
 		distance = 0;
-	}
-	
-	/** Player dies */
-	public static void die() {
-		System.out.println("Ghagha, you ish ded.");
-		System.exit(0);
+		track.getPlayer().respawn();
 	}
 
 	/**
