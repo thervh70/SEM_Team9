@@ -64,6 +64,13 @@ public class Track {
 		}
 		return this;
 	}
+	
+	/**
+	 * @return the Player
+	 */
+	public Player getPlayer() {
+		return (Player) entities.get(player);
+	}
 
 	/**
 	 * @return the entities
