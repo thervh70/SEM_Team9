@@ -58,6 +58,7 @@ public abstract class AbstractEntity {
 	public void selfDestruct() {
 		final AbstractEntity self = this;
 		new Thread(new Runnable() {
+			/** Method run in Thread, removes entity after track is done */
 			public void run() {
 				synchronized (State.getTrack()) {
 					State.getTrack().removeEntity(self);
@@ -99,6 +100,50 @@ public abstract class AbstractEntity {
 	 */
 	public void setSize(final Point3D size) {
 		this.size = size;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((center == null) ? 0 : center.hashCode());
+		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		return result;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final AbstractEntity other = (AbstractEntity) obj;
+		if (center == null) {
+			if (other.center != null) {
+				return false;
+			}
+		} else if (!center.equals(other.center)) {
+			return false;
+		}
+		if (size == null) {
+			if (other.size != null) {
+				return false;
+			}
+		} else if (!size.equals(other.size)) {
+			return false;
+		}
+		return true;
 	}
 
 	/** 

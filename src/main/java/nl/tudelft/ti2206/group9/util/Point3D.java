@@ -118,12 +118,57 @@ public class Point3D {
 		z = point.z;
 	}
 
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int shift = 32;
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ (temp >>> shift));
+		temp = Double.doubleToLongBits(y);
+		result = prime * result + (int) (temp ^ (temp >>> shift));
+		temp = Double.doubleToLongBits(z);
+		result = prime * result + (int) (temp ^ (temp >>> shift));
+		return result;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Point3D other = (Point3D) obj;
+		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) {
+			return false;
+		}
+		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) {
+			return false;
+		}
+		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) {
+			return false;
+		}
+		return true;
+	}
+
 	/** 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Point3D (" + x + ", " + y + ", " + z + ")";
+		return "(" + x + ", " + y + ", " + z + ")";
 	}
 	
 }

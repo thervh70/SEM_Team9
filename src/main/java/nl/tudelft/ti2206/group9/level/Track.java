@@ -7,10 +7,17 @@ import java.util.List;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Player;
 
+/**
+ * This class holds all entities present in the game, such as Coins, a Player
+ * and Obstacles.
+ * @author Maarten
+ *
+ */
 public class Track {
 
 	/** List of entities on the track */
-	private ArrayList<AbstractEntity> entities;
+	private final List<AbstractEntity> entities;
+	/** Index of the player entity in the entities list*/
 	private int player;
 
 	/** Default constructor */
@@ -25,9 +32,9 @@ public class Track {
 	 * track, like a treadmill)
 	 * @param distance amount of units to move the track
 	 */
-	public void moveTrack(double distance) {
+	public void moveTrack(final double distance) {
 		synchronized (this) {
-			for (AbstractEntity entity : entities) {
+			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
 					entity.getCenter().addX(-distance);
 					entity.checkCollision(entities.get(player));
@@ -40,7 +47,7 @@ public class Track {
 	 * Adds entity to the list of entities
 	 * @param entity entity to add
 	 */
-	public Track addEntity(AbstractEntity entity) {
+	public Track addEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.add(entity);	
 		}
@@ -51,7 +58,7 @@ public class Track {
 	 * Removes entity from the list of entities
 	 * @param entity entity to remove
 	 */
-	public Track removeEntity(AbstractEntity entity) {
+	public Track removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.remove(entity);
 		}
