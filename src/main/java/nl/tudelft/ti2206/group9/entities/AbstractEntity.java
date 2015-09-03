@@ -9,9 +9,9 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public abstract class AbstractEntity {
 
-	/** Center of the bounding box of this Entity */
+	/** Center of the bounding box of this Entity. */
 	private Point3D center;
-	/** Size of the bounding box of this Entity */
+	/** Size of the bounding box of this Entity. */
 	private Point3D size;
 
 	/**
@@ -70,7 +70,7 @@ public abstract class AbstractEntity {
 	/**
 	 * Called when this entity collides with <code>collidee</code>.
 	 * (Called by {@link #checkCollision(AbstractEntity)}.
-	 * @param collidee
+	 * @param collidee Entity that this entity collides with.
 	 */
 	public abstract void collision(AbstractEntity collidee);
 
@@ -104,6 +104,7 @@ public abstract class AbstractEntity {
 
 	/**
 	 * @see java.lang.Object#hashCode()
+	 * @return hashCode
 	 */
 	@Override
 	public int hashCode() {
@@ -116,6 +117,8 @@ public abstract class AbstractEntity {
 
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @param obj object to compare with
+	 * @return whether this is equal to obj
 	 */
 	@Override
 	public boolean equals(final Object obj) {
@@ -148,6 +151,7 @@ public abstract class AbstractEntity {
 
 	/** 
 	 * @see java.lang.Object#toString()
+	 * @return a string representing this AbstractEntity
 	 */
 	@Override
 	public String toString() {

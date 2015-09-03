@@ -8,14 +8,14 @@ package nl.tudelft.ti2206.group9.level;
  */
 public final class State {
 
-	/** Current score of the player, reset every run */
+	/** Current score of the player, reset every run. */
 	private static int score;
-	/** Current amount of coins */
+	/** Current amount of coins. */
 	private static int coins;
-	/** Current distance run, reset every run */
+	/** Current distance run, reset every run. */
 	private static int distance;
 	
-	/** Current track, contains all entities */
+	/** Current track, contains all entities. */
 	private static Track track = new Track();
 	
 	/** Cannot be constructed. */
@@ -113,6 +113,7 @@ public final class State {
 
 	/** 
 	 * @see java.lang.Object#toString()
+	 * @return a String representing the State.
 	 */
 	@Override
 	public String toString() {

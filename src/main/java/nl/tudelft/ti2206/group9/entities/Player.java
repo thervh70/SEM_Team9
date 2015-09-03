@@ -19,6 +19,7 @@ public class Player extends AbstractEntity {
 	/**
 	 * When colliding with a coin, Coin.VALUE is added to score, 
 	 * and amount of coins is increased by one.
+	 * @param collidee Entity that this Player collides with.
 	 */
 	@Override
 	public void collision(final AbstractEntity collidee) {
