@@ -50,7 +50,9 @@ public final class Main {
 			}
 			trackRender();
 			System.out.println(new String(track)
-				+ " score: " + State.getScore() + "\n\n\n\n\n\n\n\n");
+			+ " score: " + State.getScore()
+			+ " coins: " + State.getCoins() 
+			+ " distance: " + State.getDistance() + "\n\n\n\n\n\n\n\n");
 		}
 
 	}
