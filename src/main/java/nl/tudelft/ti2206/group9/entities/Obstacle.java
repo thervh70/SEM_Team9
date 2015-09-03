@@ -9,12 +9,14 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Obstacle extends AbstractEntity {
 
-	public Obstacle(Point3D center, Point3D size) {
+	/** Default constructor. */
+	public Obstacle(final Point3D center, final Point3D size) {
 		super(center, size);
 	}
 
 	/**
-	 * Collisions handled in {@link Player}
+	 * Collisions handled in {@link Player}. This collision does nothing.
+	 * @param collidee Entity that this Coin collides with.
 	 * @see nl.tudelft.ti2206.group9.entities.AbstractEntity#collision
 	 * (nl.tudelft.ti2206.group9.entities.AbstractEntity)
 	 */

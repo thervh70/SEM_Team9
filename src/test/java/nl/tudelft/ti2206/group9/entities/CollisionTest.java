@@ -7,7 +7,6 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 public class CollisionTest {
 
