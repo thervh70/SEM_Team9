@@ -43,7 +43,9 @@ public final class Main {
 						new Point3D(TRACKLENGTH, 0, 0),
 						Point3D.UNITCUBE));
 			}
-			State.getTrack().moveTrack(1);
+			int distance = 1;
+			State.getTrack().moveTrack(distance);
+			State.addDistance(distance);
 			if (!State.getTrack().getPlayer().isAlive()) {
 				System.out.println("Ghagha, you ish ded.");
 				break;
