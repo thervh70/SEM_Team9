@@ -188,13 +188,23 @@ public class AbstractEntityTest {
 				+ ", size=" + entity.getSize() + "]", entity.toString());
 	}
 	
+	/**
+	 * This class extends the AbstractEntity with default behaviour because
+	 * it is easier to test.
+	 * @author Maarten
+	 */
 	private static class TestEntity extends AbstractEntity {
 
+		/**
+		 * Default constructor.
+		 * @param center center of the bounding box
+		 * @param size size of the bounding box
+		 */
 		public TestEntity(Point3D center, Point3D size) {
 			super(center, size);
 		}
 
-		/** Do nothing on collision */
+		/** Do nothing on collision. */
 		@Override
 		public void collision(AbstractEntity collidee) { }
 		
