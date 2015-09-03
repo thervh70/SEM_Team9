@@ -3,6 +3,17 @@
  */
 package nl.tudelft.ti2206.group9;
 
+import java.io.IOException;
+import java.net.URL;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Obstacle;
@@ -22,16 +33,20 @@ public final class Main {
 	public static final double OBSTACLECHANCE = 0.07;
 
 	private static char[] track;
+	private static Mixer mixer;
+	private static Clip clip;
 
 	private Main() { }
-
+	
 	/**
 	 * @param args does nothing.
 	 * @throws InterruptedException 
 	 */
 	public static void main(String... args) throws InterruptedException {
-		State.resetAll();
-		State.getTrack().addEntity(new Coin(new Point3D(TRACKLENGTH, 0, 0)));
+        State.resetAll();
+        State.getTrack().addEntity(new Coin(new Point3D(TRACKLENGTH, 0, 0)));
+		initialiseTune("audio/kuikentje.wav");
+		clip.start();		
 
 		while (true) {
 			Thread.sleep(TICK);
@@ -56,7 +71,6 @@ public final class Main {
 			+ " coins: " + State.getCoins() 
 			+ " distance: " + State.getDistance() + "\n\n\n\n\n\n\n\n");
 		}
-
 	}
 
 	private static void trackRender() {
@@ -78,6 +92,35 @@ public final class Main {
 			if (entity instanceof Obstacle) {
 				track[(int) entity.getCenter().getX()] = '#';
 			}
+		}
+	}
+	
+	/**
+	 * Gets the audio file and prepares it for streaming.
+	 */
+	private static void initialiseTune(String path) {
+		Mixer.Info[] mixInfos = AudioSystem.getMixerInfo();
+		mixer = AudioSystem.getMixer(mixInfos[0]);
+		
+		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
+		
+		try { 
+			clip = (Clip) mixer.getLine(dataInfo); 
+			} catch (LineUnavailableException lue) { 
+				lue.printStackTrace(); 
+			}
+		
+		try	{
+			URL soundUrl = Main.class.getResource(path);
+			AudioInputStream audioStream = 
+						AudioSystem.getAudioInputStream(soundUrl);
+			clip.open(audioStream);
+		} catch (LineUnavailableException lue) {
+			lue.printStackTrace(); 
+		} catch (UnsupportedAudioFileException uafe) {
+			uafe.printStackTrace(); 
+		} catch (IOException ioe) { 
+			ioe.printStackTrace(); 
 		}
 	}
 
