@@ -7,7 +7,6 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 public class CollisionTest {
 
@@ -29,6 +28,15 @@ public class CollisionTest {
 		player.collision(coin);
 		assertEquals(oldscore + Coin.VALUE, State.getScore());
 		assertEquals(oldcoins + 1, State.getCoins());
+	}
+
+	@Test
+	public void testCollisionCoinCoin() {
+		int oldscore = State.getScore();
+		int oldcoins = State.getCoins();
+		coin.collision(new Coin(Point3D.ZERO));
+		assertEquals(oldscore, State.getScore());
+		assertEquals(oldcoins, State.getCoins());
 	}
 
 	@Test

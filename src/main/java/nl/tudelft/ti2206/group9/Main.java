@@ -17,8 +17,7 @@ public final class Main {
 	private Main() { }
 
 	/**
-	 * @param args
-	 * @throws IOException 
+	 * @param args does nothing.
 	 * @throws InterruptedException 
 	 */
 	public static void main(String... args) throws InterruptedException {

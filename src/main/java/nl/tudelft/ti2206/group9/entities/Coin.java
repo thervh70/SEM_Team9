@@ -14,7 +14,7 @@ public class Coin extends AbstractEntity {
 	
 	/**
 	 * Default constructor.
-	 * @param center center of the bounding box
+	 * @param center center of the bounding box of the Coin
 	 */
 	public Coin(final Point3D center) {
 		super(center, Point3D.UNITCUBE);
@@ -22,6 +22,7 @@ public class Coin extends AbstractEntity {
 
 	/**
 	 * When colliding with Player, Coin should be removed from the field.
+	 * @param collidee Entity that this Coin collides with.
 	 */
 	@Override
 	public void collision(final AbstractEntity collidee) {

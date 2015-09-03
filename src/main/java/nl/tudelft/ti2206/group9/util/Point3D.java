@@ -7,22 +7,22 @@ package nl.tudelft.ti2206.group9.util;
  */
 public class Point3D {
 
-	/** x-coordinate of point */
+	/** x-coordinate of point. */
 	private double x;
-	/** y-coordinate of point */
+	/** y-coordinate of point. */
 	private double y;
-	/** z-coordinate of point */
+	/** z-coordinate of point. */
 	private double z;
 
-	/** Equivalent to Point3D(0, 0, 0) */
+	/** Equivalent to Point3D(0, 0, 0). */
 	public static final Point3D ZERO = new Point3D(0, 0, 0);
-	/** Equivalent to Point3D(1, 0, 0) */
+	/** Equivalent to Point3D(1, 0, 0). */
 	public static final Point3D UNITX = new Point3D(1, 0, 0);
-	/** Equivalent to Point3D(0, 1, 0) */
+	/** Equivalent to Point3D(0, 1, 0). */
 	public static final Point3D UNITY = new Point3D(0, 1, 0);
-	/** Equivalent to Point3D(0, 0, 1) */
+	/** Equivalent to Point3D(0, 0, 1). */
 	public static final Point3D UNITZ = new Point3D(0, 0, 1);
-	/** Equivalent to Point3D(1, 1, 1) */
+	/** Equivalent to Point3D(1, 1, 1). */
 	public static final Point3D UNITCUBE = new Point3D(1, 1, 1);
 	
 	/**
@@ -120,6 +120,7 @@ public class Point3D {
 
 	/**
 	 * @see java.lang.Object#hashCode()
+	 * @return hashCode
 	 */
 	@Override
 	public int hashCode() {
@@ -138,6 +139,8 @@ public class Point3D {
 
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @param obj Object to compare with.
+	 * @return whether this Point3D is equal to obj.
 	 */
 	@Override
 	public boolean equals(final Object obj) {
@@ -165,6 +168,7 @@ public class Point3D {
 
 	/** 
 	 * @see java.lang.Object#toString()
+	 * @return a String representing this Point3D in "(x, y, z)" format.
 	 */
 	@Override
 	public String toString() {

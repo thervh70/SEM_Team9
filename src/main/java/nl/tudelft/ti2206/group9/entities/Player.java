@@ -9,6 +9,7 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Player extends AbstractEntity {
 	
+	/** Indicates whether the player is alive or not. */
 	private boolean alive;
 	
 	/**
@@ -19,17 +20,17 @@ public class Player extends AbstractEntity {
 		alive = true;
 	}
 	
-	/** Lets the player die */
+	/** Lets the player die. */
 	public void die() {
 		alive = false;
 	}
 	
-	/** Lets the player live */
+	/** Lets the player live. */
 	public void respawn() {
 		alive = true;
 	}
 	
-	/** @return whether the player is alive */
+	/** @return whether the player is alive. */
 	public boolean isAlive() {
 		return alive;
 	}
@@ -37,6 +38,7 @@ public class Player extends AbstractEntity {
 	/**
 	 * When colliding with a coin, Coin.VALUE is added to score, 
 	 * and amount of coins is increased by one.
+	 * @param collidee Entity that this Player collides with.
 	 */
 	@Override
 	public void collision(final AbstractEntity collidee) {
