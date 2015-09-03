@@ -145,6 +145,21 @@ public class AbstractEntityTest {
 	}
 	
 	@Test
+	public void testHashCode() {
+		final int centerHash = Point3D.ZERO.hashCode();
+		final int sizeHash = Point3D.UNITCUBE.hashCode();
+		final int prime = 31;
+		assertEquals(prime * prime, 
+				new TestEntity(null, null).hashCode());
+		assertEquals((prime + centerHash) * prime, 
+				new TestEntity(Point3D.ZERO, null).hashCode());
+		assertEquals(prime * prime + sizeHash, 
+				new TestEntity(null, Point3D.UNITCUBE).hashCode());
+		assertEquals((prime + centerHash) * prime + sizeHash, 
+				entity.hashCode());
+	}
+	
+	@Test
 	public void testEquals() {
 		AbstractEntity null1 = new TestEntity(null, Point3D.UNITCUBE);
 		AbstractEntity null2 = new TestEntity(Point3D.ZERO, null);
