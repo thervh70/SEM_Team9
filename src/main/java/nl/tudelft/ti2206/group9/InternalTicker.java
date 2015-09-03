@@ -15,24 +15,24 @@ import nl.tudelft.ti2206.group9.level.State;
  */
 public final class InternalTicker extends TimerTask {
 
-	/** Amount of nanoseconds in a second, 10<sup>9</sup> */
+	/** Amount of nanoseconds in a second, 10<sup>9</sup>. */
 	public static final int E9 = 1000000000;
-	/** A million, 10<sup>6</sup> */
+	/** A million, 10<sup>6</sup>. */
 	public static final int E6 = 1000000;
 	
-	/** Amount of frames per second */
+	/** Amount of frames per second. */
 	public static final int FPS = 60;
 	
-	/** Whether the ticks are being run */
+	/** Whether the ticks are being run. */
 	private static boolean running = true;
-	/** Time at which next tick will be scheduled */
+	/** Time at which next tick will be scheduled. */
 	private static Instant scheduleTime = Instant.now();
 	/** Amount of nanoseconds between each frame.
 	 * 	This is assuming FPS is a final constant! **/
 	private static final int NANOS_PER_TICK = E9 / FPS;
 
 	/**
-	 * Thread method
+	 * Thread method.
 	 */
 	public void run() {
 		final Timer timer = new Timer();

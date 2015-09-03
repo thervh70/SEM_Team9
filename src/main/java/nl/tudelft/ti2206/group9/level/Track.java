@@ -20,28 +20,31 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Track {
 
-	/** Chance per frame to spawn a coin */
+	/** Chance per frame to spawn a coin. */
 	public static final double COINCHANCE = 0.02;
-	/** Chance per frame to spawn an obstacle */
+	/** Chance per frame to spawn an obstacle. */
 	public static final double OBSTACLECHANCE = 0.01;
 	
-	/** Amount of units the track should move per tick */
-	public static final double UNITS_PER_TICK = 1.0 / 6;
+	/** Amount of units the track should move per tick. */
+	public static final double UNITS_PER_TICK = 0.15;
 
 	/** List of entities on the track. */
 	private final List<AbstractEntity> entities;
 	/** Index of the player entity in the entities list. */
 	private int player;
 	
-	/** Random number generator for generating stuff on the track */
+	/** Random number generator for generating stuff on the track. */
 	private Random random;
 
-	/** Default constructor, random new Random is created */
+	/** Default constructor, new Random() is created as generator. */
 	public Track() {
 		this(new Random());
 	}
 	
-	/** constructor, in which one can specify the Random generator to use */
+	/** 
+	 * Constructor, in which one can specify the Random generator to use.
+	 * @param generator the Random generator to use for this Track.
+	 */
 	public Track(final Random generator) {
 		entities = new ArrayList<AbstractEntity>();
 		entities.add(new Player());

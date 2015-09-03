@@ -25,6 +25,9 @@ public final class Main {
 		InternalTicker.start();
 	}
 	
+	/**
+	 * Draws the track to the console. (Standard out)
+	 */
 	public static void drawTrack() {
 		System.out.println("\n\n\n\n\n\n\n\n" + trackRender()
 			+ " score: " + State.getScore());
