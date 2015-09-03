@@ -11,7 +11,7 @@ public class CollisionTest {
 
 	private Player player;
 	private Coin coin;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		player = new Player();

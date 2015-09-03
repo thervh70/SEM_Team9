@@ -6,6 +6,7 @@ import java.util.List;
 
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Player;
+import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -23,7 +24,7 @@ public class Track {
 	/** Default constructor. */
 	public Track() {
 		entities = new ArrayList<AbstractEntity>();
-		entities.add(new Player());
+		entities.add(new Player(new Point3D(0, 1, 1)));
 		player = 0;
 	}
 

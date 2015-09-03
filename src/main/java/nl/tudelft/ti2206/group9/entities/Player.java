@@ -8,12 +8,13 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * @author Maarten
  */
 public class Player extends AbstractEntity {
-	
+
+	public Player() { super(new Point3D(0, 1, 1), new Point3D(1, 1, 2)); }
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
-	public Player() {
-		super(new Point3D(0, 0, 1), new Point3D(1, 1, 2));
+	public Player(Point3D center) {
+		super(center, new Point3D(1, 1, 2));
 	}
 
 	/**

@@ -10,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TrackTest {
-	
+
 	public static final double DELTA = 0.0000001;
-	
+
 	private transient Track track;
 
 	@Before
