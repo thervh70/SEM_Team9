@@ -110,8 +110,14 @@ public abstract class AbstractEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((center == null) ? 0 : center.hashCode());
-		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		result *= prime;
+		if (center != null) {
+			result += center.hashCode();
+		}
+		result *= prime;
+		if (size != null) {
+			result += size.hashCode();
+		}
 		return result;
 	}
 
