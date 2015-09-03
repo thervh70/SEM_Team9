@@ -15,12 +15,12 @@ import nl.tudelft.ti2206.group9.entities.Player;
  */
 public class Track {
 
-	/** List of entities on the track */
+	/** List of entities on the track. */
 	private final List<AbstractEntity> entities;
-	/** Index of the player entity in the entities list*/
+	/** Index of the player entity in the entities list. */
 	private int player;
 
-	/** Default constructor */
+	/** Default constructor. */
 	public Track() {
 		entities = new ArrayList<AbstractEntity>();
 		entities.add(new Player());
@@ -29,7 +29,7 @@ public class Track {
 
 	/**
 	 * Moves the track towards the player (thus making the player run over the
-	 * track, like a treadmill)
+	 * track, like a treadmill).
 	 * @param distance amount of units to move the track
 	 */
 	public void moveTrack(final double distance) {
@@ -44,8 +44,9 @@ public class Track {
 	}
 
 	/**
-	 * Adds entity to the list of entities
+	 * Adds entity to the list of entities.
 	 * @param entity entity to add
+	 * @return this Track, allowing for chaining.
 	 */
 	public Track addEntity(final AbstractEntity entity) {
 		synchronized (this) {
@@ -57,6 +58,7 @@ public class Track {
 	/**
 	 * Removes entity from the list of entities
 	 * @param entity entity to remove
+	 * @return this Track, allowing for chaining.
 	 */
 	public Track removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
