@@ -56,7 +56,7 @@ public class Track {
 	}
 
 	/**
-	 * Removes entity from the list of entities
+	 * Removes entity from the list of entities.
 	 * @param entity entity to remove
 	 * @return this Track, allowing for chaining.
 	 */
