@@ -14,7 +14,7 @@ public class Coin extends AbstractEntity {
 	
 	/**
 	 * Default constructor.
-	 * @param center center of the bounding box
+	 * @param center center of the bounding box of the Coin
 	 */
 	public Coin(final Point3D center) {
 		super(center, Point3D.UNITCUBE);
