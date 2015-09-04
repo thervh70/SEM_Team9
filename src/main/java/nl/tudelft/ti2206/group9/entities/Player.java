@@ -9,8 +9,17 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Player extends AbstractEntity {
 	
-	/** Indicates whether the player is alive or not. */
+	/** Gravity. This is added to the vertical speed of the Player each tick. */
+	private static final double GRAVITY = 0.005;
+	/** Jump speed. This is the initial vertical speed of the Player on jump. */
+	private static final double JUMPSPEED = 0.12;
+	
+	/** Indicates whether the Player is alive or not. */
 	private boolean alive;
+	/** Indicates whether the Player is jumping or not. */
+	private boolean jumping;
+	/** Vertical speed (z-direction) of the Player. */
+	private double vspeed;
 	
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -48,6 +57,32 @@ public class Player extends AbstractEntity {
 		}
 		if (collidee instanceof Obstacle) {
 			die();
+		}
+	}
+	
+	/** Make the player jump (in the z-direction). */
+	public void jump() {
+		if (!jumping) {
+			vspeed = JUMPSPEED;
+			jumping = true;
+		}
+	}
+
+	/** Is executed each step. This is done in Track. */
+	public void step() {
+		Point3D pos = getCenter();
+		if (jumping) {
+			vspeed -= GRAVITY;
+		}
+		getCenter().addZ(vspeed);
+
+		Point3D bottom = new Point3D(pos);
+		double bottomToFloor = getSize().getZ() / 2;
+		bottom.addZ(bottomToFloor);
+		if (pos.getZ() < bottomToFloor) {
+			jumping = false;
+			vspeed = 0;
+			pos.setZ(bottomToFloor);
 		}
 	}
 

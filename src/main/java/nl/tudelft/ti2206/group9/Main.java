@@ -44,7 +44,14 @@ public final class Main {
 				continue;
 			}
 			if (entity instanceof Player) {
-				track[(int) entity.getCenter().getX()] = 'P';
+				double z = entity.getCenter().getZ();
+				if (z <= 1) {
+					track[(int) entity.getCenter().getX()] = 'p';
+				} else if (z > 1 && z < 2) {
+					track[(int) entity.getCenter().getX()] = 'P';
+				} else /* if (z >= 2) */ {
+					track[(int) entity.getCenter().getX()] = '^';
+				}
 			}
 			if (entity instanceof Coin) {
 				track[(int) entity.getCenter().getX()] = 'o';

@@ -120,6 +120,7 @@ public class Track {
 					Point3D.UNITCUBE));
 		}
 		
+		getPlayer().step();
 		moveTrack(UNITS_PER_TICK);
 	}
 
