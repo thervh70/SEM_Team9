@@ -1,25 +1,18 @@
-/**
- * 
- */
 package nl.tudelft.ti2206.group9;
 
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
  * @author Maarten
  *
  */
 public final class Main {
-
-	public static final int TRACKLENGTH = 50;
-	public static final int TICK = 100;
-	public static final double COINCHANCE = 0.07;
-
-	private static char[] track;
+	
+	public static final int RENDERDIST = 50;
 
 	private Main() { }
 
@@ -29,29 +22,24 @@ public final class Main {
 	 */
 	public static void main(String... args) throws InterruptedException {
 		State.resetAll();
-		State.getTrack().addEntity(new Coin(new Point3D(TRACKLENGTH, 0, 0)));
-
-		while (true) {
-			Thread.sleep(TICK);
-			if (Math.random() < COINCHANCE) {
-				State.getTrack().addEntity(
-						new Coin(new Point3D(TRACKLENGTH, 0, 0)));
-			}
-			State.getTrack().moveTrack(1);
-			trackRender();
-			System.out.println("\n\n\n\n\n\n\n\n" + new String(track)
-				+ " score: " + State.getScore());
-		}
-
+		InternalTicker.start();
+	}
+	
+	/**
+	 * Draws the track to the console. (Standard out)
+	 */
+	public static void drawTrack() {
+		System.out.println("\n\n\n\n\n\n\n\n" + trackRender()
+			+ " score: " + State.getScore());
 	}
 
-	private static void trackRender() {
-		track = new char[TRACKLENGTH];
-		for (int i = 0; i < TRACKLENGTH; i++) {
+	private static String trackRender() {
+		char[] track = new char[RENDERDIST];
+		for (int i = 0; i < RENDERDIST; i++) {
 			track[i] = ' ';
 		}
 		for (AbstractEntity entity : State.getTrack().getEntities()) {
-			if (entity.getCenter().getX() >= TRACKLENGTH
+			if (entity.getCenter().getX() >= RENDERDIST
 			 || entity.getCenter().getX() < 0) {
 				continue;
 			}
@@ -61,7 +49,11 @@ public final class Main {
 			if (entity instanceof Coin) {
 				track[(int) entity.getCenter().getX()] = 'o';
 			}
+			if (entity instanceof Obstacle) {
+				track[(int) entity.getCenter().getX()] = '#';
+			}
 		}
+		return new String(track);
 	}
 
 }
