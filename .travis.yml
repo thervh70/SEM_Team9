@@ -1,4 +1,6 @@
 language: java
+jdk:
+  - oraclejdk8
 
 # Communicate with Octopull
 before_install:
