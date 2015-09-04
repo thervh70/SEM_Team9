@@ -7,7 +7,12 @@ import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.Action;
+import nl.tudelft.ti2206.group9.util.Direction;
+import nl.tudelft.ti2206.group9.util.MyKeyListener;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
+import java.awt.event.KeyEvent;
 
 /**
  * @author Maarten, Mathias
@@ -74,4 +79,37 @@ public final class Main {
 			}
 		}
 	}
+
+    protected void addKeys() {
+        final Player player = (Player) State.getTrack().getEntities().get(0);
+        MyKeyListener.addKey(KeyEvent.VK_UP, new Action() {
+
+            @Override
+            public void doAction() {
+                player.move(Direction.JUMP);
+            }
+        });
+        MyKeyListener.addKey(KeyEvent.VK_DOWN, new Action() {
+
+            @Override
+            public void doAction() {
+                player.move(Direction.SLIDE);
+            }
+        });
+        MyKeyListener.addKey(KeyEvent.VK_LEFT, new Action() {
+
+            @Override
+            public void doAction() {
+                player.move(Direction.LEFT);
+            }
+        });
+        MyKeyListener.addKey(KeyEvent.VK_RIGHT, new Action() {
+
+            @Override
+            public void doAction() {
+                player.move(Direction.RIGHT);
+            }
+        });
+
+    }
 }

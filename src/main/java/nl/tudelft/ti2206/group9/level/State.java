@@ -1,5 +1,9 @@
 package nl.tudelft.ti2206.group9.level;
 
+import nl.tudelft.ti2206.group9.util.Action;
+
+import java.util.Map;
+
 /**
  * This utility class stores the State of the game,
  * for example the score and the distance run.

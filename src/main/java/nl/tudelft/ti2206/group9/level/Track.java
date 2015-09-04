@@ -24,7 +24,7 @@ public class Track {
 	/** Default constructor. */
 	public Track() {
 		entities = new ArrayList<AbstractEntity>();
-		entities.add(new Player(new Point3D(0, 1, 1)));
+		entities.add(new Player());
 		player = 0;
 	}
 

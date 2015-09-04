@@ -200,5 +200,4 @@ public class AbstractEntityTest {
 		public void collision(AbstractEntity collidee) { }
 
 	}
-
 }
