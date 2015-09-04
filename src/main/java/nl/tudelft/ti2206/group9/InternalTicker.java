@@ -30,24 +30,36 @@ public final class InternalTicker extends TimerTask {
 	/** Amount of nanoseconds between each frame.
 	 * 	This is assuming FPS is a final constant! **/
 	private static final int NANOS_PER_TICK = E9 / FPS;
+	
+	/** The timer that schedules the TimerTask is stored in the instance. */
+	private final Timer timer;
+	
+	/** Default private constructor. */
+	private InternalTicker(Timer t) {
+		timer = t;
+	}
 
 	/**
 	 * Thread method.
 	 */
 	public void run() {
-		final Timer timer = new Timer();
+		final Timer newTimer = new Timer();
 
 		try {
-			step();
+			step(); // First, perform tick.
+			
+			if (timer != null) {
+				timer.cancel(); // Then, kill the timer that scheduled the task.
+			}
 		} finally {
 			if (running) {
 				scheduleTime = scheduleTime.plusNanos(NANOS_PER_TICK);
-				timer.schedule(new InternalTicker(), Date.from(scheduleTime));
+				newTimer.schedule(
+						new InternalTicker(newTimer), Date.from(scheduleTime));
 			} else {
-				timer.cancel();
+				newTimer.cancel();
 			}
 		}
-		
 	}
 	
 	private void step() {
@@ -63,7 +75,7 @@ public final class InternalTicker extends TimerTask {
 
 	/** Start the InternalTicker. Will run until {@link #stop()} is called. */
 	public static void start() {
-		final InternalTicker intern = new InternalTicker();
+		final InternalTicker intern = new InternalTicker(null);
 		new Thread(intern).start();
 	}
 	
