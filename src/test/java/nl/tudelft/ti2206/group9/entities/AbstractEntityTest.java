@@ -165,22 +165,6 @@ public class AbstractEntityTest {
 				new Point3D(2, 2, 2))));
 		assertTrue(entity.equals(new TestEntity(Point3D.ZERO,
 				Point3D.UNITCUBE)));
-/*		if (center == null) {
-			if (other.center != null) {
-				return false;
-			}
-		} else if (!center.equals(other.center)) {
-			return false;
-		}
-		if (size == null) {
-			if (other.size != null) {
-				return false;
-			}
-		} else if (!size.equals(other.size)) {
-			return false;
-		}
-		return true;
-*/
 	}
 
 	@Test

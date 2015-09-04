@@ -9,13 +9,37 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * @author Maarten
  */
 public class Player extends AbstractEntity {
+	
+	/** Indicates whether the player is alive or not. */
+	private boolean alive;
+	
+	/**
+	 * Constructs a new Player at the "center" of the game.
+	 */
+	public Player() {
+		super(new Point3D(0, 1, 0.9), new Point3D(0.8, 0.8, 1.8));
+	}
 
-	public Player() { super(new Point3D(0, 1, 0.9), new Point3D(0.8, 0.8, 1.8)); }
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
 	public Player(Point3D center) {
 		super(center, new Point3D(0.8, 0.8, 1.8));
+	}
+	
+	/** Lets the player die. */
+	public void die() {
+		alive = false;
+	}
+	
+	/** Lets the player live. */
+	public void respawn() {
+		alive = true;
+	}
+	
+	/** @return whether the player is alive. */
+	public boolean isAlive() {
+		return alive;
 	}
 
 	/**
@@ -28,6 +52,10 @@ public class Player extends AbstractEntity {
 		if (collidee instanceof Coin) {
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
+		}
+
+		if (collidee instanceof Obstacle) {
+			die();
 		}
 	}
 

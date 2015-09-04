@@ -36,6 +36,7 @@ public final class State {
 		track = new Track();
 		score = 0;
 		distance = 0;
+		track.getPlayer().respawn();
 	}
 
 	/**
