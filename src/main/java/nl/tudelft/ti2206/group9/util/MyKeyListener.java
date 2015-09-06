@@ -8,39 +8,38 @@ import java.util.Map;
 /**
  * @author Mathias
  */
-public class MyKeyListener implements KeyListener{
+public class MyKeyListener implements KeyListener {
 
 
     /** KeyMapping, linking KeyPresses (Integers) to Actions */
-    private static Map<Integer, Action> keyMapping = new HashMap<Integer, Action>();
+    private static Map<Integer, Action> keyMapping =
+    		new HashMap<Integer, Action>();
 
     public void keyPressed(KeyEvent e) {
         Action action = keyMapping.get(e.getKeyCode());
-        if(action != null) {
+        if (action != null) {
             action.doAction();
         }
     }
 
     /**
-     * KeyTyped does nothing
+     * keyTyped does nothing.
      * @param e
      */
-    @Override
-    public void keyTyped(KeyEvent e) { }
+	public void keyTyped(KeyEvent e) { }
 
     /**
-     * KeyReleased does nothing
+     * keyReleased does nothing.
      * @param e
      */
-    @Override
-    public void keyReleased(KeyEvent e) { }
+	public void keyReleased(KeyEvent e) { }
 
     /**
      * Adds a key to the keymapping
-     * @param KeyValue
+     * @param keyValue
      * @param action
      */
-    public static void addKey(int KeyValue, Action action) {
-        keyMapping.put(KeyValue, action);
+    public static void addKey(int keyValue, Action action) {
+        keyMapping.put(keyValue, action);
     }
 }
