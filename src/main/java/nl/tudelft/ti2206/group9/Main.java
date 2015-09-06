@@ -9,7 +9,7 @@ import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Action;
 import nl.tudelft.ti2206.group9.util.Direction;
-import nl.tudelft.ti2206.group9.util.MyKeyListener;
+import nl.tudelft.ti2206.group9.util.KeyMap;
 
 /**
  * @author Maarten, Mathias
@@ -17,7 +17,7 @@ import nl.tudelft.ti2206.group9.util.MyKeyListener;
  */
 public final class Main {
 	
-	public static final int TRACKWIDTH = 3;
+	public static final double TRACKWIDTH = 3;
 	
 	public static final int RENDERDIST = 50;
 
@@ -29,6 +29,8 @@ public final class Main {
 	 */
 	public static void main(String... args) throws InterruptedException {
 		State.resetAll();
+		Main.addKeys();
+//		window.addKeyListener(new KeyMap());
 		InternalTicker.start();
 	}
 	
@@ -41,7 +43,7 @@ public final class Main {
 	}
 
 	private static String trackRender() {
-		char[][] track = new char[TRACKWIDTH][RENDERDIST];
+		char[][] track = new char[(int) TRACKWIDTH][RENDERDIST];
 		for (int i = 0; i < RENDERDIST; i++) {
 			for (int j = 0; j < TRACKWIDTH; j++) {
 				track[j][i] = '-';
@@ -49,7 +51,7 @@ public final class Main {
 		}
 		for (AbstractEntity entity : State.getTrack().getEntities()) {
 			int x = (int) entity.getCenter().getX();
-			int y = (int) entity.getCenter().getY();
+			int y = (int) entity.getCenter().getY() + 1;
 			if (x >= RENDERDIST || x < 0) {
 				continue;
 			}
@@ -67,24 +69,24 @@ public final class Main {
 			 + new String(track[2]);
 	}
 
-    protected void addKeys() {
+    private static void addKeys() {
         final Player player = (Player) State.getTrack().getEntities().get(0);
-        MyKeyListener.addKey(KeyEvent.VK_UP, new Action() {
+        KeyMap.addKey(KeyEvent.VK_UP, new Action() {
             public void doAction() {
                 player.move(Direction.JUMP);
             }
         });
-        MyKeyListener.addKey(KeyEvent.VK_DOWN, new Action() {
+        KeyMap.addKey(KeyEvent.VK_DOWN, new Action() {
             public void doAction() {
                 player.move(Direction.SLIDE);
             }
         });
-        MyKeyListener.addKey(KeyEvent.VK_LEFT, new Action() {
+        KeyMap.addKey(KeyEvent.VK_LEFT, new Action() {
             public void doAction() {
                 player.move(Direction.LEFT);
             }
         });
-        MyKeyListener.addKey(KeyEvent.VK_RIGHT, new Action() {
+        KeyMap.addKey(KeyEvent.VK_RIGHT, new Action() {
             public void doAction() {
                 player.move(Direction.RIGHT);
             }

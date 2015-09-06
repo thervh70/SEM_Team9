@@ -112,12 +112,12 @@ public class Track {
 	 */
 	public void step() {
 		if (random.nextDouble() < COINCHANCE) {
+			addEntity(new Coin(new Point3D(Main.RENDERDIST, -1, 0)));
 			addEntity(new Coin(new Point3D(Main.RENDERDIST, 0, 0)));
 			addEntity(new Coin(new Point3D(Main.RENDERDIST, 1, 0)));
-			addEntity(new Coin(new Point3D(Main.RENDERDIST, 2, 0)));
 		} else if (random.nextDouble() < OBSTACLECHANCE) {
 			addEntity(new Obstacle(
-					new Point3D(Main.RENDERDIST, 1, 0),
+					new Point3D(Main.RENDERDIST, 0, 0),
 					new Point3D(1, Main.TRACKWIDTH, 1))
 			);
 		}
