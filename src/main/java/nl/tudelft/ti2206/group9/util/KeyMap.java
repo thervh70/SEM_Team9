@@ -18,8 +18,8 @@ public class KeyMap implements KeyListener {
      * At key press, the corresponding action in keyMap (if any)
      * is executed.
      * @param e keyEvent
-     * /
-    public void keyPressed(KeyEvent e) {
+     */
+    public final void keyPressed(final KeyEvent e) {
         Action action = keyMap.get(e.getKeyCode());
         if (action != null) {
             action.doAction();
@@ -30,21 +30,21 @@ public class KeyMap implements KeyListener {
      * Does nothing.
      * @param e keyEvent
      */
-	public void keyTyped(KeyEvent e) { }
+	public void keyTyped(final KeyEvent e) { }
 
     /**
      * Does nothing.
      * @param e keyEvent
      */
-	public void keyReleased(KeyEvent e) { }
+	public void keyReleased(final KeyEvent e) { }
 
     /**
-     * Return an Action given a KeyCode
-     * @param KeyValue KeyCode
+     * Return an Action given a KeyCode.
+     * @param keyValue KeyCode
      * @return corresponding Action
      */
-    public static Action getKey(int KeyValue) {
-        return keyMap.get(KeyValue);
+    public static Action getKey(final int keyValue) {
+        return keyMap.get(keyValue);
     }
 
     /**
@@ -52,15 +52,15 @@ public class KeyMap implements KeyListener {
      * @param keyValue KeyCode
      * @param action Action to perform at key press
      */
-    public static void addKey(int keyValue, Action action) {
+    public static void addKey(final int keyValue, final Action action) {
         keyMap.put(keyValue, action);
     }
 
     /**
-     * Remove a key from the KeyMap
-     * @param KeyValue KeyCode
+     * Remove a key from the KeyMap.
+     * @param keyValue KeyCode
      */
-    public static void removeKey(int KeyValue) {
-        keyMap.remove(KeyValue);
+    public static void removeKey(final int keyValue) {
+        keyMap.remove(keyValue);
     }
 }
