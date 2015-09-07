@@ -2,7 +2,7 @@ package nl.tudelft.ti2206.group9.util;
 
 /**
  * Utility class, just a simple 3 dimensional point.
- * 
+ *
  * @author Maarten
  */
 public class Point3D {
@@ -24,19 +24,20 @@ public class Point3D {
 	public static final Point3D UNITZ = new Point3D(0, 0, 1);
 	/** Equivalent to Point3D(1, 1, 1). */
 	public static final Point3D UNITCUBE = new Point3D(1, 1, 1);
-	
+
 	/**
 	 * Constructs a new Point in 3D-space.
 	 * @param xSet x-coordinate
-	 * @param y y-coordinate
-	 * @param z z-coordinate
+	 * @param ySet y-coordinate
+	 * @param zSet z-coordinate
 	 */
-	public Point3D(final double xSet, final double y, final double z) {
+	public Point3D(final double xSet, final double ySet,
+				   final double zSet) {
 		this.x = xSet;
-		this.y = y;
-		this.z = z;
+		this.y = ySet;
+		this.z = zSet;
 	}
-	
+
 	/**
 	 * Constructs a new Point in 3D-space using the coordinates of another
 	 * Point3D.
@@ -47,72 +48,72 @@ public class Point3D {
 	}
 
 	/**
-	 * @param x the amount of units to add to x
+	 * @param add the amount of units to add to x
 	 */
-	public void addX(final double x) {
-		this.x += x;
+	public final void addX(final double add) {
+		this.x += add;
 	}
 
 	/**
-	 * @param y the amount of units to add to y
+	 * @param add the amount of units to add to y
 	 */
-	public void addY(final double y) {
-		this.y += y;
+	public final void addY(final double add) {
+		this.y += add;
 	}
 
 	/**
-	 * @param z the amount of units to add to z
+	 * @param add the amount of units to add to z
 	 */
-	public void addZ(final double z) {
-		this.z += z;
+	public final void addZ(final double add) {
+		this.z += add;
 	}
-	
+
 	/**
 	 * @return the x
 	 */
-	public double getX() {
+	public final double getX() {
 		return x;
 	}
 
 	/**
-	 * @param x the x to set
+	 * @param newX the x to set
 	 */
-	public void setX(final double x) {
-		this.x = x;
+	public final void setX(final double newX) {
+		this.x = newX;
 	}
 
 	/**
 	 * @return the y
 	 */
-	public double getY() {
+	public final double getY() {
 		return y;
 	}
 
 	/**
-	 * @param y the y to set
+	 * @param newY the y to set
 	 */
-	public void setY(final double y) {
-		this.y = y;
+	public final void setY(final double newY) {
+		this.y = newY;
 	}
 
 	/**
 	 * @return the z
 	 */
-	public double getZ() {
+	public final double getZ() {
 		return z;
 	}
 
 	/**
-	 * @param z the z to set
+	 * @param newZ the z to set
 	 */
-	public void setZ(final double z) {
-		this.z = z;
+	public final void setZ(final double newZ) {
+		this.z = newZ;
 	}
-	
+
 	/**
 	 * @param point the ponit to set
 	 */
-	public void set(final Point3D point) {
+	public final void set(final Point3D point) {
 		x = point.x;
 		y = point.y;
 		z = point.z;
@@ -123,7 +124,7 @@ public class Point3D {
 	 * @return hashCode
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int shift = 32;
 		final int prime = 31;
 		int result = 1;
@@ -143,7 +144,7 @@ public class Point3D {
 	 * @return whether this Point3D is equal to obj.
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public final boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -154,25 +155,27 @@ public class Point3D {
 			return false;
 		}
 		final Point3D other = (Point3D) obj;
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) {
+		if (Double.doubleToLongBits(x)
+				!= Double.doubleToLongBits(other.x)) {
 			return false;
 		}
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) {
+		if (Double.doubleToLongBits(y)
+				!= Double.doubleToLongBits(other.y)) {
 			return false;
 		}
-		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) {
+		if (Double.doubleToLongBits(z)
+				!= Double.doubleToLongBits(other.z)) {
 			return false;
 		}
 		return true;
 	}
 
-	/** 
+	/**
 	 * @see java.lang.Object#toString()
 	 * @return a String representing this Point3D in "(x, y, z)" format.
 	 */
 	@Override
-	public String toString() {
+	public final String toString() {
 		return "(" + x + ", " + y + ", " + z + ")";
 	}
-	
 }
