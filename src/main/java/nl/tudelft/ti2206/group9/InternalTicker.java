@@ -65,9 +65,7 @@ public final class InternalTicker extends TimerTask {
 	private void step() {
 		State.getTrack().step();
 		
-		if (State.getTrack().getPlayer().isAlive()) {
-			Main.drawTrack();
-		} else {
+		if (!State.getTrack().getPlayer().isAlive()) {
 			System.out.println("Ghagha, you ish ded.");
 			stop();
 		}

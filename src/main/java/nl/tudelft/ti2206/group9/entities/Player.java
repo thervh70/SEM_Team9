@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.group9.entities;
 
-import nl.tudelft.ti2206.group9.Main;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Direction;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -89,8 +89,8 @@ public class Player extends AbstractEntity {
     private void changeLane(double dir) {
         Point3D newCenter = new Point3D(getCenter());
         newCenter.addX(dir);
-        if (newCenter.getX() <= Main.TRACKWIDTH / 2
-        		&& newCenter.getX() >= -Main.TRACKWIDTH / 2) {
+        if (newCenter.getX() <= Track.WIDTH / 2
+        		&& newCenter.getX() >= -Track.WIDTH / 2) {
 			setCenter(newCenter);
 		}
     }

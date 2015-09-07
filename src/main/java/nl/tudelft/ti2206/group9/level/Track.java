@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import nl.tudelft.ti2206.group9.Main;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Obstacle;
@@ -27,6 +26,11 @@ public class Track {
 
 	/** Amount of units the track should move per tick. */
 	public static final double UNITS_PER_TICK = 0.15;
+	
+	/** Width of the track (amount of lanes). */
+	public static final int WIDTH = 3;
+	/** Length of the track. */
+	public static final double LENGTH = 100;
 
 	/** List of entities on the track. */
 	private final List<AbstractEntity> entities;
@@ -112,13 +116,13 @@ public class Track {
 	 */
 	public final void step() {
 		if (random.nextDouble() < COINCHANCE) {
-			addEntity(new Coin(new Point3D(-1, 0, Main.RENDERDIST)));
-			addEntity(new Coin(new Point3D(0, 0, Main.RENDERDIST)));
-			addEntity(new Coin(new Point3D(1, 0, Main.RENDERDIST)));
+			addEntity(new Coin(new Point3D(-1, 1.0 / 2, LENGTH)));
+			addEntity(new Coin(new Point3D(0, 1.0 / 2, LENGTH)));
+			addEntity(new Coin(new Point3D(1, 1.0 / 2, LENGTH)));
 		} else if (random.nextDouble() < OBSTACLECHANCE) {
 			addEntity(new Obstacle(
-					new Point3D(0, 0, Main.RENDERDIST),
-					new Point3D(Main.TRACKWIDTH, 1, 1))
+					new Point3D(0, 1.0 / 2, LENGTH),
+					new Point3D(WIDTH, 1, 1))
 			);
 		}
 		moveTrack(UNITS_PER_TICK);
