@@ -16,9 +16,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TrackTest {
-	
+
 	public static final double DELTA = 0.0000001;
-	
+
 	private transient Track track;
 
 	@Before
@@ -78,6 +78,7 @@ public class TrackTest {
 		final double belowObstacleChance = Track.OBSTACLECHANCE - 0.01;
 		final double aboveObstacleChance = Track.OBSTACLECHANCE + 0.01;
 		final Track track = new Track(rand);
+		final int coins = 3;
 		int expectedSize = 1;
 		
 		when(rand.nextDouble())
@@ -85,14 +86,14 @@ public class TrackTest {
 						aboveCoinChance, belowObstacleChance,
 						aboveCoinChance, aboveObstacleChance);
 		track.step();
-		expectedSize++;
+		expectedSize += coins;
 		assertEquals(expectedSize, track.getEntities().size());
 		assertTrue(track.getEntities().get(1) instanceof Coin);
 
 		track.step();
 		expectedSize++;
 		assertEquals(expectedSize, track.getEntities().size());
-		assertTrue(track.getEntities().get(2) instanceof Obstacle);
+		assertTrue(track.getEntities().get(1 + coins) instanceof Obstacle);
 		
 		track.step();
 		assertEquals(expectedSize, track.getEntities().size());
