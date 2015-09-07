@@ -1,6 +1,3 @@
-/**
- * 
- */
 package nl.tudelft.ti2206.group9;
 
 import java.io.IOException;
@@ -14,27 +11,29 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import java.awt.event.KeyEvent;
+
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.Point3D;
+import nl.tudelft.ti2206.group9.util.Action;
+import nl.tudelft.ti2206.group9.util.Direction;
+import nl.tudelft.ti2206.group9.util.KeyMap;
 
 /**
- * @author Maarten
+ * @author Maarten, Mathias
  *
  */
 public final class Main {
 
-	public static final int TRACKLENGTH = 50;
-	public static final int TICK = 100;
-	public static final double COINCHANCE = 0.07;
-	public static final double OBSTACLECHANCE = 0.07;
-
-	private static char[] track;
 	private static Mixer mixer;
 	private static Clip clip;
+	
+	public static final double TRACKWIDTH = 3;
+	
+	public static final int RENDERDIST = 50;
 
 	private Main() { }
 	
@@ -43,56 +42,48 @@ public final class Main {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String... args) throws InterruptedException {
-        State.resetAll();
-        State.getTrack().addEntity(new Coin(new Point3D(TRACKLENGTH, 0, 0)));
 		initialiseTune("audio/kuikentje.wav");
 		clip.start();		
 
-		while (true) {
-			Thread.sleep(TICK);
-			if (Math.random() < COINCHANCE) {
-				State.getTrack().addEntity(
-						new Coin(new Point3D(TRACKLENGTH, 0, 0)));
-			} else if (Math.random() < OBSTACLECHANCE) {
-				State.getTrack().addEntity(new Obstacle(
-						new Point3D(TRACKLENGTH, 0, 0),
-						Point3D.UNITCUBE));
-			}
-			int distance = 1;
-			State.getTrack().moveTrack(distance);
-			State.addDistance(distance);
-			if (!State.getTrack().getPlayer().isAlive()) {
-				System.out.println("Ghagha, you ish ded.");
-				break;
-			}
-			trackRender();
-			System.out.println(new String(track)
-			+ " score: " + State.getScore()
-			+ " coins: " + State.getCoins() 
-			+ " distance: " + State.getDistance() + "\n\n\n\n\n\n\n\n");
-		}
+		State.resetAll();
+		Main.addKeys();
+//		window.addKeyListener(new KeyMap());
+		InternalTicker.start();
+	}
+	
+	/**
+	 * Draws the track to the console. (Standard out)
+	 */
+	public static void drawTrack() {
+		System.out.println("\n\n\n\n\n\n\n\n" + trackRender()
+			+ " score: " + State.getScore());
 	}
 
-	private static void trackRender() {
-		track = new char[TRACKLENGTH];
-		for (int i = 0; i < TRACKLENGTH; i++) {
-			track[i] = ' ';
+	private static String trackRender() {
+		char[][] track = new char[(int) TRACKWIDTH][RENDERDIST];
+		for (int i = 0; i < RENDERDIST; i++) {
+			for (int j = 0; j < TRACKWIDTH; j++) {
+				track[j][i] = '-';
+			}
 		}
 		for (AbstractEntity entity : State.getTrack().getEntities()) {
-			if (entity.getCenter().getX() >= TRACKLENGTH
-			 || entity.getCenter().getX() < 0) {
+			int x = (int) entity.getCenter().getX();
+			int y = (int) entity.getCenter().getY() + 1;
+			if (x >= RENDERDIST || x < 0) {
 				continue;
 			}
 			if (entity instanceof Player) {
-				track[(int) entity.getCenter().getX()] = 'P';
+				track[y][x] = 'P';
 			}
 			if (entity instanceof Coin) {
-				track[(int) entity.getCenter().getX()] = 'o';
+				track[y][x] = 'o';
 			}
 			if (entity instanceof Obstacle) {
-				track[(int) entity.getCenter().getX()] = '#';
+				track[y][x] = '#';
 			}
 		}
+		return new String(track[0]) + "\n" + new String(track[1]) + "\n" 
+			 + new String(track[2]);
 	}
 	
 	/**
@@ -124,4 +115,28 @@ public final class Main {
 		}
 	}
 
+    private static void addKeys() {
+        final Player player = (Player) State.getTrack().getEntities().get(0);
+        KeyMap.addKey(KeyEvent.VK_UP, new Action() {
+            public void doAction() {
+                player.move(Direction.JUMP);
+            }
+        });
+        KeyMap.addKey(KeyEvent.VK_DOWN, new Action() {
+            public void doAction() {
+                player.move(Direction.SLIDE);
+            }
+        });
+        KeyMap.addKey(KeyEvent.VK_LEFT, new Action() {
+            public void doAction() {
+                player.move(Direction.LEFT);
+            }
+        });
+        KeyMap.addKey(KeyEvent.VK_RIGHT, new Action() {
+            public void doAction() {
+                player.move(Direction.RIGHT);
+            }
+        });
+
+    }
 }
