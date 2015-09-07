@@ -23,7 +23,7 @@ import nl.tudelft.ti2206.group9.util.Direction;
 import nl.tudelft.ti2206.group9.util.KeyMap;
 
 /**
- * @author Maarten, Mathias
+ * @author Maarten, Mathias, Mitchell
  *
  */
 public final class Main {
@@ -42,7 +42,7 @@ public final class Main {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String... args) throws InterruptedException {
-		initialiseTune("audio/kuikentje.wav");
+		initialiseTune("audio/8bit.aiff");
 		clip.start();		
 
 		State.resetAll();
