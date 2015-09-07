@@ -28,6 +28,7 @@ public class Player extends AbstractEntity {
 
 	/**
 	 * Constructs a new Player at a user-defined center.
+	 * @param center user-defined center.
 	 */
 	public Player(Point3D center) {
 		super(center, new Point3D(WIDTH, WIDTH, HEIGHT));
@@ -68,7 +69,7 @@ public class Player extends AbstractEntity {
     /**
      * Decide which move methods should be called when keyboard input is
      * detected.
-     * @param direction
+     * @param direction Left/Right/Jump/Slide
      */
     public void move(Direction direction) {
         switch (direction) {
