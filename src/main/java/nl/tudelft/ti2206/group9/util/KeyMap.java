@@ -39,11 +39,28 @@ public class KeyMap implements KeyListener {
 	public void keyReleased(KeyEvent e) { }
 
     /**
+     * Return an Action given a KeyCode
+     * @param KeyValue KeyCode
+     * @return corresponding Action
+     */
+    public static Action getKey(int KeyValue) {
+        return keyMap.get(KeyValue);
+    }
+
+    /**
      * Adds a key to the keyMap.
      * @param keyValue KeyCode
      * @param action Action to perform at key press
      */
     public static void addKey(int keyValue, Action action) {
         keyMap.put(keyValue, action);
+    }
+
+    /**
+     * Remove a key from the KeyMap
+     * @param KeyValue KeyCode
+     */
+    public static void removeKey(int KeyValue) {
+        keyMap.remove(KeyValue);
     }
 }
