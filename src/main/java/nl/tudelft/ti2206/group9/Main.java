@@ -50,8 +50,8 @@ public final class Main {
 			}
 		}
 		for (AbstractEntity entity : State.getTrack().getEntities()) {
-			int x = (int) entity.getCenter().getX();
-			int y = (int) entity.getCenter().getY() + 1;
+			int x = (int) entity.getCenter().getZ();	 //Length of track
+			int y = (int) entity.getCenter().getX() + 1; //Width of track
 			if (x >= RENDERDIST || x < 0) {
 				continue;
 			}
