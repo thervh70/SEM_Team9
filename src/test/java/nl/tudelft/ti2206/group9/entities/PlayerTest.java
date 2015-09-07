@@ -22,29 +22,29 @@ public class PlayerTest {
 
     @Test
     public void moveLeftTest() {
-        assertEquals(0, player.getCenter().getY(), DELTA);
+        assertEquals(0, player.getCenter().getX(), DELTA);
         player.move(Direction.LEFT);
-        assertEquals(-1, player.getCenter().getY(), DELTA);
+        assertEquals(-1, player.getCenter().getX(), DELTA);
     }
 
     @Test
     public void moveRightTest() {
-        assertEquals(0, player.getCenter().getY(), DELTA);
+        assertEquals(0, player.getCenter().getX(), DELTA);
         player.move(Direction.RIGHT);
-        assertEquals(1, player.getCenter().getY(), DELTA);
+        assertEquals(1, player.getCenter().getX(), DELTA);
     }
 
     @Test
     public void moveLeftOffTrackTest() {
         moveLeftTest();
         player.move(Direction.LEFT);
-        assertEquals(-1, player.getCenter().getY(), DELTA);
+        assertEquals(-1, player.getCenter().getX(), DELTA);
     }
 
     @Test
     public void moveRightOffTrackTest() {
         moveRightTest();
         player.move(Direction.RIGHT);
-        assertEquals(1, player.getCenter().getY(), DELTA);
+        assertEquals(1, player.getCenter().getX(), DELTA);
     }
 }

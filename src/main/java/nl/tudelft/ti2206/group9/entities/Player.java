@@ -23,7 +23,7 @@ public class Player extends AbstractEntity {
 	 * Constructs a new Player at the "center" of the game.
 	 */
 	public Player() {
-		this(new Point3D(0, 0, HEIGHT / 2));
+		this(new Point3D(0, HEIGHT / 2, 0));
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class Player extends AbstractEntity {
 	 * @param center user-defined center.
 	 */
 	public Player(Point3D center) {
-		super(center, new Point3D(WIDTH, WIDTH, HEIGHT));
+		super(center, new Point3D(WIDTH, HEIGHT, WIDTH));
 	}
 	
 	/** Lets the player die. */
@@ -88,9 +88,9 @@ public class Player extends AbstractEntity {
      */
     private void changeLane(double dir) {
         Point3D newCenter = new Point3D(getCenter());
-        newCenter.addY(dir);
-        if (newCenter.getY() <= Main.TRACKWIDTH / 2
-        		&& newCenter.getY() >= -Main.TRACKWIDTH / 2) {
+        newCenter.addX(dir);
+        if (newCenter.getX() <= Main.TRACKWIDTH / 2
+        		&& newCenter.getX() >= -Main.TRACKWIDTH / 2) {
 			setCenter(newCenter);
 		}
     }

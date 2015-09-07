@@ -34,10 +34,10 @@ public class TrackTest {
 
 	@Test
 	public void testMoveTrack() {
-		track.addEntity(new Coin(new Point3D(2, 0, 0)));
+		track.addEntity(new Coin(new Point3D(0, 0, 2)));
 		track.moveTrack(1.0 / 2);
-		assertEquals(track.getEntities().get(0).getCenter().getX(), 0, DELTA);
-		assertEquals(1 + 1.0 / 2, track.getEntities().get(1).getCenter().getX(),
+		assertEquals(track.getEntities().get(0).getCenter().getZ(), 0, DELTA);
+		assertEquals(1 + 1.0 / 2, track.getEntities().get(1).getCenter().getZ(),
 				DELTA);
 	}
 
