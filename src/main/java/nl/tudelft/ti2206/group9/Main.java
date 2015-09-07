@@ -1,16 +1,23 @@
 package nl.tudelft.ti2206.group9;
 
+import java.awt.event.KeyEvent;
+
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.Action;
+import nl.tudelft.ti2206.group9.util.Direction;
+import nl.tudelft.ti2206.group9.util.KeyMap;
 
 /**
- * @author Maarten
+ * @author Maarten, Mathias
  *
  */
 public final class Main {
+	
+	public static final double TRACKWIDTH = 3;
 	
 	public static final int RENDERDIST = 50;
 
@@ -22,6 +29,8 @@ public final class Main {
 	 */
 	public static void main(String... args) throws InterruptedException {
 		State.resetAll();
+		Main.addKeys();
+//		window.addKeyListener(new KeyMap());
 		InternalTicker.start();
 	}
 	
@@ -34,33 +43,65 @@ public final class Main {
 	}
 
 	private static String trackRender() {
-		char[] track = new char[RENDERDIST];
+		char[][] track = new char[(int) TRACKWIDTH][RENDERDIST];
 		for (int i = 0; i < RENDERDIST; i++) {
-			track[i] = ' ';
+			for (int j = 0; j < TRACKWIDTH; j++) {
+				track[j][i] = '-';
+			}
 		}
 		for (AbstractEntity entity : State.getTrack().getEntities()) {
-			if (entity.getCenter().getX() >= RENDERDIST
-			 || entity.getCenter().getX() < 0) {
-				continue;
-			}
-			if (entity instanceof Player) {
-				double z = entity.getCenter().getZ();
-				if (z <= 1) {
-					track[(int) entity.getCenter().getX()] = 'p';
-				} else if (z > 1 && z < 2) {
-					track[(int) entity.getCenter().getX()] = 'P';
-				} else /* if (z >= 2) */ {
-					track[(int) entity.getCenter().getX()] = '^';
-				}
-			}
-			if (entity instanceof Coin) {
-				track[(int) entity.getCenter().getX()] = 'o';
-			}
-			if (entity instanceof Obstacle) {
-				track[(int) entity.getCenter().getX()] = '#';
+			addToTrack(track, entity);
+		}
+		return new String(track[0]) + "\n" + new String(track[1]) + "\n" 
+			 + new String(track[2]);
+	}
+	
+	private static void addToTrack(char[][] track, AbstractEntity entity) {
+		int x = (int) entity.getCenter().getZ();	 //Length of track
+		int y = (int) entity.getCenter().getX() + 1; //Width of track 
+		if (x >= RENDERDIST || x < 0) {
+			return;
+		}
+		if (entity instanceof Player) {
+			double z = entity.getCenter().getY();
+			if (z <= 1) {
+				track[y][x] = 'p';
+			} else if (z > 1 && z < 2) {
+				track[y][x] = 'P';
+			} else /* if (z >= 2) */ {
+				track[y][x] = '^';
 			}
 		}
-		return new String(track);
+		if (entity instanceof Coin) {
+			track[y][x] = 'o';
+		}
+		if (entity instanceof Obstacle) {
+			track[y][x] = '#';
+		}
 	}
 
+    private static void addKeys() {
+        final Player player = (Player) State.getTrack().getEntities().get(0);
+        KeyMap.addKey(KeyEvent.VK_UP, new Action() {
+            public void doAction() {
+                player.move(Direction.JUMP);
+            }
+        });
+        KeyMap.addKey(KeyEvent.VK_DOWN, new Action() {
+            public void doAction() {
+                player.move(Direction.SLIDE);
+            }
+        });
+        KeyMap.addKey(KeyEvent.VK_LEFT, new Action() {
+            public void doAction() {
+                player.move(Direction.LEFT);
+            }
+        });
+        KeyMap.addKey(KeyEvent.VK_RIGHT, new Action() {
+            public void doAction() {
+                player.move(Direction.RIGHT);
+            }
+        });
+
+    }
 }

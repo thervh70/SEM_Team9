@@ -61,7 +61,7 @@ public class Track {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
-					entity.getCenter().addX(-distance);
+					entity.getCenter().addZ(-distance);
 					entity.checkCollision(entities.get(player));
 				}
 			}
@@ -112,12 +112,14 @@ public class Track {
 	 */
 	public void step() {
 		if (random.nextDouble() < COINCHANCE) {
-			addEntity(new Coin(new Point3D(Main.RENDERDIST + 1, 0, 0)));
-			
+			addEntity(new Coin(new Point3D(-1, 0, Main.RENDERDIST)));
+			addEntity(new Coin(new Point3D(0, 0, Main.RENDERDIST)));
+			addEntity(new Coin(new Point3D(1, 0, Main.RENDERDIST)));
 		} else if (random.nextDouble() < OBSTACLECHANCE) {
 			addEntity(new Obstacle(
-					new Point3D(Main.RENDERDIST + 1, 0, 0),
-					Point3D.UNITCUBE));
+					new Point3D(0, 0, Main.RENDERDIST),
+					new Point3D(Main.TRACKWIDTH, 1, 1))
+			);
 		}
 		
 		getPlayer().step();

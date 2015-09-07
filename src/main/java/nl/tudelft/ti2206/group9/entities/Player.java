@@ -1,6 +1,8 @@
 package nl.tudelft.ti2206.group9.entities;
 
+import nl.tudelft.ti2206.group9.Main;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.Direction;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -18,15 +20,27 @@ public class Player extends AbstractEntity {
 	private boolean alive;
 	/** Indicates whether the Player is jumping or not. */
 	private boolean jumping;
-	/** Vertical speed (z-direction) of the Player. */
+	/** Vertical speed (y-direction) of the Player. */
 	private double vspeed;
+
+	/** Height of the Player's bounding box. */
+	public static final double HEIGHT = 1.8;
+	/** Width of the Player's bounding box. */
+	public static final double WIDTH = 0.8;
 	
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
 	public Player() {
-		super(new Point3D(0, 0, 1), new Point3D(1, 1, 2));
-		alive = true;
+		this(new Point3D(0, HEIGHT / 2, 0));
+	}
+
+	/**
+	 * Constructs a new Player at a user-defined center.
+	 * @param center user-defined center.
+	 */
+	public Player(Point3D center) {
+		super(center, new Point3D(WIDTH, HEIGHT, WIDTH));
 	}
 	
 	/** Lets the player die. */
@@ -55,13 +69,14 @@ public class Player extends AbstractEntity {
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
 		}
+
 		if (collidee instanceof Obstacle) {
 			die();
 		}
 	}
 	
-	/** Make the player jump (in the z-direction). */
-	public void jump() {
+	/** Make the player jump (in the y-direction). */
+	private void jump() {
 		if (!jumping) {
 			vspeed = JUMPSPEED;
 			jumping = true;
@@ -74,16 +89,44 @@ public class Player extends AbstractEntity {
 		if (jumping) {
 			vspeed -= GRAVITY;
 		}
-		getCenter().addZ(vspeed);
+		getCenter().addY(vspeed);
 
 		Point3D bottom = new Point3D(pos);
 		double bottomToFloor = getSize().getZ() / 2;
-		bottom.addZ(bottomToFloor);
-		if (pos.getZ() < bottomToFloor) {
+		bottom.addY(bottomToFloor);
+		if (pos.getY() < bottomToFloor) {
 			jumping = false;
 			vspeed = 0;
-			pos.setZ(bottomToFloor);
+			pos.setY(bottomToFloor);
 		}
 	}
 
+    /**
+     * Decide which move methods should be called when keyboard input is
+     * detected.
+     * @param direction Left/Right/Jump/Slide
+     */
+    public void move(Direction direction) {
+        switch (direction) {
+            case LEFT: 	changeLane(-1);	break;
+            case RIGHT:	changeLane(1);	break;
+            case JUMP:	jump();			break;
+            case SLIDE:	/* slide(); */	break;
+            default: break;
+        }
+    }
+
+    /**
+     * Change the lane the player is currently at. The center of the player
+     * is capped between the edges of the track (currently -1.5 and +1.5).
+     * @param dir amount of units to move.
+     */
+    private void changeLane(double dir) {
+        Point3D newCenter = new Point3D(getCenter());
+        newCenter.addX(dir);
+        if (newCenter.getX() <= Main.TRACKWIDTH / 2
+        		&& newCenter.getX() >= -Main.TRACKWIDTH / 2) {
+			setCenter(newCenter);
+		}
+    }
 }
