@@ -15,7 +15,6 @@ import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
@@ -44,8 +43,9 @@ public class GameWindow extends Application {
 	private static SubScene worldScene;
 	private static SubScene overlayScene;
     
+	/** Start the Application. */
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(final Stage primaryStage) {
 		root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
@@ -109,30 +109,30 @@ public class GameWindow extends Application {
 	}
 
 	/**
-	 * Adds node to the world
+	 * Adds node to the world.
 	 * @return true (as specified by Collections.add)
 	 */
-	public static boolean addWorld(Node node) {
+	public static boolean addWorld(final Node node) {
 		return world.getChildren().add(node);
 	}
 
 	/**
-	 * Clears the world
+	 * Clears the world.
 	 */
 	public static void clearWorld() {
 		world.getChildren().clear();
 	}
 
 	/**
-	 * Adds node to the overlay 
+	 * Adds node to the overlay.
 	 * @return true (as specified by Collections.add)
 	 */
-	public static boolean addOverlay(Node node) {
+	public static boolean addOverlay(final Node node) {
 		return overlay.getChildren().add(node);
 	}
 
 	/**
-	 * Clears the overlay
+	 * Clears the overlay.
 	 */
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
