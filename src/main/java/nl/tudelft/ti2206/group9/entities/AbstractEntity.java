@@ -60,9 +60,7 @@ public abstract class AbstractEntity {
 		new Thread(new Runnable() {
 			/** Method run in Thread, removes entity after track is done */
 			public void run() {
-				synchronized (State.getTrack()) {
-					State.getTrack().removeEntity(self);
-				}
+				State.getTrack().removeEntity(self);
 			}
 		}).start();
 	}

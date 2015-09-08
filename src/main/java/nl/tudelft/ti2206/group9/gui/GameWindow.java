@@ -6,10 +6,14 @@ package nl.tudelft.ti2206.group9.gui;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.*;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.DepthTest;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
@@ -42,7 +46,6 @@ public class GameWindow extends Application {
     
 	@Override
 	public void start(Stage primaryStage) {
-
 		root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
@@ -53,22 +56,14 @@ public class GameWindow extends Application {
 
 		world = new Group();
 		overlay = new Group();
-		worldScene = new SubScene(world, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
+		worldScene = new SubScene(world, WIDTH, HEIGHT, true,
+				SceneAntialiasing.BALANCED);
 		overlayScene = new SubScene(overlay, WIDTH, HEIGHT);
 		overlayScene.setFill(Color.TRANSPARENT);
 		root.getChildren().add(worldScene);
 		root.getChildren().add(overlayScene);
 
-		overlay.getChildren().add(new Text(0, 20, "HAAALLLLOOOO"));
-		//overlay.getChildren().add(new Rectangle(0, 0, 2, 2));
-
-		// Create and position camera
-		final PerspectiveCamera camera = new PerspectiveCamera(true);
-		camera.getTransforms().addAll(CAMERA_TRANS, CAMERA_ROT);
-		camera.setNearClip(CAMERA_NEAR);
-		camera.setFarClip(CAMERA_FAR);
-		worldScene.setCamera(camera);
-		
+		setupCamera();
 		keyBindings();
 		primaryStage.setResizable(false);
 		primaryStage.show();
@@ -76,7 +71,21 @@ public class GameWindow extends Application {
 		new ExternalTicker().start();
 		InternalTicker.start();
 	}
+	
+	/**
+	 * Create and setup camera, adding it to worldScene.
+	 */
+	private void setupCamera() {
+		final PerspectiveCamera camera = new PerspectiveCamera(true);
+		camera.getTransforms().addAll(CAMERA_TRANS, CAMERA_ROT);
+		camera.setNearClip(CAMERA_NEAR);
+		camera.setFarClip(CAMERA_FAR);
+		worldScene.setCamera(camera);
+	}
 
+	/**
+	 * Make sure KeyEvents are handled in {@link KeyMap}.
+	 */
 	private void keyBindings() {
 		KeyMap.defaultKeys();
 		
@@ -100,17 +109,33 @@ public class GameWindow extends Application {
 	}
 
 	/**
-	 * @return the world Group
+	 * Adds node to the world
+	 * @return true (as specified by Collections.add)
 	 */
-	public static Group getWorld() {
-		return world;
+	public static boolean addWorld(Node node) {
+		return world.getChildren().add(node);
 	}
 
 	/**
-	 * @return the overlay Group
+	 * Clears the world
 	 */
-	public static Group getOverlay() {
-		return overlay;
+	public static void clearWorld() {
+		world.getChildren().clear();
+	}
+
+	/**
+	 * Adds node to the overlay 
+	 * @return true (as specified by Collections.add)
+	 */
+	public static boolean addOverlay(Node node) {
+		return overlay.getChildren().add(node);
+	}
+
+	/**
+	 * Clears the overlay
+	 */
+	public static void clearOverlay() {
+		overlay.getChildren().clear();
 	}
 	
 	/**

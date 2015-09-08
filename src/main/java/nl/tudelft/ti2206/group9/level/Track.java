@@ -61,7 +61,7 @@ public class Track {
 	 * the track, like a treadmill).
 	 * @param distance amount of units to move the track
 	 */
-	public final void moveTrack(final double distance) {
+	public final synchronized void moveTrack(final double distance) {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
@@ -77,7 +77,7 @@ public class Track {
 	 * @param entity entity to add
 	 * @return this Track, allowing for chaining.
 	 */
-	public final Track addEntity(final AbstractEntity entity) {
+	public final synchronized Track addEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.add(entity);
 		}
@@ -89,7 +89,7 @@ public class Track {
 	 * @param entity entity to remove
 	 * @return this Track, allowing for chaining.
 	 */
-	public final Track removeEntity(final AbstractEntity entity) {
+	public final synchronized Track removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.remove(entity);
 		}
@@ -114,7 +114,7 @@ public class Track {
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
-	public final void step() {
+	public final synchronized void step() {
 		if (random.nextDouble() < COINCHANCE) {
 			addEntity(new Coin(new Point3D(-1, 1.0 / 2, LENGTH)));
 			addEntity(new Coin(new Point3D(0, 1.0 / 2, LENGTH)));

@@ -26,12 +26,19 @@ public class KeyMap {
      * @param e keyEvent
      */
     public final void keyPressed(final KeyCode e) {
-        Action action = keyMap.get(e);
-        if (action != null && (pressed.get(e) == null || !pressed.get(e))) {
-            action.doAction();
-            pressed.put(e, true);
-			System.out.println("Key Pressed: " + e.toString());
-        }
+    	// If this key has never been touched, create entry in pressed Map.
+    	if (pressed.get(e) == null) {
+    		pressed.put(e, false);
+    	}
+    	
+    	Action action = keyMap.get(e);
+    	if (action != null) {			// If action is defined
+    		if (!pressed.get(e)) {		// If key is not already pressed
+    			action.doAction();		// Do action
+    			pressed.put(e, true);	// Mark as pressed
+    			System.out.println("Key Pressed: " + e.toString());
+    		}
+    	}
     }
 
     /**
