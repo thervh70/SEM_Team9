@@ -1,6 +1,4 @@
-package nl.tudelft.ti2206.group9;
-
-import nl.tudelft.ti2206.group9.level.State;
+package nl.tudelft.ti2206.group9.level;
 
 import java.time.Instant;
 import java.util.Date;
