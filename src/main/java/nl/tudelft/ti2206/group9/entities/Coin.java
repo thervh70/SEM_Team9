@@ -8,10 +8,10 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  *
  */
 public class Coin extends AbstractEntity {
-	
+
 	/** Value added to the score when picked up. */
 	public static final int VALUE = 100;
-	
+
 	/**
 	 * Default constructor.
 	 * @param center center of the bounding box of the Coin

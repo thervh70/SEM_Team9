@@ -10,7 +10,7 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * @author Maarten
  */
 public class Player extends AbstractEntity {
-	
+
 	/** Indicates whether the player is alive or not. */
 	private boolean alive;
 
@@ -18,7 +18,7 @@ public class Player extends AbstractEntity {
 	public static final double HEIGHT = 1.8;
 	/** Width of the Player's bounding box. */
 	public static final double WIDTH = 0.8;
-	
+
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
@@ -30,27 +30,27 @@ public class Player extends AbstractEntity {
 	 * Constructs a new Player at a user-defined center.
 	 * @param center user-defined center.
 	 */
-	public Player(Point3D center) {
+	public Player(final Point3D center) {
 		super(center, new Point3D(WIDTH, HEIGHT, WIDTH));
 	}
-	
+
 	/** Lets the player die. */
 	public void die() {
 		alive = false;
 	}
-	
+
 	/** Lets the player live. */
 	public void respawn() {
 		alive = true;
 	}
-	
+
 	/** @return whether the player is alive. */
 	public boolean isAlive() {
 		return alive;
 	}
 
 	/**
-	 * When colliding with a coin, Coin.VALUE is added to score, 
+     * When colliding with a coin, Coin.VALUE is added to score,
 	 * and amount of coins is increased by one.
 	 * @param collidee Entity that this Player collides with.
 	 */
@@ -71,7 +71,7 @@ public class Player extends AbstractEntity {
      * detected.
      * @param direction Left/Right/Jump/Slide
      */
-    public void move(Direction direction) {
+    public void move(final Direction direction) {
         switch (direction) {
 //            case JUMP: jump(); break;
 //            case SLIDE: slide(); break;
@@ -86,7 +86,7 @@ public class Player extends AbstractEntity {
      * is capped between the edges of the track (currently -1.5 and +1.5).
      * @param dir amount of units to move.
      */
-    private void changeLane(double dir) {
+    private void changeLane(final double dir) {
         Point3D newCenter = new Point3D(getCenter());
         newCenter.addX(dir);
         if (newCenter.getX() <= Main.TRACKWIDTH / 2
