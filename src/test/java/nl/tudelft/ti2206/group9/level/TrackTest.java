@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.level;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Random;
@@ -71,32 +72,45 @@ public class TrackTest {
 	}
 	
 	@Test
-	public void testStep() {
+	public void testStepCoinZigZag() {
 		Random rand = mock(Random.class);
-		final double belowCoinChance = Track.COINCHANCE - 0.01;
-		final double aboveCoinChance = Track.COINCHANCE + 0.01;
-		final double belowObstacleChance = Track.OBSTACLECHANCE - 0.01;
-		final double aboveObstacleChance = Track.OBSTACLECHANCE + 0.01;
+		final double belowCoinZigZagChance = Track.COINZIGZAGCHANCE - 0.01;
 		final Track track = new Track(rand);
-		final int coins = 3;
-		int expectedSize = 1;
+		final int length = 5;
 		
-		when(rand.nextDouble())
-				.thenReturn(belowCoinChance, // elseif, obstacle isn't created
-						aboveCoinChance, belowObstacleChance,
-						aboveCoinChance, aboveObstacleChance);
-		track.step();
-		expectedSize += coins;
-		assertEquals(expectedSize, track.getEntities().size());
-		assertTrue(track.getEntities().get(1) instanceof Coin);
+		when(rand.nextDouble()).thenReturn(belowCoinZigZagChance);
+		when(rand.nextInt(10)).thenReturn(length);
+
+		assertEquals(1, track.getEntities().size()); //player
 
 		track.step();
-		expectedSize++;
-		assertEquals(expectedSize, track.getEntities().size());
-		assertTrue(track.getEntities().get(1 + coins) instanceof Obstacle);
-		
-		track.step();
-		assertEquals(expectedSize, track.getEntities().size());
+		assertEquals(13, track.getEntities().size()); //player + 12 coins
+		for (int i = 1; i <13; i++) {
+			assertTrue(track.getEntities().get(i) instanceof Coin);
+		}
 	}
 
+	@Test
+	public void testStepCoinLane() {
+		Random rand = mock(Random.class);
+		final double belowCoinLaneChance = Track.COINZIGZAGCHANCE + Track.COINLANECHANCE - 0.01;
+		final Track track = new Track(rand);
+		final int length = 5;
+
+		when(rand.nextDouble()).thenReturn(belowCoinLaneChance);
+		when(rand.nextInt(10)).thenReturn(length);
+
+		assertEquals(1, track.getEntities().size());
+
+		track.step();
+		assertEquals(11, track.getEntities().size());
+		for (int i = 1; i < 11; i++) {
+			assertTrue(track.getEntities().get(i) instanceof Coin);
+		}
+
+		double oldCoinLeft = track.getCoinrunleft();
+		track.step();
+		double newCoinLeft = track.getCoinrunleft();
+		assertEquals(newCoinLeft, oldCoinLeft - Track.UNITS_PER_TICK, DELTA);
+	}
 }

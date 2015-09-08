@@ -1,14 +1,10 @@
 package nl.tudelft.ti2206.group9.level;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import nl.tudelft.ti2206.group9.Main;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -20,8 +16,10 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Track {
 
-	/** Chance per frame to spawn a coin. */
-	public static final double COINCHANCE = 0.02;
+	/** Chance per frame to spawn a lane of coins. */
+	public static final double COINLANECHANCE = 0.015;
+	/** Chance per frame to spawn zigzag of coins */
+	public static final double COINZIGZAGCHANCE = 0.01;
 	/** Chance per frame to spawn an obstacle. */
 	public static final double OBSTACLECHANCE = 0.01;
 
@@ -35,6 +33,7 @@ public class Track {
 
 	/** Random number generator for generating stuff on the track. */
 	private Random random;
+	private double coinrunleft = 0;
 
 	/** Default constructor, new Random() is created as generator. */
 	public Track() {
@@ -46,7 +45,7 @@ public class Track {
 	 * @param generator the Random generator to use for this Track.
 	 */
 	public Track(final Random generator) {
-		entities = new ArrayList<AbstractEntity>();
+		entities = new LinkedList<AbstractEntity>();
 		entities.add(new Player());
 		player = 0;
 		random = generator;
@@ -61,6 +60,8 @@ public class Track {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
+					if(entity.getCenter().getZ() < 0)
+						entities.remove(entity);
 					entity.getCenter().addZ(-distance);
 					entity.checkCollision(entities.get(player));
 				}
@@ -111,17 +112,53 @@ public class Track {
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
 	public final void step() {
-		if (random.nextDouble() < COINCHANCE) {
-			addEntity(new Coin(new Point3D(-1, 0, Main.RENDERDIST)));
-			addEntity(new Coin(new Point3D(0, 0, Main.RENDERDIST)));
-			addEntity(new Coin(new Point3D(1, 0, Main.RENDERDIST)));
-		} else if (random.nextDouble() < OBSTACLECHANCE) {
-			addEntity(new Obstacle(
-					new Point3D(0, 0, Main.RENDERDIST),
-					new Point3D(Main.TRACKWIDTH, 1, 1))
-			);
+		synchronized (entities) {
+			if (coinrunleft > 0) {
+				coinrunleft -= UNITS_PER_TICK;
+			}
+			else {
+				double rand = random.nextDouble();
+				if(rand < COINZIGZAGCHANCE)
+					createZigZag();
+				else if(rand < COINZIGZAGCHANCE + COINLANECHANCE)
+					createCoinLane();
+			}
 		}
-		moveTrack(UNITS_PER_TICK);
+			moveTrack(UNITS_PER_TICK);
+		}
+
+	/**
+	 * Creates a row of coins.
+	 */
+	private void createCoinLane() {
+		int lane = -1 + random.nextInt(3);
+		int length = 5 + random.nextInt(10);
+		for (int i = 0; i < length; i++) {
+			addEntity(new Coin(new Point3D(lane, 0, Main.RENDERDIST + i)));
+		}
+		coinrunleft = length;
 	}
 
+	/**
+	 * Creates a zig-zag of coins.
+	 */
+	private void createZigZag() {
+		int lane = random.nextInt(4);
+		int length = 7 + random.nextInt(10);
+		for (int i = 0; i < length; i++) {
+			int x = (lane == 3) ? 0 : lane - 1;
+			addEntity(new Coin(new Point3D(x, 0, Main.RENDERDIST + i)));
+			lane = (lane + 1) % 4;
+		}
+		coinrunleft = length;
+	}
+
+	/**
+	 * Returns the coinRunLeft value
+	 *  **For testing purposes only**
+	 * @return coinRunLeft
+	 */
+	public double getCoinrunleft() {
+		return coinrunleft;
+	}
 }
