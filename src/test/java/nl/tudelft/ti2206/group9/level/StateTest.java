@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class StateTest {
 
-//	@Before
+	@Before
 	public void setUp() throws Exception {
 		State.resetAll();
 		assertEquals(0, State.getCoins());
@@ -15,7 +15,7 @@ public class StateTest {
 		assertEquals(0, State.getScore());
 	}
 
-//	@Test
+	@Test
 	public void testReset() {
 		State.addScore(2);
 		State.getTrack().addDistance(1);
@@ -24,28 +24,28 @@ public class StateTest {
 		assertEquals(0, State.getScore());
 	}
 
-//	@Test
+	@Test
 	public void testAddScore() {
 		State.addScore(2);
 		State.addScore(1);
 		assertEquals(2 + 1, State.getScore());
 	}
 
-//	@Test
+	@Test
 	public void testAddCoins() {
 		State.addCoins(2);
 		State.addCoins(1);
 		assertEquals(2 + 1, State.getCoins());
 	}
 
-//	@Test
+	@Test
 	public void testAddDistance() {
 		State.getTrack().addDistance(2);
 		State.getTrack().addDistance(1);
 		assertEquals(2 + 1, State.getTrack().getDistance());
 	}
 
-//	@Test
+	@Test
 	public void testSetScore() {
 		State.setScore(2);
 		assertEquals(2, State.getScore());
@@ -53,7 +53,7 @@ public class StateTest {
 		assertEquals(1, State.getScore());
 	}
 
-//	@Test
+	@Test
 	public void testSetCoins() {
 		State.setCoins(2);
 		assertEquals(2, State.getCoins());
@@ -61,7 +61,7 @@ public class StateTest {
 		assertEquals(1, State.getCoins());
 	}
 
-//	@Test
+	@Test
 	public void testSetDistance() {
 		State.getTrack().setDistance(2);
 		assertEquals(2, State.getTrack().getDistance());

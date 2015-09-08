@@ -12,8 +12,6 @@ public final class State {
 	private static int score;
 	/** Current amount of coins. */
 	private static int coins;
-	/** Current distance run, reset every run. */
-	private static int distance;
 
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
@@ -31,7 +29,7 @@ public final class State {
 	public static void reset() {
 		setTrack(new Track());
 		setScore(0);
-		setDistance(0);
+		track.setDistance(0);
 		track.getPlayer().respawn();
 	}
 
@@ -47,13 +45,6 @@ public final class State {
 	 */
 	public static void addCoins(final int amount) {
 		coins += amount;
-	}
-
-	/**
-	 * @param amount the amount of distance to add
-	 */
-	public static void addDistance(final int amount) {
-		distance += amount;
 	}
 
 	/**
@@ -82,20 +73,6 @@ public final class State {
 	 */
 	public static void setCoins(final int newCoins) {
 		State.coins = newCoins;
-	}
-
-	/**
-	 * @return the distance
-	 */
-	public static int getDistance() {
-		return distance;
-	}
-
-	/**
-	 * @param dist the distance to set
-	 */
-	public static void setDistance(final int dist) {
-		State.distance = dist;
 	}
 
 	/**

@@ -39,6 +39,12 @@ public class Track {
 
 	/** Random number generator for generating stuff on the track. */
 	private Random random;
+	
+	/** Current distance moved by the track, reset every run. */
+	private static int distance;
+	
+	/** Current 'approximated' distance moved by the track. */
+	private static int modDistance = 0;
 
 	/** Default constructor, new Random() is created as generator. */
 	public Track() {
@@ -111,6 +117,38 @@ public class Track {
 	}
 
 	/**
+	 * @param amount the amount of distance to add
+	 */
+	public void addDistance(final int amount) {
+		distance += amount;
+	}	
+	
+	/**
+	 * @return the distance
+	 */
+	public int getDistance() {
+		return distance;
+	}
+
+	/**
+	 * @param dist the distance to set
+	 */
+	public void setDistance(final int dist) {
+		Track.distance = dist;
+	}
+		
+	/**
+	 * Updates the current distance every 50 moves.
+	 * @return updated distance
+	 */
+	public int moduloDistance() {
+		if ((distance % 50) == 0) {
+			modDistance = distance;
+		}
+		return modDistance;
+	}
+
+	/**
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
@@ -128,6 +166,7 @@ public class Track {
 		
 		getPlayer().step();
 
+		distance++;
 		moveTrack(UNITS_PER_TICK);
 	}
 
