@@ -14,7 +14,7 @@ import java.util.Random;
 /**
  * This class holds all entities present in the game, such as Coins, a Player
  * and Obstacles.
- * @author Maarten
+ * @author Maarten, Mitchell
  *
  */
 public class Track {
@@ -31,6 +31,9 @@ public class Track {
 	public static final int WIDTH = 3;
 	/** Length of the track. */
 	public static final double LENGTH = 100;
+	
+	/** Standard modulus number for modDistance. */
+	public static final int MOD = 50;
 
 	/** List of entities on the track. */
 	private final List<AbstractEntity> entities;
@@ -41,7 +44,7 @@ public class Track {
 	private Random random;
 	
 	/** Current distance moved by the track, reset every run. */
-	private static int distance;
+	private static double distance;
 	
 	/** Current 'approximated' distance moved by the track. */
 	private static int modDistance = 0;
@@ -119,21 +122,21 @@ public class Track {
 	/**
 	 * @param amount the amount of distance to add
 	 */
-	void addDistance(final int amount) {
+	void addDistance(final double amount) {
 		distance += amount;
 	}	
 	
 	/**
 	 * @return the distance
 	 */
-	int getDistance() {
+	double getDistance() {
 		return distance;
 	}
 
 	/**
 	 * @param dist the distance to set
 	 */
-	void setDistance(final int dist) {
+	void setDistance(final double dist) {
 		Track.distance = dist;
 	}
 		
@@ -142,16 +145,17 @@ public class Track {
 	 * @return updated distance
 	 */
 	public int moduloDistance() {
-		if ((distance % 50) == 0) {
-			modDistance = distance;
+		int tempConvert = (int) distance;
+		if ((tempConvert % MOD) == 0) {
+			modDistance = tempConvert;
 		}
-		return modDistance;
+		return (int) modDistance;
 	}
 	
 	/**
 	 * @return the modDistance
 	 */
-	public int getModDistance() {
+	public double getModDistance() {
 		return modDistance;
 	}
 
@@ -181,7 +185,7 @@ public class Track {
 		
 		getPlayer().step();
 
-		distance++;
+		distance += UNITS_PER_TICK;
 		moveTrack(UNITS_PER_TICK);
 	}
 

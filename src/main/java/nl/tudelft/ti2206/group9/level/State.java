@@ -62,10 +62,9 @@ public final class State {
 	}
 	
 	/**
-	 * 
 	 * @return the distance of the track
 	 */
-	public static int getDistance() {
+	public static double getDistance() {
 		return track.getDistance();
 	}
 

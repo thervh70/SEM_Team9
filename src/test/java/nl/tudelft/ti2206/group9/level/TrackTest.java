@@ -72,25 +72,25 @@ public class TrackTest {
 	
 	@Test
 	public void testAddDistance() {
-		track.addDistance(2);
-		track.addDistance(1);
-		assertEquals(2 + 1, track.getDistance());
+		track.addDistance(2.0);
+		track.addDistance(1.0);
+		assertEquals(2.0 + 1.0, track.getDistance(), DELTA);
 	}
 
 	@Test
 	public void testSetDistance() {
 		track.setDistance(2);
-		assertEquals(2, track.getDistance());
+		assertEquals(2, track.getDistance(), DELTA);
 		track.setDistance(1);
-		assertEquals(1, track.getDistance());
+		assertEquals(1, track.getDistance(), DELTA);
 	}
 	
 	@Test
 	public void testSetModDistance() {
 		track.setModDistance(2);
-		assertEquals(2, track.getModDistance());
+		assertEquals(2, track.getModDistance(), DELTA);
 		track.setModDistance(1);
-		assertEquals(1, track.getModDistance());
+		assertEquals(1, track.getModDistance(), DELTA);
 	}
 
 	@Test

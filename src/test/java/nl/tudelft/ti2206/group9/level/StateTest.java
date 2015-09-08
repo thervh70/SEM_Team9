@@ -7,11 +7,13 @@ import org.junit.Test;
 
 public class StateTest {
 
+	public static final double DELTA = 0.0000001;
+
 	@Before
 	public void setUp() throws Exception {
 		State.resetAll();
 		assertEquals(0, State.getCoins());
-		assertEquals(0, State.getTrack().getDistance());
+		assertEquals(0, State.getTrack().getDistance(), DELTA);
 		assertEquals(0, State.getScore());
 	}
 
@@ -20,7 +22,7 @@ public class StateTest {
 		State.addScore(2);
 		State.getTrack().addDistance(1);
 		State.reset();
-		assertEquals(0, State.getTrack().getDistance());
+		assertEquals(0, State.getTrack().getDistance(), DELTA);
 		assertEquals(0, State.getScore());
 	}
 
@@ -41,9 +43,9 @@ public class StateTest {
 	@Test
 	public void testGetDistance() {
 		State.getTrack().setDistance(2);
-		assertEquals(2, State.getDistance());
+		assertEquals(2, State.getDistance(), DELTA);
 		State.getTrack().setDistance(1);
-		assertEquals(1, State.getDistance());
+		assertEquals(1, State.getDistance(), DELTA);
 	}
 
 	@Test
