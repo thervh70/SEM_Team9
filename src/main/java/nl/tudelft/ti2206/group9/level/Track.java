@@ -147,6 +147,21 @@ public class Track {
 		}
 		return modDistance;
 	}
+	
+	/**
+	 * @return the modDistance
+	 */
+	public int getModDistance() {
+		return modDistance;
+	}
+
+	/**
+	 * @param modDist the modDistance to set
+	 */
+	public void setModDistance(final int modDist) {
+		Track.modDistance = modDist;
+	}
+
 
 	/**
 	 * This method should be called each ticks. It generates new coins and

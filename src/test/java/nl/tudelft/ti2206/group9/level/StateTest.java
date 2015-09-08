@@ -39,13 +39,6 @@ public class StateTest {
 	}
 
 	@Test
-	public void testAddDistance() {
-		State.getTrack().addDistance(2);
-		State.getTrack().addDistance(1);
-		assertEquals(2 + 1, State.getTrack().getDistance());
-	}
-
-	@Test
 	public void testSetScore() {
 		State.setScore(2);
 		assertEquals(2, State.getScore());
@@ -59,14 +52,6 @@ public class StateTest {
 		assertEquals(2, State.getCoins());
 		State.setCoins(1);
 		assertEquals(1, State.getCoins());
-	}
-
-	@Test
-	public void testSetDistance() {
-		State.getTrack().setDistance(2);
-		assertEquals(2, State.getTrack().getDistance());
-		State.getTrack().setDistance(1);
-		assertEquals(1, State.getTrack().getDistance());
 	}
 
 }
