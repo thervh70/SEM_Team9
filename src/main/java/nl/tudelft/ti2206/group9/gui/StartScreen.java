@@ -9,28 +9,15 @@ import javafx.stage.Stage;
 
 
 /**
- * Created by Maikel on 02/09/2015.
+ * @author Maikel and Robin
  */
 public class StartScreen {
 
-
-    /**
-     * Created by Maikel on 02/09/2015.
-     */
-
     public static Stage window;
-
     public static Scene startScreen;
-
     public static Button startButton, settingsButton, exitButton;
 
-
-
-
     public static void start(final Stage primaryStage) {
-
-
-
         window = primaryStage;
 
         GridPane grid = new GridPane();
@@ -62,10 +49,9 @@ public class StartScreen {
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-
+                GameWindow.start(primaryStage);
             }
         });
-
 
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -75,9 +61,6 @@ public class StartScreen {
 
         window.setScene(startScreen);
         window.show();
-
     }
-
-
 }
 
