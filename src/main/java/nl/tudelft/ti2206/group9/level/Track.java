@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import nl.tudelft.ti2206.group9.Main;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Obstacle;
@@ -24,15 +23,20 @@ public class Track {
 	public static final double COINCHANCE = 0.02;
 	/** Chance per frame to spawn an obstacle. */
 	public static final double OBSTACLECHANCE = 0.01;
-	
+
 	/** Amount of units the track should move per tick. */
 	public static final double UNITS_PER_TICK = 0.15;
+	
+	/** Width of the track (amount of lanes). */
+	public static final int WIDTH = 3;
+	/** Length of the track. */
+	public static final double LENGTH = 100;
 
 	/** List of entities on the track. */
 	private final List<AbstractEntity> entities;
 	/** Index of the player entity in the entities list. */
 	private int player;
-	
+
 	/** Random number generator for generating stuff on the track. */
 	private Random random;
 
@@ -40,8 +44,8 @@ public class Track {
 	public Track() {
 		this(new Random());
 	}
-	
-	/** 
+
+	/**
 	 * Constructor, in which one can specify the Random generator to use.
 	 * @param generator the Random generator to use for this Track.
 	 */
@@ -53,11 +57,11 @@ public class Track {
 	}
 
 	/**
-	 * Moves the track towards the player (thus making the player run over the
-	 * track, like a treadmill).
+	 * Moves the track towards the player (thus making the player run over
+	 * the track, like a treadmill).
 	 * @param distance amount of units to move the track
 	 */
-	public void moveTrack(final double distance) {
+	public final synchronized void moveTrack(final double distance) {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
@@ -73,9 +77,9 @@ public class Track {
 	 * @param entity entity to add
 	 * @return this Track, allowing for chaining.
 	 */
-	public Track addEntity(final AbstractEntity entity) {
+	public final synchronized Track addEntity(final AbstractEntity entity) {
 		synchronized (this) {
-			entities.add(entity);	
+			entities.add(entity);
 		}
 		return this;
 	}
@@ -85,44 +89,45 @@ public class Track {
 	 * @param entity entity to remove
 	 * @return this Track, allowing for chaining.
 	 */
-	public Track removeEntity(final AbstractEntity entity) {
+	public final synchronized Track removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.remove(entity);
 		}
 		return this;
 	}
-	
+
 	/**
 	 * @return the Player
 	 */
-	public Player getPlayer() {
+	public final Player getPlayer() {
 		return (Player) entities.get(player);
 	}
 
 	/**
 	 * @return the entities
 	 */
-	public List<AbstractEntity> getEntities() {
+	public final List<AbstractEntity> getEntities() {
 		return Collections.unmodifiableList(entities);
 	}
 
-	/** 
+	/**
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
-	public void step() {
+	public final synchronized void step() {
 		if (random.nextDouble() < COINCHANCE) {
-			addEntity(new Coin(new Point3D(-1, 0, Main.RENDERDIST)));
-			addEntity(new Coin(new Point3D(0, 0, Main.RENDERDIST)));
-			addEntity(new Coin(new Point3D(1, 0, Main.RENDERDIST)));
+			addEntity(new Coin(new Point3D(-1, 1.0 / 2, LENGTH)));
+			addEntity(new Coin(new Point3D(0, 1.0 / 2, LENGTH)));
+			addEntity(new Coin(new Point3D(1, 1.0 / 2, LENGTH)));
 		} else if (random.nextDouble() < OBSTACLECHANCE) {
 			addEntity(new Obstacle(
-					new Point3D(0, 0, Main.RENDERDIST),
-					new Point3D(Main.TRACKWIDTH, 1, 1))
+					new Point3D(0, 1.0 / 2, LENGTH),
+					new Point3D(WIDTH, 1, 1))
 			);
 		}
 		
 		getPlayer().step();
+
 		moveTrack(UNITS_PER_TICK);
 	}
 
