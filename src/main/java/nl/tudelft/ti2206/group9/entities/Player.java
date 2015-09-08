@@ -10,11 +10,16 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * @author Maarten
  */
 public class Player extends AbstractEntity {
+
+	/** Height of the Player's bounding box. */
+	public static final double HEIGHT = 1.8;
+	/** Width of the Player's bounding box. */
+	public static final double WIDTH = 0.8;
 	
 	/** Gravity. This is added to the vertical speed of the Player each tick. */
-	private static final double GRAVITY = 0.005;
+	public static final double GRAVITY = 0.005;
 	/** Jump speed. This is the initial vertical speed of the Player on jump. */
-	private static final double JUMPSPEED = 0.12;
+	public static final double JUMPSPEED = 0.12;
 	
 	/** Indicates whether the Player is alive or not. */
 	private boolean alive;
@@ -22,11 +27,6 @@ public class Player extends AbstractEntity {
 	private boolean jumping;
 	/** Vertical speed (y-direction) of the Player. */
 	private double vspeed;
-
-	/** Height of the Player's bounding box. */
-	public static final double HEIGHT = 1.8;
-	/** Width of the Player's bounding box. */
-	public static final double WIDTH = 0.8;
 	
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -82,6 +82,9 @@ public class Player extends AbstractEntity {
 			jumping = true;
 		}
 	}
+	
+	/** Make the player slide. */
+	private void slide() { }
 
 	/** Is executed each step. This is done in Track. */
 	public void step() {
@@ -92,7 +95,7 @@ public class Player extends AbstractEntity {
 		getCenter().addY(vspeed);
 
 		Point3D bottom = new Point3D(pos);
-		double bottomToFloor = getSize().getZ() / 2;
+		double bottomToFloor = getSize().getY() / 2;
 		bottom.addY(bottomToFloor);
 		if (pos.getY() < bottomToFloor) {
 			jumping = false;
@@ -111,8 +114,8 @@ public class Player extends AbstractEntity {
             case LEFT: 	changeLane(-1);	break;
             case RIGHT:	changeLane(1);	break;
             case JUMP:	jump();			break;
-            case SLIDE:	/* slide(); */	break;
-            default: break;
+            case SLIDE:	slide();		break;
+            default:	break;
         }
     }
 
