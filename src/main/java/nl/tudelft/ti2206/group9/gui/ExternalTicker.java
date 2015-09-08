@@ -38,25 +38,27 @@ public class ExternalTicker extends AnimationTimer {
 	private Group renderEntities() {
 		final Group entities = new Group();
 		entities.setDepthTest(DepthTest.ENABLE);
-		for (final AbstractEntity entity : State.getTrack().getEntities()) {
-			final Box entityBox = new Box(1, 1, 1);
+		synchronized (State.getTrack()) {
+			for (final AbstractEntity entity : State.getTrack().getEntities()) {
+				final Box entityBox = new Box(1, 1, 1);
 
-			entityBox.setWidth(entity.getSize().getX());
-			entityBox.setHeight(entity.getSize().getY());
-			entityBox.setDepth(entity.getSize().getZ());
-			entityBox.setTranslateX(entity.getCenter().getX());
-			entityBox.setTranslateY(-entity.getCenter().getY());
-			entityBox.setTranslateZ(entity.getCenter().getZ());
+				entityBox.setWidth(entity.getSize().getX());
+				entityBox.setHeight(entity.getSize().getY());
+				entityBox.setDepth(entity.getSize().getZ());
+				entityBox.setTranslateX(entity.getCenter().getX());
+				entityBox.setTranslateY(-entity.getCenter().getY());
+				entityBox.setTranslateZ(entity.getCenter().getZ());
 
-			if (entity instanceof Player) {
-				entityBox.setMaterial(new PhongMaterial(Color.ORANGE));
-			} else if (entity instanceof Coin) {
-				entityBox.setMaterial(new PhongMaterial(Color.GOLD));
-			} else {
-				entityBox.setMaterial(new PhongMaterial(Color.GREEN));
+				if (entity instanceof Player) {
+					entityBox.setMaterial(new PhongMaterial(Color.ORANGE));
+				} else if (entity instanceof Coin) {
+					entityBox.setMaterial(new PhongMaterial(Color.GOLD));
+				} else {
+					entityBox.setMaterial(new PhongMaterial(Color.GREEN));
+				}
+
+				entities.getChildren().add(entityBox);
 			}
-
-			entities.getChildren().add(entityBox);
 		}
 		return entities;
 	}

@@ -106,7 +106,7 @@ public class Track {
 	/**
 	 * @return the entities
 	 */
-	public final List<AbstractEntity> getEntities() {
+	public final synchronized List<AbstractEntity> getEntities() {
 		return Collections.unmodifiableList(entities);
 	}
 
