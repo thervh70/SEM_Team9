@@ -60,6 +60,14 @@ public final class State {
 	public static void setScore(final int newScore) {
 		State.score = newScore;
 	}
+	
+	/**
+	 * 
+	 * @return the distance of the track
+	 */
+	public static int getDistance() {
+		return track.getDistance();
+	}
 
 	/**
 	 * @return the coins

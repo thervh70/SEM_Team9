@@ -37,6 +37,14 @@ public class StateTest {
 		State.addCoins(1);
 		assertEquals(2 + 1, State.getCoins());
 	}
+	
+	@Test
+	public void testGetDistance() {
+		State.getTrack().setDistance(2);
+		assertEquals(2, State.getDistance());
+		State.getTrack().setDistance(1);
+		assertEquals(1, State.getDistance());
+	}
 
 	@Test
 	public void testSetScore() {

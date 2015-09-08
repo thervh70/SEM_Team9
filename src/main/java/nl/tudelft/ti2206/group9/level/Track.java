@@ -119,21 +119,21 @@ public class Track {
 	/**
 	 * @param amount the amount of distance to add
 	 */
-	public void addDistance(final int amount) {
+	void addDistance(final int amount) {
 		distance += amount;
 	}	
 	
 	/**
 	 * @return the distance
 	 */
-	public int getDistance() {
+	int getDistance() {
 		return distance;
 	}
 
 	/**
 	 * @param dist the distance to set
 	 */
-	public void setDistance(final int dist) {
+	void setDistance(final int dist) {
 		Track.distance = dist;
 	}
 		
