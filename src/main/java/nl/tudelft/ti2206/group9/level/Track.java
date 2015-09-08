@@ -1,15 +1,15 @@
 package nl.tudelft.ti2206.group9.level;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -22,7 +22,7 @@ public class Track {
 	/** Chance per frame to spawn a coin. */
 	public static final double COINCHANCE = 0.02;
 	/** Chance per frame to spawn an obstacle. */
-	public static final double OBSTACLECHANCE = 0.01;
+	public static final double OBSTACLECHANCE = 0.005;
 
 	/** Amount of units the track should move per tick. */
 	public static final double UNITS_PER_TICK = 0.15;

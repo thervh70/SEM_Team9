@@ -5,11 +5,11 @@ package nl.tudelft.ti2206.group9.gui;
  */
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.*;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
@@ -59,8 +59,13 @@ public class GameWindow extends Application {
 		root.getChildren().add(worldScene);
 		root.getChildren().add(overlayScene);
 
-		overlay.getChildren().add(new Text(0, 20, "HAAALLLLOOOO"));
-		//overlay.getChildren().add(new Rectangle(0, 0, 2, 2));
+		Integer coins = State.getScore();
+		Text test = new Text(0, 20, "Coins: " + coins.toString());
+		Button pause = new Button("||");
+		pause.setLayoutX(WIDTH - 30);
+		pause.setLayoutY(10);
+
+		overlay.getChildren().addAll(test, pause);
 
 		// Create and position camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
@@ -75,6 +80,13 @@ public class GameWindow extends Application {
 
 		new ExternalTicker().start();
 		InternalTicker.start();
+
+		pause.setOnAction(new EventHandler<ActionEvent>() {
+
+			public void handle(ActionEvent event) {
+				InternalTicker.stop();
+			}
+		});
 	}
 
 	private void keyBindings() {
