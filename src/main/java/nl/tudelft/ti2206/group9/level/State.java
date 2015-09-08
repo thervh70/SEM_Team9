@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.group9.level;
 /**
  * This utility class stores the State of the game,
  * for example the score and the distance run.
- * 
+ *
  * @author Maarten
  */
 public final class State {
@@ -14,24 +14,25 @@ public final class State {
 	private static int coins;
 	/** Current distance run, reset every run. */
 	private static int distance;
-	
+
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
-	
+
 	/** Cannot be constructed. */
 	private State() { }
-	
+
 	/** Reset all player data. */
 	public static void resetAll() {
 		reset();
 		coins = 0;
 	}
-	
+
 	/** Reset data that should be reset every run. */
 	public static void reset() {
 		track = new Track();
 		score = 0;
 		distance = 0;
+		track.getPlayer().respawn();
 	}
 
 	/**
@@ -63,10 +64,10 @@ public final class State {
 	}
 
 	/**
-	 * @param score the score to set
+	 * @param newScore the score to set
 	 */
-	public static void setScore(final int score) {
-		State.score = score;
+	public static void setScore(final int newScore) {
+		State.score = newScore;
 	}
 
 	/**
@@ -77,10 +78,10 @@ public final class State {
 	}
 
 	/**
-	 * @param coins the coins to set
+	 * @param newCoins the coins to set
 	 */
-	public static void setCoins(final int coins) {
-		State.coins = coins;
+	public static void setCoins(final int newCoins) {
+		State.coins = newCoins;
 	}
 
 	/**
@@ -91,10 +92,10 @@ public final class State {
 	}
 
 	/**
-	 * @param distance the distance to set
+	 * @param dist the distance to set
 	 */
-	public static void setDistance(final int distance) {
-		State.distance = distance;
+	public static void setDistance(final int dist) {
+		State.distance = dist;
 	}
 
 	/**
@@ -105,13 +106,13 @@ public final class State {
 	}
 
 	/**
-	 * @param track the track to set
+	 * @param trck the track to set
 	 */
-	public static void setTrack(final Track track) {
-		State.track = track;
+	public static void setTrack(final Track trck) {
+		State.track = trck;
 	}
 
-	/** 
+	/**
 	 * @see java.lang.Object#toString()
 	 * @return a String representing the State.
 	 */
@@ -120,5 +121,4 @@ public final class State {
 		return "State [score=" + score + ", coins=" + coins
 				+ ", distance=" + distance + "]";
 	}
-	
 }
