@@ -24,14 +24,14 @@ public final class State {
 	/** Reset all player data. */
 	public static void resetAll() {
 		reset();
-		coins = 0;
+		setCoins(0);
 	}
 	
 	/** Reset data that should be reset every run. */
 	public static void reset() {
-		track = new Track();
-		score = 0;
-		distance = 0;
+		setTrack(new Track());
+		setScore(0);
+		setDistance(0);
 		track.getPlayer().respawn();
 	}
 
@@ -110,16 +110,6 @@ public final class State {
 	 */
 	public static void setTrack(final Track track) {
 		State.track = track;
-	}
-
-	/** 
-	 * @see java.lang.Object#toString()
-	 * @return a String representing the State.
-	 */
-	@Override
-	public String toString() {
-		return "State [score=" + score + ", coins=" + coins
-				+ ", distance=" + distance + "]";
 	}
 	
 }
