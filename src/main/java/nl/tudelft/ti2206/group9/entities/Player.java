@@ -21,12 +21,25 @@ public class Player extends AbstractEntity {
 	/** Jump speed. This is the initial vertical speed of the Player on jump. */
 	public static final double JUMPSPEED = 0.12;
 	
+	/** Slide length in ticks. */
+	public static final double SLIDELENGTH = 40;
+	/** Lowest point in slide. */
+	public static final double SLIDINGLOW = HEIGHT / 2;
+	
 	/** Indicates whether the Player is alive or not. */
 	private boolean alive;
 	/** Indicates whether the Player is jumping or not. */
 	private boolean jumping;
 	/** Vertical speed (y-direction) of the Player. */
 	private double vspeed;
+	/** Lane where the Player is currently moving to (smoothly). */
+	private double moveLane;
+	/** Horizontal speed (x-direction) of the Player. */
+	private double hspeed;
+	/** Indicates whether the Player is sliding or not. */
+	private boolean sliding;
+	/** Rate at which the Player's size in-/decreases. */
+	private double slideSpeed;
 	
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -74,25 +87,59 @@ public class Player extends AbstractEntity {
 			die();
 		}
 	}
+
+    /**
+     * Change the lane the player is currently at. The center of the player
+     * is capped between the edges of the track (currently -1.5 and +1.5).
+     * @param dir amount of units to move.
+     */
+    private void changeLane(final double dir) {
+        if (moveLane + dir >= -Track.WIDTH / 2
+        		&& moveLane + dir <= Track.WIDTH / 2) {
+			moveLane += dir;
+		}
+    }
+
+	/** Is executed each step in {@link #step()}. Keeps the Player moving. */
+    private void changeLaneStep() {
+		double dist = moveLane - getCenter().getX();
+		final double delta = 0.02;	// higher means acceleration is faster
+		final double slow = 5;		// higher means terminal speed is lower
+		if (Math.abs(dist) < delta) {
+			getCenter().setX(moveLane);
+			hspeed = 0;
+		} else {
+			if (Math.abs(hspeed) < Math.abs(dist) / slow) {
+				hspeed += delta * Math.signum(dist);
+			} else {
+				hspeed = dist / slow;
+			}
+		}
+		getCenter().addX(hspeed);
+    }
+    
+    /** Used for testability only.
+     * @return The lane where the Player is currently moving to
+     */
+    int getMoveLane() {
+    	return (int) moveLane;
+    }
 	
 	/** Make the player jump (in the y-direction). */
 	private void jump() {
-		if (!jumping) {
+		if (!jumping && !sliding) {
 			vspeed = JUMPSPEED;
 			jumping = true;
 		}
 	}
-	
-	/** Make the player slide. */
-	private void slide() { }
 
-	/** Is executed each step. This is done in Track. */
-	public void step() {
+	/** Is executed each step in {@link #step()}. Keeps the Player jumping. */
+	private void jumpStep() {
 		Point3D pos = getCenter();
 		if (jumping) {
 			vspeed -= GRAVITY;
 		}
-		getCenter().addY(vspeed);
+		pos.addY(vspeed);
 
 		Point3D bottom = new Point3D(pos);
 		double bottomToFloor = getSize().getY() / 2;
@@ -101,6 +148,34 @@ public class Player extends AbstractEntity {
 			jumping = false;
 			vspeed = 0;
 			pos.setY(bottomToFloor);
+		}
+	}
+	
+	/** Make the player slide. */
+	private void slide() {
+		// y = (max-min) {1/(ticks/2) (x - ticks/2)} ^ 2 + min
+		// y' = 2 (max-min) 1/(ticks/2) (x - ticks/2) 1/(ticks/2)
+		// y'' = 2 (max-min) 1/(ticks/2) 1/(ticks/2)
+		// y'(0) = 2 (max-min) 1/(ticks/2) (-ticks/2) 1/(ticks/2)
+		if (!jumping && !sliding) {
+			slideSpeed = -1 * 2 * (HEIGHT - SLIDINGLOW) / (SLIDELENGTH / 2);
+			sliding = true;
+		}
+	}
+	
+	/** Is executed each step in {@link #step()}. Keeps the Player sliding. */
+	private void slideStep() {
+		if (sliding) {
+			getSize().addY(slideSpeed);
+			getSize().setX(HEIGHT * WIDTH / getSize().getY()); // volume = const
+			getCenter().addY(slideSpeed / 2);
+			
+			slideSpeed += 2 * (HEIGHT - SLIDINGLOW)
+					/ (SLIDELENGTH / 2) / (SLIDELENGTH / 2);
+		}
+		if (getSize().getY() >= HEIGHT) {
+			sliding = false;
+			getSize().setY(HEIGHT);
 		}
 	}
 
@@ -119,17 +194,11 @@ public class Player extends AbstractEntity {
         }
     }
 
-    /**
-     * Change the lane the player is currently at. The center of the player
-     * is capped between the edges of the track (currently -1.5 and +1.5).
-     * @param dir amount of units to move.
-     */
-    private void changeLane(final double dir) {
-        Point3D newCenter = new Point3D(getCenter());
-        newCenter.addX(dir);
-        if (newCenter.getX() <= Track.WIDTH / 2
-        		&& newCenter.getX() >= -Track.WIDTH / 2) {
-			setCenter(newCenter);
-		}
-    }
+	/** Is executed each step. This is done in Track. */
+	public void step() {
+		changeLaneStep();
+		jumpStep();
+		slideStep();
+	}
+	
 }
