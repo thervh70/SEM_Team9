@@ -11,14 +11,23 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Player extends AbstractEntity {
 
-	/** Indicates whether the player is alive or not. */
-	private boolean alive;
-
 	/** Height of the Player's bounding box. */
 	public static final double HEIGHT = 1.8;
 	/** Width of the Player's bounding box. */
 	public static final double WIDTH = 0.8;
-
+	
+	/** Gravity. This is added to the vertical speed of the Player each tick. */
+	public static final double GRAVITY = 0.005;
+	/** Jump speed. This is the initial vertical speed of the Player on jump. */
+	public static final double JUMPSPEED = 0.12;
+	
+	/** Indicates whether the Player is alive or not. */
+	private boolean alive;
+	/** Indicates whether the Player is jumping or not. */
+	private boolean jumping;
+	/** Vertical speed (y-direction) of the Player. */
+	private double vspeed;
+	
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
@@ -65,6 +74,35 @@ public class Player extends AbstractEntity {
 			die();
 		}
 	}
+	
+	/** Make the player jump (in the y-direction). */
+	private void jump() {
+		if (!jumping) {
+			vspeed = JUMPSPEED;
+			jumping = true;
+		}
+	}
+	
+	/** Make the player slide. */
+	private void slide() { }
+
+	/** Is executed each step. This is done in Track. */
+	public void step() {
+		Point3D pos = getCenter();
+		if (jumping) {
+			vspeed -= GRAVITY;
+		}
+		getCenter().addY(vspeed);
+
+		Point3D bottom = new Point3D(pos);
+		double bottomToFloor = getSize().getY() / 2;
+		bottom.addY(bottomToFloor);
+		if (pos.getY() < bottomToFloor) {
+			jumping = false;
+			vspeed = 0;
+			pos.setY(bottomToFloor);
+		}
+	}
 
     /**
      * Decide which move methods should be called when keyboard input is
@@ -73,11 +111,11 @@ public class Player extends AbstractEntity {
      */
     public void move(final Direction direction) {
         switch (direction) {
-//            case JUMP: jump(); break;
-//            case SLIDE: slide(); break;
-            case LEFT: changeLane(-1); break;
-            case RIGHT: changeLane(1); break;
-            default: break;
+            case LEFT: 	changeLane(-1);	break;
+            case RIGHT:	changeLane(1);	break;
+            case JUMP:	jump();			break;
+            case SLIDE:	slide();		break;
+            default:	break;
         }
     }
 

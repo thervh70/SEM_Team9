@@ -125,6 +125,9 @@ public class Track {
 					new Point3D(WIDTH, 1, 1))
 			);
 		}
+		
+		getPlayer().step();
+
 		moveTrack(UNITS_PER_TICK);
 	}
 
