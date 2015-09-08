@@ -1,23 +1,22 @@
 package nl.tudelft.ti2206.group9.gui;
 
 /**
- * Created by Robin.
+ * @author Robin, Maarten
  */
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.DepthTest;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
+import javafx.scene.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.KeyMap;
 
 @SuppressWarnings("restriction")
@@ -28,55 +27,49 @@ public class GameWindow extends Application {
 	/** Height of the Window. */
 	public static final int HEIGHT = 480;
 
-	private static Group root;
+	private static final Translate CAMERA_TRANS = new Translate(0, -3, -12);
+	private static final Rotate CAMERA_ROT = new Rotate(-10, Rotate.X_AXIS);
+	private static final double CAMERA_NEAR = 0.1;
+	private static final double CAMERA_FAR = 1000;
+
 	private static KeyMap keyMap = new KeyMap();
+	private static Group root;
+	private static Group world;
+	private static Group overlay;
+	private static Scene scene;
+	private static SubScene worldScene;
+	private static SubScene overlayScene;
     
 	@Override
 	public void start(Stage primaryStage) {
-		
+
 		root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
 		
-		Scene scene = new Scene(root, WIDTH, HEIGHT, true);
+		scene = new Scene(root, WIDTH, HEIGHT, true);
+		scene.setFill(Color.AQUA);
 		primaryStage.setScene(scene);
+
+		world = new Group();
+		overlay = new Group();
+		worldScene = new SubScene(world, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
+		overlayScene = new SubScene(overlay, WIDTH, HEIGHT);
+		overlayScene.setFill(Color.TRANSPARENT);
+		root.getChildren().add(worldScene);
+		root.getChildren().add(overlayScene);
+
+		overlay.getChildren().add(new Text(0, 20, "HAAALLLLOOOO"));
+		//overlay.getChildren().add(new Rectangle(0, 0, 2, 2));
 
 		// Create and position camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
-		camera.getTransforms().addAll(
-				new Translate(0, -3, -12),
-				new Rotate(-10, Rotate.X_AXIS)//,
-//				new Rotate(0.01, Rotate.Z_AXIS) // else it bugs, for some reason
-				);
-		camera.setNearClip(0.1);
-		camera.setFarClip(Track.LENGTH * Track.LENGTH);
-
-		scene.setCamera(camera);
-
-		KeyMap.defaultKeys();
+		camera.getTransforms().addAll(CAMERA_TRANS, CAMERA_ROT);
+		camera.setNearClip(CAMERA_NEAR);
+		camera.setFarClip(CAMERA_FAR);
+		worldScene.setCamera(camera);
 		
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent keyEvent) {
-				KeyCode code = keyEvent.getCode();
-				System.out.println("Key Pressed: " + code.toString());
-				keyMap.keyPressed(code);
-			}
-		});
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent keyEvent) {
-				KeyCode code = keyEvent.getCode();
-				System.out.println("Key Pressed: " + code.toString());
-				keyMap.keyReleased(code);
-			}
-		});
-		scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent keyEvent) {
-				KeyCode code = keyEvent.getCode();
-				System.out.println("Key Pressed: " + code.toString());
-				keyMap.keyTyped(code);
-			}
-		});
-		
+		keyBindings();
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
@@ -84,11 +77,40 @@ public class GameWindow extends Application {
 		InternalTicker.start();
 	}
 
+	private void keyBindings() {
+		KeyMap.defaultKeys();
+		
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent keyEvent) {
+				keyMap.keyPressed(keyEvent.getCode());
+			}
+		});
+		
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent keyEvent) {
+				keyMap.keyReleased(keyEvent.getCode());
+			}
+		});
+		
+		scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent keyEvent) {
+				keyMap.keyTyped(keyEvent.getCode());
+			}
+		});
+	}
+
 	/**
-	 * @return the root Group
+	 * @return the world Group
 	 */
-	public static Group getRoot() {
-		return root;
+	public static Group getWorld() {
+		return world;
+	}
+
+	/**
+	 * @return the overlay Group
+	 */
+	public static Group getOverlay() {
+		return overlay;
 	}
 	
 	/**
@@ -97,8 +119,6 @@ public class GameWindow extends Application {
 	 */
 	public static void main(String... args) {
 		State.resetAll();
-//		Main.addKeys();
-//		window.addKeyListener(new KeyMap());
 		GameWindow.launch(args);
 	}
 
