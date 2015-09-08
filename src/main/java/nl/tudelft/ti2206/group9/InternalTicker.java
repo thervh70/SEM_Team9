@@ -10,7 +10,7 @@ import java.util.TimerTask;
 /**
  * This thread handles the ticks of the internal system. On each tick, the track
  * is moved. This task should be active during a "run".
- * 
+ *
  * @author Maarten
  *
  */

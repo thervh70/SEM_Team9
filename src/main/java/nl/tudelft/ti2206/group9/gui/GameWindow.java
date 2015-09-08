@@ -42,14 +42,14 @@ public class GameWindow extends Application {
 	private static Scene scene;
 	private static SubScene worldScene;
 	private static SubScene overlayScene;
-    
+
 	/** Start the Application. */
 	@Override
 	public void start(final Stage primaryStage) {
 		root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
-		
+
 		scene = new Scene(root, WIDTH, HEIGHT, true);
 		scene.setFill(Color.AQUA);
 		primaryStage.setScene(scene);
@@ -71,7 +71,7 @@ public class GameWindow extends Application {
 		new ExternalTicker().start();
 		InternalTicker.start();
 	}
-	
+
 	/**
 	 * Create and setup camera, adding it to worldScene.
 	 */
@@ -88,21 +88,21 @@ public class GameWindow extends Application {
 	 */
 	private void keyBindings() {
 		KeyMap.defaultKeys();
-		
+
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent keyEvent) {
+			public void handle(final KeyEvent keyEvent) {
 				keyMap.keyPressed(keyEvent.getCode());
 			}
 		});
-		
+
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent keyEvent) {
+			public void handle(final KeyEvent keyEvent) {
 				keyMap.keyReleased(keyEvent.getCode());
 			}
 		});
-		
+
 		scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent keyEvent) {
+			public void handle(final KeyEvent keyEvent) {
 				keyMap.keyTyped(keyEvent.getCode());
 			}
 		});
@@ -137,12 +137,12 @@ public class GameWindow extends Application {
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
-	
+
 	/**
 	 * @param args does nothing.
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
-	public static void main(String... args) {
+	public static void main(final String... args) {
 		State.resetAll();
 		GameWindow.launch(args);
 	}

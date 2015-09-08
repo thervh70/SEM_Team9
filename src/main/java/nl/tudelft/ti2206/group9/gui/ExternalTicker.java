@@ -19,27 +19,27 @@ public class ExternalTicker extends AnimationTimer {
 	public void handle(final long now) {
 		renderScene();
 	}
-	
+
 	private void renderScene() {
 		GameWindow.clearWorld();
 		GameWindow.clearOverlay();
-		
+
 		final Box track = new Box(3, 0.1, 500);
 		track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
 		GameWindow.addWorld(track);
-		
+
 		final Group entities = renderEntities();
 		GameWindow.addWorld(entities);
-		
+
 		GameWindow.addOverlay(new Text(0, 16, "Score: " + State.getScore()));
 	}
-	
+
 	private Group renderEntities() {
 		final Group entities = new Group();
 		entities.setDepthTest(DepthTest.ENABLE);
 		for (final AbstractEntity entity : State.getTrack().getEntities()) {
 			final Box entityBox = new Box(1, 1, 1);
-			
+
 			entityBox.setWidth(entity.getSize().getX());
 			entityBox.setHeight(entity.getSize().getY());
 			entityBox.setDepth(entity.getSize().getZ());
@@ -54,11 +54,10 @@ public class ExternalTicker extends AnimationTimer {
 			} else {
 				entityBox.setMaterial(new PhongMaterial(Color.GREEN));
 			}
-			
+
 			entities.getChildren().add(entityBox);
 		}
 		return entities;
 	}
-	
 }
 

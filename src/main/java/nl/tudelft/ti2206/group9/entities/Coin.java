@@ -11,7 +11,7 @@ public class Coin extends AbstractEntity {
 
 	/** Value added to the score when picked up. */
 	public static final int VALUE = 100;
-	
+
 	/** Standard bounding box size of a Coin. */
 	public static final Point3D SIZE = new Point3D(0.5, 0.5, 0.5);
 
