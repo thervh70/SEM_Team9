@@ -7,5 +7,5 @@ public interface Action {
 
 	/** Action to perform. */
     void doAction();
-    
+
 }

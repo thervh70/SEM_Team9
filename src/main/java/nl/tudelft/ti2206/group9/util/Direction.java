@@ -5,8 +5,24 @@ package nl.tudelft.ti2206.group9.util;
  */
 public enum Direction {
 
+    /**
+     * Enum for Left.
+     */
     LEFT,
+
+    /**
+     * Enum for Right.
+     */
     RIGHT,
+
+    /**
+     * Enum for Jump/Up.
+     */
     JUMP,
-    SLIDE;
+
+    /**
+     * Enum for Slide/Down.
+     */
+    SLIDE
+
 }

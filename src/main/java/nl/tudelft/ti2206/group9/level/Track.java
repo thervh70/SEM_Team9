@@ -1,15 +1,15 @@
 package nl.tudelft.ti2206.group9.level;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -26,7 +26,7 @@ public class Track {
 
 	/** Amount of units the track should move per tick. */
 	public static final double UNITS_PER_TICK = 0.15;
-	
+
 	/** Width of the track (amount of lanes). */
 	public static final int WIDTH = 3;
 	/** Length of the track. */
@@ -61,7 +61,7 @@ public class Track {
 	 * the track, like a treadmill).
 	 * @param distance amount of units to move the track
 	 */
-	public final void moveTrack(final double distance) {
+	public final synchronized void moveTrack(final double distance) {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
@@ -77,7 +77,7 @@ public class Track {
 	 * @param entity entity to add
 	 * @return this Track, allowing for chaining.
 	 */
-	public final Track addEntity(final AbstractEntity entity) {
+	public final synchronized Track addEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.add(entity);
 		}
@@ -89,7 +89,7 @@ public class Track {
 	 * @param entity entity to remove
 	 * @return this Track, allowing for chaining.
 	 */
-	public final Track removeEntity(final AbstractEntity entity) {
+	public final synchronized Track removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.remove(entity);
 		}
@@ -114,7 +114,7 @@ public class Track {
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
-	public final void step() {
+	public final synchronized void step() {
 		if (random.nextDouble() < COINCHANCE) {
 			addEntity(new Coin(new Point3D(-1, 1.0 / 2, LENGTH)));
 			addEntity(new Coin(new Point3D(0, 1.0 / 2, LENGTH)));
@@ -125,6 +125,9 @@ public class Track {
 					new Point3D(WIDTH, 1, 1))
 			);
 		}
+		
+		getPlayer().step();
+
 		moveTrack(UNITS_PER_TICK);
 	}
 

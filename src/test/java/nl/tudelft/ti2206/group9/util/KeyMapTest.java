@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.util;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import javafx.scene.input.KeyCode;
 
@@ -42,6 +43,7 @@ public class KeyMapTest {
     public void pressKey42Test() {
         KeyMap.addKey(KeyCode.UP, action);
         pressKey(KeyCode.UP);
+        releaseKey(KeyCode.UP);
         verify(action).doAction();
     }
 
@@ -49,10 +51,34 @@ public class KeyMapTest {
     public void pressKeyNullTest() {
         KeyMap.addKey(KeyCode.UP, null);
         pressKey(KeyCode.UP);
+        releaseKey(KeyCode.UP);
         verify(action, never()).doAction();
     }
 
-    public void pressKey(KeyCode code) {
+    @Test
+    public void pressReleasePressTest() {
+        KeyMap.addKey(KeyCode.UP, action);
+        pressKey(KeyCode.UP);
+        releaseKey(KeyCode.UP);
+        pressKey(KeyCode.UP);
+        releaseKey(KeyCode.UP);
+        verify(action, times(2)).doAction();
+    }
+
+    @Test
+    public void pressPressReleaseTest() {
+        KeyMap.addKey(KeyCode.UP, action);
+        pressKey(KeyCode.UP);
+        pressKey(KeyCode.UP);
+        releaseKey(KeyCode.UP);
+        verify(action, times(1)).doAction();
+    }
+
+    private void pressKey(KeyCode code) {
         keyMapObject.keyPressed(code);
+    }
+
+    private void releaseKey(KeyCode code) {
+        keyMapObject.keyReleased(code);
     }
 }
