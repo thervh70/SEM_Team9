@@ -5,4 +5,5 @@ package nl.tudelft.ti2206.group9.gui;
  */
 public class Style {
 
+
 }

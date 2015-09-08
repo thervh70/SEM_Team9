@@ -68,7 +68,7 @@ public class GameWindow extends Application {
 		camera.setNearClip(CAMERA_NEAR);
 		camera.setFarClip(CAMERA_FAR);
 		worldScene.setCamera(camera);
-		
+
 		keyBindings();
 		primaryStage.setResizable(false);
 		primaryStage.show();
@@ -79,19 +79,19 @@ public class GameWindow extends Application {
 
 	private void keyBindings() {
 		KeyMap.defaultKeys();
-		
+
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent keyEvent) {
 				keyMap.keyPressed(keyEvent.getCode());
 			}
 		});
-		
+
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent keyEvent) {
 				keyMap.keyReleased(keyEvent.getCode());
 			}
 		});
-		
+
 		scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent keyEvent) {
 				keyMap.keyTyped(keyEvent.getCode());
@@ -112,10 +112,10 @@ public class GameWindow extends Application {
 	public static Group getOverlay() {
 		return overlay;
 	}
-	
+
 	/**
 	 * @param args does nothing.
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
 	public static void main(String... args) {
 		State.resetAll();
