@@ -71,6 +71,37 @@ public class TrackTest {
 	}
 	
 	@Test
+	public void testAddDistance() {
+		track.addDistance(2);
+		track.addDistance(1);
+		assertEquals(2 + 1, track.getDistance());
+	}
+
+	@Test
+	public void testSetDistance() {
+		track.setDistance(2);
+		assertEquals(2, track.getDistance());
+		track.setDistance(1);
+		assertEquals(1, track.getDistance());
+	}
+	
+	@Test
+	public void testSetModDistance() {
+		track.setModDistance(2);
+		assertEquals(2, track.getModDistance());
+		track.setModDistance(1);
+		assertEquals(1, track.getModDistance());
+	}
+
+	@Test
+	public void testModuloDistance() {
+		track.setDistance(2);
+		assertEquals(0, track.moduloDistance());
+		track.setDistance(50);
+		assertEquals(50, track.moduloDistance());
+	}
+	
+	@Test
 	public void testStep() {
 		Random rand = mock(Random.class);
 		final double belowCoinChance = Track.COINCHANCE - 0.01;
