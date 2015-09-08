@@ -36,6 +36,7 @@ public class ExternalTicker extends AnimationTimer {
 		GameWindow.addOverlay(new Text(0, 16, "Score: " + State.getScore()));
 		GameWindow.addOverlay(new Text(0, 32, "Distance: " 
 				+ State.getTrack().moduloDistance()));
+		GameWindow.addOverlay(new Text(0, 48, "Coins: " + State.getCoins()));
 		
 	}
 
