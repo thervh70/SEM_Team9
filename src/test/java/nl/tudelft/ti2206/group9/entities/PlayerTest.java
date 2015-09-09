@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import nl.tudelft.ti2206.group9.util.Direction;
-import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +14,8 @@ import org.junit.Test;
 public class PlayerTest {
 
     private static final double DELTA = 0.00000001;
+    private static final double HACCEL = 0.02;
+    private static final double SLOW = 5;
 
     private Player player;
 
@@ -36,6 +37,14 @@ public class PlayerTest {
         assertEquals(0, player.getMoveLane(), DELTA);
         player.move(Direction.LEFT);
         assertEquals(-1, player.getMoveLane(), DELTA);
+        player.step();
+        assertEquals(-HACCEL, player.getCenter().getX(), DELTA);
+        player.step();
+        assertEquals(-(1 + 2) * HACCEL, player.getCenter().getX(), DELTA);
+        player.getCenter().setX(-1 + HACCEL);
+        player.step();
+        assertEquals(-1 + HACCEL - HACCEL / SLOW, player.getCenter().getX(), 
+        		DELTA);
     }
 
     @Test
@@ -43,11 +52,20 @@ public class PlayerTest {
         assertEquals(0, player.getMoveLane(), DELTA);
         player.move(Direction.RIGHT);
         assertEquals(1, player.getMoveLane(), DELTA);
+        player.step();
+        assertEquals(HACCEL, player.getCenter().getX(), DELTA);
+        player.step();
+        assertEquals((1 + 2) * HACCEL, player.getCenter().getX(), DELTA);
+        player.getCenter().setX(1 - HACCEL);
+        player.step();
+        assertEquals(1 - HACCEL + HACCEL / SLOW, player.getCenter().getX(), 
+        		DELTA);
     }
 
     @Test
     public void moveLeftOffTrackTest() {
-        moveLeftTest();
+        player.move(Direction.LEFT);
+        assertEquals(-1, player.getMoveLane(), DELTA);
         player.move(Direction.LEFT);
         assertEquals(-1, player.getMoveLane(), DELTA);
     }
@@ -73,6 +91,8 @@ public class PlayerTest {
         assertEquals(Player.HEIGHT / 2, player.getCenter().getY(), DELTA);
         player.move(Direction.JUMP);
         player.step();
+        assertEquals(Player.HEIGHT / 2 + Player.JUMPSPEED - Player.GRAVITY, 
+        		player.getCenter().getY(), DELTA);
         player.move(Direction.JUMP);
         player.step();
         assertEquals(Player.HEIGHT / 2 			// Original height
@@ -91,12 +111,54 @@ public class PlayerTest {
         assertEquals(Player.HEIGHT / 2, player.getCenter().getY(), DELTA);
     }
     
-    /** Slide does nothing for now. */
     @Test
     public void moveSlideTest() {
-    	Point3D before = new Point3D(player.getCenter());
+    	final double initSlideSpeed = -1 * 2 * (Player.HEIGHT 
+    			- Player.SLIDINGLOW) / (Player.SLIDELENGTH / 2);
+        assertEquals(Player.HEIGHT, player.getSize().getY(), DELTA);
     	player.move(Direction.SLIDE);
-    	assertEquals(before, player.getCenter());
+    	player.step();
+        assertEquals(Player.HEIGHT + initSlideSpeed, player.getSize().getY(), 
+        		DELTA);
+        player.getSize().addY(2);
+        player.step();
+        player.step();
+        player.step();
+        assertEquals(Player.HEIGHT, player.getSize().getY(), DELTA);
+    }
+    
+    @Test
+    public void moveDoubleSlideTest() {
+    	final double initSlideSpeed = -1 * 2 * (Player.HEIGHT 
+    			- Player.SLIDINGLOW) / (Player.SLIDELENGTH / 2);
+    	final double slideAccel = 2 * (Player.HEIGHT - Player.SLIDINGLOW)
+				/ (Player.SLIDELENGTH / 2) / (Player.SLIDELENGTH / 2);
+        assertEquals(Player.HEIGHT, player.getSize().getY(), DELTA);
+    	player.move(Direction.SLIDE);
+    	player.step();
+        assertEquals(Player.HEIGHT + initSlideSpeed, player.getSize().getY(), 
+        		DELTA);
+    	player.move(Direction.SLIDE);
+    	player.step();
+        assertEquals(Player.HEIGHT + 2 * initSlideSpeed + slideAccel, 
+        		player.getSize().getY(), DELTA);
+    }
+    
+    @Test
+    public void slideJumpTest() {
+    	player.move(Direction.SLIDE);
+    	player.move(Direction.JUMP);
+    	player.step();
+    	assertEquals(player.getSize().getY() / 2, player.getCenter().getY(), 
+    			DELTA);
+    }
+    
+    @Test
+    public void jumpSlideTest() {
+    	player.move(Direction.JUMP);
+    	player.move(Direction.SLIDE);
+    	player.step();
+    	assertEquals(Player.HEIGHT, player.getSize().getY(), DELTA);
     }
     
 }
