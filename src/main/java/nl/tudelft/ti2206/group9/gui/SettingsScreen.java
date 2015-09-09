@@ -13,19 +13,28 @@ import nl.tudelft.ti2206.group9.gui.StartScreen;
 
 /**
  * Created by Maikel on 08/09/2015.
+ *
+ * A screen for displaying a settings menu.
  */
 public class SettingsScreen {
 
     public static Scene settings;
 
+    /**
+     * Creating and displaying the scene.
+     *
+     * @param primaryStage The stage to be started.
+     */
     public static void start(final Stage primaryStage) {
 
 
+        //Creating a gridPane for the layout.
         GridPane grid = new GridPane();
         grid.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
         grid.setVgap(20);
         grid.setHgap(20);
 
+        //Creating a back button.
         Button backButton;
         backButton = new Button("Back");
         GridPane.setConstraints(backButton, 3, 20);
