@@ -29,7 +29,7 @@ public class SplashScreen extends Application {
 
         /**Creating a new stackpane and scene. */
         StackPane root = new StackPane();
-        Scene scene = new Scene(root, 640, 480);
+        Scene scene = new Scene(root, GameWindow.WIDTH, GameWindow.HEIGHT);
 
         /**Creating a new label for displaying text. */
         Label text = new Label("Press any key to continue");

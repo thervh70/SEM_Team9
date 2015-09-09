@@ -3,10 +3,8 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,22 +16,30 @@ import javafx.stage.Popup;
  */
 public class PopupMenu {
 
-    public static Popup makeWarning(String t, final Pane root, final EventHandler<MouseEvent> event, final EventHandler<MouseEvent> event2) {
-        root.setDisable(true);
+    /**
+     * Generic method to build popups
+     * Generates a menu based on the parameters.
+     * 2 mouseEvent listeners are passed to this method in order to setup buttons in the popup.
+     * @param t Text to be displayed in popup
+     * @param button1 First button text
+     * @param button2 Second button text
+     * @param event First button event
+     * @param event2 Second button event
+     * @return A fully build popup ready to be put on the screen.
+     */
+    public static Popup makeMenu(String t, String button1, String button2, final EventHandler<MouseEvent> event, final EventHandler<MouseEvent> event2) {
 
         final Popup warning = new Popup();
         warning.centerOnScreen();
-        warning.setWidth(100);
+        warning.setWidth(200);
         warning.setHeight(300);
         
-        Rectangle rect = new Rectangle(300, 100, Color.WHITESMOKE);=
+        Rectangle rect = new Rectangle(200, 300, Color.WHITESMOKE);
 
+        Button yes = new Button(button1);
+        Button no = new Button(button2);
         Text text = new Text(t);
         text.setFill(Color.BLACK);
-
-        Button yes = new Button("Yes");
-
-        Button no = new Button("No");
 
         HBox hbox = new HBox(20,yes,no);
         hbox.setAlignment(Pos.CENTER);
@@ -43,7 +49,7 @@ public class PopupMenu {
 
         yes.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent y){
+            public void handle(MouseEvent y) {
                 warning.hide();
                 event.handle(y);
             }
@@ -54,7 +60,6 @@ public class PopupMenu {
             public void handle(MouseEvent n){
                 warning.hide();
                 event2.handle(n);
-                root.setDisable(false);
             }
         });
 
