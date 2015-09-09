@@ -46,6 +46,14 @@ public final class State {
 	public static void addCoins(final int amount) {
 		coins += amount;
 	}
+	
+	/**
+	 * Updates the current distance every 50 moves.
+	 * @return updated distance
+	 */
+	public static int moduloDistance() {
+		return (int) (Math.floor(track.getDistance() / Track.MOD) * Track.MOD);
+	}
 
 	/**
 	 * @return the score
