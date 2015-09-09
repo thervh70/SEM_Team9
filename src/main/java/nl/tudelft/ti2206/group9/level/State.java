@@ -12,8 +12,6 @@ public final class State {
 	private static int score;
 	/** Current amount of coins. */
 	private static int coins;
-	/** Current distance run, reset every run. */
-	private static int distance;
 
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
@@ -24,14 +22,14 @@ public final class State {
 	/** Reset all player data. */
 	public static void resetAll() {
 		reset();
-		coins = 0;
+		setCoins(0);
 	}
 
 	/** Reset data that should be reset every run. */
 	public static void reset() {
-		track = new Track();
-		score = 0;
-		distance = 0;
+		setTrack(new Track());
+		setScore(0);
+		track.setDistance(0);
 		track.getPlayer().respawn();
 	}
 
@@ -48,12 +46,13 @@ public final class State {
 	public static void addCoins(final int amount) {
 		coins += amount;
 	}
-
+	
 	/**
-	 * @param amount the amount of distance to add
+	 * Updates the current distance every 50 moves.
+	 * @return updated distance
 	 */
-	public static void addDistance(final int amount) {
-		distance += amount;
+	public static int moduloDistance() {
+		return (int) (Math.floor(track.getDistance() / Track.MOD) * Track.MOD);
 	}
 
 	/**
@@ -68,6 +67,13 @@ public final class State {
 	 */
 	public static void setScore(final int newScore) {
 		State.score = newScore;
+	}
+	
+	/**
+	 * @return the distance of the track
+	 */
+	public static double getDistance() {
+		return track.getDistance();
 	}
 
 	/**
@@ -85,20 +91,6 @@ public final class State {
 	}
 
 	/**
-	 * @return the distance
-	 */
-	public static int getDistance() {
-		return distance;
-	}
-
-	/**
-	 * @param dist the distance to set
-	 */
-	public static void setDistance(final int dist) {
-		State.distance = dist;
-	}
-
-	/**
 	 * @return the track
 	 */
 	public static Track getTrack() {
@@ -112,13 +104,4 @@ public final class State {
 		State.track = trck;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 * @return a String representing the State.
-	 */
-	@Override
-	public String toString() {
-		return "State [score=" + score + ", coins=" + coins
-				+ ", distance=" + distance + "]";
-	}
 }

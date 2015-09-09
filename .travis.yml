@@ -1,18 +1,14 @@
 language: java
+
+
+# Use Java 8
 jdk:
   - oraclejdk8
 
-#Make sure java8 is installed (with javafx)
-before_install:
-    - "sudo apt-get purge openjdk*"
-    - "sudo apt-get clean"
-    - "sudo apt-get autoremove"
-    - "sudo add-apt-repository -y ppa:webupd8team/java"
-    - "sudo apt-get update"
-install:
-    - "sudo apt-get install oracle-java8-installer"
-    - "sudo update-java-alternatives -s java-8-oracle"
-    - "export JAVA_HOME=/usr/lib/jvm/java-8-oracle"
+
+# Use container-based infrastructure
+sudo: false
+
 
 # Communicate with Octopull
 before_install:
@@ -28,6 +24,7 @@ after_script:
   - echo "== CHECKSTYLE_RESULT ==" && cat "target/checkstyle-result.xml" && echo "== END_CHECKSTYLE_RESULT =="
   - echo "== PMD_RESULT ==" && cat "target/pmd.xml" && echo "== END_PMD_RESULT =="
   - echo "== FINDBUGS_RESULT ==" && cat "target/findbugsXml.xml" && echo "== END_FINDBUGS_RESULT =="
+
 
 # setting the Slack email notification level to none
 
