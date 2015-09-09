@@ -9,7 +9,7 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Obstacle extends AbstractEntity {
 
-	/** 
+	/**
 	 * Default constructor.
 	 * @param center center of the Obstacle.
 	 * @param size size of the Obstacle (i.e. size of bounding box)
