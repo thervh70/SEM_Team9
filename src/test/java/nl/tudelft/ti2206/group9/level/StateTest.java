@@ -7,20 +7,22 @@ import org.junit.Test;
 
 public class StateTest {
 
+	public static final double DELTA = 0.0000001;
+
 	@Before
 	public void setUp() throws Exception {
 		State.resetAll();
 		assertEquals(0, State.getCoins());
-		assertEquals(0, State.getDistance());
+		assertEquals(0, State.getTrack().getDistance(), DELTA);
 		assertEquals(0, State.getScore());
 	}
 
 	@Test
 	public void testReset() {
 		State.addScore(2);
-		State.addDistance(1);
+		State.getTrack().addDistance(1);
 		State.reset();
-		assertEquals(0, State.getDistance());
+		assertEquals(0, State.getTrack().getDistance(), DELTA);
 		assertEquals(0, State.getScore());
 	}
 
@@ -37,12 +39,21 @@ public class StateTest {
 		State.addCoins(1);
 		assertEquals(2 + 1, State.getCoins());
 	}
-
+	
 	@Test
-	public void testAddDistance() {
-		State.addDistance(2);
-		State.addDistance(1);
-		assertEquals(2 + 1, State.getDistance());
+	public void testModuloDistance() {
+		State.getTrack().setDistance(2);
+		assertEquals(0, State.moduloDistance());
+		State.getTrack().setDistance(50);
+		assertEquals(50, State.moduloDistance());
+	}
+	
+	@Test
+	public void testGetDistance() {
+		State.getTrack().setDistance(2);
+		assertEquals(2, State.getDistance(), DELTA);
+		State.getTrack().setDistance(1);
+		assertEquals(1, State.getDistance(), DELTA);
 	}
 
 	@Test
@@ -59,14 +70,6 @@ public class StateTest {
 		assertEquals(2, State.getCoins());
 		State.setCoins(1);
 		assertEquals(1, State.getCoins());
-	}
-
-	@Test
-	public void testSetDistance() {
-		State.setDistance(2);
-		assertEquals(2, State.getDistance());
-		State.setDistance(1);
-		assertEquals(1, State.getDistance());
 	}
 
 }

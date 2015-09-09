@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import nl.tudelft.ti2206.group9.gui.GameWindow;
+
 /**
  * This thread handles the ticks of the internal system. On each tick, the track
  * is moved. This task should be active during a "run".
@@ -25,7 +27,7 @@ public final class InternalTicker extends TimerTask {
 	/** Whether the ticks are being run. */
 	private static boolean running = true;
 	/** Time at which next tick will be scheduled. */
-	private static Instant scheduleTime = Instant.now();
+	private static Instant scheduleTime;
 	/** Amount of nanoseconds between each frame, assuming FPS is constant. **/
 	private static final int NANOS_PER_TICK = E9 / FPS;
 
@@ -44,21 +46,23 @@ public final class InternalTicker extends TimerTask {
 	 * Thread method.
 	 */
 	public void run() {
-		final Timer newTimer = new Timer();
-
-		try {
-			step(); // First, perform tick.
-
-			if (timer != null) {
-				timer.cancel(); // Then, kill the timer that scheduled the task.
-			}
-		} finally {
-			if (running) {
-				scheduleTime = scheduleTime.plusNanos(NANOS_PER_TICK);
-				newTimer.schedule(new InternalTicker(newTimer),
-						Date.from(scheduleTime));
-			} else {
-				newTimer.cancel();
+		synchronized (GameWindow.LOCK) {
+			final Timer newTimer = new Timer();
+	
+			try {
+				step(); // First, perform tick.
+						// Then, kill the timer that scheduled the task.
+				if (timer != null) {
+					timer.cancel(); 
+				}
+			} finally {
+				if (running) {
+					scheduleTime = scheduleTime.plusNanos(NANOS_PER_TICK);
+					newTimer.schedule(new InternalTicker(newTimer),
+							Date.from(scheduleTime));
+				} else {
+					newTimer.cancel();
+				}
 			}
 		}
 	}
@@ -72,7 +76,7 @@ public final class InternalTicker extends TimerTask {
 
 		if (!State.getTrack().getPlayer().isAlive()) {
 			System.out.println("Ghagha, you ish ded.");
-			stop();
+			GameWindow.stopTickers();
 		}
 	}
 
@@ -80,6 +84,7 @@ public final class InternalTicker extends TimerTask {
 	 * Start the InternalTicker. Will run until {@link #stop()} is called.
 	 */
 	public static void start() {
+		scheduleTime = Instant.now();
 		final InternalTicker intern = new InternalTicker(null);
 		new Thread(intern).start();
 	}

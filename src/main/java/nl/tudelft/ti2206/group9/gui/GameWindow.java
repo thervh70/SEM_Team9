@@ -29,6 +29,9 @@ public class GameWindow extends Application {
 	public static final int WIDTH = 640;
 	/** Height of the Window. */
 	public static final int HEIGHT = 480;
+	
+	/** Threadlock. */
+	public static final Object LOCK = new Object();
 
 	private static final Translate CAMERA_TRANS = new Translate(0, -3, -12);
 	private static final Rotate CAMERA_ROT = new Rotate(-10, Rotate.X_AXIS);
@@ -42,6 +45,8 @@ public class GameWindow extends Application {
 	private static Scene scene;
 	private static SubScene worldScene;
 	private static SubScene overlayScene;
+	private static ExternalTicker extTicker;
+	private static boolean running;
 
 	/** Start the Application. */
 	@Override
@@ -68,8 +73,7 @@ public class GameWindow extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-		new ExternalTicker().start();
-		InternalTicker.start();
+		startTickers();
 	}
 
 	/**
@@ -91,21 +95,42 @@ public class GameWindow extends Application {
 
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
-				keyMap.keyPressed(keyEvent.getCode());
+				if (running) {
+					keyMap.keyPressed(keyEvent.getCode());
+				}
 			}
 		});
 
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
-				keyMap.keyReleased(keyEvent.getCode());
+				if (running) {
+					keyMap.keyReleased(keyEvent.getCode());
+				}
 			}
 		});
 
 		scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
-				keyMap.keyTyped(keyEvent.getCode());
+				if (running) {
+					keyMap.keyTyped(keyEvent.getCode());
+				}
 			}
 		});
+	}
+	
+	/** Start the tickers. */
+	public static void startTickers() {
+		extTicker = new ExternalTicker();
+		extTicker.start();
+		InternalTicker.start();
+		running = true;
+	}
+	
+	/** Stop the tickers. */
+	public static void stopTickers() {
+		running = false;
+		extTicker.stop();
+		InternalTicker.stop();
 	}
 
 	/**
