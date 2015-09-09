@@ -46,9 +46,6 @@ public class Track {
 	/** Current distance moved by the track, reset every run. */
 	private static double distance;
 	
-	/** Current 'approximated' distance moved by the track. */
-	private static int modDistance = 0;
-
 	/** Default constructor, new Random() is created as generator. */
 	public Track() {
 		this(new Random());
@@ -145,27 +142,8 @@ public class Track {
 	 * @return updated distance
 	 */
 	public int moduloDistance() {
-		int tempConvert = (int) distance;
-		if ((tempConvert % MOD) == 0) {
-			modDistance = tempConvert;
-		}
-		return (int) modDistance;
+		return (int) (Math.floor(distance / MOD) * MOD);
 	}
-	
-	/**
-	 * @return the modDistance
-	 */
-	public double getModDistance() {
-		return modDistance;
-	}
-
-	/**
-	 * @param modDist the modDistance to set
-	 */
-	public void setModDistance(final int modDist) {
-		Track.modDistance = modDist;
-	}
-
 
 	/**
 	 * This method should be called each ticks. It generates new coins and
