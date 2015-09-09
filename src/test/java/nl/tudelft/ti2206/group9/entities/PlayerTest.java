@@ -21,6 +21,7 @@ public class PlayerTest {
     @Before
     public void setUp() {
         player = new Player();
+        player.respawn();
     }
     
     @Test
@@ -33,30 +34,30 @@ public class PlayerTest {
 
     @Test
     public void moveLeftTest() {
-        assertEquals(0, player.getCenter().getX(), DELTA);
+        assertEquals(0, player.getMoveLane(), DELTA);
         player.move(Direction.LEFT);
-        assertEquals(-1, player.getCenter().getX(), DELTA);
+        assertEquals(-1, player.getMoveLane(), DELTA);
     }
 
     @Test
     public void moveRightTest() {
-        assertEquals(0, player.getCenter().getX(), DELTA);
+        assertEquals(0, player.getMoveLane(), DELTA);
         player.move(Direction.RIGHT);
-        assertEquals(1, player.getCenter().getX(), DELTA);
+        assertEquals(1, player.getMoveLane(), DELTA);
     }
 
     @Test
     public void moveLeftOffTrackTest() {
         moveLeftTest();
         player.move(Direction.LEFT);
-        assertEquals(-1, player.getCenter().getX(), DELTA);
+        assertEquals(-1, player.getMoveLane(), DELTA);
     }
 
     @Test
     public void moveRightOffTrackTest() {
         moveRightTest();
         player.move(Direction.RIGHT);
-        assertEquals(1, player.getCenter().getX(), DELTA);
+        assertEquals(1, player.getMoveLane(), DELTA);
     }
 
     @Test
