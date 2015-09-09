@@ -14,7 +14,7 @@ import java.util.Random;
 /**
  * This class holds all entities present in the game, such as Coins, a Player
  * and Obstacles.
- * @author Maarten
+ * @author Maarten, Mitchell
  *
  */
 public class Track {
@@ -31,6 +31,9 @@ public class Track {
 	public static final int WIDTH = 3;
 	/** Length of the track. */
 	public static final double LENGTH = 100;
+	
+	/** Standard modulus number for modDistance. */
+	public static final int MOD = 50;
 
 	/** List of entities on the track. */
 	private final List<AbstractEntity> entities;
@@ -39,7 +42,10 @@ public class Track {
 
 	/** Random number generator for generating stuff on the track. */
 	private Random random;
-
+	
+	/** Current distance moved by the track, reset every run. */
+	private static double distance;
+	
 	/** Default constructor, new Random() is created as generator. */
 	public Track() {
 		this(new Random());
@@ -111,6 +117,27 @@ public class Track {
 	}
 
 	/**
+	 * @param amount the amount of distance to add
+	 */
+	void addDistance(final double amount) {
+		distance += amount;
+	}	
+	
+	/**
+	 * @return the distance
+	 */
+	double getDistance() {
+		return distance;
+	}
+
+	/**
+	 * @param dist the distance to set
+	 */
+	void setDistance(final double dist) {
+		Track.distance = dist;
+	}
+
+	/**
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
@@ -128,6 +155,7 @@ public class Track {
 		
 		getPlayer().step();
 
+		distance += UNITS_PER_TICK;
 		moveTrack(UNITS_PER_TICK);
 	}
 
