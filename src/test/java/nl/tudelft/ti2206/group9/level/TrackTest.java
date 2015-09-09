@@ -84,14 +84,6 @@ public class TrackTest {
 		track.setDistance(1);
 		assertEquals(1, track.getDistance(), DELTA);
 	}
-
-	@Test
-	public void testModuloDistance() {
-		track.setDistance(2);
-		assertEquals(0, track.moduloDistance());
-		track.setDistance(50);
-		assertEquals(50, track.moduloDistance());
-	}
 	
 	@Test
 	public void testStep() {

@@ -136,14 +136,6 @@ public class Track {
 	void setDistance(final double dist) {
 		Track.distance = dist;
 	}
-		
-	/**
-	 * Updates the current distance every 50 moves.
-	 * @return updated distance
-	 */
-	public int moduloDistance() {
-		return (int) (Math.floor(distance / MOD) * MOD);
-	}
 
 	/**
 	 * This method should be called each ticks. It generates new coins and
