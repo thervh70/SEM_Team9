@@ -17,9 +17,9 @@ public class Player extends AbstractEntity {
 	public static final double WIDTH = 0.8;
 	
 	/** Gravity. This is added to the vertical speed of the Player each tick. */
-	public static final double GRAVITY = 0.005;
+	public static final double GRAVITY = 0.025;
 	/** Jump speed. This is the initial vertical speed of the Player on jump. */
-	public static final double JUMPSPEED = 0.12;
+	public static final double JUMPSPEED = 0.4;
 	
 	/** Slide length in ticks. */
 	public static final double SLIDELENGTH = 40;

@@ -22,10 +22,10 @@ public class Track {
 	/** Chance per frame to spawn a coin. */
 	public static final double COINCHANCE = 0.02;
 	/** Chance per frame to spawn an obstacle. */
-	public static final double OBSTACLECHANCE = 0.01;
+	public static final double OBSTACLECHANCE = 0.009;
 
 	/** Amount of units the track should move per tick. */
-	public static final double UNITS_PER_TICK = 0.15;
+	public static final double UNITS_PER_TICK = 0.5;
 
 	/** Width of the track (amount of lanes). */
 	public static final int WIDTH = 3;
