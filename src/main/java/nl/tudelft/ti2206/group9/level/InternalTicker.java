@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import nl.tudelft.ti2206.group9.gui.GameWindow;
+
 /**
  * This thread handles the ticks of the internal system. On each tick, the track
  * is moved. This task should be active during a "run".
@@ -72,7 +74,7 @@ public final class InternalTicker extends TimerTask {
 
 		if (!State.getTrack().getPlayer().isAlive()) {
 			System.out.println("Ghagha, you ish ded.");
-			stop();
+			GameWindow.stopTickers();
 		}
 	}
 

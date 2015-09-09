@@ -153,6 +153,7 @@ public class Player extends AbstractEntity {
 	
 	/** Make the player slide. */
 	private void slide() {
+		// Slide is done with a quadratic function
 		// y = (max-min) {1/(ticks/2) (x - ticks/2)} ^ 2 + min
 		// y' = 2 (max-min) 1/(ticks/2) (x - ticks/2) 1/(ticks/2)
 		// y'' = 2 (max-min) 1/(ticks/2) 1/(ticks/2)
@@ -167,7 +168,7 @@ public class Player extends AbstractEntity {
 	private void slideStep() {
 		if (sliding) {
 			getSize().addY(slideSpeed);
-			getSize().setX(HEIGHT * WIDTH / getSize().getY()); // volume = const
+			getSize().setZ(HEIGHT * WIDTH / getSize().getY()); // volume = const
 			getCenter().addY(slideSpeed / 2);
 			
 			slideSpeed += 2 * (HEIGHT - SLIDINGLOW)
@@ -185,13 +186,15 @@ public class Player extends AbstractEntity {
      * @param direction Left/Right/Jump/Slide
      */
     public void move(final Direction direction) {
-        switch (direction) {
-            case LEFT: 	changeLane(-1);	break;
-            case RIGHT:	changeLane(1);	break;
-            case JUMP:	jump();			break;
-            case SLIDE:	slide();		break;
-            default:	break;
-        }
+    	if (isAlive()) {
+	        switch (direction) {
+	            case LEFT: 	changeLane(-1);	break;
+	            case RIGHT:	changeLane(1);	break;
+	            case JUMP:	jump();			break;
+	            case SLIDE:	slide();		break;
+	            default:	break;
+	        }
+    	}
     }
 
 	/** Is executed each step. This is done in Track. */
