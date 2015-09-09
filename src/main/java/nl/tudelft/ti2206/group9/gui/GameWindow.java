@@ -41,7 +41,7 @@ public class GameWindow extends Application {
 	private static SubScene overlayScene;
     
 	@Override
-	public void start(Stage primaryStage) {
+	public static void start(Stage primaryStage) {
 
 		root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
