@@ -49,13 +49,17 @@ public final class GameWindow {
 	private static SubScene overlayScene;
 	private static ExternalTicker extTicker;
 	private static boolean running;
+	private static Stage primaryStage;
+
 	
 	/** Hide public constructor. */
 	private GameWindow() { }
 
 	/** Start the Application. */
-	public static void start(Stage primaryStage) {
+	public static void start(Stage stage) {
 		State.resetAll();
+
+		primaryStage = stage;
 
 		root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
@@ -101,7 +105,7 @@ public final class GameWindow {
 
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
-				if (keyEvent.getCode().equals(KeyCode.ESCAPE)) {
+				if (running && keyEvent.getCode().equals(KeyCode.ESCAPE)) {
 					showPauseMenu(primaryStage);
 				} else if (running) {
 					keyMap.keyPressed(keyEvent.getCode());
@@ -172,6 +176,29 @@ public final class GameWindow {
 
 		Popup confirm = PopupMenu.makeMenu("Paused", "Resume",
 				"Return to Main Menu", resume, menu);
+		confirm.show(primaryStage);
+	}
+
+	/**
+	 * Show a death menu.
+	 */
+	public static void showDeathMenu() {
+		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
+
+			public void handle(MouseEvent e) {
+				State.reset();
+				StartScreen.start(primaryStage);
+			}
+		};
+
+		EventHandler<MouseEvent> retry = new EventHandler<MouseEvent>() {
+
+			public void handle(MouseEvent e) {
+				GameWindow.start(primaryStage);
+			}
+		};
+
+		Popup confirm = PopupMenu.makeFinalMenu("Game Ended", State.getScore(), State.getCoins(), "Try again", "Return to Main Menu", retry, menu);
 		confirm.show(primaryStage);
 	}
 

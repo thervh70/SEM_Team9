@@ -21,7 +21,7 @@ public final class PopupMenu {
 	private PopupMenu() { }
 	
     /**
-     * Generic method to build popups
+     * Generic method to build popups.
      * Generates a menu based on the parameters.
      * 2 mouseEvent listeners are passed to this method in order to setup 
      * buttons in the popup.
@@ -38,10 +38,10 @@ public final class PopupMenu {
 
         final Popup warning = new Popup();
         warning.centerOnScreen();
-        warning.setWidth(200);
+        warning.setWidth(250);
         warning.setHeight(300);
         
-        Rectangle rect = new Rectangle(200, 300, Color.WHITESMOKE);
+        Rectangle rect = new Rectangle(250, 300, Color.WHITESMOKE);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
@@ -52,6 +52,61 @@ public final class PopupMenu {
         hbox.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(50, text, hbox);
+        vbox.setAlignment(Pos.CENTER);
+
+        yes.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent y) {
+                warning.hide();
+                event.handle(y);
+            }
+        });
+
+        no.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent n){
+                warning.hide();
+                event2.handle(n);
+            }
+        });
+
+        warning.getContent().addAll(rect, vbox);
+        return warning;
+    }
+
+    /**
+     * Generic method to build popups.
+     * Generates a menu based on the parameters.
+     * 2 mouseEvent listeners are passed to this method in order to setup buttons in the popup.
+     * @param t Text to be displayed in popup
+     * @param button1 First button text
+     * @param button2 Second button text
+     * @param event First button event
+     * @param event2 Second button event
+     * @return A fully build popup ready to be put on the screen.
+     */
+    public static Popup makeFinalMenu(String t, int score, int coins, String button1, String button2, final EventHandler<MouseEvent> event, final EventHandler<MouseEvent> event2) {
+
+        final Popup warning = new Popup();
+        warning.centerOnScreen();
+        warning.setWidth(250);
+        warning.setHeight(300);
+
+        Rectangle rect = new Rectangle(250, 300, Color.WHITESMOKE);
+
+        Button yes = new Button(button1);
+        Button no = new Button(button2);
+        Text text = new Text(t);
+
+        String s = "Final Score: " + score;
+        Text finalScore = new Text(s);
+        String c = "Total amount of coins: " + coins;
+        Text finalCoins = new Text(c);
+
+        HBox hbox = new HBox(20,yes,no);
+        hbox.setAlignment(Pos.CENTER);
+
+        VBox vbox = new VBox(50, text, finalScore, finalCoins, hbox);
         vbox.setAlignment(Pos.CENTER);
 
         yes.setOnMouseClicked(new EventHandler<MouseEvent>() {

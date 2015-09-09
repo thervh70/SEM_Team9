@@ -1,11 +1,13 @@
 package nl.tudelft.ti2206.group9.level;
 
+import javafx.application.Platform;
+import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.gui.GameWindow;
+
 import java.time.Instant;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import nl.tudelft.ti2206.group9.gui.GameWindow;
 
 /**
  * This thread handles the ticks of the internal system. On each tick, the track
@@ -34,6 +36,9 @@ public final class InternalTicker extends TimerTask {
 	/** The timer that schedules the TimerTask is stored in the instance. */
 	private final Timer timer;
 
+	/** Ticker needs to know the primaryStage to be able to send the death menu*/
+	private static Stage primaryStage = null;
+
 	/**
 	 * Default private constructor.
 	 * @param t Timer given to the internal ticker
@@ -46,25 +51,27 @@ public final class InternalTicker extends TimerTask {
 	 * Thread method.
 	 */
 	public void run() {
-		synchronized (GameWindow.LOCK) {
-			final Timer newTimer = new Timer();
-	
-			try {
-				step(); // First, perform tick.
-						// Then, kill the timer that scheduled the task.
-				if (timer != null) {
-					timer.cancel(); 
-				}
-			} finally {
-				if (running) {
-					scheduleTime = scheduleTime.plusNanos(NANOS_PER_TICK);
-					newTimer.schedule(new InternalTicker(newTimer),
-							Date.from(scheduleTime));
-				} else {
-					newTimer.cancel();
+		Platform.runLater(() -> {
+			synchronized (GameWindow.LOCK) {
+				final Timer newTimer = new Timer();
+
+				try {
+					step(); // First, perform tick.
+					// Then, kill the timer that scheduled the task.
+					if (timer != null) {
+						timer.cancel();
+					}
+				} finally {
+					if (running) {
+						scheduleTime = scheduleTime.plusNanos(NANOS_PER_TICK);
+						newTimer.schedule(new InternalTicker(newTimer),
+								Date.from(scheduleTime));
+					} else {
+						newTimer.cancel();
+					}
 				}
 			}
-		}
+		});
 	}
 
 	/**
@@ -75,8 +82,8 @@ public final class InternalTicker extends TimerTask {
 		State.getTrack().step();
 
 		if (!State.getTrack().getPlayer().isAlive()) {
-			System.out.println("Ghagha, you ish ded.");
 			GameWindow.stopTickers();
+			GameWindow.showDeathMenu();
 		}
 	}
 
