@@ -9,11 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import nl.tudelft.ti2206.group9.gui.StartScreen;
+
 
 /**
  * Created by Maikel on 08/09/2015.

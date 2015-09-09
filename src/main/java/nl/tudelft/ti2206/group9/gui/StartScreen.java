@@ -16,9 +16,6 @@ import javafx.stage.Stage;
  */
 public class StartScreen {
 
-    public static Stage window;
-    public static Scene startScreen;
-    public static Button startButton, settingsButton, exitButton;
 
     /**
      *Creating and displaying the startscreen.
@@ -26,6 +23,10 @@ public class StartScreen {
      * @param primaryStage The stage to be started.
      */
     public static void start(final Stage primaryStage) {
+
+        Stage window;
+        Scene startScreen;
+        Button startButton, settingsButton, exitButton;
 
         window = primaryStage;
 
