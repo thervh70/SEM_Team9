@@ -27,11 +27,11 @@ public class SplashScreen extends Application {
     public void start(final Stage primaryStage) {
 
 
-        //Creating a new stackpane and scene.
+        /**Creating a new stackpane and scene. */
         StackPane root = new StackPane();
         Scene scene = new Scene(root, 640, 480);
 
-        //Creating a new label for displaying text.
+        /**Creating a new label for displaying text. */
         Label text = new Label("Press any key to continue");
 
 
@@ -53,8 +53,7 @@ public class SplashScreen extends Application {
                 StartScreen.start(primaryStage);
             }
         });
-
-        //Add the text to the canvas and give it a fade in/ fade out effect.
+        /**Add the text to the canvas and give it a fade in/ fade out effect.*/
         root.getChildren().add(text);
         root.setAlignment(Pos.CENTER);
         FadeTransition ft = new FadeTransition(Duration.millis(1000), text);
@@ -64,7 +63,7 @@ public class SplashScreen extends Application {
         ft.setAutoReverse(true);
         ft.play();
 
-        //Setting the right scene and displaying it.
+        /**Setting the right scene and displaying it. */
         primaryStage.setScene(scene);
         primaryStage.show();
     }
