@@ -46,21 +46,23 @@ public final class InternalTicker extends TimerTask {
 	 * Thread method.
 	 */
 	public void run() {
-		final Timer newTimer = new Timer();
-
-		try {
-			step(); // First, perform tick.
-
-			if (timer != null) {
-				timer.cancel(); // Then, kill the timer that scheduled the task.
-			}
-		} finally {
-			if (running) {
-				scheduleTime = scheduleTime.plusNanos(NANOS_PER_TICK);
-				newTimer.schedule(new InternalTicker(newTimer),
-						Date.from(scheduleTime));
-			} else {
-				newTimer.cancel();
+		synchronized (GameWindow.LOCK) {
+			final Timer newTimer = new Timer();
+	
+			try {
+				step(); // First, perform tick.
+						// Then, kill the timer that scheduled the task.
+				if (timer != null) {
+					timer.cancel(); 
+				}
+			} finally {
+				if (running) {
+					scheduleTime = scheduleTime.plusNanos(NANOS_PER_TICK);
+					newTimer.schedule(new InternalTicker(newTimer),
+							Date.from(scheduleTime));
+				} else {
+					newTimer.cancel();
+				}
 			}
 		}
 	}

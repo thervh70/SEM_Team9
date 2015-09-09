@@ -29,6 +29,9 @@ public class GameWindow extends Application {
 	public static final int WIDTH = 640;
 	/** Height of the Window. */
 	public static final int HEIGHT = 480;
+	
+	/** Threadlock. */
+	public static final Object LOCK = new Object();
 
 	private static final Translate CAMERA_TRANS = new Translate(0, -3, -12);
 	private static final Rotate CAMERA_ROT = new Rotate(-10, Rotate.X_AXIS);

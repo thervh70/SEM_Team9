@@ -17,7 +17,9 @@ public class ExternalTicker extends AnimationTimer {
 
 	@Override
 	public void handle(final long now) {
-		renderScene();
+		synchronized (GameWindow.LOCK) {
+			renderScene();
+		}
 	}
 
 	private void renderScene() {
