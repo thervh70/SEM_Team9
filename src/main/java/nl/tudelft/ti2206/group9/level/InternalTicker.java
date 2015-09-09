@@ -27,7 +27,7 @@ public final class InternalTicker extends TimerTask {
 	/** Whether the ticks are being run. */
 	private static boolean running = true;
 	/** Time at which next tick will be scheduled. */
-	private static Instant scheduleTime = Instant.now();
+	private static Instant scheduleTime;
 	/** Amount of nanoseconds between each frame, assuming FPS is constant. **/
 	private static final int NANOS_PER_TICK = E9 / FPS;
 
@@ -84,6 +84,7 @@ public final class InternalTicker extends TimerTask {
 	 * Start the InternalTicker. Will run until {@link #stop()} is called.
 	 */
 	public static void start() {
+		scheduleTime = Instant.now();
 		final InternalTicker intern = new InternalTicker(null);
 		new Thread(intern).start();
 	}
