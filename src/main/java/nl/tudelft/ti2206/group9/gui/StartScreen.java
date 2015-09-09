@@ -11,12 +11,15 @@ import javafx.stage.Stage;
 /**
  * @author Maikel and Robin
  *
- * A startscreen with different options/buttons like a options menu, start button
+ * A startscreen with different options/buttons like a options menu, startbutton
  * and exit button.
  */
-public class StartScreen {
+@SuppressWarnings("restriction")
+public final class StartScreen {
 
-
+	/** Hide public constructor. */
+	private StartScreen() { }
+	
     /**
      *Creating and displaying the startscreen.
      *
@@ -37,7 +40,8 @@ public class StartScreen {
         grid.setHgap(20);
 
         /**Setting a background for the menu.*/
-        //grid.getChildren().add(Style.setBackground("/View/Resources/background_splashscreen.png"));
+        //grid.getChildren().add(Style.setBackground(
+        // 		"/View/Resources/background_splashscreen.png"));
 
         /** Add text to buttons give them a location on the grid.*/
         startButton = new Button("START");
@@ -53,7 +57,7 @@ public class StartScreen {
         grid.getChildren().addAll(startButton, settingsButton, exitButton);
 
         /**Creating the scene. */
-        startScreen = new Scene(grid, GameWindow.WIDTH,GameWindow.HEIGHT);
+        startScreen = new Scene(grid, GameWindow.WIDTH, GameWindow.HEIGHT);
 
         /**Setting function of the buttons. */
         exitButton.setOnAction(new EventHandler<ActionEvent>() {

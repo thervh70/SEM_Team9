@@ -16,44 +16,41 @@ import javafx.util.Duration;
 /**
  * Created by Maikel on 08/09/2015.
  *
- * A splashcreen that show a "Press any key to continue", also starts the entire application.
+ * A splashcreen that show a "Press any key to continue", also starts the 
+ * entire application.
  */
-public class SplashScreen extends Application {
+@SuppressWarnings("restriction")
+public final class SplashScreen extends Application {
 
+	/** Hide public constructor. */
+	private SplashScreen() { }
+	
     /**
      * Creating and  displaying the scene.
      * @param primaryStage The stage to be started.
      */
     public void start(final Stage primaryStage) {
-
-
-        /**Creating a new stackpane and scene. */
+        /* Creating a new stackpane and scene. */
         StackPane root = new StackPane();
         Scene scene = new Scene(root, GameWindow.WIDTH, GameWindow.HEIGHT);
 
-        /**Creating a new label for displaying text. */
+        /* Creating a new label for displaying text. */
         Label text = new Label("Press any key to continue");
 
-
-        /**
-         * Defining what has happens in case of a mouseClickEvent.
-         */
+        /* Defining what has happens in case of a mouseClickEvent. */
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
                 StartScreen.start(primaryStage);
             }
         });
 
-        /**
-         * Defining what happens in case of a random keyPressedEvent.
-         */
+        /* Defining what happens in case of a random keyPressedEvent. */
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
             public void handle(KeyEvent ke) {
                 StartScreen.start(primaryStage);
             }
         });
-        /**Add the text to the canvas and give it a fade in/ fade out effect.*/
+        /* Add the text to the canvas and give it a fade in/ fade out effect. */
         root.getChildren().add(text);
         root.setAlignment(Pos.CENTER);
         FadeTransition ft = new FadeTransition(Duration.millis(1000), text);
@@ -63,7 +60,7 @@ public class SplashScreen extends Application {
         ft.setAutoReverse(true);
         ft.play();
 
-        /**Setting the right scene and displaying it. */
+        /* Setting the right scene and displaying it. */
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -5,7 +5,13 @@ package nl.tudelft.ti2206.group9.gui;
  */
 
 import javafx.event.EventHandler;
-import javafx.scene.*;
+import javafx.scene.DepthTest;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -18,9 +24,8 @@ import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.KeyMap;
 
-
 @SuppressWarnings("restriction")
-public class GameWindow {
+public final class GameWindow {
 
 	/** Width of the Window. */
 	public static final int WIDTH = 480;
@@ -44,6 +49,9 @@ public class GameWindow {
 	private static SubScene overlayScene;
 	private static ExternalTicker extTicker;
 	private static boolean running;
+	
+	/** Hide public constructor. */
+	private GameWindow() { }
 
 	/** Start the Application. */
 	public static void start(Stage primaryStage) {
@@ -162,7 +170,8 @@ public class GameWindow {
 			}
 		};
 
-		Popup confirm = PopupMenu.makeMenu("Paused", "Resume", "Return to Main Menu", resume, menu);
+		Popup confirm = PopupMenu.makeMenu("Paused", "Resume",
+				"Return to Main Menu", resume, menu);
 		confirm.show(primaryStage);
 	}
 

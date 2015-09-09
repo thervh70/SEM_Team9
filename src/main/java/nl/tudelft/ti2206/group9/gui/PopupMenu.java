@@ -14,12 +14,17 @@ import javafx.stage.Popup;
 /**
  * @author Robin
  */
-public class PopupMenu {
+@SuppressWarnings("restriction")
+public final class PopupMenu {
 
+	/** Hide public constructor. */
+	private PopupMenu() { }
+	
     /**
      * Generic method to build popups
      * Generates a menu based on the parameters.
-     * 2 mouseEvent listeners are passed to this method in order to setup buttons in the popup.
+     * 2 mouseEvent listeners are passed to this method in order to setup 
+     * buttons in the popup.
      * @param t Text to be displayed in popup
      * @param button1 First button text
      * @param button2 Second button text
@@ -27,7 +32,9 @@ public class PopupMenu {
      * @param event2 Second button event
      * @return A fully build popup ready to be put on the screen.
      */
-    public static Popup makeMenu(String t, String button1, String button2, final EventHandler<MouseEvent> event, final EventHandler<MouseEvent> event2) {
+    public static Popup makeMenu(String t, String button1, String button2, 
+    		final EventHandler<MouseEvent> event, 
+    		final EventHandler<MouseEvent> event2) {
 
         final Popup warning = new Popup();
         warning.centerOnScreen();
@@ -41,7 +48,7 @@ public class PopupMenu {
         Text text = new Text(t);
         text.setFill(Color.BLACK);
 
-        HBox hbox = new HBox(20,yes,no);
+        HBox hbox = new HBox(20, yes, no);
         hbox.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(50, text, hbox);
