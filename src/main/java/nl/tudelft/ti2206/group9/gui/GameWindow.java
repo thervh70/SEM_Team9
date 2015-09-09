@@ -4,15 +4,8 @@ package nl.tudelft.ti2206.group9.gui;
  * @author Robin, Maarten
  */
 
-import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.DepthTest;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
-import javafx.scene.SubScene;
+import javafx.scene.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
@@ -23,7 +16,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.KeyMap;
 
 @SuppressWarnings("restriction")
-public class GameWindow extends Application {
+public class GameWindow {
 
 	/** Width of the Window. */
 	public static final int WIDTH = 640;
@@ -49,8 +42,8 @@ public class GameWindow extends Application {
 	private static boolean running;
 
 	/** Start the Application. */
-	@Override
-	public void start(final Stage primaryStage) {
+	public static void start(Stage primaryStage) {
+		State.resetAll();
 		root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
@@ -79,7 +72,7 @@ public class GameWindow extends Application {
 	/**
 	 * Create and setup camera, adding it to worldScene.
 	 */
-	private void setupCamera() {
+	private static void setupCamera() {
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
 		camera.getTransforms().addAll(CAMERA_TRANS, CAMERA_ROT);
 		camera.setNearClip(CAMERA_NEAR);
@@ -90,7 +83,7 @@ public class GameWindow extends Application {
 	/**
 	 * Make sure KeyEvents are handled in {@link KeyMap}.
 	 */
-	private void keyBindings() {
+	private static void keyBindings() {
 		KeyMap.defaultKeys();
 
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -162,14 +155,4 @@ public class GameWindow extends Application {
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
-
-	/**
-	 * @param args does nothing.
-	 * @throws InterruptedException
-	 */
-	public static void main(final String... args) {
-		State.resetAll();
-		GameWindow.launch(args);
-	}
-
 }
