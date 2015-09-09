@@ -23,7 +23,7 @@ import javafx.util.Duration;
 public final class SplashScreen extends Application {
 
 	/** Hide public constructor. */
-	private SplashScreen() { }
+	public SplashScreen() { }
 	
     /**
      * Creating and  displaying the scene.
