@@ -37,7 +37,7 @@ public class Track {
 	public static final int WIDTH = 3;
 	/** Length of the track. */
 	public static final double LENGTH = 100;
-	
+
 	/** Standard modulus number for modDistance. */
 	public static final int MOD = 50;
 
@@ -49,9 +49,11 @@ public class Track {
 	/** Index of the player entity in the entities list. */
 	private int player;
 	/** Minimum number of coins in a coin lane. */
-	private int minCoinLaneLength = 5;
+	private final int minCoinLaneLength = 5;
 	/** Minimum number of coins in a coin zigzag. */
-	private int minCoinZigZagLength = 7;
+	private final int minCoinZigZagLength = 7;
+	/** Maximum number of coins added to a zigzag or coinlane. */
+	private final int addToCoins = 10;
 
 	/** Random number generator for generating stuff on the track. */
 	private Random random;
@@ -77,9 +79,9 @@ public class Track {
 	/**
 	 * Moves the track towards the player (thus making the player run over
 	 * the track, like a treadmill).
-	 * @param distance amount of units to move the track
+	 * @param dist amount of units to move the track
 	 */
-	public final synchronized void moveTrack(final double distance) {
+	public final synchronized void moveTrack(final double dist) {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
@@ -87,7 +89,7 @@ public class Track {
 							< GameWindow.CAMERA_TRANS.getZ()) {
 						entity.selfDestruct();
 					}
-					entity.getCenter().addZ(-distance);
+					entity.getCenter().addZ(-dist);
 					entity.checkCollision(entities.get(player));
 				}
 			}
@@ -111,7 +113,8 @@ public class Track {
 	 * @param entity entity to remove
 	 * @return this Track, allowing for chaining.
 	 */
-	public final synchronized Track removeEntity(final AbstractEntity entity) {
+	public final synchronized Track
+			removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.remove(entity);
 		}
@@ -150,21 +153,21 @@ public class Track {
 	/**
 	 * @param amount the amount to be added
 	 */
-	public void addDistance(final double amount) {
+	public final void addDistance(final double amount) {
 		distance += amount;
-	}	
-	
+	}
+
 	/**
 	 * @return the distance
 	 */
-	double getDistance() {
+	final double getDistance() {
 		return distance;
 	}
 
 	/**
 	 * @param dist the distance to set
 	 */
-	void setDistance(final double dist) {
+	final void setDistance(final double dist) {
 		Track.distance = dist;
 	}
 
@@ -200,8 +203,8 @@ public class Track {
 	 * Creates a row of coins.
 	 */
 	private void createCoinLane() {
-		int lane = random.nextInt(3) - 1;
-		int length = minCoinLaneLength + random.nextInt(10);
+		int lane = random.nextInt(WIDTH) - 1;
+		int length = minCoinLaneLength + random.nextInt(addToCoins);
 		for (int i = 0; i < length; i++) {
 			addEntity(new Coin(new Point3D(lane, 1, LENGTH + COINDISTANCE*i)));
 		}
@@ -213,13 +216,13 @@ public class Track {
 	 */
 	private void createZigZag() {
 		int x;
-		int lane = random.nextInt(4);
-		int length = minCoinZigZagLength + random.nextInt(10);
+		int lane = random.nextInt(WIDTH + 1);
+		int length = minCoinZigZagLength + random.nextInt(addToCoins);
 		for (int i = 0; i < length; i++) {
-			if (lane == 3) { x = 0; }
+			if (lane == WIDTH) { x = 0; }
 			else { x = lane - 1; }
 			addEntity(new Coin(new Point3D(x, 1, LENGTH + COINDISTANCE*i)));
-			lane = (lane + 1) % 4;
+			lane = (lane + 1) % (WIDTH + 1);
 		}
 		coinrunleft = length;
 	}
@@ -229,13 +232,14 @@ public class Track {
 	 */
 	private void createSingleObstacle() {
 		int x;
-		int lane = random.nextInt(3);
+		int lane = random.nextInt(WIDTH);
 		if (this.containsCenter(new Point3D(lane - 1, 0, LENGTH))) {
-			lane = (lane + 1) % 3;
+			lane = (lane + 1) % WIDTH;
 		}
-		if (lane == 3) { x = 0; }
+		if (lane == WIDTH) { x = 0; }
 		else { x = lane - 1; }
-		addEntity(new Obstacle(new Point3D(x, 1, LENGTH), new Point3D(1, 1, 1)));
+		addEntity(new Obstacle(new Point3D(x, 1, LENGTH),
+				new Point3D(1, 1, 1)));
 	}
 
 	/**
@@ -243,7 +247,7 @@ public class Track {
 	 *  **For testing purposes only**
 	 * @return coinRunLeft
 	 */
-	public double getCoinrunleft() {
+	public final double getCoinrunleft() {
 		return coinrunleft;
 	}
 }
