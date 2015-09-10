@@ -55,7 +55,7 @@ public abstract class AbstractEntity {
 	}
 
 	/** Used to remove the entity from the Track. */
-	public final void selfDestruct() {
+	public void selfDestruct() {
 		final AbstractEntity self = this;
 		new Thread(new Runnable() {
 			/** Method run in Thread,
@@ -76,28 +76,28 @@ public abstract class AbstractEntity {
 	/**
 	 * @return the center
 	 */
-	public final Point3D getCenter() {
+	public Point3D getCenter() {
 		return center;
 	}
 
 	/**
 	 * @param cent the center to set
 	 */
-	public final void setCenter(final Point3D cent) {
+	public void setCenter(final Point3D cent) {
 		this.center = cent;
 	}
 
 	/**
 	 * @return the size
 	 */
-	public final Point3D getSize() {
+	public Point3D getSize() {
 		return size;
 	}
 
 	/**
 	 * @param siz the size to set
 	 */
-	public final void setSize(final Point3D siz) {
+	public void setSize(final Point3D siz) {
 		this.size = siz;
 	}
 
@@ -106,7 +106,7 @@ public abstract class AbstractEntity {
 	 * @return hashCode
 	 */
 	@Override
-	public final int hashCode() {
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result *= prime;
@@ -126,7 +126,7 @@ public abstract class AbstractEntity {
 	 * @return whether this is equal to obj
 	 */
 	@Override
-	public final boolean equals(final Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -159,7 +159,7 @@ public abstract class AbstractEntity {
 	 * @return a string representing this AbstractEntity
 	 */
 	@Override
-	public final String toString() {
+	public String toString() {
 		return "AbstractEntity [center=" + center + ","
 				+ "size=" + size + "]";
 	}

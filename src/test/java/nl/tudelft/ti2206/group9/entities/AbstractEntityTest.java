@@ -185,7 +185,7 @@ public class AbstractEntityTest {
 	@Test
 	public void testToString() {
 		assertEquals("AbstractEntity [center=" + entity.getCenter()
-				+ ", size=" + entity.getSize() + "]", entity.toString());
+				+ ",size=" + entity.getSize() + "]", entity.toString());
 	}
 	
 	/**
