@@ -62,7 +62,7 @@ public class ExternalTicker extends AnimationTimer {
 				}
 
 				entities.getChildren().add(entityBox);
-			}
+            }
 		}
 		return entities;
 	}

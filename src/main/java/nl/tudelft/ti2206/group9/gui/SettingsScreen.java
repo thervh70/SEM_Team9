@@ -1,25 +1,26 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import nl.tudelft.ti2206.group9.gui.StartScreen;
 
 /**
  * Created by Maikel on 08/09/2015.
  *
  * A screen for displaying a settings menu.
  */
-public class SettingsScreen {
+@SuppressWarnings("restriction")
+public final class SettingsScreen {
 
-    public static Scene settings;
+    private static Scene settings;
 
+	/** Hide public constructor. */
+	private SettingsScreen() { }
+	
     /**
      * Creating and displaying the scene.
      *
@@ -40,9 +41,9 @@ public class SettingsScreen {
         GridPane.setConstraints(backButton, 3, 20);
 
         Label label = new Label("Hier komen settings lijstjes ofzo?");
-        GridPane.setConstraints(label, 10,10);
+        GridPane.setConstraints(label, 10, 10);
 
-        grid.getChildren().addAll(backButton,label);
+        grid.getChildren().addAll(backButton, label);
 
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -50,7 +51,7 @@ public class SettingsScreen {
             }
         });
 
-       settings = new Scene(grid,640,480);
+        settings = new Scene(grid, GameWindow.WIDTH, GameWindow.HEIGHT);
 
         primaryStage.setScene(settings);
         primaryStage.show();

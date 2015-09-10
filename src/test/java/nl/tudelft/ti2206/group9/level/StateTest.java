@@ -44,8 +44,8 @@ public class StateTest {
 	public void testModuloDistance() {
 		State.getTrack().setDistance(2);
 		assertEquals(0, State.moduloDistance());
-		State.getTrack().setDistance(50);
-		assertEquals(50, State.moduloDistance());
+		State.getTrack().setDistance(Track.MOD);
+		assertEquals(Track.MOD, State.moduloDistance());
 	}
 	
 	@Test
