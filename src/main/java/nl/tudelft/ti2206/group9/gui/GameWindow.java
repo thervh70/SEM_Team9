@@ -4,31 +4,27 @@ package nl.tudelft.ti2206.group9.gui;
  * @author Robin, Maarten
  */
 
-import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.DepthTest;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
-import javafx.scene.SubScene;
+import javafx.scene.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
-import nl.tudelft.ti2206.group9.InternalTicker;
+import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.KeyMap;
 
 @SuppressWarnings("restriction")
-public class GameWindow extends Application {
+public class GameWindow {
 
 	/** Width of the Window. */
 	public static final int WIDTH = 640;
 	/** Height of the Window. */
 	public static final int HEIGHT = 480;
+	
+	/** Threadlock. */
+	public static final Object LOCK = new Object();
 
 	public static final Translate CAMERA_TRANS = new Translate(0, -3, -12);
 	private static final Rotate CAMERA_ROT = new Rotate(-10, Rotate.X_AXIS);
@@ -42,10 +38,12 @@ public class GameWindow extends Application {
 	private static Scene scene;
 	private static SubScene worldScene;
 	private static SubScene overlayScene;
+	private static ExternalTicker extTicker;
+	private static boolean running;
 
 	/** Start the Application. */
-	@Override
-	public void start(final Stage primaryStage) {
+	public static void start(Stage primaryStage) {
+		State.resetAll();
 		root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
@@ -68,14 +66,13 @@ public class GameWindow extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-		new ExternalTicker().start();
-		InternalTicker.start();
+		startTickers();
 	}
 
 	/**
 	 * Create and setup camera, adding it to worldScene.
 	 */
-	private void setupCamera() {
+	private static void setupCamera() {
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
 		camera.getTransforms().addAll(CAMERA_TRANS, CAMERA_ROT);
 		camera.setNearClip(CAMERA_NEAR);
@@ -86,26 +83,47 @@ public class GameWindow extends Application {
 	/**
 	 * Make sure KeyEvents are handled in {@link KeyMap}.
 	 */
-	private void keyBindings() {
+	private static void keyBindings() {
 		KeyMap.defaultKeys();
 
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
-				keyMap.keyPressed(keyEvent.getCode());
+				if (running) {
+					keyMap.keyPressed(keyEvent.getCode());
+				}
 			}
 		});
 
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
-				keyMap.keyReleased(keyEvent.getCode());
+				if (running) {
+					keyMap.keyReleased(keyEvent.getCode());
+				}
 			}
 		});
 
 		scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
-				keyMap.keyTyped(keyEvent.getCode());
+				if (running) {
+					keyMap.keyTyped(keyEvent.getCode());
+				}
 			}
 		});
+	}
+	
+	/** Start the tickers. */
+	public static void startTickers() {
+		extTicker = new ExternalTicker();
+		extTicker.start();
+		InternalTicker.start();
+		running = true;
+	}
+	
+	/** Stop the tickers. */
+	public static void stopTickers() {
+		running = false;
+		extTicker.stop();
+		InternalTicker.stop();
 	}
 
 	/**
@@ -137,14 +155,4 @@ public class GameWindow extends Application {
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
-
-	/**
-	 * @param args does nothing.
-	 * @throws InterruptedException
-	 */
-	public static void main(final String... args) {
-		State.resetAll();
-		GameWindow.launch(args);
-	}
-
 }

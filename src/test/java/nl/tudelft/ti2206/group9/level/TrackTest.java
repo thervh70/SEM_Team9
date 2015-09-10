@@ -88,7 +88,7 @@ public class TrackTest {
 		final double aboveObstacleChance = Track.OBSTACLECHANCE + 0.01;
 		final Track track = new Track(rand);
 		final int length = 5;
-		
+
 		when(rand.nextDouble()).thenReturn(belowCoinZigZagChance, aboveObstacleChance);
 		when(rand.nextInt(10)).thenReturn(length);
 
@@ -99,6 +99,20 @@ public class TrackTest {
 		for (int i = 1; i <13; i++) {
 			assertTrue(track.getEntities().get(i) instanceof Coin);
 		}
+	}
+
+	public void testAddDistance() {
+		track.addDistance(2.0);
+		track.addDistance(1.0);
+		assertEquals(2.0 + 1.0, track.getDistance(), DELTA);
+	}
+
+	@Test
+	public void testSetDistance() {
+		track.setDistance(2);
+		assertEquals(2, track.getDistance(), DELTA);
+		track.setDistance(1);
+		assertEquals(1, track.getDistance(), DELTA);
 	}
 
 	@Test
