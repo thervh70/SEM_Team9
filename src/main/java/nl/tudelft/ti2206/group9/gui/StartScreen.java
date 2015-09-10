@@ -1,12 +1,12 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 
 /**
  * @author Maikel and Robin
@@ -57,18 +57,18 @@ public final class StartScreen {
         grid.getChildren().addAll(startButton, settingsButton, exitButton);
 
         /**Creating the scene. */
-        startScreen = new Scene(grid, GameWindow.WIDTH, GameWindow.HEIGHT);
+        startScreen = new Scene(grid, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
         /**Setting function of the buttons. */
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                System.exit(0);
+                primaryStage.close();
             }
         });
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                GameWindow.start(primaryStage);
+                GameScreen.start(primaryStage);
             }
         });
 

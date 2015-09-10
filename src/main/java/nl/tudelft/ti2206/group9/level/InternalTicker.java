@@ -6,7 +6,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.application.Platform;
-import nl.tudelft.ti2206.group9.gui.GameWindow;
+import nl.tudelft.ti2206.group9.gui.GUIConstant;
+import nl.tudelft.ti2206.group9.gui.GameScreen;
 
 /**
  * This thread handles the ticks of the internal system. On each tick, the track
@@ -31,7 +32,7 @@ public final class InternalTicker extends TimerTask {
 	/** Time at which next tick will be scheduled. */
 	private static Instant scheduleTime;
 	/** Amount of nanoseconds between each frame, assuming FPS is constant. **/
-	private static final int NANOS_PER_TICK = E9 / FPS;
+	public static final int NANOS_PER_TICK = E9 / FPS;
 
 	/** The timer that schedules the TimerTask is stored in the instance. */
 	private final Timer timer;
@@ -50,7 +51,7 @@ public final class InternalTicker extends TimerTask {
 	public void run() {
 		Platform.runLater(new Runnable() {
 			public void run() {
-				synchronized (GameWindow.LOCK) {
+				synchronized (GUIConstant.LOCK) {
 					final Timer newTimer = new Timer();
 
 					try {
@@ -82,8 +83,8 @@ public final class InternalTicker extends TimerTask {
 		State.getTrack().step();
 
 		if (!State.getTrack().getPlayer().isAlive()) {
-			GameWindow.stopTickers();
-			GameWindow.showDeathMenu();
+			GameScreen.stopTickers();
+			GameScreen.showDeathMenu();
 		}
 	}
 

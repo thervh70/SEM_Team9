@@ -17,26 +17,26 @@ public class ExternalTicker extends AnimationTimer {
 
 	@Override
 	public void handle(final long now) {
-		synchronized (GameWindow.LOCK) {
+		synchronized (GUIConstant.LOCK) {
 			renderScene();
 		}
 	}
 
 	private void renderScene() {
-		GameWindow.clearWorld();
-		GameWindow.clearOverlay();
+		GameScreen.clearWorld();
+		GameScreen.clearOverlay();
 
 		final Box track = new Box(3, 0.1, 500);
 		track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
-		GameWindow.addWorld(track);
+		GameScreen.addWorld(track);
 
 		final Group entities = renderEntities();
-		GameWindow.addWorld(entities);
+		GameScreen.addWorld(entities);
 
-		GameWindow.addOverlay(new Text(0, 16, "Score: " + State.getScore()));
-		GameWindow.addOverlay(new Text(0, 32, "Distance: " 
+		GameScreen.addOverlay(new Text(0, 16, "Score: " + State.getScore()));
+		GameScreen.addOverlay(new Text(0, 32, "Distance: " 
 				+ State.moduloDistance()));
-		GameWindow.addOverlay(new Text(0, 48, "Coins: " + State.getCoins()));
+		GameScreen.addOverlay(new Text(0, 48, "Coins: " + State.getCoins()));
 	}
 
 	private Group renderEntities() {

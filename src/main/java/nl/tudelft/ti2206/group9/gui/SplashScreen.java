@@ -21,9 +21,6 @@ import javafx.util.Duration;
  */
 @SuppressWarnings("restriction")
 public final class SplashScreen extends Application {
-
-	/** Hide public constructor. */
-	public SplashScreen() { }
 	
     /**
      * Creating and  displaying the scene.
@@ -32,7 +29,7 @@ public final class SplashScreen extends Application {
     public void start(final Stage primaryStage) {
         /* Creating a new stackpane and scene. */
         StackPane root = new StackPane();
-        Scene scene = new Scene(root, GameWindow.WIDTH, GameWindow.HEIGHT);
+        Scene scene = new Scene(root, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
         /* Creating a new label for displaying text. */
         Label text = new Label("Press any key to continue");
@@ -69,7 +66,7 @@ public final class SplashScreen extends Application {
      * Main method to launch the application.
      * @param args -
      */
-    public static void main(String[] args) {
+    public static void main(String... args) {
         launch(args);
     }
 }

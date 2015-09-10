@@ -3,6 +3,15 @@
   <groupId>nl.tudelft.ti2206.group9</groupId>
   <artifactId>ti2206-sem-group-9</artifactId>
   <version>0.3.1</version>
+  <repositories>
+    <repository>
+        <id>maven-central-repo</id>
+        <url>http://repo1.maven.org/maven2</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+   </repositories>
   <dependencies>
   	<dependency>
   		<groupId>junit</groupId>
@@ -14,6 +23,18 @@
 		<artifactId>mockito-core</artifactId>
 		<version>2.0.5-beta</version>
 	</dependency>
+	<dependency>
+        <groupId>org.testfx</groupId>
+        <artifactId>testfx-core</artifactId>
+        <version>4.0.1-alpha</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.testfx</groupId>
+        <artifactId>testfx-junit</artifactId>
+        <version>4.0.1-alpha</version>
+        <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
   	<plugins>
