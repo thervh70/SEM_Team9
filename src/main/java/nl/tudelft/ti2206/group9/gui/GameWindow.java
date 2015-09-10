@@ -1,9 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-/**
- * @author Robin, Maarten
- */
-
 import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -24,6 +20,9 @@ import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.KeyMap;
 
+/**
+ * @author Robin, Maarten
+ */
 @SuppressWarnings("restriction")
 public final class GameWindow {
 
@@ -31,32 +30,47 @@ public final class GameWindow {
 	public static final int WIDTH = 480;
 	/** Height of the Window. */
 	public static final int HEIGHT = 640;
-	
+
 	/** Threadlock. */
 	public static final Object LOCK = new Object();
 
+	/** The translation of the camera. */
 	private static final Translate CAMERA_TRANS = new Translate(0, -5, -12);
+	/** The rotation of the camera. */
 	private static final Rotate CAMERA_ROT = new Rotate(-10, Rotate.X_AXIS);
+	/** The near end of the camera. */
 	private static final double CAMERA_NEAR = 0.1;
+	/** The far end of the camera. */
 	private static final double CAMERA_FAR = 1000;
 
+	/** The KeyMap to be used. */
 	private static KeyMap keyMap = new KeyMap();
+	/** The root. */
 	private static Group root;
+	/** The world. */
 	private static Group world;
+	/** The overlay. */
 	private static Group overlay;
+	/** The scene. */
 	private static Scene scene;
+	/** The worldscene. */
 	private static SubScene worldScene;
+	/** The overlayscene. */
 	private static SubScene overlayScene;
+	/** The ExternalTicker to be used. */
 	private static ExternalTicker extTicker;
+	/** Indicate whether the game is running. */
 	private static boolean running;
+	/** The primarystage. */
 	private static Stage primaryStage;
 
-	
 	/** Hide public constructor. */
 	private GameWindow() { }
 
-	/** Start the Application. */
-	public static void start(Stage stage) {
+	/** Start the Application.
+	 * @param stage stage
+	 */
+	public static void start(final Stage stage) {
 		State.reset();
 
 		primaryStage = stage;
@@ -99,14 +113,16 @@ public final class GameWindow {
 
 	/**
 	 * Make sure KeyEvents are handled in {@link KeyMap}.
+	 * @param primeStage the primaryStage
 	 */
-	private static void keyBindings(final Stage primaryStage) {
+	private static void keyBindings(final Stage primeStage) {
 		KeyMap.defaultKeys();
 
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
-				if (running && keyEvent.getCode().equals(KeyCode.ESCAPE)) {
-					showPauseMenu(primaryStage);
+				if (running && keyEvent.getCode()
+						.equals(KeyCode.ESCAPE)) {
+					showPauseMenu(primeStage);
 				} else if (running) {
 					keyMap.keyPressed(keyEvent.getCode());
 				}
@@ -129,7 +145,7 @@ public final class GameWindow {
 			}
 		});
 	}
-	
+
 	/** Start the tickers. */
 	public static void startTickers() {
 		extTicker = new ExternalTicker();
@@ -144,7 +160,7 @@ public final class GameWindow {
 		InternalTicker.start();
 		running = true;
 	}
-	
+
 	/** Stop the tickers. */
 	public static void stopTickers() {
 		running = false;
@@ -154,22 +170,23 @@ public final class GameWindow {
 
 	/**
 	 * Show a pause menu.
-	 * @param primaryStage main stage of the game.
+	 * @param primeStage main stage of the game.
 	 */
-	public static void showPauseMenu(final Stage primaryStage) {
+	public static void showPauseMenu(final Stage primeStage) {
 		stopTickers();
 
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
-			public void handle(MouseEvent e) {
+			public void handle(final MouseEvent e) {
 				State.reset();
-				StartScreen.start(primaryStage);
+				StartScreen.start(primeStage);
 			}
 		};
 
-		EventHandler<MouseEvent> resume = new EventHandler<MouseEvent>() {
+		EventHandler<MouseEvent> resume
+				= new EventHandler<MouseEvent>() {
 
-			public void handle(MouseEvent e) {
+			public void handle(final MouseEvent e) {
 				resumeTickers();
 			}
 		};
@@ -185,27 +202,32 @@ public final class GameWindow {
 	public static void showDeathMenu() {
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
-			public void handle(MouseEvent e) {
+			public void handle(final MouseEvent e) {
 				State.reset();
 				StartScreen.start(primaryStage);
 			}
 		};
 
-		EventHandler<MouseEvent> retry = new EventHandler<MouseEvent>() {
+		EventHandler<MouseEvent> retry
+				= new EventHandler<MouseEvent>() {
 
-			public void handle(MouseEvent e) {
+			public void handle(final MouseEvent e) {
 				State.reset();
 				GameWindow.start(primaryStage);
 			}
 		};
 
-		Popup confirm = PopupMenu.makeFinalMenu("Game Ended", State.getScore(),
-			State.getCoins(), "Try again", "Return to Main Menu", retry, menu);
+		Popup confirm
+			= PopupMenu.makeFinalMenu("Game Ended",
+				State.getScore(),
+			State.getCoins(), "Try again",
+				"Return to Main Menu", retry, menu);
 		confirm.show(primaryStage);
 	}
 
 	/**
 	 * Adds node to the world.
+	 * @param node the Node
 	 * @return true (as specified by Collections.add)
 	 */
 	public static boolean addWorld(final Node node) {
@@ -221,6 +243,7 @@ public final class GameWindow {
 
 	/**
 	 * Adds node to the overlay.
+	 * @param node the Node
 	 * @return true (as specified by Collections.add)
 	 */
 	public static boolean addOverlay(final Node node) {

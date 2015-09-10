@@ -19,7 +19,7 @@ public final class StartScreen {
 
 	/** Hide public constructor. */
 	private StartScreen() { }
-	
+
     /**
      *Creating and displaying the startscreen.
      *
@@ -61,19 +61,19 @@ public final class StartScreen {
 
         /**Setting function of the buttons. */
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
                 System.exit(0);
             }
         });
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
                 GameWindow.start(primaryStage);
             }
         });
 
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
              //   SettingsScreen.start(primaryStage);
             }
         });
