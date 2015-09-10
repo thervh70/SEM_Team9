@@ -139,7 +139,8 @@ public class Track {
 	 */
 	public final boolean containsCenter(final Point3D center) {
 		for (AbstractEntity entity : entities) {
-			if (entity.getCenter().equals(center)) {
+			if (entity.getCenter().getX() == center.getX()
+					&& entity.getCenter().getZ() == center.getZ()) {
 				return true;
 			}
 		}
@@ -228,7 +229,7 @@ public class Track {
 	 */
 	private void createSingleObstacle() {
 		int x;
-		int lane = random.nextInt(4);
+		int lane = random.nextInt(3);
 		if (this.containsCenter(new Point3D(lane - 1, 0, LENGTH))) {
 			lane = (lane + 1) % 3;
 		}

@@ -1,0 +1,209 @@
+*   [31m15b9988[m -[33m (HEAD -> 23-Generating-track, origin/23-Generating-track)[m Merge branch '23-Generating-track' of https://github.com/thervh70/SEM_Team9 into 23-Generating-track [32m(3 hours ago) [1;34m<MathiasMeuleman>[m
+[31m|[m[32m\[m  
+[31m|[m * [31m768dc0a[m -[33m (origin/master, origin/HEAD, master)[m Delete rules.md [32m(18 hours ago) [1;34m<Robin van Heukelum>[m
+[31m|[m *   [31m9b2d3eb[m -[33m[m Merge pull request #50 from thervh70/37-startscreen [32m(20 hours ago) [1;34m<Robin van Heukelum>[m
+[31m|[m [33m|[m[34m\[m  
+[31m|[m [33m|[m * [31mc113b5e[m -[33m[m Fixed some comments. [32m(22 hours ago) [1;34m<Maikel Kerkhof>[m
+[31m|[m [33m|[m * [31m5998a05[m -[33m[m Fixed checkstyle [32m(22 hours ago) [1;34m<Maikel Kerkhof>[m
+[31m|[m [33m|[m * [31m7cc4f74[m -[33m[m Added comments. [32m(22 hours ago) [1;34m<Maikel Kerkhof>[m
+[31m|[m [33m|[m *   [31md4183e4[m -[33m[m Merge branch 'master' into 37-startscreen [32m(23 hours ago) [1;34m<rvanheukelum>[m
+[31m|[m [33m|[m [35m|[m[33m\[m  
+[31m|[m [33m|[m [35m|[m[33m/[m  
+[31m|[m [33m|[m[33m/[m[35m|[m   
+[31m|[m * [35m|[m   [31m1714c8d[m -[33m[m Merge pull request #59 from thervh70/57-more-player-movement [32m(23 hours ago) [1;34m<Robin van Heukelum>[m
+[31m|[m [1;31m|[m[1;32m\[m [35m\[m  
+[31m|[m [1;31m|[m * [35m\[m   [31mf6488e4[m -[33m[m Merge branch 'master' into 57-more-player-movement [32m(23 hours ago) [1;34m<rvanheukelum>[m
+[31m|[m [1;31m|[m [1;33m|[m[1;31m\[m [35m\[m  
+[31m|[m [1;31m|[m [1;33m|[m[1;31m/[m [35m/[m  
+[31m|[m [1;31m|[m[1;31m/[m[1;33m|[m [35m|[m   
+[31m|[m * [1;33m|[m [35m|[m   [31m830cf08[m -[33m[m Merge pull request #60 from thervh70/58-improve-tickers [32m(23 hours ago) [1;34m<Robin van Heukelum>[m
+[31m|[m [1;35m|[m[1;36m\[m [1;33m\[m [35m\[m  
+[31m|[m [1;35m|[m * [1;33m\[m [35m\[m   [31m3f662d9[m -[33m[m Merge branch 'master' into 58-improve-tickers [32m(23 hours ago) [1;34m<rvanheukelum>[m
+[31m|[m [1;35m|[m [31m|[m[1;35m\[m [1;33m\[m [35m\[m  
+[31m|[m [1;35m|[m [31m|[m[1;35m/[m [1;33m/[m [35m/[m  
+[31m|[m [1;35m|[m[1;35m/[m[31m|[m [1;33m|[m [35m|[m   
+[31m|[m * [31m|[m [1;33m|[m [35m|[m   [31m83323aa[m -[33m[m Merge pull request #55 from thervh70/31-Displaying-distance [32m(24 hours ago) [1;34m<Robin van Heukelum>[m
+[31m|[m [33m|[m[34m\[m [31m\[m [1;33m\[m [35m\[m  
+[31m|[m [33m|[m * [31m\[m [1;33m\[m [35m\[m   [31m342035f[m -[33m[m Merge branch 'master' into 31-Displaying-distance [32m(24 hours ago) [1;34m<rvanheukelum>[m
+[31m|[m [33m|[m [35m|[m[33m\[m [31m\[m [1;33m\[m [35m\[m  
+[31m|[m [33m|[m [35m|[m[33m/[m [31m/[m [1;33m/[m [35m/[m  
+[31m|[m [33m|[m[33m/[m[35m|[m [31m|[m [1;33m|[m [35m|[m   
+[31m|[m * [35m|[m [31m|[m [1;33m|[m [35m|[m [31m2abb528[m -[33m[m Changed parameters to make game more fun [32m(17 hours ago) [1;34m<Maikel>[m
+[31m|[m [36m|[m * [31m|[m [1;33m|[m [35m|[m [31m241efec[m -[33m (origin/31-Displaying-distance, origin/18-Collected-coins, 31-Displaying-distance, 18-Collected-coins)[m #31 Replaced the moduloDistance method to the State class + some other changes. [32m(30 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m * [31m|[m [1;33m|[m [35m|[m [31m5ff0dfb[m -[33m[m #31 Improved the moduloDistance method, removed modDistance field. [32m(32 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m * [31m|[m [1;33m|[m [35m|[m [31mb15af72[m -[33m[m #31, #18 Made the distance counter more realistic and processed feedback. [32m(2 days ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m * [31m|[m [1;33m|[m [35m|[m [31m1524808[m -[33m[m #18 Added the coin counter to the GameWindow. [32m(2 days ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m * [31m|[m [1;33m|[m [35m|[m [31md9a7073[m -[33m[m #31 Added a distance getter to the (data-class) State for completeness + visibility changes + tests. [32m(2 days ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m * [31m|[m [1;33m|[m [35m|[m [31m8250f8a[m -[33m[m #31 Added last few tests to increase coverage even more + some refactoring. [32m(2 days ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m * [31m|[m [1;33m|[m [35m|[m [31mf5d4811[m -[33m[m #31 Every move the track makes is taken into account by the distance and is displayed in the GameWindow. [32m(2 days ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m * [31m|[m [1;33m|[m [35m|[m [31m525257c[m -[33m[m #31 Changed some tests as preparation for displaying the distance. [32m(2 days ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m * [31m|[m [1;33m|[m [35m|[m   [31m159b7a2[m -[33m[m Merge branch 'master' into 31-Displaying-distance [32m(2 days ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;31m|[m[1;32m\[m [31m\[m [1;33m\[m [35m\[m  
+[31m|[m [36m|[m * [1;32m|[m [31m|[m [1;33m|[m [35m|[m [31mf886e03[m -[33m[m #31 Added distance increase per track move to the first working version. [32m(7 days ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m * [1;32m|[m [31m|[m [1;33m|[m [35m|[m [31m4f22ec5[m -[33m[m #18 Amount of coins is now displayed in the first working version. [32m(7 days ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31m3c6abb7[m -[33m[m Changed parameters to make game more fun [32m(23 hours ago) [1;34m<Maikel>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31m2117eb4[m -[33m[m #31 Replaced the moduloDistance method to the State class + some other changes. [32m(23 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31meaf61c2[m -[33m[m #31 Improved the moduloDistance method, removed modDistance field. [32m(23 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31m03d2751[m -[33m[m #31, #18 Made the distance counter more realistic and processed feedback. [32m(23 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31me9e6da3[m -[33m[m #18 Added the coin counter to the GameWindow. [32m(23 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31maa974eb[m -[33m[m #31 Added a distance getter to the (data-class) State for completeness + visibility changes + tests. [32m(23 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31m7b79698[m -[33m[m #31 Added last few tests to increase coverage even more + some refactoring. [32m(23 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31m65376e8[m -[33m[m #31 Every move the track makes is taken into account by the distance and is displayed in the GameWindow. [32m(23 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31m6b8b521[m -[33m[m #31 Changed some tests as preparation for displaying the distance. [32m(23 hours ago) [1;34m<mdingjan>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31m76f28c7[m -[33m[m #58 Refactor scheduleTime in InternalTicker [32m(25 hours ago) [1;34m<Maarten Sijm>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31me7c8231[m -[33m[m #58 Added "The Great Lock" for the Tickers to use [32m(26 hours ago) [1;34m<Maarten Sijm>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [1;33m|[m [35m|[m [31m418b117[m -[33m[m #58 Add method to stop tickers at the same time [32m(27 hours ago) [1;34m<Maarten Sijm>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m [1;32m|[m * [35m|[m [31m0f34424[m -[33m[m #57 Add new move methods to test suite [32m(24 hours ago) [1;34m<Maarten Sijm>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m [1;32m|[m[1;32m/[m [35m/[m  
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m * [35m|[m   [31m4ba7b3d[m -[33m (origin/57-more-player-movement, 57-more-player-movement)[m Merge 'v0.3.1' of https://github.com/thervh70/SEM_Team9 into 57-more-player-movement [32m(31 hours ago) [1;34m<Maarten Sijm>[m
+[31m|[m [36m|[m [1;32m|[m [1;32m|[m [1;33m|[m[36m\[m [35m\[m  
+[31m|[m [36m|[m [1;32m|[m[36m_[m[1;32m|[m[36m_[m[1;33m|[m[36m/[m [35m/[m  
+[31m|[m [36m|[m[36m/[m[1;32m|[m [1;32m|[m [1;33m|[m [35m|[m   
+[31m|[m * [1;32m|[m [1;32m|[m [1;33m|[m [35m|[m [31m53ed266[m -[33m (tag: v0.3.1)[m Updated version number to v0.3.1 [32m(32 hours ago) [1;34m<Maarten Sijm>[m
+[31m|[m * [1;32m|[m [1;32m|[m [1;33m|[m [35m|[m [31ma15eb4e[m -[33m[m (no-issue) Remove jdk8 sudo, because it was already listed [32m(32 hours ago) [1;34m<Maarten Sijm>[m
+[31m|[m [1;34m|[m [1;32m|[m [1;32m|[m * [35m|[m [31m58675b2[m -[33m[m #57 Add sliding and switching lanes smoothly [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[31m|[m [1;34m|[m [1;32m|[m[1;34m_[m[1;32m|[m[1;34m/[m [35m/[m  
+[31m|[m [1;34m|[m[1;34m/[m[1;32m|[m [1;32m|[m [35m|[m   
+[31m|[m * [1;32m|[m [1;32m|[m [35m|[m [31m2e097d3[m -[33m[m (no-issue) Revert removing synchronized from renderEntities() [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[31m|[m * [1;32m|[m [1;32m|[m [35m|[m [31m319835a[m -[33m[m (no issue) Move InternalTicker to level package [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[31m|[m * [1;32m|[m [1;32m|[m [35m|[m [31m4c462b6[m -[33m[m (no issue) Make Travis use Container-based infrastructure [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[31m|[m [1;32m|[m [1;32m|[m[1;32m/[m [35m/[m  
+[31m|[m [1;32m|[m[1;32m/[m[1;32m|[m [35m|[m   
+[31m|[m [1;32m|[m [1;32m|[m * [31m4d0707d[m -[33m (origin/37-startscreen, 37-startscreen)[m #37 connected main menu to game [32m(2 days ago) [1;34m<rvanheukelum>[m
+[31m|[m [1;32m|[m [1;32m|[m *   [31mad405e9[m -[33m[m Merge branch 'master' into 37-startscreen [32m(2 days ago) [1;34m<rvanheukelum>[m
+[31m|[m [1;32m|[m [1;32m|[m [1;35m|[m[1;32m\[m  
+[31m|[m [1;32m|[m [1;32m|[m[1;32m_[m[1;35m|[m[1;32m/[m  
+[31m|[m [1;32m|[m[1;32m/[m[1;32m|[m [1;35m|[m   
+[31m|[m [1;32m|[m [1;32m|[m * [31m02bd4d9[m -[33m[m Basic startscreen, navigation works, starting a game doesn't [32m(2 days ago) [1;34m<Maikel Kerkhof>[m
+[31m|[m [1;32m|[m [1;32m|[m *   [31m97002ea[m -[33m[m Merge branch '7-3dspace' into 37-startscreen [32m(2 days ago) [1;34m<rvanheukelum>[m
+[31m|[m [1;32m|[m [1;32m|[m [31m|[m[32m\[m  
+[31m|[m [1;32m|[m [1;32m|[m * [32m|[m [31m3d8fbc3[m -[33m[m Very, very basic startscreen [32m(7 days ago) [1;34m<Maikel Kerkhof>[m
+[31m|[m [1;32m|[m [1;32m|[m * [32m|[m [31m2fed78a[m -[33m[m Initial commit, added GUI package [32m(8 days ago) [1;34m<Maikel Kerkhof>[m
+* [1;32m|[m [1;32m|[m [32m|[m [32m|[m [31m3c9f679[m -[33m[m  #23 Add single obstacles and fully testes Track [32m(4 hours ago) [1;34m<MathiasMeuleman>[m
+* [1;32m|[m [1;32m|[m [32m|[m [32m|[m   [31m6031bac[m -[33m[m Merge branch 'master' into 23-Generating-track [32m(29 hours ago) [1;34m<MathiasMeuleman>[m
+[33m|[m[1;32m\[m [1;32m\[m [1;32m\[m [32m\[m [32m\[m  
+[33m|[m [1;32m|[m[1;32m/[m [1;32m/[m [32m/[m [32m/[m  
+[33m|[m * [1;32m|[m [32m|[m [32m|[m [31m91924c8[m -[33m (tag: v0.3)[m Updated version number to v0.3 [32m(2 days ago) [1;34m<rvanheukelum>[m
+[33m|[m * [1;32m|[m [32m|[m [32m|[m   [31mcc46bb7[m -[33m[m Merge branch '12-jumping' [32m(2 days ago) [1;34m<rvanheukelum>[m
+[33m|[m [35m|[m[36m\[m [1;32m\[m [32m\[m [32m\[m  
+[33m|[m [35m|[m * [1;32m\[m [32m\[m [32m\[m   [31m532f51f[m -[33m[m Merge branch '7-3dspace' of https://github.com/thervh70/SEM_Team9 into 12-jumping [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m [35m|[m [1;31m|[m[1;32m\[m [1;32m\[m [32m\[m [32m\[m  
+[33m|[m [35m|[m * [1;32m|[m [1;32m|[m [32m|[m [32m|[m [31m6edf272[m -[33m[m (no issue) Write test for State to UP line coverage [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m [35m|[m * [1;32m|[m [1;32m|[m [32m|[m [32m|[m [31m815bb0b[m -[33m[m #12 Test jumping and added support for sliding [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m [35m|[m * [1;32m|[m [1;32m|[m [32m|[m [32m|[m   [31me568ac2[m -[33m (origin/12-jumping)[m Merge branch 'master' of https://github.com/thervh70/SEM_Team9 into 12-jumping [32m(3 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m [35m|[m [1;33m|[m[1;34m\[m [1;32m\[m [1;32m\[m [32m\[m [32m\[m  
+[33m|[m [35m|[m * [1;34m|[m [1;32m|[m [1;32m|[m [32m|[m [32m|[m [31ma110fb6[m -[33m[m #12 Make the player able to jump [32m(6 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m * [1;34m|[m [1;34m|[m [1;32m|[m [1;32m|[m [32m|[m [32m|[m [31mb1493f6[m -[33m[m Fixed checkstyle warnings [32m(2 days ago) [1;34m<rvanheukelum>[m
+[33m|[m [1;32m|[m [1;34m|[m[1;32m_[m[1;34m|[m[1;32m/[m [1;32m/[m [32m/[m [32m/[m  
+[33m|[m [1;32m|[m[1;32m/[m[1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [32m|[m   
+[33m|[m * [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [32m|[m   [31m0c43a3b[m -[33m[m Merge branch 'master' of https://github.com/thervh70/SEM_Team9 into 7-3dspace [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m [1;35m|[m[1;36m\[m [1;34m\[m [1;34m\[m [1;32m\[m [32m\[m [32m\[m  
+[33m|[m [1;35m|[m * [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [32m|[m [31m5248de3[m -[33m (origin/53-textures)[m Fixed checkstyle warnings [32m(2 days ago) [1;34m<rvanheukelum>[m
+[33m|[m * [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [32m|[m [31m235dac8[m -[33m[m #7 Change interface to add objects to scene [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m [32m|[m [1;36m|[m[32m_[m[1;34m|[m[32m_[m[1;34m|[m[32m_[m[1;32m|[m[32m_[m[32m|[m[32m/[m  
+[33m|[m [32m|[m[32m/[m[1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m   
+[33m|[m * [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31mf716ff6[m -[33m[m #7 Add 2D overlay [32m(2 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m * [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m28392ad[m -[33m (origin/7-3dspace, 7-3dspace)[m #7 Exit command-line, Enter 3D-scene! [32m(3 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m * [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m   [31m6035cbb[m -[33m[m Merge branch 'master' of https://github.com/thervh70/SEM_Team9 into 7-3dspace [32m(3 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m [31m|[m[1;36m\[m [1;36m\[m [1;34m\[m [1;34m\[m [1;32m\[m [32m\[m  
+[33m|[m [31m|[m [1;36m|[m[1;36m/[m [1;34m/[m [1;34m/[m [1;32m/[m [32m/[m  
+[33m|[m * [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m   [31m9e67d6c[m -[33m[m Merge branch 'master' of https://github.com/thervh70/SEM_Team9 into 7-3dspace [32m(6 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m [33m|[m[34m\[m [1;36m\[m [1;34m\[m [1;34m\[m [1;32m\[m [32m\[m  
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31mf038e2c[m -[33m[m #7 Somehow made 3D space work [32m(6 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m5e925af[m -[33m[m First tests in 3d space [32m(6 days ago) [1;34m<rvanheukelum>[m
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m015b8ea[m -[33m[m Updated pom.xml with new version number [32m(7 days ago) [1;34m<rvanheukelum>[m
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m532edf9[m -[33m[m #2 Fix more Octopull warnings about documentation [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m694e53d[m -[33m[m #2 Fixed Octopull warnings about documentation [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m7b43325[m -[33m[m #2 confirm that collision between Coins has no effect [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31mfd2b0ea[m -[33m[m #2 Add CollisionTest [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m14e87b6[m -[33m[m #2 Test initial framework automatically with JUnit [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m8db1e17[m -[33m[m Attempt to make travis work [32m(8 days ago) [1;34m<rvanheukelum>[m
+[33m|[m * [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m660b8b6[m -[33m[m #7 working on basic 3d environment [32m(8 days ago) [1;34m<rvanheukelum>[m
+* [34m|[m [34m|[m [1;36m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31mf6fdad0[m -[33m[m  #23 Add Coin generation [32m(2 days ago) [1;34m<MathiasMeuleman>[m
+[1;36m|[m [34m|[m[1;36m_[m[34m|[m[1;36m/[m [1;34m/[m [1;34m/[m [1;32m/[m [32m/[m  
+[1;36m|[m[1;36m/[m[34m|[m [34m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m   
+* [34m|[m [34m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31mc484b3c[m -[33m[m  Fix checkstyle errors [32m(3 days ago) [1;34m<MathiasMeuleman>[m
+* [34m|[m [34m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m [31mf9a37d0[m -[33m[m Resolved checkstyle warnings and deleted space [32m(3 days ago) [1;34m<rvanheukelum>[m
+* [34m|[m [34m|[m [1;34m|[m [1;34m|[m [1;32m|[m [32m|[m   [31mcd8a088[m -[33m[m Merge branch 'master' of https://github.com/thervh70/SEM_Team9 [32m(3 days ago) [1;34m<MathiasMeuleman>[m
+[35m|[m[1;34m\[m [34m\[m [34m\[m [1;34m\[m [1;34m\[m [1;32m\[m [32m\[m  
+[35m|[m [1;34m|[m [34m|[m[1;34m_[m[34m|[m[1;34m_[m[1;34m|[m[1;34m/[m [1;32m/[m [32m/[m  
+[35m|[m [1;34m|[m[1;34m/[m[34m|[m [34m|[m [1;34m|[m [1;32m|[m [32m|[m   
+[35m|[m * [34m|[m [34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m2e228c0[m -[33m (tag: v0.2)[m (no issue) Updated version number in pom.xml to 0.2 [32m(3 days ago) [1;34m<Maarten Sijm>[m
+* [36m|[m [34m|[m [34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m889415c[m -[33m[m  #4 Remove unneccesary method [32m(3 days ago) [1;34m<MathiasMeuleman>[m
+[36m|[m[36m/[m [34m/[m [34m/[m [1;34m/[m [1;32m/[m [32m/[m  
+* [34m|[m [34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m61db469[m -[33m[m  #4 Add KeyMapTest [32m(3 days ago) [1;34m<MathiasMeuleman>[m
+* [34m|[m [34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m6edb62a[m -[33m[m (no issue) Switch axes to comply with JavaFX: X->Z, Y->X, Z->Y [32m(3 days ago) [1;34m<Maarten Sijm>[m
+* [34m|[m [34m|[m [1;34m|[m [1;32m|[m [32m|[m   [31mdbea9c7[m -[33m[m Merge pull request #52 from thervh70/4-lanes [32m(3 days ago) [1;34m<mdingjan>[m
+[34m|[m[1;32m\[m [34m\[m [34m\[m [1;34m\[m [1;32m\[m [32m\[m  
+[34m|[m [1;32m|[m[34m_[m[34m|[m[34m/[m [1;34m/[m [1;32m/[m [32m/[m  
+[34m|[m[34m/[m[1;32m|[m [34m|[m [1;34m|[m [1;32m|[m [32m|[m   
+[34m|[m * [34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m9112e37[m -[33m (origin/4-lanes, 4-lanes)[m #4 Fixed last two Checkstyle warnings. [32m(3 days ago) [1;34m<mdingjan>[m
+[34m|[m * [34m|[m [1;34m|[m [1;32m|[m [32m|[m [31m1954eca[m -[33m[m #4 Fix Checkstyle warnings: updated naming and JavaDoc [32m(4 days ago) [1;34m<Maarten Sijm>[m
+[34m|[m * [34m|[m [1;34m|[m [1;32m|[m [32m|[m   [31mdd2b272[m -[33m[m Merge branch 'master' of https://github.com/thervh70/SEM_Team9 into 4-lanes [32m(4 days ago) [1;34m<Maarten Sijm>[m
+[34m|[m [1;33m|[m[34m\[m [34m\[m [1;34m\[m [1;32m\[m [32m\[m  
+[34m|[m [1;33m|[m[34m/[m [34m/[m [1;34m/[m [1;32m/[m [32m/[m  
+[34m|[m[34m/[m[1;33m|[m [34m|[m [1;34m|[m [1;32m|[m [32m|[m   
+* [1;33m|[m [34m|[m [1;34m|[m [1;32m|[m [32m|[m   [31m298c602[m -[33m[m Merge pull request #51 from thervh70/47-tick-scheduler [32m(6 days ago) [1;34m<Robin van Heukelum>[m
+[1;35m|[m[1;34m\[m [1;33m\[m [34m\[m [1;34m\[m [1;32m\[m [32m\[m  
+[1;35m|[m [1;34m|[m [1;33m|[m[1;34m_[m[34m|[m[1;34m/[m [1;32m/[m [32m/[m  
+[1;35m|[m [1;34m|[m[1;34m/[m[1;33m|[m [34m|[m [1;32m|[m [32m|[m   
+[1;35m|[m * [1;33m|[m [34m|[m [1;32m|[m [32m|[m [31m2796edf[m -[33m[m #47 Ensure Timer threads are stopped after having run [32m(6 days ago) [1;34m<Maarten Sijm>[m
+[1;35m|[m * [1;33m|[m [34m|[m [1;32m|[m [32m|[m [31med78874[m -[33m (origin/47-tick-scheduler)[m (No issue) Add Javadoc to test class TestEntity [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[1;35m|[m * [1;33m|[m [34m|[m [1;32m|[m [32m|[m [31mf694fdc[m -[33m[m #47 Fix Javadoc comments [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[1;35m|[m * [1;33m|[m [34m|[m [1;32m|[m [32m|[m [31m9e6ece0[m -[33m[m (No issue) Add hashCode test to Abstract entity [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[1;35m|[m * [1;33m|[m [34m|[m [1;32m|[m [32m|[m [31ma747983[m -[33m[m #47 Enable Java 1.8 in Travis [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[1;35m|[m * [1;33m|[m [34m|[m [1;32m|[m [32m|[m   [31m1a0adca[m -[33m[m Merge branch '13-obstacles' of https://github.com/thervh70/SEM_Team9 into 47-tick-scheduler [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[1;35m|[m [31m|[m[32m\[m [1;33m\[m [34m\[m [1;32m\[m [32m\[m  
+[1;35m|[m * [32m|[m [1;33m|[m [34m|[m [1;32m|[m [32m|[m [31mea3529e[m -[33m[m #47 Rewrite Tick Scheduler [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[1;35m|[m [32m|[m [32m|[m * [34m|[m [1;32m|[m [32m|[m   [31m2d5475c[m -[33m[m Merge branch 'master' into 4-lanes [32m(6 days ago) [1;34m<rvanheukelum>[m
+[1;35m|[m [32m|[m [32m|[m [33m|[m[1;35m\[m [34m\[m [1;32m\[m [32m\[m  
+[1;35m|[m [32m|[m[1;35m_[m[32m|[m[1;35m_[m[33m|[m[1;35m/[m [34m/[m [1;32m/[m [32m/[m  
+[1;35m|[m[1;35m/[m[32m|[m [32m|[m [33m|[m [34m|[m [1;32m|[m [32m|[m   
+* [32m|[m [32m|[m [33m|[m [34m|[m [1;32m|[m [32m|[m   [31m64b0c2f[m -[33m[m Merge pull request #49 from thervh70/13-obstacles [32m(6 days ago) [1;34m<Robin van Heukelum>[m
+[32m|[m[32m\[m [32m\[m [32m\[m [33m\[m [34m\[m [1;32m\[m [32m\[m  
+[32m|[m [32m|[m [32m|[m[32m/[m [33m/[m [34m/[m [1;32m/[m [32m/[m  
+[32m|[m [32m|[m[32m/[m[32m|[m [33m|[m [34m|[m [1;32m|[m [32m/[m   
+[32m|[m [32m|[m[32m_[m[32m|[m[32m_[m[33m|[m[32m_[m[34m|[m[32m_[m[1;32m|[m[32m/[m    
+[32m|[m[32m/[m[32m|[m [32m|[m [33m|[m [34m|[m [1;32m|[m     
+[32m|[m * [32m|[m [33m|[m [34m|[m [1;32m|[m [31m1c82e6b[m -[33m (origin/13-obstacles, 13-obstacles)[m #13 Update documentation [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[32m|[m [1;32m|[m [32m|[m[1;32m_[m[33m|[m[1;32m_[m[34m|[m[1;32m/[m  
+[32m|[m [1;32m|[m[1;32m/[m[32m|[m [33m|[m [34m|[m   
+[32m|[m * [32m|[m [33m|[m [34m|[m [31m5537559[m -[33m[m #13 Fix JavaDoc and other Static Analysis warnings [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[32m|[m * [32m|[m [33m|[m [34m|[m   [31m910113c[m -[33m[m Merge branch '13-obstacles' of https://github.com/thervh70/SEM_Team9 into 13-obstacles [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[32m|[m [1;31m|[m[32m\[m [32m\[m [33m\[m [34m\[m  
+[32m|[m [1;31m|[m [32m|[m[32m/[m [33m/[m [34m/[m  
+[32m|[m [1;31m|[m * [33m|[m [34m|[m [31m5a2112a[m -[33m[m #13 Player now properly dies when hitting an obstacle [32m(8 days ago) [1;34m<Maarten Sijm>[m
+[32m|[m [1;31m|[m * [33m|[m [34m|[m [31m82a9caf[m -[33m[m #7 Add entity Obstacle, no idea how to test it yet [32m(8 days ago) [1;34m<Maarten Sijm>[m
+[32m|[m * [1;32m|[m [33m|[m [34m|[m [31m6402214[m -[33m[m #13 Player now properly dies when hitting an obstacle [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[32m|[m * [1;32m|[m [33m|[m [34m|[m [31mcb74eee[m -[33m[m #7 Add entity Obstacle, no idea how to test it yet [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[32m|[m[32m/[m [1;32m/[m [33m/[m [34m/[m  
+[32m|[m [1;32m|[m * [34m|[m [31m0b17593[m -[33m[m Add player movement, including tests [32m(6 days ago) [1;34m<MathiasMeuleman>[m
+[32m|[m [1;32m|[m * [34m|[m [31mbcabdcf[m -[33m[m  #4 Add lanes to gameplay [32m(7 days ago) [1;34m<MathiasMeuleman>[m
+[32m|[m [1;32m|[m[32m/[m [34m/[m  
+[32m|[m[32m/[m[1;32m|[m [34m|[m   
+* [1;32m|[m [34m|[m [31mc02a099[m -[33m[m Updated pom.xml with new version number [32m(7 days ago) [1;34m<rvanheukelum>[m
+* [1;32m|[m [34m|[m   [31m9c176a5[m -[33m (tag: v0.1)[m Merge pull request #45 from thervh70/branch-2-initial-framework [32m(7 days ago) [1;34m<Robin van Heukelum>[m
+[1;33m|[m[1;34m\[m [1;32m\[m [34m\[m  
+[1;33m|[m * [1;32m|[m [34m|[m [31md4df33f[m -[33m[m #2 Fix more Octopull warnings about documentation [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[1;33m|[m * [1;32m|[m [34m|[m [31m105be73[m -[33m[m #2 Fixed Octopull warnings about documentation [32m(7 days ago) [1;34m<Maarten Sijm>[m
+[1;33m|[m * [1;32m|[m [34m|[m [31m888d6c7[m -[33m[m #2 confirm that collision between Coins has no effect [32m(8 days ago) [1;34m<Maarten Sijm>[m
+[1;33m|[m [1;32m|[m[1;32m/[m [34m/[m  
+[1;33m|[m * [34m|[m [31m22d23fb[m -[33m[m #2 Add CollisionTest [32m(8 days ago) [1;34m<Maarten Sijm>[m
+[1;33m|[m * [34m|[m [31m402bba5[m -[33m[m #2 Test initial framework automatically with JUnit [32m(8 days ago) [1;34m<Maarten Sijm>[m
+[1;33m|[m [34m|[m[34m/[m  
+[1;33m|[m * [31mb072165[m -[33m[m #2 Add track, first working version finished [32m(9 days ago) [1;34m<Maarten Sijm>[m
+[1;33m|[m * [31m0c9e8d7[m -[33m[m #2 Initial Entity framework, basic Coin and Player [32m(9 days ago) [1;34m<Maarten Sijm>[m
+[1;33m|[m[1;33m/[m  
+* [31mb2dd4a1[m -[33m[m Add mockito to pom.xml [32m(9 days ago) [1;34m<Maarten Sijm>[m
+* [31mde28855[m -[33m[m #1 Add Octopull and Static Analysis plugins [32m(9 days ago) [1;34m<Maarten Sijm>[m
+* [31ma3e4a5a[m -[33m[m Update rules.md [32m(9 days ago) [1;34m<Robin van Heukelum>[m
+* [31mb769dc0[m -[33m[m Added rules for git use [32m(9 days ago) [1;34m<rvanheukelum>[m
+* [31m8acc3f8[m -[33m[m Added new rules to gitignore [32m(10 days ago) [1;34m<rvanheukelum>[m
+* [31mbfa69af[m -[33m[m Add JUnit as dependency to pom.xml [32m(10 days ago) [1;34m<Maarten Sijm>[m
+* [31mc3df6e2[m -[33m[m Fix .travis.yml [32m(10 days ago) [1;34m<Maarten Sijm>[m
+* [31m4f3a4ab[m -[33m[m Update .travis.yml - add slack notifier [32m(10 days ago) [1;34m<Maarten Sijm>[m
+* [31m829e548[m -[33m[m Add .travis.yml [32m(10 days ago) [1;34m<Maarten Sijm>[m
+* [31m5511216[m -[33m[m Create empty Maven project and add Eclipse settings to .gitignore [32m(10 days ago) [1;34m<Maarten Sijm>[m
+* [31ma4b5a33[m -[33m[m Update README.md [32m(10 days ago) [1;34m<Robin van Heukelum>[m
+* [31mfac6ce2[m -[33m[m Create README.md [32m(10 days ago) [1;34m<Robin van Heukelum>[m
+* [31m5b82cea[m -[33m[m Initial commit [32m(10 days ago) [1;34m<Robin van Heukelum>[m

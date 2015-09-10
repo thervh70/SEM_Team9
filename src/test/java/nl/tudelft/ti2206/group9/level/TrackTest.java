@@ -75,7 +75,7 @@ public class TrackTest {
 
 	@Test
 	public void testContainsCenter() {
-		Coin coin = new Coin(new Point3D(0, 0, 0));
+		Coin coin = new Coin(new Point3D(1, 0, 0));
 		assertFalse(track.containsCenter(coin.getCenter()));
 		track.addEntity(coin);
 		assertTrue(track.containsCenter(coin.getCenter()));
@@ -101,7 +101,9 @@ public class TrackTest {
 		}
 	}
 
+	@Test
 	public void testAddDistance() {
+		track.setDistance(0);
 		track.addDistance(2.0);
 		track.addDistance(1.0);
 		assertEquals(2.0 + 1.0, track.getDistance(), DELTA);
