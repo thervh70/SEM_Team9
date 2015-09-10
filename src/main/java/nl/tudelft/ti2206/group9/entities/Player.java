@@ -1,5 +1,9 @@
 package nl.tudelft.ti2206.group9.entities;
 
+//import javax.sound.sampled.Clip;
+//import javax.sound.sampled.Mixer;
+
+//import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Direction;
@@ -45,6 +49,9 @@ public class Player extends AbstractEntity {
 	/** Rate at which the Player's size in-/decreases. */
 	private double slideSpeed;
 
+//	private static Mixer mixer;
+//	private static Clip clip;
+	
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
@@ -85,10 +92,16 @@ public class Player extends AbstractEntity {
 		if (collidee instanceof Coin) {
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
+//			AudioPlayer ap = new AudioPlayer(mixer, clip);
+//			ap.initialiseTune("sounds/coin.wav");
+//			ap.play();
 		}
 
 		if (collidee instanceof Obstacle) {
-			die();
+//			AudioPlayer ap = new AudioPlayer(mixer, clip);
+//			ap.initialiseTune("sounds/fail.wav");
+//			ap.play();
+			die();		
 		}
 	}
 
