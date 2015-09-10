@@ -32,9 +32,6 @@ public class Track {
 	/** Length of the track. */
 	public static final double LENGTH = 100;
 	
-	/** Standard modulus number for modDistance. */
-	public static final int MOD = 50;
-
 	/** List of entities on the track. */
 	private final List<AbstractEntity> entities;
 	/** Index of the player entity in the entities list. */
@@ -156,6 +153,7 @@ public class Track {
 		getPlayer().step();
 
 		distance += UNITS_PER_TICK;
+		State.addScore(UNITS_PER_TICK);
 		moveTrack(UNITS_PER_TICK);
 	}
 
