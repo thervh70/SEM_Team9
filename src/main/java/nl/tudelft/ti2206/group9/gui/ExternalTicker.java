@@ -17,7 +17,9 @@ public class ExternalTicker extends AnimationTimer {
 
 	@Override
 	public void handle(final long now) {
-		renderScene();
+		synchronized (GameWindow.LOCK) {
+			renderScene();
+		}
 	}
 
 	private void renderScene() {
@@ -31,8 +33,10 @@ public class ExternalTicker extends AnimationTimer {
 		final Group entities = renderEntities();
 		GameWindow.addWorld(entities);
 
-		GameWindow.addOverlay(
-				new Text(0, GameWindow.HEIGHT, "Score: " + State.getScore()));
+		GameWindow.addOverlay(new Text(0, 16, "Score: " + State.getScore()));
+		GameWindow.addOverlay(new Text(0, 32, "Distance: " 
+				+ State.moduloDistance()));
+		GameWindow.addOverlay(new Text(0, 48, "Coins: " + State.getCoins()));
 	}
 
 	private Group renderEntities() {
@@ -58,7 +62,7 @@ public class ExternalTicker extends AnimationTimer {
 				}
 
 				entities.getChildren().add(entityBox);
-			}
+            }
 		}
 		return entities;
 	}

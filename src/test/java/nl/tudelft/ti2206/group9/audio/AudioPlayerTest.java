@@ -23,15 +23,6 @@ public class AudioPlayerTest {
 	private static Mixer otherMixer;
 	
 	@Test
-	public void testPlay() {
-		test.initialiseTune("sounds/soundtrack.aiff");
-		test.play();
-		// The result is false, because JUnit directly stops the soundtrack.
-		assertFalse(test.getClip().isRunning());
-		test.stop();
-	}
-
-	@Test
 	public void testStop() {
 		test.initialiseTune("sounds/soundtrack.aiff");
 		test.play();
