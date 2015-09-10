@@ -51,7 +51,7 @@ public final class SettingsScreen {
             }
         });
 
-        settings = new Scene(grid, 640, 480);
+        settings = new Scene(grid, GameWindow.WIDTH, GameWindow.HEIGHT);
 
         primaryStage.setScene(settings);
         primaryStage.show();

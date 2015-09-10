@@ -30,7 +30,7 @@ public final class PopupMenu {
      * @param button2 Second button text
      * @param event First button event
      * @param event2 Second button event
-     * @return A fully build popup ready to be put on the screen.
+     * @return A fully built popup ready to be put on the screen.
      */
     public static Popup makeMenu(String t, String button1, String button2, 
     		final EventHandler<MouseEvent> event, 
@@ -64,7 +64,7 @@ public final class PopupMenu {
 
         no.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent n){
+            public void handle(MouseEvent n) {
                 warning.hide();
                 event2.handle(n);
             }
@@ -77,15 +77,21 @@ public final class PopupMenu {
     /**
      * Generic method to build popups.
      * Generates a menu based on the parameters.
-     * 2 mouseEvent listeners are passed to this method in order to setup buttons in the popup.
+     * 2 mouseEvent listeners are passed to this method in order to setup 
+     * buttons in the popup.
      * @param t Text to be displayed in popup
+     * @param score Score to be displayed
+     * @param coins Total amount of coins to be displayed
      * @param button1 First button text
      * @param button2 Second button text
      * @param event First button event
      * @param event2 Second button event
-     * @return A fully build popup ready to be put on the screen.
+     * @return A fully built popup ready to be put on the screen.
      */
-    public static Popup makeFinalMenu(String t, int score, int coins, String button1, String button2, final EventHandler<MouseEvent> event, final EventHandler<MouseEvent> event2) {
+    public static Popup makeFinalMenu(String t, int score, int coins, 
+    		String button1, String button2, 
+    		final EventHandler<MouseEvent> event, 
+    		final EventHandler<MouseEvent> event2) {
 
         final Popup warning = new Popup();
         warning.centerOnScreen();
@@ -119,7 +125,7 @@ public final class PopupMenu {
 
         no.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent n){
+            public void handle(MouseEvent n) {
                 warning.hide();
                 event2.handle(n);
             }

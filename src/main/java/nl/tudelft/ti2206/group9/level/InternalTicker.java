@@ -1,13 +1,12 @@
 package nl.tudelft.ti2206.group9.level;
 
-import javafx.application.Platform;
-import javafx.stage.Stage;
-import nl.tudelft.ti2206.group9.gui.GameWindow;
-
 import java.time.Instant;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.application.Platform;
+import nl.tudelft.ti2206.group9.gui.GameWindow;
 
 /**
  * This thread handles the ticks of the internal system. On each tick, the track
@@ -16,6 +15,7 @@ import java.util.TimerTask;
  * @author Maarten
  *
  */
+@SuppressWarnings("restriction")
 public final class InternalTicker extends TimerTask {
 
 	/** Amount of nanoseconds in a second, 10<sup>9</sup>. */
@@ -36,9 +36,6 @@ public final class InternalTicker extends TimerTask {
 	/** The timer that schedules the TimerTask is stored in the instance. */
 	private final Timer timer;
 
-	/** Ticker needs to know the primaryStage to be able to send the death menu*/
-	private static Stage primaryStage = null;
-
 	/**
 	 * Default private constructor.
 	 * @param t Timer given to the internal ticker
@@ -52,7 +49,6 @@ public final class InternalTicker extends TimerTask {
 	 */
 	public void run() {
 		Platform.runLater(new Runnable() {
-			@Override
 			public void run() {
 				synchronized (GameWindow.LOCK) {
 					final Timer newTimer = new Timer();
@@ -65,7 +61,8 @@ public final class InternalTicker extends TimerTask {
 						}
 					} finally {
 						if (running) {
-							scheduleTime = scheduleTime.plusNanos(NANOS_PER_TICK);
+							scheduleTime = scheduleTime.plusNanos(
+									NANOS_PER_TICK);
 							newTimer.schedule(new InternalTicker(newTimer),
 									Date.from(scheduleTime));
 						} else {

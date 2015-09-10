@@ -57,7 +57,7 @@ public final class GameWindow {
 
 	/** Start the Application. */
 	public static void start(Stage stage) {
-		State.resetAll();
+		State.reset();
 
 		primaryStage = stage;
 
@@ -194,11 +194,13 @@ public final class GameWindow {
 		EventHandler<MouseEvent> retry = new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent e) {
+				State.reset();
 				GameWindow.start(primaryStage);
 			}
 		};
 
-		Popup confirm = PopupMenu.makeFinalMenu("Game Ended", State.getScore(), State.getCoins(), "Try again", "Return to Main Menu", retry, menu);
+		Popup confirm = PopupMenu.makeFinalMenu("Game Ended", State.getScore(),
+			State.getCoins(), "Try again", "Return to Main Menu", retry, menu);
 		confirm.show(primaryStage);
 	}
 
