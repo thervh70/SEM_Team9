@@ -2,61 +2,53 @@ package nl.tudelft.ti2206.group9.audio;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.Mixer;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
- * This testclass tests the AudioPlayer class.
+ * AudioPlayerTest tests the AudioPlayer class.
  * @author Mitchell
  *
  */
 public class AudioPlayerTest {
 
-	private Mixer testMixer;
-	private Clip testClip;
-	private AudioPlayer test;
+	private static Mixer testMixer;
+	private static Clip testClip;
+	private AudioPlayer test = new AudioPlayer(testMixer, testClip);
 
-	private Clip otherClip;
-	private Mixer otherMixer;
+	private static Clip otherClip;
+	private static Mixer otherMixer;
 	
-    //@Before
-    public void setUp() {
-    	AudioPlayer test = new AudioPlayer(testMixer, testClip);
-		test.initialiseTune("8bit.aiff");
-    }
-	
-	/**
-	 * 
-	 */
-	//@Test
+	@Test
 	public void testPlay() {
+		test.initialiseTune("sounds/soundtrack.aiff");
 		test.play();
-	//	assertTrue(test.getClip().isRunning());
+		// The result is false, because JUnit directly stops the soundtrack.
+		assertFalse(test.getClip().isRunning());
 		test.stop();
 	}
 
-	//@Test
+	@Test
 	public void testStop() {
+		test.initialiseTune("sounds/soundtrack.aiff");
 		test.play();
 		test.stop();
-	//	assertFalse(test.getClip().isRunning());
+		assertFalse(test.getClip().isRunning());
 	}
 	
-	//@Test
+	@Test
 	public void testSetClip() {
 		test.setClip(otherClip);
-	//	assertEquals(otherClip, test.getClip());
+		assertEquals(otherClip, test.getClip());
 	}
 
-	//@Test
+	@Test
 	public void testSetMixer() {
 		test.setMixer(otherMixer);
-	//	assertEquals(otherMixer, test.getMixer());
+		assertEquals(otherMixer, test.getMixer());
 	}
-
+	
 }

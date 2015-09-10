@@ -12,7 +12,7 @@ import javax.sound.sampled.Mixer;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
- * Creates an AudioPlayer which you can initialize, start and stop.
+ * Creates an AudioPlayer which you can initialise, start and stop.
  * @author Mitchell
  *
  */
@@ -50,6 +50,8 @@ public class AudioPlayer {
 	 * @param path leads to the soundtrack.
 	 */
 	public void initialiseTune(final String path) {
+		Mixer.Info[] mixInfos = AudioSystem.getMixerInfo();
+		mixer = AudioSystem.getMixer(mixInfos[0]);
 		
 		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
 		
@@ -78,14 +80,6 @@ public class AudioPlayer {
 	 * @return current clip.
 	 */
 	public Clip getClip() {
-		return clip;
-	}
-
-	/**
-	 * Return the current clip.
-	 * @return current clip.
-	 */
-	public Clip setClip() {
 		return clip;
 	}
 	

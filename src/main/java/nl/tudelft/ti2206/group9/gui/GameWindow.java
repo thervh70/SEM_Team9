@@ -4,6 +4,9 @@ package nl.tudelft.ti2206.group9.gui;
  * @author Robin, Maarten
  */
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.Mixer;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
@@ -18,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.KeyMap;
@@ -42,6 +46,9 @@ public class GameWindow extends Application {
 	private static Scene scene;
 	private static SubScene worldScene;
 	private static SubScene overlayScene;
+	
+	private static Mixer mixer;
+	private static Clip clip;
 
 	/** Start the Application. */
 	@Override
@@ -144,6 +151,11 @@ public class GameWindow extends Application {
 	 */
 	public static void main(final String... args) {
 		State.resetAll();
+		
+		AudioPlayer soundtrack = new AudioPlayer(mixer, clip);
+		soundtrack.initialiseTune("sounds/soundtrack.aiff");
+		soundtrack.play();
+		
 		GameWindow.launch(args);
 	}
 
