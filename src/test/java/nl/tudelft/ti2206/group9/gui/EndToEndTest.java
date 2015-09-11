@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -7,6 +9,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 
@@ -25,6 +28,9 @@ public class EndToEndTest extends ApplicationTest {
 	public static final long SHORT = 2 * TARDINESS;
 	/** Amount of milliseconds the Robot sleeps when sleeping "long". */
 	public static final long LONG = 5 * TARDINESS;
+	
+	/** Delta for double equality. */
+	private static final double DELTA = 0.000001;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -34,65 +40,94 @@ public class EndToEndTest extends ApplicationTest {
 
 	@Test
 	public void test() {
-		ObservableList<Node> buttons;
-		
 		sleep(LONG);
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
 		
-		buttons = rootNode(stage).getScene().getRoot()
-				.getChildrenUnmodifiable();
-		clickOn(buttons.get(0), MouseButton.PRIMARY);	// Click start
-		sleep(LONG);
+		mainMenu(0);				// Click start
 		
-		press(KeyCode.ESCAPE);							// Press Escape
-		release(KeyCode.ESCAPE);
-		sleep(SHORT);
+		keyboard(KeyCode.ESCAPE);	// Press Escape
+		pausePopup(0);				// Click resume
+		moveAround();				// Move around
+		keyboard(KeyCode.ESCAPE);	// Press Escape
+		pausePopup(1);				// Click "Main menu"
 		
-		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
-				.getChildren();
-		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
-		clickOn(buttons.get(0), MouseButton.PRIMARY);	// Click resume
-		sleep(LONG);
+		mainMenu(0);				// Click start
 		
-		press(KeyCode.ESCAPE);							// Press Escape
-		release(KeyCode.ESCAPE);
-		sleep(SHORT);
+		playerDies();				// Player dies
+		deathPopup(0);				// Click "Try Again"
+		playerDies();				// Player dies
+		deathPopup(1);				// Click "Main Menu"
 		
-		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
-				.getChildren();
-		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
-		clickOn(buttons.get(1), MouseButton.PRIMARY);	// Click "Main menu"
-		sleep(SHORT);
+		mainMenu(2);				// Click quit
+	}
+	
+	private void moveAround() {
+		final int before = 5;
+		final int after = 40;
 		
-		buttons = rootNode(stage).getScene().getRoot()
-				.getChildrenUnmodifiable();
-		clickOn(buttons.get(0), MouseButton.PRIMARY);	// Click start
-		sleep(LONG);
+		keyboard(KeyCode.LEFT);
+		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		assertTrue(State.getTrack().getPlayer().getCenter().getX() < 0);
+		keyboard(KeyCode.RIGHT);
+		sleep(after / 2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
 		
-		State.getTrack().getPlayer().die();				// Player dies
-		sleep(InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		sleep(LONG);
+		keyboard(KeyCode.RIGHT);
+		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		assertTrue(State.getTrack().getPlayer().getCenter().getX() > 0);
+		keyboard(KeyCode.LEFT);
+		sleep(after / 2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
+		
+		keyboard(KeyCode.UP);
+		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		assertTrue(State.getTrack().getPlayer().getCenter().getY() > 1);
+		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		
+		keyboard(KeyCode.DOWN);
+		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		assertTrue(State.getTrack().getPlayer().getSize().getY() 
+				< Player.HEIGHT);
+		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+	}
 
-		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
-				.getChildren();
-		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
-		clickOn(buttons.get(0), MouseButton.PRIMARY);	// Click "Try Again"
-		sleep(LONG);
-		
-		State.getTrack().getPlayer().die();				// Player dies
-		sleep(InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		sleep(LONG);
-
-		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
-				.getChildren();
-		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
-		clickOn(buttons.get(1), MouseButton.PRIMARY);	// Click "Main Menu"
+	private void keyboard(KeyCode kc) {
+		press(kc);
+		release(kc);
 		sleep(SHORT);
-		
+	}
+	
+	private void mainMenu(int buttonNo) {
+		ObservableList<Node> buttons;
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();
-		clickOn(buttons.get(2), MouseButton.PRIMARY);	// Click quit
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(LONG);
+	}
+	
+	private void pausePopup(int buttonNo) {
+		ObservableList<Node> buttons;
+		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
+				.getChildren();
+		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(LONG);
+	}
+	
+	private void playerDies() {
+		State.getTrack().getPlayer().die();
+		sleep(2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		sleep(LONG);
+	}
+	
+	private void deathPopup(int buttonNo) {
+		ObservableList<Node> buttons;
+		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
+				.getChildren();
+		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(SHORT);
 	}
 
 }
