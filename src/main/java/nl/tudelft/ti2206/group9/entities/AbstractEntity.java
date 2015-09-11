@@ -160,7 +160,8 @@ public abstract class AbstractEntity {
 	 */
 	@Override
 	public String toString() {
-		return "AbstractEntity [center=" + center + ", size=" + size + "]";
+		return "AbstractEntity [center=" + center + ","
+				+ "size=" + size + "]";
 	}
 
 }

@@ -28,7 +28,7 @@ public class Coin extends AbstractEntity {
 	 * @param collidee Entity that this Coin collides with.
 	 */
 	@Override
-	public void collision(final AbstractEntity collidee) {
+	public final void collision(final AbstractEntity collidee) {
 		if (collidee instanceof Player) {
 			selfDestruct();
 		}

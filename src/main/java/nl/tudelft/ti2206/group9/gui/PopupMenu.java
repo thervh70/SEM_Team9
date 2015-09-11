@@ -17,13 +17,22 @@ import javafx.stage.Popup;
 @SuppressWarnings("restriction")
 public final class PopupMenu {
 
+    /** Width of the PopUpMenu. */
+    private static final double WIDTH = 250;
+    /** Heigth of the PopUpMenu. */
+    private static final double HEIGTH = 300;
+    /** Size of the HBox. */
+    private static final double HBOXSIZE = 20;
+    /** Size of the VBox. */
+    private static final double VBOXSIZE = 50;
+
 	/** Hide public constructor. */
 	private PopupMenu() { }
-	
+
     /**
      * Generic method to build popups.
      * Generates a menu based on the parameters.
-     * 2 mouseEvent listeners are passed to this method in order to setup 
+     * 2 mouseEvent listeners are passed to this method in order to setup
      * buttons in the popup.
      * @param t Text to be displayed in popup
      * @param button1 First button text
@@ -32,31 +41,32 @@ public final class PopupMenu {
      * @param event2 Second button event
      * @return A fully built popup ready to be put on the screen.
      */
-    public static Popup makeMenu(String t, String button1, String button2, 
-    		final EventHandler<MouseEvent> event, 
+    public static Popup makeMenu(final String t, final String button1,
+            final String button2,
+    		final EventHandler<MouseEvent> event,
     		final EventHandler<MouseEvent> event2) {
 
         final Popup warning = new Popup();
         warning.centerOnScreen();
-        warning.setWidth(250);
-        warning.setHeight(300);
-        
-        Rectangle rect = new Rectangle(250, 300, Color.WHITESMOKE);
+        warning.setWidth(WIDTH);
+        warning.setHeight(HEIGTH);
+
+        Rectangle rect = new Rectangle(WIDTH, HEIGTH, Color.WHITESMOKE);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
         Text text = new Text(t);
         text.setFill(Color.BLACK);
 
-        HBox hbox = new HBox(20, yes, no);
+        HBox hbox = new HBox(HBOXSIZE, yes, no);
         hbox.setAlignment(Pos.CENTER);
 
-        VBox vbox = new VBox(50, text, hbox);
+        VBox vbox = new VBox(VBOXSIZE, text, hbox);
         vbox.setAlignment(Pos.CENTER);
 
         yes.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent y) {
+            public void handle(final MouseEvent y) {
                 warning.hide();
                 event.handle(y);
             }
@@ -64,7 +74,7 @@ public final class PopupMenu {
 
         no.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent n) {
+            public void handle(final MouseEvent n) {
                 warning.hide();
                 event2.handle(n);
             }
@@ -77,7 +87,7 @@ public final class PopupMenu {
     /**
      * Generic method to build popups.
      * Generates a menu based on the parameters.
-     * 2 mouseEvent listeners are passed to this method in order to setup 
+     * 2 mouseEvent listeners are passed to this method in order to setup
      * buttons in the popup.
      * @param t Text to be displayed in popup
      * @param score Score to be displayed
@@ -88,17 +98,18 @@ public final class PopupMenu {
      * @param event2 Second button event
      * @return A fully built popup ready to be put on the screen.
      */
-    public static Popup makeFinalMenu(String t, int score, int coins, 
-    		String button1, String button2, 
-    		final EventHandler<MouseEvent> event, 
+    public static Popup makeFinalMenu(final String t, final int score,
+            final int coins,
+    		final String button1, final String button2,
+    		final EventHandler<MouseEvent> event,
     		final EventHandler<MouseEvent> event2) {
 
         final Popup warning = new Popup();
         warning.centerOnScreen();
-        warning.setWidth(250);
-        warning.setHeight(300);
+        warning.setWidth(WIDTH);
+        warning.setHeight(HEIGTH);
 
-        Rectangle rect = new Rectangle(250, 300, Color.WHITESMOKE);
+        Rectangle rect = new Rectangle(WIDTH, HEIGTH, Color.WHITESMOKE);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
@@ -109,15 +120,15 @@ public final class PopupMenu {
         String c = "Total amount of coins: " + coins;
         Text finalCoins = new Text(c);
 
-        HBox hbox = new HBox(20,yes,no);
+        HBox hbox = new HBox(HBOXSIZE, yes, no);
         hbox.setAlignment(Pos.CENTER);
 
-        VBox vbox = new VBox(50, text, finalScore, finalCoins, hbox);
+        VBox vbox = new VBox(VBOXSIZE, text, finalScore, finalCoins, hbox);
         vbox.setAlignment(Pos.CENTER);
 
         yes.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent y) {
+            public void handle(final MouseEvent y) {
                 warning.hide();
                 event.handle(y);
             }
@@ -125,7 +136,7 @@ public final class PopupMenu {
 
         no.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent n) {
+            public void handle(final MouseEvent n) {
                 warning.hide();
                 event2.handle(n);
             }

@@ -16,11 +16,12 @@ import javafx.stage.Stage;
 @SuppressWarnings("restriction")
 public final class SettingsScreen {
 
+    /** The scene. */
     private static Scene settings;
 
 	/** Hide public constructor. */
 	private SettingsScreen() { }
-	
+
     /**
      * Creating and displaying the scene.
      *
@@ -46,7 +47,7 @@ public final class SettingsScreen {
         grid.getChildren().addAll(backButton, label);
 
         backButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
                 StartScreen.start(primaryStage);
             }
         });

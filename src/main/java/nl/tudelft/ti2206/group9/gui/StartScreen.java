@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -19,7 +18,7 @@ public final class StartScreen {
 
 	/** Hide public constructor. */
 	private StartScreen() { }
-	
+
     /**
      *Creating and displaying the startscreen.
      *
@@ -61,19 +60,19 @@ public final class StartScreen {
 
         /**Setting function of the buttons. */
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
                 primaryStage.close();
             }
         });
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
                 GameScreen.start(primaryStage);
             }
         });
 
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
              //   SettingsScreen.start(primaryStage);
             }
         });
