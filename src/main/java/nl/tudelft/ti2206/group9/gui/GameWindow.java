@@ -1,5 +1,9 @@
 package nl.tudelft.ti2206.group9.gui;
 
+/**
+ * @author Robin, Maarten
+ */
+
 import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -16,6 +20,11 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.Mixer;
+
+import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.KeyMap;
@@ -63,6 +72,9 @@ public final class GameWindow {
 	private static boolean running;
 	/** The primarystage. */
 	private static Stage primaryStage;
+	
+	private static Mixer mixer;
+	private static Clip clip;
 
 	/** Hide public constructor. */
 	private GameWindow() { }
@@ -72,6 +84,10 @@ public final class GameWindow {
 	 */
 	public static void start(final Stage stage) {
 		State.reset();
+		
+		AudioPlayer ap = new AudioPlayer(mixer, clip);
+		ap.initialiseTune("sounds/soundtrack.aiff");
+		ap.play();
 
 		primaryStage = stage;
 
@@ -256,4 +272,5 @@ public final class GameWindow {
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
+
 }
