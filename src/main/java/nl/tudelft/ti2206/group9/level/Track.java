@@ -37,12 +37,12 @@ public class Track {
 	/** Length of the track. */
 	public static final double LENGTH = 100;
 
-    /** Minimum number of coins in a coin lane. */
-    private static final int MIN_COIN_LANE_LENGTH = 5;
-    /** Minimum number of coins in a coin zigzag. */
-    private static final int MIN_COIN_ZIG_ZAG_LENGTH = 7;
-    /** Maximum number of coins added to a zigzag or coinlane. */
-    private static final int ADD_TO_COINS = 10;
+	/** Minimum number of coins in a coin lane. */
+	private static final int MIN_COIN_LANE_LENGTH = 5;
+	/** Minimum number of coins in a coin zigzag. */
+	private static final int MIN_COIN_ZIG_ZAG_LENGTH = 7;
+	/** Maximum number of coins added to a zigzag or coinlane. */
+	private static final int ADD_TO_COINS = 10;
 
 	/** Current distance moved by the track, reset every run. */
 	private static double distance;
@@ -111,8 +111,7 @@ public class Track {
 	 * @param entity entity to remove
 	 * @return this Track, allowing for chaining.
 	 */
-	public final synchronized Track
-			removeEntity(final AbstractEntity entity) {
+	public final synchronized Track removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.remove(entity);
 		}
