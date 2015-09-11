@@ -174,7 +174,7 @@ public class Track {
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
-	public final void step() {
+	public final synchronized void step() {
 		synchronized (this) {
 			if (coinrunleft > 0) {
 				coinrunleft -= UNITS_PER_TICK / COINDISTANCE;
