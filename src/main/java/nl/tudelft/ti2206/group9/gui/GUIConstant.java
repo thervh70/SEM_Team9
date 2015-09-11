@@ -1,12 +1,9 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import javafx.stage.Stage;
-
 /**
  * This utility constains all Constants used for the GUI.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public final class GUIConstant {
 	
 	/** Width of the Window. */
