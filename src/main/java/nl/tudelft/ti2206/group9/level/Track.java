@@ -18,7 +18,6 @@ import java.util.Random;
  * @author Maarten, Mitchell
  *
  */
-@SuppressWarnings("magicnumber")
 public class Track {
 
 	/** Chance per frame to spawn a lane of coins. */
@@ -40,6 +39,12 @@ public class Track {
 
 	/** Standard modulus number for modDistance. */
 	public static final int MOD = 50;
+    /** Minimum number of coins in a coin lane. */
+    private static final int MIN_COIN_LANE_LENGTH = 5;
+    /** Minimum number of coins in a coin zigzag. */
+    private static final int MIN_COIN_ZIG_ZAG_LENGTH = 7;
+    /** Maximum number of coins added to a zigzag or coinlane. */
+    private static final int ADD_TO_COINS = 10;
 
 	/** Current distance moved by the track, reset every run. */
 	private static double distance;
@@ -48,12 +53,6 @@ public class Track {
 	private final List<AbstractEntity> entities;
 	/** Index of the player entity in the entities list. */
 	private int player;
-	/** Minimum number of coins in a coin lane. */
-	private final int minCoinLaneLength = 5;
-	/** Minimum number of coins in a coin zigzag. */
-	private final int minCoinZigZagLength = 7;
-	/** Maximum number of coins added to a zigzag or coinlane. */
-	private final int addToCoins = 10;
 
 	/** Random number generator for generating stuff on the track. */
 	private Random random;
@@ -202,7 +201,7 @@ public class Track {
 	 */
 	private void createCoinLane() {
 		int lane = random.nextInt(WIDTH) - 1;
-		int length = minCoinLaneLength + random.nextInt(addToCoins);
+		int length = MIN_COIN_LANE_LENGTH + random.nextInt(ADD_TO_COINS);
 		for (int i = 0; i < length; i++) {
 			addEntity(new Coin(new Point3D(lane, 1,
 					LENGTH + COINDISTANCE * i)));
@@ -216,7 +215,7 @@ public class Track {
 	private void createZigZag() {
 		int x;
 		int lane = random.nextInt(WIDTH + 1);
-		int length = minCoinZigZagLength + random.nextInt(addToCoins);
+		int length = MIN_COIN_ZIG_ZAG_LENGTH + random.nextInt(ADD_TO_COINS);
 		for (int i = 0; i < length; i++) {
 			if (lane == WIDTH) {
 				x = 0;
