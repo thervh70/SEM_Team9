@@ -24,15 +24,7 @@ import nl.tudelft.ti2206.group9.util.KeyMap;
  * @author Robin, Maarten
  */
 @SuppressWarnings("restriction")
-public final class GameWindow {
-
-	/** Width of the Window. */
-	public static final int WIDTH = 480;
-	/** Height of the Window. */
-	public static final int HEIGHT = 640;
-
-	/** Threadlock. */
-	public static final Object LOCK = new Object();
+public final class GameScreen {
 
 	/** The translation of the camera. */
 	public static final Translate CAMERA_TRANS = new Translate(0, -5, -12);
@@ -64,8 +56,11 @@ public final class GameWindow {
 	/** The primarystage. */
 	private static Stage primaryStage;
 
+	private static Popup pause;
+	private static Popup death;
+	
 	/** Hide public constructor. */
-	private GameWindow() { }
+	private GameScreen() { }
 
 	/** Start the Application.
 	 * @param stage stage
@@ -79,15 +74,16 @@ public final class GameWindow {
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
 
-		scene = new Scene(root, WIDTH, HEIGHT, true);
+		scene = new Scene(root, GUIConstant.WIDTH, GUIConstant.HEIGHT, true);
 		scene.setFill(Color.AQUA);
 		primaryStage.setScene(scene);
 
 		world = new Group();
 		overlay = new Group();
-		worldScene = new SubScene(world, WIDTH, HEIGHT, true,
-			SceneAntialiasing.BALANCED);
-		overlayScene = new SubScene(overlay, WIDTH, HEIGHT);
+		worldScene = new SubScene(world, GUIConstant.WIDTH, GUIConstant.HEIGHT, 
+				true, SceneAntialiasing.BALANCED);
+		overlayScene = new SubScene(overlay, GUIConstant.WIDTH,
+				GUIConstant.HEIGHT);
 		overlayScene.setFill(Color.TRANSPARENT);
 		root.getChildren().add(worldScene);
 		root.getChildren().add(overlayScene);
@@ -180,6 +176,7 @@ public final class GameWindow {
 			public void handle(final MouseEvent e) {
 				State.reset();
 				StartScreen.start(primeStage);
+				pause = null;
 			}
 		};
 
@@ -188,12 +185,13 @@ public final class GameWindow {
 
 			public void handle(final MouseEvent e) {
 				resumeTickers();
+				pause = null;
 			}
 		};
 
-		Popup confirm = PopupMenu.makeMenu("Paused", "Resume",
+		pause = PopupMenu.makeMenu("Paused", "Resume",
 				"Return to Main Menu", resume, menu);
-		confirm.show(primaryStage);
+		pause.show(primaryStage);
 	}
 
 	/**
@@ -205,6 +203,7 @@ public final class GameWindow {
 			public void handle(final MouseEvent e) {
 				State.reset();
 				StartScreen.start(primaryStage);
+				death = null;
 			}
 		};
 
@@ -213,16 +212,14 @@ public final class GameWindow {
 
 			public void handle(final MouseEvent e) {
 				State.reset();
-				GameWindow.start(primaryStage);
+				GameScreen.start(primaryStage);
+				death = null;
 			}
 		};
 
-		Popup confirm
-			= PopupMenu.makeFinalMenu("Game Ended",
-                (int) State.getScore(),
-			    State.getCoins(), "Try again",
-				"Return to Main Menu", retry, menu);
-		confirm.show(primaryStage);
+		death = PopupMenu.makeFinalMenu("Game Ended", (int) State.getScore(),
+			State.getCoins(), "Try again", "Return to Main Menu", retry, menu);
+		death.show(primaryStage);
 	}
 
 	/**
@@ -255,5 +252,14 @@ public final class GameWindow {
 	 */
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
+	}
+	
+	/** @return current Popup. Is null if no Popup is present. */
+	static Popup getPopup() {
+		if (pause != null) {
+			return pause;
+		} else {
+			return death;
+		}
 	}
 }

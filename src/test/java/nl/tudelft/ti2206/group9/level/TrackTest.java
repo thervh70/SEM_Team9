@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Random;
@@ -12,7 +11,6 @@ import java.util.Random;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
-import nl.tudelft.ti2206.group9.gui.GameWindow;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Before;
@@ -89,7 +87,8 @@ public class TrackTest {
 		final Track track = new Track(rand);
 		final int length = 5;
 
-		when(rand.nextDouble()).thenReturn(belowCoinZigZagChance, aboveObstacleChance);
+		when(rand.nextDouble()).thenReturn(belowCoinZigZagChance, 
+				aboveObstacleChance);
 		when(rand.nextInt(10)).thenReturn(length);
 
 		assertEquals(1, track.getEntities().size()); //player
@@ -120,12 +119,14 @@ public class TrackTest {
 	@Test
 	public void testStepCoinLane() {
 		Random rand = mock(Random.class);
-		final double belowCoinLaneChance = Track.COINZIGZAGCHANCE + Track.COINLANECHANCE - 0.01;
+		final double belowCoinLaneChance = Track.COINZIGZAGCHANCE 
+				+ Track.COINLANECHANCE - 0.01;
 		final double aboveObstacleChance = Track.OBSTACLECHANCE + 0.01;
 		final Track track = new Track(rand);
 		final int length = 5;
 
-		when(rand.nextDouble()).thenReturn(belowCoinLaneChance, aboveObstacleChance);
+		when(rand.nextDouble()).thenReturn(belowCoinLaneChance, 
+				aboveObstacleChance);
 		when(rand.nextInt(10)).thenReturn(length);
 
 		assertEquals(1, track.getEntities().size());
@@ -139,17 +140,20 @@ public class TrackTest {
 		double oldCoinLeft = track.getCoinrunleft();
 		track.step();
 		double newCoinLeft = track.getCoinrunleft();
-		assertEquals(newCoinLeft, oldCoinLeft - Track.UNITS_PER_TICK / Track.COINDISTANCE, DELTA);
+		assertEquals(newCoinLeft, oldCoinLeft 
+				- Track.UNITS_PER_TICK / Track.COINDISTANCE, DELTA);
 	}
 
 	@Test
 	public void testSingleObstacle() {
 		Random rand = mock(Random.class);
-		final double aboveCoinLaneChance = Track.COINZIGZAGCHANCE + Track.COINLANECHANCE + 0.01;
+		final double aboveCoinLaneChance = Track.COINZIGZAGCHANCE 
+				+ Track.COINLANECHANCE + 0.01;
 		final double belowObstacleChance = Track.OBSTACLECHANCE - 0.01;
 		final Track track = new Track(rand);
 
-		when(rand.nextDouble()).thenReturn(aboveCoinLaneChance, belowObstacleChance);
+		when(rand.nextDouble()).thenReturn(aboveCoinLaneChance, 
+				belowObstacleChance);
 
 		assertEquals(1, track.getEntities().size());
 

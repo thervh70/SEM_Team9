@@ -1,16 +1,16 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.entities.AbstractEntity;
-import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Obstacle;
-import nl.tudelft.ti2206.group9.entities.Player;
-import nl.tudelft.ti2206.group9.gui.GameWindow;
-import nl.tudelft.ti2206.group9.util.Point3D;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.Obstacle;
+import nl.tudelft.ti2206.group9.entities.Player;
+import nl.tudelft.ti2206.group9.gui.GameScreen;
+import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -80,12 +80,13 @@ public class Track {
 	 * the track, like a treadmill).
 	 * @param dist amount of units to move the track
 	 */
+	@SuppressWarnings("restriction")
 	public final synchronized void moveTrack(final double dist) {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
 					if (entity.getCenter().getZ()
-							< GameWindow.CAMERA_TRANS.getZ()) {
+							< GameScreen.CAMERA_TRANS.getZ()) {
 						entity.selfDestruct();
 					}
 					entity.getCenter().addZ(-dist);
