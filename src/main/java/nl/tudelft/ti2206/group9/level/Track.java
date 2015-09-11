@@ -145,7 +145,7 @@ public class Track {
 		if (random.nextDouble() < COINCHANCE) {
 			addEntity(new Coin(new Point3D(-1, 1.0 / 2, LENGTH)));
 			addEntity(new Coin(new Point3D(0, 1.0 / 2, LENGTH)));
-			addEntity(new Coin(new Point3D(1, 1.0 / 2, LENGTH)));
+    			addEntity(new Coin(new Point3D(1, 1.0 / 2, LENGTH)));
 		} else if (random.nextDouble() < OBSTACLECHANCE) {
 			addEntity(new Obstacle(
 					new Point3D(0, 1.0 / 2, LENGTH),
