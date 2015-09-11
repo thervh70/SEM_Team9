@@ -39,9 +39,10 @@ public class ExternalTicker extends AnimationTimer {
 		final Group entities = renderEntities();
 		GameWindow.addWorld(entities);
 
-		GameWindow.addOverlay(new Text(0, 16, "Score: " + State.getScore()));
-		GameWindow.addOverlay(new Text(0, 32, "Distance: "
-				+ State.moduloDistance()));
+		GameWindow.addOverlay(new Text(0, 16, "Score: " 
+				+ State.modulo(State.getScore())));
+		GameWindow.addOverlay(new Text(0, 32, "Distance: " 
+				+ State.modulo(State.getDistance())));
 		GameWindow.addOverlay(new Text(0, 48, "Coins: " + State.getCoins()));
 	}
 

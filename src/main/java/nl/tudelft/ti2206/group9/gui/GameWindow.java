@@ -219,8 +219,8 @@ public final class GameWindow {
 
 		Popup confirm
 			= PopupMenu.makeFinalMenu("Game Ended",
-				State.getScore(),
-			State.getCoins(), "Try again",
+                (int) State.getScore(),
+			    State.getCoins(), "Try again",
 				"Return to Main Menu", retry, menu);
 		confirm.show(primaryStage);
 	}

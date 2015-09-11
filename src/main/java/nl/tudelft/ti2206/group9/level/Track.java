@@ -193,6 +193,7 @@ public class Track {
 		getPlayer().step();
 
 		distance += UNITS_PER_TICK;
+		State.addScore(UNITS_PER_TICK);
 		moveTrack(UNITS_PER_TICK);
 	}
 
