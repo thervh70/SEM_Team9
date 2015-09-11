@@ -14,7 +14,8 @@ import java.util.Map;
 public class KeyMap {
 
     /** Links KeyCodes to Actions. */
-	private static Map<KeyCode, Action> keyMap = new HashMap<KeyCode, Action>();
+	private static Map<KeyCode, Action> keyMap
+            = new HashMap<KeyCode, Action>();
 
 	/** Stores whether keys are pressed or not. */
 	private static Map<KeyCode, Boolean> pressed =
@@ -51,7 +52,7 @@ public class KeyMap {
      * Does nothing.
      * @param e keyEvent
      */
-	public void keyReleased(final KeyCode e) {
+	public final void keyReleased(final KeyCode e) {
         pressed.put(e, false);
 		System.out.println("Key Release: " + e.toString());
 	}
@@ -82,6 +83,9 @@ public class KeyMap {
         keyMap.remove(code);
     }
 
+    /**
+     * Set the game to use the default keys.
+     */
     public static void defaultKeys() {
         KeyMap.addKey(KeyCode.UP, new MoveAction(Direction.JUMP));
         KeyMap.addKey(KeyCode.W, getKey(KeyCode.UP));
@@ -96,10 +100,20 @@ public class KeyMap {
         KeyMap.addKey(KeyCode.D, getKey(KeyCode.RIGHT));
     }
 
+    /**
+     * MoveAction implement Action.
+     * It's main reason of existence is getting rid of the
+     * need to implement Action over and over again.
+     */
     private static final class MoveAction implements Action {
+
+        /** The direction. */
     	private Direction dir;
 
-    	private MoveAction(Direction d) {
+        /** Nice constructor.
+         * @param d direction
+         */
+    	private MoveAction(final Direction d) {
     		dir = d;
     	}
 

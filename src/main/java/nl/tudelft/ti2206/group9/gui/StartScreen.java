@@ -11,11 +11,14 @@ import javafx.stage.Stage;
 /**
  * @author Maikel and Robin
  *
- * A startscreen with different options/buttons like a options menu, start button
+ * A startscreen with different options/buttons like a options menu, startbutton
  * and exit button.
  */
-public class StartScreen {
+@SuppressWarnings("restriction")
+public final class StartScreen {
 
+	/** Hide public constructor. */
+	private StartScreen() { }
 
     /**
      *Creating and displaying the startscreen.
@@ -37,39 +40,40 @@ public class StartScreen {
         grid.setHgap(20);
 
         /**Setting a background for the menu.*/
-        //grid.getChildren().add(Style.setBackground("/View/Resources/background_splashscreen.png"));
+        //grid.getChildren().add(Style.setBackground(
+        // 		"/View/Resources/background_splashscreen.png"));
 
         /** Add text to buttons give them a location on the grid.*/
         startButton = new Button("START");
-        GridPane.setConstraints(startButton, 10, 18);
+        GridPane.setConstraints(startButton, 7, 21);
 
         settingsButton = new Button("SETTINGS");
-        GridPane.setConstraints(settingsButton, 6, 18);
+        GridPane.setConstraints(settingsButton, 3, 21);
 
         exitButton = new Button("EXIT");
-        GridPane.setConstraints(exitButton, 14, 18);
+        GridPane.setConstraints(exitButton, 11, 21);
 
         /**Adding all buttons to the gridpane.*/
         grid.getChildren().addAll(startButton, settingsButton, exitButton);
 
         /**Creating the scene. */
-        startScreen = new Scene(grid, 640,480);
+        startScreen = new Scene(grid, GameWindow.WIDTH, GameWindow.HEIGHT);
 
         /**Setting function of the buttons. */
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
                 System.exit(0);
             }
         });
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
                 GameWindow.start(primaryStage);
             }
         });
 
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
              //   SettingsScreen.start(primaryStage);
             }
         });
