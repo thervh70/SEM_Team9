@@ -16,13 +16,13 @@ public abstract class AbstractEntity {
 
 	/**
 	 * Default constructor.
-	 * @param center center of the bounding box
-	 * @param size size of the bounding box
+	 * @param cent center of the bounding box
+	 * @param siz size of the bounding box
 	 */
-	public AbstractEntity(final Point3D center, final Point3D size) {
+	public AbstractEntity(final Point3D cent, final Point3D siz) {
 		super();
-		this.center = center;
-		this.size = size;
+		this.center = cent;
+		this.size = siz;
 	}
 
 	/**
@@ -58,11 +58,10 @@ public abstract class AbstractEntity {
 	public void selfDestruct() {
 		final AbstractEntity self = this;
 		new Thread(new Runnable() {
-			/** Method run in Thread, removes entity after track is done */
+			/** Method run in Thread,
+			 * removes entity after track is done */
 			public void run() {
-				synchronized (State.getTrack()) {
-					State.getTrack().removeEntity(self);
-				}
+				State.getTrack().removeEntity(self);
 			}
 		}).start();
 	}
@@ -72,7 +71,7 @@ public abstract class AbstractEntity {
 	 * (Called by {@link #checkCollision(AbstractEntity)}.
 	 * @param collidee Entity that this entity collides with.
 	 */
-	public abstract void collision(AbstractEntity collidee);
+	public abstract void collision(final AbstractEntity collidee);
 
 	/**
 	 * @return the center
@@ -82,10 +81,10 @@ public abstract class AbstractEntity {
 	}
 
 	/**
-	 * @param center the center to set
+	 * @param cent the center to set
 	 */
-	public void setCenter(final Point3D center) {
-		this.center = center;
+	public void setCenter(final Point3D cent) {
+		this.center = cent;
 	}
 
 	/**
@@ -96,10 +95,10 @@ public abstract class AbstractEntity {
 	}
 
 	/**
-	 * @param size the size to set
+	 * @param siz the size to set
 	 */
-	public void setSize(final Point3D size) {
-		this.size = size;
+	public void setSize(final Point3D siz) {
+		this.size = siz;
 	}
 
 	/**
@@ -155,13 +154,14 @@ public abstract class AbstractEntity {
 		return true;
 	}
 
-	/** 
+	/**
 	 * @see java.lang.Object#toString()
 	 * @return a string representing this AbstractEntity
 	 */
 	@Override
 	public String toString() {
-		return "AbstractEntity [center=" + center + ", size=" + size + "]";
+		return "AbstractEntity [center=" + center + ","
+				+ "size=" + size + "]";
 	}
 
 }

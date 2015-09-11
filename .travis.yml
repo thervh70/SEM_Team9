@@ -1,5 +1,15 @@
 language: java
 
+
+# Use Java 8
+jdk:
+  - oraclejdk8
+
+
+# Use container-based infrastructure
+sudo: false
+
+
 # Communicate with Octopull
 before_install:
   - "[ \"$BUILD_PR_BRANCH\" = \"true\" ] && git checkout $TRAVIS_BRANCH && echo \"OCTOPULL_SHA=$(git rev-parse HEAD)\"; true"
@@ -14,6 +24,7 @@ after_script:
   - echo "== CHECKSTYLE_RESULT ==" && cat "target/checkstyle-result.xml" && echo "== END_CHECKSTYLE_RESULT =="
   - echo "== PMD_RESULT ==" && cat "target/pmd.xml" && echo "== END_PMD_RESULT =="
   - echo "== FINDBUGS_RESULT ==" && cat "target/findbugsXml.xml" && echo "== END_FINDBUGS_RESULT =="
+
 
 # setting the Slack email notification level to none
 
