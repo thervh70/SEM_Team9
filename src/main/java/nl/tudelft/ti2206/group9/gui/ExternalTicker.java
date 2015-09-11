@@ -12,16 +12,22 @@ import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
 
+/**
+ * @author Maarten.
+ */
 @SuppressWarnings("restriction")
 public class ExternalTicker extends AnimationTimer {
 
 	@Override
-	public void handle(final long now) {
+	public final void handle(final long now) {
 		synchronized (GameWindow.LOCK) {
 			renderScene();
 		}
 	}
 
+    /**
+     * This method renders the scene.
+     */
 	private void renderScene() {
 		GameWindow.clearWorld();
 		GameWindow.clearOverlay();
@@ -40,6 +46,10 @@ public class ExternalTicker extends AnimationTimer {
 		GameWindow.addOverlay(new Text(0, 48, "Coins: " + State.getCoins()));
 	}
 
+    /**
+     * This method renders all Entities.
+     * @return group
+     */
 	private Group renderEntities() {
 		final Group entities = new Group();
 		entities.setDepthTest(DepthTest.ENABLE);
@@ -63,7 +73,7 @@ public class ExternalTicker extends AnimationTimer {
 				}
 
 				entities.getChildren().add(entityBox);
-			}
+            }
 		}
 		return entities;
 	}

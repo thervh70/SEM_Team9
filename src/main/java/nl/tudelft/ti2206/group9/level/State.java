@@ -49,7 +49,7 @@ public final class State {
 	public static void addCoins(final int amount) {
 		coins += amount;
 	}
-	
+
 	/**
 	 * Updates the current distance every {@link #MOD} moves or points increase.
 	 * @param amount number of (distance or points)
@@ -72,7 +72,7 @@ public final class State {
 	public static void setScore(final double newScore) {
 		State.score = newScore;
 	}
-	
+
 	/**
 	 * @return the distance of the track
 	 */

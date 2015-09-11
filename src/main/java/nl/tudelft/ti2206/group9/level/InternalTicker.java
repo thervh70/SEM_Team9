@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
 import nl.tudelft.ti2206.group9.gui.GameWindow;
 
 /**
@@ -14,6 +15,7 @@ import nl.tudelft.ti2206.group9.gui.GameWindow;
  * @author Maarten
  *
  */
+@SuppressWarnings("restriction")
 public final class InternalTicker extends TimerTask {
 
 	/** Amount of nanoseconds in a second, 10<sup>9</sup>. */
@@ -25,7 +27,7 @@ public final class InternalTicker extends TimerTask {
 	public static final int FPS = 60;
 
 	/** Whether the ticks are being run. */
-	private static boolean running = true;
+	private static boolean running;
 	/** Time at which next tick will be scheduled. */
 	private static Instant scheduleTime;
 	/** Amount of nanoseconds between each frame, assuming FPS is constant. **/
@@ -46,25 +48,30 @@ public final class InternalTicker extends TimerTask {
 	 * Thread method.
 	 */
 	public void run() {
-		synchronized (GameWindow.LOCK) {
-			final Timer newTimer = new Timer();
-	
-			try {
-				step(); // First, perform tick.
+		Platform.runLater(new Runnable() {
+			public void run() {
+				synchronized (GameWindow.LOCK) {
+					final Timer newTimer = new Timer();
+
+					try {
+						InternalTicker.this.step(); // First, perform tick.
 						// Then, kill the timer that scheduled the task.
-				if (timer != null) {
-					timer.cancel(); 
-				}
-			} finally {
-				if (running) {
-					scheduleTime = scheduleTime.plusNanos(NANOS_PER_TICK);
-					newTimer.schedule(new InternalTicker(newTimer),
-							Date.from(scheduleTime));
-				} else {
-					newTimer.cancel();
+						if (timer != null) {
+							timer.cancel();
+						}
+					} finally {
+						if (running) {
+							scheduleTime = scheduleTime.plusNanos(
+									NANOS_PER_TICK);
+							newTimer.schedule(new InternalTicker(newTimer),
+									Date.from(scheduleTime));
+						} else {
+							newTimer.cancel();
+						}
+					}
 				}
 			}
-		}
+		});
 	}
 
 	/**
@@ -75,8 +82,8 @@ public final class InternalTicker extends TimerTask {
 		State.getTrack().step();
 
 		if (!State.getTrack().getPlayer().isAlive()) {
-			System.out.println("Ghagha, you ish ded.");
 			GameWindow.stopTickers();
+			GameWindow.showDeathMenu();
 		}
 	}
 
@@ -87,6 +94,7 @@ public final class InternalTicker extends TimerTask {
 		scheduleTime = Instant.now();
 		final InternalTicker intern = new InternalTicker(null);
 		new Thread(intern).start();
+		running = true;
 	}
 
 	/** Stops the InternalTicker. */
