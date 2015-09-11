@@ -179,13 +179,11 @@ public class Track {
 		synchronized (this) {
 			if (coinrunleft > 0) {
 				coinrunleft -= UNITS_PER_TICK / COINDISTANCE;
-			}
-			else {
+			} else {
 				double rand = random.nextDouble();
 				if (rand < COINZIGZAGCHANCE) {
 					createZigZag();
-				}
-				else if (rand < COINZIGZAGCHANCE + COINLANECHANCE) {
+				} else if (rand < COINZIGZAGCHANCE + COINLANECHANCE) {
 					createCoinLane();
 				}
 			}
@@ -206,7 +204,8 @@ public class Track {
 		int lane = random.nextInt(WIDTH) - 1;
 		int length = minCoinLaneLength + random.nextInt(addToCoins);
 		for (int i = 0; i < length; i++) {
-			addEntity(new Coin(new Point3D(lane, 1, LENGTH + COINDISTANCE*i)));
+			addEntity(new Coin(new Point3D(lane, 1,
+					LENGTH + COINDISTANCE * i)));
 		}
 		coinrunleft = length;
 	}
@@ -219,9 +218,13 @@ public class Track {
 		int lane = random.nextInt(WIDTH + 1);
 		int length = minCoinZigZagLength + random.nextInt(addToCoins);
 		for (int i = 0; i < length; i++) {
-			if (lane == WIDTH) { x = 0; }
-			else { x = lane - 1; }
-			addEntity(new Coin(new Point3D(x, 1, LENGTH + COINDISTANCE*i)));
+			if (lane == WIDTH) {
+				x = 0;
+			} else {
+				x = lane - 1;
+			}
+			addEntity(new Coin(new Point3D(x, 1,
+					LENGTH + COINDISTANCE * i)));
 			lane = (lane + 1) % (WIDTH + 1);
 		}
 		coinrunleft = length;
@@ -236,8 +239,11 @@ public class Track {
 		if (this.containsCenter(new Point3D(lane - 1, 0, LENGTH))) {
 			lane = (lane + 1) % WIDTH;
 		}
-		if (lane == WIDTH) { x = 0; }
-		else { x = lane - 1; }
+		if (lane == WIDTH) {
+			x = 0;
+		} else {
+			x = lane - 1;
+		}
 		addEntity(new Obstacle(new Point3D(x, 1, LENGTH),
 				new Point3D(1, 1, 1)));
 	}
