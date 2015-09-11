@@ -25,9 +25,9 @@ public class EndToEndTest extends ApplicationTest {
 	/** Multiplier for Robot sleeps. */
 	private static final long TARDINESS = 10;
 	/** Amount of milliseconds the Robot sleeps when sleeping "short". */
-	public static final long SHORT = 2 * TARDINESS;
+	private static final long SHORT = 2 * TARDINESS;
 	/** Amount of milliseconds the Robot sleeps when sleeping "long". */
-	public static final long LONG = 5 * TARDINESS;
+	private static final long LONG = 5 * TARDINESS;
 	
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
