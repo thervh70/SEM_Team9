@@ -37,8 +37,6 @@ public class Track {
 	/** Length of the track. */
 	public static final double LENGTH = 100;
 
-	/** Standard modulus number for modDistance. */
-	public static final int MOD = 50;
     /** Minimum number of coins in a coin lane. */
     private static final int MIN_COIN_LANE_LENGTH = 5;
     /** Minimum number of coins in a coin zigzag. */
