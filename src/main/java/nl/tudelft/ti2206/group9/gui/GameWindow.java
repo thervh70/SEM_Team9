@@ -35,7 +35,7 @@ public final class GameWindow {
 	public static final Object LOCK = new Object();
 
 	/** The translation of the camera. */
-	private static final Translate CAMERA_TRANS = new Translate(0, -5, -12);
+	public static final Translate CAMERA_TRANS = new Translate(0, -5, -12);
 	/** The rotation of the camera. */
 	private static final Rotate CAMERA_ROT = new Rotate(-10, Rotate.X_AXIS);
 	/** The near end of the camera. */
