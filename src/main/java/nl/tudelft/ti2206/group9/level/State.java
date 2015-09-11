@@ -15,7 +15,7 @@ public final class State {
 
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
-	
+
 	/** Standard modulus number for both modulo calculation. */
 	public static final int MOD = 50;
 
@@ -51,11 +51,11 @@ public final class State {
 	}
 	
 	/**
-	 * Updates the current distance every {@link #MOD} moves or points increase.
+	 * Update the current distance every {@link #MOD} moves or points increase.
 	 * @param amount number of (distance or points)
 	 * @return updated amount
 	 */
-	public static int modulo(double amount) {
+	public static int modulo(final double amount) {
 		return (int) (Math.floor(amount / MOD) * MOD);
 	}
 
