@@ -37,7 +37,6 @@ public class KeyMap {
     		if (!pressed.get(e)) {		// If key is not already pressed
     			action.doAction();		// Do action
     			pressed.put(e, true);	// Mark as pressed
-    			System.out.println("Key Pressed: " + e.toString());
     		}
     	}
     }
@@ -54,7 +53,6 @@ public class KeyMap {
      */
 	public final void keyReleased(final KeyCode e) {
         pressed.put(e, false);
-		System.out.println("Key Release: " + e.toString());
 	}
 
     /**
