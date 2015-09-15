@@ -238,7 +238,7 @@ public class Track {
 			lane = (lane + 1) % WIDTH;
 		}
 		addEntity(new Obstacle(new Point3D(lane - 1, 1, LENGTH),
-				new Point3D(1, 1, 1)));
+				Point3D.UNITCUBE));
 	}
 
 	/**
