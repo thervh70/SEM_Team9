@@ -167,7 +167,6 @@ public class AbstractEntityTest {
 		assertTrue(entity.equals(entity));
 		assertFalse(entity.equals(null));
 		assertFalse(entity.equals(""));
-		assertFalse(entity.equals(""));
 		assertFalse(null1.equals(entity));
 		assertTrue(null1.equals(new TestEntity(null, Point3D.UNITCUBE)));
 		assertFalse(entity.equals(null1));
