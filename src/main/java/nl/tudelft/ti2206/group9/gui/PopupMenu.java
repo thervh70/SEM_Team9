@@ -3,9 +3,9 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -55,6 +55,9 @@ public final class PopupMenu {
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
+        Style.setButtonStyle(yes, 14);
+        Style.setButtonStyle(no, 14);
+
         Text text = new Text(t);
         text.setFill(Color.BLACK);
 
@@ -109,11 +112,15 @@ public final class PopupMenu {
         warning.setWidth(WIDTH);
         warning.setHeight(HEIGTH);
 
+
         Rectangle rect = new Rectangle(WIDTH, HEIGTH, Color.WHITESMOKE);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
         Text text = new Text(t);
+
+        Style.setButtonStyle(yes, 14);
+        Style.setButtonStyle(no, 14);
 
         String s = "Final Score: " + score;
         Text finalScore = new Text(s);

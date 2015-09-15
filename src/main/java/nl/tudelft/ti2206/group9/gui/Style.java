@@ -3,15 +3,18 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import javax.print.DocFlavor;
+import javax.xml.soap.Node;
 
 /**
  * Created by Maikel on 03/09/2015.
@@ -22,8 +25,8 @@ public class Style {
 
 
     public static void setButtonStyle(final Button b, double size) {
-        Color color = Color.CORNFLOWERBLUE;
-        CornerRadii corner = new CornerRadii(1.5);
+        Color color = Color.BLACK;
+        CornerRadii corner = new CornerRadii(3);
         Insets inset = new Insets(0);
         BackgroundFill fill = new BackgroundFill(color, corner, inset);
         Background buttonBack = new Background(fill);
@@ -52,8 +55,8 @@ public class Style {
     }
 
     public static void setLabelStyle(Label l, int size){
-        Color color = Color.CORNFLOWERBLUE;
-        CornerRadii corner = new CornerRadii(1.5);
+        Color color = Color.BLACK;
+        CornerRadii corner = new CornerRadii(3);
         Insets inset = new Insets(-4);
         BackgroundFill fill = new BackgroundFill(color, corner, inset);
         Background buttonBack = new Background(fill);
@@ -61,6 +64,14 @@ public class Style {
         l.setTextFill(Color.WHITE);
         l.setFont(Font.font("Roboto", FontWeight.BOLD, 18));
 
+    }
+
+    public static void setBackground(String src, Pane p){
+        Image image = new Image(src);
+        BackgroundSize backgroundSize = new BackgroundSize(480, 640, true, true, true, false);
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+        p.setBackground(background);
     }
 
 
