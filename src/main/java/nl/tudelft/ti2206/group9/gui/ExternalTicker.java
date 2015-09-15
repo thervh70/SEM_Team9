@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.animation.AnimationTimer;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -32,9 +33,25 @@ public class ExternalTicker extends AnimationTimer {
 		GameScreen.clearWorld();
 		GameScreen.clearOverlay();
 
-		final Box track = new Box(3, 0.1, 500);
-		track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
-		GameScreen.addWorld(track);
+		PhongMaterial mat = new PhongMaterial();
+		Image texture = new Image("texture_cobblestone.png");
+		mat.setDiffuseMap(texture);
+
+		for(int i = 0; i < 500; i++){
+			for(int j = 0; j < 3; j++){
+//				if(i == 2 && j == 2) {
+//					;
+//				}
+//				else {
+					final Box trackPiece = new Box(1, 0, 1);
+					trackPiece.setLayoutX(j - 1);
+					trackPiece.setTranslateZ(i);
+					trackPiece.setMaterial(mat);
+					GameScreen.addWorld(trackPiece);
+//				}
+			}
+		}
+
 
 		final Group entities = renderEntities();
 		GameScreen.addWorld(entities);
