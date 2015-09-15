@@ -82,8 +82,8 @@ public class TrackTest {
 	@Test
 	public void testStepCoinZigZag() {
 		Random rand = mock(Random.class);
-		final double belowCoinZigZagChance = Track.COINZIGZAGCHANCE - 0.01;
-		final double aboveObstacleChance = Track.OBSTACLECHANCE + 0.01;
+		final double belowCoinZigZagChance = Track.COIN_ZIGZAG_CHANCE - 0.01;
+		final double aboveObstacleChance = Track.OBSTACLE_CHANCE + 0.01;
 		final Track track = new Track(rand);
 		final int length = 5;
 
@@ -119,9 +119,9 @@ public class TrackTest {
 	@Test
 	public void testStepCoinLane() {
 		Random rand = mock(Random.class);
-		final double belowCoinLaneChance = Track.COINZIGZAGCHANCE 
-				+ Track.COINLANECHANCE - 0.01;
-		final double aboveObstacleChance = Track.OBSTACLECHANCE + 0.01;
+		final double belowCoinLaneChance = Track.COIN_ZIGZAG_CHANCE 
+				+ Track.COIN_LANE_CHANCE - 0.01;
+		final double aboveObstacleChance = Track.OBSTACLE_CHANCE + 0.01;
 		final Track track = new Track(rand);
 		final int length = 5;
 
@@ -141,15 +141,15 @@ public class TrackTest {
 		track.step();
 		double newCoinLeft = track.getCoinrunleft();
 		assertEquals(newCoinLeft, oldCoinLeft 
-				- Track.UNITS_PER_TICK / Track.COINDISTANCE, DELTA);
+				- Track.UNITS_PER_TICK / Track.COIN_DISTANCE, DELTA);
 	}
 
 	@Test
 	public void testSingleObstacle() {
 		Random rand = mock(Random.class);
-		final double aboveCoinLaneChance = Track.COINZIGZAGCHANCE 
-				+ Track.COINLANECHANCE + 0.01;
-		final double belowObstacleChance = Track.OBSTACLECHANCE - 0.01;
+		final double aboveCoinLaneChance = Track.COIN_ZIGZAG_CHANCE 
+				+ Track.COIN_LANE_CHANCE + 0.01;
+		final double belowObstacleChance = Track.OBSTACLE_CHANCE - 0.01;
 		final Track track = new Track(rand);
 
 		when(rand.nextDouble()).thenReturn(aboveCoinLaneChance, 

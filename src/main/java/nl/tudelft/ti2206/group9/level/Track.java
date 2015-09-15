@@ -21,13 +21,13 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 public class Track {
 
 	/** Chance per frame to spawn a lane of coins. */
-	public static final double COINLANECHANCE = 0.015;
+	public static final double COIN_LANE_CHANCE = 0.015;
 	/** Chance per frame to spawn zigzag of coins. */
-	public static final double COINZIGZAGCHANCE = 0.01;
+	public static final double COIN_ZIGZAG_CHANCE = 0.01;
 	/** Chance per frame to spawn an obstacle. */
-	public static final double OBSTACLECHANCE = 0.01;
+	public static final double OBSTACLE_CHANCE = 0.01;
 	/** The distance between the coins. */
-	public static final double COINDISTANCE = 10;
+	public static final double COIN_DISTANCE = 10;
 
 	/** Amount of units the track should move per tick. */
 	public static final double UNITS_PER_TICK = 0.4;
@@ -175,16 +175,16 @@ public class Track {
 	public final synchronized void step() {
 		synchronized (this) {
 			if (coinrunleft > 0) {
-				coinrunleft -= UNITS_PER_TICK / COINDISTANCE;
+				coinrunleft -= UNITS_PER_TICK / COIN_DISTANCE;
 			} else {
 				double rand = random.nextDouble();
-				if (rand < COINZIGZAGCHANCE) {
+				if (rand < COIN_ZIGZAG_CHANCE) {
 					createZigZag();
-				} else if (rand < COINZIGZAGCHANCE + COINLANECHANCE) {
+				} else if (rand < COIN_ZIGZAG_CHANCE + COIN_LANE_CHANCE) {
 					createCoinLane();
 				}
 			}
-			if (random.nextDouble() < OBSTACLECHANCE) {
+			if (random.nextDouble() < OBSTACLE_CHANCE) {
 				createSingleObstacle();
 			}
 		}
@@ -203,7 +203,7 @@ public class Track {
 		int length = MIN_COIN_LANE_LENGTH + random.nextInt(ADD_TO_COINS);
 		for (int i = 0; i < length; i++) {
 			addEntity(new Coin(new Point3D(lane, 1,
-					LENGTH + COINDISTANCE * i)));
+					LENGTH + COIN_DISTANCE * i)));
 		}
 		coinrunleft = length;
 	}
@@ -222,7 +222,7 @@ public class Track {
 				x = lane - 1;
 			}
 			addEntity(new Coin(new Point3D(x, 1,
-					LENGTH + COINDISTANCE * i)));
+					LENGTH + COIN_DISTANCE * i)));
 			lane = (lane + 1) % (WIDTH + 1);
 		}
 		coinrunleft = length;

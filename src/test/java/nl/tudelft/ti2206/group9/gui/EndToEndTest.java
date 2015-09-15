@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.level.Track;
 
 import org.junit.Test;
 import org.mockito.Mockito;
