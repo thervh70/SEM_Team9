@@ -19,8 +19,8 @@ public final class PopupMenu {
 
     /** Width of the PopUpMenu. */
     private static final double WIDTH = 250;
-    /** Heigth of the PopUpMenu. */
-    private static final double HEIGTH = 300;
+    /** Height of the PopUpMenu. */
+    private static final double HEIGHT = 300;
     /** Size of the HBox. */
     private static final double HBOX_SIZE = 20;
     /** Size of the VBox. */
@@ -49,9 +49,9 @@ public final class PopupMenu {
         final Popup warning = new Popup();
         warning.centerOnScreen();
         warning.setWidth(WIDTH);
-        warning.setHeight(HEIGTH);
+        warning.setHeight(HEIGHT);
 
-        Rectangle rect = new Rectangle(WIDTH, HEIGTH, Color.WHITESMOKE);
+        Rectangle rect = new Rectangle(WIDTH, HEIGHT, Color.WHITESMOKE);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
@@ -107,9 +107,9 @@ public final class PopupMenu {
         final Popup warning = new Popup();
         warning.centerOnScreen();
         warning.setWidth(WIDTH);
-        warning.setHeight(HEIGTH);
+        warning.setHeight(HEIGHT);
 
-        Rectangle rect = new Rectangle(WIDTH, HEIGTH, Color.WHITESMOKE);
+        Rectangle rect = new Rectangle(WIDTH, HEIGHT, Color.WHITESMOKE);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
