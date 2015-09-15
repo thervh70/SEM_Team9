@@ -33,22 +33,17 @@ public class ExternalTicker extends AnimationTimer {
 		GameScreen.clearWorld();
 		GameScreen.clearOverlay();
 
-		PhongMaterial mat = new PhongMaterial();
+		PhongMaterial floor = new PhongMaterial();
 		Image texture = new Image("texture_cobblestone.png");
-		mat.setDiffuseMap(texture);
+		floor.setDiffuseMap(texture);
 
 		for(int i = 0; i < 500; i++){
 			for(int j = 0; j < 3; j++){
-//				if(i == 2 && j == 2) {
-//					;
-//				}
-//				else {
-					final Box trackPiece = new Box(1, 0, 1);
-					trackPiece.setLayoutX(j - 1);
-					trackPiece.setTranslateZ(i);
-					trackPiece.setMaterial(mat);
-					GameScreen.addWorld(trackPiece);
-//				}
+				final Box trackPiece = new Box(1, 0, 1);
+				trackPiece.setLayoutX(j - 1);
+				trackPiece.setTranslateZ(i);
+				trackPiece.setMaterial(floor);
+				GameScreen.addWorld(trackPiece);
 			}
 		}
 
@@ -68,6 +63,11 @@ public class ExternalTicker extends AnimationTimer {
      * @return group
      */
 	private Group renderEntities() {
+		PhongMaterial wood = new PhongMaterial();
+		Image texture = new Image("texture_wood.png");
+		wood.setDiffuseMap(texture);
+
+
 		final Group entities = new Group();
 		entities.setDepthTest(DepthTest.ENABLE);
 		synchronized (State.getTrack()) {
@@ -86,7 +86,7 @@ public class ExternalTicker extends AnimationTimer {
 				} else if (entity instanceof Coin) {
 					entityBox.setMaterial(new PhongMaterial(Color.GOLD));
 				} else {
-					entityBox.setMaterial(new PhongMaterial(Color.GREEN));
+					entityBox.setMaterial(wood);
 				}
 
 				entities.getChildren().add(entityBox);
