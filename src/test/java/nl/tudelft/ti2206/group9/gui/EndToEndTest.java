@@ -2,6 +2,9 @@ package nl.tudelft.ti2206.group9.gui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Random;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -12,8 +15,10 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.testfx.framework.junit.ApplicationTest;
 
 @SuppressWarnings("restriction")
@@ -34,6 +39,7 @@ public class EndToEndTest extends ApplicationTest {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		mockGenerator();
 		stage = primaryStage;
 		new SplashScreen().start(stage);
 	}
@@ -62,6 +68,12 @@ public class EndToEndTest extends ApplicationTest {
 		mainMenu(2);				// Click quit
 	}
 	
+	private void mockGenerator() {
+		Random mockGenerator = Mockito.mock(Random.class);
+		Mockito.when(mockGenerator.nextDouble()).thenReturn(1.0);
+		State.getTrack().setRandom(mockGenerator);
+	}
+
 	private void moveAround() {
 		final int before = 5;
 		final int after = 50;
@@ -70,14 +82,14 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertTrue(State.getTrack().getPlayer().getCenter().getX() < 0);
 		keyboard(KeyCode.RIGHT);
-		sleep(after / 2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
 		
 		keyboard(KeyCode.RIGHT);
 		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertTrue(State.getTrack().getPlayer().getCenter().getX() > 0);
 		keyboard(KeyCode.LEFT);
-		sleep(after / 2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
 		
 		keyboard(KeyCode.UP);
@@ -103,6 +115,7 @@ public class EndToEndTest extends ApplicationTest {
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		mockGenerator();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
 	
@@ -118,11 +131,13 @@ public class EndToEndTest extends ApplicationTest {
 	private void playerDies() {
 		State.getTrack().getPlayer().die();
 		sleep(2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		mockGenerator();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
 	
 	private void deathPopup(int buttonNo) {
 		ObservableList<Node> buttons;
+		sleep(1);
 		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
 				.getChildren();
 		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();

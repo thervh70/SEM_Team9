@@ -254,4 +254,12 @@ public class Track {
 	public final double getCoinrunleft() {
 		return coinrunleft;
 	}
+
+	/**
+	 * Set the Random generator.
+	 * @param randomGenerator Random object to set.
+	 */
+	public void setRandom(Random randomGenerator) {
+		random = randomGenerator;
+	}
 }
