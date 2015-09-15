@@ -232,17 +232,11 @@ public class Track {
 	 * Creates a single obstacle (1x1x1).
 	 */
 	private void createSingleObstacle() {
-		int x;
 		int lane = random.nextInt(WIDTH);
 		if (this.containsCenter(new Point3D(lane - 1, 0, LENGTH))) {
 			lane = (lane + 1) % WIDTH;
 		}
-		if (lane == WIDTH) {
-			x = 0;
-		} else {
-			x = lane - 1;
-		}
-		addEntity(new Obstacle(new Point3D(x, 1, LENGTH),
+		addEntity(new Obstacle(new Point3D(lane - 1, 1, LENGTH),
 				new Point3D(1, 1, 1)));
 	}
 

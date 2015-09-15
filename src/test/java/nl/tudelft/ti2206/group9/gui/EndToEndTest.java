@@ -75,7 +75,7 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void moveAround() {
 		final int before = 5;
-		final int after = 50;
+		final int after = 100;
 		
 		keyboard(KeyCode.LEFT);
 		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
@@ -84,10 +84,10 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
 		
-		keyboard(KeyCode.RIGHT);
+		keyboard(KeyCode.D);
 		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertTrue(State.getTrack().getPlayer().getCenter().getX() > 0);
-		keyboard(KeyCode.LEFT);
+		keyboard(KeyCode.A);
 		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
 		

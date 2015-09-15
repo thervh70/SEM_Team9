@@ -161,4 +161,25 @@ public class TrackTest {
 		assertEquals(2, track.getEntities().size());
 		assertTrue(track.getEntities().get(1) instanceof Obstacle);
 	}
+
+	@Test
+	public void testSingleObstacleWithObstruction() {
+		Random rand = mock(Random.class);
+		final double aboveCoinLaneChance = Track.COIN_ZIGZAG_CHANCE 
+				+ Track.COIN_LANE_CHANCE + 0.01;
+		final double belowObstacleChance = Track.OBSTACLE_CHANCE - 0.01;
+
+		when(rand.nextInt(Track.WIDTH)).thenReturn(1);
+		when(rand.nextDouble()).thenReturn(aboveCoinLaneChance, 
+				belowObstacleChance);
+		final Track track = new Track(rand);
+		
+		track.addEntity(new Coin(new Point3D(0, 1, Track.LENGTH)));
+		assertEquals(2, track.getEntities().size());
+
+		track.step();
+		assertEquals(2 + 1, track.getEntities().size());
+		assertTrue(track.getEntities().get(2) instanceof Obstacle);
+		assertEquals(1, track.getEntities().get(2).getCenter().getX(), DELTA);
+	}
 }
