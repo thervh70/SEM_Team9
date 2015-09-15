@@ -97,7 +97,7 @@ public class Point3DTest {
 	public void testEquals() {
 		assertTrue(point.equals(point));
 		assertFalse(point.equals(null));
-		assertFalse(point.equals(new Integer(0)));
+		assertFalse(point.equals(""));
 		assertFalse(point.equals(new Point3D(2.0, 2.0, 0.0)));
 		assertFalse(point.equals(new Point3D(1.0, 1.0, 0.0)));
 		assertFalse(point.equals(new Point3D(1.0, 2.0, 2.0)));
