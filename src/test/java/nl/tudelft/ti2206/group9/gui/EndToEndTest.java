@@ -75,7 +75,7 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void moveAround() {
 		final int before = 5;
-		final int after = 100;
+		final int after = 75;
 		
 		keyboard(KeyCode.LEFT);
 		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);

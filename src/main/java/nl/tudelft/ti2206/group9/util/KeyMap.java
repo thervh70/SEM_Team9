@@ -33,11 +33,9 @@ public class KeyMap {
     	}
 
     	Action action = keyMap.get(e);
-    	if (action != null) {			// If action is defined
-    		if (!pressed.get(e)) {		// If key is not already pressed
-    			action.doAction();		// Do action
-    			pressed.put(e, true);	// Mark as pressed
-    		}
+    	if (action != null && !pressed.get(e)) {	// If key not pressed
+			action.doAction();						// Do action
+			pressed.put(e, true);					// Mark as pressed
     	}
     }
 

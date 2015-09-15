@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.level;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -68,7 +69,11 @@ public class TrackTest {
 	
 	@Test
 	public void testGetPlayer() {
-		assertTrue(track.getPlayer() instanceof Player);
+		try {
+			track.getPlayer();
+		} catch (ClassCastException e) {
+			fail("Player could not be retrieved from the entities list.");
+		}
 	}
 
 	@Test
@@ -102,18 +107,18 @@ public class TrackTest {
 
 	@Test
 	public void testAddDistance() {
-		track.setDistance(0);
-		track.addDistance(2.0);
-		track.addDistance(1.0);
-		assertEquals(2.0 + 1.0, track.getDistance(), DELTA);
+		Track.setDistance(0);
+		Track.addDistance(2.0);
+		Track.addDistance(1.0);
+		assertEquals(2.0 + 1.0, Track.getDistance(), DELTA);
 	}
 
 	@Test
 	public void testSetDistance() {
-		track.setDistance(2);
-		assertEquals(2, track.getDistance(), DELTA);
-		track.setDistance(1);
-		assertEquals(1, track.getDistance(), DELTA);
+		Track.setDistance(2);
+		assertEquals(2, Track.getDistance(), DELTA);
+		Track.setDistance(1);
+		assertEquals(1, Track.getDistance(), DELTA);
 	}
 
 	@Test

@@ -150,21 +150,21 @@ public class Track {
 	/**
 	 * @param amount the amount to be added
 	 */
-	public final void addDistance(final double amount) {
+	static final void addDistance(final double amount) {
 		distance += amount;
 	}
 
 	/**
 	 * @return the distance
 	 */
-	final double getDistance() {
+	static final double getDistance() {
 		return distance;
 	}
 
 	/**
 	 * @param dist the distance to set
 	 */
-	final void setDistance(final double dist) {
+	static final void setDistance(final double dist) {
 		Track.distance = dist;
 	}
 
@@ -174,17 +174,18 @@ public class Track {
 	 */
 	public final synchronized void step() {
 		synchronized (this) {
+			double coin = random.nextDouble();
+			double obstacle = random.nextDouble();
 			if (coinrunleft > 0) {
 				coinrunleft -= UNITS_PER_TICK / COIN_DISTANCE;
 			} else {
-				double rand = random.nextDouble();
-				if (rand < COIN_ZIGZAG_CHANCE) {
+				if (coin < COIN_ZIGZAG_CHANCE) {
 					createZigZag();
-				} else if (rand < COIN_ZIGZAG_CHANCE + COIN_LANE_CHANCE) {
+				} else if (coin < COIN_ZIGZAG_CHANCE + COIN_LANE_CHANCE) {
 					createCoinLane();
 				}
 			}
-			if (random.nextDouble() < OBSTACLE_CHANCE) {
+			if (obstacle < OBSTACLE_CHANCE) {
 				createSingleObstacle();
 			}
 		}

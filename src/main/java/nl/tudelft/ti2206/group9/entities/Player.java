@@ -149,9 +149,7 @@ public class Player extends AbstractEntity {
 		}
 		pos.addY(vspeed);
 
-		Point3D bottom = new Point3D(pos);
 		double bottomToFloor = getSize().getY() / 2;
-		bottom.addY(bottomToFloor);
 		if (pos.getY() < bottomToFloor) {
 			jumping = false;
 			vspeed = 0;
@@ -200,10 +198,10 @@ public class Player extends AbstractEntity {
     public final void move(final Direction direction) {
     	if (isAlive()) {
 	        switch (direction) {
-	            case LEFT: 	changeLane(-1);	break;
-	            case RIGHT:	changeLane(1);	break;
-	            case JUMP:	jump();			break;
-	            case SLIDE:	slide();		break;
+	            case LEFT:  changeLane(-1.0);	break;
+	            case RIGHT: changeLane(1.0);	break;
+	            case JUMP:  jump();				break;
+	            case SLIDE: slide();			break;
 	            default:	break;
 	        }
     	}
