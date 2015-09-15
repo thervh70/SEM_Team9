@@ -33,6 +33,7 @@ public final class SplashScreen extends Application {
 
         /* Creating a new label for displaying text. */
         Label text = new Label("Press any key to continue");
+        Style.setLabelStyle(text,36);
 
         /* Defining what has happens in case of a mouseClickEvent. */
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -53,7 +54,7 @@ public final class SplashScreen extends Application {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), text);
         ft.setFromValue(1.0);
         ft.setToValue(0);
-        ft.setCycleCount(1500);
+        ft.setCycleCount(2000);
         ft.setAutoReverse(true);
         ft.play();
 

@@ -44,13 +44,16 @@ public final class StartScreen {
 
         /** Add text to buttons give them a location on the grid.*/
         startButton = new Button("START");
-        GridPane.setConstraints(startButton, 7, 21);
+        Style.setButtonStyle(startButton, 36);
+        GridPane.setConstraints(startButton, 6, 21);
 
         settingsButton = new Button("SETTINGS");
-        GridPane.setConstraints(settingsButton, 3, 21);
+        Style.setButtonStyle(settingsButton,36);
+        GridPane.setConstraints(settingsButton, 2, 21);
 
         exitButton = new Button("EXIT");
-        GridPane.setConstraints(exitButton, 11, 21);
+        Style.setButtonStyle(exitButton, 36);
+        GridPane.setConstraints(exitButton, 10, 21);
 
         /**Adding all buttons to the gridpane.*/
         grid.getChildren().addAll(startButton, settingsButton, exitButton);
