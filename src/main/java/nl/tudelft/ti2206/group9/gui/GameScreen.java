@@ -65,8 +65,12 @@ public final class GameScreen {
 	/** The primarystage. */
 	private static Stage primaryStage;
 	
+	/** The mixer to be used for the AudioPlayer. */
 	private static Mixer mixer;
+	/** The clip to be used for the AudioPlayer. */
 	private static Clip clip;
+	/** The AudioPlayer to be used. */
+	private static AudioPlayer audioPlayer;
 
 	private static Popup pause;
 	private static Popup death;
@@ -80,10 +84,6 @@ public final class GameScreen {
 	public static void start(final Stage stage) {
 		State.reset();
 		
-		AudioPlayer ap = new AudioPlayer(mixer, clip);
-		ap.initialiseTune("sounds/soundtrack.aiff");
-		ap.play();
-
 		primaryStage = stage;
 
 		root = new Group();
@@ -108,7 +108,8 @@ public final class GameScreen {
 		keyBindings(primaryStage);
 		primaryStage.setResizable(false);
 		primaryStage.show();
-
+		
+		startAudioPlayer();
 		startTickers();
 	}
 
@@ -186,10 +187,12 @@ public final class GameScreen {
 	 */
 	public static void showPauseMenu(final Stage primeStage) {
 		stopTickers();
+		audioPlayer.stop();
 
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
+				
 				State.reset();
 				StartScreen.start(primeStage);
 				pause = null;
@@ -200,6 +203,7 @@ public final class GameScreen {
 				= new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
+				audioPlayer.play();
 				resumeTickers();
 				pause = null;
 			}
@@ -214,6 +218,7 @@ public final class GameScreen {
 	 * Show a death menu.
 	 */
 	public static void showDeathMenu() {
+		audioPlayer.stop();
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
@@ -232,7 +237,6 @@ public final class GameScreen {
 				death = null;
 			}
 		};
-
 		death = PopupMenu.makeFinalMenu("Game Ended", (int) State.getScore(),
 			State.getCoins(), "Try again", "Return to Main Menu", retry, menu);
 		death.show(primaryStage);
@@ -278,4 +282,12 @@ public final class GameScreen {
 			return death;
 		}
 	}
+	
+	/** Starts the AudioPlayer. */
+	public static void startAudioPlayer() {
+		audioPlayer = new AudioPlayer(mixer, clip);
+		audioPlayer.initialiseTune("sounds/soundtrack.aiff");
+		audioPlayer.play();
+	}
+
 }

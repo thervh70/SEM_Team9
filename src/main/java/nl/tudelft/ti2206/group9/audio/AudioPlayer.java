@@ -51,7 +51,11 @@ public class AudioPlayer {
 	 */
 	public void initialiseTune(final String path) {
 		Mixer.Info[] mixInfos = AudioSystem.getMixerInfo();
-		mixer = AudioSystem.getMixer(mixInfos[0]);
+		for(Mixer.Info info : mixInfos)
+		{
+			System.out.println(info.getName() + " - " + info.getDescription());
+		}
+		mixer = AudioSystem.getMixer(mixInfos[1]);
 		
 		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
 		
