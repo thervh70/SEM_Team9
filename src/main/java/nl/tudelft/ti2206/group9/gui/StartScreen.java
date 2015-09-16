@@ -78,7 +78,7 @@ public final class StartScreen {
 
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
-             //   SettingsScreen.start(primaryStage);
+                SettingsScreen.start(primaryStage);
             }
         });
 

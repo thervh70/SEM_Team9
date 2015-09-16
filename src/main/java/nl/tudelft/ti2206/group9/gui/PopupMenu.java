@@ -18,11 +18,11 @@ import javafx.stage.Popup;
 public final class PopupMenu {
 
     /** Width of the PopUpMenu. */
-    private static final double WIDTH = 250;
+    private static final double WIDTH = 260;
     /** Heigth of the PopUpMenu. */
-    private static final double HEIGTH = 300;
+    private static final double HEIGTH = 320;
     /** Size of the HBox. */
-    private static final double HBOXSIZE = 20;
+    private static final double HBOXSIZE = 10;
     /** Size of the VBox. */
     private static final double VBOXSIZE = 50;
 
@@ -51,12 +51,13 @@ public final class PopupMenu {
         warning.setWidth(WIDTH);
         warning.setHeight(HEIGTH);
 
-        Rectangle rect = new Rectangle(WIDTH, HEIGTH, Color.WHITESMOKE);
+        Rectangle rect = new Rectangle(WIDTH, 130, Color.WHITESMOKE);
+        rect.setStroke(Color.BLACK);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
-        Style.setButtonStyle(yes, 14);
-        Style.setButtonStyle(no, 14);
+        Style.setPopupButtonStyle(yes, 10);
+        Style.setPopupButtonStyle(no, 10);
 
         Text text = new Text(t);
         text.setFill(Color.BLACK);
@@ -82,6 +83,7 @@ public final class PopupMenu {
                 event2.handle(n);
             }
         });
+
 
         warning.getContent().addAll(rect, vbox);
         return warning;
@@ -114,13 +116,14 @@ public final class PopupMenu {
 
 
         Rectangle rect = new Rectangle(WIDTH, HEIGTH, Color.WHITESMOKE);
+        rect.setStroke(Color.BLACK);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
         Text text = new Text(t);
 
-        Style.setButtonStyle(yes, 14);
-        Style.setButtonStyle(no, 14);
+        Style.setPopupButtonStyle(yes, 10);
+        Style.setPopupButtonStyle(no, 10);
 
         String s = "Final Score: " + score;
         Text finalScore = new Text(s);

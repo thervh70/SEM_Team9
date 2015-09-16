@@ -32,16 +32,13 @@ public class Style {
         Background buttonBack = new Background(fill);
         b.setTextFill(Color.WHITE);
         b.setBackground(buttonBack);
-
-
-
         b.setFont(Font.font("Roboto", FontWeight.BOLD, 14));
 
 
                 b.setOnMouseEntered(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
-                        b.setScaleX(1.3);
-                        b.setScaleY(1.3);
+                        b.setScaleX(1.2);
+                        b.setScaleY(1.2);
                     }
                 });
 
@@ -49,6 +46,30 @@ public class Style {
             public void handle(MouseEvent e) {
                 b.setScaleX(1);
                 b.setScaleY(1);
+            }
+        });
+    }
+
+    public static void setPopupButtonStyle(final Button b, double size){
+        Color color = Color.BLACK;
+        CornerRadii corner = new CornerRadii(3);
+        Insets inset = new Insets(0);
+        BackgroundFill fill = new BackgroundFill(color, corner, inset);
+        Background buttonBack = new Background(fill);
+        b.setTextFill(Color.WHITE);
+        b.setBackground(buttonBack);
+        b.setFont(Font.font("Roboto", FontWeight.BOLD, 14));
+
+        b.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                b.setTextFill(Color.CORNFLOWERBLUE);
+
+            }
+        });
+
+        b.setOnMouseExited(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                b.setTextFill(Color.WHITE);
             }
         });
 
