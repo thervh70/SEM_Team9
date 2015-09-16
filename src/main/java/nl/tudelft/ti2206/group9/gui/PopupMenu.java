@@ -3,9 +3,9 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -18,11 +18,11 @@ import javafx.stage.Popup;
 public final class PopupMenu {
 
     /** Width of the PopUpMenu. */
-    private static final double WIDTH = 250;
-    /** Height of the PopUpMenu. */
-    private static final double HEIGHT = 300;
+    private static final double WIDTH = 260;
+    /** Heigth of the PopUpMenu. */
+    private static final double HEIGHT = 320;
     /** Size of the HBox. */
-    private static final double HBOX_SIZE = 20;
+    private static final double HBOX_SIZE = 10;
     /** Size of the VBox. */
     private static final double VBOX_SIZE = 50;
 
@@ -51,10 +51,14 @@ public final class PopupMenu {
         warning.setWidth(WIDTH);
         warning.setHeight(HEIGHT);
 
-        Rectangle rect = new Rectangle(WIDTH, HEIGHT, Color.WHITESMOKE);
+        Rectangle rect = new Rectangle(WIDTH, 130, Color.WHITESMOKE);
+        rect.setStroke(Color.BLACK);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
+        Style.setPopupButtonStyle(yes, 10);
+        Style.setPopupButtonStyle(no, 10);
+
         Text text = new Text(t);
         text.setFill(Color.BLACK);
 
@@ -79,6 +83,7 @@ public final class PopupMenu {
                 event2.handle(n);
             }
         });
+
 
         warning.getContent().addAll(rect, vbox);
         return warning;
@@ -110,10 +115,14 @@ public final class PopupMenu {
         warning.setHeight(HEIGHT);
 
         Rectangle rect = new Rectangle(WIDTH, HEIGHT, Color.WHITESMOKE);
+        rect.setStroke(Color.BLACK);
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
         Text text = new Text(t);
+
+        Style.setPopupButtonStyle(yes, 10);
+        Style.setPopupButtonStyle(no, 10);
 
         String s = "Final Score: " + score;
         Text finalScore = new Text(s);
