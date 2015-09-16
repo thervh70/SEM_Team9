@@ -29,7 +29,6 @@ public final class StartScreen {
         Stage window;
         Scene startScreen;
         Button startButton, settingsButton, exitButton;
-
         window = primaryStage;
 
         /**Creating the gridPane which is used for the layout. */
@@ -38,23 +37,20 @@ public final class StartScreen {
         grid.setVgap(20);
         grid.setHgap(20);
 
-        Style.setBackground("sc.png", grid);
-
         /**Setting a background for the menu.*/
-        //grid.getChildren().add(Style.setBackground(
-        // 		"/View/Resources/background_splashscreen.png"));
+        Style.setBackground("sc.png", grid);
 
         /** Add text to buttons give them a location on the grid.*/
         startButton = new Button("START");
-        Style.setButtonStyle(startButton, 36);
+        Style.setButtonStyle(startButton);
         GridPane.setConstraints(startButton, 6, 26);
 
         settingsButton = new Button("SETTINGS");
-        Style.setButtonStyle(settingsButton,36);
+        Style.setButtonStyle(settingsButton);
         GridPane.setConstraints(settingsButton, 2, 26);
 
         exitButton = new Button("EXIT");
-        Style.setButtonStyle(exitButton, 36);
+        Style.setButtonStyle(exitButton);
         GridPane.setConstraints(exitButton, 10, 26);
 
         /**Adding all buttons to the gridpane.*/

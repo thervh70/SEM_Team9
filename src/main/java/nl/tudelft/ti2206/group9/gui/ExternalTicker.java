@@ -46,9 +46,9 @@ public class ExternalTicker extends AnimationTimer {
 				+ State.modulo(State.getDistance()));
 		Label coinsLabel = new Label(("Coins: " + State.getCoins()));
 
-		Style.setLabelStyle(scoreLabel, 10);
-		Style.setLabelStyle(distanceLabel, 10);
-		Style.setLabelStyle(coinsLabel, 10);
+		Style.setLabelStyle(scoreLabel);
+		Style.setLabelStyle(distanceLabel);
+		Style.setLabelStyle(coinsLabel);
 
 		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
 		scoreBox.setStyle( " -fx-background-color:BLACK;");

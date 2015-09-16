@@ -56,8 +56,8 @@ public final class PopupMenu {
 
         Button yes = new Button(button1);
         Button no = new Button(button2);
-        Style.setPopupButtonStyle(yes, 10);
-        Style.setPopupButtonStyle(no, 10);
+        Style.setPopupButtonStyle(yes);
+        Style.setPopupButtonStyle(no);
 
         Text text = new Text(t);
         text.setFill(Color.BLACK);
@@ -121,8 +121,8 @@ public final class PopupMenu {
         Button no = new Button(button2);
         Text text = new Text(t);
 
-        Style.setPopupButtonStyle(yes, 10);
-        Style.setPopupButtonStyle(no, 10);
+        Style.setPopupButtonStyle(yes);
+        Style.setPopupButtonStyle(no);
 
         String s = "Final Score: " + score;
         Text finalScore = new Text(s);

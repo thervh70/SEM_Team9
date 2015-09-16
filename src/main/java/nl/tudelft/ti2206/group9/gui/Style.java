@@ -26,9 +26,18 @@ import javafx.scene.text.FontWeight;
 @SuppressWarnings("restriction")
 public final class Style {
 
+    /**
+     * Private empty constructor.
+     */
 	private Style() { }
 
-    public static void setButtonStyle(final Button b, double size) {
+    /**
+     * Alters the looks and behaviour of a button.
+     *
+     * @param b Button to be styled.
+     */
+    public static void setButtonStyle(final Button b) {
+        /** Adjusting looks of button */
         Color color = Color.BLACK;
         CornerRadii corner = new CornerRadii(3);
         Insets inset = new Insets(0);
@@ -39,13 +48,15 @@ public final class Style {
         b.setFont(Font.font("Roboto", FontWeight.BOLD, 14));
 
 
-                b.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent e) {
-                        b.setScaleX(1.2);
-                        b.setScaleY(1.2);
-                    }
-                });
+        /** Action to be taken on MouseEntered Event */
+        b.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                b.setScaleX(1.2);
+                b.setScaleY(1.2);
+            }
+        });
 
+        /** Action to be taken on MouseExited Event. */
         b.setOnMouseExited(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 b.setScaleX(1);
@@ -54,7 +65,13 @@ public final class Style {
         });
     }
 
-    public static void setPopupButtonStyle(final Button b, double size){
+    /**
+     * Changes the styling and behaviour of a button in a pop up.
+     *
+     * @param b Button to be changed.
+     */
+    public static void setPopupButtonStyle(final Button b){
+        /** Adjusting the looks of the button */
         Color color = Color.BLACK;
         CornerRadii corner = new CornerRadii(3);
         Insets inset = new Insets(0);
@@ -64,22 +81,27 @@ public final class Style {
         b.setBackground(buttonBack);
         b.setFont(Font.font("Roboto", FontWeight.BOLD, 14));
 
+        /** Action to be taken on MouseEntered Event */
         b.setOnMouseEntered(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 b.setTextFill(Color.CORNFLOWERBLUE);
-
             }
         });
 
+        /** Action to be taken on MouseExited Event. */
         b.setOnMouseExited(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 b.setTextFill(Color.WHITE);
             }
         });
-
     }
 
-    public static void setLabelStyle(Label l, int size){
+    /**
+     * Changes the styling of a label.
+     *
+     * @param l Label to be changed.
+     */
+    public static void setLabelStyle(Label l){
         Color color = Color.BLACK;
         CornerRadii corner = new CornerRadii(3);
         Insets inset = new Insets(-4);
@@ -88,19 +110,22 @@ public final class Style {
         l.setBackground(buttonBack);
         l.setTextFill(Color.WHITE);
         l.setFont(Font.font("Roboto", FontWeight.BOLD, 18));
-
     }
 
+    /**
+     * Sets the background of a pane.
+     *
+     * @param src Path to source of the imagefile.
+     * @param p The pane.
+     */
     public static void setBackground(String src, Pane p){
         Image image = new Image(src);
-        BackgroundSize backgroundSize = new BackgroundSize(
-        		GUIConstant.WIDTH, GUIConstant.HEIGHT, true, true, true, false);
+        BackgroundSize backgroundSize = new BackgroundSize(GUIConstant.WIDTH,
+                GUIConstant.HEIGHT, true, true, true, false);
         BackgroundImage backgroundImage = new BackgroundImage(image, 
         		BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, 
         		BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
         p.setBackground(background);
     }
-
-
 }
