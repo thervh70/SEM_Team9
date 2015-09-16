@@ -83,7 +83,7 @@ public class PlayerTest {
         assertEquals(Player.HEIGHT / 2, player.getCenter().getY(), DELTA);
         player.move(Direction.JUMP);
         player.step();
-        assertEquals(Player.HEIGHT / 2 + Player.JUMPSPEED - Player.GRAVITY, 
+        assertEquals(Player.HEIGHT / 2 + Player.JUMP_SPEED - Player.GRAVITY, 
         		player.getCenter().getY(), DELTA);
     }
 
@@ -92,12 +92,12 @@ public class PlayerTest {
         assertEquals(Player.HEIGHT / 2, player.getCenter().getY(), DELTA);
         player.move(Direction.JUMP);
         player.step();
-        assertEquals(Player.HEIGHT / 2 + Player.JUMPSPEED - Player.GRAVITY, 
+        assertEquals(Player.HEIGHT / 2 + Player.JUMP_SPEED - Player.GRAVITY, 
         		player.getCenter().getY(), DELTA);
         player.move(Direction.JUMP);
         player.step();
         assertEquals(Player.HEIGHT / 2 			// Original height
-        		+ 2 * Player.JUMPSPEED 			// Two steps to get higher
+        		+ 2 * Player.JUMP_SPEED 			// Two steps to get higher
         		- (1 + 2) * Player.GRAVITY, 	// Two steps with gravity (1+2)
         		player.getCenter().getY(), DELTA);
     }
@@ -115,7 +115,7 @@ public class PlayerTest {
     @Test
     public void moveSlideTest() {
     	final double initSlideSpeed = -1 * 2 * (Player.HEIGHT 
-    			- Player.SLIDINGLOW) / (Player.SLIDELENGTH / 2);
+    			- Player.SLIDE_MIN_HEIGHT) / (Player.SLIDE_LENGTH / 2);
         assertEquals(Player.HEIGHT, player.getSize().getY(), DELTA);
     	player.move(Direction.SLIDE);
     	player.step();
@@ -131,9 +131,9 @@ public class PlayerTest {
     @Test
     public void moveDoubleSlideTest() {
     	final double initSlideSpeed = -1 * 2 * (Player.HEIGHT 
-    			- Player.SLIDINGLOW) / (Player.SLIDELENGTH / 2);
-    	final double slideAccel = 2 * (Player.HEIGHT - Player.SLIDINGLOW)
-				/ (Player.SLIDELENGTH / 2) / (Player.SLIDELENGTH / 2);
+    			- Player.SLIDE_MIN_HEIGHT) / (Player.SLIDE_LENGTH / 2);
+    	final double slideAccel = 2 * (Player.HEIGHT - Player.SLIDE_MIN_HEIGHT)
+				/ (Player.SLIDE_LENGTH / 2) / (Player.SLIDE_LENGTH / 2);
         assertEquals(Player.HEIGHT, player.getSize().getY(), DELTA);
     	player.move(Direction.SLIDE);
     	player.step();

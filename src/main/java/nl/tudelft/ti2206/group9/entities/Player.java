@@ -23,12 +23,12 @@ public class Player extends AbstractEntity {
 	/** Jump speed. This is the initial vertical speed
 	 * of the Player on jump.
 	 */
-	public static final double JUMPSPEED = 0.4;
+	public static final double JUMP_SPEED = 0.4;
 
 	/** Slide length in ticks. */
-	public static final double SLIDELENGTH = 40;
+	public static final double SLIDE_LENGTH = 40;
 	/** Lowest point in slide. */
-	public static final double SLIDINGLOW = HEIGHT / 2;
+	public static final double SLIDE_MIN_HEIGHT = HEIGHT / 2;
 
 	/** Indicates whether the Player is alive or not. */
 	private boolean alive;
@@ -134,7 +134,7 @@ public class Player extends AbstractEntity {
 	/** Make the player jump (in the y-direction). */
 	private void jump() {
 		if (!jumping && !sliding) {
-			vspeed = JUMPSPEED;
+			vspeed = JUMP_SPEED;
 			jumping = true;
 		}
 	}
@@ -149,9 +149,7 @@ public class Player extends AbstractEntity {
 		}
 		pos.addY(vspeed);
 
-		Point3D bottom = new Point3D(pos);
 		double bottomToFloor = getSize().getY() / 2;
-		bottom.addY(bottomToFloor);
 		if (pos.getY() < bottomToFloor) {
 			jumping = false;
 			vspeed = 0;
@@ -167,8 +165,8 @@ public class Player extends AbstractEntity {
 		// y'' = 2 (max-min) 1/(ticks/2) 1/(ticks/2)
 		// y'(0) = 2 (max-min) 1/(ticks/2) (-ticks/2) 1/(ticks/2)
 		if (!jumping && !sliding) {
-			slideSpeed = -1 * 2 * (HEIGHT - SLIDINGLOW)
-					/ (SLIDELENGTH / 2);
+			slideSpeed = -1 * 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
+					/ (SLIDE_LENGTH / 2);
 			sliding = true;
 		}
 	}
@@ -183,8 +181,8 @@ public class Player extends AbstractEntity {
 					/ getSize().getY()); // volume = const
 			getCenter().addY(slideSpeed / 2);
 
-			slideSpeed += 2 * (HEIGHT - SLIDINGLOW)
-					/ (SLIDELENGTH / 2) / (SLIDELENGTH / 2);
+			slideSpeed += 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
+					/ (SLIDE_LENGTH / 2) / (SLIDE_LENGTH / 2);
 		}
 		if (getSize().getY() >= HEIGHT) {
 			sliding = false;
@@ -200,10 +198,10 @@ public class Player extends AbstractEntity {
     public final void move(final Direction direction) {
     	if (isAlive()) {
 	        switch (direction) {
-	            case LEFT: 	changeLane(-1);	break;
-	            case RIGHT:	changeLane(1);	break;
-	            case JUMP:	jump();			break;
-	            case SLIDE:	slide();		break;
+	            case LEFT:  changeLane(-1.0);	break;
+	            case RIGHT: changeLane(1.0);	break;
+	            case JUMP:  jump();				break;
+	            case SLIDE: slide();			break;
 	            default:	break;
 	        }
     	}
