@@ -15,17 +15,21 @@ public class Player extends AbstractEntity {
 	public static final double HEIGHT = 1.8;
 	/** Width of the Player's bounding box. */
 	public static final double WIDTH = 0.8;
-	
-	/** Gravity. This is added to the vertical speed of the Player each tick. */
+
+	/** Gravity. This is added to the vertical speed
+	 * of the Player each tick.
+	 */
 	public static final double GRAVITY = 0.025;
-	/** Jump speed. This is the initial vertical speed of the Player on jump. */
-	public static final double JUMPSPEED = 0.4;
-	
+	/** Jump speed. This is the initial vertical speed
+	 * of the Player on jump.
+	 */
+	public static final double JUMP_SPEED = 0.4;
+
 	/** Slide length in ticks. */
-	public static final double SLIDELENGTH = 40;
+	public static final double SLIDE_LENGTH = 40;
 	/** Lowest point in slide. */
-	public static final double SLIDINGLOW = HEIGHT / 2;
-	
+	public static final double SLIDE_MIN_HEIGHT = HEIGHT / 2;
+
 	/** Indicates whether the Player is alive or not. */
 	private boolean alive;
 	/** Indicates whether the Player is jumping or not. */
@@ -40,7 +44,7 @@ public class Player extends AbstractEntity {
 	private boolean sliding;
 	/** Rate at which the Player's size in-/decreases. */
 	private double slideSpeed;
-	
+
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
@@ -57,17 +61,17 @@ public class Player extends AbstractEntity {
 	}
 
 	/** Lets the player die. */
-	public void die() {
+	public final void die() {
 		alive = false;
 	}
 
 	/** Lets the player live. */
-	public void respawn() {
+	public final void respawn() {
 		alive = true;
 	}
 
 	/** @return whether the player is alive. */
-	public boolean isAlive() {
+	public final boolean isAlive() {
 		return alive;
 	}
 
@@ -77,7 +81,7 @@ public class Player extends AbstractEntity {
 	 * @param collidee Entity that this Player collides with.
 	 */
 	@Override
-	public void collision(final AbstractEntity collidee) {
+	public final void collision(final AbstractEntity collidee) {
 		if (collidee instanceof Coin) {
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
@@ -100,11 +104,13 @@ public class Player extends AbstractEntity {
 		}
     }
 
-	/** Is executed each step in {@link #step()}. Keeps the Player moving. */
+	/** Is executed each step in {@link #step()}.
+	 * Keeps the Player moving.
+	 */
     private void changeLaneStep() {
 		double dist = moveLane - getCenter().getX();
-		final double delta = 0.02;	// higher means acceleration is faster
-		final double slow = 5;		// higher means terminal speed is lower
+		final double delta = 0.02; // higher means faster acceleration
+		final double slow = 5; 	// higher means lower terminal speed
 		if (Math.abs(dist) < delta) {
 			getCenter().setX(moveLane);
 			hspeed = 0;
@@ -117,23 +123,25 @@ public class Player extends AbstractEntity {
 		}
 		getCenter().addX(hspeed);
     }
-    
+
     /** Used for testability only.
      * @return The lane where the Player is currently moving to
      */
-    int getMoveLane() {
+    final int getMoveLane() {
     	return (int) moveLane;
     }
-	
+
 	/** Make the player jump (in the y-direction). */
 	private void jump() {
 		if (!jumping && !sliding) {
-			vspeed = JUMPSPEED;
+			vspeed = JUMP_SPEED;
 			jumping = true;
 		}
 	}
 
-	/** Is executed each step in {@link #step()}. Keeps the Player jumping. */
+	/** Is executed each step in {@link #step()}.
+	 * Keeps the Player jumping.
+	 */
 	private void jumpStep() {
 		Point3D pos = getCenter();
 		if (jumping) {
@@ -141,16 +149,14 @@ public class Player extends AbstractEntity {
 		}
 		pos.addY(vspeed);
 
-		Point3D bottom = new Point3D(pos);
 		double bottomToFloor = getSize().getY() / 2;
-		bottom.addY(bottomToFloor);
 		if (pos.getY() < bottomToFloor) {
 			jumping = false;
 			vspeed = 0;
 			pos.setY(bottomToFloor);
 		}
 	}
-	
+
 	/** Make the player slide. */
 	private void slide() {
 		// Slide is done with a quadratic function
@@ -159,20 +165,24 @@ public class Player extends AbstractEntity {
 		// y'' = 2 (max-min) 1/(ticks/2) 1/(ticks/2)
 		// y'(0) = 2 (max-min) 1/(ticks/2) (-ticks/2) 1/(ticks/2)
 		if (!jumping && !sliding) {
-			slideSpeed = -1 * 2 * (HEIGHT - SLIDINGLOW) / (SLIDELENGTH / 2);
+			slideSpeed = -1 * 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
+					/ (SLIDE_LENGTH / 2);
 			sliding = true;
 		}
 	}
-	
-	/** Is executed each step in {@link #step()}. Keeps the Player sliding. */
+
+	/** Is executed each step in {@link #step()}.
+	 * Keeps the Player sliding.
+	 */
 	private void slideStep() {
 		if (sliding) {
 			getSize().addY(slideSpeed);
-			getSize().setZ(HEIGHT * WIDTH / getSize().getY()); // volume = const
+			getSize().setZ(HEIGHT * WIDTH
+					/ getSize().getY()); // volume = const
 			getCenter().addY(slideSpeed / 2);
-			
-			slideSpeed += 2 * (HEIGHT - SLIDINGLOW)
-					/ (SLIDELENGTH / 2) / (SLIDELENGTH / 2);
+
+			slideSpeed += 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
+					/ (SLIDE_LENGTH / 2) / (SLIDE_LENGTH / 2);
 		}
 		if (getSize().getY() >= HEIGHT) {
 			sliding = false;
@@ -185,23 +195,22 @@ public class Player extends AbstractEntity {
      * detected.
      * @param direction Left/Right/Jump/Slide
      */
-    public void move(final Direction direction) {
+    public final void move(final Direction direction) {
     	if (isAlive()) {
 	        switch (direction) {
-	            case LEFT: 	changeLane(-1);	break;
-	            case RIGHT:	changeLane(1);	break;
-	            case JUMP:	jump();			break;
-	            case SLIDE:	slide();		break;
+	            case LEFT:  changeLane(-1.0);	break;
+	            case RIGHT: changeLane(1.0);	break;
+	            case JUMP:  jump();				break;
+	            case SLIDE: slide();			break;
 	            default:	break;
 	        }
     	}
     }
 
 	/** Is executed each step. This is done in Track. */
-	public void step() {
+	public final void step() {
 		changeLaneStep();
 		jumpStep();
 		slideStep();
 	}
-	
 }

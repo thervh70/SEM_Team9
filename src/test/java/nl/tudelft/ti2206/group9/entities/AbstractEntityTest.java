@@ -166,8 +166,7 @@ public class AbstractEntityTest {
 
 		assertTrue(entity.equals(entity));
 		assertFalse(entity.equals(null));
-		assertFalse(entity.equals(new Integer(0)));
-		assertFalse(entity.equals(new Integer(0)));
+		assertFalse(entity.equals(""));
 		assertFalse(null1.equals(entity));
 		assertTrue(null1.equals(new TestEntity(null, Point3D.UNITCUBE)));
 		assertFalse(entity.equals(null1));
@@ -185,7 +184,7 @@ public class AbstractEntityTest {
 	@Test
 	public void testToString() {
 		assertEquals("AbstractEntity [center=" + entity.getCenter()
-				+ ", size=" + entity.getSize() + "]", entity.toString());
+				+ ",size=" + entity.getSize() + "]", entity.toString());
 	}
 	
 	/**

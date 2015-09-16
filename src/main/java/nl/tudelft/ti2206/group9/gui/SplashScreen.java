@@ -16,15 +16,12 @@ import javafx.util.Duration;
 /**
  * Created by Maikel on 08/09/2015.
  *
- * A splashcreen that show a "Press any key to continue", also starts the 
+ * A splashcreen that show a "Press any key to continue", also starts the
  * entire application.
  */
 @SuppressWarnings("restriction")
 public final class SplashScreen extends Application {
 
-	/** Hide public constructor. */
-	public SplashScreen() { }
-	
     /**
      * Creating and  displaying the scene.
      * @param primaryStage The stage to be started.
@@ -32,21 +29,21 @@ public final class SplashScreen extends Application {
     public void start(final Stage primaryStage) {
         /* Creating a new stackpane and scene. */
         StackPane root = new StackPane();
-        Scene scene = new Scene(root, GameWindow.WIDTH, GameWindow.HEIGHT);
+        Scene scene = new Scene(root, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
         /* Creating a new label for displaying text. */
         Label text = new Label("Press any key to continue");
 
         /* Defining what has happens in case of a mouseClickEvent. */
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
+            public void handle(final MouseEvent t) {
                 StartScreen.start(primaryStage);
             }
         });
 
         /* Defining what happens in case of a random keyPressedEvent. */
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
+            public void handle(final KeyEvent ke) {
                 StartScreen.start(primaryStage);
             }
         });
@@ -69,7 +66,7 @@ public final class SplashScreen extends Application {
      * Main method to launch the application.
      * @param args -
      */
-    public static void main(String[] args) {
+    public static void main(String... args) {
         launch(args);
     }
 }
