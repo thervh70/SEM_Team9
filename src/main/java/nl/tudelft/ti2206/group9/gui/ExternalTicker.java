@@ -8,7 +8,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.text.Text;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Player;
@@ -51,9 +50,9 @@ public class ExternalTicker extends AnimationTimer {
 		Style.setLabelStyle(distanceLabel, 10);
 		Style.setLabelStyle(coinsLabel, 10);
 
-		VBox scoreBox = new VBox(scoreLabel,distanceLabel,coinsLabel);
+		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
 		scoreBox.setStyle( " -fx-background-color:BLACK;");
-		scoreBox.setMinSize(130,90);
+		scoreBox.setMinSize(130, 90);
 
 
 		GameScreen.addOverlay(scoreBox);

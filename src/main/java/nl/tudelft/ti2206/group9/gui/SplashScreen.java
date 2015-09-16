@@ -6,14 +6,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.text.Font;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 
 /**
  * Created by Maikel on 08/09/2015.
@@ -33,13 +30,13 @@ public final class SplashScreen extends Application {
         StackPane root = new StackPane();
         Scene scene = new Scene(root, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
-       Style.setBackground("sc.png", root);
+        Style.setBackground("sc.png", root);
 
 
 
         /* Creating a new label for displaying text. */
         Label text = new Label("Press any key to continue");
-        Style.setLabelStyle(text,36);
+        Style.setLabelStyle(text, 36);
 
         /* Defining what has happens in case of a mouseClickEvent. */
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
