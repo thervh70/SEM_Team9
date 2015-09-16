@@ -3,6 +3,8 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.animation.AnimationTimer;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -39,11 +41,23 @@ public class ExternalTicker extends AnimationTimer {
 		final Group entities = renderEntities();
 		GameScreen.addWorld(entities);
 
-		GameScreen.addOverlay(new Text(0, 16, "Score: " 
+		Label scoreLabel = new Label(("Score: "
 				+ State.modulo(State.getScore())));
-		GameScreen.addOverlay(new Text(0, 32, "Distance: " 
-				+ State.modulo(State.getDistance())));
-		GameScreen.addOverlay(new Text(0, 48, "Coins: " + State.getCoins()));
+		Label distanceLabel = new Label("Distance: "
+				+ State.modulo(State.getDistance()));
+		Label coinsLabel = new Label(("Coins: " + State.getCoins()));
+
+		Style.setLabelStyle(scoreLabel, 10);
+		Style.setLabelStyle(distanceLabel, 10);
+		Style.setLabelStyle(coinsLabel, 10);
+
+		VBox scoreBox = new VBox(scoreLabel,distanceLabel,coinsLabel);
+		scoreBox.setStyle( " -fx-background-color:BLACK;");
+		scoreBox.setMinSize(130,90);
+
+
+		GameScreen.addOverlay(scoreBox);
+
 	}
 
     /**
