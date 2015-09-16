@@ -50,7 +50,7 @@ public final class Style {
 
         /** Action to be taken on MouseEntered Event */
         b.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent e) {
+            public void handle(final MouseEvent e) {
                 b.setScaleX(1.2);
                 b.setScaleY(1.2);
             }
@@ -58,7 +58,7 @@ public final class Style {
 
         /** Action to be taken on MouseExited Event. */
         b.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent e) {
+            public void handle(final MouseEvent e) {
                 b.setScaleX(1);
                 b.setScaleY(1);
             }
@@ -70,7 +70,7 @@ public final class Style {
      *
      * @param b Button to be changed.
      */
-    public static void setPopupButtonStyle(final Button b){
+    public static void setPopupButtonStyle(final Button b) {
         /** Adjusting the looks of the button */
         Color color = Color.BLACK;
         CornerRadii corner = new CornerRadii(3);
@@ -83,14 +83,14 @@ public final class Style {
 
         /** Action to be taken on MouseEntered Event */
         b.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent e) {
+            public void handle(final MouseEvent e) {
                 b.setTextFill(Color.CORNFLOWERBLUE);
             }
         });
 
         /** Action to be taken on MouseExited Event. */
         b.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent e) {
+            public void handle(final MouseEvent e) {
                 b.setTextFill(Color.WHITE);
             }
         });
@@ -101,7 +101,7 @@ public final class Style {
      *
      * @param l Label to be changed.
      */
-    public static void setLabelStyle(Label l){
+    public static void setLabelStyle(final Label l) {
         Color color = Color.BLACK;
         CornerRadii corner = new CornerRadii(3);
         Insets inset = new Insets(-4);
@@ -118,12 +118,12 @@ public final class Style {
      * @param src Path to source of the imagefile.
      * @param p The pane.
      */
-    public static void setBackground(String src, Pane p){
+    public static void setBackground(final String src, final Pane p) {
         Image image = new Image(src);
         BackgroundSize backgroundSize = new BackgroundSize(GUIConstant.WIDTH,
                 GUIConstant.HEIGHT, true, true, true, false);
-        BackgroundImage backgroundImage = new BackgroundImage(image, 
-        		BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, 
+        BackgroundImage backgroundImage = new BackgroundImage(image,
+        		BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
         		BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
         p.setBackground(background);

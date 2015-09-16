@@ -55,10 +55,10 @@ public final class GameScreen {
 	private static boolean running;
 	/** The primarystage. */
 	private static Stage primaryStage;
-
+	/** The Pause popup. */
 	private static Popup pause;
+	/** The final after death popup. */
 	private static Popup death;
-	
 	/** Hide public constructor. */
 	private GameScreen() { }
 
@@ -73,15 +73,15 @@ public final class GameScreen {
 		root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
-
-		scene = new Scene(root, GUIConstant.WIDTH, GUIConstant.HEIGHT, true);
+		scene = new Scene(root, GUIConstant.WIDTH,
+                GUIConstant.HEIGHT, true);
 		scene.setFill(Color.AQUA);
 		primaryStage.setScene(scene);
 
 		world = new Group();
 		overlay = new Group();
-		worldScene = new SubScene(world, GUIConstant.WIDTH, GUIConstant.HEIGHT, 
-				true, SceneAntialiasing.BALANCED);
+		worldScene = new SubScene(world, GUIConstant.WIDTH,
+                GUIConstant.HEIGHT, true, SceneAntialiasing.BALANCED);
 		overlayScene = new SubScene(overlay, GUIConstant.WIDTH,
 				GUIConstant.HEIGHT);
 		overlayScene.setFill(Color.TRANSPARENT);
@@ -217,8 +217,9 @@ public final class GameScreen {
 			}
 		};
 
-		death = PopupMenu.makeFinalMenu("Game Ended", (int) State.getScore(),
-			State.getCoins(), "Try again", "Return to Main Menu", retry, menu);
+		death = PopupMenu.makeFinalMenu("Game Ended",
+                (int) State.getScore(), State.getCoins(),
+                "Try again", "Return to Main Menu", retry, menu);
 		death.show(primaryStage);
 	}
 
@@ -253,7 +254,6 @@ public final class GameScreen {
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
-	
 	/** @return current Popup. Is null if no Popup is present. */
 	static Popup getPopup() {
 		if (pause != null) {

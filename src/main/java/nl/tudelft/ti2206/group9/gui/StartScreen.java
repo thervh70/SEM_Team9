@@ -38,7 +38,7 @@ public final class StartScreen {
         grid.setHgap(20);
 
         /**Setting a background for the menu.*/
-        Style.setBackground("sc.png", grid);
+        Style.setBackground("Resources/sc.png", grid);
 
         /** Add text to buttons give them a location on the grid.*/
         startButton = new Button("START");

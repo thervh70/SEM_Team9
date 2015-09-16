@@ -51,7 +51,7 @@ public class ExternalTicker extends AnimationTimer {
 		Style.setLabelStyle(coinsLabel);
 
 		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
-		scoreBox.setStyle( " -fx-background-color:BLACK;");
+		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(130, 90);
 
 

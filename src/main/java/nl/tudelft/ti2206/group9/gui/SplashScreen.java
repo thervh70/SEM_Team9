@@ -20,6 +20,8 @@ import javafx.util.Duration;
  */
 @SuppressWarnings("restriction")
 public final class SplashScreen extends Application {
+    /** Duration of transition in ms. */
+    private final int transitionDuration = 750;
 
     /**
      * Creating and  displaying the scene.
@@ -31,7 +33,7 @@ public final class SplashScreen extends Application {
         Scene scene = new Scene(root, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
         /** Setting the background image */
-        Style.setBackground("sc.png", root);
+        Style.setBackground("Resources/sc.png", root);
 
 
         /** Creating a new label for displaying text. */
@@ -52,13 +54,15 @@ public final class SplashScreen extends Application {
             }
         });
 
-        /** Add the text to the canvas and give it a fade in/ fade out effect. */
+        /** Add the text to the canvas and give it a fade
+         * in/ fade out effect. */
         root.getChildren().add(text);
         root.setAlignment(Pos.CENTER);
-        FadeTransition ft = new FadeTransition(Duration.millis(1000), text);
+        FadeTransition ft = new FadeTransition(
+                Duration.millis(transitionDuration), text);
         ft.setFromValue(1.0);
         ft.setToValue(0);
-        ft.setCycleCount(2000);
+        ft.setCycleCount(transitionDuration * 2);
         ft.setAutoReverse(true);
         ft.play();
 
