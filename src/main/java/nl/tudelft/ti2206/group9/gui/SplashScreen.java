@@ -33,7 +33,7 @@ public final class SplashScreen extends Application {
         Scene scene = new Scene(root, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
         /** Setting the background image */
-        Style.setBackground("Resources/sc.png", root);
+        Style.setBackground("sc.png", root);
 
 
         /** Creating a new label for displaying text. */

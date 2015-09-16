@@ -1,5 +1,10 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.net.URL;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -119,7 +124,7 @@ public final class Style {
      * @param p The pane.
      */
     public static void setBackground(final String src, final Pane p) {
-        Image image = new Image(src);
+        Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
         BackgroundSize backgroundSize = new BackgroundSize(GUIConstant.WIDTH,
                 GUIConstant.HEIGHT, true, true, true, false);
         BackgroundImage backgroundImage = new BackgroundImage(image,
@@ -128,4 +133,5 @@ public final class Style {
         Background background = new Background(backgroundImage);
         p.setBackground(background);
     }
+
 }

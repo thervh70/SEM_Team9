@@ -1,6 +1,8 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -32,13 +34,15 @@ public class ExternalTicker extends AnimationTimer {
 	private void renderScene() {
 		GameScreen.clearWorld();
 		GameScreen.clearOverlay();
+		
+		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
+			final Box track = new Box(3, 0.1, 500);
+			track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
+			GameScreen.addWorld(track);
 
-		final Box track = new Box(3, 0.1, 500);
-		track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
-		GameScreen.addWorld(track);
-
-		final Group entities = renderEntities();
-		GameScreen.addWorld(entities);
+			final Group entities = renderEntities();
+			GameScreen.addWorld(entities);
+		}
 
 		Label scoreLabel = new Label(("Score: "
 				+ State.modulo(State.getScore())));
@@ -54,9 +58,7 @@ public class ExternalTicker extends AnimationTimer {
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(130, 90);
 
-
 		GameScreen.addOverlay(scoreBox);
-
 	}
 
     /**
