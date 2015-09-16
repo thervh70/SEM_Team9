@@ -21,13 +21,13 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 public class Track {
 
 	/** Chance per frame to spawn a lane of coins. */
-	public static final double COINLANECHANCE = 0.015;
+	public static final double COIN_LANE_CHANCE = 0.015;
 	/** Chance per frame to spawn zigzag of coins. */
-	public static final double COINZIGZAGCHANCE = 0.01;
+	public static final double COIN_ZIGZAG_CHANCE = 0.01;
 	/** Chance per frame to spawn an obstacle. */
-	public static final double OBSTACLECHANCE = 0.01;
+	public static final double OBSTACLE_CHANCE = 0.01;
 	/** The distance between the coins. */
-	public static final double COINDISTANCE = 10;
+	public static final double COIN_DISTANCE = 10;
 
 	/** Amount of units the track should move per tick. */
 	public static final double UNITS_PER_TICK = 0.4;
@@ -150,21 +150,21 @@ public class Track {
 	/**
 	 * @param amount the amount to be added
 	 */
-	public final void addDistance(final double amount) {
+	static final void addDistance(final double amount) {
 		distance += amount;
 	}
 
 	/**
 	 * @return the distance
 	 */
-	final double getDistance() {
+	static final double getDistance() {
 		return distance;
 	}
 
 	/**
 	 * @param dist the distance to set
 	 */
-	final void setDistance(final double dist) {
+	static final void setDistance(final double dist) {
 		Track.distance = dist;
 	}
 
@@ -174,17 +174,18 @@ public class Track {
 	 */
 	public final synchronized void step() {
 		synchronized (this) {
+			double coin = random.nextDouble();
+			double obstacle = random.nextDouble();
 			if (coinrunleft > 0) {
-				coinrunleft -= UNITS_PER_TICK / COINDISTANCE;
+				coinrunleft -= UNITS_PER_TICK / COIN_DISTANCE;
 			} else {
-				double rand = random.nextDouble();
-				if (rand < COINZIGZAGCHANCE) {
+				if (coin < COIN_ZIGZAG_CHANCE) {
 					createZigZag();
-				} else if (rand < COINZIGZAGCHANCE + COINLANECHANCE) {
+				} else if (coin < COIN_ZIGZAG_CHANCE + COIN_LANE_CHANCE) {
 					createCoinLane();
 				}
 			}
-			if (random.nextDouble() < OBSTACLECHANCE) {
+			if (obstacle < OBSTACLE_CHANCE) {
 				createSingleObstacle();
 			}
 		}
@@ -203,7 +204,7 @@ public class Track {
 		int length = MIN_COIN_LANE_LENGTH + random.nextInt(ADD_TO_COINS);
 		for (int i = 0; i < length; i++) {
 			addEntity(new Coin(new Point3D(lane, 1,
-					LENGTH + COINDISTANCE * i)));
+					LENGTH + COIN_DISTANCE * i)));
 		}
 		coinrunleft = length;
 	}
@@ -222,7 +223,7 @@ public class Track {
 				x = lane - 1;
 			}
 			addEntity(new Coin(new Point3D(x, 1,
-					LENGTH + COINDISTANCE * i)));
+					LENGTH + COIN_DISTANCE * i)));
 			lane = (lane + 1) % (WIDTH + 1);
 		}
 		coinrunleft = length;
@@ -232,18 +233,12 @@ public class Track {
 	 * Creates a single obstacle (1x1x1).
 	 */
 	private void createSingleObstacle() {
-		int x;
 		int lane = random.nextInt(WIDTH);
 		if (this.containsCenter(new Point3D(lane - 1, 0, LENGTH))) {
 			lane = (lane + 1) % WIDTH;
 		}
-		if (lane == WIDTH) {
-			x = 0;
-		} else {
-			x = lane - 1;
-		}
-		addEntity(new Obstacle(new Point3D(x, 1, LENGTH),
-				new Point3D(1, 1, 1)));
+		addEntity(new Obstacle(new Point3D(lane - 1, 1, LENGTH),
+				Point3D.UNITCUBE));
 	}
 
 	/**
@@ -253,5 +248,13 @@ public class Track {
 	 */
 	public final double getCoinrunleft() {
 		return coinrunleft;
+	}
+
+	/**
+	 * Set the Random generator.
+	 * @param randomGenerator Random object to set.
+	 */
+	public void setRandom(Random randomGenerator) {
+		random = randomGenerator;
 	}
 }
