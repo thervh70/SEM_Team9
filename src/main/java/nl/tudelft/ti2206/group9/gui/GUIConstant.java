@@ -5,12 +5,12 @@ package nl.tudelft.ti2206.group9.gui;
  * @author Maarten
  */
 public final class GUIConstant {
-	
+
 	/** Width of the Window. */
 	public static final int WIDTH = 480;
 	/** Height of the Window. */
 	public static final int HEIGHT = 640;
-	
+
 	/** Threadlock. */
 	public static final Object LOCK = new Object();
 
