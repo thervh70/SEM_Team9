@@ -6,6 +6,13 @@ import java.util.List;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Specific;
 
+/**
+ * This utility class handles the observability of the game. If there are any
+ * {@link GameObserver}s attached, calling the
+ * {@link #notify(Category, Specific, Object...)} method will update these
+ * observers.
+ * @author Maarten
+ */
 public final class GameObservable {
 	
 	private GameObservable() { }
@@ -35,8 +42,8 @@ public final class GameObservable {
 	 * @param optionalArgs Optional arguments that come with the update
 	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
 	 */
-	public static void notifyObservers(
-			Category cat, Specific spec, Object... optionalArgs) {
+	public static void notify(Category cat, Specific spec, 
+			Object... optionalArgs) {
 		for (GameObserver go : observers) {
 			go.gameUpdate(cat, spec, optionalArgs);
 		}

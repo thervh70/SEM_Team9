@@ -30,7 +30,7 @@ public class GameObservableTest implements GameObserver {
 		GameObservable.addObserver(go1);
 		GameObservable.addObserver(go2);
 		GameObservable.deleteObserver(go2);
-		GameObservable.notifyObservers(Category.GAME, Game.STARTED, 0);
+		GameObservable.notify(Category.GAME, Game.STARTED, 0);
 		verify(go1).gameUpdate(Category.GAME, Game.STARTED, new Integer[]{0});
 		verify(go2, never()).gameUpdate(Category.GAME, Game.STARTED, 
 				new Integer[]{0});
