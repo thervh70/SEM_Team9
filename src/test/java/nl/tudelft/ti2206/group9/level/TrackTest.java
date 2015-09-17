@@ -100,7 +100,7 @@ public class TrackTest {
 
 		track.step();
 		assertEquals(13, track.getEntities().size()); //player + 12 coins
-		for (int i = 1; i <13; i++) {
+		for (int i = 1; i < 13; i++) {
 			assertTrue(track.getEntities().get(i) instanceof Coin);
 		}
 	}
