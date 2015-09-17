@@ -27,22 +27,26 @@ public class AudioPlayer {
 	 * Gets the audio file and prepares it for streaming.
 	 * @param path leads to the soundtrack.
 	 */
-	public void initialiseTune(final String path) {
+	public final void initialiseTune(final String path) {
 		audioPlayer = new AudioClip(new File(path).toURI().toString());
 	}
 	
 	/**
 	 * Starts the initialised soundtrack.
 	 */
-	public void play() {
-		audioPlayer.play();
+	public final synchronized void play() {
+		synchronized(this) {
+			audioPlayer.play();
+		}
 	}
 	
 	/**
 	 * Stops the initialised soundtrack.
 	 */
-	public void stop() {
-		audioPlayer.stop();
+	public final synchronized void stop() {
+		synchronized(this) {
+			audioPlayer.stop();			
+		}
 	}
 	
 	/**

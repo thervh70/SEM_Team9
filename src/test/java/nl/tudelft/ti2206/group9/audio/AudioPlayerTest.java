@@ -19,7 +19,8 @@ public class AudioPlayerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		testPath = "src/main/java/nl/tudelft/ti2206/group9/audio/sounds/soundtrack.aiff";
+		testPath = "src/main/resources"
+            + "/nl.tudelft.ti2206.group9.audio/soundtrack.aiff";
 		test = new AudioPlayer(testPath);
 	}
 	
