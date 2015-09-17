@@ -143,10 +143,11 @@ public class TrackTest {
 		}
 
 		double oldCoinLeft = track.getCoinrunleft();
+		double unitsPerTick = Track.getUnitsPerTick();
 		track.step();
 		double newCoinLeft = track.getCoinrunleft();
 		assertEquals(newCoinLeft, oldCoinLeft 
-				- Track.UNITS_PER_TICK / Track.COIN_DISTANCE, DELTA);
+				- unitsPerTick / Track.COIN_DISTANCE, DELTA);
 	}
 
 	@Test

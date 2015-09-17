@@ -14,6 +14,7 @@ import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 
 /**
  * @author Maarten.
@@ -21,8 +22,10 @@ import nl.tudelft.ti2206.group9.level.State;
 @SuppressWarnings("restriction")
 public class ExternalTicker extends AnimationTimer {
 
+	/** Equal to 1000. */
+	private static final double E3 = 1000.0;
 	/** Height of the box in-game where the score is displayed. */
-	private static final int SCORE_BOX_HEIGHT = 90;
+	private static final int SCORE_BOX_HEIGHT = 90 + 60;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 130;
 
@@ -48,22 +51,34 @@ public class ExternalTicker extends AnimationTimer {
 			final Group entities = renderEntities();
 			GameScreen.addWorld(entities);
 		}
+		
+		GameScreen.addOverlay(renderScore());
+	}
 
+	/**
+	 * @return VBox with score labels
+	 */
+	private VBox renderScore() {
 		Label scoreLabel = new Label(("Score: "
 				+ State.modulo(State.getScore())));
 		Label distanceLabel = new Label("Distance: "
 				+ State.modulo(State.getDistance()));
 		Label coinsLabel = new Label(("Coins: " + State.getCoins()));
+		Label speedLabel = new Label(("Speed: " 
+				+ (double) Math.round(Track.getUnitsPerTick() * E3) / E3));
+		Label ticksLabel = new Label(("Ticks: " + State.getTrack().getTicks()));
 
 		Style.setLabelStyle(scoreLabel);
 		Style.setLabelStyle(distanceLabel);
 		Style.setLabelStyle(coinsLabel);
+		Style.setLabelStyle(speedLabel);
+		Style.setLabelStyle(ticksLabel);
 
-		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
+		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel, 
+				speedLabel, ticksLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
-
-		GameScreen.addOverlay(scoreBox);
+		return scoreBox;
 	}
 
     /**

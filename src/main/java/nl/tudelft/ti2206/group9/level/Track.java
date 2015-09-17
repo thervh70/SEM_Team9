@@ -29,9 +29,6 @@ public class Track {
 	/** The distance between the coins. */
 	public static final double COIN_DISTANCE = 10;
 
-	/** Amount of units the track should move per tick. */
-	public static final double UNITS_PER_TICK = 0.4;
-
 	/** Width of the track (amount of lanes). */
 	public static final int WIDTH = 3;
 	/** Length of the track. */
@@ -44,6 +41,10 @@ public class Track {
 	/** Maximum number of coins added to a zigzag or coinlane. */
 	private static final int ADD_TO_COINS = 10;
 
+	/** Amount of units the track should move per tick, initially. */
+	private static final double UNITS_PER_TICK_BASE = 0.4;
+	/** Acceleration of the units per tick, per tick. */
+	private static final double UNITS_PER_TICK_ACCEL = 0.0001;
 	/** Current distance moved by the track, reset every run. */
 	private static double distance;
 
@@ -56,6 +57,8 @@ public class Track {
 	private Random random;
 	/** Amount of coins that still have to spawn. */
 	private double coinrunleft = 0;
+	/** Amount of ticks that this Track has been running. */
+	private int ticks = 0;
 
 	/** Default constructor, new Random() is created as generator. */
 	public Track() {
@@ -167,6 +170,13 @@ public class Track {
 	static final void setDistance(final double dist) {
 		Track.distance = dist;
 	}
+	
+	public static final double getUnitsPerTick() {
+		final double div = Math.pow(UNITS_PER_TICK_ACCEL, -1) / 2 
+				* UNITS_PER_TICK_BASE * UNITS_PER_TICK_BASE;
+		return UNITS_PER_TICK_BASE 
+				* Math.sqrt(State.getDistance() / div + 1);
+	}
 
 	/**
 	 * This method should be called each ticks. It generates new coins and
@@ -177,7 +187,7 @@ public class Track {
 			double coin = random.nextDouble();
 			double obstacle = random.nextDouble();
 			if (coinrunleft > 0) {
-				coinrunleft -= UNITS_PER_TICK / COIN_DISTANCE;
+				coinrunleft -= getUnitsPerTick() / COIN_DISTANCE;
 			} else {
 				if (coin < COIN_ZIGZAG_CHANCE) {
 					createZigZag();
@@ -191,9 +201,10 @@ public class Track {
 		}
 		getPlayer().step();
 
-		distance += UNITS_PER_TICK;
-		State.addScore(UNITS_PER_TICK);
-		moveTrack(UNITS_PER_TICK);
+		ticks++;
+		distance += getUnitsPerTick();
+		State.addScore(getUnitsPerTick());
+		moveTrack(getUnitsPerTick());
 	}
 
 	/**
@@ -256,5 +267,12 @@ public class Track {
 	 */
 	public void setRandom(Random randomGenerator) {
 		random = randomGenerator;
+	}
+
+	/**
+	 * @return the ticks
+	 */
+	public int getTicks() {
+		return ticks;
 	}
 }
