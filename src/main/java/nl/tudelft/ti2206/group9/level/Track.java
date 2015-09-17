@@ -5,10 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import nl.tudelft.ti2206.group9.entities.AbstractEntity;
-import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Obstacle;
-import nl.tudelft.ti2206.group9.entities.Player;
+import nl.tudelft.ti2206.group9.entities.*;
 import nl.tudelft.ti2206.group9.gui.GameScreen;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -43,6 +40,8 @@ public class Track {
 	private static final int MIN_COIN_ZIG_ZAG_LENGTH = 7;
 	/** Maximum number of coins added to a zigzag or coinlane. */
 	private static final int ADD_TO_COINS = 10;
+	/** Number of obstacle types in the game. */
+	private static final int OBSTACLE_TYPES = 3;
 
 	/** Current distance moved by the track, reset every run. */
 	private static double distance;
@@ -237,8 +236,16 @@ public class Track {
 		if (this.containsCenter(new Point3D(lane - 1, 0, LENGTH))) {
 			lane = (lane + 1) % WIDTH;
 		}
-		addEntity(new Obstacle(new Point3D(lane - 1, 1, LENGTH),
-				Point3D.UNITCUBE));
+		int obstacleType = random.nextInt(OBSTACLE_TYPES);
+		Point3D center = new Point3D(lane - 1, 1, LENGTH);
+		Obstacle obstacle;
+		switch (obstacleType) {
+			case 0 : obstacle = new Log(center, Point3D.UNITCUBE); break;
+			case 1 : obstacle = new Pillar(center, new Point3D(1, 3, 1)); break;
+			case 2 : obstacle = new Fence(new Point3D(lane - 1, 2, LENGTH), new Point3D(1, 2, 1)); break;
+			default : obstacle = new Log(center, Point3D.UNITCUBE); break;
+		}
+		addEntity(obstacle);
 	}
 
 	/**
@@ -254,7 +261,7 @@ public class Track {
 	 * Set the Random generator.
 	 * @param randomGenerator Random object to set.
 	 */
-	public void setRandom(Random randomGenerator) {
+	public final void setRandom(final Random randomGenerator) {
 		random = randomGenerator;
 	}
 }
