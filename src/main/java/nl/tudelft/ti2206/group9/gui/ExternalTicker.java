@@ -3,14 +3,12 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.animation.AnimationTimer;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
 import nl.tudelft.ti2206.group9.entities.*;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
  * @author Maarten.
@@ -50,11 +48,18 @@ public class ExternalTicker extends AnimationTimer {
 		for(int h = 0; h < 2; h++) {
 			for (int i = 0; i < 100; i++) {
 				for (int j = 0; j < 3; j++) {
+					double random = Math.random();
 					final Box wallPiece = new Box(0, 1, 1);
 					wallPiece.setTranslateY(j - 3);
 					wallPiece.setTranslateZ(i);
 					wallPiece.setTranslateX(h * 3 - 1.5);
-					wallPiece.setMaterial(Style.BRICK);
+					if( random < 0.5) {
+						wallPiece.setMaterial(Style.BRICK);
+					} else if ( random > 0.5 && random < 0.75) {
+						wallPiece.setMaterial(Style.CRACK);
+					} else {
+						wallPiece.setMaterial(Style.MOSS);
+					}
 					GameScreen.addWorld(wallPiece);
 				}
 			}
@@ -75,10 +80,6 @@ public class ExternalTicker extends AnimationTimer {
      * @return group
      */
 	private Group renderEntities() {
-		PhongMaterial wood = new PhongMaterial();
-		Image texture = new Image("texture_wood.png");
-		wood.setDiffuseMap(texture);
-
 
 		final Group entities = new Group();
 		entities.setDepthTest(DepthTest.ENABLE);
@@ -96,9 +97,9 @@ public class ExternalTicker extends AnimationTimer {
 				if (entity instanceof Player) {
 					entityBox.setMaterial(new PhongMaterial(Color.ORANGE));
 				} else if (entity instanceof Coin) {
-					entityBox.setMaterial(new PhongMaterial(Color.GOLD));
+					entityBox.setMaterial(Style.COIN);
 				} else if (entity instanceof Log){
-					entityBox.setMaterial(wood);
+					entityBox.setMaterial(Style.WOOD);
 				} else if (entity instanceof Pillar) {
 					entityBox.setMaterial(new PhongMaterial(Color.WHITE));
 				} else /*if (entity instanceof Fence) */{

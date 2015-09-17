@@ -23,7 +23,8 @@ public class Style {
     public static final PhongMaterial MOSS = new PhongMaterial();
     public static final PhongMaterial CRACK = new PhongMaterial();
     public static final PhongMaterial FLOOR = new PhongMaterial();
-
+    public static final PhongMaterial COIN = new PhongMaterial();
+    public static final PhongMaterial WOOD = new PhongMaterial();
 
     public static void loadTextures() {
         Image brickTexture = new Image("texture_brick.png");
@@ -35,8 +36,14 @@ public class Style {
         Image crackTexture = new Image("texture_crack.png");
         CRACK.setDiffuseMap(crackTexture);
 
-        Image texture = new Image("texture_cobblestone.png");
-        FLOOR.setDiffuseMap(texture);
+        Image floorTexture = new Image("texture_cobblestone.png");
+        FLOOR.setDiffuseMap(floorTexture);
+
+        Image coinTexture = new Image("texture_coin.png");
+        COIN.setDiffuseMap(coinTexture);
+
+        Image woodTexture = new Image("texture_wood.png");
+        WOOD.setDiffuseMap(woodTexture);
     }
 
 
@@ -50,13 +57,12 @@ public class Style {
         b.setBackground(buttonBack);
         b.setFont(Font.font("Roboto", FontWeight.BOLD, 14));
 
-
-                b.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent e) {
-                        b.setScaleX(1.2);
-                        b.setScaleY(1.2);
-                    }
-                });
+        b.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                b.setScaleX(1.2);
+                b.setScaleY(1.2);
+            }
+        });
 
         b.setOnMouseExited(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
