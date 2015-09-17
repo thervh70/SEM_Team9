@@ -1,20 +1,16 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import javax.print.DocFlavor;
-import javax.xml.soap.Node;
 
 /**
  * Created by Maikel on 03/09/2015.
@@ -22,6 +18,26 @@ import javax.xml.soap.Node;
  * Class containing the styling for the GUI.
  */
 public class Style {
+
+    public static final PhongMaterial BRICK = new PhongMaterial();
+    public static final PhongMaterial MOSS = new PhongMaterial();
+    public static final PhongMaterial CRACK = new PhongMaterial();
+    public static final PhongMaterial FLOOR = new PhongMaterial();
+
+
+    public static void loadTextures() {
+        Image brickTexture = new Image("texture_brick.png");
+        BRICK.setDiffuseMap(brickTexture);
+
+        Image mossTexture = new Image("texture_moss.png");
+        MOSS.setDiffuseMap(mossTexture);
+
+        Image crackTexture = new Image("texture_crack.png");
+        CRACK.setDiffuseMap(crackTexture);
+
+        Image texture = new Image("texture_cobblestone.png");
+        FLOOR.setDiffuseMap(texture);
+    }
 
 
     public static void setButtonStyle(final Button b, double size) {

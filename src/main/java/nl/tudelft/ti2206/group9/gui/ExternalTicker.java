@@ -32,31 +32,15 @@ public class ExternalTicker extends AnimationTimer {
 		GameScreen.clearWorld();
 		GameScreen.clearOverlay();
 
-		PhongMaterial floor = new PhongMaterial();
-		Image texture = new Image("texture_cobblestone.png");
-		floor.setDiffuseMap(texture);
-
-		for(int i = 0; i < 500; i++){
+		for(int i = 0; i < 100; i++){
 			for(int j = 0; j < 3; j++){
 				final Box trackPiece = new Box(1, 0, 1);
 				trackPiece.setTranslateX(j - 1);
 				trackPiece.setTranslateZ(i);
-				trackPiece.setMaterial(floor);
+				trackPiece.setMaterial(Style.FLOOR);
 				GameScreen.addWorld(trackPiece);
 			}
 		}
-
-		PhongMaterial brick = new PhongMaterial();
-		Image brickTexture = new Image("texture_brick.png");
-		brick.setDiffuseMap(brickTexture);
-
-		PhongMaterial moss = new PhongMaterial();
-		Image mossTexture = new Image("texture_moss.png");
-		moss.setDiffuseMap(mossTexture);
-
-		PhongMaterial crack = new PhongMaterial();
-		Image crackTexture = new Image("texture_crack.png");
-		crack.setDiffuseMap(crackTexture);
 
 		/**
 		 * h: 2 walls
@@ -64,18 +48,17 @@ public class ExternalTicker extends AnimationTimer {
 		 * j: 3 wallpieces in height
 		 */
 		for(int h = 0; h < 2; h++) {
-			for (int i = 0; i < 500; i++) {
+			for (int i = 0; i < 100; i++) {
 				for (int j = 0; j < 3; j++) {
 					final Box wallPiece = new Box(0, 1, 1);
 					wallPiece.setTranslateY(j - 3);
 					wallPiece.setTranslateZ(i);
 					wallPiece.setTranslateX(h * 3 - 1.5);
-					wallPiece.setMaterial(brick);
+					wallPiece.setMaterial(Style.BRICK);
 					GameScreen.addWorld(wallPiece);
 				}
 			}
 		}
-
 
 		final Group entities = renderEntities();
 		GameScreen.addWorld(entities);

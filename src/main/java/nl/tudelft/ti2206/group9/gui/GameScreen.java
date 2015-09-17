@@ -67,6 +67,7 @@ public final class GameScreen {
 	 */
 	public static void start(final Stage stage) {
 		State.reset();
+		Style.loadTextures();
 
 		primaryStage = stage;
 
