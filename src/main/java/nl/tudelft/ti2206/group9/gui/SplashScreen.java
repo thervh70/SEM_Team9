@@ -25,6 +25,8 @@ import nl.tudelft.ti2206.group9.util.Logger;
  */
 @SuppressWarnings("restriction")
 public final class SplashScreen extends Application {
+    /** Duration of transition in ms. */
+    private final int transitionDuration = 750;
 
     /**
      * Creating and  displaying the scene.
@@ -33,14 +35,19 @@ public final class SplashScreen extends Application {
     public void start(final Stage primaryStage) {
     	GameObservable.addObserver(new Logger());
     	
-        /* Creating a new stackpane and scene. */
+        /** Creating a new stackpane and scene. */
         StackPane root = new StackPane();
         Scene scene = new Scene(root, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
-        /* Creating a new label for displaying text. */
-        Label text = new Label("Press any key to continue");
+        /** Setting the background image */
+        Style.setBackground("sc.png", root);
 
-        /* Defining what has happens in case of a mouseClickEvent. */
+
+        /** Creating a new label for displaying text. */
+        Label text = new Label("Press any key to continue");
+        Style.setLabelStyle(text);
+
+        /** Defining what has happens in case of a mouseClickEvent. */
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent t) {
                 GameObservable.notify(Category.INPUT, Input.MOUSE, 
@@ -50,7 +57,7 @@ public final class SplashScreen extends Application {
             }
         });
 
-        /* Defining what happens in case of a random keyPressedEvent. */
+        /** Defining what happens in case of a random keyPressedEvent. */
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent ke) {
                 GameObservable.notify(Category.INPUT, Input.KEYBOARD, 
@@ -59,17 +66,20 @@ public final class SplashScreen extends Application {
                 StartScreen.start(primaryStage);
             }
         });
-        /* Add the text to the canvas and give it a fade in/ fade out effect. */
+
+        /** Add the text to the canvas and give it a fade
+         * in/ fade out effect. */
         root.getChildren().add(text);
         root.setAlignment(Pos.CENTER);
-        FadeTransition ft = new FadeTransition(Duration.millis(1000), text);
+        FadeTransition ft = new FadeTransition(
+                Duration.millis(transitionDuration), text);
         ft.setFromValue(1.0);
         ft.setToValue(0);
-        ft.setCycleCount(1500);
+        ft.setCycleCount(transitionDuration * 2);
         ft.setAutoReverse(true);
         ft.play();
 
-        /* Setting the right scene and displaying it. */
+        /** Setting the right scene and displaying it. */
         primaryStage.setScene(scene);
         primaryStage.show();
     }
