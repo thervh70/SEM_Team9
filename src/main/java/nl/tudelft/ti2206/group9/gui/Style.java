@@ -50,7 +50,7 @@ public final class Style {
         Background buttonBack = new Background(fill);
         b.setTextFill(Color.WHITE);
         b.setBackground(buttonBack);
-        b.setFont(Font.font("Roboto", FontWeight.BOLD, 14));
+        b.setFont(Font.font("Roboto", FontWeight.BOLD, 16));
 
 
         /** Action to be taken on MouseEntered Event */
