@@ -15,26 +15,28 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Specific;
  */
 public final class GameObservable {
 	
+	/** Hiding public constructor. */
 	private GameObservable() { }
-	
+
+	/** List of observers observing this game. */
 	private static List<GameObserver> observers = new ArrayList<GameObserver>();
-	
+
 	/**
 	 * Add observer to the observers list.
 	 * @param go GameObserver to add to the list.
 	 */
-	public static void addObserver(GameObserver go) {
+	public static void addObserver(final GameObserver go) {
 		observers.add(go);
 	}
-	
+
 	/**
 	 * Remove observer from the observers list.
 	 * @param go GameObserver to remove from the list.
 	 */
-	public static void deleteObserver(GameObserver go) {
+	public static void deleteObserver(final GameObserver go) {
 		observers.remove(go);
 	}
-	
+
 	/**
 	 * Call this method when you want to update the observers.
 	 * @param cat the Category of this update.
@@ -42,11 +44,11 @@ public final class GameObservable {
 	 * @param optionalArgs Optional arguments that come with the update
 	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
 	 */
-	public static void notify(Category cat, Specific spec, 
-			Object... optionalArgs) {
-		for (GameObserver go : observers) {
+	public static void notify(final Category cat, final Specific spec, 
+			final Object... optionalArgs) {
+		for (final GameObserver go : observers) {
 			go.gameUpdate(cat, spec, optionalArgs);
 		}
 	}
-	
+
 }

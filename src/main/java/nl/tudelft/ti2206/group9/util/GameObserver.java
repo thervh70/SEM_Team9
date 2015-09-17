@@ -13,10 +13,10 @@ public interface GameObserver {
 		/** Player actions, see {@link Player}. */
 		PLAYER,
 	};
-	
+
 	/** Super-enum for specific statuses/actions/... */
 	interface Specific { }
-	
+
 	/** Specific statuses for Game updates. */
 	enum Game implements Specific {
 		/** Game started. */
@@ -32,8 +32,8 @@ public interface GameObserver {
 		/** Game exited to main menu. */
 		TO_MAIN_MENU,
 	}
-	
-	/** 
+
+	/**
 	 * Whether input is from Keyboard or from Mouse. 
 	 * Mouse input is accompanied with optionalArg MouseButton.
 	 */
@@ -43,7 +43,7 @@ public interface GameObserver {
 		/** Mouse input. optionalArg: MouseButton. */
 		MOUSE,
 	}
-	
+
 	/**
 	 * Specific actions for Menu buttons.
 	 */
@@ -57,7 +57,7 @@ public interface GameObserver {
 		/** Exit button has been pressed. */
 		EXIT,
 	}
-	
+
 	/**
 	 * Specific actions executed by the Player.
 	 */
@@ -73,7 +73,7 @@ public interface GameObserver {
 		/** Player collides. optionalArg: name of entity collided with. */
 		COLLISION,
 	}
-	
+
 	/**
 	 * Is called when the game is updated. The internal classes should call
 	 * {@link State#updateObservers} to update GameObservers.
@@ -82,6 +82,7 @@ public interface GameObserver {
 	 * @param optionalArgs Optional arguments that come with the update
 	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
 	 */
-	void gameUpdate(Category cat, Specific spec, Object[] optionalArgs);
-	
+	void gameUpdate(final Category cat, final Specific spec,
+			final Object[] optionalArgs);
+
 }

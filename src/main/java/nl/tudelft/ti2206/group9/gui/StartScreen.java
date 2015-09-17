@@ -65,21 +65,21 @@ public final class StartScreen {
         /**Setting function of the buttons. */
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
-            	GameObservable.notify(Category.MENU, Menu.EXIT);
+                GameObservable.notify(Category.MENU, Menu.EXIT);
                 primaryStage.close();
             }
         });
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
-            	GameObservable.notify(Category.MENU, Menu.START);
+                GameObservable.notify(Category.MENU, Menu.START);
                 GameScreen.start(primaryStage);
             }
         });
 
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
-            	GameObservable.notify(Category.MENU, Menu.SETTINGS);
+                GameObservable.notify(Category.MENU, Menu.SETTINGS);
              //   SettingsScreen.start(primaryStage);
             }
         });

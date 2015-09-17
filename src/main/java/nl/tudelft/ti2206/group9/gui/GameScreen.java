@@ -149,7 +149,7 @@ public final class GameScreen {
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
-    	GameObservable.notify(Category.GAME, Game.STARTED);
+		GameObservable.notify(Category.GAME, Game.STARTED);
 	}
 
 	/** Resumes the tickers. */
@@ -157,7 +157,7 @@ public final class GameScreen {
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
-    	GameObservable.notify(Category.GAME, Game.RESUMED);
+		GameObservable.notify(Category.GAME, Game.RESUMED);
 	}
 
 	/** Stop the tickers. */
@@ -165,7 +165,7 @@ public final class GameScreen {
 		running = false;
 		extTicker.stop();
 		InternalTicker.stop();
-    	GameObservable.notify(Category.GAME, Game.STOPPED);
+		GameObservable.notify(Category.GAME, Game.STOPPED);
 	}
 
 	/**
@@ -178,7 +178,7 @@ public final class GameScreen {
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
-            	GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				StartScreen.start(primeStage);
 				pause = null;
@@ -206,7 +206,7 @@ public final class GameScreen {
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
-            	GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				StartScreen.start(primaryStage);
 				death = null;
@@ -217,7 +217,7 @@ public final class GameScreen {
 				= new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
-            	GameObservable.notify(Category.GAME, Game.RETRY);
+				GameObservable.notify(Category.GAME, Game.RETRY);
 				State.reset();
 				GameScreen.start(primaryStage);
 				death = null;

@@ -58,7 +58,8 @@ public class Logger implements GameObserver {
 	}
 
 	@Override
-	public void gameUpdate(Category cat, Specific spec, Object[] optionalArgs) {
+	public void gameUpdate(final Category cat, final Specific spec, 
+			final Object[] optionalArgs) {
 		String line = getLogString(spec, optionalArgs);
 
 		FileWriter fw;
@@ -71,7 +72,8 @@ public class Logger implements GameObserver {
 	}
 
 	/** Retrieves the string to be logged from the hashmap in correct format. */
-	private String getLogString(Specific spec, Object[] optionalArgs) {
+	private String getLogString(final Specific spec,
+			final Object[] optionalArgs) {
 		LocalDateTime date = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMAT);
 		String time = date.format(formatter);

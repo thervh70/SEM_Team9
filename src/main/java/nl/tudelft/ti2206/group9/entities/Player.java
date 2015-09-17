@@ -79,53 +79,53 @@ public class Player extends AbstractEntity {
 	}
 
 	/**
-     * When colliding with a coin, Coin.VALUE is added to score,
+	 * When colliding with a coin, Coin.VALUE is added to score,
 	 * and amount of coins is increased by one.
 	 * @param collidee Entity that this Player collides with.
 	 */
 	@Override
 	public final void collision(final AbstractEntity collidee) {
 		if (collidee instanceof Coin) {
-	    	GameObservable.notify(Category.PLAYER,
-	    			GameObserver.Player.COLLISION, Coin.class.getSimpleName());
+			GameObservable.notify(Category.PLAYER,
+					GameObserver.Player.COLLISION, Coin.class.getSimpleName());
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
 		}
 
 		if (collidee instanceof Obstacle) {
-	    	GameObservable.notify(
-	    			Category.PLAYER, GameObserver.Player.COLLISION, 
-	    			Obstacle.class.getSimpleName());
+			GameObservable.notify(
+					Category.PLAYER, GameObserver.Player.COLLISION, 
+					Obstacle.class.getSimpleName());
 			die();
 		}
 	}
 
-    /**
-     * Change the lane the player is currently at. The center of the player
-     * is capped between the edges of the track (currently -1.5 and +1.5).
-     * @param dir amount of units to move.
-     */
-    private void changeLane(final double dir) {
-        if (moveLane + dir >= -Track.WIDTH / 2
-        		&& moveLane + dir <= Track.WIDTH / 2) {
-	    	GameObservable.notify(Category.PLAYER, 
-	    			GameObserver.Player.START_MOVE, (int) moveLane);
+	/**
+	 * Change the lane the player is currently at. The center of the player
+	 * is capped between the edges of the track (currently -1.5 and +1.5).
+	 * @param dir amount of units to move.
+	 */
+	private void changeLane(final double dir) {
+		if (moveLane + dir >= -Track.WIDTH / 2
+				&& moveLane + dir <= Track.WIDTH / 2) {
+			GameObservable.notify(Category.PLAYER, 
+					GameObserver.Player.START_MOVE, (int) moveLane);
 			moveLane += dir;
 		}
-    }
+	}
 
 	/** Is executed each step in {@link #step()}.
 	 * Keeps the Player moving.
 	 */
-    private void changeLaneStep() {
+	private void changeLaneStep() {
 		double dist = moveLane - getCenter().getX();
 		final double delta = 0.02; // higher means faster acceleration
 		final double slow = 5; 	// higher means lower terminal speed
 		if (Math.abs(dist) < delta && hspeed != 0) {
 			getCenter().setX(moveLane);
 			hspeed = 0;
-	    	GameObservable.notify(Category.PLAYER, 
-	    			GameObserver.Player.STOP_MOVE, (int) moveLane);
+			GameObservable.notify(Category.PLAYER, 
+					GameObserver.Player.STOP_MOVE, (int) moveLane);
 		} else {
 			if (Math.abs(hspeed) < Math.abs(dist) / slow) {
 				hspeed += delta * Math.signum(dist);
@@ -134,21 +134,21 @@ public class Player extends AbstractEntity {
 			}
 		}
 		getCenter().addX(hspeed);
-    }
+	}
 
-    /** Used for testability only.
-     * @return The lane where the Player is currently moving to
-     */
-    final int getMoveLane() {
-    	return (int) moveLane;
-    }
+	/** Used for testability only.
+	 * @return The lane where the Player is currently moving to
+	 */
+	final int getMoveLane() {
+		return (int) moveLane;
+	}
 
 	/** Make the player jump (in the y-direction). */
 	private void jump() {
 		if (!jumping && !sliding) {
 			vspeed = JUMP_SPEED;
 			jumping = true;
-	    	GameObservable.notify(Category.PLAYER, GameObserver.Player.JUMP);
+			GameObservable.notify(Category.PLAYER, GameObserver.Player.JUMP);
 		}
 	}
 
@@ -181,7 +181,7 @@ public class Player extends AbstractEntity {
 			slideSpeed = -1 * 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
 					/ (SLIDE_LENGTH / 2);
 			sliding = true;
-	    	GameObservable.notify(Category.PLAYER, GameObserver.Player.SLIDE);
+			GameObservable.notify(Category.PLAYER, GameObserver.Player.SLIDE);
 		}
 	}
 
@@ -204,22 +204,22 @@ public class Player extends AbstractEntity {
 		}
 	}
 
-    /**
-     * Decide which move methods should be called when keyboard input is
-     * detected.
-     * @param direction Left/Right/Jump/Slide
-     */
-    public final void move(final Direction direction) {
-    	if (isAlive()) {
-	        switch (direction) {
-	            case LEFT:  changeLane(-1.0);	break;
-	            case RIGHT: changeLane(1.0);	break;
-	            case JUMP:  jump();				break;
-	            case SLIDE: slide();			break;
-	            default:	break;
-	        }
-    	}
-    }
+	/**
+	 * Decide which move methods should be called when keyboard input is
+	 * detected.
+	 * @param direction Left/Right/Jump/Slide
+	 */
+	public final void move(final Direction direction) {
+		if (isAlive()) {
+			switch (direction) {
+			case LEFT:  changeLane(-1.0);	break;
+			case RIGHT: changeLane(1.0);	break;
+			case JUMP:  jump();				break;
+			case SLIDE: slide();			break;
+			default:	break;
+			}
+		}
+	}
 
 	/** Is executed each step. This is done in Track. */
 	public final void step() {

@@ -43,9 +43,9 @@ public final class SplashScreen extends Application {
         /* Defining what has happens in case of a mouseClickEvent. */
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent t) {
-            	GameObservable.notify(Category.INPUT, Input.MOUSE, 
-            			t.getButton());
-            	GameObservable.notify(Category.MENU, Menu.ANY_KEY);
+                GameObservable.notify(Category.INPUT, Input.MOUSE, 
+                        t.getButton());
+                GameObservable.notify(Category.MENU, Menu.ANY_KEY);
                 StartScreen.start(primaryStage);
             }
         });
@@ -53,9 +53,9 @@ public final class SplashScreen extends Application {
         /* Defining what happens in case of a random keyPressedEvent. */
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent ke) {
-            	GameObservable.notify(Category.INPUT, Input.KEYBOARD, 
-            			ke.getCode());
-            	GameObservable.notify(Category.MENU, Menu.ANY_KEY);
+                GameObservable.notify(Category.INPUT, Input.KEYBOARD, 
+                        ke.getCode());
+                GameObservable.notify(Category.MENU, Menu.ANY_KEY);
                 StartScreen.start(primaryStage);
             }
         });
