@@ -59,8 +59,8 @@ public final class GameScreen {
 	private static Stage primaryStage;
 
 	/** The AudioPlayer to be used for background music. */
-    static AudioPlayer audioPlayer = new AudioPlayer("src/main/java"
-            + "/nl/tudelft/ti2206/group9/audio/sounds/soundtrack.aiff");
+    static AudioPlayer audioPlayer = new AudioPlayer("src/main/resources"
+            + "/nl.tudelft.ti2206.group9.audio/soundtrack.aiff");
 
 
 	private static Popup pause;
@@ -100,7 +100,10 @@ public final class GameScreen {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-        audioPlayer.play();
+        if(SettingsScreen.sound) {
+            audioPlayer.play();
+        }
+
 		startTickers();
 	}
 
@@ -160,6 +163,7 @@ public final class GameScreen {
 
 	/** Resumes the tickers. */
 	public static void resumeTickers() {
+        if (SettingsScreen.sound)
 		audioPlayer.play();
 		extTicker.start();
 		InternalTicker.start();

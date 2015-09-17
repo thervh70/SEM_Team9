@@ -23,7 +23,7 @@ public final class SettingsScreen {
 	/** Hide public constructor. */
 	private SettingsScreen() { }
     /** Boolean for sound status. */
-    private static boolean sound = true;
+    public static boolean sound = true;
 
     /**
      * Creating and displaying the scene.
@@ -50,6 +50,10 @@ public final class SettingsScreen {
         /** Creating the sound toggle. */
         final Button soundButton;
         soundButton = new Button("Sound: ON");
+        if (!sound) {
+            soundButton.setText("Sound: OFF");
+        }
+
         Style.setButtonStyle(soundButton);
         soundButton.setFont(Font.font("Roboto", FontWeight.BOLD, 20));
         GridPane.setConstraints(soundButton, 5, 18);
