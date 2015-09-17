@@ -3,6 +3,8 @@ package nl.tudelft.ti2206.group9.util;
 import javafx.scene.input.KeyCode;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +36,7 @@ public class KeyMap {
 
     	Action action = keyMap.get(e);
     	if (action != null && !pressed.get(e)) {	// If key not pressed
+			GameObservable.notify(Category.INPUT, Input.KEYBOARD, e);
 			action.doAction();						// Do action
 			pressed.put(e, true);					// Mark as pressed
     	}

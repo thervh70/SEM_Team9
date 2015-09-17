@@ -19,9 +19,17 @@ public interface GameObserver {
 	
 	/** Specific statuses for Game updates. */
 	enum Game implements Specific {
+		/** Game started. */
 		STARTED,
+		/** Game stopped. */
 		STOPPED,
+		/** Game paused. */
 		PAUSED,
+		/** Game resumed. */
+		RESUMED,
+		/** Game restarted. */
+		RETRY,
+		/** Game exited to main menu. */
 		TO_MAIN_MENU,
 	}
 	

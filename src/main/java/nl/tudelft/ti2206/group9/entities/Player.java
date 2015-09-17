@@ -3,6 +3,9 @@ package nl.tudelft.ti2206.group9.entities;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Direction;
+import nl.tudelft.ti2206.group9.util.GameObservable;
+import nl.tudelft.ti2206.group9.util.GameObserver;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -83,11 +86,16 @@ public class Player extends AbstractEntity {
 	@Override
 	public final void collision(final AbstractEntity collidee) {
 		if (collidee instanceof Coin) {
+	    	GameObservable.notify(Category.PLAYER,
+	    			GameObserver.Player.COLLISION, Coin.class.getSimpleName());
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
 		}
 
 		if (collidee instanceof Obstacle) {
+	    	GameObservable.notify(
+	    			Category.PLAYER, GameObserver.Player.COLLISION, 
+	    			Obstacle.class.getSimpleName());
 			die();
 		}
 	}
@@ -100,6 +108,8 @@ public class Player extends AbstractEntity {
     private void changeLane(final double dir) {
         if (moveLane + dir >= -Track.WIDTH / 2
         		&& moveLane + dir <= Track.WIDTH / 2) {
+	    	GameObservable.notify(Category.PLAYER, 
+	    			GameObserver.Player.START_MOVE, (int) moveLane);
 			moveLane += dir;
 		}
     }
@@ -111,9 +121,11 @@ public class Player extends AbstractEntity {
 		double dist = moveLane - getCenter().getX();
 		final double delta = 0.02; // higher means faster acceleration
 		final double slow = 5; 	// higher means lower terminal speed
-		if (Math.abs(dist) < delta) {
+		if (Math.abs(dist) < delta && hspeed != 0) {
 			getCenter().setX(moveLane);
 			hspeed = 0;
+	    	GameObservable.notify(Category.PLAYER, 
+	    			GameObserver.Player.STOP_MOVE, (int) moveLane);
 		} else {
 			if (Math.abs(hspeed) < Math.abs(dist) / slow) {
 				hspeed += delta * Math.signum(dist);
@@ -136,6 +148,7 @@ public class Player extends AbstractEntity {
 		if (!jumping && !sliding) {
 			vspeed = JUMP_SPEED;
 			jumping = true;
+	    	GameObservable.notify(Category.PLAYER, GameObserver.Player.JUMP);
 		}
 	}
 
@@ -168,6 +181,7 @@ public class Player extends AbstractEntity {
 			slideSpeed = -1 * 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
 					/ (SLIDE_LENGTH / 2);
 			sliding = true;
+	    	GameObservable.notify(Category.PLAYER, GameObserver.Player.SLIDE);
 		}
 	}
 

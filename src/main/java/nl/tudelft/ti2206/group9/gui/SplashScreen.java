@@ -17,7 +17,6 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 import nl.tudelft.ti2206.group9.util.Logger;
 
-
 /**
  * Created by Maikel on 08/09/2015.
  *

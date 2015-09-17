@@ -3,6 +3,10 @@ package nl.tudelft.ti2206.group9.gui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Random;
 
 import javafx.collections.ObservableList;
@@ -15,6 +19,7 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.Logger;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -44,7 +49,7 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws IOException {
 		sleep(LONG);
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
@@ -65,6 +70,12 @@ public class EndToEndTest extends ApplicationTest {
 		deathPopup(1);				// Click "Main Menu"
 		
 		mainMenu(2);				// Click quit
+		
+		String log = new String(Files.readAllBytes(Paths.get(Logger.OUTFILE)),
+				StandardCharsets.UTF_8);
+		System.out.println("\n== EVENT_LOG ==");
+		System.out.println(log);
+		System.out.println("== END_EVENT_LOG ==\n");
 	}
 	
 	private void mockGenerator() {
