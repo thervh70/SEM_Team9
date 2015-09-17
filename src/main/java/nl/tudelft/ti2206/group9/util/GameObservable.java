@@ -44,7 +44,7 @@ public final class GameObservable {
 	 * @param optionalArgs Optional arguments that come with the update
 	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
 	 */
-	public static void notify(final Category cat, final Specific spec, 
+	public static void notify(final Category cat, final Specific spec,
 			final Object... optionalArgs) {
 		for (final GameObserver go : observers) {
 			go.gameUpdate(cat, spec, optionalArgs);

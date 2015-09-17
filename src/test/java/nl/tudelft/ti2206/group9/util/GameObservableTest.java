@@ -17,13 +17,15 @@ import org.junit.Test;
 public class GameObservableTest implements GameObserver {
 
 	private GameObserver go1, go2;
-	
+
+	/** Mock observers. */
 	@Before
 	public void setUp() throws Exception {
 		go1 = mock(GameObserver.class);
 		go2 = mock(GameObserver.class);
 	}
 
+	/** Test whether observers are called when there is an update. */
 	@Test
 	public void testNotifyObservers() {
 		GameObservable.addObserver(this);
@@ -32,7 +34,7 @@ public class GameObservableTest implements GameObserver {
 		GameObservable.deleteObserver(go2);
 		GameObservable.notify(Category.GAME, Game.STARTED, 0);
 		verify(go1).gameUpdate(Category.GAME, Game.STARTED, new Integer[]{0});
-		verify(go2, never()).gameUpdate(Category.GAME, Game.STARTED, 
+		verify(go2, never()).gameUpdate(Category.GAME, Game.STARTED,
 				new Integer[]{0});
 	}
 
