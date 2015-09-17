@@ -1,9 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-/**
- * @author Robin, Maarten
- */
-
 import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -61,9 +57,10 @@ public final class GameScreen {
 	private static boolean running;
 	/** The primarystage. */
 	private static Stage primaryStage;
-	
-	/** The AudioPlayer to be used. */
-	private static AudioPlayer audioPlayer;
+
+	/** The AudioPlayer to be used for background music. */
+    static AudioPlayer audioPlayer = new AudioPlayer("src/main/java"
+            + "/nl/tudelft/ti2206/group9/audio/sounds/soundtrack.aiff");
 
 	private static Popup pause;
 	private static Popup death;
@@ -101,10 +98,8 @@ public final class GameScreen {
 		keyBindings(primaryStage);
 		primaryStage.setResizable(false);
 		primaryStage.show();
-		
-		AudioPlayer audioPlayer = new AudioPlayer("src/main/java"
-				+ "/nl/tudelft/ti2206/group9/audio/sounds/soundtrack.aiff"); 
-		audioPlayer.play();
+
+        audioPlayer.play();
 		startTickers();
 	}
 
