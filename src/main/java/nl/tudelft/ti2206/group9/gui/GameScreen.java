@@ -4,9 +4,6 @@ package nl.tudelft.ti2206.group9.gui;
  * @author Robin, Maarten
  */
 
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.Mixer;
-
 import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -65,10 +62,6 @@ public final class GameScreen {
 	/** The primarystage. */
 	private static Stage primaryStage;
 	
-	/** The mixer to be used for the AudioPlayer. */
-	private static Mixer mixer;
-	/** The clip to be used for the AudioPlayer. */
-	private static Clip clip;
 	/** The AudioPlayer to be used. */
 	private static AudioPlayer audioPlayer;
 
@@ -109,7 +102,9 @@ public final class GameScreen {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 		
-		startAudioPlayer();
+		AudioPlayer audioPlayer = new AudioPlayer("src/main/java"
+				+ "/nl/tudelft/ti2206/group9/audio/sounds/soundtrack.aiff"); 
+		audioPlayer.play();
 		startTickers();
 	}
 
@@ -169,6 +164,7 @@ public final class GameScreen {
 
 	/** Resumes the tickers. */
 	public static void resumeTickers() {
+		audioPlayer.play();
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
@@ -176,6 +172,7 @@ public final class GameScreen {
 
 	/** Stop the tickers. */
 	public static void stopTickers() {
+		audioPlayer.stop();
 		running = false;
 		extTicker.stop();
 		InternalTicker.stop();
@@ -187,7 +184,6 @@ public final class GameScreen {
 	 */
 	public static void showPauseMenu(final Stage primeStage) {
 		stopTickers();
-		audioPlayer.stop();
 
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
@@ -281,13 +277,6 @@ public final class GameScreen {
 		} else {
 			return death;
 		}
-	}
-	
-	/** Starts the AudioPlayer. */
-	public static void startAudioPlayer() {
-		audioPlayer = new AudioPlayer(mixer, clip);
-		audioPlayer.initialiseTune("sounds/soundtrack.aiff");
-		audioPlayer.play();
 	}
 
 }
