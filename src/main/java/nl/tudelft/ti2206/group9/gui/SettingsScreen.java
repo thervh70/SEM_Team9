@@ -22,6 +22,7 @@ public final class SettingsScreen {
 
 	/** Hide public constructor. */
 	private SettingsScreen() { }
+    /** Boolean for sound status. */
     private static boolean sound = true;
 
     /**
@@ -66,7 +67,7 @@ public final class SettingsScreen {
         });
 
         soundButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
                 if (sound) {
 
 
