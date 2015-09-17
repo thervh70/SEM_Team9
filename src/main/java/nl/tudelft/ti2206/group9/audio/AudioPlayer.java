@@ -66,11 +66,12 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Sets the path of the AudioPlayer.
+	 * Sets the path of the AudioPlayer and reinitializes it.
 	 * @param location new path to a file.
 	 */
 	public final void setPath(final String location) {
 		AudioPlayer.path = location;
+		initialiseTune(path);
 	}
 
 }
