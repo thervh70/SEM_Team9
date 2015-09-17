@@ -6,6 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.util.GameObservable;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
 /**
  * @author Maikel and Robin
@@ -62,18 +65,21 @@ public final class StartScreen {
         /**Setting function of the buttons. */
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
+                GameObservable.notify(Category.MENU, Menu.EXIT);
                 primaryStage.close();
             }
         });
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
+                GameObservable.notify(Category.MENU, Menu.START);
                 GameScreen.start(primaryStage);
             }
         });
 
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
+                GameObservable.notify(Category.MENU, Menu.SETTINGS);
                 SettingsScreen.start(primaryStage);
             }
         });

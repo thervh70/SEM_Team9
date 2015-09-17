@@ -21,6 +21,11 @@ import nl.tudelft.ti2206.group9.level.State;
 @SuppressWarnings("restriction")
 public class ExternalTicker extends AnimationTimer {
 
+	/** Height of the box in-game where the score is displayed. */
+	private static final int SCORE_BOX_HEIGHT = 90;
+	/** Width of the box in-game where the score is displayed. */
+	private static final int SCORE_BOX_WIDTH = 130;
+
 	@Override
 	public final void handle(final long now) {
 		synchronized (GUIConstant.LOCK) {
@@ -56,7 +61,7 @@ public class ExternalTicker extends AnimationTimer {
 
 		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
-		scoreBox.setMinSize(130, 90);
+		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
 
 		GameScreen.addOverlay(scoreBox);
 	}
