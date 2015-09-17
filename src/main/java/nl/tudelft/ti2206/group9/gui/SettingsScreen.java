@@ -32,8 +32,6 @@ public final class SettingsScreen {
      */
     public static void start(final Stage primaryStage) {
 
-
-
         /**Creating a gridPane for the layout. */
         GridPane grid = new GridPane();
         grid.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
@@ -69,18 +67,14 @@ public final class SettingsScreen {
         soundButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
                 if (sound) {
-
-
                     soundButton.setText("Sound: OFF");
                     sound = false;
                 } else {
                     soundButton.setText("Sound: ON");
                     sound = true;
                 }
-
             }
         });
-
 
         settings = new Scene(grid, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 

@@ -47,7 +47,6 @@ public final class Style {
         b.setBackground(buttonBack);
         b.setFont(Font.font("Roboto", FontWeight.BOLD, 16));
 
-
         /** Action to be taken on MouseEntered Event */
         b.setOnMouseEntered(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent e) {
