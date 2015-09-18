@@ -1,6 +1,10 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.entities.*;
+import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.Fence;
+import nl.tudelft.ti2206.group9.entities.Log;
+import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 import java.io.BufferedReader;
@@ -16,6 +20,9 @@ import java.util.List;
  * @author Mathias
  */
 public class TrackParser {
+
+    /** Standard Y-value of the center of a Fence. */
+    public static final double FENCE_CENTER_HEIGHT = 2.8;
 
     /**
      * Parse all txt-files into TrackParts.
@@ -110,9 +117,9 @@ public class TrackParser {
                 AbstractEntity entity;
                 switch (c) {
                     case 'c' : entity = new Coin(new Point3D(i - 1, 1, j)); break;
-                    case 'l' : entity = new Log(new Point3D(i-1, 1, j)); break;
-                    case 'p' : entity = new Pillar(new Point3D(i-1, 1, j)); break;
-                    case 'f' : entity = new Fence(new Point3D(i-1, 2.8, j)); break;
+                    case 'l' : entity = new Log(new Point3D(i - 1, 1, j)); break;
+                    case 'p' : entity = new Pillar(new Point3D(i - 1, 1, j)); break;
+                    case 'f' : entity = new Fence(new Point3D(i - 1, FENCE_CENTER_HEIGHT, j)); break;
                     default : continue;
                 }
                 part.addEntity(entity);
