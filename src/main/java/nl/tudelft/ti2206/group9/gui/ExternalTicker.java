@@ -16,6 +16,7 @@ import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 
 /**
  * @author Maarten.
@@ -23,6 +24,8 @@ import nl.tudelft.ti2206.group9.level.State;
 @SuppressWarnings("restriction")
 public class ExternalTicker extends AnimationTimer {
 
+	/** Equal to 1000. */
+	private static final double E3 = 1000.0;
 	/** Height of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_HEIGHT = 90;
 	/** Width of the box in-game where the score is displayed. */
@@ -50,7 +53,14 @@ public class ExternalTicker extends AnimationTimer {
 			final Group entities = renderEntities();
 			GameScreen.addWorld(entities);
 		}
+		
+		GameScreen.addOverlay(renderScore());
+	}
 
+	/**
+	 * @return VBox with score labels
+	 */
+	private VBox renderScore() {
 		Label scoreLabel = new Label(("Score: "
 				+ State.modulo(State.getScore())));
 		Label distanceLabel = new Label("Distance: "
@@ -64,8 +74,7 @@ public class ExternalTicker extends AnimationTimer {
 		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
-
-		GameScreen.addOverlay(scoreBox);
+		return scoreBox;
 	}
 
     /**

@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import nl.tudelft.ti2206.group9.util.GameObservable;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -60,19 +63,22 @@ public final class SettingsScreen {
         /** Assigning a function to the buttons. */
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
+                GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
                 StartScreen.start(primaryStage);
             }
         });
 
         soundButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
+                sound = !sound;
+                String s;
                 if (sound) {
-                    soundButton.setText("Sound: OFF");
-                    sound = false;
+                    s = "ON";
                 } else {
-                    soundButton.setText("Sound: ON");
-                    sound = true;
+                    s = "OFF";
                 }
+                soundButton.setText("Sound: " + s);
+                GameObservable.notify(Category.MENU, Menu.SETTING_SOUND, s);
             }
         });
 
@@ -80,5 +86,13 @@ public final class SettingsScreen {
 
         primaryStage.setScene(settings);
         primaryStage.show();
+    }
+
+    /**
+     * Return whether sound is enabled.
+     * @return whether sound is enabled.
+     */
+    public static boolean isSoundEnabled() {
+    	return sound;
     }
 }

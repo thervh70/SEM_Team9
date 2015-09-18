@@ -22,17 +22,15 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Track {
 
-	/** The distance between the coins. */
-	public static final double COIN_DISTANCE = 10;
-
-	/** Amount of units the track should move per tick. */
-	public static final double UNITS_PER_TICK = 0.4;
-
 	/** Width of the track (amount of lanes). */
 	public static final int WIDTH = 3;
 	/** Length of the track. */
 	public static final double LENGTH = 100;
 
+	/** Amount of units the track should move per tick, initially. */
+	static final double UNITS_PER_TICK_BASE = 0.4;
+	/** Acceleration of the units per tick, per tick. */
+	static final double UNITS_PER_TICK_ACCEL = 0.0001;
 	/** Current distance moved by the track, reset every run. */
 	private static double distance;
 
@@ -147,17 +145,24 @@ public class Track {
 	}
 
 	/**
+	 * Get the number of Units that pass by per tick at this moment.
+	 * @return double Units per Tick
+	 */
+	public static final double getUnitsPerTick() {
+		final double div = Math.pow(UNITS_PER_TICK_ACCEL, -1) / 2
+				* UNITS_PER_TICK_BASE * UNITS_PER_TICK_BASE;
+		return UNITS_PER_TICK_BASE
+				* Math.sqrt(State.getDistance() / div + 1);
+	}
+
+	/**
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
 	public final synchronized void step() {
 		synchronized (this) {
 			if (trackLeft > 0) {
-				trackLeft -= UNITS_PER_TICK;
-
-				// !! After merging #32, use this !!
-				// trackLeft -= getUnitsPerTick();
-
+				 trackLeft -= getUnitsPerTick();
 			} else {
 				int rand = random.nextInt(trackParts.size());
 				TrackPart part = trackParts.get(rand);
@@ -166,9 +171,9 @@ public class Track {
 		}
 		getPlayer().step();
 
-		distance += UNITS_PER_TICK;
-		State.addScore(UNITS_PER_TICK);
-		moveTrack(UNITS_PER_TICK);
+		distance += getUnitsPerTick();
+		State.addScore(getUnitsPerTick());
+		moveTrack(getUnitsPerTick());
 	}
 
 	/**
@@ -201,4 +206,5 @@ public class Track {
 	public final void setRandom(final  Random randomGenerator) {
 		random = randomGenerator;
 	}
+
 }
