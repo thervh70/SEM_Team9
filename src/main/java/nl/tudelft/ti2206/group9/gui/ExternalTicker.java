@@ -1,8 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.ConditionalFeature;
-import javafx.application.Platform;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -39,12 +37,6 @@ public class ExternalTicker extends AnimationTimer {
 	private void renderScene() {
 		GameScreen.clearWorld();
 		GameScreen.clearOverlay();
-		
-		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
-			final Box track = new Box(3, 0.1, 500);
-			track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
-			GameScreen.addWorld(track);
-		}
 
 		final Group entities = renderEntities();
 		GameScreen.addWorld(entities);
@@ -78,50 +70,51 @@ public class ExternalTicker extends AnimationTimer {
      */
 	private Group renderEntities() {
 
-		/**
-		 * This method is for producing track pieces.
-		 * This is a working version, however refactoring is needed.
-		 */
-		for(int i = 0; i < 100; i++){
-			for(int j = 0; j < 3; j++){
-				final Box trackPiece = new Box(1, 0, 1);
-				trackPiece.setTranslateX(j - 1);
-				trackPiece.setTranslateZ(i);
-				trackPiece.setMaterial(Style.FLOOR);
-				GameScreen.addWorld(trackPiece);
-			}
-		}
-
-		/**
-		 * The same applies here as described above.
-		 * This part handles the walls.
-		 * h: 2 walls
-		 * i: 500 wallpieces in depth
-		 * j: 3 wallpieces in height
-		 */
-		for(int h = 0; h < 2; h++) {
-			for (int i = 0; i < 100; i++) {
-				for (int j = 0; j < 3; j++) {
-					double random = Math.random();
-					final Box wallPiece = new Box(0, 1, 1);
-					wallPiece.setTranslateY(j - 3);
-					wallPiece.setTranslateZ(i);
-					wallPiece.setTranslateX(h * 3 - 1.5);
-					if( random < 0.5) {
-						wallPiece.setMaterial(Style.BRICK);
-					} else if ( random > 0.5 && random < 0.75) {
-						wallPiece.setMaterial(Style.CRACK);
-					} else {
-						wallPiece.setMaterial(Style.MOSS);
-					}
-					GameScreen.addWorld(wallPiece);
-				}
-			}
-		}
-
 		final Group entities = new Group();
 		entities.setDepthTest(DepthTest.ENABLE);
 		synchronized (State.getTrack()) {
+			/**
+			 * This method is for producing track pieces.
+			 * This is a working version, however refactoring is needed.
+			 */
+			for(int i = 0; i < 100; i++){
+				for(int j = 0; j < 3; j++){
+					final Box trackPiece = new Box(1, 0, 1);
+					trackPiece.setTranslateX(j - 1);
+					trackPiece.setTranslateZ(i);
+					trackPiece.setMaterial(Style.FLOOR);
+					entities.getChildren().add(trackPiece);
+				}
+			}
+
+			/**
+			 * The same applies here as described above.
+			 * This part handles the walls.
+			 * h: 2 walls
+			 * i: 500 wallpieces in depth
+			 * j: 3 wallpieces in height
+			 */
+			for(int h = 0; h < 2; h++) {
+				for (int i = 0; i < 100; i++) {
+					for (int j = 0; j < 3; j++) {
+						double random = Math.random();
+						final Box wallPiece = new Box(0, 1, 1);
+						wallPiece.setTranslateY(j - 3);
+						wallPiece.setTranslateZ(i);
+						wallPiece.setTranslateX(h * 3 - 1.5);
+						if( random < 0.5) {
+							wallPiece.setMaterial(Style.BRICK);
+						} else if ( random > 0.5 && random < 0.75) {
+							wallPiece.setMaterial(Style.CRACK);
+						} else {
+							wallPiece.setMaterial(Style.MOSS);
+						}
+						entities.getChildren().add(wallPiece);
+					}
+				}
+			}
+
+
 			for (final AbstractEntity entity : State.getTrack().getEntities()) {
 				final Box entityBox = new Box(1, 1, 1);
 
