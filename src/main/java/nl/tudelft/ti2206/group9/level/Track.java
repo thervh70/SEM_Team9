@@ -1,10 +1,5 @@
 package nl.tudelft.ti2206.group9.level;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Fence;
@@ -13,6 +8,11 @@ import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.gui.GameScreen;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -45,7 +45,7 @@ public class Track {
 	private List<TrackPart> trackParts;
 
 	/** Length of the track that is already created. */
-	private double trackLeft = 0;
+	private double trackLeft;
 
 	/** Default constructor, new Random() is created as generator. */
 	public Track() {
@@ -164,8 +164,8 @@ public class Track {
 			if (trackLeft > 0) {
 				 trackLeft -= getUnitsPerTick();
 			} else {
-				int rand = random.nextInt(trackParts.size());
-				TrackPart part = trackParts.get(rand);
+				final int rand = random.nextInt(trackParts.size());
+				final TrackPart part = trackParts.get(rand);
 				addTrackPartToTrack(part);
 			}
 		}
@@ -181,10 +181,10 @@ public class Track {
 	 * @param part the TrackPart to be added
 	 */
 	private void addTrackPartToTrack(final TrackPart part) {
-		for (AbstractEntity entity : part.getEntities()) {
-			Point3D center = new Point3D(entity.getCenter());
+		AbstractEntity add = null;
+		for (final AbstractEntity entity : part.getEntities()) {
+			final Point3D center = new Point3D(entity.getCenter());
 			center.addZ(LENGTH);
-			AbstractEntity add = null;
 			if (entity instanceof Coin) {
 				add = new Coin(center);
 			} else if (entity instanceof Fence) {

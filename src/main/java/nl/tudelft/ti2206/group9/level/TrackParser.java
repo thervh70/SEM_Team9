@@ -29,13 +29,13 @@ public class TrackParser {
      * @return List of TrackParts
      */
     public final List<TrackPart> parseTrack() {
-        List<TrackPart> partList = new ArrayList<TrackPart>();
+        final List<TrackPart> partList = new ArrayList<TrackPart>();
 
-        File folder =
+        final File folder =
         		new File("src/main/resources/nl/tudelft/ti2206/group9/level");
-        for (File file : folder.listFiles()) {
+        for (final File file : folder.listFiles()) {
             try {
-                TrackPart part = parseTrackPart(file.getPath());
+            	final TrackPart part = parseTrackPart(file.getPath());
                 partList.add(part);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -53,8 +53,8 @@ public class TrackParser {
      */
     public final TrackPart parseTrackPart(final String infile)
     		throws IOException {
-        URL path = new File(infile).toURI().toURL();
-        InputStream stream = path.openStream();
+    	final URL path = new File(infile).toURI().toURL();
+    	final InputStream stream = path.openStream();
         return parseTrackPart(stream);
     }
 
@@ -66,9 +66,9 @@ public class TrackParser {
      */
     protected final TrackPart parseTrackPart(final InputStream stream)
     		throws IOException {
-        BufferedReader reader = new BufferedReader(
+    	final BufferedReader reader = new BufferedReader(
         		new InputStreamReader(stream, "UTF-8"));
-        List<String> lines = new ArrayList<String>();
+    	final List<String> lines = new ArrayList<String>();
         while (reader.ready()) {
             lines.add(reader.readLine());
         }
@@ -84,10 +84,10 @@ public class TrackParser {
     protected final TrackPart parseTrackPart(final List<String> text) {
         checkFormat(text);
 
-        int height = text.size();
-        int width = text.get(0).length();
+        final int height = text.size();
+        final int width = text.get(0).length();
 
-        char[][] map = new char[width][height];
+        final char[][] map = new char[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 map[x][y] = text.get(y).charAt(x);
@@ -113,10 +113,10 @@ public class TrackParser {
      * @return TrackPart the created TrackPart
      */
     protected final TrackPart parseTrackPart(final char[][] map) {
-        TrackPart part = new TrackPart();
+    	final TrackPart part = new TrackPart();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                char c = map[i][j];
+            	final char c = map[i][j];
                 AbstractEntity entity;
                 switch (c) {
                     case 'c':

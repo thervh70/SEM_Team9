@@ -11,7 +11,8 @@ import java.util.List;
 public class TrackPart {
 
     /** List of all entities in this trackpart. */
-    private List<AbstractEntity> entities = new LinkedList<AbstractEntity>();
+	private final List<AbstractEntity> entities =
+			new LinkedList<AbstractEntity>();
 
     /** Size of the TrackPart. */
     private int length;

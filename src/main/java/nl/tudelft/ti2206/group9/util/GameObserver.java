@@ -91,6 +91,6 @@ public interface GameObserver {
 	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
 	 */
 	void gameUpdate(final Category cat, final Specific spec,
-			final Object[] optionalArgs);
+			final Object... optionalArgs);
 
 }

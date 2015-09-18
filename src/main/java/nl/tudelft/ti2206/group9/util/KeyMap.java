@@ -34,7 +34,7 @@ public class KeyMap {
 			pressed.put(e, false);
 		}
 
-		Action action = keyMap.get(e);
+		final Action action = keyMap.get(e);
 		if (action != null && !pressed.get(e)) {	// If key not pressed
 			GameObservable.notify(Category.INPUT, Input.KEYBOARD, e);
 			action.doAction();						// Do action
@@ -107,7 +107,7 @@ public class KeyMap {
 	private static final class MoveAction implements Action {
 
 		/** The direction. */
-		private Direction dir;
+		private final Direction dir;
 
 		/** Nice constructor.
 		 * @param d direction

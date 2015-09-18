@@ -51,21 +51,21 @@ public final class PopupMenu {
         warning.setWidth(WIDTH);
         warning.setHeight(HEIGHT);
 
-        Rectangle rect = new Rectangle(WIDTH, HEIGHT / 2, Color.WHITESMOKE);
+        final Rectangle rect = new Rectangle(WIDTH, HEIGHT / 2, Color.WHITESMOKE);
         rect.setStroke(Color.BLACK);
 
-        Button yes = new Button(button1);
-        Button no = new Button(button2);
+        final Button yes = new Button(button1);
+        final Button no = new Button(button2);
         Style.setPopupButtonStyle(yes);
         Style.setPopupButtonStyle(no);
 
-        Text text = new Text(t);
+        final Text text = new Text(t);
         text.setFill(Color.BLACK);
 
-        HBox hbox = new HBox(HBOX_SIZE, yes, no);
+        final HBox hbox = new HBox(HBOX_SIZE, yes, no);
         hbox.setAlignment(Pos.CENTER);
 
-        VBox vbox = new VBox(VBOX_SIZE, text, hbox);
+        final VBox vbox = new VBox(VBOX_SIZE, text, hbox);
         vbox.setAlignment(Pos.CENTER);
 
         yes.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -114,25 +114,25 @@ public final class PopupMenu {
         warning.setWidth(WIDTH);
         warning.setHeight(HEIGHT);
 
-        Rectangle rect = new Rectangle(WIDTH, HEIGHT, Color.WHITESMOKE);
+        final Rectangle rect = new Rectangle(WIDTH, HEIGHT, Color.WHITESMOKE);
         rect.setStroke(Color.BLACK);
 
-        Button yes = new Button(button1);
-        Button no = new Button(button2);
-        Text text = new Text(t);
+        final Button yes = new Button(button1);
+        final Button no = new Button(button2);
+        final Text text = new Text(t);
 
         Style.setPopupButtonStyle(yes);
         Style.setPopupButtonStyle(no);
 
-        String s = "Final Score: " + score;
-        Text finalScore = new Text(s);
-        String c = "Total amount of coins: " + coins;
-        Text finalCoins = new Text(c);
+        final String s = "Final Score: " + score;
+        final Text finalScore = new Text(s);
+        final String c = "Total amount of coins: " + coins;
+        final Text finalCoins = new Text(c);
 
-        HBox hbox = new HBox(HBOX_SIZE, yes, no);
+        final HBox hbox = new HBox(HBOX_SIZE, yes, no);
         hbox.setAlignment(Pos.CENTER);
 
-        VBox vbox = new VBox(VBOX_SIZE, text, finalScore, finalCoins, hbox);
+        final VBox vbox = new VBox(VBOX_SIZE, text, finalScore, finalCoins, hbox);
         vbox.setAlignment(Pos.CENTER);
 
         yes.setOnMouseClicked(new EventHandler<MouseEvent>() {
