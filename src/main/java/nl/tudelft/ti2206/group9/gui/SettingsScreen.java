@@ -88,7 +88,10 @@ public final class SettingsScreen {
         primaryStage.show();
     }
 
-    /** Return whether sound is enabled. */
+    /**
+     * Return whether sound is enabled.
+     * @return whether sound is enabled.
+     */
     public static boolean isSoundEnabled() {
     	return sound;
     }
