@@ -266,7 +266,7 @@ public class Track {
 	 * Set the Random generator.
 	 * @param randomGenerator Random object to set.
 	 */
-	public void setRandom(Rando	m randomGenerator) {
+	public void setRandom(Random randomGenerator) {
 		random = randomGenerator;
 	}
 
