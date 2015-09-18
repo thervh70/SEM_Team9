@@ -26,12 +26,27 @@ public class TrackTest {
 	@Before
 	public void setUp() throws Exception {
 		track = new Track();
+		Track.setDistance(0);
 	}
 
 	@Test
 	public void testTrack() {
 		assertEquals(1, track.getEntities().size());
 		assertEquals(new Player(), track.getEntities().get(0));
+	}
+	
+	@Test
+	public void testGetUnitsPerTick() {
+		final double div = Math.pow(Track.UNITS_PER_TICK_ACCEL, -1) / 2 
+				* Track.UNITS_PER_TICK_BASE * Track.UNITS_PER_TICK_BASE;
+		
+		Track.setDistance(div);
+		assertEquals(Track.UNITS_PER_TICK_BASE * Math.sqrt(2),
+						Track.getUnitsPerTick(), DELTA);
+		
+		Track.addDistance(2 * div);
+		assertEquals(Track.UNITS_PER_TICK_BASE * 2,
+						Track.getUnitsPerTick(), DELTA);
 	}
 
 	@Test
@@ -143,10 +158,11 @@ public class TrackTest {
 		}
 
 		double oldCoinLeft = track.getCoinrunleft();
+		double unitsPerTick = Track.getUnitsPerTick();
 		track.step();
 		double newCoinLeft = track.getCoinrunleft();
 		assertEquals(newCoinLeft, oldCoinLeft 
-				- Track.UNITS_PER_TICK / Track.COIN_DISTANCE, DELTA);
+				- unitsPerTick / Track.COIN_DISTANCE, DELTA);
 	}
 
 	@Test

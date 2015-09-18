@@ -1,12 +1,15 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.text.Text;
 import nl.tudelft.ti2206.group9.entities.*;
 import nl.tudelft.ti2206.group9.level.State;
 
@@ -15,6 +18,13 @@ import nl.tudelft.ti2206.group9.level.State;
  */
 @SuppressWarnings("restriction")
 public class ExternalTicker extends AnimationTimer {
+
+	/** Equal to 1000. */
+	private static final double E3 = 1000.0;
+	/** Height of the box in-game where the score is displayed. */
+	private static final int SCORE_BOX_HEIGHT = 90;
+	/** Width of the box in-game where the score is displayed. */
+	private static final int SCORE_BOX_WIDTH = 130;
 
 	@Override
 	public final void handle(final long now) {
@@ -29,7 +39,49 @@ public class ExternalTicker extends AnimationTimer {
 	private void renderScene() {
 		GameScreen.clearWorld();
 		GameScreen.clearOverlay();
+		
+		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
+			final Box track = new Box(3, 0.1, 500);
+			track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
+			GameScreen.addWorld(track);
+		}
 
+		final Group entities = renderEntities();
+		GameScreen.addWorld(entities);
+
+		GameScreen.addOverlay(renderScore());
+	}
+
+	/**
+	 * @return VBox with score labels
+	 */
+	private VBox renderScore() {
+		Label scoreLabel = new Label(("Score: "
+				+ State.modulo(State.getScore())));
+		Label distanceLabel = new Label("Distance: "
+				+ State.modulo(State.getDistance()));
+		Label coinsLabel = new Label(("Coins: " + State.getCoins()));
+
+		Style.setLabelStyle(scoreLabel);
+		Style.setLabelStyle(distanceLabel);
+		Style.setLabelStyle(coinsLabel);
+
+		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
+		scoreBox.setStyle(" -fx-background-color:BLACK;");
+		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
+		return scoreBox;
+	}
+
+    /**
+     * This method renders all Entities.
+     * @return group
+     */
+	private Group renderEntities() {
+
+		/**
+		 * This method is for producing track pieces.
+		 * This is a working version, however refactoring is needed.
+		 */
 		for(int i = 0; i < 100; i++){
 			for(int j = 0; j < 3; j++){
 				final Box trackPiece = new Box(1, 0, 1);
@@ -41,6 +93,8 @@ public class ExternalTicker extends AnimationTimer {
 		}
 
 		/**
+		 * The same applies here as described above.
+		 * This part handles the walls.
 		 * h: 2 walls
 		 * i: 500 wallpieces in depth
 		 * j: 3 wallpieces in height
@@ -64,22 +118,6 @@ public class ExternalTicker extends AnimationTimer {
 				}
 			}
 		}
-
-		final Group entities = renderEntities();
-		GameScreen.addWorld(entities);
-
-		GameScreen.addOverlay(new Text(0, 16, "Score: " 
-				+ State.modulo(State.getScore())));
-		GameScreen.addOverlay(new Text(0, 32, "Distance: " 
-				+ State.modulo(State.getDistance())));
-		GameScreen.addOverlay(new Text(0, 48, "Coins: " + State.getCoins()));
-	}
-
-    /**
-     * This method renders all Entities.
-     * @return group
-     */
-	private Group renderEntities() {
 
 		final Group entities = new Group();
 		entities.setDepthTest(DepthTest.ENABLE);

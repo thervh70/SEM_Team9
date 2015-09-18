@@ -26,9 +26,6 @@ public class Track {
 	/** The distance between the coins. */
 	public static final double COIN_DISTANCE = 10;
 
-	/** Amount of units the track should move per tick. */
-	public static final double UNITS_PER_TICK = 0.4;
-
 	/** Width of the track (amount of lanes). */
 	public static final int WIDTH = 3;
 	/** Length of the track. */
@@ -43,6 +40,10 @@ public class Track {
 	/** Number of obstacle types in the game. */
 	private static final int OBSTACLE_TYPES = 3;
 
+	/** Amount of units the track should move per tick, initially. */
+	static final double UNITS_PER_TICK_BASE = 0.4;
+	/** Acceleration of the units per tick, per tick. */
+	static final double UNITS_PER_TICK_ACCEL = 0.0001;
 	/** Current distance moved by the track, reset every run. */
 	private static double distance;
 
@@ -168,6 +169,17 @@ public class Track {
 	}
 
 	/**
+	 * Get the number of Units that pass by per tick at this moment.
+	 * @return double Units per Tick
+	 */
+	public static final double getUnitsPerTick() {
+		final double div = Math.pow(UNITS_PER_TICK_ACCEL, -1) / 2
+				* UNITS_PER_TICK_BASE * UNITS_PER_TICK_BASE;
+		return UNITS_PER_TICK_BASE
+				* Math.sqrt(State.getDistance() / div + 1);
+	}
+
+	/**
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
@@ -176,7 +188,7 @@ public class Track {
 			double coin = random.nextDouble();
 			double obstacle = random.nextDouble();
 			if (coinrunleft > 0) {
-				coinrunleft -= UNITS_PER_TICK / COIN_DISTANCE;
+				coinrunleft -= getUnitsPerTick() / COIN_DISTANCE;
 			} else {
 				if (coin < COIN_ZIGZAG_CHANCE) {
 					createZigZag();
@@ -190,9 +202,9 @@ public class Track {
 		}
 		getPlayer().step();
 
-		distance += UNITS_PER_TICK;
-		State.addScore(UNITS_PER_TICK);
-		moveTrack(UNITS_PER_TICK);
+		distance += getUnitsPerTick();
+		State.addScore(getUnitsPerTick());
+		moveTrack(getUnitsPerTick());
 	}
 
 	/**
@@ -264,4 +276,5 @@ public class Track {
 	public final void setRandom(final Random randomGenerator) {
 		random = randomGenerator;
 	}
+
 }

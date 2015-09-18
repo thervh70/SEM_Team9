@@ -1,11 +1,15 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import nl.tudelft.ti2206.group9.util.GameObservable;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
@@ -21,6 +25,8 @@ public final class SettingsScreen {
 
 	/** Hide public constructor. */
 	private SettingsScreen() { }
+    /** Boolean for sound status. */
+    private static boolean sound = true;
 
     /**
      * Creating and displaying the scene.
@@ -29,26 +35,50 @@ public final class SettingsScreen {
      */
     public static void start(final Stage primaryStage) {
 
-
-        //Creating a gridPane for the layout.
+        /**Creating a gridPane for the layout. */
         GridPane grid = new GridPane();
         grid.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
         grid.setVgap(20);
         grid.setHgap(20);
 
-        //Creating a back button.
+        /** Setting the background image */
+        Style.setBackground("sc2.jpg", grid);
+
+        /**Creating a back button. */
         Button backButton;
         backButton = new Button("Back");
-        GridPane.setConstraints(backButton, 3, 20);
+        Style.setButtonStyle(backButton);
+        GridPane.setConstraints(backButton, 2, 26);
 
-        Label label = new Label("Hier komen settings lijstjes ofzo?");
-        GridPane.setConstraints(label, 10, 10);
+        /** Creating the sound toggle. */
+        final Button soundButton;
+        soundButton = new Button("Sound: ON");
+        Style.setButtonStyle(soundButton);
+        soundButton.setFont(Font.font("Roboto", FontWeight.BOLD, 20));
+        GridPane.setConstraints(soundButton, 5, 18);
 
-        grid.getChildren().addAll(backButton, label);
+        /** Adding buttons to grid. */
+        grid.getChildren().addAll(backButton, soundButton);
 
+        /** Assigning a function to the buttons. */
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
+                GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
                 StartScreen.start(primaryStage);
+            }
+        });
+
+        soundButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(final ActionEvent event) {
+                sound = !sound;
+                String s;
+                if (sound) {
+                    s = "ON";
+                } else {
+                    s = "OFF";
+                }
+                soundButton.setText("Sound: " + s);
+                GameObservable.notify(Category.MENU, Menu.SETTING_SOUND, s);
             }
         });
 
@@ -56,5 +86,13 @@ public final class SettingsScreen {
 
         primaryStage.setScene(settings);
         primaryStage.show();
+    }
+
+    /**
+     * Return whether sound is enabled.
+     * @return whether sound is enabled.
+     */
+    public static boolean isSoundEnabled() {
+    	return sound;
     }
 }
