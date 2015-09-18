@@ -36,6 +36,10 @@ public class GameObservableTest implements GameObserver {
 		verify(go1).gameUpdate(Category.GAME, Game.STARTED, new Integer[]{0});
 		verify(go2, never()).gameUpdate(Category.GAME, Game.STARTED,
 				new Integer[]{0});
+		
+		// Clean up test
+		GameObservable.deleteObserver(go1);
+		GameObservable.deleteObserver(this);
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Specific;
  * @author Maarten
  */
 public final class GameObservable {
-	
+
 	/** Hiding public constructor. */
 	private GameObservable() { }
 

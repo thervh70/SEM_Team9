@@ -1,6 +1,8 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static nl.tudelft.ti2206.group9.gui.SettingsScreen.isSoundEnabled;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -50,12 +52,17 @@ public class EndToEndTest extends ApplicationTest {
 
 	@Test
 	public void test() throws IOException {
-		sleep(LONG);
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
+
+		mainMenu(1);				// Click settings
+		settings(1);				// Toggle sound
+		assertFalse(isSoundEnabled());
+		settings(1);				// Toggle sound
+		assertTrue(isSoundEnabled());
+		settings(0);				// Click Back
 		
 		mainMenu(0);				// Click start
-		
 		keyboard(KeyCode.ESCAPE);	// Press Escape
 		pausePopup(0);				// Click resume
 		moveAround();				// Move around
@@ -63,14 +70,16 @@ public class EndToEndTest extends ApplicationTest {
 		pausePopup(1);				// Click "Main menu"
 		
 		mainMenu(0);				// Click start
-		
 		playerDies();				// Player dies
 		deathPopup(0);				// Click "Try Again"
 		playerDies();				// Player dies
 		deathPopup(1);				// Click "Main Menu"
 		
 		mainMenu(2);				// Click quit
-		
+		outputEventLog();
+	}
+
+	private void outputEventLog() throws IOException {
 		String log = new String(Files.readAllBytes(Paths.get(Logger.OUTFILE)),
 				StandardCharsets.UTF_8);
 		System.out.println("\n== EVENT_LOG ==");
@@ -127,6 +136,14 @@ public class EndToEndTest extends ApplicationTest {
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
 		mockGenerator();			// Make sure there are no obstacles
 		sleep(LONG);
+	}
+	
+	private void settings(int buttonNo) {
+		ObservableList<Node> buttons;
+		buttons = rootNode(stage).getScene().getRoot()
+				.getChildrenUnmodifiable();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(SHORT);
 	}
 	
 	private void pausePopup(int buttonNo) {
