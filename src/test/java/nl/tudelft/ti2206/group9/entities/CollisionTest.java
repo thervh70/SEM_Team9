@@ -20,6 +20,7 @@ public class CollisionTest {
 		player = new Player();
 		coin = new Coin(Point3D.ZERO);
 		obstacle = new Obstacle(Point3D.ZERO, Point3D.UNITCUBE);
+		State.resetAll();
 	}
 
 	@Test
