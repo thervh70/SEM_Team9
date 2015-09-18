@@ -1,13 +1,13 @@
 package nl.tudelft.ti2206.group9.entities;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.StateTest;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class CollisionTest {
 
@@ -19,12 +19,8 @@ public class CollisionTest {
 	public void setUp() throws Exception {
 		player = new Player();
 		coin = new Coin(Point3D.ZERO);
-<<<<<<< HEAD
 		obstacle = new Log(Point3D.ZERO, Point3D.UNITCUBE);
-=======
-		obstacle = new Obstacle(Point3D.ZERO, Point3D.UNITCUBE);
 		State.resetAll();
->>>>>>> master
 	}
 
 	@Test
