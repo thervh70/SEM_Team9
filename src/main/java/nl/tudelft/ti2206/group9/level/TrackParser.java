@@ -27,12 +27,12 @@ public class TrackParser {
     /**
      * Parse all txt-files into TrackParts.
      * @return List of TrackParts
-     *
      */
     public final List<TrackPart> parseTrack() {
         List<TrackPart> partList = new ArrayList<TrackPart>();
 
-        File folder = new File("src/main/resources/nl/tudelft/ti2206/group9/level");
+        File folder =
+        		new File("src/main/resources/nl/tudelft/ti2206/group9/level");
         for (File file : folder.listFiles()) {
             try {
                 TrackPart part = parseTrackPart(file.getPath());
@@ -51,7 +51,8 @@ public class TrackParser {
      * @return TrackPart the created TrackPart
      * @throws IOException IOException
      */
-    public final TrackPart parseTrackPart(final String infile) throws IOException {
+    public final TrackPart parseTrackPart(final String infile)
+    		throws IOException {
         URL path = new File(infile).toURI().toURL();
         InputStream stream = path.openStream();
         return parseTrackPart(stream);
@@ -63,8 +64,10 @@ public class TrackParser {
      * @return TrackPart the created TrackPart
      * @throws IOException IOException
      */
-    protected final TrackPart parseTrackPart(final InputStream stream) throws IOException {
-        BufferedReader reader = new BufferedReader((new InputStreamReader(stream, "UTF-8")));
+    protected final TrackPart parseTrackPart(final InputStream stream)
+    		throws IOException {
+        BufferedReader reader = new BufferedReader(
+        		new InputStreamReader(stream, "UTF-8"));
         List<String> lines = new ArrayList<String>();
         while (reader.ready()) {
             lines.add(reader.readLine());
@@ -116,10 +119,15 @@ public class TrackParser {
                 char c = map[i][j];
                 AbstractEntity entity;
                 switch (c) {
-                    case 'c' : entity = new Coin(new Point3D(i - 1, 1, j)); break;
-                    case 'l' : entity = new Log(new Point3D(i - 1, 1, j)); break;
-                    case 'p' : entity = new Pillar(new Point3D(i - 1, 1, j)); break;
-                    case 'f' : entity = new Fence(new Point3D(i - 1, FENCE_CENTER_HEIGHT, j)); break;
+                    case 'c':
+                    	entity = new Coin(new Point3D(i - 1, 1, j)); break;
+                    case 'l':
+                    	entity = new Log(new Point3D(i - 1, 1, j)); break;
+                    case 'p':
+                    	entity = new Pillar(new Point3D(i - 1, 1, j)); break;
+                    case 'f':
+                    	entity = new Fence(new Point3D(i - 1, 
+                    			FENCE_CENTER_HEIGHT, j)); break;
                     default : continue;
                 }
                 part.addEntity(entity);

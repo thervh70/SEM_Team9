@@ -14,7 +14,9 @@ public class Log extends Obstacle {
      * Easy to use constructor for standard Log.
      * @param center center of Log
      */
-    public Log(final Point3D center) { super(center, SIZE); }
+    public Log(final Point3D center) {
+        super(center, SIZE);
+    }
 
     /**
      * Default constructor.

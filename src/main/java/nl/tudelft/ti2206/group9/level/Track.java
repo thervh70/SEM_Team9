@@ -203,7 +203,7 @@ public class Track {
 	 * Set the Random generator.
 	 * @param randomGenerator Random object to set.
 	 */
-	public final void setRandom(final  Random randomGenerator) {
+	public final void setRandom(final Random randomGenerator) {
 		random = randomGenerator;
 	}
 

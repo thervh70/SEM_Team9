@@ -23,6 +23,7 @@ public class TrackPart {
     public final List<AbstractEntity> getEntities() {
         return entities;
     }
+    
     /**
      * Adds an entity to the entities list.
      * @param entity entity to be added
