@@ -47,6 +47,8 @@ public class Player extends AbstractEntity {
 	private boolean sliding;
 	/** Rate at which the Player's size in-/decreases. */
 	private double slideSpeed;
+	/** Whether the player is invincible. */
+	private boolean invincible;
 
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -78,6 +80,16 @@ public class Player extends AbstractEntity {
 		return alive;
 	}
 
+	/** @return the invincible */
+	public boolean isInvincible() {
+		return invincible;
+	}
+
+	/** @param invincible the invincible to set */
+	public void setInvincible(boolean set) {
+		invincible = set;
+	}
+
 	/**
 	 * When colliding with a coin, Coin.VALUE is added to score,
 	 * and amount of coins is increased by one.
@@ -96,7 +108,9 @@ public class Player extends AbstractEntity {
 			GameObservable.notify(
 					Category.PLAYER, GameObserver.Player.COLLISION,
 					Obstacle.class.getSimpleName());
-			die();
+			if (!isInvincible()) {
+				die();
+			}
 		}
 	}
 
