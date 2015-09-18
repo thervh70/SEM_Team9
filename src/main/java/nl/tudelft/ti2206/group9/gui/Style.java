@@ -24,7 +24,11 @@ import javafx.scene.text.FontWeight;
  *
  * Class containing the styling for the GUI.
  */
-public class Style {
+@SuppressWarnings("restriction")
+public final class Style {
+	    
+    /** Hide public constructor. */
+    private Style() { }
 
     public static final PhongMaterial BRICK = new PhongMaterial();
     public static final PhongMaterial MOSS = new PhongMaterial();
