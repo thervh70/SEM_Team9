@@ -26,7 +26,7 @@ public class TrackParser {
         for (File file : folder.listFiles()) {
             try {
                 System.out.println(file.getPath());
-                TrackPart part = parseTrackPart("src/main/resources/nl/tudelft/ti2206/group9/level/tp1_coinlaneleft.txt");
+                TrackPart part = parseTrackPart(file.getPath());
                 partList.add(part);
             } catch (IOException e) {
                 e.printStackTrace();
