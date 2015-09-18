@@ -22,7 +22,7 @@ public abstract class Obstacle extends AbstractEntity {
 	 * Collisions handled in {@link Player}. This collision does nothing.
 	 * @param collidee Entity that this Coin collides with.
 	 * @see nl.tudelft.ti2206.group9.entities.AbstractEntity#collision
-	 * (nl.tudelft.ti2206.group9.entities.AbstractEntity)
+	 * (nl.tudelft.ti2206.nl.tudelft.ti2206.group9.entities.AbstractEntity)
 	 */
 	@Override
 	public void collision(final AbstractEntity collidee) { }

@@ -53,8 +53,13 @@ public class Track {
 
 	/** Random number generator for generating stuff on the track. */
 	private Random random;
+	/** List of all TrackParts the Track can consist of. */
+	private List<TrackPart> trackParts;
 	/** Amount of coins that still have to spawn. */
 	private double coinrunleft = 0;
+
+	/** Length of the track that is already created. */
+	private double trackLeft = 0;
 
 	/** Default constructor, new Random() is created as generator. */
 	public Track() {
@@ -67,6 +72,7 @@ public class Track {
 	 */
 	public Track(final Random generator) {
 		entities = new LinkedList<AbstractEntity>();
+		trackParts = new TrackParser().parseTrack();
 		entities.add(new Player());
 		player = 0;
 		random = generator;
@@ -173,7 +179,7 @@ public class Track {
 	 */
 	public final synchronized void step() {
 		synchronized (this) {
-			double coin = random.nextDouble();
+			/*double coin = random.nextDouble();
 			double obstacle = random.nextDouble();
 			if (coinrunleft > 0) {
 				coinrunleft -= UNITS_PER_TICK / COIN_DISTANCE;
@@ -186,6 +192,14 @@ public class Track {
 			}
 			if (obstacle < OBSTACLE_CHANCE) {
 				createSingleObstacle();
+			}*/
+
+
+			if (trackLeft > 0) {
+				trackLeft -= UNITS_PER_TICK / COIN_DISTANCE;
+			} else {
+				TrackPart part = trackParts.get(random.nextInt(trackParts.size()));
+				addTrackPartToTrack(part);
 			}
 		}
 		getPlayer().step();
@@ -193,6 +207,20 @@ public class Track {
 		distance += UNITS_PER_TICK;
 		State.addScore(UNITS_PER_TICK);
 		moveTrack(UNITS_PER_TICK);
+	}
+
+	/**
+	 * Adds al entities from the TrackPart to the Track.
+	 * @param part the TrackPart to be added
+	 */
+	private void addTrackPartToTrack(final TrackPart part) {
+		for (AbstractEntity entity : part.getEntities()) {
+			Point3D center = entity.getCenter();
+			center.setZ(center.getZ() + LENGTH);
+			entity.setCenter(center);
+			addEntity(entity);
+		}
+		trackLeft = part.getLength();
 	}
 
 	/**
@@ -242,7 +270,7 @@ public class Track {
 		switch (obstacleType) {
 			case 0 : obstacle = new Log(center, Point3D.UNITCUBE); break;
 			case 1 : obstacle = new Pillar(center, new Point3D(1, 3, 1)); break;
-			case 2 : obstacle = new Fence(new Point3D(lane - 1, 2, LENGTH), new Point3D(1, 2, 1)); break;
+			case 2 : obstacle = new Fence(new Point3D(lane - 1, Fence.HEIGHT, LENGTH), new Point3D(1, 2, 1)); break;
 			default : obstacle = new Log(center, Point3D.UNITCUBE); break;
 		}
 		addEntity(obstacle);
@@ -261,7 +289,7 @@ public class Track {
 	 * Set the Random generator.
 	 * @param randomGenerator Random object to set.
 	 */
-	public final void setRandom(final Random randomGenerator) {
+	public final void setRandom(final  Random randomGenerator) {
 		random = randomGenerator;
 	}
 }
