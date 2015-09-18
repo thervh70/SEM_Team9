@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.Fence;
+import nl.tudelft.ti2206.group9.entities.Log;
+import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.gui.GameScreen;
 import nl.tudelft.ti2206.group9.util.Point3D;
@@ -173,10 +177,19 @@ public class Track {
 	 */
 	private void addTrackPartToTrack(final TrackPart part) {
 		for (AbstractEntity entity : part.getEntities()) {
-			Point3D center = entity.getCenter();
-			center.setZ(center.getZ() + LENGTH);
-			entity.setCenter(center);
-			addEntity(entity);
+			Point3D center = new Point3D(entity.getCenter());
+			center.addZ(LENGTH);
+			AbstractEntity add = null;
+			if (entity instanceof Coin) {
+				add = new Coin(center);
+			} else if (entity instanceof Fence) {
+				add = new Fence(center);
+			} else if (entity instanceof Log) {
+				add = new Log(center);
+			} else if (entity instanceof Pillar) {
+				add = new Pillar(center);
+			}
+			addEntity(add);
 		}
 		trackLeft = part.getLength();
 	}
