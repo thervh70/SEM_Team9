@@ -26,7 +26,7 @@ import nl.tudelft.ti2206.group9.util.Logger;
 @SuppressWarnings("restriction")
 public final class SplashScreen extends Application {
     /** Duration of transition in ms. */
-    private final int transitionDuration = 750;
+    private static final int transitionDuration = 750;
 
     /**
      * Creating and  displaying the scene.

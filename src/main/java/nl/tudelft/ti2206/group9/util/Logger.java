@@ -15,7 +15,7 @@ import java.util.Map;
 public class Logger implements GameObserver {
 
 	/** Map containing all Strings to output to log file. */
-	public static final Map<Specific, String> STRINGS =
+	protected static final Map<Specific, String> STRINGS =
 			new HashMap<Specific, String>();
 	/** Location of the log file. */
 	public static final String OUTFILE = "./events.log";
