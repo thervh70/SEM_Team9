@@ -4,7 +4,11 @@ import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +57,7 @@ public class TrackParser {
      * @return TrackPart the created TrackPart
      * @throws IOException IOException
      */
-    protected TrackPart parseTrackPart(final InputStream stream) throws IOException {
+    protected final TrackPart parseTrackPart(final InputStream stream) throws IOException {
         BufferedReader reader = new BufferedReader((new InputStreamReader(stream, "UTF-8")));
         List<String> lines = new ArrayList<String>();
         while (reader.ready()) {
@@ -68,7 +72,7 @@ public class TrackParser {
      * @param text the List of Strings to be used
      * @return TrakPart the created TrackPart
      */
-    protected TrackPart parseTrackPart(final List<String> text) {
+    protected final TrackPart parseTrackPart(final List<String> text) {
         checkFormat(text);
 
         int height = text.size();
@@ -88,7 +92,7 @@ public class TrackParser {
      * If th format is not right, it throws an exception
      * @param text the text to be checked
      */
-    protected void checkFormat(final List<String> text) {
+    protected final void checkFormat(final List<String> text) {
         if (text == null || text.isEmpty()) {
             throw new NullPointerException("text is null");
         }
@@ -99,7 +103,7 @@ public class TrackParser {
      * @param map the nested array of characters to be used
      * @return TrackPart the created TrackPart
      */
-    protected TrackPart parseTrackPart(final char[][] map) {
+    protected final TrackPart parseTrackPart(final char[][] map) {
         TrackPart part = new TrackPart();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {

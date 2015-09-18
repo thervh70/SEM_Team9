@@ -1,34 +1,81 @@
-2015-09-18T12:47:19.580 [INPUT ] Pressed Mouse button PRIMARY.
-2015-09-18T12:47:19.597 [ MENU ] Any key pressed.
-2015-09-18T12:47:20.091 [ MENU ] Clicked "Start game".
-2015-09-18T12:47:20.115 [ GAME ] Game has been started.
-2015-09-18T12:47:20.280 [ GAME ] Game has been stopped.
-2015-09-18T12:47:20.846 [ GAME ] Game has been resumed.
-2015-09-18T12:47:20.982 [INPUT ] Pressed keyboard key LEFT.
-2015-09-18T12:47:20.983 [PLAYER] Started moving from lane 0.
-2015-09-18T12:47:21.238 [INPUT ] Pressed keyboard key RIGHT.
-2015-09-18T12:47:21.239 [PLAYER] Started moving from lane -1.
-2015-09-18T12:47:21.595 [PLAYER] Stopped moving in lane 0.
-2015-09-18T12:47:22.668 [INPUT ] Pressed keyboard key D.
-2015-09-18T12:47:22.668 [PLAYER] Started moving from lane 0.
-2015-09-18T12:47:22.889 [INPUT ] Pressed keyboard key A.
-2015-09-18T12:47:22.890 [PLAYER] Started moving from lane 1.
-2015-09-18T12:47:23.254 [PLAYER] Stopped moving in lane 0.
-2015-09-18T12:47:24.313 [INPUT ] Pressed keyboard key UP.
-2015-09-18T12:47:24.314 [PLAYER] Jumping.
-2015-09-18T12:47:25.805 [INPUT ] Pressed keyboard key DOWN.
-2015-09-18T12:47:25.806 [PLAYER] Sliding.
-2015-09-18T12:47:27.270 [ GAME ] Game has been stopped.
-2015-09-18T12:47:27.651 [ GAME ] Game exited to main menu.
-2015-09-18T12:47:28.232 [ MENU ] Clicked "Start game".
-2015-09-18T12:47:28.243 [ GAME ] Game has been started.
-2015-09-18T12:47:28.359 [ GAME ] Game has been stopped.
-2015-09-18T12:47:28.764 [ GAME ] Game will retry a new run.
-2015-09-18T12:47:28.770 [ GAME ] Game has been started.
-2015-09-18T12:47:28.854 [ GAME ] Game has been stopped.
-2015-09-18T12:47:29.208 [ GAME ] Game exited to main menu.
-2015-09-18T12:47:29.771 [ MENU ] Clicked "Exit".
-2015-09-18T12:47:30.025 [ GAME ] Game has been started.
-2015-09-18T12:47:30.033 [INPUT ] Pressed keyboard key UP.
-2015-09-18T12:47:30.041 [INPUT ] Pressed keyboard key UP.
-2015-09-18T12:47:30.049 [INPUT ] Pressed keyboard key UP.
+2015-09-18T19:54:32.825 [INPUT ] Pressed keyboard key SPACE.
+2015-09-18T19:54:32.850 [ MENU ] Any key pressed.
+2015-09-18T19:54:35.511 [ MENU ] Clicked "Start game".
+2015-09-18T19:54:35.551 [ GAME ] Game has been started.
+2015-09-18T19:54:36.373 [INPUT ] Pressed keyboard key UP.
+2015-09-18T19:54:36.376 [PLAYER] Jumping.
+2015-09-18T19:54:36.841 [INPUT ] Pressed keyboard key LEFT.
+2015-09-18T19:54:36.843 [PLAYER] Started moving from lane 0.
+2015-09-18T19:54:37.158 [INPUT ] Pressed keyboard key RIGHT.
+2015-09-18T19:54:37.159 [PLAYER] Started moving from lane -1.
+2015-09-18T19:54:37.507 [INPUT ] Pressed keyboard key DOWN.
+2015-09-18T19:54:37.508 [PLAYER] Sliding.
+2015-09-18T19:54:37.525 [PLAYER] Stopped moving in lane 0.
+2015-09-18T19:54:38.024 [INPUT ] Pressed keyboard key UP.
+2015-09-18T19:54:38.357 [INPUT ] Pressed keyboard key RIGHT.
+2015-09-18T19:54:38.358 [PLAYER] Started moving from lane 0.
+2015-09-18T19:54:38.441 [INPUT ] Pressed keyboard key UP.
+2015-09-18T19:54:38.442 [PLAYER] Jumping.
+2015-09-18T19:54:38.540 [INPUT ] Pressed keyboard key RIGHT.
+2015-09-18T19:54:38.724 [PLAYER] Stopped moving in lane 1.
+2015-09-18T19:54:38.841 [INPUT ] Pressed keyboard key LEFT.
+2015-09-18T19:54:38.843 [PLAYER] Started moving from lane 1.
+2015-09-18T19:54:39.108 [INPUT ] Pressed keyboard key LEFT.
+2015-09-18T19:54:39.110 [PLAYER] Started moving from lane 0.
+2015-09-18T19:54:39.507 [PLAYER] Stopped moving in lane -1.
+2015-09-18T19:54:40.360 [PLAYER] Collided with Coin.
+2015-09-18T19:54:40.775 [PLAYER] Collided with Coin.
+2015-09-18T19:54:41.207 [PLAYER] Collided with Coin.
+2015-09-18T19:54:41.658 [PLAYER] Collided with Coin.
+2015-09-18T19:54:42.075 [PLAYER] Collided with Coin.
+2015-09-18T19:54:42.507 [PLAYER] Collided with Coin.
+2015-09-18T19:54:42.941 [PLAYER] Collided with Coin.
+2015-09-18T19:54:43.425 [PLAYER] Collided with Coin.
+2015-09-18T19:54:43.858 [PLAYER] Collided with Coin.
+2015-09-18T19:54:44.291 [INPUT ] Pressed keyboard key RIGHT.
+2015-09-18T19:54:44.293 [PLAYER] Started moving from lane -1.
+2015-09-18T19:54:44.308 [PLAYER] Collided with Coin.
+2015-09-18T19:54:44.441 [INPUT ] Pressed keyboard key RIGHT.
+2015-09-18T19:54:44.442 [PLAYER] Started moving from lane 0.
+2015-09-18T19:54:44.807 [PLAYER] Stopped moving in lane 1.
+2015-09-18T19:54:46.809 [PLAYER] Collided with Coin.
+2015-09-18T19:54:46.826 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.041 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.044 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.241 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.258 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.475 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.476 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.675 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.691 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.909 [PLAYER] Collided with Coin.
+2015-09-18T19:54:47.911 [PLAYER] Collided with Coin.
+2015-09-18T19:54:48.109 [PLAYER] Collided with Coin.
+2015-09-18T19:54:48.141 [PLAYER] Collided with Coin.
+2015-09-18T19:54:48.358 [PLAYER] Collided with Coin.
+2015-09-18T19:54:48.360 [PLAYER] Collided with Coin.
+2015-09-18T19:54:48.558 [PLAYER] Collided with Coin.
+2015-09-18T19:54:48.591 [PLAYER] Collided with Coin.
+2015-09-18T19:54:48.808 [PLAYER] Collided with Coin.
+2015-09-18T19:54:48.810 [PLAYER] Collided with Coin.
+2015-09-18T19:54:49.075 [INPUT ] Pressed keyboard key LEFT.
+2015-09-18T19:54:49.076 [PLAYER] Started moving from lane 1.
+2015-09-18T19:54:49.458 [PLAYER] Stopped moving in lane 0.
+2015-09-18T19:54:51.524 [INPUT ] Pressed keyboard key RIGHT.
+2015-09-18T19:54:51.525 [PLAYER] Started moving from lane 0.
+2015-09-18T19:54:51.908 [PLAYER] Stopped moving in lane 1.
+2015-09-18T19:54:53.241 [PLAYER] Collided with Coin.
+2015-09-18T19:54:53.243 [PLAYER] Collided with Coin.
+2015-09-18T19:54:53.245 [PLAYER] Collided with Coin.
+2015-09-18T19:54:53.246 [PLAYER] Collided with Coin.
+2015-09-18T19:54:53.247 [PLAYER] Collided with Coin.
+2015-09-18T19:54:53.249 [PLAYER] Collided with Coin.
+2015-09-18T19:54:53.250 [PLAYER] Collided with Coin.
+2015-09-18T19:54:53.252 [PLAYER] Collided with Coin.
+2015-09-18T19:54:53.253 [PLAYER] Collided with Coin.
+2015-09-18T19:54:53.254 [PLAYER] Collided with Coin.
+2015-09-18T19:54:54.156 [INPUT ] Pressed keyboard key LEFT.
+2015-09-18T19:54:54.157 [PLAYER] Started moving from lane 1.
+2015-09-18T19:54:54.308 [INPUT ] Pressed keyboard key LEFT.
+2015-09-18T19:54:54.309 [PLAYER] Started moving from lane 0.
+2015-09-18T19:54:54.673 [PLAYER] Stopped moving in lane -1.

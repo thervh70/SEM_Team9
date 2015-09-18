@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import nl.tudelft.ti2206.group9.entities.*;
+import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.gui.GameScreen;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -149,11 +150,12 @@ public class Track {
 		synchronized (this) {
 			if (trackLeft > 0) {
 				trackLeft -= UNITS_PER_TICK;
+
+				// !! After merging #32, use this !!
+				// trackLeft -= getUnitsPerTick();
+
 			} else {
 				int rand = random.nextInt(trackParts.size());
-				System.out.println(rand);
-				for (AbstractEntity entity : trackParts.get(rand).getEntities())
-					System.out.println(entity);
 				TrackPart part = trackParts.get(rand);
 				addTrackPartToTrack(part);
 			}
