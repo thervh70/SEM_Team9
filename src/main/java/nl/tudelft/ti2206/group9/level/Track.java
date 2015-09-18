@@ -1,16 +1,16 @@
 package nl.tudelft.ti2206.group9.level;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.gui.GameScreen;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -266,7 +266,7 @@ public class Track {
 	 * Set the Random generator.
 	 * @param randomGenerator Random object to set.
 	 */
-	public void setRandom(Random randomGenerator) {
+	public void setRandom(final Random randomGenerator) {
 		random = randomGenerator;
 	}
 

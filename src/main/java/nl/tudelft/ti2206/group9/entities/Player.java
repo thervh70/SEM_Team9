@@ -94,7 +94,7 @@ public class Player extends AbstractEntity {
 
 		if (collidee instanceof Obstacle) {
 			GameObservable.notify(
-					Category.PLAYER, GameObserver.Player.COLLISION, 
+					Category.PLAYER, GameObserver.Player.COLLISION,
 					Obstacle.class.getSimpleName());
 			die();
 		}
@@ -108,7 +108,7 @@ public class Player extends AbstractEntity {
 	private void changeLane(final double dir) {
 		if (moveLane + dir >= -Track.WIDTH / 2
 				&& moveLane + dir <= Track.WIDTH / 2) {
-			GameObservable.notify(Category.PLAYER, 
+			GameObservable.notify(Category.PLAYER,
 					GameObserver.Player.START_MOVE, (int) moveLane);
 			moveLane += dir;
 		}
@@ -124,7 +124,7 @@ public class Player extends AbstractEntity {
 		if (Math.abs(dist) < delta && hspeed != 0) {
 			getCenter().setX(moveLane);
 			hspeed = 0;
-			GameObservable.notify(Category.PLAYER, 
+			GameObservable.notify(Category.PLAYER,
 					GameObserver.Player.STOP_MOVE, (int) moveLane);
 		} else {
 			if (Math.abs(hspeed) < Math.abs(dist) / slow) {

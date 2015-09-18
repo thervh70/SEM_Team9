@@ -14,7 +14,6 @@ import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.level.Track;
 
 /**
  * @author Maarten.
@@ -42,7 +41,7 @@ public class ExternalTicker extends AnimationTimer {
 	private void renderScene() {
 		GameScreen.clearWorld();
 		GameScreen.clearOverlay();
-		
+
 		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
 			final Box track = new Box(3, 0.1, 500);
 			track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
@@ -51,7 +50,7 @@ public class ExternalTicker extends AnimationTimer {
 			final Group entities = renderEntities();
 			GameScreen.addWorld(entities);
 		}
-		
+
 		GameScreen.addOverlay(renderScore());
 	}
 
