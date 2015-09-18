@@ -42,9 +42,9 @@ public class Track {
 	private static final int ADD_TO_COINS = 10;
 
 	/** Amount of units the track should move per tick, initially. */
-	private static final double UNITS_PER_TICK_BASE = 0.4;
+	static final double UNITS_PER_TICK_BASE = 0.4;
 	/** Acceleration of the units per tick, per tick. */
-	private static final double UNITS_PER_TICK_ACCEL = 0.0001;
+	static final double UNITS_PER_TICK_ACCEL = 0.0001;
 	/** Current distance moved by the track, reset every run. */
 	private static double distance;
 
