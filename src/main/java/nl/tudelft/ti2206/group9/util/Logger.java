@@ -41,13 +41,15 @@ public class Logger implements GameObserver {
 
 		lbl = " [INPUT ] ";
 		STRINGS.put(Input.KEYBOARD, 	lbl + "Pressed keyboard key %s.");
-		STRINGS.put(Input.MOUSE, 		lbl + "Pressed Mouse button %s.");
+		STRINGS.put(Input.MOUSE, 		lbl + "Pressed mouse button %s.");
 
 		lbl = " [ MENU ] ";
 		STRINGS.put(Menu.ANY_KEY, 		lbl + "Any key pressed.");
-		STRINGS.put(Menu.EXIT, 			lbl + "Clicked \"Exit\".");
-		STRINGS.put(Menu.SETTINGS, 		lbl + "Clicked \"Settings\".");
-		STRINGS.put(Menu.START, 		lbl + "Clicked \"Start game\".");
+		STRINGS.put(Menu.EXIT, 			lbl + "Pressed \"Exit\".");
+		STRINGS.put(Menu.SETTINGS, 		lbl + "Pressed \"Settings\".");
+		STRINGS.put(Menu.SETTING_SOUND,	lbl + "  Toggled sound, is now %s.");
+		STRINGS.put(Menu.SETTINGS_BACK, lbl + "  Back to Main Menu.");
+		STRINGS.put(Menu.START, 		lbl + "Pressed \"Start game\".");
 
 		lbl = " [PLAYER] ";
 		STRINGS.put(Player.COLLISION, 	lbl + "Collided with %s.");

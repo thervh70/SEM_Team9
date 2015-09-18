@@ -54,6 +54,10 @@ public interface GameObserver {
 		START,
 		/** Settings button has been pressed. */
 		SETTINGS,
+		/** Setting "sound" has been toggled. optionalArg: isSoundEnabled. */
+		SETTING_SOUND,
+		/** Back from settings screen to main menu. */
+		SETTINGS_BACK,
 		/** Exit button has been pressed. */
 		EXIT,
 	}
