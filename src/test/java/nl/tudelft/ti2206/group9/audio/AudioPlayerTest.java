@@ -39,7 +39,8 @@ public class AudioPlayerTest {
 
 	@Test
 	public void testSetPath() {
-		String testDifferentPath = "test123";
+		String testDifferentPath = "src/main/resources"
+				+ "/nl.tudelft.ti2206.group9.audio/test.aiff";
 		test.setPath(testDifferentPath);
 		assertTrue(testDifferentPath.equals(test.getPath()));
 	}
