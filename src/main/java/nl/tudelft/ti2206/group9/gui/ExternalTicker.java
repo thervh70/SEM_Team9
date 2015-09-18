@@ -12,6 +12,8 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.Log;
+import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
@@ -97,8 +99,12 @@ public class ExternalTicker extends AnimationTimer {
 					entityBox.setMaterial(new PhongMaterial(Color.ORANGE));
 				} else if (entity instanceof Coin) {
 					entityBox.setMaterial(new PhongMaterial(Color.GOLD));
+				} else if (entity instanceof Log){
+					entityBox.setMaterial(new PhongMaterial(Color.BROWN));
+				} else if (entity instanceof Pillar) {
+					entityBox.setMaterial(new PhongMaterial(Color.WHITE));
 				} else {
-					entityBox.setMaterial(new PhongMaterial(Color.GREEN));
+					entityBox.setMaterial(new PhongMaterial(Color.GRAY));
 				}
 
 				entities.getChildren().add(entityBox);
