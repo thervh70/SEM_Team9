@@ -1,21 +1,32 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.text.Text;
-import nl.tudelft.ti2206.group9.entities.*;
+import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.Log;
+import nl.tudelft.ti2206.group9.entities.Pillar;
+import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
  * @author Maarten.
  */
 @SuppressWarnings("restriction")
 public class ExternalTicker extends AnimationTimer {
+
+	/** Height of the box in-game where the score is displayed. */
+	private static final int SCORE_BOX_HEIGHT = 90;
+	/** Width of the box in-game where the score is displayed. */
+	private static final int SCORE_BOX_WIDTH = 130;
 
 	@Override
 	public final void handle(final long now) {
@@ -30,19 +41,31 @@ public class ExternalTicker extends AnimationTimer {
 	private void renderScene() {
 		GameScreen.clearWorld();
 		GameScreen.clearOverlay();
+		
+		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
+			final Box track = new Box(3, 0.1, 500);
+			track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
+			GameScreen.addWorld(track);
 
-		final Box track = new Box(3, 0.1, 500);
-		track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
-		GameScreen.addWorld(track);
+			final Group entities = renderEntities();
+			GameScreen.addWorld(entities);
+		}
 
-		final Group entities = renderEntities();
-		GameScreen.addWorld(entities);
-
-		GameScreen.addOverlay(new Text(0, 16, "Score: " 
+		Label scoreLabel = new Label(("Score: "
 				+ State.modulo(State.getScore())));
-		GameScreen.addOverlay(new Text(0, 32, "Distance: " 
-				+ State.modulo(State.getDistance())));
-		GameScreen.addOverlay(new Text(0, 48, "Coins: " + State.getCoins()));
+		Label distanceLabel = new Label("Distance: "
+				+ State.modulo(State.getDistance()));
+		Label coinsLabel = new Label(("Coins: " + State.getCoins()));
+
+		Style.setLabelStyle(scoreLabel);
+		Style.setLabelStyle(distanceLabel);
+		Style.setLabelStyle(coinsLabel);
+
+		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
+		scoreBox.setStyle(" -fx-background-color:BLACK;");
+		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
+
+		GameScreen.addOverlay(scoreBox);
 	}
 
     /**

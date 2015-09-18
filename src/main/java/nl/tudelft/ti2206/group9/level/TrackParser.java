@@ -25,7 +25,6 @@ public class TrackParser {
         File folder = new File("src/main/resources/nl/tudelft/ti2206/group9/level");
         for (File file : folder.listFiles()) {
             try {
-                System.out.println(file.getPath());
                 TrackPart part = parseTrackPart(file.getPath());
                 partList.add(part);
             } catch (IOException e) {
@@ -108,7 +107,7 @@ public class TrackParser {
                 if (c == '.') {
                     continue;
                 } else if (c == 'c') {
-                    AbstractEntity entity = new Coin(new Point3D(i, 1, j));
+                    AbstractEntity entity = new Coin(new Point3D(i - 1, 1, j));
                     part.addEntity(entity);
                 }
             }

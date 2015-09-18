@@ -17,12 +17,6 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Track {
 
-	/** Chance per frame to spawn a lane of coins. */
-	public static final double COIN_LANE_CHANCE = 0.015;
-	/** Chance per frame to spawn zigzag of coins. */
-	public static final double COIN_ZIGZAG_CHANCE = 0.01;
-	/** Chance per frame to spawn an obstacle. */
-	public static final double OBSTACLE_CHANCE = 0.01;
 	/** The distance between the coins. */
 	public static final double COIN_DISTANCE = 10;
 
@@ -33,15 +27,6 @@ public class Track {
 	public static final int WIDTH = 3;
 	/** Length of the track. */
 	public static final double LENGTH = 100;
-
-	/** Minimum number of coins in a coin lane. */
-	private static final int MIN_COIN_LANE_LENGTH = 5;
-	/** Minimum number of coins in a coin zigzag. */
-	private static final int MIN_COIN_ZIG_ZAG_LENGTH = 7;
-	/** Maximum number of coins added to a zigzag or coinlane. */
-	private static final int ADD_TO_COINS = 10;
-	/** Number of obstacle types in the game. */
-	private static final int OBSTACLE_TYPES = 3;
 
 	/** Current distance moved by the track, reset every run. */
 	private static double distance;
@@ -55,8 +40,6 @@ public class Track {
 	private Random random;
 	/** List of all TrackParts the Track can consist of. */
 	private List<TrackPart> trackParts;
-	/** Amount of coins that still have to spawn. */
-	private double coinrunleft = 0;
 
 	/** Length of the track that is already created. */
 	private double trackLeft = 0;
@@ -138,21 +121,6 @@ public class Track {
 	}
 
 	/**
-	 * Checks whether there already exists an entity with the given center.
-	 * @param center center
-	 * @return boolean
-	 */
-	public final boolean containsCenter(final Point3D center) {
-		for (AbstractEntity entity : entities) {
-			if (entity.getCenter().getX() == center.getX()
-					&& entity.getCenter().getZ() == center.getZ()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * @param amount the amount to be added
 	 */
 	static final void addDistance(final double amount) {
@@ -179,26 +147,14 @@ public class Track {
 	 */
 	public final synchronized void step() {
 		synchronized (this) {
-			/*double coin = random.nextDouble();
-			double obstacle = random.nextDouble();
-			if (coinrunleft > 0) {
-				coinrunleft -= UNITS_PER_TICK / COIN_DISTANCE;
-			} else {
-				if (coin < COIN_ZIGZAG_CHANCE) {
-					createZigZag();
-				} else if (coin < COIN_ZIGZAG_CHANCE + COIN_LANE_CHANCE) {
-					createCoinLane();
-				}
-			}
-			if (obstacle < OBSTACLE_CHANCE) {
-				createSingleObstacle();
-			}*/
-
-
 			if (trackLeft > 0) {
-				trackLeft -= UNITS_PER_TICK / COIN_DISTANCE;
+				trackLeft -= UNITS_PER_TICK;
 			} else {
-				TrackPart part = trackParts.get(random.nextInt(trackParts.size()));
+				int rand = random.nextInt(trackParts.size());
+				System.out.println(rand);
+				for (AbstractEntity entity : trackParts.get(rand).getEntities())
+					System.out.println(entity);
+				TrackPart part = trackParts.get(rand);
 				addTrackPartToTrack(part);
 			}
 		}
@@ -221,68 +177,6 @@ public class Track {
 			addEntity(entity);
 		}
 		trackLeft = part.getLength();
-	}
-
-	/**
-	 * Creates a row of coins.
-	 */
-	private void createCoinLane() {
-		int lane = random.nextInt(WIDTH) - 1;
-		int length = MIN_COIN_LANE_LENGTH + random.nextInt(ADD_TO_COINS);
-		for (int i = 0; i < length; i++) {
-			addEntity(new Coin(new Point3D(lane, 1,
-					LENGTH + COIN_DISTANCE * i)));
-		}
-		coinrunleft = length;
-	}
-
-	/**
-	 * Creates a zig-zag of coins.
-	 */
-	private void createZigZag() {
-		int x;
-		int lane = random.nextInt(WIDTH + 1);
-		int length = MIN_COIN_ZIG_ZAG_LENGTH + random.nextInt(ADD_TO_COINS);
-		for (int i = 0; i < length; i++) {
-			if (lane == WIDTH) {
-				x = 0;
-			} else {
-				x = lane - 1;
-			}
-			addEntity(new Coin(new Point3D(x, 1,
-					LENGTH + COIN_DISTANCE * i)));
-			lane = (lane + 1) % (WIDTH + 1);
-		}
-		coinrunleft = length;
-	}
-
-	/**
-	 * Creates a single obstacle (1x1x1).
-	 */
-	private void createSingleObstacle() {
-		int lane = random.nextInt(WIDTH);
-		if (this.containsCenter(new Point3D(lane - 1, 0, LENGTH))) {
-			lane = (lane + 1) % WIDTH;
-		}
-		int obstacleType = random.nextInt(OBSTACLE_TYPES);
-		Point3D center = new Point3D(lane - 1, 1, LENGTH);
-		Obstacle obstacle;
-		switch (obstacleType) {
-			case 0 : obstacle = new Log(center, Point3D.UNITCUBE); break;
-			case 1 : obstacle = new Pillar(center, new Point3D(1, 3, 1)); break;
-			case 2 : obstacle = new Fence(new Point3D(lane - 1, Fence.HEIGHT, LENGTH), new Point3D(1, 2, 1)); break;
-			default : obstacle = new Log(center, Point3D.UNITCUBE); break;
-		}
-		addEntity(obstacle);
-	}
-
-	/**
-	 * Returns the coinRunLeft value.
-	 *  **For testing purposes only**
-	 * @return coinRunLeft
-	 */
-	public final double getCoinrunleft() {
-		return coinrunleft;
 	}
 
 	/**

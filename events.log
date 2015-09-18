@@ -1,0 +1,34 @@
+2015-09-18T12:47:19.580 [INPUT ] Pressed Mouse button PRIMARY.
+2015-09-18T12:47:19.597 [ MENU ] Any key pressed.
+2015-09-18T12:47:20.091 [ MENU ] Clicked "Start game".
+2015-09-18T12:47:20.115 [ GAME ] Game has been started.
+2015-09-18T12:47:20.280 [ GAME ] Game has been stopped.
+2015-09-18T12:47:20.846 [ GAME ] Game has been resumed.
+2015-09-18T12:47:20.982 [INPUT ] Pressed keyboard key LEFT.
+2015-09-18T12:47:20.983 [PLAYER] Started moving from lane 0.
+2015-09-18T12:47:21.238 [INPUT ] Pressed keyboard key RIGHT.
+2015-09-18T12:47:21.239 [PLAYER] Started moving from lane -1.
+2015-09-18T12:47:21.595 [PLAYER] Stopped moving in lane 0.
+2015-09-18T12:47:22.668 [INPUT ] Pressed keyboard key D.
+2015-09-18T12:47:22.668 [PLAYER] Started moving from lane 0.
+2015-09-18T12:47:22.889 [INPUT ] Pressed keyboard key A.
+2015-09-18T12:47:22.890 [PLAYER] Started moving from lane 1.
+2015-09-18T12:47:23.254 [PLAYER] Stopped moving in lane 0.
+2015-09-18T12:47:24.313 [INPUT ] Pressed keyboard key UP.
+2015-09-18T12:47:24.314 [PLAYER] Jumping.
+2015-09-18T12:47:25.805 [INPUT ] Pressed keyboard key DOWN.
+2015-09-18T12:47:25.806 [PLAYER] Sliding.
+2015-09-18T12:47:27.270 [ GAME ] Game has been stopped.
+2015-09-18T12:47:27.651 [ GAME ] Game exited to main menu.
+2015-09-18T12:47:28.232 [ MENU ] Clicked "Start game".
+2015-09-18T12:47:28.243 [ GAME ] Game has been started.
+2015-09-18T12:47:28.359 [ GAME ] Game has been stopped.
+2015-09-18T12:47:28.764 [ GAME ] Game will retry a new run.
+2015-09-18T12:47:28.770 [ GAME ] Game has been started.
+2015-09-18T12:47:28.854 [ GAME ] Game has been stopped.
+2015-09-18T12:47:29.208 [ GAME ] Game exited to main menu.
+2015-09-18T12:47:29.771 [ MENU ] Clicked "Exit".
+2015-09-18T12:47:30.025 [ GAME ] Game has been started.
+2015-09-18T12:47:30.033 [INPUT ] Pressed keyboard key UP.
+2015-09-18T12:47:30.041 [INPUT ] Pressed keyboard key UP.
+2015-09-18T12:47:30.049 [INPUT ] Pressed keyboard key UP.

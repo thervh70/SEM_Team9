@@ -32,7 +32,7 @@ public final class State {
 	public static void reset() {
 		setTrack(new Track());
 		setScore(0);
-		track.setDistance(0);
+		Track.setDistance(0);
 		track.getPlayer().respawn();
 	}
 
@@ -77,7 +77,7 @@ public final class State {
 	 * @return the distance of the track
 	 */
 	public static double getDistance() {
-		return track.getDistance();
+		return Track.getDistance();
 	}
 
 	/**
