@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.entities.AbstractEntity;
-import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.*;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 import java.io.BufferedReader;
@@ -108,12 +107,15 @@ public class TrackParser {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 char c = map[i][j];
-                if (c == '.') {
-                    continue;
-                } else if (c == 'c') {
-                    AbstractEntity entity = new Coin(new Point3D(i - 1, 1, j));
-                    part.addEntity(entity);
+                AbstractEntity entity;
+                switch (c) {
+                    case 'c' : entity = new Coin(new Point3D(i - 1, 1, j)); break;
+                    case 'l' : entity = new Log(new Point3D(i-1, 1, j)); break;
+                    case 'p' : entity = new Pillar(new Point3D(i-1, 1, j)); break;
+                    case 'f' : entity = new Fence(new Point3D(i-1, 2.8, j)); break;
+                    default : continue;
                 }
+                part.addEntity(entity);
             }
         }
         part.setLength(map[0].length);

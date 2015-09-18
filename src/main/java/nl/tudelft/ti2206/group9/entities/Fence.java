@@ -8,7 +8,7 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 public class Fence extends Obstacle {
 
     /** Standard bounding box size of a Fence. */
-    public static final Point3D SIZE = new Point3D(0.5, 0.5, 0.5);
+    public static final Point3D SIZE = new Point3D(1, 2, 1);
     /** Standard center heigth. */
     public static final double HEIGHT = 2.3;
 
