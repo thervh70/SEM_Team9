@@ -42,6 +42,7 @@ public final class InternalTicker extends TimerTask {
 	 * @param t Timer given to the internal ticker
 	 */
 	private InternalTicker(final Timer t) {
+		super();
 		timer = t;
 	}
 

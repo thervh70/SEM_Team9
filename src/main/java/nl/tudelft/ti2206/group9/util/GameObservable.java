@@ -15,11 +15,11 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Specific;
  */
 public final class GameObservable {
 
-	/** Hiding public constructor. */
-	private GameObservable() { }
-
 	/** List of observers observing this game. */
 	private static List<GameObserver> observers = new ArrayList<GameObserver>();
+
+	/** Hiding public constructor. */
+	private GameObservable() { }
 
 	/**
 	 * Add observer to the observers list.

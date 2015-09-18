@@ -22,11 +22,11 @@ public final class SettingsScreen {
 
     /** The scene. */
     private static Scene settings;
-
-	/** Hide public constructor. */
-	private SettingsScreen() { }
     /** Boolean for sound status. */
     private static boolean sound = true;
+    
+	/** Hide public constructor. */
+	private SettingsScreen() { }
 
     /**
      * Creating and displaying the scene.
@@ -36,7 +36,7 @@ public final class SettingsScreen {
     public static void start(final Stage primaryStage) {
 
         /**Creating a gridPane for the layout. */
-        GridPane grid = new GridPane();
+    	final GridPane grid = new GridPane();
         grid.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
         grid.setVgap(20);
         grid.setHgap(20);
@@ -45,7 +45,7 @@ public final class SettingsScreen {
         Style.setBackground("sc2.jpg", grid);
 
         /**Creating a back button. */
-        Button backButton;
+        final Button backButton;
         backButton = new Button("Back");
         Style.setButtonStyle(backButton);
         GridPane.setConstraints(backButton, 2, 26);

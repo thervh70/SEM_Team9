@@ -4,8 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Add this Logger to GameObservable, and it will log every single action in
@@ -15,21 +15,22 @@ import java.util.Map;
 public class Logger implements GameObserver {
 
 	/** Map containing all Strings to output to log file. */
-	protected static final Map<Specific, String> STRINGS =
-			new HashMap<Specific, String>();
+	private static final Map<Specific, String> STRINGS =
+			new ConcurrentHashMap<Specific, String>();
 	/** Location of the log file. */
 	public static final String OUTFILE = "./events.log";
 	/** Format of the Timestamp in the log file. */
 	public static final String FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
 	{
-		FileWriter fw;
+		final FileWriter fw;
 		try {
 			fw = new FileWriter(OUTFILE, false);
 			fw.write("");
 			fw.close();
 		} catch (IOException e) {
 		}
+		
 		String lbl;
 
 		lbl = " [ GAME ] ";
@@ -61,10 +62,10 @@ public class Logger implements GameObserver {
 	}
 
 	public void gameUpdate(final Category cat, final Specific spec, 
-			final Object[] optionalArgs) {
-		String line = getLogString(spec, optionalArgs);
+			final Object... optionalArgs) {
+		final String line = getLogString(spec, optionalArgs);
 
-		FileWriter fw;
+		final FileWriter fw;
 		try {
 			fw = new FileWriter(OUTFILE, true);
 			fw.write(line + "\n");
@@ -79,10 +80,10 @@ public class Logger implements GameObserver {
 	 *  @return Get part of log as a string
 	 */
 	private String getLogString(final Specific spec,
-			final Object[] optionalArgs) {
-		LocalDateTime date = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMAT);
-		String time = date.format(formatter);
+			final Object... optionalArgs) {
+		final LocalDateTime date = LocalDateTime.now();
+		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMAT);
+		final String time = date.format(formatter);
 		return time + String.format(STRINGS.get(spec), optionalArgs);
 	}
 

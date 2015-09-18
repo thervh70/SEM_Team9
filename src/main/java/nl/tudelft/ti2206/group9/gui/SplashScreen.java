@@ -26,7 +26,7 @@ import nl.tudelft.ti2206.group9.util.Logger;
 @SuppressWarnings("restriction")
 public final class SplashScreen extends Application {
     /** Duration of transition in ms. */
-    private static final int transitionDuration = 750;
+    private static final int TRANSITION_TIME = 750;
 
     /**
      * Creating and  displaying the scene.
@@ -36,15 +36,16 @@ public final class SplashScreen extends Application {
     	GameObservable.addObserver(new Logger());
 
         /** Creating a new stackpane and scene. */
-        StackPane root = new StackPane();
-        Scene scene = new Scene(root, GUIConstant.WIDTH, GUIConstant.HEIGHT);
+    	final StackPane root = new StackPane();
+    	final Scene scene = new Scene(root,
+    			GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
         /** Setting the background image */
         Style.setBackground("sc.png", root);
 
 
         /** Creating a new label for displaying text. */
-        Label text = new Label("Press any key to continue");
+        final Label text = new Label("Press any key to continue");
         Style.setLabelStyle(text);
 
         /** Defining what has happens in case of a mouseClickEvent. */
@@ -71,11 +72,11 @@ public final class SplashScreen extends Application {
          * in/ fade out effect. */
         root.getChildren().add(text);
         root.setAlignment(Pos.CENTER);
-        FadeTransition ft = new FadeTransition(
-                Duration.millis(transitionDuration), text);
+        final FadeTransition ft = new FadeTransition(
+                Duration.millis(TRANSITION_TIME), text);
         ft.setFromValue(1.0);
         ft.setToValue(0);
-        ft.setCycleCount(transitionDuration * 2);
+        ft.setCycleCount(TRANSITION_TIME * 2);
         ft.setAutoReverse(true);
         ft.play();
 

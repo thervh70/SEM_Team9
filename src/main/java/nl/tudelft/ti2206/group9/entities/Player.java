@@ -118,7 +118,7 @@ public class Player extends AbstractEntity {
 	 * Keeps the Player moving.
 	 */
 	private void changeLaneStep() {
-		double dist = moveLane - getCenter().getX();
+		final double dist = moveLane - getCenter().getX();
 		final double delta = 0.02; // higher means faster acceleration
 		final double slow = 5; 	// higher means lower terminal speed
 		if (Math.abs(dist) < delta && hspeed != 0) {
@@ -156,13 +156,13 @@ public class Player extends AbstractEntity {
 	 * Keeps the Player jumping.
 	 */
 	private void jumpStep() {
-		Point3D pos = getCenter();
+		final Point3D pos = getCenter();
 		if (jumping) {
 			vspeed -= GRAVITY;
 		}
 		pos.addY(vspeed);
 
-		double bottomToFloor = getSize().getY() / 2;
+		final double bottomToFloor = getSize().getY() / 2;
 		if (pos.getY() < bottomToFloor) {
 			jumping = false;
 			vspeed = 0;
