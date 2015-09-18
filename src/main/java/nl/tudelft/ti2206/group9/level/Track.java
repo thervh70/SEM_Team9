@@ -57,8 +57,6 @@ public class Track {
 	private Random random;
 	/** Amount of coins that still have to spawn. */
 	private double coinrunleft = 0;
-	/** Amount of ticks that this Track has been running. */
-	private int ticks = 0;
 
 	/** Default constructor, new Random() is created as generator. */
 	public Track() {
@@ -201,7 +199,6 @@ public class Track {
 		}
 		getPlayer().step();
 
-		ticks++;
 		distance += getUnitsPerTick();
 		State.addScore(getUnitsPerTick());
 		moveTrack(getUnitsPerTick());
@@ -269,10 +266,4 @@ public class Track {
 		random = randomGenerator;
 	}
 
-	/**
-	 * @return the ticks
-	 */
-	public int getTicks() {
-		return ticks;
-	}
 }
