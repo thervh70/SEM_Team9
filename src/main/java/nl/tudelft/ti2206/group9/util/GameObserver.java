@@ -1,5 +1,9 @@
 package nl.tudelft.ti2206.group9.util;
 
+/**
+ * Interface for observers who want to observe the game.
+ * @author Maarten
+ */
 public interface GameObserver {
 
 	/** Different Categories for updates. */
@@ -34,7 +38,7 @@ public interface GameObserver {
 	}
 
 	/**
-	 * Whether input is from Keyboard or from Mouse. 
+	 * Whether input is from Keyboard or from Mouse.
 	 * Mouse input is accompanied with optionalArg MouseButton.
 	 */
 	enum Input implements Specific {
