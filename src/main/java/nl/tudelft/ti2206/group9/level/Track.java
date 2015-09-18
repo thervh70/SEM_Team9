@@ -168,11 +168,15 @@ public class Track {
 	static final void setDistance(final double dist) {
 		Track.distance = dist;
 	}
-	
+
+	/**
+	 * Get the number of Units that pass by per tick at this moment.
+	 * @return double Units per Tick
+	 */
 	public static final double getUnitsPerTick() {
-		final double div = Math.pow(UNITS_PER_TICK_ACCEL, -1) / 2 
+		final double div = Math.pow(UNITS_PER_TICK_ACCEL, -1) / 2
 				* UNITS_PER_TICK_BASE * UNITS_PER_TICK_BASE;
-		return UNITS_PER_TICK_BASE 
+		return UNITS_PER_TICK_BASE
 				* Math.sqrt(State.getDistance() / div + 1);
 	}
 
@@ -262,7 +266,7 @@ public class Track {
 	 * Set the Random generator.
 	 * @param randomGenerator Random object to set.
 	 */
-	public void setRandom(Random randomGenerator) {
+	public void setRandom(Rando	m randomGenerator) {
 		random = randomGenerator;
 	}
 
