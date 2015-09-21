@@ -11,84 +11,102 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
 /**
- * @author Maikel and Robin
+ * @author Maikel, Mitchell and Robin
  *
  * A startscreen with different options/buttons like a options menu, startbutton
  * and exit button.
  */
 @SuppressWarnings("restriction")
 public final class StartScreen {
-
+		 
 	/** Hide public constructor. */
 	private StartScreen() { }
 
+	/**
+	 * Type of buttons that exist.
+	 */
+	private enum BType {
+		EXIT, START, SETTINGS
+	 }
+	
     /**
-     *Creating and displaying the startscreen.
-     *
+     * Creating and displaying the startscreen.
      * @param primaryStage The stage to be started.
      */
     public static void start(final Stage primaryStage) {
-
         final Stage window;
         final Scene startScreen;
-        final Button startButton,
-        settingsButton,
-        exitButton;
         window = primaryStage;
+        GridPane grid = initializeGrid();
 
-        /**Creating the gridPane which is used for the layout. */
-        final GridPane grid = new GridPane();
-        grid.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
-        grid.setVgap(20);
-        grid.setHgap(20);
-
-        /**Setting a background for the menu.*/
-        Style.setBackground("sc.png", grid);
-
-        /** Add text to buttons give them a location on the grid.*/
-        startButton = new Button("START");
-        Style.setButtonStyle(startButton);
-        GridPane.setConstraints(startButton, 6, 26);
-
-        settingsButton = new Button("SETTINGS");
-        Style.setButtonStyle(settingsButton);
-        GridPane.setConstraints(settingsButton, 2, 26);
-
-        exitButton = new Button("EXIT");
-        Style.setButtonStyle(exitButton);
-        GridPane.setConstraints(exitButton, 10, 26);
-
+        final Button startButton = createButton("START", 6, 26);
+        final Button settingsButton = createButton("SETTINGS", 2, 26);
+        final Button exitButton = createButton("EXIT", 10, 26);
+        
         /**Adding all buttons to the gridpane.*/
         grid.getChildren().addAll(startButton, settingsButton, exitButton);
 
         /**Creating the scene. */
         startScreen = new Scene(grid, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
-        /**Setting function of the buttons. */
-        exitButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(final ActionEvent event) {
-                GameObservable.notify(Category.MENU, Menu.EXIT);
-                primaryStage.close();
-            }
-        });
-
-        startButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(final ActionEvent event) {
-                GameObservable.notify(Category.MENU, Menu.START);
-                GameScreen.start(primaryStage);
-            }
-        });
-
-        settingsButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(final ActionEvent event) {
-                GameObservable.notify(Category.MENU, Menu.SETTINGS);
-                SettingsScreen.start(primaryStage);
-            }
-        });
+        setButtonFunction(primaryStage, exitButton, BType.EXIT);
+        setButtonFunction(primaryStage, startButton, BType.START);
+        setButtonFunction(primaryStage, settingsButton, BType.SETTINGS);
 
         /**Set the scene for the window and display it. */
         window.setScene(startScreen);
         window.show();
     }
+
+	/**
+     * This method creates the gridPane which is used for the layout.
+     * @return grid that is going to be used.
+     */
+    private static GridPane initializeGrid() {
+        final GridPane grid = new GridPane();
+        grid.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
+        grid.setVgap(20);
+        grid.setHgap(20);
+        Style.setBackground("sc.png", grid);
+        return grid;
+    }
+    
+    /**
+     * This method adds text to buttons and give them a location on the grid.
+     * @param name Name of the button.
+     * @param colum Colum index on the grid.
+     * @param row Row index on the grid.
+     * @return the created button.
+     */
+    private static Button createButton(String name, int colum, int row) {
+        Button button = new Button(name);
+        Style.setButtonStyle(button);
+        GridPane.setConstraints(button, colum, row);
+		return button;
+	}
+
+    /**
+     * This method sets the function of a button.
+     * @param stage given PrimaryStage.
+     * @param button Button to be set.
+     * @param type Type of button
+     */
+	private static void setButtonFunction(final Stage stage, Button button, final BType type) {
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(final ActionEvent event) {
+                if (type == BType.EXIT) { 
+                	GameObservable.notify(Category.MENU, Menu.EXIT);
+                	stage.close(); 
+                } else if (type == BType.START) { 
+                    GameObservable.notify(Category.MENU, Menu.START);
+                    GameScreen.start(stage); 
+                } else {
+                    GameObservable.notify(Category.MENU, Menu.SETTINGS);
+                    SettingsScreen.start(stage);
+                }
+            }
+        });
+	}
+    
 }
 
