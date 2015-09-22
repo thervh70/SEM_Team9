@@ -6,13 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -26,42 +26,69 @@ import javafx.scene.text.FontWeight;
  */
 @SuppressWarnings("restriction")
 public final class Style {
-	    
+
     /** Hide public constructor. */
     private Style() { }
 
+    /** BRICK material for walls, brick wall texture. */
     public static final PhongMaterial BRICK = new PhongMaterial();
+
+    /** MOSS material for walls, mossy brick wall texture. */
     public static final PhongMaterial MOSS = new PhongMaterial();
+
+    /** CRACK material used for walls, cracked brick wall texture. */
     public static final PhongMaterial CRACK = new PhongMaterial();
+
+    /** FLOOR material used for floors, mossy cobblestone floor texture. */
     public static final PhongMaterial FLOOR = new PhongMaterial();
+
+    /** COIN material used for coins, question mark box coin texture. */
     public static final PhongMaterial COIN = new PhongMaterial();
+
+    /** WOOD material used for logs, wooden planks obstacle texture. */
     public static final PhongMaterial WOOD = new PhongMaterial();
+
+    /** PILLAR material used for pillars, stack of cracked stone bricks texture. */
     public static final PhongMaterial PILLAR = new PhongMaterial();
+
+    /** FENCE material used for fences, mossy brick stone texture.*/
     public static final PhongMaterial FENCE = new PhongMaterial();
 
+    /**
+     * Method is called once to load all textures.
+     * They are loaded into Phongmaterials.
+     */
     public static void loadTextures() {
-        Image brickTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_brick.png");
+        Image brickTexture = new Image(
+                "nl/tudelft/ti2206/group9/gui/texture_brick.png");
         BRICK.setDiffuseMap(brickTexture);
 
-        Image mossTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_moss.png");
+        Image mossTexture = new Image(
+                "nl/tudelft/ti2206/group9/gui/texture_moss.png");
         MOSS.setDiffuseMap(mossTexture);
 
-        Image crackTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_crack.png");
+        Image crackTexture = new Image(
+                "nl/tudelft/ti2206/group9/gui/texture_crack.png");
         CRACK.setDiffuseMap(crackTexture);
 
-        Image floorTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_cobblestone.png");
+        Image floorTexture = new Image(
+                "nl/tudelft/ti2206/group9/gui/texture_cobblestone.png");
         FLOOR.setDiffuseMap(floorTexture);
 
-        Image coinTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_coin.png");
+        Image coinTexture = new Image(
+                "nl/tudelft/ti2206/group9/gui/texture_coin.png");
         COIN.setDiffuseMap(coinTexture);
 
-        Image woodTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_wood.png");
+        Image woodTexture = new Image(
+                "nl/tudelft/ti2206/group9/gui/texture_wood.png");
         WOOD.setDiffuseMap(woodTexture);
 
-        Image pillarTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_pillar.png");
+        Image pillarTexture = new Image(
+                "nl/tudelft/ti2206/group9/gui/texture_pillar.png");
         PILLAR.setDiffuseMap(pillarTexture);
 
-        Image fenceTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_fence.png");
+        Image fenceTexture = new Image(
+                "nl/tudelft/ti2206/group9/gui/texture_fence.png");
         FENCE.setDiffuseMap(fenceTexture);
     }
 
@@ -84,7 +111,7 @@ public final class Style {
         b.setFont(Font.font("Roboto", FontWeight.BOLD, 14));
 
         b.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent e) {
+            public void handle(final MouseEvent e) {
                 b.setScaleX(1.2);
                 b.setScaleY(1.2);
             }
@@ -155,7 +182,8 @@ public final class Style {
     public static void setBackground(final String src, final Pane p) {
     	final Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
     	final BackgroundSize backgroundSize = new BackgroundSize(
-    			GUIConstant.WIDTH, GUIConstant.HEIGHT, true, true, true, false);
+    			GUIConstant.WIDTH, GUIConstant.HEIGHT,
+                true, true, true, false);
     	final BackgroundImage backgroundImage = new BackgroundImage(image,
         		BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
         		BackgroundPosition.CENTER, backgroundSize);
