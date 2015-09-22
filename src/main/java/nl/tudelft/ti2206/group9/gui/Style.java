@@ -36,6 +36,8 @@ public final class Style {
     public static final PhongMaterial FLOOR = new PhongMaterial();
     public static final PhongMaterial COIN = new PhongMaterial();
     public static final PhongMaterial WOOD = new PhongMaterial();
+    public static final PhongMaterial PILLAR = new PhongMaterial();
+    public static final PhongMaterial FENCE = new PhongMaterial();
 
     public static void loadTextures() {
         Image brickTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_brick.png");
@@ -55,6 +57,12 @@ public final class Style {
 
         Image woodTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_wood.png");
         WOOD.setDiffuseMap(woodTexture);
+
+        Image pillarTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_pillar.png");
+        PILLAR.setDiffuseMap(pillarTexture);
+
+        Image fenceTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_fence.png");
+        FENCE.setDiffuseMap(fenceTexture);
     }
 
     /**

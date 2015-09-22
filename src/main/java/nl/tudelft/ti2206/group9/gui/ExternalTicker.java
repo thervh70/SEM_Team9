@@ -141,9 +141,9 @@ public class ExternalTicker extends AnimationTimer {
 				} else if (entity instanceof Log){
 					entityBox.setMaterial(Style.WOOD);
 				} else if (entity instanceof Pillar) {
-					entityBox.setMaterial(new PhongMaterial(Color.WHITE));
+					entityBox.setMaterial(Style.PILLAR);
 				} else /*if (entity instanceof Fence) */{
-					entityBox.setMaterial(new PhongMaterial(Color.GRAY));
+					entityBox.setMaterial(Style.FENCE);
 				}
 
 				entityBox.setCache(true);

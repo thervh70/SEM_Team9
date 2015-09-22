@@ -79,7 +79,7 @@ public final class GameScreen {
 		root.setAutoSizeChildren(true);
 		scene = new Scene(root, GUIConstant.WIDTH,
                 GUIConstant.HEIGHT, true);
-		scene.setFill(Color.AQUA);
+		scene.setFill(Color.BLACK);
 		primaryStage.setScene(scene);
 
 		world = new Group();
