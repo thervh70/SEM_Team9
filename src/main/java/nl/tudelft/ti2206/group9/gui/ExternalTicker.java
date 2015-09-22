@@ -40,10 +40,6 @@ public class ExternalTicker extends AnimationTimer {
 		GameScreen.clearOverlay();
 
 		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
-			final Box track = new Box(3, 0.1, 500);
-			track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
-			GameScreen.addWorld(track);
-
 			final Group entities = renderEntities();
 			GameScreen.addWorld(entities);
 		}

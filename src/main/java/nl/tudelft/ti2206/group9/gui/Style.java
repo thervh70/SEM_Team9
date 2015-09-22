@@ -38,22 +38,22 @@ public final class Style {
     public static final PhongMaterial WOOD = new PhongMaterial();
 
     public static void loadTextures() {
-        Image brickTexture = new Image("texture_brick.png");
+        Image brickTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_brick.png");
         BRICK.setDiffuseMap(brickTexture);
 
-        Image mossTexture = new Image("texture_moss.png");
+        Image mossTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_moss.png");
         MOSS.setDiffuseMap(mossTexture);
 
-        Image crackTexture = new Image("texture_crack.png");
+        Image crackTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_crack.png");
         CRACK.setDiffuseMap(crackTexture);
 
-        Image floorTexture = new Image("texture_cobblestone.png");
+        Image floorTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_cobblestone.png");
         FLOOR.setDiffuseMap(floorTexture);
 
-        Image coinTexture = new Image("texture_coin.png");
+        Image coinTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_coin.png");
         COIN.setDiffuseMap(coinTexture);
 
-        Image woodTexture = new Image("texture_wood.png");
+        Image woodTexture = new Image("nl/tudelft/ti2206/group9/gui/texture_wood.png");
         WOOD.setDiffuseMap(woodTexture);
     }
 
