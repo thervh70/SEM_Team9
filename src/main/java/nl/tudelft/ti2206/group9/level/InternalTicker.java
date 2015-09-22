@@ -84,6 +84,7 @@ public final class InternalTicker extends TimerTask {
 		State.getTrack().step();
 
 		if (!State.getTrack().getPlayer().isAlive()) {
+			State.checkHighscore();
 			GameScreen.stopTickers();
 			GameScreen.showDeathMenu();
 		}
