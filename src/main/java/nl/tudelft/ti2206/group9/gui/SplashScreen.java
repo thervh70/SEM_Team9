@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,12 +23,12 @@ import nl.tudelft.ti2206.group9.util.Logger;
  * entire application.
  */
 @SuppressWarnings("restriction")
-public final class SplashScreen extends Application {
+public final class SplashScreen {
     /** Duration of transition in ms. */
     private static final int TRANSITION_TIME = 750;
 
     /**
-     * Creating and  displaying the scene.
+     * Creating and displaying the scene.
      * @param primaryStage The stage to be started.
      */
     public void start(final Stage primaryStage) {
@@ -57,14 +56,6 @@ public final class SplashScreen extends Application {
         /** Setting the right scene and displaying it. */
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-	/**
-     * Main method to launch the application.
-     * @param args -
-     */
-    public static void main(final String... args) {
-        launch(args);
     }
 
     /**

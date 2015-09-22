@@ -18,6 +18,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
@@ -47,7 +48,7 @@ public class EndToEndTest extends ApplicationTest {
 	public void start(Stage primaryStage) throws Exception {
 		mockGenerator();
 		stage = primaryStage;
-		new SplashScreen().start(stage);
+		new ShaftEscape().start(stage);
 	}
 
 	@Test
