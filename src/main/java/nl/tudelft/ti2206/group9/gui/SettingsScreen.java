@@ -24,15 +24,18 @@ public final class SettingsScreen {
     private static Scene settings;
     /** Boolean for sound status. */
     private static boolean sound = true;
-    
+
 	/** Hide public constructor. */
 	private SettingsScreen() { }
-	
+
 	/**
 	 * Type of buttons that exist.
 	 */
 	private enum BType {
-		SETTINGS_BACK, SETTING_SOUND
+		/** Back button. */
+		SETTINGS_BACK, 
+		/** Sound toggle. */
+		SETTING_SOUND
 	 }
 
     /**
@@ -65,7 +68,7 @@ public final class SettingsScreen {
     public static boolean isSoundEnabled() {
     	return sound;
     }
-    
+
 	/**
      * This method creates the gridPane which is used for the layout.
      * @return grid that is going to be used.
@@ -82,28 +85,29 @@ public final class SettingsScreen {
     /**
      * This method adds text to buttons and give them a location on the grid.
      * @param name Name of the button.
-     * @param colum Colum index on the grid.
+     * @param column Column index on the grid.
      * @param row Row index on the grid.
      * @return the created button.
      */
-    private static Button createButton(String name, int colum, int row) {
+    private static Button createButton(final String name, final int column, 
+    									final int row) {
         Button button = new Button(name);
         Style.setButtonStyle(button);
-        GridPane.setConstraints(button, colum, row);
+        GridPane.setConstraints(button, column, row);
 		return button;
 	}
-    
+
     /**
      * This method sets the function of a button.
      * @param stage given PrimaryStage.
      * @param button Button to be set.
      * @param type Type of button
      */
-	private static void setButtonFunction(final Stage stage, 
+	private static void setButtonFunction(final Stage stage,
 									final Button button, final BType type) {
         button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
-                if (type == BType.SETTINGS_BACK) { 
+                if (type == BType.SETTINGS_BACK) {
                     GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
                     StartScreen.start(stage);
                 } else {
@@ -121,5 +125,4 @@ public final class SettingsScreen {
         });
 	}
 
-    
 }

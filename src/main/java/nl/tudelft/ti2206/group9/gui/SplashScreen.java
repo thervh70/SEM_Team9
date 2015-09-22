@@ -51,9 +51,9 @@ public final class SplashScreen extends Application {
          * in/ fade out effect. */
         root.getChildren().add(text);
         root.setAlignment(Pos.CENTER);
-        
+
         generateFadeTransition(text);
-        
+
         /** Setting the right scene and displaying it. */
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -69,7 +69,7 @@ public final class SplashScreen extends Application {
 
     /**
      * Creating a new label for displaying text.
-     * @param string a given sentence.
+     * @param text a given sentence.
      * @return label resulting label.
      */
     private Label createLabel(final String text) {
@@ -77,10 +77,10 @@ public final class SplashScreen extends Application {
         Style.setLabelStyle(label);
 		return label;
 	}
-    
+
     /**
      * Defining what has happens in case of a mouseClickEvent.
-     * @param stackpane current stackPane.
+     * @param stackPane current stackPane.
      * @param primaryStage current primaryStage.
      */
     private static void addMouseClick(final StackPane stackPane, 
@@ -92,7 +92,7 @@ public final class SplashScreen extends Application {
                 GameObservable.notify(Category.MENU, Menu.ANY_KEY);
                 StartScreen.start(primaryStage);
             }
-        });    	
+        });
     }
 
     /**
@@ -100,7 +100,7 @@ public final class SplashScreen extends Application {
      * @param scene current scene.
      * @param primaryStage current primaryStage.
      */
-    private static void addKeyPressed(final Scene scene, 
+    private static void addKeyPressed(final Scene scene,
     									final Stage primaryStage) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent ke) {
@@ -110,7 +110,7 @@ public final class SplashScreen extends Application {
                 StartScreen.start(primaryStage);
             }
         });
-	
+
     }
 
     /**

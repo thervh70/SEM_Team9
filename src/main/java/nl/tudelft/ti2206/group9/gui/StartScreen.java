@@ -18,7 +18,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  */
 @SuppressWarnings("restriction")
 public final class StartScreen {
-		 
+
 	/** Hide public constructor. */
 	private StartScreen() { }
 
@@ -26,9 +26,14 @@ public final class StartScreen {
 	 * Type of buttons that exist.
 	 */
 	private enum BType {
-		EXIT, START, SETTINGS
+		/** Exit button. */
+		EXIT,
+		/** Start button. */
+		START,
+		/** Settings button. */
+		SETTINGS
 	 }
-	
+
     /**
      * Creating and displaying the startscreen.
      * @param primaryStage The stage to be started.
@@ -42,7 +47,7 @@ public final class StartScreen {
         final Button startButton = createButton("START", 6, 26);
         final Button settingsButton = createButton("SETTINGS", 2, 26);
         final Button exitButton = createButton("EXIT", 10, 26);
-        
+
         /**Adding all buttons to the gridpane.*/
         grid.getChildren().addAll(startButton, settingsButton, exitButton);
 
@@ -70,7 +75,7 @@ public final class StartScreen {
         Style.setBackground("sc.png", grid);
         return grid;
     }
-    
+
     /**
      * This method adds text to buttons and give them a location on the grid.
      * @param name Name of the button.
@@ -78,7 +83,8 @@ public final class StartScreen {
      * @param row Row index on the grid.
      * @return the created button.
      */
-    private static Button createButton(String name, int colum, int row) {
+    private static Button createButton(final String name, final int colum, 
+    									final int row) {
         Button button = new Button(name);
         Style.setButtonStyle(button);
         GridPane.setConstraints(button, colum, row);
@@ -91,16 +97,16 @@ public final class StartScreen {
      * @param button Button to be set.
      * @param type Type of button
      */
-	private static void setButtonFunction(final Stage stage, 
+	private static void setButtonFunction(final Stage stage,
 										final Button button, final BType type) {
         button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
-                if (type == BType.EXIT) { 
+                if (type == BType.EXIT) {
                 	GameObservable.notify(Category.MENU, Menu.EXIT);
-                	stage.close(); 
-                } else if (type == BType.START) { 
+                	stage.close();
+                } else if (type == BType.START) {
                     GameObservable.notify(Category.MENU, Menu.START);
-                    GameScreen.start(stage); 
+                    GameScreen.start(stage);
                 } else {
                     GameObservable.notify(Category.MENU, Menu.SETTINGS);
                     SettingsScreen.start(stage);
@@ -108,6 +114,6 @@ public final class StartScreen {
             }
         });
 	}
-    
+
 }
 
