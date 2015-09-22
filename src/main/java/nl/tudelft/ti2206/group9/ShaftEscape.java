@@ -22,8 +22,8 @@ public class ShaftEscape extends Application {
 	public void start(Stage appStage) {
 		stage = appStage;
 		stage.setResizable(false);
-		
-    	GameObservable.addObserver(new Logger());
+
+		GameObservable.addObserver(new Logger());
 		setScene(new SplashScene());
 	}
 

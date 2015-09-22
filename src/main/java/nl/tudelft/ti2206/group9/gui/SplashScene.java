@@ -2,12 +2,11 @@ package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObservable;
@@ -20,31 +19,29 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  * @author Maikel and Mitchell
  */
 @SuppressWarnings("restriction")
-public final class SplashScene extends AbstractScene {
+public final class SplashScene extends MenuScene {
 	
     /** Duration of transition in ms. */
     private static final int TRANSITION_TIME = 750;
 
 	@Override
-	public Parent createRoot() {
-    	final StackPane root = new StackPane();
-
-        // Setting the background image.
-        Style.setBackground("sc.png", root);
-
-        Label text = createLabel("Press any key to continue");
+	Node[] createContent() {
         addMouseClick();
         addKeyPressed();
 
-        // Add the text to the canvas and give it a fade  in/ fade out effect.
-        root.getChildren().add(text);
-        root.setAlignment(Pos.CENTER);
-
+        final int labelRows = 2;
+        final int labelCols = 12;
+        Label text = createLabel("Press any key to continue");
         generateFadeTransition(text);
-        return root;
-    }
-
-    /**
+        text.setPrefWidth(labelCols * GRID_GAP);
+        text.setPrefHeight(labelRows * GRID_GAP);
+	    GridPane.setConstraints(text, GRID_WIDTH / 2 - labelCols / 2,
+	    		GRID_HEIGHT / 2 + 2 - labelRows / 2);
+	    
+        return new Node[]{text};
+	}
+	
+	/**
      * Creating a new label for displaying text.
      * @param text a given sentence.
      * @return label resulting label.
@@ -81,7 +78,6 @@ public final class SplashScene extends AbstractScene {
                 ShaftEscape.setScene(new MainMenuScene());
             }
         });
-
     }
 
     /**
@@ -96,6 +92,11 @@ public final class SplashScene extends AbstractScene {
         ft.setCycleCount(TRANSITION_TIME * 2);
         ft.setAutoReverse(true);
         ft.play();
+	}
+
+	@Override
+	String getBackgroundPath() {
+		return "sc.png";
 	}
 
 }
