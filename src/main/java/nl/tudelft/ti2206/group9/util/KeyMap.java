@@ -109,7 +109,8 @@ public class KeyMap {
 		/** The direction. */
 		private final Direction dir;
 
-		/** Nice constructor.
+		/**
+		 * Nice constructor.
 		 * @param d direction
 		 */
 		private MoveAction(final Direction d) {
@@ -118,7 +119,7 @@ public class KeyMap {
 
 		/** Perform action. */
 		public void doAction() {
-			final Player player = (Player) State.getTrack().getPlayer();
+			final Player player = State.getTrack().getPlayer();
 			player.move(dir);
 		}
 	}

@@ -50,6 +50,7 @@ public final class PopupMenu {
         warning.centerOnScreen();
         warning.setWidth(WIDTH);
         warning.setHeight(HEIGHT);
+        warning.setHideOnEscape(false);
 
         final Rectangle rect = new Rectangle(WIDTH, HEIGHT / 2, Color.WHITESMOKE);
         rect.setStroke(Color.BLACK);
@@ -84,7 +85,6 @@ public final class PopupMenu {
             }
         });
 
-
         warning.getContent().addAll(rect, vbox);
         return warning;
     }
@@ -113,6 +113,7 @@ public final class PopupMenu {
         warning.centerOnScreen();
         warning.setWidth(WIDTH);
         warning.setHeight(HEIGHT);
+        warning.setHideOnEscape(false);
 
         final Rectangle rect = new Rectangle(WIDTH, HEIGHT, Color.WHITESMOKE);
         rect.setStroke(Color.BLACK);
