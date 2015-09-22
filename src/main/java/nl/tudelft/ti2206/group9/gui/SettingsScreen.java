@@ -13,7 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
- * Created by Maikel on 08/09/2015.
+ * @author Maikel and Mitchell
  *
  * A screen for displaying a settings menu.
  */
