@@ -3,59 +3,45 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-import nl.tudelft.ti2206.group9.util.Logger;
 
 /**
+ * A SplashScene that show a "Press any key to continue".
  * @author Maikel and Mitchell
- *
- * A splashcreen that show a "Press any key to continue", also starts the
- * entire application.
  */
 @SuppressWarnings("restriction")
-public final class SplashScreen {
+public final class SplashScene extends AbstractScene {
+	
     /** Duration of transition in ms. */
     private static final int TRANSITION_TIME = 750;
 
-    /**
-     * Creating and displaying the scene.
-     * @param primaryStage The stage to be started.
-     */
-    public void start(final Stage primaryStage) {
-    	GameObservable.addObserver(new Logger());
-
-        /** Creating a new stackpane and scene. */
+	@Override
+	public Parent createRoot() {
     	final StackPane root = new StackPane();
-    	final Scene scene = new Scene(root,
-    			GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
-        /** Setting the background image */
+        // Setting the background image.
         Style.setBackground("sc.png", root);
 
         Label text = createLabel("Press any key to continue");
-        addMouseClick(root, primaryStage);
-        addKeyPressed(scene, primaryStage);
+        addMouseClick();
+        addKeyPressed();
 
-        /** Add the text to the canvas and give it a fade
-         * in/ fade out effect. */
+        // Add the text to the canvas and give it a fade  in/ fade out effect.
         root.getChildren().add(text);
         root.setAlignment(Pos.CENTER);
 
         generateFadeTransition(text);
-
-        /** Setting the right scene and displaying it. */
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        return root;
     }
 
     /**
@@ -71,34 +57,28 @@ public final class SplashScreen {
 
     /**
      * Defining what has happens in case of a mouseClickEvent.
-     * @param stackPane current stackPane.
-     * @param primaryStage current primaryStage.
      */
-    private static void addMouseClick(final StackPane stackPane, 
-    									final Stage primaryStage) {
-    	stackPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    private void addMouseClick() {
+    	setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent me) {
                 GameObservable.notify(Category.INPUT, Input.MOUSE,
                         me.getButton());
                 GameObservable.notify(Category.MENU, Menu.ANY_KEY);
-                StartScreen.start(primaryStage);
+                ShaftEscape.setScene(new MainMenuScene());
             }
         });
     }
 
     /**
      * Defining what happens in case of a random keyPressedEvent.
-     * @param scene current scene.
-     * @param primaryStage current primaryStage.
      */
-    private static void addKeyPressed(final Scene scene,
-    									final Stage primaryStage) {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+    private void addKeyPressed() {
+        setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent ke) {
                 GameObservable.notify(Category.INPUT, Input.KEYBOARD,
                         ke.getCode());
                 GameObservable.notify(Category.MENU, Menu.ANY_KEY);
-                StartScreen.start(primaryStage);
+                ShaftEscape.setScene(new MainMenuScene());
             }
         });
 

@@ -6,7 +6,7 @@ import nl.tudelft.ti2206.group9.entities.Fence;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
-import nl.tudelft.ti2206.group9.gui.GameScreen;
+import nl.tudelft.ti2206.group9.gui.GameScene;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 import java.util.Collections;
@@ -75,7 +75,7 @@ public class Track {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
 					if (entity.getCenter().getZ()
-							< GameScreen.CAMERA_TRANS.getZ()) {
+							< GameScene.CAMERA_TRANS.getZ()) {
 						entity.selfDestruct();
 					}
 					moveEntity(entity, -dist);

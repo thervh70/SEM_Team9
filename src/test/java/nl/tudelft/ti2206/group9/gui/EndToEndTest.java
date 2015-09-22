@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.gui.SettingsScreen.isSoundEnabled;
+import static nl.tudelft.ti2206.group9.gui.SettingsScene.isSoundEnabled;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -150,7 +150,7 @@ public class EndToEndTest extends ApplicationTest {
 	
 	private void pausePopup(int buttonNo) {
 		ObservableList<Node> buttons;
-		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
+		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
 				.getChildren();
 		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
@@ -167,7 +167,7 @@ public class EndToEndTest extends ApplicationTest {
 	private void deathPopup(int buttonNo) {
 		ObservableList<Node> buttons;
 		sleep(1);
-		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
+		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
 				.getChildren();
 		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);

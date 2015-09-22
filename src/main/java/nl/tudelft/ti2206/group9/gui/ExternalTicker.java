@@ -39,19 +39,19 @@ public class ExternalTicker extends AnimationTimer {
      * This method renders the scene.
      */
 	private void renderScene() {
-		GameScreen.clearWorld();
-		GameScreen.clearOverlay();
+		GameScene.clearWorld();
+		GameScene.clearOverlay();
 
 		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
 			final Box track = new Box(3, 0.1, 500);
 			track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
-			GameScreen.addWorld(track);
+			GameScene.addWorld(track);
 
 			final Group entities = renderEntities();
-			GameScreen.addWorld(entities);
+			GameScene.addWorld(entities);
 		}
 
-		GameScreen.addOverlay(renderScore());
+		GameScene.addOverlay(renderScore());
 	}
 
 	/**

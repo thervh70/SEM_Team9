@@ -1,10 +1,14 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import java.awt.font.ShapeGraphicAttribute;
+
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -18,15 +22,10 @@ import javafx.stage.Stage;
  * A screen for displaying a settings menu.
  */
 @SuppressWarnings("restriction")
-public final class SettingsScreen {
+public final class SettingsScene extends AbstractScene {
 
-    /** The scene. */
-    private static Scene settings;
     /** Boolean for sound status. */
     private static boolean sound = true;
-
-	/** Hide public constructor. */
-	private SettingsScreen() { }
 
 	/**
 	 * Type of buttons that exist.
@@ -39,26 +38,22 @@ public final class SettingsScreen {
 	 }
 
     /**
-     * Creating and displaying the scene.
-     *
-     * @param primaryStage The stage to be started.
+     * Creating the SettingsScene.
      */
-    public static void start(final Stage primaryStage) {
+    public Parent createRoot() {
         GridPane grid = initializeGrid();
 
         final Button backButton = createButton("Back", 2, 26);
         final Button soundButton = createButton("Sound: ON", 5, 18);
         soundButton.setFont(Font.font("Roboto", FontWeight.BOLD, 20));
 
-        /** Adding buttons to grid. */
+        setButtonFunction(backButton, BType.SETTINGS_BACK);
+        setButtonFunction(soundButton, BType.SETTING_SOUND);
+
+        // Adding buttons to grid.
         grid.getChildren().addAll(backButton, soundButton);
-
-        setButtonFunction(primaryStage, backButton, BType.SETTINGS_BACK);
-        setButtonFunction(primaryStage, soundButton, BType.SETTING_SOUND);
-
-        settings = new Scene(grid, GUIConstant.WIDTH, GUIConstant.HEIGHT);
-        primaryStage.setScene(settings);
-        primaryStage.show();
+        
+		return grid;
     }
 
     /**
@@ -103,13 +98,13 @@ public final class SettingsScreen {
      * @param button Button to be set.
      * @param type Type of button
      */
-	private static void setButtonFunction(final Stage stage,
-									final Button button, final BType type) {
+	private static void setButtonFunction(final Button button,
+			final BType type) {
         button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
                 if (type == BType.SETTINGS_BACK) {
                     GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
-                    StartScreen.start(stage);
+                    ShaftEscape.setScene(new MainMenuScene());
                 } else {
                     sound = !sound;
                     String s;

@@ -2,10 +2,10 @@ package nl.tudelft.ti2206.group9.gui;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
@@ -17,10 +17,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  * and exit button.
  */
 @SuppressWarnings("restriction")
-public final class StartScreen {
-
-	/** Hide public constructor. */
-	private StartScreen() { }
+public final class MainMenuScene extends AbstractScene {
 
 	/**
 	 * Type of buttons that exist.
@@ -35,32 +32,23 @@ public final class StartScreen {
 	 }
 
     /**
-     * Creating and displaying the startscreen.
-     * @param primaryStage The stage to be started.
+     * Creating the MainMenuScene.
      */
-    public static void start(final Stage primaryStage) {
-        final Stage window;
-        final Scene startScreen;
-        window = primaryStage;
+    public Parent createRoot() {
         GridPane grid = initializeGrid();
 
         final Button startButton = createButton("START", 6, 26);
         final Button settingsButton = createButton("SETTINGS", 2, 26);
         final Button exitButton = createButton("EXIT", 10, 26);
 
-        /**Adding all buttons to the gridpane.*/
+        // Adding all buttons to the gridpane.
         grid.getChildren().addAll(startButton, settingsButton, exitButton);
 
-        /**Creating the scene. */
-        startScreen = new Scene(grid, GUIConstant.WIDTH, GUIConstant.HEIGHT);
-
-        setButtonFunction(primaryStage, exitButton, BType.EXIT);
-        setButtonFunction(primaryStage, startButton, BType.START);
-        setButtonFunction(primaryStage, settingsButton, BType.SETTINGS);
-
-        /**Set the scene for the window and display it. */
-        window.setScene(startScreen);
-        window.show();
+        setButtonFunction(exitButton, BType.EXIT);
+        setButtonFunction(startButton, BType.START);
+        setButtonFunction(settingsButton, BType.SETTINGS);
+        
+        return grid;
     }
 
 	/**
@@ -97,19 +85,19 @@ public final class StartScreen {
      * @param button Button to be set.
      * @param type Type of button
      */
-	private static void setButtonFunction(final Stage stage,
-										final Button button, final BType type) {
+	private static void setButtonFunction(final Button button,
+			final BType type) {
         button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
                 if (type == BType.EXIT) {
                 	GameObservable.notify(Category.MENU, Menu.EXIT);
-                	stage.close();
+                	ShaftEscape.exit();
                 } else if (type == BType.START) {
                     GameObservable.notify(Category.MENU, Menu.START);
-                    GameScreen.start(stage);
+                    ShaftEscape.setScene(new GameScene());
                 } else {
                     GameObservable.notify(Category.MENU, Menu.SETTINGS);
-                    SettingsScreen.start(stage);
+                    ShaftEscape.setScene(new SettingsScene());
                 }
             }
         });
