@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import nl.tudelft.ti2206.group9.level.State;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -127,13 +128,16 @@ public final class PopupMenu {
 
         final String s = "Final Score: " + score;
         final Text finalScore = new Text(s);
+        final String h = "High Score: " + State.getHighscore();
+        final Text finalHigh = new Text(h);
         final String c = "Total amount of coins: " + coins;
         final Text finalCoins = new Text(c);
 
         final HBox hbox = new HBox(HBOX_SIZE, yes, no);
         hbox.setAlignment(Pos.CENTER);
 
-        final VBox vbox = new VBox(VBOX_SIZE, text, finalScore, finalCoins, hbox);
+        final VBox vbox = new VBox(VBOX_SIZE, text, finalScore, finalHigh, 
+        		finalCoins, hbox);
         vbox.setAlignment(Pos.CENTER);
 
         yes.setOnMouseClicked(new EventHandler<MouseEvent>() {
