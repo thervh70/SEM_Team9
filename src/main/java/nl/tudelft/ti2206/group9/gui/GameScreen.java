@@ -1,7 +1,13 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.event.EventHandler;
-import javafx.scene.*;
+import javafx.scene.DepthTest;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
