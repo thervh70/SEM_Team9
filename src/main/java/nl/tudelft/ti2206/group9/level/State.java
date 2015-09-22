@@ -16,6 +16,12 @@ public final class State {
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
 
+	/** Name of the player. */
+	private static String playerName;
+
+	/** Boolean to determine whether sound is enabled. */
+	private static boolean soundEnabled;
+
 	/** Standard modulus number for both modulo calculation. */
 	public static final int MOD = 50;
 
@@ -108,4 +114,19 @@ public final class State {
 		State.track = trck;
 	}
 
+	public static String getPlayerName() {
+		return playerName;
+	}
+
+	public static void setPlayerName(String newPlayerName) {
+		State.playerName = newPlayerName;
+	}
+
+	public static boolean isSoundEnabled() {
+		return soundEnabled;
+	}
+
+	public static void setSoundEnabled(boolean newSoundEnabled) {
+		State.soundEnabled = newSoundEnabled;
+	}
 }
