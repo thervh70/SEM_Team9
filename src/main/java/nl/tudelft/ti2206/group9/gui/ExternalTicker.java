@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.CacheHint;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -79,10 +80,12 @@ public class ExternalTicker extends AnimationTimer {
 			 */
 			for(int i = 0; i < 100; i++){
 				for(int j = 0; j < 3; j++){
-					final Box trackPiece = new Box(1, 0, 1);
+					final Box trackPiece = new Box(1.5, 0, 1.5);
 					trackPiece.setTranslateX(j - 1);
 					trackPiece.setTranslateZ(i);
 					trackPiece.setMaterial(Style.FLOOR);
+					trackPiece.setCache(true);
+					trackPiece.setCacheHint(CacheHint.SPEED);
 					entities.getChildren().add(trackPiece);
 				}
 			}
@@ -109,11 +112,12 @@ public class ExternalTicker extends AnimationTimer {
 						} else {
 							wallPiece.setMaterial(Style.MOSS);
 						}
+						wallPiece.setCache(true);
+						wallPiece.setCacheHint(CacheHint.SPEED);
 						entities.getChildren().add(wallPiece);
 					}
 				}
 			}
-
 
 			for (final AbstractEntity entity : State.getTrack().getEntities()) {
 				final Box entityBox = new Box(1, 1, 1);
@@ -137,6 +141,8 @@ public class ExternalTicker extends AnimationTimer {
 					entityBox.setMaterial(new PhongMaterial(Color.GRAY));
 				}
 
+				entityBox.setCache(true);
+				entityBox.setCacheHint(CacheHint.SPEED);
 				entities.getChildren().add(entityBox);
             }
 		}
