@@ -13,7 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
- * Created by Maikel on 08/09/2015.
+ * @author Maikel and Mitchell
  *
  * A screen for displaying a settings menu.
  */
@@ -24,9 +24,19 @@ public final class SettingsScreen {
     private static Scene settings;
     /** Boolean for sound status. */
     private static boolean sound = true;
-    
+
 	/** Hide public constructor. */
 	private SettingsScreen() { }
+
+	/**
+	 * Type of buttons that exist.
+	 */
+	private enum BType {
+		/** Back button. */
+		SETTINGS_BACK, 
+		/** Sound toggle. */
+		SETTING_SOUND
+	 }
 
     /**
      * Creating and displaying the scene.
@@ -34,56 +44,19 @@ public final class SettingsScreen {
      * @param primaryStage The stage to be started.
      */
     public static void start(final Stage primaryStage) {
+        GridPane grid = initializeGrid();
 
-        /**Creating a gridPane for the layout. */
-    	final GridPane grid = new GridPane();
-        grid.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
-        grid.setVgap(20);
-        grid.setHgap(20);
-
-        /** Setting the background image */
-        Style.setBackground("sc2.jpg", grid);
-
-        /**Creating a back button. */
-        final Button backButton;
-        backButton = new Button("Back");
-        Style.setButtonStyle(backButton);
-        GridPane.setConstraints(backButton, 2, 26);
-
-        /** Creating the sound toggle. */
-        final Button soundButton;
-        soundButton = new Button("Sound: ON");
-        Style.setButtonStyle(soundButton);
+        final Button backButton = createButton("Back", 2, 26);
+        final Button soundButton = createButton("Sound: ON", 5, 18);
         soundButton.setFont(Font.font("Roboto", FontWeight.BOLD, 20));
-        GridPane.setConstraints(soundButton, 5, 18);
 
         /** Adding buttons to grid. */
         grid.getChildren().addAll(backButton, soundButton);
 
-        /** Assigning a function to the buttons. */
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(final ActionEvent event) {
-                GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
-                StartScreen.start(primaryStage);
-            }
-        });
-
-        soundButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(final ActionEvent event) {
-                sound = !sound;
-                String s;
-                if (sound) {
-                    s = "ON";
-                } else {
-                    s = "OFF";
-                }
-                soundButton.setText("Sound: " + s);
-                GameObservable.notify(Category.MENU, Menu.SETTING_SOUND, s);
-            }
-        });
+        setButtonFunction(primaryStage, backButton, BType.SETTINGS_BACK);
+        setButtonFunction(primaryStage, soundButton, BType.SETTING_SOUND);
 
         settings = new Scene(grid, GUIConstant.WIDTH, GUIConstant.HEIGHT);
-
         primaryStage.setScene(settings);
         primaryStage.show();
     }
@@ -95,4 +68,61 @@ public final class SettingsScreen {
     public static boolean isSoundEnabled() {
     	return sound;
     }
+
+	/**
+     * This method creates the gridPane which is used for the layout.
+     * @return grid that is going to be used.
+     */
+    private static GridPane initializeGrid() {
+        final GridPane grid = new GridPane();
+        grid.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
+        grid.setVgap(20);
+        grid.setHgap(20);
+        Style.setBackground("sc2.jpg", grid);
+        return grid;
+    }
+
+    /**
+     * This method adds text to buttons and give them a location on the grid.
+     * @param name Name of the button.
+     * @param column Column index on the grid.
+     * @param row Row index on the grid.
+     * @return the created button.
+     */
+    private static Button createButton(final String name, final int column, 
+    									final int row) {
+        Button button = new Button(name);
+        Style.setButtonStyle(button);
+        GridPane.setConstraints(button, column, row);
+		return button;
+	}
+
+    /**
+     * This method sets the function of a button.
+     * @param stage given PrimaryStage.
+     * @param button Button to be set.
+     * @param type Type of button
+     */
+	private static void setButtonFunction(final Stage stage,
+									final Button button, final BType type) {
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(final ActionEvent event) {
+                if (type == BType.SETTINGS_BACK) {
+                    GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
+                    StartScreen.start(stage);
+                } else {
+                    sound = !sound;
+                    String s;
+                    if (sound) {
+                        s = "ON";
+                    } else {
+                        s = "OFF";
+                    }
+                    button.setText("Sound: " + s);
+                    GameObservable.notify(Category.MENU, Menu.SETTING_SOUND, s);
+                }
+            }
+        });
+	}
+
 }
