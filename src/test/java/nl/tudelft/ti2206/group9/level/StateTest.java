@@ -80,8 +80,12 @@ public class StateTest {
 		assertEquals(1, State.getCoins());
 	}
 	
+	/**
+	 * This method tests whether the highscore is set correctly
+	 * when the score changes.
+	 */
 	@Test
-	public void testGetHighScore() {
+	public void testHighscore() {
 		assertEquals(0, State.getHighscore());
 		
 		State.setScore(2);
