@@ -91,7 +91,8 @@ public final class StartScreen {
      * @param button Button to be set.
      * @param type Type of button
      */
-	private static void setButtonFunction(final Stage stage, Button button, final BType type) {
+	private static void setButtonFunction(final Stage stage, 
+										final Button button, final BType type) {
         button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
                 if (type == BType.EXIT) { 
