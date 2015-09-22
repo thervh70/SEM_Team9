@@ -18,7 +18,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 import nl.tudelft.ti2206.group9.util.Logger;
 
 /**
- * Created by Maikel on 08/09/2015.
+ * @author Maikel and Mitchell
  *
  * A splashcreen that show a "Press any key to continue", also starts the
  * entire application.
@@ -43,22 +43,65 @@ public final class SplashScreen extends Application {
         /** Setting the background image */
         Style.setBackground("sc.png", root);
 
+        Label text = createLabel("Press any key to continue");
+        addMouseClick(root, primaryStage);
+        addKeyPressed(scene, primaryStage);
 
-        /** Creating a new label for displaying text. */
-        final Label text = new Label("Press any key to continue");
-        Style.setLabelStyle(text);
+        /** Add the text to the canvas and give it a fade
+         * in/ fade out effect. */
+        root.getChildren().add(text);
+        root.setAlignment(Pos.CENTER);
 
-        /** Defining what has happens in case of a mouseClickEvent. */
-        root.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent t) {
+        generateFadeTransition(text);
+
+        /** Setting the right scene and displaying it. */
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+	/**
+     * Main method to launch the application.
+     * @param args -
+     */
+    public static void main(final String... args) {
+        launch(args);
+    }
+
+    /**
+     * Creating a new label for displaying text.
+     * @param text a given sentence.
+     * @return label resulting label.
+     */
+    private Label createLabel(final String text) {
+        final Label label = new Label(text);
+        Style.setLabelStyle(label);
+		return label;
+	}
+
+    /**
+     * Defining what has happens in case of a mouseClickEvent.
+     * @param stackPane current stackPane.
+     * @param primaryStage current primaryStage.
+     */
+    private static void addMouseClick(final StackPane stackPane, 
+    									final Stage primaryStage) {
+    	stackPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(final MouseEvent me) {
                 GameObservable.notify(Category.INPUT, Input.MOUSE,
-                        t.getButton());
+                        me.getButton());
                 GameObservable.notify(Category.MENU, Menu.ANY_KEY);
                 StartScreen.start(primaryStage);
             }
         });
+    }
 
-        /** Defining what happens in case of a random keyPressedEvent. */
+    /**
+     * Defining what happens in case of a random keyPressedEvent.
+     * @param scene current scene.
+     * @param primaryStage current primaryStage.
+     */
+    private static void addKeyPressed(final Scene scene,
+    									final Stage primaryStage) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent ke) {
                 GameObservable.notify(Category.INPUT, Input.KEYBOARD,
@@ -68,28 +111,20 @@ public final class SplashScreen extends Application {
             }
         });
 
-        /** Add the text to the canvas and give it a fade
-         * in/ fade out effect. */
-        root.getChildren().add(text);
-        root.setAlignment(Pos.CENTER);
+    }
+
+    /**
+     * Generates a fade transition for a specific label.
+     * @param label given label.
+     */
+	private static void generateFadeTransition(final Label label) {
         final FadeTransition ft = new FadeTransition(
-                Duration.millis(TRANSITION_TIME), text);
+                Duration.millis(TRANSITION_TIME), label);
         ft.setFromValue(1.0);
         ft.setToValue(0);
         ft.setCycleCount(TRANSITION_TIME * 2);
         ft.setAutoReverse(true);
         ft.play();
+	}
 
-        /** Setting the right scene and displaying it. */
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    /**
-     * Main method to launch the application.
-     * @param args -
-     */
-    public static void main(final String... args) {
-        launch(args);
-    }
 }

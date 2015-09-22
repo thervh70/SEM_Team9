@@ -79,6 +79,23 @@ public class StateTest {
 		State.setCoins(1);
 		assertEquals(1, State.getCoins());
 	}
+	
+	/**
+	 * This method tests whether the highscore is set correctly
+	 * when the score changes.
+	 */
+	@Test
+	public void testHighscore() {
+		assertEquals(0, State.getHighscore());
+		
+		State.setScore(2);
+		State.checkHighscore();
+		assertEquals(2, State.getHighscore());
+		
+		State.setScore(1);
+		State.checkHighscore();
+		assertEquals(2, State.getHighscore());
+	}
 
 	@Test
 	public void testSetPlayerName() {

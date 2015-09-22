@@ -24,9 +24,9 @@ import nl.tudelft.ti2206.group9.level.State;
 public class ExternalTicker extends AnimationTimer {
 
 	/** Height of the box in-game where the score is displayed. */
-	private static final int SCORE_BOX_HEIGHT = 90;
+	private static final int SCORE_BOX_HEIGHT = 120;
 	/** Width of the box in-game where the score is displayed. */
-	private static final int SCORE_BOX_WIDTH = 130;
+	private static final int SCORE_BOX_WIDTH = 140;
 
 	@Override
 	public final void handle(final long now) {
@@ -58,17 +58,20 @@ public class ExternalTicker extends AnimationTimer {
 	 * @return VBox with score labels
 	 */
 	private VBox renderScore() {
-		final Label scoreLabel = new Label(("Score: "
-				+ State.modulo(State.getScore())));
+		final Label highLabel = new Label("Highscore: "	+ State.getHighscore());
+		final Label scoreLabel = new Label("Score: "
+				+ State.modulo(State.getScore()));
 		final Label distanceLabel = new Label("Distance: "
 				+ State.modulo(State.getDistance()));
-		final Label coinsLabel = new Label(("Coins: " + State.getCoins()));
+		final Label coinsLabel = new Label("Coins: " + State.getCoins());
 
+		Style.setLabelStyle(highLabel);
 		Style.setLabelStyle(scoreLabel);
 		Style.setLabelStyle(distanceLabel);
 		Style.setLabelStyle(coinsLabel);
 
-		final VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
+		final VBox scoreBox = new VBox(highLabel, scoreLabel,
+				distanceLabel, coinsLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
 		return scoreBox;
@@ -96,14 +99,13 @@ public class ExternalTicker extends AnimationTimer {
 					entityBox.setMaterial(new PhongMaterial(Color.ORANGE));
 				} else if (entity instanceof Coin) {
 					entityBox.setMaterial(new PhongMaterial(Color.GOLD));
-				} else if (entity instanceof Log){
+				} else if (entity instanceof Log) {
 					entityBox.setMaterial(new PhongMaterial(Color.BROWN));
 				} else if (entity instanceof Pillar) {
 					entityBox.setMaterial(new PhongMaterial(Color.WHITE));
 				} else {
 					entityBox.setMaterial(new PhongMaterial(Color.GRAY));
 				}
-
 				entities.getChildren().add(entityBox);
             }
 		}
