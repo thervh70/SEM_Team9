@@ -47,6 +47,8 @@ public class Player extends AbstractEntity {
 	private boolean sliding;
 	/** Rate at which the Player's size in-/decreases. */
 	private double slideSpeed;
+	/** Whether the player is invincible. */
+	private boolean invincible;
 
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -78,6 +80,16 @@ public class Player extends AbstractEntity {
 		return alive;
 	}
 
+	/** @return the invincible */
+	public boolean isInvincible() {
+		return invincible;
+	}
+
+	/** @param invincible the invincible to set */
+	public void setInvincible(boolean set) {
+		invincible = set;
+	}
+
 	/**
 	 * When colliding with a coin, Coin.VALUE is added to score,
 	 * and amount of coins is increased by one.
@@ -94,9 +106,11 @@ public class Player extends AbstractEntity {
 
 		if (collidee instanceof Obstacle) {
 			GameObservable.notify(
-					Category.PLAYER, GameObserver.Player.COLLISION, 
+					Category.PLAYER, GameObserver.Player.COLLISION,
 					Obstacle.class.getSimpleName());
-			die();
+			if (!isInvincible()) {
+				die();
+			}
 		}
 	}
 
@@ -108,7 +122,7 @@ public class Player extends AbstractEntity {
 	private void changeLane(final double dir) {
 		if (moveLane + dir >= -Track.WIDTH / 2
 				&& moveLane + dir <= Track.WIDTH / 2) {
-			GameObservable.notify(Category.PLAYER, 
+			GameObservable.notify(Category.PLAYER,
 					GameObserver.Player.START_MOVE, (int) moveLane);
 			moveLane += dir;
 		}
@@ -118,13 +132,13 @@ public class Player extends AbstractEntity {
 	 * Keeps the Player moving.
 	 */
 	private void changeLaneStep() {
-		double dist = moveLane - getCenter().getX();
+		final double dist = moveLane - getCenter().getX();
 		final double delta = 0.02; // higher means faster acceleration
 		final double slow = 5; 	// higher means lower terminal speed
 		if (Math.abs(dist) < delta && hspeed != 0) {
 			getCenter().setX(moveLane);
 			hspeed = 0;
-			GameObservable.notify(Category.PLAYER, 
+			GameObservable.notify(Category.PLAYER,
 					GameObserver.Player.STOP_MOVE, (int) moveLane);
 		} else {
 			if (Math.abs(hspeed) < Math.abs(dist) / slow) {
@@ -156,13 +170,13 @@ public class Player extends AbstractEntity {
 	 * Keeps the Player jumping.
 	 */
 	private void jumpStep() {
-		Point3D pos = getCenter();
+		final Point3D pos = getCenter();
 		if (jumping) {
 			vspeed -= GRAVITY;
 		}
 		pos.addY(vspeed);
 
-		double bottomToFloor = getSize().getY() / 2;
+		final double bottomToFloor = getSize().getY() / 2;
 		if (pos.getY() < bottomToFloor) {
 			jumping = false;
 			vspeed = 0;

@@ -63,11 +63,14 @@ public final class Style {
      * @param b Button to be styled.
      */
     public static void setButtonStyle(final Button b) {
-        Color color = Color.BLACK;
-        CornerRadii corner = new CornerRadii(3);
-        Insets inset = new Insets(0);
-        BackgroundFill fill = new BackgroundFill(color, corner, inset);
-        Background buttonBack = new Background(fill);
+
+        /** Adjusting looks of button */
+    	final Color color = Color.BLACK;
+    	final CornerRadii corner = new CornerRadii(3);
+    	final Insets inset = new Insets(0);
+    	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
+    	final Background buttonBack = new Background(fill);
+
         b.setTextFill(Color.WHITE);
         b.setBackground(buttonBack);
         b.setFont(Font.font("Roboto", FontWeight.BOLD, 14));
@@ -95,11 +98,11 @@ public final class Style {
      */
     public static void setPopupButtonStyle(final Button b) {
         /** Adjusting the looks of the button */
-        Color color = Color.BLACK;
-        CornerRadii corner = new CornerRadii(3);
-        Insets inset = new Insets(0);
-        BackgroundFill fill = new BackgroundFill(color, corner, inset);
-        Background buttonBack = new Background(fill);
+    	final Color color = Color.BLACK;
+    	final CornerRadii corner = new CornerRadii(3);
+    	final Insets inset = new Insets(0);
+    	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
+    	final Background buttonBack = new Background(fill);
         b.setTextFill(Color.WHITE);
         b.setBackground(buttonBack);
         b.setFont(Font.font("Roboto", FontWeight.BOLD, 14));
@@ -125,11 +128,11 @@ public final class Style {
      * @param l Label to be changed.
      */
     public static void setLabelStyle(final Label l) {
-        Color color = Color.BLACK;
-        CornerRadii corner = new CornerRadii(3);
-        Insets inset = new Insets(-4);
-        BackgroundFill fill = new BackgroundFill(color, corner, inset);
-        Background buttonBack = new Background(fill);
+    	final Color color = Color.BLACK;
+    	final CornerRadii corner = new CornerRadii(3);
+    	final Insets inset = new Insets(-4);
+    	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
+    	final Background buttonBack = new Background(fill);
         l.setBackground(buttonBack);
         l.setTextFill(Color.WHITE);
         l.setFont(Font.font("Roboto", FontWeight.BOLD, 18));
@@ -142,13 +145,13 @@ public final class Style {
      * @param p The pane.
      */
     public static void setBackground(final String src, final Pane p) {
-        Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
-        BackgroundSize backgroundSize = new BackgroundSize(GUIConstant.WIDTH,
-                GUIConstant.HEIGHT, true, true, true, false);
-        BackgroundImage backgroundImage = new BackgroundImage(image,
+    	final Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
+    	final BackgroundSize backgroundSize = new BackgroundSize(
+    			GUIConstant.WIDTH, GUIConstant.HEIGHT, true, true, true, false);
+    	final BackgroundImage backgroundImage = new BackgroundImage(image,
         		BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
         		BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
+    	final Background background = new Background(backgroundImage);
         p.setBackground(background);
     }
 

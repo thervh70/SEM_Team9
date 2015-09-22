@@ -7,6 +7,17 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  */
 public class Pillar extends Obstacle {
 
+    /** Standard bounding box size of a Pillar. */
+    public static final Point3D SIZE = new Point3D(1, 4, 1);
+
+    /**
+     * Easy to use costructor for standard Pillar.
+     * @param center center of Pillar
+     */
+    public Pillar(final Point3D center) {
+        super(center, SIZE);
+    }
+
     /**
      * Default constructor.
      *

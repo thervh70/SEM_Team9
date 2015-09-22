@@ -1,6 +1,8 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.scene.CacheHint;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -18,12 +20,10 @@ import nl.tudelft.ti2206.group9.level.State;
 @SuppressWarnings("restriction")
 public class ExternalTicker extends AnimationTimer {
 
-	/** Equal to 1000. */
-	private static final double E3 = 1000.0;
 	/** Height of the box in-game where the score is displayed. */
-	private static final int SCORE_BOX_HEIGHT = 90;
+	private static final int SCORE_BOX_HEIGHT = 120;
 	/** Width of the box in-game where the score is displayed. */
-	private static final int SCORE_BOX_WIDTH = 130;
+	private static final int SCORE_BOX_WIDTH = 140;
 
 	@Override
 	public final void handle(final long now) {
@@ -39,8 +39,14 @@ public class ExternalTicker extends AnimationTimer {
 		GameScreen.clearWorld();
 		GameScreen.clearOverlay();
 
-		final Group entities = renderEntities();
-		GameScreen.addWorld(entities);
+		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
+			final Box track = new Box(3, 0.1, 500);
+			track.setMaterial(new PhongMaterial(Color.WHITESMOKE));
+			GameScreen.addWorld(track);
+
+			final Group entities = renderEntities();
+			GameScreen.addWorld(entities);
+		}
 
 		GameScreen.addOverlay(renderScore());
 	}
@@ -49,17 +55,20 @@ public class ExternalTicker extends AnimationTimer {
 	 * @return VBox with score labels
 	 */
 	private VBox renderScore() {
-		Label scoreLabel = new Label(("Score: "
-				+ State.modulo(State.getScore())));
-		Label distanceLabel = new Label("Distance: "
+		final Label highLabel = new Label("Highscore: "	+ State.getHighscore());
+		final Label scoreLabel = new Label("Score: "
+				+ State.modulo(State.getScore()));
+		final Label distanceLabel = new Label("Distance: "
 				+ State.modulo(State.getDistance()));
-		Label coinsLabel = new Label(("Coins: " + State.getCoins()));
+		final Label coinsLabel = new Label("Coins: " + State.getCoins());
 
+		Style.setLabelStyle(highLabel);
 		Style.setLabelStyle(scoreLabel);
 		Style.setLabelStyle(distanceLabel);
 		Style.setLabelStyle(coinsLabel);
 
-		VBox scoreBox = new VBox(scoreLabel, distanceLabel, coinsLabel);
+		final VBox scoreBox = new VBox(highLabel, scoreLabel,
+				distanceLabel, coinsLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
 		return scoreBox;

@@ -84,13 +84,14 @@ public interface GameObserver {
 
 	/**
 	 * Is called when the game is updated. The internal classes should call
-	 * {@link State#updateObservers} to update GameObservers.
+	 * {@link GameObservable#notify(Category, Specific, Object...)} 
+	 * to update GameObservers.
 	 * @param cat the Category of this update.
 	 * @param spec the Specific action of this update.
 	 * @param optionalArgs Optional arguments that come with the update
 	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
 	 */
 	void gameUpdate(final Category cat, final Specific spec,
-			final Object[] optionalArgs);
+			final Object... optionalArgs);
 
 }

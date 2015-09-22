@@ -175,8 +175,9 @@ public final class GameScreen {
 	 */
 	public static void showPauseMenu(final Stage primeStage) {
 		stopTickers();
+		GameObservable.notify(Category.GAME, Game.PAUSED);
 
-		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
+		final EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
 				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
@@ -186,7 +187,7 @@ public final class GameScreen {
 			}
 		};
 
-		EventHandler<MouseEvent> resume
+		final EventHandler<MouseEvent> resume
 				= new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
@@ -264,10 +265,10 @@ public final class GameScreen {
 	}
 	/** @return current Popup. Is null if no Popup is present. */
 	static Popup getPopup() {
-		if (pause != null) {
-			return pause;
-		} else {
+		if (pause == null) {
 			return death;
+		} else {
+			return pause;
 		}
 	}
 }

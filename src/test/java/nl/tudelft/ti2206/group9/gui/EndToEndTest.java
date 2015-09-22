@@ -91,6 +91,7 @@ public class EndToEndTest extends ApplicationTest {
 		Random mockGenerator = Mockito.mock(Random.class);
 		Mockito.when(mockGenerator.nextDouble()).thenReturn(1.0);
 		State.getTrack().setRandom(mockGenerator);
+		State.getTrack().getPlayer().setInvincible(true);
 	}
 
 	private void moveAround() {
