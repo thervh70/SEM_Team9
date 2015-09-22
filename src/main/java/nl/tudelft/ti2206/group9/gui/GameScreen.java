@@ -174,6 +174,7 @@ public final class GameScreen {
 	 */
 	public static void showPauseMenu(final Stage primeStage) {
 		stopTickers();
+		GameObservable.notify(Category.GAME, Game.PAUSED);
 
 		final EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
