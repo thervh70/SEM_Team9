@@ -26,10 +26,10 @@ public class SaveGameParser {
 	private boolean soundEnabled;
 
 	/**
-	 * Load all data from the given file and save it in State
+	 * Load all data from the given file and save it in State.
 	 * @param filePath the path to the file to be read.
 	 */
-	public void loadGame(String filePath) {
+	public final void loadGame(final String filePath) {
 		try {
 			JSONObject mainObject = parserInit(filePath);
 			playername = (String) mainObject.get("playername");
@@ -58,10 +58,10 @@ public class SaveGameParser {
 	 * Initialize the parsing process.
 	 * @param filePath path to the file to be parsed.
 	 * @return JSONObject the main JSONObjct from the read file
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws IOException IOException
+	 * @throws ParseException ParseException
 	 */
-	private JSONObject parserInit(String filePath) throws IOException, ParseException {
+	private JSONObject parserInit(final String filePath) throws IOException, ParseException {
 		FileReader reader = new FileReader(filePath);
 		JSONParser parser = new JSONParser();
 		JSONObject mainObject = (JSONObject) parser.parse(reader);
