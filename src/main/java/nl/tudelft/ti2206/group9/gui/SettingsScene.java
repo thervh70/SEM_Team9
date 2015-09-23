@@ -40,7 +40,10 @@ public final class SettingsScene extends MenuScene {
     	return sound;
     }
 
-    /** Creates a Sound toggle button and a Back button. */
+    /**
+     * Creates a Sound toggle button and a Back button.
+     * @return an array of Nodes to be added to the Scene.
+     */
 	@Override
 	public Node[] createContent() {
 	    
@@ -58,7 +61,6 @@ public final class SettingsScene extends MenuScene {
 
 	/**
 	 * This method sets the function of a button.
-	 * @param stage given PrimaryStage.
 	 * @param button Button to be set.
 	 * @param type Type of button
 	 */

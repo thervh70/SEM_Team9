@@ -21,6 +21,7 @@ public abstract class MenuScene extends AbstractScene {
 
 	/**
 	 * Creating the SettingsScene.
+	 * @return The root Node for this Scene.
 	 */
 	public Parent createRoot() {
 	    GridPane grid = initializeGrid();

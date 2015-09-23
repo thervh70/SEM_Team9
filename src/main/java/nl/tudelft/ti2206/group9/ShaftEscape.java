@@ -44,13 +44,19 @@ public class ShaftEscape extends Application {
 		setScene(new SplashScene());
 	}
 
-	/** Setting the right scene and displaying it. */
+	/**
+	 * Setting the right scene and displaying it.
+	 * @param newScene the new Scene that is to be showed.
+	 */
 	public static void setScene(AbstractScene newScene) {
 		stage.setScene(newScene);
 		stage.show();
 	}
 
-	/** Shows a popup on the screen. */
+	/**
+	 * Shows a popup on the screen.
+	 * @param popup the Popup that is to be shown.
+	 */
 	public static void showPopup(Popup popup) {
 		popup.show(stage);
 		popup.setAnchorX(stage.getX() + stage.getWidth() / 2
@@ -66,7 +72,7 @@ public class ShaftEscape extends Application {
 
 	/**
 	 * Launch JavaFX.
-	 * @param optional JavaFX arguments
+	 * @param args optional JavaFX arguments
 	 */
 	public static void main(String... args) {
 		launch(args);

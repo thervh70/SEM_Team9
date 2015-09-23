@@ -24,7 +24,10 @@ public final class SplashScene extends MenuScene {
     /** Duration of transition in ms. */
     private static final int TRANSITION_TIME = 750;
 
-    /** Create Splash label and set AnyKey event handlers. */
+    /**
+     * Create Splash label and set AnyKey event handlers.
+     * @return an array of Nodes to be added to the Scene.
+     */
 	@Override
 	public Node[] createContent() {
         addMouseClick();

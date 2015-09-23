@@ -29,7 +29,10 @@ public final class MainMenuScene extends MenuScene {
 		SETTINGS
 	}
 
-	/** Create Start, Settings and Exit buttons. */
+	/**
+	 * Create Start, Settings and Exit buttons.
+	 * @return an array of Nodes to be added to the Scene.
+	 */
 	@Override
 	public Node[] createContent() {
         final Button startButton = createButton("START", 6, 26);

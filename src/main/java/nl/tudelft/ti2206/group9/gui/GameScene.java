@@ -71,6 +71,7 @@ public final class GameScene extends AbstractScene {
 	
 	/** 
 	 * Creating the GameScene.
+	 * @return The root Node for this Scene.
 	 */
 	public Parent createRoot() {
 		State.reset();
@@ -79,6 +80,16 @@ public final class GameScene extends AbstractScene {
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
 
+		setupSubScenes();
+		setupCamera();
+		keyBindings();
+
+		startTickers();
+		return root;
+	}
+	
+	/** In this method, the SubScenes for the world and overlay are created. */
+	private static void setupSubScenes() {
 		world = new Group();
 		overlay = new Group();
 		worldScene = new SubScene(world, ShaftEscape.WIDTH,
@@ -88,17 +99,9 @@ public final class GameScene extends AbstractScene {
 		overlayScene.setFill(Color.TRANSPARENT);
 		root.getChildren().add(worldScene);
 		root.getChildren().add(overlayScene);
-
-		setupCamera();
-		keyBindings();
-
-		startTickers();
-		return root;
 	}
 
-	/**
-	 * Create and setup camera, adding it to worldScene.
-	 */
+	/** Create and setup camera, adding it to worldScene. */
 	private static void setupCamera() {
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
 		camera.getTransforms().addAll(CAMERA_TRANS, CAMERA_ROT);
@@ -107,9 +110,7 @@ public final class GameScene extends AbstractScene {
 		worldScene.setCamera(camera);
 	}
 
-	/**
-	 * Make sure KeyEvents are handled in {@link KeyMap}.
-	 */
+	/** Make sure KeyEvents are handled in {@link KeyMap}. */
 	private void keyBindings() {
 		KeyMap.defaultKeys();
 		setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -164,9 +165,7 @@ public final class GameScene extends AbstractScene {
 		GameObservable.notify(Category.GAME, Game.STOPPED);
 	}
 
-	/**
-	 * Show a pause menu.
-	 */
+	/** Show a pause menu. */
 	public static void showPauseMenu() {
 		stopTickers();
 		GameObservable.notify(Category.GAME, Game.PAUSED);
@@ -195,9 +194,7 @@ public final class GameScene extends AbstractScene {
 		ShaftEscape.showPopup(pause);
 	}
 
-	/**
-	 * Show a death menu.
-	 */
+	/** Show a death menu. */
 	public static void showDeathMenu() {
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
@@ -235,9 +232,7 @@ public final class GameScene extends AbstractScene {
 		return world.getChildren().add(node);
 	}
 
-	/**
-	 * Clears the world.
-	 */
+	/** Clears the world. */
 	public static void clearWorld() {
 		world.getChildren().clear();
 	}
@@ -251,12 +246,11 @@ public final class GameScene extends AbstractScene {
 		return overlay.getChildren().add(node);
 	}
 
-	/**
-	 * Clears the overlay.
-	 */
+	/** Clears the overlay. */
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
+	
 	/** @return current Popup. Is null if no Popup is present. */
 	static Popup getPopup() {
 		if (pause == null) {
