@@ -7,6 +7,7 @@ import nl.tudelft.ti2206.group9.gui.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.SplashScene;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.Logger;
+import nl.tudelft.ti2206.group9.util.SaveGameParser;
 
 /**
  * Starting point of the Application.
@@ -43,6 +44,7 @@ public class ShaftEscape extends Application {
 		stage.setMaxHeight(ShaftEscape.HEIGHT);
 
 		GameObservable.addObserver(new Logger());
+		SaveGameParser.loadGame("src/main/resources/nl/tudelft/ti2206/group9/util/firstSaveGame.json");
 		setScene(new SplashScene());
 	}
 	

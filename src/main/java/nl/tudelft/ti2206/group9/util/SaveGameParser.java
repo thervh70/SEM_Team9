@@ -15,21 +15,21 @@ import java.io.IOException;
 public class SaveGameParser {
 
 	/** Playername. */
-	private String playername;
+	private static String playername;
 	/** Number of coins.*/
-	private int coins;
+	private static int coins;
 	/** Players highscore. */
-	private double highScore;
+	private static double highScore;
 	/** Number of coins collected in players last highscore run. */
-	private int highCoins;
+	private static int highCoins;
 	/** Boolean to indicate whether the sound is enabled. */
-	private boolean soundEnabled;
+	private static boolean soundEnabled;
 
 	/**
 	 * Load all data from the given file and save it in State.
 	 * @param filePath the path to the file to be read.
 	 */
-	public final void loadGame(final String filePath) {
+	public static final void loadGame(final String filePath) {
 		try {
 			JSONObject mainObject = parserInit(filePath);
 			playername = (String) mainObject.get("playername");
@@ -61,7 +61,7 @@ public class SaveGameParser {
 	 * @throws IOException IOException
 	 * @throws ParseException ParseException
 	 */
-	private JSONObject parserInit(final String filePath) throws IOException, ParseException {
+	private static JSONObject parserInit(final String filePath) throws IOException, ParseException {
 		FileReader reader = new FileReader(filePath);
 		JSONParser parser = new JSONParser();
 		JSONObject mainObject = (JSONObject) parser.parse(reader);
@@ -72,7 +72,7 @@ public class SaveGameParser {
 	/**
 	 * Write all data to the State class.
 	 */
-	private void writeToState() {
+	private static void writeToState() {
 		State.setPlayerName(playername);
 		State.setCoins(coins);
 		State.setSoundEnabled(soundEnabled);

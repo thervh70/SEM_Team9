@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
@@ -18,9 +19,6 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  */
 @SuppressWarnings("restriction")
 public final class SettingsScene extends MenuScene {
-
-    /** Boolean for sound status. */
-    private static boolean sound = true;
 
 	/**
 	 * Type of buttons that exist.
@@ -37,7 +35,7 @@ public final class SettingsScene extends MenuScene {
      * @return whether sound is enabled.
      */
     public static boolean isSoundEnabled() {
-    	return sound;
+    	return State.isSoundEnabled();
     }
 
     /**
@@ -48,7 +46,11 @@ public final class SettingsScene extends MenuScene {
 	public Node[] createContent() {
 	    
 	    final Button backButton = createButton("Back", 2, 26);
-	    final Button soundButton = createButton("Sound: ON", 5, 18);
+		String soundToggle = "OFF";
+		if(isSoundEnabled()) {
+			soundToggle = "ON";
+		}
+	    final Button soundButton = createButton("Sound: " + soundToggle, 5, 18);
 	    
 	    // Override default button size from Style
 	    final Font font = Font.font("Roboto", FontWeight.BOLD, 20);
@@ -72,9 +74,9 @@ public final class SettingsScene extends MenuScene {
 	                GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
 	                ShaftEscape.setScene(new MainMenuScene());
 	            } else {
-	                sound = !sound;
+	                State.setSoundEnabled(!isSoundEnabled());
 	                String s;
-	                if (sound) {
+	                if (State.isSoundEnabled()) {
 	                    s = "ON";
 	                } else {
 	                    s = "OFF";
