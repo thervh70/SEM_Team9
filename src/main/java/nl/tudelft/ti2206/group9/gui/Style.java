@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,9 +21,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 /**
- * Created by Maikel on 03/09/2015.
- *
  * Class containing the styling for the GUI.
+ * @author Maikel
  */
 @SuppressWarnings("restriction")
 public final class Style {
@@ -127,7 +127,7 @@ public final class Style {
     public static void setBackground(final String src, final Pane p) {
     	final Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
     	final BackgroundSize backgroundSize = new BackgroundSize(
-    			GUIConstant.WIDTH, GUIConstant.HEIGHT, true, true, true, false);
+    			ShaftEscape.WIDTH, ShaftEscape.HEIGHT, true, true, true, false);
     	final BackgroundImage backgroundImage = new BackgroundImage(image,
         		BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
         		BackgroundPosition.CENTER, backgroundSize);

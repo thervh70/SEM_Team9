@@ -15,8 +15,8 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
 /**
- * A SplashScene that show a "Press any key to continue".
- * @author Maikel and Mitchell
+ * A SplashScene that shows "Press any key to continue".
+ * @author Maikel, Maarten and Mitchell
  */
 @SuppressWarnings("restriction")
 public final class SplashScene extends MenuScene {
@@ -24,8 +24,9 @@ public final class SplashScene extends MenuScene {
     /** Duration of transition in ms. */
     private static final int TRANSITION_TIME = 750;
 
+    /** Create Splash label and set AnyKey event handlers. */
 	@Override
-	Node[] createContent() {
+	public Node[] createContent() {
         addMouseClick();
         addKeyPressed();
 
@@ -92,11 +93,6 @@ public final class SplashScene extends MenuScene {
         ft.setCycleCount(TRANSITION_TIME * 2);
         ft.setAutoReverse(true);
         ft.play();
-	}
-
-	@Override
-	String getBackgroundPath() {
-		return "sc.png";
 	}
 
 }

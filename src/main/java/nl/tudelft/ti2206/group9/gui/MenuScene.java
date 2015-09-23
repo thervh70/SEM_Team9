@@ -1,21 +1,23 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 /**
+ * Ancestor for all MenuScenes. Subclasses should define an array of Nodes in
+ * the abstract method {@link #createContent()}.
  * @author Maarten
- *
  */
 @SuppressWarnings("restriction")
 public abstract class MenuScene extends AbstractScene {
 
 	protected static final int GRID_GAP = 20;
 	protected static final int GRID_MARGIN = 10;
-	protected static final int GRID_WIDTH = GUIConstant.WIDTH / GRID_GAP;
-	protected static final int GRID_HEIGHT = GUIConstant.HEIGHT / GRID_GAP;
+	protected static final int GRID_WIDTH = ShaftEscape.WIDTH / GRID_GAP;
+	protected static final int GRID_HEIGHT = ShaftEscape.HEIGHT / GRID_GAP;
 
 	/**
 	 * Creating the SettingsScene.
@@ -29,7 +31,11 @@ public abstract class MenuScene extends AbstractScene {
 		return grid;
 	}
 
-	abstract Node[] createContent();
+	/**
+	 * @return a list of Nodes which should be added to the Root (which is a 
+	 * {@link GridPane}).
+	 */
+	public abstract Node[] createContent();
 
 	/**
 	 * This method creates the gridPane which is used for the layout.
@@ -45,7 +51,12 @@ public abstract class MenuScene extends AbstractScene {
 	    return grid;
 	}
 
-	abstract String getBackgroundPath();
+	/**
+	 * @return the path to the background image (located in the gui package).
+	 */
+	public String getBackgroundPath() {
+		return "sc.png";
+	}
 
 	/**
 	 * This method adds text to buttons and give them a location on the grid.

@@ -13,9 +13,8 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
 
 /**
- * @author Maikel and Mitchell
- *
  * A screen for displaying a settings menu.
+ * @author Maikel, Maarten and Mitchell
  */
 @SuppressWarnings("restriction")
 public final class SettingsScene extends MenuScene {
@@ -41,8 +40,9 @@ public final class SettingsScene extends MenuScene {
     	return sound;
     }
 
+    /** Creates a Sound toggle button and a Back button. */
 	@Override
-	Node[] createContent() {
+	public Node[] createContent() {
 	    
 	    final Button backButton = createButton("Back", 2, 26);
 	    final Button soundButton = createButton("Sound: ON", 5, 18);
@@ -84,8 +84,9 @@ public final class SettingsScene extends MenuScene {
 	    });
 	}
 
+	/** Override background, the Settings background shows "Settings". */
 	@Override
-	String getBackgroundPath() {
+	public String getBackgroundPath() {
 		return "sc2.jpg";
 	}
 

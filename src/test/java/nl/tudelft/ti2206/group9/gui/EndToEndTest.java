@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Random;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -25,7 +24,6 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Logger;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.testfx.framework.junit.ApplicationTest;
 
 @SuppressWarnings("restriction")
@@ -46,7 +44,7 @@ public class EndToEndTest extends ApplicationTest {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		mockGenerator();
+		letPlayerSurvive();
 		stage = primaryStage;
 		new ShaftEscape().start(stage);
 	}
@@ -88,10 +86,7 @@ public class EndToEndTest extends ApplicationTest {
 		System.out.println("== END_EVENT_LOG ==\n");
 	}
 	
-	private void mockGenerator() {
-		Random mockGenerator = Mockito.mock(Random.class);
-		Mockito.when(mockGenerator.nextDouble()).thenReturn(1.0);
-		State.getTrack().setRandom(mockGenerator);
+	private void letPlayerSurvive() {
 		State.getTrack().getPlayer().setInvincible(true);
 	}
 
@@ -136,7 +131,7 @@ public class EndToEndTest extends ApplicationTest {
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-		mockGenerator();			// Make sure there are no obstacles
+		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
 	
@@ -160,7 +155,7 @@ public class EndToEndTest extends ApplicationTest {
 	private void playerDies() {
 		State.getTrack().getPlayer().die();
 		sleep(2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		mockGenerator();			// Make sure there are no obstacles
+		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
 	

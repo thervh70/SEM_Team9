@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Log;
@@ -30,7 +31,7 @@ public class ExternalTicker extends AnimationTimer {
 
 	@Override
 	public final void handle(final long now) {
-		synchronized (GUIConstant.LOCK) {
+		synchronized (ShaftEscape.TICKER_LOCK) {
 			renderScene();
 		}
 	}

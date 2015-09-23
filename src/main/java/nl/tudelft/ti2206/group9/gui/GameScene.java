@@ -24,6 +24,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
 
 /**
+ * This scene shows the 3D Game world and the 2D score overlay.
  * @author Robin, Maarten
  */
 @SuppressWarnings("restriction")
@@ -60,8 +61,8 @@ public final class GameScene extends AbstractScene {
 	private static Popup death;
 
 	/**
-	 * Default constructor, Scene of default {@link GUIConstant#WIDTH} and 
-	 * {@link GUIConstant#HEIGHT} is created.
+	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and 
+	 * {@link ShaftEscape#HEIGHT} is created.
 	 */
 	public GameScene() {
 		super(true);
@@ -80,10 +81,10 @@ public final class GameScene extends AbstractScene {
 
 		world = new Group();
 		overlay = new Group();
-		worldScene = new SubScene(world, GUIConstant.WIDTH,
-                GUIConstant.HEIGHT, true, SceneAntialiasing.BALANCED);
-		overlayScene = new SubScene(overlay, GUIConstant.WIDTH,
-				GUIConstant.HEIGHT);
+		worldScene = new SubScene(world, ShaftEscape.WIDTH,
+                ShaftEscape.HEIGHT, true, SceneAntialiasing.BALANCED);
+		overlayScene = new SubScene(overlay, ShaftEscape.WIDTH,
+				ShaftEscape.HEIGHT);
 		overlayScene.setFill(Color.TRANSPARENT);
 		root.getChildren().add(worldScene);
 		root.getChildren().add(overlayScene);

@@ -8,10 +8,21 @@ import nl.tudelft.ti2206.group9.gui.SplashScene;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.Logger;
 
+/**
+ * Starting point of the Application.
+ * Contains method to switch Scenes or show Popups.
+ * @author Maarten
+ */
 @SuppressWarnings("restriction")
 public class ShaftEscape extends Application {
 
 	private static Stage stage;
+	/** Width of the Window. */
+	public static final int WIDTH = 480;
+	/** Height of the Window. */
+	public static final int HEIGHT = 640;
+	/** Lock used so that the tickers won't use the Track concurrently. */
+	public static final Object TICKER_LOCK = new Object();
 
 	/**
 	 * Start the application in the SplashScene.
@@ -22,6 +33,12 @@ public class ShaftEscape extends Application {
 	public void start(Stage appStage) {
 		stage = appStage;
 		stage.setResizable(false);
+		stage.setWidth(ShaftEscape.WIDTH);
+		stage.setHeight(ShaftEscape.HEIGHT);
+		stage.setMinWidth(ShaftEscape.WIDTH);
+		stage.setMinHeight(ShaftEscape.HEIGHT);
+		stage.setMaxWidth(ShaftEscape.WIDTH);
+		stage.setMaxHeight(ShaftEscape.HEIGHT);
 
 		GameObservable.addObserver(new Logger());
 		setScene(new SplashScene());

@@ -9,12 +9,10 @@ import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
-
 /**
- * @author Maikel, Mitchell and Robin
- *
- * A startscreen with different options/buttons like a options menu, startbutton
+ * A Main Menu with different options/buttons like a options menu, start button
  * and exit button.
+ * @author Maikel, Maarten, Mitchell and Robin
  */
 @SuppressWarnings("restriction")
 public final class MainMenuScene extends MenuScene {
@@ -31,8 +29,9 @@ public final class MainMenuScene extends MenuScene {
 		SETTINGS
 	}
 
+	/** Create Start, Settings and Exit buttons. */
 	@Override
-	Node[] createContent() {
+	public Node[] createContent() {
         final Button startButton = createButton("START", 6, 26);
 		final Button settingsButton = createButton("SETTINGS", 2, 26);
 		final Button exitButton = createButton("EXIT", 10, 26);
@@ -66,11 +65,6 @@ public final class MainMenuScene extends MenuScene {
 				}
 			}
 		});
-	}
-
-	@Override
-	String getBackgroundPath() {
-		return "sc.png";
 	}
 
 }
