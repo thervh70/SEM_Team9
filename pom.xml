@@ -69,7 +69,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>nl.tudelft.ti2206.group9.gui.SplashScreen</mainClass>
+							<mainClass>nl.tudelft.ti2206.group9.ShaftEscape</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

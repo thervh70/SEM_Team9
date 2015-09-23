@@ -1,73 +1,51 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-import nl.tudelft.ti2206.group9.util.Logger;
 
 /**
- * @author Maikel and Mitchell
- *
- * A splashcreen that show a "Press any key to continue", also starts the
- * entire application.
+ * A SplashScene that shows "Press any key to continue".
+ * @author Maikel, Maarten and Mitchell
  */
 @SuppressWarnings("restriction")
-public final class SplashScreen extends Application {
+public final class SplashScene extends MenuScene {
+	
     /** Duration of transition in ms. */
     private static final int TRANSITION_TIME = 750;
 
     /**
-     * Creating and  displaying the scene.
-     * @param primaryStage The stage to be started.
+     * Create Splash label and set AnyKey event handlers.
+     * @return an array of Nodes to be added to the Scene.
      */
-    public void start(final Stage primaryStage) {
-    	GameObservable.addObserver(new Logger());
+	@Override
+	public Node[] createContent() {
+        addMouseClick();
+        addKeyPressed();
 
-        /** Creating a new stackpane and scene. */
-    	final StackPane root = new StackPane();
-    	final Scene scene = new Scene(root,
-    			GUIConstant.WIDTH, GUIConstant.HEIGHT);
-
-        /** Setting the background image */
-        Style.setBackground("sc.png", root);
-
+        final int labelRows = 2;
+        final int labelCols = 12;
         Label text = createLabel("Press any key to continue");
-        addMouseClick(root, primaryStage);
-        addKeyPressed(scene, primaryStage);
-
-        /** Add the text to the canvas and give it a fade
-         * in/ fade out effect. */
-        root.getChildren().add(text);
-        root.setAlignment(Pos.CENTER);
-
         generateFadeTransition(text);
-
-        /** Setting the right scene and displaying it. */
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
+        text.setPrefWidth(labelCols * GRID_GAP);
+        text.setPrefHeight(labelRows * GRID_GAP);
+	    GridPane.setConstraints(text, GRID_WIDTH / 2 - labelCols / 2,
+	    		GRID_HEIGHT / 2 + 2 - labelRows / 2);
+	    
+        return new Node[]{text};
+	}
+	
 	/**
-     * Main method to launch the application.
-     * @param args -
-     */
-    public static void main(final String... args) {
-        launch(args);
-    }
-
-    /**
      * Creating a new label for displaying text.
      * @param text a given sentence.
      * @return label resulting label.
@@ -80,37 +58,30 @@ public final class SplashScreen extends Application {
 
     /**
      * Defining what has happens in case of a mouseClickEvent.
-     * @param stackPane current stackPane.
-     * @param primaryStage current primaryStage.
      */
-    private static void addMouseClick(final StackPane stackPane, 
-    									final Stage primaryStage) {
-    	stackPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    private void addMouseClick() {
+    	setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent me) {
                 GameObservable.notify(Category.INPUT, Input.MOUSE,
                         me.getButton());
                 GameObservable.notify(Category.MENU, Menu.ANY_KEY);
-                StartScreen.start(primaryStage);
+                ShaftEscape.setScene(new MainMenuScene());
             }
         });
     }
 
     /**
      * Defining what happens in case of a random keyPressedEvent.
-     * @param scene current scene.
-     * @param primaryStage current primaryStage.
      */
-    private static void addKeyPressed(final Scene scene,
-    									final Stage primaryStage) {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+    private void addKeyPressed() {
+        setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent ke) {
                 GameObservable.notify(Category.INPUT, Input.KEYBOARD,
                         ke.getCode());
                 GameObservable.notify(Category.MENU, Menu.ANY_KEY);
-                StartScreen.start(primaryStage);
+                ShaftEscape.setScene(new MainMenuScene());
             }
         });
-
     }
 
     /**

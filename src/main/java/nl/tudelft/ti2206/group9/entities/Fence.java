@@ -15,7 +15,7 @@ public class Fence extends Obstacle {
      * @param center center of the Fence
      */
     public Fence(final Point3D center) {
-        super(center, SIZE);
+        this(center, SIZE);
     }
     /**
      * Default constructor.
