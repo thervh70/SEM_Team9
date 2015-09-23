@@ -2,9 +2,14 @@ package nl.tudelft.ti2206.group9.gui;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -32,20 +37,24 @@ public final class StartScreen {
         final Stage window;
         final Scene startScreen;
         final Button startButton,
-        settingsButton,
+        settingsButton,loadButton,
         exitButton;
         window = primaryStage;
+        final Label label = new Label("");
 
         /**Creating the gridPane which is used for the layout. */
-        final GridPane grid = new GridPane();
-        grid.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
-        grid.setVgap(20);
-        grid.setHgap(20);
+        final StackPane pane = new StackPane();
+        pane.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
+
 
         /**Setting a background for the menu.*/
-        Style.setBackground("sc.png", grid);
+        Style.setBackground("sc.png", pane);
 
-        /** Add text to buttons give them a location on the grid.*/
+        HBox hbox = new HBox(60);
+        VBox vbox = new VBox(30);
+
+
+        /** Add text to buttons give them a location on the pane.*/
         startButton = new Button("START");
         Style.setButtonStyle(startButton);
         GridPane.setConstraints(startButton, 6, 26);
@@ -56,13 +65,21 @@ public final class StartScreen {
 
         exitButton = new Button("EXIT");
         Style.setButtonStyle(exitButton);
-        GridPane.setConstraints(exitButton, 10, 26);
 
-        /**Adding all buttons to the gridpane.*/
-        grid.getChildren().addAll(startButton, settingsButton, exitButton);
+        loadButton = new Button("LOAD GAME");
+        Style.setButtonStyle(loadButton);
+
+        hbox.getChildren().addAll(settingsButton, startButton, exitButton);
+        vbox.getChildren().addAll(label, loadButton,hbox);
+
+        vbox.setAlignment(Pos.CENTER);
+        hbox.setAlignment(Pos.BOTTOM_CENTER);
+
+        /**Adding all buttons to the pane.*/
+        pane.getChildren().addAll(vbox);
 
         /**Creating the scene. */
-        startScreen = new Scene(grid, GUIConstant.WIDTH, GUIConstant.HEIGHT);
+        startScreen = new Scene(pane, GUIConstant.WIDTH, GUIConstant.HEIGHT);
 
         /**Setting function of the buttons. */
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
