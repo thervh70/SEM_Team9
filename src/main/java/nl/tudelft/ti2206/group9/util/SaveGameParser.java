@@ -15,28 +15,21 @@ import java.io.IOException;
 public class SaveGameParser {
 
 	/** Playername. */
-	static String playername;
+	private String playername;
 	/** Number of coins.*/
-	static int coins;
+	private int coins;
 	/** Players highscore. */
-	static double highScore;
+	private double highScore;
 	/** Number of coins collected in players last highscore run. */
-	static int highCoins;
+	private int highCoins;
 	/** Boolean to indicate whether the sound is enabled. */
-	static boolean soundEnabled;
-
-	/**
-	 * Main is only for testing purposes!
-	 */
-	public static void main(String[] args) {
-		loadGame("src/main/resources/nl/tudelft/ti2206/group9/util/firstSaveGame.json");
-	}
+	private boolean soundEnabled;
 
 	/**
 	 * Load all data from the given file and save it in State
 	 * @param filePath the path to the file to be read.
 	 */
-	public static void loadGame(String filePath) {
+	public void loadGame(String filePath) {
 		try {
 			JSONObject mainObject = parserInit(filePath);
 			playername = (String) mainObject.get("playername");
@@ -50,7 +43,6 @@ public class SaveGameParser {
 			highScore = Double.valueOf((String) highScoreObj.get("score"));
 			highCoins = Integer.valueOf((String) highScoreObj.get("coins"));
 
-			printAllJSON();
 			writeToState();
 
 		} catch (FileNotFoundException e) {
@@ -69,7 +61,7 @@ public class SaveGameParser {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	private static JSONObject parserInit(String filePath) throws IOException, ParseException {
+	private JSONObject parserInit(String filePath) throws IOException, ParseException {
 		FileReader reader = new FileReader(filePath);
 		JSONParser parser = new JSONParser();
 		JSONObject mainObject = (JSONObject) parser.parse(reader);
@@ -80,24 +72,10 @@ public class SaveGameParser {
 	/**
 	 * Write all data to the State class.
 	 */
-	private static void writeToState() {
+	private void writeToState() {
 		State.setPlayerName(playername);
 		State.setCoins(coins);
 		State.setSoundEnabled(soundEnabled);
 		State.setScore(highScore);
-	}
-
-	/**
-	 * For testing purposes only
-	 */
-	public static void printAllJSON() {
-		System.out.println("JSONPARSINGSTUFF!!\n");
-		System.out.println("PlayerName: " + playername);
-		System.out.println("Coins: " + coins);
-		System.out.println("Settings:");
-		System.out.println("  SoundEnabled: " + soundEnabled + "\n");
-		System.out.println("HighScore:");
-		System.out.println("  Score: " + highScore);
-		System.out.println("  Coins: " + highCoins);
 	}
 }
