@@ -31,7 +31,7 @@ public class ShaftEscape extends Application {
 	 */
 	@Override
 	public void start(Stage appStage) {
-		stage = appStage;
+		setStage(appStage);
 		stage.setResizable(false);
 		stage.setWidth(ShaftEscape.WIDTH);
 		stage.setHeight(ShaftEscape.HEIGHT);
@@ -42,6 +42,11 @@ public class ShaftEscape extends Application {
 
 		GameObservable.addObserver(new Logger());
 		setScene(new SplashScene());
+	}
+	
+	/** @param newStage the new stage to set as private static field. */
+	private static void setStage(Stage newStage) {
+		stage = newStage;
 	}
 
 	/**

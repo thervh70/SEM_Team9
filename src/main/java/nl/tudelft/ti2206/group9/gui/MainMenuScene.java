@@ -48,7 +48,6 @@ public final class MainMenuScene extends MenuScene {
 
 	/**
 	 * This method sets the function of a button.
-	 * @param stage given PrimaryStage.
 	 * @param button Button to be set.
 	 * @param type Type of button
 	 */
