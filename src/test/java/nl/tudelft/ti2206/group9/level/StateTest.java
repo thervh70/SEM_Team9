@@ -57,7 +57,7 @@ public class StateTest {
 	}
 	
 	@Test
-	public void testGetDistance() {
+	public void tesSGetDistance() {
 		Track.setDistance(2);
 		assertEquals(2, State.getDistance(), DELTA);
 		Track.setDistance(1);
@@ -95,6 +95,14 @@ public class StateTest {
 		State.setScore(1);
 		State.checkHighscore();
 		assertEquals(2, State.getHighscore());
+	}
+
+	@Test
+	public void testSetPlayerName() {
+		State.setPlayerName("Jan");
+		assertEquals("Jan", State.getPlayerName());
+		State.setPlayerName("Piet");
+		assertEquals("Piet", State.getPlayerName());
 	}
 
 }
