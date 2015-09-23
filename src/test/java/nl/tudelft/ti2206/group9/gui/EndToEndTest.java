@@ -61,6 +61,8 @@ public class EndToEndTest extends ApplicationTest {
 		assertFalse(isSoundEnabled());
 		settings(1);				// Toggle sound
 		assertTrue(isSoundEnabled());
+		settings(1);				// Toggle sound
+		assertFalse(isSoundEnabled());		
 		settings(0);				// Click Back
 		
 		mainMenu(0);				// Click start
