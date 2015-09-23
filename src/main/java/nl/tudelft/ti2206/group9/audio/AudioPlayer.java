@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.MediaException;
 
 /**
  * Creates an AudioPlayer which you can initialize, start and stop.
@@ -34,8 +35,9 @@ public class AudioPlayer {
 			audioPlayer = new AudioClip(new File(path).toURI().toURL()
 					.toString());
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (MediaException me) {
+			me.printStackTrace();
 		}
 	}
 
@@ -44,7 +46,11 @@ public class AudioPlayer {
 	 */
 	public final synchronized void play() {
 		synchronized (this) {
-			audioPlayer.play();
+			try {
+				audioPlayer.play();
+			} catch (MediaException me) {
+				me.printStackTrace();
+			}
 		}
 	}
 
