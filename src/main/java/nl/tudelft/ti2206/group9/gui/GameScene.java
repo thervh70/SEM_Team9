@@ -41,8 +41,6 @@ public final class GameScene extends AbstractScene {
 
 	/** The KeyMap to be used. */
 	private static KeyMap keyMap = new KeyMap();
-	/** The root. */
-	private static Group root;
 	/** The world. */
 	private static Group world;
 	/** The overlay. */
@@ -76,11 +74,11 @@ public final class GameScene extends AbstractScene {
 	public Parent createRoot() {
 		State.reset();
 
-		root = new Group();
+		Group root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
 
-		setupSubScenes();
+		setupSubScenes(root);
 		setupCamera();
 		keyBindings();
 
@@ -89,7 +87,7 @@ public final class GameScene extends AbstractScene {
 	}
 	
 	/** In this method, the SubScenes for the world and overlay are created. */
-	private static void setupSubScenes() {
+	private static void setupSubScenes(Group root) {
 		world = new Group();
 		overlay = new Group();
 		worldScene = new SubScene(world, ShaftEscape.WIDTH,
