@@ -62,7 +62,7 @@ public class AudioPlayer {
 			try {
 				audioPlayer.stop();			
 			} catch (MediaException me) {
-			audioPlayer.stop();			
+				me.printStackTrace();
 			}
 		}
 	}
