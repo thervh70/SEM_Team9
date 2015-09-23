@@ -54,6 +54,10 @@ public final class Style {
     /** FENCE material used for fences, mossy brick stone texture.*/
     public static final PhongMaterial FENCE = new PhongMaterial();
 
+    /** PLAYER material used for the player */
+    public static final PhongMaterial PLAYER = new PhongMaterial();
+
+
     /**
      * Method is called once to load all textures.
      * They are loaded into Phongmaterials.
@@ -90,6 +94,10 @@ public final class Style {
         Image fenceTexture = new Image(
                 "nl/tudelft/ti2206/group9/gui/texture_fence.png");
         FENCE.setDiffuseMap(fenceTexture);
+
+        Image playerTexture = new Image(
+                "nl/tudelft/ti2206/group9/gui/texture_player.png");
+        PLAYER.setDiffuseMap(playerTexture);
     }
 
     /**

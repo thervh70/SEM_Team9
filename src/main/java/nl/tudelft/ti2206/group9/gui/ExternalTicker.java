@@ -8,14 +8,13 @@ import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
+
 import nl.tudelft.ti2206.group9.level.State;
 
 /**
@@ -98,7 +97,7 @@ public class ExternalTicker extends AnimationTimer {
 				entityBox.setTranslateZ(entity.getCenter().getZ());
 
 				if (entity instanceof Player) {
-					entityBox.setMaterial(new PhongMaterial(Color.ORANGE));
+					entityBox.setMaterial(Style.PLAYER);
 				} else if (entity instanceof Coin) {
 					entityBox.setMaterial(Style.COIN);
 				} else if (entity instanceof Log) {
