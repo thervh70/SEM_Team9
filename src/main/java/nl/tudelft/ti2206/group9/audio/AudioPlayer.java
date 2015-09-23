@@ -1,50 +1,73 @@
 package nl.tudelft.ti2206.group9.audio;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.MediaException;
 
 import java.io.File;
 
 /**
- * Creates an AudioPlayer which you can initialise, start and stop.
+ * Creates an AudioPlayer which you can initialize, start and stop.
  * @author Mitchell
  *
  */
+@SuppressWarnings("restriction")
 public class AudioPlayer {
 
-	private static AudioClip audioPlayer;
-	private static String path;
-	
+	private AudioClip audioPlayer;
+	private String path;
+
 	/**
 	 * Creates an AudioPlayer with as input a specific path.
 	 * @param soundPath given path
 	 */
 	public AudioPlayer(final String soundPath) {
-		this.path = soundPath;
-		initialiseTune(path);
+		path = soundPath;
+		initializeTune(path);
 	}
 
 	/**
 	 * Gets the audio file and prepares it for streaming.
 	 * @param path leads to the soundtrack.
 	 */
-	public void initialiseTune(final String path) {
-		audioPlayer = new AudioClip(new File(path).toURI().toString());
+	private void initializeTune(final String path) {
+		try {
+			audioPlayer = new AudioClip(new File(path).toURI().toURL()
+					.toString());
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (MediaException me) {
+			me.printStackTrace();
+		}
 	}
-	
+
 	/**
-	 * Starts the initialised soundtrack.
+	 * Starts the initialized soundtrack.
 	 */
-	public void play() {
-		audioPlayer.play();
+	public final synchronized void play() {
+		synchronized (this) {
+			try {
+				audioPlayer.play();
+			} catch (MediaException me) {
+				me.printStackTrace();
+			}
+		}
 	}
-	
+
 	/**
-	 * Stops the initialised soundtrack.
+	 * Stops the initialized soundtrack.
 	 */
-	public void stop() {
-		audioPlayer.stop();
+	public final synchronized void stop() {
+		synchronized (this) {
+			try {
+				audioPlayer.stop();			
+			} catch (MediaException me) {
+				me.printStackTrace();
+			}
+		}
 	}
-	
+
 	/**
 	 * Checks if the current audioPlayer is running.
 	 * @return boolean true if running, false if not.
@@ -52,7 +75,7 @@ public class AudioPlayer {
 	public final boolean isRunning() {
 		return (audioPlayer.isPlaying());
 	}
-	
+
 	/**
 	 * Returns the path of the AudioPlayer.
 	 * @return path leads to the soundtrack.
@@ -62,11 +85,12 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Sets the path of the AudioPlayer.
+	 * Sets the path of the AudioPlayer and reinitializes it.
 	 * @param location new path to a file.
 	 */
 	public final void setPath(final String location) {
-		AudioPlayer.path = location;
+		path = location;
+		initializeTune(path);
 	}
 
 }
