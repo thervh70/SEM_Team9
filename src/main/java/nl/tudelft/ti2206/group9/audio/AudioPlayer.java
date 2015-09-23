@@ -1,8 +1,8 @@
 package nl.tudelft.ti2206.group9.audio;
 
-import java.io.File;
-
 import javafx.scene.media.AudioClip;
+
+import java.io.File;
 
 /**
  * Creates an AudioPlayer which you can initialise, start and stop.

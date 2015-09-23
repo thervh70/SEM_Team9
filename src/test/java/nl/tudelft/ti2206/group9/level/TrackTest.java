@@ -26,12 +26,27 @@ public class TrackTest {
 	@Before
 	public void setUp() throws Exception {
 		track = new Track();
+		Track.setDistance(0);
 	}
 
 	@Test
 	public void testTrack() {
 		assertEquals(1, track.getEntities().size());
 		assertEquals(new Player(), track.getEntities().get(0));
+	}
+	
+	@Test
+	public void testGetUnitsPerTick() {
+		final double div = Math.pow(Track.UNITS_PER_TICK_ACCEL, -1) / 2 
+				* Track.UNITS_PER_TICK_BASE * Track.UNITS_PER_TICK_BASE;
+		
+		Track.setDistance(div);
+		assertEquals(Track.UNITS_PER_TICK_BASE * Math.sqrt(2),
+						Track.getUnitsPerTick(), DELTA);
+		
+		Track.addDistance(2 * div);
+		assertEquals(Track.UNITS_PER_TICK_BASE * 2,
+						Track.getUnitsPerTick(), DELTA);
 	}
 
 	@Test
@@ -77,35 +92,6 @@ public class TrackTest {
 	}
 
 	@Test
-	public void testContainsCenter() {
-		Coin coin = new Coin(new Point3D(1, 0, 0));
-		assertFalse(track.containsCenter(coin.getCenter()));
-		track.addEntity(coin);
-		assertTrue(track.containsCenter(coin.getCenter()));
-	}
-	
-	@Test
-	public void testStepCoinZigZag() {
-		Random rand = mock(Random.class);
-		final double belowCoinZigZagChance = Track.COIN_ZIGZAG_CHANCE - 0.01;
-		final double aboveObstacleChance = Track.OBSTACLE_CHANCE + 0.01;
-		final Track track = new Track(rand);
-		final int length = 5;
-
-		when(rand.nextDouble()).thenReturn(belowCoinZigZagChance, 
-				aboveObstacleChance);
-		when(rand.nextInt(10)).thenReturn(length);
-
-		assertEquals(1, track.getEntities().size()); //player
-
-		track.step();
-		assertEquals(13, track.getEntities().size()); //player + 12 coins
-		for (int i = 1; i <13; i++) {
-			assertTrue(track.getEntities().get(i) instanceof Coin);
-		}
-	}
-
-	@Test
 	public void testAddDistance() {
 		Track.setDistance(0);
 		Track.addDistance(2.0);
@@ -119,72 +105,5 @@ public class TrackTest {
 		assertEquals(2, Track.getDistance(), DELTA);
 		Track.setDistance(1);
 		assertEquals(1, Track.getDistance(), DELTA);
-	}
-
-	@Test
-	public void testStepCoinLane() {
-		Random rand = mock(Random.class);
-		final double belowCoinLaneChance = Track.COIN_ZIGZAG_CHANCE 
-				+ Track.COIN_LANE_CHANCE - 0.01;
-		final double aboveObstacleChance = Track.OBSTACLE_CHANCE + 0.01;
-		final Track track = new Track(rand);
-		final int length = 5;
-
-		when(rand.nextDouble()).thenReturn(belowCoinLaneChance, 
-				aboveObstacleChance);
-		when(rand.nextInt(10)).thenReturn(length);
-
-		assertEquals(1, track.getEntities().size());
-
-		track.step();
-		assertEquals(11, track.getEntities().size());
-		for (int i = 1; i < 11; i++) {
-			assertTrue(track.getEntities().get(i) instanceof Coin);
-		}
-
-		double oldCoinLeft = track.getCoinrunleft();
-		track.step();
-		double newCoinLeft = track.getCoinrunleft();
-		assertEquals(newCoinLeft, oldCoinLeft 
-				- Track.UNITS_PER_TICK / Track.COIN_DISTANCE, DELTA);
-	}
-
-	@Test
-	public void testSingleObstacle() {
-		Random rand = mock(Random.class);
-		final double aboveCoinLaneChance = Track.COIN_ZIGZAG_CHANCE 
-				+ Track.COIN_LANE_CHANCE + 0.01;
-		final double belowObstacleChance = Track.OBSTACLE_CHANCE - 0.01;
-		final Track track = new Track(rand);
-
-		when(rand.nextDouble()).thenReturn(aboveCoinLaneChance, 
-				belowObstacleChance);
-
-		assertEquals(1, track.getEntities().size());
-
-		track.step();
-		assertEquals(2, track.getEntities().size());
-		assertTrue(track.getEntities().get(1) instanceof Obstacle);
-	}
-
-	@Test
-	public void testSingleObstacleWithObstruction() {
-		Random rand = mock(Random.class);
-		final double aboveCoinLaneChance = Track.COIN_ZIGZAG_CHANCE 
-				+ Track.COIN_LANE_CHANCE + 0.01;
-		final double belowObstacleChance = Track.OBSTACLE_CHANCE - 0.01;
-
-		when(rand.nextInt(Track.WIDTH)).thenReturn(1);
-		when(rand.nextDouble()).thenReturn(aboveCoinLaneChance, 
-				belowObstacleChance);
-		final Track track = new Track(rand);
-		
-		track.addEntity(new Coin(new Point3D(0, 1, Track.LENGTH)));
-		assertEquals(2, track.getEntities().size());
-
-		track.step();
-		assertEquals(2 + 1, track.getEntities().size());
-		assertTrue(track.getEntities().get(2) instanceof Obstacle);
-		assertEquals(1, track.getEntities().get(2).getCenter().getX(), DELTA);
 	}
 }

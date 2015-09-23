@@ -7,7 +7,7 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * @author Maarten
  *
  */
-public class Obstacle extends AbstractEntity {
+public abstract class Obstacle extends AbstractEntity {
 
 	/**
 	 * Default constructor.

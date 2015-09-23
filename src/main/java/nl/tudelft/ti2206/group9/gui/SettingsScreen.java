@@ -8,6 +8,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.ShaftEscape;
+import sun.applet.Main;
 
 /**
  * Created by Maikel on 08/09/2015.
@@ -64,7 +66,7 @@ public final class SettingsScreen {
         /** Assigning a function to the buttons. */
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
-                StartScreen.start(primaryStage);
+                ShaftEscape.setScene(new MainMenuScene());
             }
         });
 
@@ -80,7 +82,7 @@ public final class SettingsScreen {
             }
         });
 
-        settings = new Scene(grid, GUIConstant.WIDTH, GUIConstant.HEIGHT);
+        settings = new Scene(grid, ShaftEscape.WIDTH, ShaftEscape.HEIGHT);
 
         primaryStage.setScene(settings);
         primaryStage.show();
