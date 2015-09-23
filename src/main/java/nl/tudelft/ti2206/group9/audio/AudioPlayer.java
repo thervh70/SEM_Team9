@@ -59,7 +59,11 @@ public class AudioPlayer {
 	 */
 	public final synchronized void stop() {
 		synchronized (this) {
+			try {
+				audioPlayer.stop();			
+			} catch (MediaException me) {
 			audioPlayer.stop();			
+			}
 		}
 	}
 

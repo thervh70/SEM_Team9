@@ -17,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaException;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
@@ -26,6 +27,7 @@ import nl.tudelft.ti2206.group9.util.Logger;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.testfx.framework.junit.ApplicationTest;
+
 
 @SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
@@ -51,7 +53,7 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	@Test
-	public void test() throws IOException {
+	public void test() throws IOException, MediaException {
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
 
