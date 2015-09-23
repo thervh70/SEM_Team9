@@ -55,11 +55,11 @@ public final class GameScene extends AbstractScene {
 	private static ExternalTicker extTicker;
 	/** Indicate whether the game is running. */
 	private static boolean running;
-	/** The AudioPlayer to be used for background music. */
-    static AudioPlayer audioPlayer = new AudioPlayer("src/main/resources"
-            + "/nl.tudelft.ti2206.group9.audio/soundtrack.aiff");
 
-	/** The Pause popup. */
+	/** The AudioPlayer to be used for background music. */
+	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/"
+			+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
+
 	private static Popup pause;
 	/** The final after death popup. */
 	private static Popup death;
