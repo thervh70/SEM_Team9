@@ -11,11 +11,11 @@ public class Pillar extends Obstacle {
     public static final Point3D SIZE = new Point3D(1, 4, 1);
 
     /**
-     * Easy to use costructor for standard Pillar.
+     * Easy to use constructor for standard Pillar.
      * @param center center of Pillar
      */
     public Pillar(final Point3D center) {
-        super(center, SIZE);
+        this(center, SIZE);
     }
 
     /**
