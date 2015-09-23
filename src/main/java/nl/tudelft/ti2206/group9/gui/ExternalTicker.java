@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Log;
@@ -30,7 +31,7 @@ public class ExternalTicker extends AnimationTimer {
 
 	@Override
 	public final void handle(final long now) {
-		synchronized (GUIConstant.LOCK) {
+		synchronized (ShaftEscape.TICKER_LOCK) {
 			renderScene();
 		}
 	}
@@ -39,15 +40,15 @@ public class ExternalTicker extends AnimationTimer {
      * This method renders the scene.
      */
 	private void renderScene() {
-		GameScreen.clearWorld();
-		GameScreen.clearOverlay();
+		GameScene.clearWorld();
+		GameScene.clearOverlay();
 
 		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
 			final Group entities = renderEntities();
-			GameScreen.addWorld(entities);
+			GameScene.addWorld(entities);
 		}
 
-		GameScreen.addOverlay(renderScore());
+		GameScene.addOverlay(renderScore());
 	}
 
 	/**
