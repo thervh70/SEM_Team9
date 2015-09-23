@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaException;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.Player;
@@ -25,6 +26,7 @@ import nl.tudelft.ti2206.group9.util.Logger;
 
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
 
 @SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
@@ -50,7 +52,7 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	@Test
-	public void test() throws IOException {
+	public void test() throws IOException, MediaException {
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
 
@@ -59,6 +61,8 @@ public class EndToEndTest extends ApplicationTest {
 		assertFalse(isSoundEnabled());
 		settings(1);				// Toggle sound
 		assertTrue(isSoundEnabled());
+		settings(1);				// Toggle sound
+		assertFalse(isSoundEnabled());		
 		settings(0);				// Click Back
 		
 		mainMenu(0);				// Click start

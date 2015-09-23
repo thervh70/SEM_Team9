@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Popup;
+import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
@@ -49,11 +50,16 @@ public final class GameScene extends AbstractScene {
 	private static SubScene worldScene;
 	/** The overlayscene. */
 	private static SubScene overlayScene;
+
 	/** The ExternalTicker to be used. */
 	private static ExternalTicker extTicker;
 	/** Indicate whether the game is running. */
 	private static boolean running;
-	/** The Pause popup. */
+
+	/** The AudioPlayer to be used for background music. */
+	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/"
+			+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
+
 	private static Popup pause;
 	/** The final after death popup. */
 	private static Popup death;
@@ -73,7 +79,6 @@ public final class GameScene extends AbstractScene {
 	 */
 	public Parent createRoot() {
 		State.reset();
-
 		Group root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
@@ -149,6 +154,8 @@ public final class GameScene extends AbstractScene {
 
 	/** Resumes the tickers. */
 	public static void resumeTickers() {
+        if (SettingsScreen.sound)
+		audioPlayer.play();
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
@@ -157,6 +164,7 @@ public final class GameScene extends AbstractScene {
 
 	/** Stop the tickers. */
 	public static void stopTickers() {
+		audioPlayer.stop();
 		running = false;
 		extTicker.stop();
 		InternalTicker.stop();
@@ -182,6 +190,7 @@ public final class GameScene extends AbstractScene {
 				= new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
+				audioPlayer.play();
 				resumeTickers();
 				pause = null;
 			}
@@ -194,6 +203,7 @@ public final class GameScene extends AbstractScene {
 
 	/** Show a death menu. */
 	public static void showDeathMenu() {
+		audioPlayer.stop();
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
@@ -257,4 +267,5 @@ public final class GameScene extends AbstractScene {
 			return pause;
 		}
 	}
+
 }
