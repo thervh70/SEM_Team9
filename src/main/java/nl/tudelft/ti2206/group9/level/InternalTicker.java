@@ -42,6 +42,7 @@ public final class InternalTicker extends TimerTask {
 	 * @param t Timer given to the internal ticker
 	 */
 	private InternalTicker(final Timer t) {
+		super();
 		timer = t;
 	}
 
@@ -83,6 +84,7 @@ public final class InternalTicker extends TimerTask {
 		State.getTrack().step();
 
 		if (!State.getTrack().getPlayer().isAlive()) {
+			State.checkHighscore();
 			GameScreen.stopTickers();
 			GameScreen.showDeathMenu();
 		}

@@ -19,6 +19,9 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObservable;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
 
 /**
@@ -120,18 +123,17 @@ public final class GameScreen {
 	 */
 	private static void keyBindings(final Stage primeStage) {
 		KeyMap.defaultKeys();
-
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
-				if (running && keyEvent.getCode()
-						.equals(KeyCode.ESCAPE)) {
-					showPauseMenu(primeStage);
-				} else if (running) {
+				if (running) {
 					keyMap.keyPressed(keyEvent.getCode());
+					if (keyEvent.getCode().equals(KeyCode.ESCAPE)
+							&& getPopup() == null) {
+						showPauseMenu(primeStage);
+					}
 				}
 			}
 		});
-
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
 				if (running) {
@@ -139,7 +141,6 @@ public final class GameScreen {
 				}
 			}
 		});
-
 		scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
 				if (running) {
@@ -155,6 +156,7 @@ public final class GameScreen {
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
+		GameObservable.notify(Category.GAME, Game.STARTED);
 	}
 
 	/** Resumes the tickers. */
@@ -163,6 +165,7 @@ public final class GameScreen {
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
+		GameObservable.notify(Category.GAME, Game.RESUMED);
 	}
 
 	/** Stop the tickers. */
@@ -171,6 +174,7 @@ public final class GameScreen {
 		running = false;
 		extTicker.stop();
 		InternalTicker.stop();
+		GameObservable.notify(Category.GAME, Game.STOPPED);
 	}
 
 	/**
@@ -179,18 +183,19 @@ public final class GameScreen {
 	 */
 	public static void showPauseMenu(final Stage primeStage) {
 		stopTickers();
+		GameObservable.notify(Category.GAME, Game.PAUSED);
 
-		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
+		final EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
-				
+				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				StartScreen.start(primeStage);
 				pause = null;
 			}
 		};
 
-		EventHandler<MouseEvent> resume
+		final EventHandler<MouseEvent> resume
 				= new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
@@ -213,6 +218,7 @@ public final class GameScreen {
 		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
+				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				StartScreen.start(primaryStage);
 				death = null;
@@ -223,6 +229,7 @@ public final class GameScreen {
 				= new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
+				GameObservable.notify(Category.GAME, Game.RETRY);
 				State.reset();
 				GameScreen.start(primaryStage);
 				death = null;
@@ -268,10 +275,10 @@ public final class GameScreen {
 	}
 	/** @return current Popup. Is null if no Popup is present. */
 	static Popup getPopup() {
-		if (pause != null) {
-			return pause;
-		} else {
+		if (pause == null) {
 			return death;
+		} else {
+			return pause;
 		}
 	}
 
