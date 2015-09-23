@@ -18,7 +18,7 @@ public class ShaftEscape extends Application {
 
 	private static Stage stage;
 	/** Width of the Window. */
-	public static final int WIDTH = 480;
+	public static final int WIDTH = 480 - 16;
 	/** Height of the Window. */
 	public static final int HEIGHT = 640;
 	/** Lock used so that the tickers won't use the Track concurrently. */

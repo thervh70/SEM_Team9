@@ -89,7 +89,7 @@ public final class SettingsScene extends MenuScene {
 	/** Override background, the Settings background shows "Settings". */
 	@Override
 	public String getBackgroundPath() {
-		return "sc2.jpg";
+		return "settingsBackground.png";
 	}
 
 }
