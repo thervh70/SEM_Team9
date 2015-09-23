@@ -27,8 +27,8 @@ public abstract class AbstractScene extends Scene {
 	 * @param depthBuffer whether the scene should have a depthBuffer.
 	 * @param sceneAntialiasing see {@link SceneAntialiasing}
 	 */
-	public AbstractScene(boolean depthBuffer,
-			SceneAntialiasing sceneAntialiasing) {
+	public AbstractScene(final boolean depthBuffer,
+			final SceneAntialiasing sceneAntialiasing) {
 		super(DEFAULT_ROOT, ShaftEscape.WIDTH, ShaftEscape.HEIGHT, depthBuffer,
 				sceneAntialiasing);
 		setRoot(createRoot());
@@ -39,7 +39,7 @@ public abstract class AbstractScene extends Scene {
 	 * {@link ShaftEscape#HEIGHT} is created, with an optional depthBuffer.
 	 * @param depthBuffer whether the scene should have a depthBuffer.
 	 */
-	public AbstractScene(boolean depthBuffer) {
+	public AbstractScene(final boolean depthBuffer) {
 		super(DEFAULT_ROOT, ShaftEscape.WIDTH, ShaftEscape.HEIGHT, depthBuffer);
 		setRoot(createRoot());
 	}
@@ -49,7 +49,7 @@ public abstract class AbstractScene extends Scene {
 	 * {@link ShaftEscape#HEIGHT} is created with pre-set fill.
 	 * @param fill pre-set fill for the Scene
 	 */
-	public AbstractScene(Paint fill) {
+	public AbstractScene(final Paint fill) {
 		super(DEFAULT_ROOT, ShaftEscape.WIDTH, ShaftEscape.HEIGHT, fill);
 		setRoot(createRoot());
 	}

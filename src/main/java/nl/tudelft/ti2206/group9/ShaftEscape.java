@@ -16,7 +16,6 @@ import nl.tudelft.ti2206.group9.util.Logger;
 @SuppressWarnings("restriction")
 public class ShaftEscape extends Application {
 
-	private static Stage stage;
 	/** Width of the Window. */
 	public static final int WIDTH = 480 - 16;
 	/** Height of the Window. */
@@ -24,13 +23,16 @@ public class ShaftEscape extends Application {
 	/** Lock used so that the tickers won't use the Track concurrently. */
 	public static final Object TICKER_LOCK = new Object();
 
+	/** Primary stage where the Scenes are shown in. */
+	private static Stage stage;
+
 	/**
 	 * Start the application in the SplashScene.
 	 * @param appStage the primary Stage for the Application. This is where
 	 * the scenes are shown in.
 	 */
 	@Override
-	public void start(Stage appStage) {
+	public void start(final Stage appStage) {
 		setStage(appStage);
 		stage.setResizable(false);
 		stage.setWidth(ShaftEscape.WIDTH);
@@ -45,7 +47,7 @@ public class ShaftEscape extends Application {
 	}
 	
 	/** @param newStage the new stage to set as private static field. */
-	private static void setStage(Stage newStage) {
+	private static void setStage(final Stage newStage) {
 		stage = newStage;
 	}
 
@@ -53,7 +55,7 @@ public class ShaftEscape extends Application {
 	 * Setting the right scene and displaying it.
 	 * @param newScene the new Scene that is to be showed.
 	 */
-	public static void setScene(AbstractScene newScene) {
+	public static void setScene(final AbstractScene newScene) {
 		stage.setScene(newScene);
 		stage.show();
 	}
@@ -62,7 +64,7 @@ public class ShaftEscape extends Application {
 	 * Shows a popup on the screen.
 	 * @param popup the Popup that is to be shown.
 	 */
-	public static void showPopup(Popup popup) {
+	public static void showPopup(final Popup popup) {
 		popup.show(stage);
 		popup.setAnchorX(stage.getX() + stage.getWidth() / 2
 				- popup.getWidth() / 2);
@@ -79,7 +81,7 @@ public class ShaftEscape extends Application {
 	 * Launch JavaFX.
 	 * @param args optional JavaFX arguments
 	 */
-	public static void main(String... args) {
+	public static void main(final String... args) {
 		launch(args);
 	}
 
