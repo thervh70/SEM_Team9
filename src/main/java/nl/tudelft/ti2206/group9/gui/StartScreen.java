@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -14,6 +15,8 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
+
+import java.awt.*;
 
 /**
  * @author Maikel and Robin
@@ -40,7 +43,17 @@ public final class StartScreen {
         settingsButton,loadButton,
         exitButton;
         window = primaryStage;
+
+        final String promptText = "Player1";
+
         final Label label = new Label("");
+        final Label nameLabel = new Label("PLAYER NAME:");
+        Style.setLabelStyle(nameLabel);
+
+        final TextField input = new TextField();
+        input.setPromptText(promptText);
+        input.setMaxSize(80,100);
+        input.setFocusTraversable(false);
 
         /**Creating the gridPane which is used for the layout. */
         final StackPane pane = new StackPane();
@@ -51,8 +64,8 @@ public final class StartScreen {
         Style.setBackground("sc.png", pane);
 
         HBox hbox = new HBox(60);
-        VBox vbox = new VBox(30);
-
+        HBox hbox2 = new HBox(20);
+        VBox vbox = new VBox(50);
 
         /** Add text to buttons give them a location on the pane.*/
         startButton = new Button("START");
@@ -69,11 +82,14 @@ public final class StartScreen {
         loadButton = new Button("LOAD GAME");
         Style.setButtonStyle(loadButton);
 
+
         hbox.getChildren().addAll(settingsButton, startButton, exitButton);
-        vbox.getChildren().addAll(label, loadButton,hbox);
+        hbox2.getChildren().addAll(nameLabel, input);
+        vbox.getChildren().addAll(label, hbox2, hbox, loadButton);
 
         vbox.setAlignment(Pos.CENTER);
         hbox.setAlignment(Pos.BOTTOM_CENTER);
+        hbox2.setAlignment(Pos.CENTER);
 
         /**Adding all buttons to the pane.*/
         pane.getChildren().addAll(vbox);
