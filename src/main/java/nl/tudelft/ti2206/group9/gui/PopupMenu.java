@@ -20,7 +20,7 @@ public final class PopupMenu {
 
     /** Width of the PopUpMenu. */
     private static final double WIDTH = 260;
-    /** Heigth of the PopUpMenu. */
+    /** Height of the PopUpMenu. */
     private static final double HEIGHT = 320;
     /** Size of the HBox. */
     private static final double HBOX_SIZE = 10;

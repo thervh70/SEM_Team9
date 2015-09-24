@@ -11,12 +11,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
-import nl.tudelft.ti2206.group9.entities.Player;
-
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 
 /**
  * @author Maarten.
@@ -61,7 +61,8 @@ public class ExternalTicker extends AnimationTimer {
 				+ State.modulo(State.getScore()));
 		final Label distanceLabel = new Label("Distance: "
 				+ State.modulo(State.getDistance()));
-		final Label coinsLabel = new Label("Coins: " + State.getCoins());
+		final Label coinsLabel = new Label("Coins: "
+				+ State.getCoins());
 
 		Style.setLabelStyle(highLabel);
 		Style.setLabelStyle(scoreLabel);
@@ -80,34 +81,19 @@ public class ExternalTicker extends AnimationTimer {
      * @return group
      */
 	private Group renderEntities() {
-
 		final Group entities = new Group();
 		entities.setDepthTest(DepthTest.ENABLE);
 		synchronized (State.getTrack()) {
 
-			entities.getChildren().addAll(renderTrack(), renderWall());
+			entities.getChildren().addAll(
+					renderTrack(), renderWall());
 
-			for (final AbstractEntity entity : State.getTrack().getEntities()) {
+			for (final AbstractEntity entity
+					: State.getTrack().getEntities()) {
 				final Box entityBox = new Box(1, 1, 1);
 
-				entityBox.setWidth(entity.getSize().getX());
-				entityBox.setHeight(entity.getSize().getY());
-				entityBox.setDepth(entity.getSize().getZ());
-				entityBox.setTranslateX(entity.getCenter().getX());
-				entityBox.setTranslateY(-entity.getCenter().getY());
-				entityBox.setTranslateZ(entity.getCenter().getZ());
-
-				if (entity instanceof Player) {
-					entityBox.setMaterial(Style.PLAYER);
-				} else if (entity instanceof Coin) {
-					entityBox.setMaterial(Style.COIN);
-				} else if (entity instanceof Log) {
-					entityBox.setMaterial(Style.WOOD);
-				} else if (entity instanceof Pillar) {
-					entityBox.setMaterial(Style.PILLAR);
-				} else /*if (entity instanceof Fence) */ {
-					entityBox.setMaterial(Style.FENCE);
-				}
+				setDimensions(entity, entityBox);
+				setMaterial(entity, entityBox);
 
 				entityBox.setCache(true);
 				entityBox.setCacheHint(CacheHint.SPEED);
@@ -118,15 +104,55 @@ public class ExternalTicker extends AnimationTimer {
 	}
 
 	/**
+	 * Separate method to set the dimensions of the box.
+	 * @param entity The entity that contains the dimensions.
+	 * @param entityBox The box representing the entity.
+	 */
+	private static void setDimensions(
+			final AbstractEntity entity, final Box entityBox) {
+		entityBox.setWidth(entity.getSize().getX());
+		entityBox.setHeight(entity.getSize().getY());
+		entityBox.setDepth(entity.getSize().getZ());
+		entityBox.setTranslateX(
+				entity.getCenter().getX());
+		entityBox.setTranslateY(
+				-entity.getCenter().getY());
+		entityBox.setTranslateZ(
+				entity.getCenter().getZ());
+	}
+	/**
+	 * Separate method to set material.
+	 * @param entity The entity that has to be textured.
+	 * @param entityBox The box that represents the entity.
+	 */
+	private static void setMaterial(
+			final AbstractEntity entity, final Box entityBox) {
+		if (entity instanceof Player) {
+			entityBox.setMaterial(Style.PLAYER);
+		} else if (entity instanceof Coin) {
+			entityBox.setMaterial(Style.COIN);
+		} else if (entity instanceof Log) {
+			entityBox.setMaterial(Style.WOOD);
+		} else if (entity instanceof Pillar) {
+			entityBox.setMaterial(Style.PILLAR);
+		} else /*if (entity instanceof Fence) */ {
+			entityBox.setMaterial(Style.FENCE);
+		}
+	}
+
+	/**
 	 * This method is for producing track pieces.
 	 * This is a working version, however refactoring is needed.
 	 * @return Group with all the track parts
 	 */
 	private Group renderTrack() {
 		Group result = new Group();
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 3; j++) {
-				final Box trackPiece = new Box(1.5, 0, 1.5);
+		final double trackBoxX = 1.5;
+		final double trackBoxZ = 1.5;
+		for (int i = 0; i < (int) Track.LENGTH; i++) {
+			for (int j = 0; j < Track.WIDTH; j++) {
+				final Box trackPiece = new Box(
+						trackBoxX, 0, trackBoxZ);
 				trackPiece.setTranslateX(j - 1);
 				trackPiece.setTranslateZ(i);
 				trackPiece.setMaterial(Style.FLOOR);
@@ -148,20 +174,29 @@ public class ExternalTicker extends AnimationTimer {
 	 */
 	private Group renderWall() {
 		Group result = new Group();
+		final int offset = 3;
+		final double correction = 1.5;
+		final double alpha = 0.5;
+		final double beta = 0.75;
 		for (int h = 0; h < 2; h++) {
-			for (int i = 0; i < 100; i++) {
-				for (int j = 0; j < 3; j++) {
+			for (int i = 0; i < (int) Track.LENGTH; i++) {
+				for (int j = 0; j < Track.WIDTH; j++) {
 					double random = Math.random();
 					final Box wallPiece = new Box(0, 1, 1);
-					wallPiece.setTranslateY(j - 3);
+					wallPiece.setTranslateY(j - offset);
 					wallPiece.setTranslateZ(i);
-					wallPiece.setTranslateX(h * 3 - 1.5);
-					if (random < 0.5) {
-						wallPiece.setMaterial(Style.BRICK);
-					} else if (random > 0.5 && random < 0.75) {
-						wallPiece.setMaterial(Style.CRACK);
+					wallPiece.setTranslateX(h
+							* offset - correction);
+					if (random < alpha) {
+						wallPiece.setMaterial(
+								Style.BRICK);
+					} else if (random > alpha
+							&& random < beta) {
+						wallPiece.setMaterial(
+								Style.CRACK);
 					} else {
-						wallPiece.setMaterial(Style.MOSS);
+						wallPiece.setMaterial(
+								Style.MOSS);
 					}
 					wallPiece.setCache(true);
 					wallPiece.setCacheHint(CacheHint.SPEED);

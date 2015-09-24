@@ -32,7 +32,7 @@ public class ShaftEscape extends Application {
 	 * the scenes are shown in.
 	 */
 	@Override
-	public void start(final Stage appStage) {
+	public final void start(final Stage appStage) {
 		setStage(appStage);
 		stage.setResizable(false);
 		stage.setWidth(ShaftEscape.WIDTH);
@@ -45,7 +45,7 @@ public class ShaftEscape extends Application {
 		GameObservable.addObserver(new Logger());
 		setScene(new SplashScene());
 	}
-	
+
 	/** @param newStage the new stage to set as private static field. */
 	private static void setStage(final Stage newStage) {
 		stage = newStage;

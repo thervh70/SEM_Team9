@@ -49,16 +49,18 @@ public final class Style {
     /** WOOD material used for logs, wooden planks obstacle texture. */
     public static final PhongMaterial WOOD = new PhongMaterial();
 
-    /** PILLAR material used for pillars, stack of cracked stone bricks texture. */
+    /** PILLAR material used for pillars.
+     *  Stack of cracked stone bricks texture.
+     */
     public static final PhongMaterial PILLAR = new PhongMaterial();
 
     /** FENCE material used for fences, mossy brick stone texture.*/
     public static final PhongMaterial FENCE = new PhongMaterial();
 
-    /** PLAYER material used for the player */
+    /** PLAYER material used for the player. */
     public static final PhongMaterial PLAYER = new PhongMaterial();
 
-    /** Scale for button hover (in pause menu) */
+    /** Scale for button hover (in pause menu). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
 
      /**
@@ -196,7 +198,8 @@ public final class Style {
     public static void setBackground(final String src, final Pane p) {
     	final Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
     	final BackgroundSize backgroundSize = new BackgroundSize(
-    			ShaftEscape.WIDTH, ShaftEscape.HEIGHT, true, true, true, false);
+    			ShaftEscape.WIDTH, ShaftEscape.HEIGHT,
+                true, true, true, false);
     	final BackgroundImage backgroundImage = new BackgroundImage(image,
         		BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
         		BackgroundPosition.CENTER, backgroundSize);
