@@ -54,15 +54,14 @@ public final class SaveGameParser {
 	 */
 	private static void parseJSON(final JSONObject mainObject) {
 		playername = (String) mainObject.get("playername");
-		String coinsString = (String) mainObject.get("coins");
-		coins = Integer.valueOf(coinsString);
+		coins = Integer.parseInt((String) mainObject.get("coins"));
 
 		JSONObject settingsObj = (JSONObject) mainObject.get("settings");
 		String soundEnabledString = (String) settingsObj.get("soundEnabled");
 		soundEnabled = soundEnabledString.equals("true");
 
 		JSONObject highScoreObj = (JSONObject) mainObject.get("highscore");
-		highScore = Double.valueOf((String) highScoreObj.get("score"));
+		highScore = Double.parseDouble((String) highScoreObj.get("score"));
 	}
 
 	/**
