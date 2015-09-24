@@ -1,7 +1,9 @@
 package nl.tudelft.ti2206.group9.util;
 
-import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -23,14 +25,7 @@ public class Logger implements GameObserver {
 	public static final String FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
 	static {
-		final FileWriter fw;
-		try {
-			fw = new FileWriter(OUTFILE, false);
-			fw.write("");
-			fw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		writeToOutput("", false); // Empty existing log
 
 		String lbl;
 
@@ -65,17 +60,7 @@ public class Logger implements GameObserver {
 	@Override
 	public void gameUpdate(final Category cat, final Specific spec,
 			final Object... optionalArgs) {
-		final String line = getLogString(spec, optionalArgs);
-
-		final FileWriter fw;
-		try {
-			fw = new FileWriter(OUTFILE, true);
-			fw.write(line + "\n");
-			fw.flush();
-			fw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		writeToOutput(getLogString(spec, optionalArgs) + "\n", true);
 	}
 
 	/** Retrieves the string to be logged from the hashmap in correct format.
@@ -89,6 +74,32 @@ public class Logger implements GameObserver {
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMAT);
 		final String time = date.format(formatter);
 		return time + String.format(STRINGS.get(spec), optionalArgs);
+	}
+
+	/**
+	 * Writes <pre>str</pre> to the {@link #OUTFILE}.
+	 * @param str String to write.
+	 * @param append Whether to append or create an empty file.
+	 */
+	private static void writeToOutput(final String str, final boolean append) {
+		BufferedWriter fw = null;
+		try {
+			fw = new BufferedWriter(new OutputStreamWriter(
+			    new FileOutputStream(OUTFILE, append), "UTF-8"
+			));
+			fw.write(str);
+			fw.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (fw != null) {
+					fw.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

@@ -24,22 +24,25 @@ public class TrackParser {
     /** Standard Y-value of the center of a Fence. */
     public static final double FENCE_CENTER_HEIGHT = 2.8;
 
+    /** Folder where the levels are stored. */
+    public static final String LEVELS_FOLDER =
+            "src/main/resources/nl/tudelft/ti2206/group9/level";
+
     /**
      * Parse all txt-files into TrackParts.
      * @return List of TrackParts
      */
     public final List<TrackPart> parseTrack() {
         final List<TrackPart> partList = new ArrayList<TrackPart>();
+        final File folder = new File(LEVELS_FOLDER);
+        final File[] files = folder.listFiles();
+        if (files == null) {
+            return partList;
+        }
 
-        final File folder =
-        		new File("src/main/resources/nl/tudelft/ti2206/group9/level");
-        for (final File file : folder.listFiles()) {
-            try {
-            	final TrackPart part = parseTrackPart(file.getPath());
-                partList.add(part);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        for (final File file : files) {
+            final TrackPart part = parseTrackPart(file.getPath());
+            partList.add(part);
         }
 
         return partList;
@@ -49,13 +52,16 @@ public class TrackParser {
      * Create a TrackPart by reading the trackpart textfile.
      * @param infile path to the textfile
      * @return TrackPart the created TrackPart
-     * @throws IOException IOException
      */
-    public final TrackPart parseTrackPart(final String infile)
-    		throws IOException {
-    	final URL path = new File(infile).toURI().toURL();
-    	final InputStream stream = path.openStream();
-        return parseTrackPart(stream);
+    public final TrackPart parseTrackPart(final String infile) {
+    	try {
+	    	final URL path = new File(infile).toURI().toURL();
+	    	final InputStream stream = path.openStream();
+	        return parseTrackPart(stream);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	return new TrackPart();
     }
 
     /**
