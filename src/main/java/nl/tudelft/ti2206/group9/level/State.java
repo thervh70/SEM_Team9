@@ -8,6 +8,7 @@ package nl.tudelft.ti2206.group9.level;
  */
 public final class State {
 
+	public String name;
 	/** Current score of the player, reset every run. */
 	private static double score;
 	/** Current amount of coins. */
