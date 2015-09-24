@@ -8,15 +8,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -27,12 +28,73 @@ import javafx.scene.text.FontWeight;
 @SuppressWarnings("restriction")
 public final class Style {
 
+    /** BRICK material for walls, brick wall texture. */
+    public static final PhongMaterial BRICK = new PhongMaterial();
+
+    /** MOSS material for walls, mossy brick wall texture. */
+    public static final PhongMaterial MOSS = new PhongMaterial();
+
+    /** CRACK material used for walls, cracked brick wall texture. */
+    public static final PhongMaterial CRACK = new PhongMaterial();
+
+    /** FLOOR material used for floors, mossy cobblestone floor texture. */
+    public static final PhongMaterial FLOOR = new PhongMaterial();
+
+    /** COIN material used for coins, question mark box coin texture. */
+    public static final PhongMaterial COIN = new PhongMaterial();
+
+    /** WOOD material used for logs, wooden planks obstacle texture. */
+    public static final PhongMaterial WOOD = new PhongMaterial();
+
+    /** PILLAR mat. used for pillars. Stack of cracked stone bricks texture. */
+    public static final PhongMaterial PILLAR = new PhongMaterial();
+
+    /** FENCE material used for fences, mossy brick stone texture.*/
+    public static final PhongMaterial FENCE = new PhongMaterial();
+
+    /** PLAYER material used for the player. */
+    public static final PhongMaterial PLAYER = new PhongMaterial();
+
+	/** Size of a button while hovering (relative to 1). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
 
-	/**
-     * Private empty constructor.
+    /** Hide public constructor. */
+    private Style() { }
+
+    /**
+     * Method is called once to load all textures.
+     * They are loaded into Phongmaterials.
      */
-	private Style() { }
+    public static void loadTextures() {
+        final String path = "nl/tudelft/ti2206/group9/gui/";
+
+        final Image brickTexture = new Image(path + "texture_brick.png");
+        BRICK.setDiffuseMap(brickTexture);
+
+        final Image mossTexture = new Image(path + "texture_moss.png");
+        MOSS.setDiffuseMap(mossTexture);
+
+        final Image crackTexture = new Image(path + "texture_crack.png");
+        CRACK.setDiffuseMap(crackTexture);
+
+        final Image floorTexture = new Image(path + "texture_cobblestone.png");
+        FLOOR.setDiffuseMap(floorTexture);
+
+        final Image coinTexture = new Image(path + "texture_coin.png");
+        COIN.setDiffuseMap(coinTexture);
+
+        final Image woodTexture = new Image(path + "texture_wood.png");
+        WOOD.setDiffuseMap(woodTexture);
+
+        final Image pillarTexture = new Image(path + "texture_pillar.png");
+        PILLAR.setDiffuseMap(pillarTexture);
+
+        final Image fenceTexture = new Image(path + "texture_fence.png");
+        FENCE.setDiffuseMap(fenceTexture);
+
+        final Image playerTexture = new Image(path + "texture_player.png");
+        PLAYER.setDiffuseMap(playerTexture);
+    }
 
     /**
      * Alters the looks and behaviour of a button.
@@ -40,6 +102,7 @@ public final class Style {
      * @param b Button to be styled.
      */
     public static void setButtonStyle(final Button b) {
+
         /** Adjusting looks of button */
     	final Color color = Color.BLACK;
     	final CornerRadii corner = new CornerRadii(3);
@@ -51,7 +114,6 @@ public final class Style {
         b.setBackground(buttonBack);
         b.setFont(font);
 
-        /** Action to be taken on MouseEntered Event */
         b.setOnMouseEntered(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent e) {
                 b.setScaleX(BUTTON_HOVER_SCALE);
@@ -127,7 +189,8 @@ public final class Style {
     public static void setBackground(final String src, final Pane p) {
     	final Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
     	final BackgroundSize backgroundSize = new BackgroundSize(
-    			ShaftEscape.WIDTH, ShaftEscape.HEIGHT, true, true, true, false);
+    			ShaftEscape.WIDTH, ShaftEscape.HEIGHT,
+                true, true, true, false);
     	final BackgroundImage backgroundImage = new BackgroundImage(image,
         		BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
         		BackgroundPosition.CENTER, backgroundSize);

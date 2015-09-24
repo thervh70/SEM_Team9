@@ -163,7 +163,7 @@ public class Point3D {
 				!= Double.doubleToLongBits(other.y)) {
 			return false;
 		}
-		if (Double.doubleToLongBits(z)
+		if (Double.doubleToLongBits(z) //NOPMD - equals is generated this way
 				!= Double.doubleToLongBits(other.z)) {
 			return false;
 		}

@@ -59,22 +59,23 @@ public final class GameScene extends AbstractScene {
 	private static Popup death;
 
 	/**
-	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and 
+	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and
 	 * {@link ShaftEscape#HEIGHT} is created.
 	 */
 	public GameScene() {
 		super(true);
-		setFill(Color.AQUA);
+		setFill(Color.BLACK);
 	}
-	
-	/** 
+
+	/**
 	 * Creating the GameScene.
 	 * @return The root Node for this Scene.
 	 */
 	public Parent createRoot() {
 		State.reset();
+		Style.loadTextures();
 
-		Group root = new Group();
+		final Group root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
 
@@ -85,8 +86,11 @@ public final class GameScene extends AbstractScene {
 		startTickers();
 		return root;
 	}
-	
-	/** In this method, the SubScenes for the world and overlay are created. */
+
+	/**
+	 * In this method, the SubScenes for the world and overlay are created.
+	 * @param root the Group to which the SubScenes are added to.
+	 */
 	private static void setupSubScenes(final Group root) {
 		world = new Group();
 		overlay = new Group();
@@ -194,7 +198,7 @@ public final class GameScene extends AbstractScene {
 
 	/** Show a death menu. */
 	public static void showDeathMenu() {
-		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
+		final EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
 				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
@@ -204,7 +208,7 @@ public final class GameScene extends AbstractScene {
 			}
 		};
 
-		EventHandler<MouseEvent> retry
+		final EventHandler<MouseEvent> retry
 				= new EventHandler<MouseEvent>() {
 
 			public void handle(final MouseEvent e) {
@@ -248,9 +252,9 @@ public final class GameScene extends AbstractScene {
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
-	
+
 	/** @return current Popup. Is null if no Popup is present. */
-	static Popup getPopup() {
+	public static Popup getPopup() {
 		if (pause == null) {
 			return death;
 		} else {

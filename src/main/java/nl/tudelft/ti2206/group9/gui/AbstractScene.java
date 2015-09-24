@@ -16,12 +16,12 @@ import javafx.scene.paint.Paint;
  */
 @SuppressWarnings("restriction")
 public abstract class AbstractScene extends Scene {
-	
+
 	/** Default root, is an empty StackPane. */
 	public static final StackPane DEFAULT_ROOT = new StackPane();
 
 	/**
-	 * Scene of default {@link ShaftEscape#WIDTH} and 
+	 * Scene of default {@link ShaftEscape#WIDTH} and
 	 * {@link ShaftEscape#HEIGHT} is created, with an optional depthBuffer
 	 * and/or sceneAntialiasing.
 	 * @param depthBuffer whether the scene should have a depthBuffer.
@@ -35,7 +35,7 @@ public abstract class AbstractScene extends Scene {
 	}
 
 	/**
-	 * Scene of default {@link ShaftEscape#WIDTH} and 
+	 * Scene of default {@link ShaftEscape#WIDTH} and
 	 * {@link ShaftEscape#HEIGHT} is created, with an optional depthBuffer.
 	 * @param depthBuffer whether the scene should have a depthBuffer.
 	 */
@@ -45,7 +45,7 @@ public abstract class AbstractScene extends Scene {
 	}
 
 	/**
-	 * Scene of default {@link ShaftEscape#WIDTH} and 
+	 * Scene of default {@link ShaftEscape#WIDTH} and
 	 * {@link ShaftEscape#HEIGHT} is created with pre-set fill.
 	 * @param fill pre-set fill for the Scene
 	 */
@@ -55,14 +55,14 @@ public abstract class AbstractScene extends Scene {
 	}
 
 	/**
-	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and 
+	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and
 	 * {@link ShaftEscape#HEIGHT} is created.
 	 */
 	public AbstractScene() {
 		super(DEFAULT_ROOT, ShaftEscape.WIDTH, ShaftEscape.HEIGHT);
 		setRoot(createRoot());
 	}
-	
+
 	/**
 	 * This method creates the {@link Parent} root that is used in the scene.
 	 * It is called in the constructor.
