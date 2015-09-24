@@ -30,6 +30,7 @@ public class KeyMapTest {
         assertEquals(null, KeyMap.getKey(KeyCode.UP));
         KeyMap.addKey(KeyCode.UP, action);
         assertEquals(action, KeyMap.getKey(KeyCode.UP));
+        KeyMap.removeKey(KeyCode.UP);
     }
 
     @Test
@@ -45,11 +46,13 @@ public class KeyMapTest {
         pressKey(KeyCode.UP);
         releaseKey(KeyCode.UP);
         verify(action).doAction();
+        KeyMap.removeKey(KeyCode.UP);
     }
 
     @Test
     public void pressKeyNullTest() {
-        KeyMap.addKey(KeyCode.UP, null);
+        KeyMap.addKey(KeyCode.UP, action);
+        KeyMap.removeKey(KeyCode.UP);
         pressKey(KeyCode.UP);
         releaseKey(KeyCode.UP);
         verify(action, never()).doAction();
@@ -63,6 +66,7 @@ public class KeyMapTest {
         pressKey(KeyCode.UP);
         releaseKey(KeyCode.UP);
         verify(action, times(2)).doAction();
+        KeyMap.removeKey(KeyCode.UP);
     }
 
     @Test
@@ -72,6 +76,7 @@ public class KeyMapTest {
         pressKey(KeyCode.UP);
         releaseKey(KeyCode.UP);
         verify(action, times(1)).doAction();
+        KeyMap.removeKey(KeyCode.UP);
     }
 
     private void pressKey(final KeyCode code) {
