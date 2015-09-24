@@ -6,8 +6,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.application.Platform;
-import nl.tudelft.ti2206.group9.gui.GUIConstant;
-import nl.tudelft.ti2206.group9.gui.GameScreen;
+import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.gui.GameScene;
 
 /**
  * This thread handles the ticks of the internal system. On each tick, the track
@@ -52,7 +52,7 @@ public final class InternalTicker extends TimerTask {
 	public void run() {
 		Platform.runLater(new Runnable() {
 			public void run() {
-				synchronized (GUIConstant.LOCK) {
+				synchronized (ShaftEscape.TICKER_LOCK) {
 					final Timer newTimer = new Timer();
 
 					try {
@@ -84,8 +84,9 @@ public final class InternalTicker extends TimerTask {
 		State.getTrack().step();
 
 		if (!State.getTrack().getPlayer().isAlive()) {
-			GameScreen.stopTickers();
-			GameScreen.showDeathMenu();
+			State.checkHighscore();
+			GameScene.stopTickers();
+			GameScene.showDeathMenu();
 		}
 	}
 
