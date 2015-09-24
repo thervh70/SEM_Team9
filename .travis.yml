@@ -21,8 +21,6 @@ before_install:
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
 # Communicate with Octopull
   - '[ "$BUILD_PR_BRANCH" = "true" ] && { [ "$TRAVIS_PULL_REQUEST" != "false" ] || exit 1; } && git checkout HEAD^2 && echo "OCTOPULL_SHA=$(git rev-parse HEAD)"; true'
-  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - export JAVA_HOME=$JAVA8_HOME
 
 env:
   - BUILD_PR_BRANCH=true
