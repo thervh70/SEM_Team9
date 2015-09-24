@@ -28,9 +28,6 @@ import javafx.scene.text.FontWeight;
 @SuppressWarnings("restriction")
 public final class Style {
 
-    /** Hide public constructor. */
-    private Style() { }
-
     /** BRICK material for walls, brick wall texture. */
     public static final PhongMaterial BRICK = new PhongMaterial();
 
@@ -49,9 +46,7 @@ public final class Style {
     /** WOOD material used for logs, wooden planks obstacle texture. */
     public static final PhongMaterial WOOD = new PhongMaterial();
 
-    /** PILLAR material used for pillars.
-     *  Stack of cracked stone bricks texture.
-     */
+    /** PILLAR mat. used for pillars. Stack of cracked stone bricks texture. */
     public static final PhongMaterial PILLAR = new PhongMaterial();
 
     /** FENCE material used for fences, mossy brick stone texture.*/
@@ -60,41 +55,44 @@ public final class Style {
     /** PLAYER material used for the player. */
     public static final PhongMaterial PLAYER = new PhongMaterial();
 
-    /** Scale for button hover (in pause menu). */
+	/** Size of a button while hovering (relative to 1). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
 
-     /**
+    /** Hide public constructor. */
+    private Style() { }
+
+    /**
      * Method is called once to load all textures.
      * They are loaded into Phongmaterials.
      */
     public static void loadTextures() {
-        String path = "nl/tudelft/ti2206/group9/gui/";
+        final String path = "nl/tudelft/ti2206/group9/gui/";
 
-        Image brickTexture = new Image(path + "texture_brick.png");
+        final Image brickTexture = new Image(path + "texture_brick.png");
         BRICK.setDiffuseMap(brickTexture);
 
-        Image mossTexture = new Image(path + "texture_moss.png");
+        final Image mossTexture = new Image(path + "texture_moss.png");
         MOSS.setDiffuseMap(mossTexture);
 
-        Image crackTexture = new Image(path + "texture_crack.png");
+        final Image crackTexture = new Image(path + "texture_crack.png");
         CRACK.setDiffuseMap(crackTexture);
 
-        Image floorTexture = new Image(path + "texture_cobblestone.png");
+        final Image floorTexture = new Image(path + "texture_cobblestone.png");
         FLOOR.setDiffuseMap(floorTexture);
 
-        Image coinTexture = new Image(path + "texture_coin.png");
+        final Image coinTexture = new Image(path + "texture_coin.png");
         COIN.setDiffuseMap(coinTexture);
 
-        Image woodTexture = new Image(path + "texture_wood.png");
+        final Image woodTexture = new Image(path + "texture_wood.png");
         WOOD.setDiffuseMap(woodTexture);
 
-        Image pillarTexture = new Image(path + "texture_pillar.png");
+        final Image pillarTexture = new Image(path + "texture_pillar.png");
         PILLAR.setDiffuseMap(pillarTexture);
 
-        Image fenceTexture = new Image(path + "texture_fence.png");
+        final Image fenceTexture = new Image(path + "texture_fence.png");
         FENCE.setDiffuseMap(fenceTexture);
 
-        Image playerTexture = new Image(path + "texture_player.png");
+        final Image playerTexture = new Image(path + "texture_player.png");
         PLAYER.setDiffuseMap(playerTexture);
     }
 

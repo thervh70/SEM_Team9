@@ -147,7 +147,7 @@ public class ExternalTicker extends AnimationTimer {
 	 * @return Group with all the track parts
 	 */
 	private Group renderTrack() {
-		Group result = new Group();
+		final Group result = new Group();
 		final double trackBoxX = 1.5;
 		final double trackBoxZ = 1.5;
 		for (int i = 0; i < (int) Track.LENGTH; i++) {
@@ -174,7 +174,7 @@ public class ExternalTicker extends AnimationTimer {
 	 * @return Group with all the wallpieces
 	 */
 	private Group renderWall() {
-		Group result = new Group();
+		final Group result = new Group();
 		final int offset = 3;
 		final double correction = 1.5;
 		for (int h = 0; h < 2; h++) {

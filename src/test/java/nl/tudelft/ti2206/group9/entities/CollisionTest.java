@@ -13,7 +13,7 @@ public class CollisionTest {
 
 	private Player player;
 	private Coin coin;
-	private Obstacle obstacle;
+	private AbstractObstacle obstacle;
 
 	@Before
 	public void setUp() throws Exception {
@@ -25,8 +25,8 @@ public class CollisionTest {
 
 	@Test
 	public void testCollisionPlayerCoin() {
-		double oldscore = State.getScore();
-		int oldcoins = State.getCoins();
+		final double oldscore = State.getScore();
+		final int oldcoins = State.getCoins();
 		player.collision(coin);
 		assertEquals(oldscore + Coin.VALUE, State.getScore(), StateTest.DELTA);
 		assertEquals(oldcoins + 1, State.getCoins());
@@ -34,8 +34,8 @@ public class CollisionTest {
 
 	@Test
 	public void testCollisionCoinCoin() {
-		double oldscore = State.getScore();
-		int oldcoins = State.getCoins();
+		final double oldscore = State.getScore();
+		final int oldcoins = State.getCoins();
 		coin.collision(new Coin(Point3D.ZERO));
 		assertEquals(oldscore, State.getScore(), StateTest.DELTA);
 		assertEquals(oldcoins, State.getCoins());
@@ -43,8 +43,8 @@ public class CollisionTest {
 
 	@Test
 	public void testCollisionCoinPlayer() {
-		double oldscore = State.getScore();
-		int oldcoins = State.getCoins();
+		final double oldscore = State.getScore();
+		final int oldcoins = State.getCoins();
 		coin.collision(player);
 		assertEquals(oldscore, State.getScore(), StateTest.DELTA);
 		assertEquals(oldcoins, State.getCoins());

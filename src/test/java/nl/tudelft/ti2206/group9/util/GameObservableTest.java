@@ -16,11 +16,12 @@ import org.junit.Test;
  */
 public class GameObservableTest implements GameObserver {
 
+	/** GameObservers used for testing. */
 	private GameObserver go1, go2;
 
 	/** Mock observers. */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		go1 = mock(GameObserver.class);
 		go2 = mock(GameObserver.class);
 	}
@@ -33,17 +34,17 @@ public class GameObservableTest implements GameObserver {
 		GameObservable.addObserver(go2);
 		GameObservable.deleteObserver(go2);
 		GameObservable.notify(Category.GAME, Game.STARTED, 0);
-		verify(go1).gameUpdate(Category.GAME, Game.STARTED, new Integer[]{0});
-		verify(go2, never()).gameUpdate(Category.GAME, Game.STARTED,
-				new Integer[]{0});
-		
+		verify(go1).gameUpdate(Category.GAME, Game.STARTED, 0);
+		verify(go2, never()).gameUpdate(Category.GAME, Game.STARTED, 0);
+
 		// Clean up test
 		GameObservable.deleteObserver(go1);
 		GameObservable.deleteObserver(this);
 	}
 
 	@Override
-	public void gameUpdate(Category cat, Specific spec, Object[] optionalArgs) {
+	public void gameUpdate(final Category cat, final Specific spec,
+			final Object... optionalArgs) {
 		assertEquals(Category.GAME, cat);
 		assertEquals(Game.STARTED, spec);
 		assertArrayEquals(new Integer[]{0}, optionalArgs);

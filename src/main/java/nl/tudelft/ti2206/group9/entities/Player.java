@@ -80,15 +80,13 @@ public class Player extends AbstractEntity {
 		return alive;
 	}
 
-	/** @return the invincible */
+	/** @return whether the player is invincible */
 	public final boolean isInvincible() {
 		return invincible;
 	}
 
-	/**
-	 * @param set the invincible to set
-	 */
-	public final void setInvincible(final boolean set) {
+	/** @param set whether the Player should be invincible */
+	public void setInvincible(final boolean set) {
 		invincible = set;
 	}
 
@@ -106,10 +104,10 @@ public class Player extends AbstractEntity {
 			State.addCoins(1);
 		}
 
-		if (collidee instanceof Obstacle) {
+		if (collidee instanceof AbstractObstacle) {
 			GameObservable.notify(
 					Category.PLAYER, GameObserver.Player.COLLISION,
-					Obstacle.class.getSimpleName());
+					AbstractObstacle.class.getSimpleName());
 			if (!isInvincible()) {
 				die();
 			}
@@ -121,7 +119,7 @@ public class Player extends AbstractEntity {
 	 * is capped between the edges of the track (currently -1.5 and +1.5).
 	 * @param dir amount of units to move.
 	 */
-	private void changeLane(final double dir) {
+	private void changeLane(final double dir) { //NOPMD - Travis says "unused"
 		if (moveLane + dir >= -Track.WIDTH / 2
 				&& moveLane + dir <= Track.WIDTH / 2) {
 			GameObservable.notify(Category.PLAYER,
@@ -155,7 +153,7 @@ public class Player extends AbstractEntity {
 	/** Used for testability only.
 	 * @return The lane where the Player is currently moving to
 	 */
-	final int getMoveLane() {
+	int getMoveLane() {
 		return (int) moveLane;
 	}
 
