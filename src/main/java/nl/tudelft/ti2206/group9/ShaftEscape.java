@@ -24,10 +24,6 @@ public class ShaftEscape extends Application {
 	/** Lock used so that the tickers won't use the Track concurrently. */
 	public static final Object TICKER_LOCK = new Object();
 
-	/** Path to the saved game. */
-	private String saveGamePath =
-			"src/main/resources/nl/tudelft/ti2206/group9/util/";
-
 	/** Primary stage where the Scenes are shown in. */
 	private static Stage stage;
 
@@ -48,7 +44,7 @@ public class ShaftEscape extends Application {
 		stage.setMaxHeight(ShaftEscape.HEIGHT);
 
 		GameObservable.addObserver(new Logger());
-		SaveGameParser.loadGame(saveGamePath + "firstSaveGame.json");
+		SaveGameParser.loadGame("firstSaveGame.json");
 		setScene(new SplashScene());
 	}
 

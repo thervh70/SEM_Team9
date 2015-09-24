@@ -31,13 +31,17 @@ public final class SaveGameParser {
 	/** Boolean to indicate whether the sound is enabled. */
 	private static boolean soundEnabled;
 
+	/** Default folder to read savefiles from. */
+	private static String fileFolder =
+			"src/main/resources/nl/tudelft/ti2206/group9/util/";
+
 	/**
 	 * Read a json savefile and store all data in the State class.
-	 * @param filePath path to the file to be parsed.
+	 * @param fileName path to the file to be parsed.
 	 */
-	public static void loadGame(final String filePath) {
+	public static void loadGame(final String fileName) {
 		try {
-			URL path = new File(filePath).toURI().toURL();
+			URL path = new File(fileFolder + fileName).toURI().toURL();
 			InputStream stream = path.openStream();
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(stream, "UTF-8"));
