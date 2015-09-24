@@ -15,7 +15,7 @@ public class Log extends Obstacle {
      * @param center center of Log
      */
     public Log(final Point3D center) {
-        super(center, SIZE);
+        this(center, SIZE);
     }
 
     /**

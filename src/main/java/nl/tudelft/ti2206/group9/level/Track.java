@@ -6,7 +6,7 @@ import nl.tudelft.ti2206.group9.entities.Fence;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
-import nl.tudelft.ti2206.group9.gui.GameScreen;
+import nl.tudelft.ti2206.group9.gui.GameScene;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 import java.util.Collections;
@@ -75,14 +75,31 @@ public class Track {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
 					if (entity.getCenter().getZ()
-							< GameScreen.CAMERA_TRANS.getZ()) {
+							< GameScene.CAMERA_TRANS.getZ()) {
 						entity.selfDestruct();
 					}
-					entity.getCenter().addZ(-dist);
-					entity.checkCollision(entities.get(player));
+					moveEntity(entity, -dist);
 				}
 			}
 		}
+	}
+
+	/**
+	 * Make sure the collisions are checked over the interval that the entities
+	 * are moved.
+	 * @param entity Entity that the collision is checked with.
+	 * @param distance The distance that the second entity has moved.
+	 */
+	private void moveEntity(AbstractEntity entity, double distance) {
+		double oldZ = entity.getCenter().getZ();
+		double diffZ = 
+				(getPlayer().getSize().getZ() + entity.getSize().getZ())
+				* Math.signum(distance);
+		for (double i = 0; Math.abs(i) < Math.abs(distance); i += diffZ) {
+			entity.getCenter().addZ(diffZ);
+			getPlayer().checkCollision(entity);
+		}
+		entity.getCenter().setZ(oldZ + distance);
 	}
 
 	/**
@@ -197,14 +214,6 @@ public class Track {
 			addEntity(add);
 		}
 		trackLeft = part.getLength();
-	}
-
-	/**
-	 * Set the Random generator.
-	 * @param randomGenerator Random object to set.
-	 */
-	public final void setRandom(final Random randomGenerator) {
-		random = randomGenerator;
 	}
 
 }
