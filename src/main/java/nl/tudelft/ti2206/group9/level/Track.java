@@ -70,7 +70,7 @@ public class Track {
 	 * @param dist amount of units to move the track
 	 */
 	@SuppressWarnings("restriction")
-	public final synchronized void moveTrack(final double dist) {
+	public final void moveTrack(final double dist) {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
@@ -92,8 +92,8 @@ public class Track {
 	 */
 	private void moveEntity(final AbstractEntity entity,
 			final double dist) {
-		double oldZ = entity.getCenter().getZ();
-		double diffZ =
+		final double oldZ = entity.getCenter().getZ();
+		final double diffZ =
 				(getPlayer().getSize().getZ() + entity.getSize().getZ())
 				* Math.signum(dist);
 		for (double i = 0; Math.abs(i) < Math.abs(dist); i += diffZ) {
@@ -108,7 +108,7 @@ public class Track {
 	 * @param entity entity to add
 	 * @return this Track, allowing for chaining.
 	 */
-	public final synchronized Track addEntity(final AbstractEntity entity) {
+	public final Track addEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.add(entity);
 		}
@@ -120,7 +120,7 @@ public class Track {
 	 * @param entity entity to remove
 	 * @return this Track, allowing for chaining.
 	 */
-	public final synchronized Track removeEntity(final AbstractEntity entity) {
+	public final Track removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.remove(entity);
 		}
@@ -137,7 +137,7 @@ public class Track {
 	/**
 	 * @return the entities
 	 */
-	public final synchronized List<AbstractEntity> getEntities() {
+	public final List<AbstractEntity> getEntities() {
 		return Collections.unmodifiableList(entities);
 	}
 
@@ -177,7 +177,7 @@ public class Track {
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
-	public final synchronized void step() {
+	public final void step() {
 		synchronized (this) {
 			if (trackLeft > 0) {
 				 trackLeft -= getUnitsPerTick();

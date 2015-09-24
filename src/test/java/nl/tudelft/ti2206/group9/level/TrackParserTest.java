@@ -15,7 +15,7 @@ import org.junit.Test;
 public class TrackParserTest {
 
     private TrackParser parser;
-    private char[][] map = {
+    private final char[][] map = {
                     {'.', 'l', 'f'},
                     {'c', 'c', 'p'},
                     {'l', 'p', '.'}
@@ -30,11 +30,12 @@ public class TrackParserTest {
     @Test
     public void testParseCharMap() {
         part = parser.parseTrackPart(map);
-        final int expectedLength = 3, expectedEntities = 7;
+        final int expectedLength = 3,
+        		expectedEntities = 7;
         assertEquals(expectedLength, part.getLength());
         assertEquals(expectedEntities, part.getEntities().size());
 
-        Class<?>[] types = new Class<?>[] {
+        final Class<?>[] types = new Class<?>[] {
         		Log.class, Fence.class, Coin.class, Coin.class,
         		Pillar.class, Log.class, Pillar.class
         };
@@ -47,7 +48,7 @@ public class TrackParserTest {
 
     @Test(expected = NullPointerException.class)
     public void testParseNullCharMap() {
-        char[][] nullMap = null;
+        final char[][] nullMap = null;
         part = parser.parseTrackPart(nullMap);
     }
 }

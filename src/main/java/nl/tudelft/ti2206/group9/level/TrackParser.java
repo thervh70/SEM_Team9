@@ -103,7 +103,7 @@ public class TrackParser {
      */
     protected final void checkFormat(final List<String> text) {
         if (text == null || text.isEmpty()) {
-            throw new NullPointerException("text is null");
+            throw new NullPointerException("text is null"); //NOPMD
         }
     }
 
@@ -112,23 +112,20 @@ public class TrackParser {
      * @param map the nested array of characters to be used
      * @return TrackPart the created TrackPart
      */
-    protected final TrackPart parseTrackPart(final char[][] map) {
+    // NOPMD used because PMD wants map to be a vararg parameter
+    protected final TrackPart parseTrackPart(final char[][] map) { //NOPMD
     	final TrackPart part = new TrackPart();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
             	final char c = map[i][j];
                 AbstractEntity entity;
-                switch (c) {
-                    case 'c':
-                    	entity = new Coin(new Point3D(i - 1, 1, j)); break;
-                    case 'l':
-                    	entity = new Log(new Point3D(i - 1, 1, j)); break;
-                    case 'p':
-                    	entity = new Pillar(new Point3D(i - 1, 1, j)); break;
-                    case 'f':
-                    	entity = new Fence(new Point3D(i - 1,
+                switch (c) { //NOPMD - default case contains no break, duh.
+                case 'c': entity = new Coin(new Point3D(i - 1, 1, j)); break;
+                case 'l': entity = new Log(new Point3D(i - 1, 1, j)); break;
+                case 'p': entity = new Pillar(new Point3D(i - 1, 1, j)); break;
+                case 'f': entity = new Fence(new Point3D(i - 1,
                     			FENCE_CENTER_HEIGHT, j)); break;
-                    default : continue;
+                default : continue;
                 }
                 part.addEntity(entity);
             }

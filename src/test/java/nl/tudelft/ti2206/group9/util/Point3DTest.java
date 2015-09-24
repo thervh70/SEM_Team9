@@ -27,7 +27,7 @@ public class Point3DTest {
 
 	@Test
 	public void testPoint3DPoint3D() {
-		Point3D point1 = new Point3D(point);
+		final Point3D point1 = new Point3D(point);
 		assertEquals(1.0, point1.getX(), DELTA);
 		assertEquals(2.0, point1.getY(), DELTA);
 		assertEquals(0.0, point1.getZ(), DELTA);
@@ -86,7 +86,7 @@ public class Point3DTest {
 
 	@Test
 	public void testSet() {
-		Point3D point1 = new Point3D(0.0, 1.0, 2.0);
+		final Point3D point1 = new Point3D(0.0, 1.0, 2.0);
 		point.set(point1);
 		assertEquals(0.0, point.getX(), DELTA);
 		assertEquals(1.0, point.getY(), DELTA);
@@ -96,7 +96,7 @@ public class Point3DTest {
 	@Test
 	public void testEquals() {
 		assertTrue(point.equals(point));
-		assertFalse(point.equals(null));
+		assertFalse(point.equals(null)); //NOPMD - intended equals(null)
 		assertFalse(point.equals(""));
 		assertFalse(point.equals(new Point3D(2.0, 2.0, 0.0)));
 		assertFalse(point.equals(new Point3D(1.0, 1.0, 0.0)));

@@ -20,7 +20,7 @@ public class TrackPartTest {
     private TrackPart part;
 
     private Coin coin;
-    private Log log;
+    private Log log; //NOPMD - confuses Log with Logger
 
     @Before
     public void setUp() {
@@ -33,8 +33,8 @@ public class TrackPartTest {
     public void testGetEntities() {
         part.addEntity(coin);
         part.addEntity(log);
-        List<AbstractEntity> actual = part.getEntities();
-        List<AbstractEntity> expected = new LinkedList<AbstractEntity>();
+        final List<AbstractEntity> actual = part.getEntities();
+        final List<AbstractEntity> expected = new LinkedList<AbstractEntity>();
         expected.add(coin);
         expected.add(log);
 

@@ -79,11 +79,11 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void outputEventLog() throws IOException {
-		String log = new String(Files.readAllBytes(Paths.get(Logger.OUTFILE)),
-				StandardCharsets.UTF_8);
-		System.out.println("\n== EVENT_LOG ==");
-		System.out.println(log);
-		System.out.println("== END_EVENT_LOG ==\n");
+		final String log = new String(Files.readAllBytes(
+				Paths.get(Logger.OUTFILE)), StandardCharsets.UTF_8);
+		System.out.println("\n== EVENT_LOG ==");     //NOPMD - Intended use of
+		System.out.println(log);                     //NOPMD - System.out.print
+		System.out.println("== END_EVENT_LOG ==\n"); //NOPMD - for Travis log
 	}
 
 	private void letPlayerSurvive() {

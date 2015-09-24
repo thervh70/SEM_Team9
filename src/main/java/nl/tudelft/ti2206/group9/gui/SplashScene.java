@@ -19,7 +19,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  * @author Maikel, Maarten and Mitchell
  */
 @SuppressWarnings("restriction")
-public final class SplashScene extends MenuScene {
+public final class SplashScene extends AbstractMenuScene {
 
     /** Duration of transition in ms. */
     private static final int TRANSITION_TIME = 750;
@@ -35,7 +35,7 @@ public final class SplashScene extends MenuScene {
 
         final int labelRows = 2;
         final int labelCols = 12;
-        Label text = createLabel("Press any key to continue");
+        final Label text = createLabel("Press any key to continue");
         generateFadeTransition(text);
         text.setPrefWidth(labelCols * GRID_GAP);
         text.setPrefHeight(labelRows * GRID_GAP);

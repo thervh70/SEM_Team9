@@ -15,7 +15,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  * @author Maikel, Maarten, Mitchell and Robin
  */
 @SuppressWarnings("restriction")
-public final class MainMenuScene extends MenuScene {
+public final class MainMenuScene extends AbstractMenuScene {
 
 	/**
 	 * Type of buttons that exist.

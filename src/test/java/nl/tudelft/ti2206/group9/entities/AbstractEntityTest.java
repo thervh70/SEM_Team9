@@ -66,7 +66,7 @@ public class AbstractEntityTest {
 	}
 
 	@Test
-	public void testCheckCollisionDistance0_5Size1() {
+	public void testCheckCollisionDistanceHalfSize1() {
 		setEntities(Point3D.ZERO, Point3D.UNITCUBE,
 					new Point3D(1.0 / 2.0, 0, 0), Point3D.UNITCUBE);
 		first.checkCollision(second);
@@ -116,7 +116,7 @@ public class AbstractEntityTest {
 		entity = new AbstractEntity(Point3D.ZERO, Point3D.UNITCUBE) {
 			/** Do nothing on collision */
 			@Override
-			public void collision(final AbstractEntity collidee) { }
+			public void collision(final AbstractEntity collidee) { } //NOPMD
 		};
 		assertEquals(Point3D.ZERO, entity.getCenter());
 		assertEquals(Point3D.UNITCUBE, entity.getSize());
@@ -161,11 +161,11 @@ public class AbstractEntityTest {
 
 	@Test
 	public void testEquals() {
-		AbstractEntity null1 = new TestEntity(null, Point3D.UNITCUBE);
-		AbstractEntity null2 = new TestEntity(Point3D.ZERO, null);
+		final AbstractEntity null1 = new TestEntity(null, Point3D.UNITCUBE);
+		final AbstractEntity null2 = new TestEntity(Point3D.ZERO, null);
 
 		assertTrue(entity.equals(entity));
-		assertFalse(entity.equals(null));
+		assertFalse(entity.equals(null)); // NOPMD - intended equals(null)
 		assertFalse(entity.equals(""));
 		assertFalse(null1.equals(entity));
 		assertTrue(null1.equals(new TestEntity(null, Point3D.UNITCUBE)));
@@ -205,7 +205,7 @@ public class AbstractEntityTest {
 
 		/** Do nothing on collision. */
 		@Override
-		public void collision(final AbstractEntity collidee) { }
+		public void collision(final AbstractEntity collidee) { } // NOPMD
 
 	}
 }

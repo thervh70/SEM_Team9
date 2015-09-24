@@ -22,7 +22,7 @@ public class Logger implements GameObserver {
 	/** Format of the Timestamp in the log file. */
 	public static final String FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
-	{
+	static {
 		final FileWriter fw;
 		try {
 			fw = new FileWriter(OUTFILE, false);

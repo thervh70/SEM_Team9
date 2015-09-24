@@ -17,7 +17,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  * @author Maikel, Maarten and Mitchell
  */
 @SuppressWarnings("restriction")
-public final class SettingsScene extends MenuScene {
+public final class SettingsScene extends AbstractMenuScene {
 
     /** Boolean for sound status. */
     private static boolean sound = true;

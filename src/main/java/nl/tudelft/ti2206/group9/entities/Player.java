@@ -104,10 +104,10 @@ public class Player extends AbstractEntity {
 			State.addCoins(1);
 		}
 
-		if (collidee instanceof Obstacle) {
+		if (collidee instanceof AbstractObstacle) {
 			GameObservable.notify(
 					Category.PLAYER, GameObserver.Player.COLLISION,
-					Obstacle.class.getSimpleName());
+					AbstractObstacle.class.getSimpleName());
 			if (!isInvincible()) {
 				die();
 			}
@@ -153,7 +153,7 @@ public class Player extends AbstractEntity {
 	/** Used for testability only.
 	 * @return The lane where the Player is currently moving to
 	 */
-	final int getMoveLane() {
+	int getMoveLane() {
 		return (int) moveLane;
 	}
 

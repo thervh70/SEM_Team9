@@ -41,7 +41,7 @@ public class StateTest {
 	}
 
 	@Test
-	public void testModulo_Distance() {
+	public void testModuloDistance() {
 		Track.setDistance(2);
 		assertEquals(0, State.modulo(State.getDistance()));
 		Track.setDistance(State.MOD + 1);
@@ -49,7 +49,7 @@ public class StateTest {
 	}
 
 	@Test
-	public void testModulo_Score() {
+	public void testModuloScore() {
 		State.setScore(2.0);
 		assertEquals(0, State.modulo(State.getDistance()));
 		State.setScore(State.MOD + 1.0);

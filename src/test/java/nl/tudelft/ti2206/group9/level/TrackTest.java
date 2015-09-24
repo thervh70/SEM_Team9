@@ -60,7 +60,7 @@ public class TrackTest {
 
 	@Test
 	public void testRemoveEntity() {
-		Coin coin = new Coin(Point3D.UNITX);
+		final Coin coin = new Coin(Point3D.UNITX);
 		track.addEntity(coin);
 		assertEquals(2, track.getEntities().size());
 		track.removeEntity(coin);
