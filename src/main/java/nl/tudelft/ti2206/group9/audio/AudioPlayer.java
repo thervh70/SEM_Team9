@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.audio;
 import java.io.File;
 import java.net.MalformedURLException;
 
+import nl.tudelft.ti2206.group9.gui.SettingsScreen;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaException;
 
@@ -14,7 +15,7 @@ import javafx.scene.media.MediaException;
 @SuppressWarnings("restriction")
 public class AudioPlayer {
 
-	private AudioClip audioPlayer;
+	private AudioClip audioClip = null;
 	private String path;
 
 	/**
@@ -23,7 +24,9 @@ public class AudioPlayer {
 	 */
 	public AudioPlayer(final String soundPath) {
 		path = soundPath;
-		initializeTune(path);
+		if (SettingsScreen.isSoundEnabled()) {
+			initializeTune(path);
+		}
 	}
 
 	/**
@@ -32,7 +35,7 @@ public class AudioPlayer {
 	 */
 	private void initializeTune(final String path) {
 		try {
-			audioPlayer = new AudioClip(new File(path).toURI().toURL()
+			audioClip = new AudioClip(new File(path).toURI().toURL()
 					.toString());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -47,7 +50,12 @@ public class AudioPlayer {
 	public final synchronized void play() {
 		synchronized (this) {
 			try {
-				audioPlayer.play();
+				if (SettingsScreen.isSoundEnabled()) {
+					if (audioClip == null) {
+						initializeTune(path);
+					}
+					audioClip.play();
+				}
 			} catch (MediaException me) {
 				me.printStackTrace();
 			}
@@ -60,7 +68,12 @@ public class AudioPlayer {
 	public final synchronized void stop() {
 		synchronized (this) {
 			try {
-				audioPlayer.stop();			
+				if (SettingsScreen.isSoundEnabled()) {
+					if (audioClip == null) {
+						initializeTune(path);
+					}
+					audioClip.stop();
+				}
 			} catch (MediaException me) {
 				me.printStackTrace();
 			}
@@ -68,11 +81,15 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Checks if the current audioPlayer is running.
+	 * Checks if the current audioClip is running.
 	 * @return boolean true if running, false if not.
 	 */
 	public final boolean isRunning() {
-		return (audioPlayer.isPlaying());
+		if (audioClip == null) {
+			return false;
+		} else {
+			return audioClip.isPlaying();
+		}
 	}
 
 	/**
@@ -89,7 +106,9 @@ public class AudioPlayer {
 	 */
 	public final void setPath(final String location) {
 		path = location;
-		initializeTune(path);
+		if (SettingsScreen.isSoundEnabled()) {
+			initializeTune(path);
+		}
 	}
 
 }
