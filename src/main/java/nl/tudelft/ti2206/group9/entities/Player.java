@@ -119,7 +119,7 @@ public class Player extends AbstractEntity {
 	 * is capped between the edges of the track (currently -1.5 and +1.5).
 	 * @param dir amount of units to move.
 	 */
-	private void changeLane(final double dir) {
+	private void changeLane(final double dir) { //NOPMD - Travis says "unused"
 		if (moveLane + dir >= -Track.WIDTH / 2
 				&& moveLane + dir <= Track.WIDTH / 2) {
 			GameObservable.notify(Category.PLAYER,
