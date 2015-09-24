@@ -83,6 +83,6 @@ public final class SaveGameParser {
 		State.setPlayerName(playername);
 		State.setCoins(coins);
 		State.setSoundEnabled(soundEnabled);
-		State.setScore(highScore);
+		State.setHighscore(highScore);
 	}
 }

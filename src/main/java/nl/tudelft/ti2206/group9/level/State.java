@@ -134,6 +134,14 @@ public final class State {
 	}
 
 	/**
+	 * Set the highscore.
+ 	 * @param score new highscore
+	 */
+	public static void setHighscore(final double score) {
+		highscore = score;
+	}
+
+	/**
 	 * @return the name of the player
 	 */
 	public static String getPlayerName() {

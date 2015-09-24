@@ -58,7 +58,7 @@ public final class SaveGameWriter {
         mainObject.put("coins", new Integer(State.getCoins()).toString());
 
         JSONObject highscore = new JSONObject();
-        highscore.put("score", new Double(State.getScore()).toString());
+        highscore.put("score", new Double(State.getHighscore()).toString());
         mainObject.put("highscore", highscore);
 
         return mainObject.toJSONString();

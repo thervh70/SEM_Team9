@@ -8,6 +8,7 @@ import nl.tudelft.ti2206.group9.gui.SplashScene;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.SaveGameParser;
+import nl.tudelft.ti2206.group9.util.SaveGameWriter;
 
 /**
  * Starting point of the Application.
@@ -44,7 +45,7 @@ public class ShaftEscape extends Application {
 		stage.setMaxHeight(ShaftEscape.HEIGHT);
 
 		GameObservable.addObserver(new Logger());
-		SaveGameParser.loadGame("firstSaveGame.json");
+		SaveGameParser.loadGame("firstActualGame.json");
 		setScene(new SplashScene());
 	}
 
@@ -76,6 +77,7 @@ public class ShaftEscape extends Application {
 
 	/** Exits the Application. */
 	public static void exit() {
+		SaveGameWriter.saveGame("firstActualGame.json");
 		stage.close();
 	}
 
