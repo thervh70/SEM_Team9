@@ -200,9 +200,10 @@ public class ExternalTicker extends AnimationTimer {
 	 * @return The material for the wallPiece.
 	 */
 	private static PhongMaterial chooseMaterial() {
-		double random = Math.random();
-		double alpha = 0.5;
-		double beta = 0.75;
+		final double random = Math.random();
+		final double alpha = 0.5;
+		final double beta = 0.75;
+
 		if (random < alpha) {
 			return Style.BRICK;
 		} else if (random > alpha && random < beta) {
