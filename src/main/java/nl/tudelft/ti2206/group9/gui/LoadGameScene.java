@@ -30,8 +30,8 @@ public class LoadGameScene extends MenuScene {
         @Override
         public Node[] createContent() {
 
-            final Button backButton = createButton("Back", 2, 26);
-            final Button loadButton = createButton("Load", 10, 26);
+            final Button backButton = createButton("Back", 0, 24);
+            final Button loadButton = createButton("Load", 4, 24);
 
             setButtonFunction(backButton, BType.LOAD_BACK);
             setButtonFunction(loadButton, BType.LOAD_START);

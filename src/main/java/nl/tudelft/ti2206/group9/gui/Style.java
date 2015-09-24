@@ -76,7 +76,7 @@ public final class Style {
     public static void setPopupButtonStyle(final Button b) {
         /** Adjusting the looks of the button */
     	final Color color = Color.BLACK;
-    	final CornerRadii corner = new CornerRadii(3);
+    	final CornerRadii corner = new CornerRadii(4);
     	final Insets inset = new Insets(0);
     	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
     	final Background buttonBack = new Background(fill);
@@ -107,11 +107,11 @@ public final class Style {
      */
     public static void setLabelStyle(final Label l) {
     	final Color color = Color.BLACK;
-    	final CornerRadii corner = new CornerRadii(3);
+    	final CornerRadii corner = new CornerRadii(4);
     	final Insets inset = new Insets(-4);
     	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
     	final Background buttonBack = new Background(fill);
-    	final Font font = Font.font("Roboto", FontWeight.BOLD, 18);
+    	final Font font = Font.font("Roboto", FontWeight.BOLD, 16);
         l.setAlignment(Pos.CENTER);
         l.setBackground(buttonBack);
         l.setTextFill(Color.WHITE);

@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -37,17 +39,21 @@ public final class MainMenuScene extends MenuScene {
 	 */
 	@Override
 	public Node[] createContent() {
-        final Button startButton = createButton("START", 6, 26);
-		final Button settingsButton = createButton("SETTINGS", 2, 26);
-		final Button exitButton = createButton("EXIT", 10, 26);
-		final Button loadButton = createButton("LOAD GAME", 6, 20);
+        final Button startButton = createButton("START!", 4, 22);
+		final Button settingsButton = createButton("SETTINGS", 0, 24);
+		final Button exitButton = createButton("EXIT", 4, 24);
+		final Button loadButton = createButton("LOAD GAME", 2, 24);
+		final Label nameLabel = createLabel("NEW PLAYER:", 0, 22);
+		final TextField input = createTextField("PLAYER NAME", 2, 22);
+
 
 		setButtonFunction(exitButton, BType.EXIT);
 		setButtonFunction(startButton, BType.START);
 		setButtonFunction(settingsButton, BType.SETTINGS);
 		setButtonFunction(loadButton, BType.LOAD);
 
-		return new Node[]{startButton, settingsButton, exitButton, loadButton};
+		return new Node[]{startButton, settingsButton, exitButton,
+				loadButton, nameLabel, input};
 	}
 
 	/**

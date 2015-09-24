@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -26,7 +28,7 @@ public abstract class MenuScene extends AbstractScene {
 	public Parent createRoot() {
 	    GridPane grid = initializeGrid();
 	
-	    // Adding buttons to grid.
+	    // Adding objects to grid.
 	    grid.getChildren().addAll(createContent());
 	    
 		return grid;
@@ -60,7 +62,7 @@ public abstract class MenuScene extends AbstractScene {
 	}
 
 	/**
-	 * This method adds text to buttons and give them a location on the grid.
+	 * This method adds text to buttons and gives them a location on the grid.
 	 * @param name Name of the button.
 	 * @param column Column index on the grid.
 	 * @param row Row index on the grid.
@@ -70,8 +72,36 @@ public abstract class MenuScene extends AbstractScene {
 			final int column, final int row) {
 	    Button button = new Button(name);
 	    Style.setButtonStyle(button);
+		button.setMinSize(120,10);
 	    GridPane.setConstraints(button, column, row);
 		return button;
 	}
+
+	/**
+	 * This method creates labels and gives them a location on the grid.
+	 * @param text Label text.
+	 * @param column Column index on the grid.
+	 * @param row Row index on the grid.
+	 * @return the created Label.
+	 */
+	protected static Label createLabel(final String text,
+                                       final int column, final int row) {
+		Label label = new Label(text);
+		Style.setLabelStyle(label);
+		label.setMinSize(120,10);
+		GridPane.setConstraints(label, column, row);
+		return label;
+	}
+
+	protected static TextField createTextField(
+            final String promptText, final int column, final int row) {
+        TextField tf = new TextField();
+        tf.setPromptText(promptText);
+        tf.setPrefSize(120, 10);
+        GridPane.setConstraints(tf, column,row);
+        return tf;
+	}
+
+
 
 }
