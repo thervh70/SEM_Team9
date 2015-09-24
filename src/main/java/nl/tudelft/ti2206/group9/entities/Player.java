@@ -80,12 +80,12 @@ public class Player extends AbstractEntity {
 		return alive;
 	}
 
-	/** @return the invincible */
-	public boolean isInvincible() {
+	/** @return whether the player is invincible */
+	public final boolean isInvincible() {
 		return invincible;
 	}
 
-	/** @param set the invincible to set */
+	/** @param set whether the Player should be invincible */
 	public void setInvincible(final boolean set) {
 		invincible = set;
 	}

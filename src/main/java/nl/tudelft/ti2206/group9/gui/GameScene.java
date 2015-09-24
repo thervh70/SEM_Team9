@@ -64,7 +64,7 @@ public final class GameScene extends AbstractScene {
 	 */
 	public GameScene() {
 		super(true);
-		setFill(Color.AQUA);
+		setFill(Color.BLACK);
 	}
 
 	/**
@@ -73,6 +73,7 @@ public final class GameScene extends AbstractScene {
 	 */
 	public Parent createRoot() {
 		State.reset();
+		Style.loadTextures();
 
 		final Group root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
