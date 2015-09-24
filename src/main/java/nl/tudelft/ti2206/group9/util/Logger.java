@@ -29,6 +29,7 @@ public class Logger implements GameObserver {
 			fw.write("");
 			fw.close();
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		String lbl;
@@ -72,7 +73,9 @@ public class Logger implements GameObserver {
 			fw.write(line + "\n");
 			fw.flush();
 			fw.close();
-		} catch (IOException e) { }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/** Retrieves the string to be logged from the hashmap in correct format.
