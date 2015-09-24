@@ -68,40 +68,33 @@ public final class Style {
      * They are loaded into Phongmaterials.
      */
     public static void loadTextures() {
-        Image brickTexture = new Image(
-                "nl/tudelft/ti2206/group9/gui/texture_brick.png");
+        String path = "nl/tudelft/ti2206/group9/gui/";
+
+        Image brickTexture = new Image(path + "texture_brick.png");
         BRICK.setDiffuseMap(brickTexture);
 
-        Image mossTexture = new Image(
-                "nl/tudelft/ti2206/group9/gui/texture_moss.png");
+        Image mossTexture = new Image(path + "texture_moss.png");
         MOSS.setDiffuseMap(mossTexture);
 
-        Image crackTexture = new Image(
-                "nl/tudelft/ti2206/group9/gui/texture_crack.png");
+        Image crackTexture = new Image(path + "texture_crack.png");
         CRACK.setDiffuseMap(crackTexture);
 
-        Image floorTexture = new Image(
-                "nl/tudelft/ti2206/group9/gui/texture_cobblestone.png");
+        Image floorTexture = new Image(path + "texture_cobblestone.png");
         FLOOR.setDiffuseMap(floorTexture);
 
-        Image coinTexture = new Image(
-                "nl/tudelft/ti2206/group9/gui/texture_coin.png");
+        Image coinTexture = new Image(path + "texture_coin.png");
         COIN.setDiffuseMap(coinTexture);
 
-        Image woodTexture = new Image(
-                "nl/tudelft/ti2206/group9/gui/texture_wood.png");
+        Image woodTexture = new Image(path + "texture_wood.png");
         WOOD.setDiffuseMap(woodTexture);
 
-        Image pillarTexture = new Image(
-                "nl/tudelft/ti2206/group9/gui/texture_pillar.png");
+        Image pillarTexture = new Image(path + "texture_pillar.png");
         PILLAR.setDiffuseMap(pillarTexture);
 
-        Image fenceTexture = new Image(
-                "nl/tudelft/ti2206/group9/gui/texture_fence.png");
+        Image fenceTexture = new Image(path + "texture_fence.png");
         FENCE.setDiffuseMap(fenceTexture);
 
-        Image playerTexture = new Image(
-                "nl/tudelft/ti2206/group9/gui/texture_player.png");
+        Image playerTexture = new Image(path + "texture_player.png");
         PLAYER.setDiffuseMap(playerTexture);
     }
 
