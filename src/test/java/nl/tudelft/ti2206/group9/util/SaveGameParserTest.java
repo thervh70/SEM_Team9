@@ -17,7 +17,7 @@ public class SaveGameParserTest {
         SaveGameParser.loadGame("firstSaveGame.json");
         assertEquals(State.getPlayerName(), "Mathias");
         assertEquals(State.getCoins(), 42);
-        assertEquals(State.getScore(), 2560, DELTA);
+        assertEquals(State.getHighscore(), 2560);
         assertEquals(State.isSoundEnabled(), true);
     }
 }
