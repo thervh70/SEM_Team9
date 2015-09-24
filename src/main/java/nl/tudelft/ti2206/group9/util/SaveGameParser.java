@@ -5,14 +5,18 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 /**
  * @author Mathias
  */
-public class SaveGameParser {
+public final class SaveGameParser {
+
+	/**
+	 * Private constructor.
+	 */
+	private SaveGameParser() { }
 
 	/** Playername. */
 	private static String playername;
@@ -20,53 +24,45 @@ public class SaveGameParser {
 	private static int coins;
 	/** Players highscore. */
 	private static double highScore;
-	/** Number of coins collected in players last highscore run. */
-	private static int highCoins;
 	/** Boolean to indicate whether the sound is enabled. */
 	private static boolean soundEnabled;
 
 	/**
-	 * Load all data from the given file and save it in State.
-	 * @param filePath the path to the file to be read.
+	 * Read a json savefile and store all data in the State class.
+	 * @param filePath path to the file to be parsed.
 	 */
-	public static final void loadGame(final String filePath) {
+	public static void loadGame(final String filePath) {
 		try {
-			JSONObject mainObject = parserInit(filePath);
-			playername = (String) mainObject.get("playername");
-			coins = Integer.valueOf((String) mainObject.get("coins"));
+			FileReader reader = new FileReader(filePath);
+			JSONParser parser = new JSONParser();
+			JSONObject mainObject = (JSONObject) parser.parse(reader);
 
-			JSONObject settingsObj = (JSONObject) mainObject.get("settings");
-			String soundEnabledString = (String) settingsObj.get("soundEnabled");
-			soundEnabled = soundEnabledString.equals("true");
-
-			JSONObject highScoreObj = (JSONObject) mainObject.get("highscore");
-			highScore = Double.valueOf((String) highScoreObj.get("score"));
-			highCoins = Integer.valueOf((String) highScoreObj.get("coins"));
-
+			parseJSON(mainObject);
 			writeToState();
 
-		} catch (FileNotFoundException e) {
+			reader.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Initialize the parsing process.
-	 * @param filePath path to the file to be parsed.
-	 * @return JSONObject the main JSONObjct from the read file
-	 * @throws IOException IOException
-	 * @throws ParseException ParseException
+	 * Parse all json data from the file.
+	 * @param mainObject the main JSON object
 	 */
-	private static JSONObject parserInit(final String filePath) throws IOException, ParseException {
-		FileReader reader = new FileReader(filePath);
-		JSONParser parser = new JSONParser();
-		JSONObject mainObject = (JSONObject) parser.parse(reader);
+	private static void parseJSON(final JSONObject mainObject) {
+		playername = (String) mainObject.get("playername");
+		String coinsString = (String) mainObject.get("coins");
+		coins = Integer.valueOf(coinsString);
 
-		return mainObject;
+		JSONObject settingsObj = (JSONObject) mainObject.get("settings");
+		String soundEnabledString = (String) settingsObj.get("soundEnabled");
+		soundEnabled = soundEnabledString.equals("true");
+
+		JSONObject highScoreObj = (JSONObject) mainObject.get("highscore");
+		highScore = Double.valueOf((String) highScoreObj.get("score"));
 	}
 
 	/**

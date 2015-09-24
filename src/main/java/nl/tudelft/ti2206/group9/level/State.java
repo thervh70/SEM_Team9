@@ -116,7 +116,7 @@ public final class State {
 	public static void setTrack(final Track trck) {
 		State.track = trck;
 	}
-	
+
 	/**
 	 * Call this method to check whether the highscore should be updated.
 	 */
@@ -125,7 +125,7 @@ public final class State {
 			highscore = score;
 		}
 	}
-	
+
 	/**
 	 * @return the current highest score
 	 */
@@ -133,19 +133,33 @@ public final class State {
 		return (int) highscore;
 	}
 
+	/**
+	 * @return the name of the player
+	 */
 	public static String getPlayerName() {
 		return playerName;
 	}
 
-	public static void setPlayerName(String newPlayerName) {
+	/**
+	 * Set the name of the player.
+	 * @param newPlayerName the new name
+	 */
+	public static void setPlayerName(final String newPlayerName) {
 		State.playerName = newPlayerName;
 	}
 
+	/**
+	 * @return whether sound is enabled
+	 */
 	public static boolean isSoundEnabled() {
 		return soundEnabled;
 	}
 
-	public static void setSoundEnabled(boolean newSoundEnabled) {
+	/**
+	 * Change whether the sound is enabled.
+	 * @param newSoundEnabled true/false
+	 */
+	public static void setSoundEnabled(final boolean newSoundEnabled) {
 		State.soundEnabled = newSoundEnabled;
 	}
 }

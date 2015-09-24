@@ -25,18 +25,10 @@ public final class SettingsScene extends MenuScene {
 	 */
 	enum BType {
 		/** Back button. */
-		SETTINGS_BACK, 
+		SETTINGS_BACK,
 		/** Sound toggle. */
 		SETTING_SOUND
 	 }
-
-    /**
-     * Return whether sound is enabled.
-     * @return whether sound is enabled.
-     */
-    public static boolean isSoundEnabled() {
-    	return State.isSoundEnabled();
-    }
 
     /**
      * Creates a Sound toggle button and a Back button.
@@ -44,18 +36,18 @@ public final class SettingsScene extends MenuScene {
      */
 	@Override
 	public Node[] createContent() {
-	    
+
 	    final Button backButton = createButton("Back", 2, 26);
 		String soundToggle = "OFF";
-		if(isSoundEnabled()) {
+		if (State.isSoundEnabled()) {
 			soundToggle = "ON";
 		}
 	    final Button soundButton = createButton("Sound: " + soundToggle, 5, 18);
-	    
+
 	    // Override default button size from Style
 	    final Font font = Font.font("Roboto", FontWeight.BOLD, 20);
 	    soundButton.setFont(font);
-	
+
 	    setButtonFunction(backButton, BType.SETTINGS_BACK);
 	    setButtonFunction(soundButton, BType.SETTING_SOUND);
 		return new Node[]{backButton, soundButton};
@@ -74,7 +66,7 @@ public final class SettingsScene extends MenuScene {
 	                GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
 	                ShaftEscape.setScene(new MainMenuScene());
 	            } else {
-	                State.setSoundEnabled(!isSoundEnabled());
+	                State.setSoundEnabled(!State.isSoundEnabled());
 	                String s;
 	                if (State.isSoundEnabled()) {
 	                    s = "ON";

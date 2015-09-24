@@ -44,10 +44,11 @@ public class ShaftEscape extends Application {
 		stage.setMaxHeight(ShaftEscape.HEIGHT);
 
 		GameObservable.addObserver(new Logger());
-		SaveGameParser.loadGame("src/main/resources/nl/tudelft/ti2206/group9/util/firstSaveGame.json");
+		SaveGameParser.loadGame(
+				"src/main/resources/nl/tudelft/ti2206/group9/util/firstSaveGame.json");
 		setScene(new SplashScene());
 	}
-	
+
 	/** @param newStage the new stage to set as private static field. */
 	private static void setStage(final Stage newStage) {
 		stage = newStage;
