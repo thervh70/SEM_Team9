@@ -26,7 +26,9 @@ public final class MainMenuScene extends MenuScene {
 		/** Start button. */
 		START,
 		/** Settings button. */
-		SETTINGS
+		SETTINGS,
+		/** Load Game button. */
+		LOAD
 	}
 
 	/**
@@ -38,12 +40,14 @@ public final class MainMenuScene extends MenuScene {
         final Button startButton = createButton("START", 6, 26);
 		final Button settingsButton = createButton("SETTINGS", 2, 26);
 		final Button exitButton = createButton("EXIT", 10, 26);
+		final Button loadButton = createButton("LOAD GAME", 6, 20);
 
 		setButtonFunction(exitButton, BType.EXIT);
 		setButtonFunction(startButton, BType.START);
 		setButtonFunction(settingsButton, BType.SETTINGS);
+		setButtonFunction(loadButton, BType.LOAD);
 
-		return new Node[]{startButton, settingsButton, exitButton};
+		return new Node[]{startButton, settingsButton, exitButton, loadButton};
 	}
 
 	/**
@@ -61,12 +65,15 @@ public final class MainMenuScene extends MenuScene {
 				} else if (type == BType.START) {
 					GameObservable.notify(Category.MENU, Menu.START);
 					ShaftEscape.setScene(new GameScene());
+				} else if (type == BType.LOAD) {
+					GameObservable.notify(Category.MENU, Menu.LOAD_MENU);
+					ShaftEscape.setScene(new LoadGameScene());
 				} else {
 					GameObservable.notify(Category.MENU, Menu.SETTINGS);
 					ShaftEscape.setScene(new SettingsScene());
 				}
 			}
 		});
-	}
 
+	}
 }
