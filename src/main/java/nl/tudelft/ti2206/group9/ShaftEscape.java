@@ -7,6 +7,7 @@ import nl.tudelft.ti2206.group9.gui.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.SplashScene;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.Logger;
+import nl.tudelft.ti2206.group9.util.SaveGameParser;
 
 /**
  * Starting point of the Application.
@@ -22,6 +23,10 @@ public class ShaftEscape extends Application {
 	public static final int HEIGHT = 640;
 	/** Lock used so that the tickers won't use the Track concurrently. */
 	public static final Object TICKER_LOCK = new Object();
+
+	/** Path to the saved game. */
+	private String saveGamePath =
+			"src/main/resources/nl/tudelft/ti2206/group9/util/";
 
 	/** Primary stage where the Scenes are shown in. */
 	private static Stage stage;
@@ -43,9 +48,10 @@ public class ShaftEscape extends Application {
 		stage.setMaxHeight(ShaftEscape.HEIGHT);
 
 		GameObservable.addObserver(new Logger());
+		SaveGameParser.loadGame(saveGamePath + "firstSaveGame.json");
 		setScene(new SplashScene());
 	}
-	
+
 	/** @param newStage the new stage to set as private static field. */
 	private static void setStage(final Stage newStage) {
 		stage = newStage;

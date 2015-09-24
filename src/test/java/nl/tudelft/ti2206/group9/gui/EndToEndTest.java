@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.gui.SettingsScene.isSoundEnabled;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -51,14 +50,15 @@ public class EndToEndTest extends ApplicationTest {
 
 	@Test
 	public void test() throws IOException {
+		boolean soundEnabled = State.isSoundEnabled();
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
 
 		mainMenu(1);				// Click settings
 		settings(1);				// Toggle sound
-		assertFalse(isSoundEnabled());
+		assertFalse(State.isSoundEnabled() == soundEnabled);
 		settings(1);				// Toggle sound
-		assertTrue(isSoundEnabled());
+		assertTrue(State.isSoundEnabled() == soundEnabled);
 		settings(0);				// Click Back
 		
 		mainMenu(0);				// Click start
