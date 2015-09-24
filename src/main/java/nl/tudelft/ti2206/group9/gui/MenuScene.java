@@ -93,6 +93,13 @@ public abstract class MenuScene extends AbstractScene {
 		return label;
 	}
 
+    /**
+     * Create a new textfield.
+     * @param promptText PromtText for the textfield.
+     * @param column Column index for gridPane.
+     * @param row Row index for gridPane.
+     * @return The created textField.
+     */
 	protected static TextField createTextField(
             final String promptText, final int column, final int row) {
         TextField tf = new TextField();

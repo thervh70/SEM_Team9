@@ -60,7 +60,11 @@ public class EndToEndTest extends ApplicationTest {
 		settings(1);				// Toggle sound
 		assertTrue(isSoundEnabled());
 		settings(0);				// Click Back
-		
+
+		mainMenu(3);				// Click Load game
+		loadMenu(1);				// Click load
+		loadMenu(0);				// Back to main
+
 		mainMenu(0);				// Click start
 		keyboard(KeyCode.ESCAPE);	// Press Escape
 		pausePopup(0);				// Click resume
@@ -136,6 +140,14 @@ public class EndToEndTest extends ApplicationTest {
 	}
 	
 	private void settings(int buttonNo) {
+		ObservableList<Node> buttons;
+		buttons = rootNode(stage).getScene().getRoot()
+				.getChildrenUnmodifiable();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(SHORT);
+	}
+
+	private void loadMenu(int buttonNo) {
 		ObservableList<Node> buttons;
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();

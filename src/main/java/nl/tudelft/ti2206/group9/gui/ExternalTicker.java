@@ -25,7 +25,7 @@ import nl.tudelft.ti2206.group9.level.State;
 public class ExternalTicker extends AnimationTimer {
 
 	/** Height of the box in-game where the score is displayed. */
-	private static final int SCORE_BOX_HEIGHT = 120;
+	private static final int SCORE_BOX_HEIGHT = 130;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
 
@@ -59,6 +59,7 @@ public class ExternalTicker extends AnimationTimer {
 	 * @return VBox with score labels
 	 */
 	private VBox renderScore() {
+		final Label nameLabel = new Label(State.getPlayerName());
 		final Label highLabel = new Label("Highscore: "	+ State.getHighscore());
 		final Label scoreLabel = new Label("Score: "
 				+ State.modulo(State.getScore()));
@@ -66,12 +67,13 @@ public class ExternalTicker extends AnimationTimer {
 				+ State.modulo(State.getDistance()));
 		final Label coinsLabel = new Label("Coins: " + State.getCoins());
 
+		Style.setLabelStyle(nameLabel);
 		Style.setLabelStyle(highLabel);
 		Style.setLabelStyle(scoreLabel);
 		Style.setLabelStyle(distanceLabel);
 		Style.setLabelStyle(coinsLabel);
 
-		final VBox scoreBox = new VBox(highLabel, scoreLabel,
+		final VBox scoreBox = new VBox(nameLabel, highLabel, scoreLabel,
 				distanceLabel, coinsLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);

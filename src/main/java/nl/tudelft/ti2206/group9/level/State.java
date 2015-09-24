@@ -8,7 +8,8 @@ package nl.tudelft.ti2206.group9.level;
  */
 public final class State {
 
-	public String name;
+	/** Name of the player.*/
+	public static String playerName = "Player";
 	/** Current score of the player, reset every run. */
 	private static double score;
 	/** Current amount of coins. */
@@ -126,6 +127,22 @@ public final class State {
 	 */
 	public static int getHighscore() {
 		return (int) highscore;
+	}
+
+	/**
+	 *
+	 * @return Player name
+	 */
+	public static String getPlayerName() {
+		return playerName;
+	}
+
+	/**
+	 * Set Player name.
+	 * @param playerName Player name.
+	 */
+	public static void setPlayerName(String playerName) {
+		State.playerName = playerName;
 	}
 
 }
