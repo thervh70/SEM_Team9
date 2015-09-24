@@ -5,8 +5,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 /**
  * @author Mathias
@@ -33,7 +37,11 @@ public final class SaveGameParser {
 	 */
 	public static void loadGame(final String filePath) {
 		try {
-			FileReader reader = new FileReader(filePath);
+			URL path = new File(filePath).toURI().toURL();
+			InputStream stream = path.openStream();
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(stream, "UTF-8"));
+
 			JSONParser parser = new JSONParser();
 			JSONObject mainObject = (JSONObject) parser.parse(reader);
 
