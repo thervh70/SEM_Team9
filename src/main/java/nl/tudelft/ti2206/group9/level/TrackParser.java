@@ -126,7 +126,7 @@ public class TrackParser {
                     case 'p':
                     	entity = new Pillar(new Point3D(i - 1, 1, j)); break;
                     case 'f':
-                    	entity = new Fence(new Point3D(i - 1, 
+                    	entity = new Fence(new Point3D(i - 1,
                     			FENCE_CENTER_HEIGHT, j)); break;
                     default : continue;
                 }

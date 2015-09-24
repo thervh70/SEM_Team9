@@ -10,9 +10,9 @@ import org.junit.Test;
 public class Point3DTest {
 
 	public static final double DELTA = 0.00000001;
-	
+
 	private transient Point3D point;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		point = new Point3D(1.0, 2.0, 0.0);
@@ -92,7 +92,7 @@ public class Point3DTest {
 		assertEquals(1.0, point.getY(), DELTA);
 		assertEquals(2.0, point.getZ(), DELTA);
 	}
-	
+
 	@Test
 	public void testEquals() {
 		assertTrue(point.equals(point));

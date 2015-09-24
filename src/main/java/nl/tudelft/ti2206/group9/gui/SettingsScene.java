@@ -27,7 +27,7 @@ public final class SettingsScene extends MenuScene {
 	 */
 	enum BType {
 		/** Back button. */
-		SETTINGS_BACK, 
+		SETTINGS_BACK,
 		/** Sound toggle. */
 		SETTING_SOUND
 	 }
@@ -46,14 +46,13 @@ public final class SettingsScene extends MenuScene {
      */
 	@Override
 	public Node[] createContent() {
-	    
 	    final Button backButton = createButton("Back", 2, 26);
 	    final Button soundButton = createButton("Sound: ON", 5, 18);
-	    
+
 	    // Override default button size from Style
 	    final Font font = Font.font("Roboto", FontWeight.BOLD, 20);
 	    soundButton.setFont(font);
-	
+
 	    setButtonFunction(backButton, BType.SETTINGS_BACK);
 	    setButtonFunction(soundButton, BType.SETTING_SOUND);
 		return new Node[]{backButton, soundButton};

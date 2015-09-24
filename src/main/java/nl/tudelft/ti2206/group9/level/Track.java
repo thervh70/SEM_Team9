@@ -88,18 +88,19 @@ public class Track {
 	 * Make sure the collisions are checked over the interval that the entities
 	 * are moved.
 	 * @param entity Entity that the collision is checked with.
-	 * @param distance The distance that the second entity has moved.
+	 * @param dist The distance that the second entity has moved.
 	 */
-	private void moveEntity(AbstractEntity entity, double distance) {
+	private void moveEntity(final AbstractEntity entity,
+			final double dist) {
 		double oldZ = entity.getCenter().getZ();
-		double diffZ = 
+		double diffZ =
 				(getPlayer().getSize().getZ() + entity.getSize().getZ())
-				* Math.signum(distance);
-		for (double i = 0; Math.abs(i) < Math.abs(distance); i += diffZ) {
+				* Math.signum(dist);
+		for (double i = 0; Math.abs(i) < Math.abs(dist); i += diffZ) {
 			entity.getCenter().addZ(diffZ);
 			getPlayer().checkCollision(entity);
 		}
-		entity.getCenter().setZ(oldZ + distance);
+		entity.getCenter().setZ(oldZ + dist);
 	}
 
 	/**

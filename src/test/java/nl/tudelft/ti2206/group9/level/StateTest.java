@@ -39,7 +39,7 @@ public class StateTest {
 		State.addCoins(1);
 		assertEquals(2 + 1, State.getCoins());
 	}
-	
+
 	@Test
 	public void testModulo_Distance() {
 		Track.setDistance(2);
@@ -55,7 +55,7 @@ public class StateTest {
 		State.setScore(State.MOD + 1.0);
 		assertEquals(State.MOD, State.modulo(State.getScore()));
 	}
-	
+
 	@Test
 	public void testGetDistance() {
 		Track.setDistance(2);
@@ -79,7 +79,7 @@ public class StateTest {
 		State.setCoins(1);
 		assertEquals(1, State.getCoins());
 	}
-	
+
 	/**
 	 * This method tests whether the highscore is set correctly
 	 * when the score changes.
@@ -87,11 +87,11 @@ public class StateTest {
 	@Test
 	public void testHighscore() {
 		assertEquals(0, State.getHighscore());
-		
+
 		State.setScore(2);
 		State.checkHighscore();
 		assertEquals(2, State.getHighscore());
-		
+
 		State.setScore(1);
 		State.checkHighscore();
 		assertEquals(2, State.getHighscore());

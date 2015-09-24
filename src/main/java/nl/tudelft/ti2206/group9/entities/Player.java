@@ -85,8 +85,8 @@ public class Player extends AbstractEntity {
 		return invincible;
 	}
 
-	/** @param invincible the invincible to set */
-	public void setInvincible(boolean set) {
+	/** @param set the invincible to set */
+	public void setInvincible(final boolean set) {
 		invincible = set;
 	}
 

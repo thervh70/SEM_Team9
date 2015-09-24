@@ -30,7 +30,7 @@ public class Logger implements GameObserver {
 			fw.close();
 		} catch (IOException e) {
 		}
-		
+
 		String lbl;
 
 		lbl = " [ GAME ] ";
@@ -61,7 +61,8 @@ public class Logger implements GameObserver {
 		STRINGS.put(Player.STOP_MOVE, lbl + "Stopped moving in lane %d.");
 	}
 
-	public void gameUpdate(final Category cat, final Specific spec, 
+	@Override
+	public void gameUpdate(final Category cat, final Specific spec,
 			final Object... optionalArgs) {
 		final String line = getLogString(spec, optionalArgs);
 

@@ -14,9 +14,13 @@ import javafx.scene.layout.GridPane;
 @SuppressWarnings("restriction")
 public abstract class MenuScene extends AbstractScene {
 
+	/** Gap between grid cells. */
 	protected static final int GRID_GAP = 20;
+	/** Margin of grid cells. */
 	protected static final int GRID_MARGIN = 10;
+	/** Amount of columns in grid. */
 	protected static final int GRID_WIDTH = ShaftEscape.WIDTH / GRID_GAP;
+	/** Amount of rows in grid. */
 	protected static final int GRID_HEIGHT = ShaftEscape.HEIGHT / GRID_GAP;
 
 	/**
@@ -25,15 +29,12 @@ public abstract class MenuScene extends AbstractScene {
 	 */
 	public Parent createRoot() {
 	    GridPane grid = initializeGrid();
-	
-	    // Adding buttons to grid.
 	    grid.getChildren().addAll(createContent());
-	    
 		return grid;
 	}
 
 	/**
-	 * @return a list of Nodes which should be added to the Root (which is a 
+	 * @return a list of Nodes which should be added to the Root (which is a
 	 * {@link GridPane}).
 	 */
 	public abstract Node[] createContent();

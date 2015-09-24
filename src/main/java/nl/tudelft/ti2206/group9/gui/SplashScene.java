@@ -20,7 +20,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  */
 @SuppressWarnings("restriction")
 public final class SplashScene extends MenuScene {
-	
+
     /** Duration of transition in ms. */
     private static final int TRANSITION_TIME = 750;
 
@@ -41,10 +41,10 @@ public final class SplashScene extends MenuScene {
         text.setPrefHeight(labelRows * GRID_GAP);
 	    GridPane.setConstraints(text, GRID_WIDTH / 2 - labelCols / 2,
 	    		GRID_HEIGHT / 2 + 2 - labelRows / 2);
-	    
+
         return new Node[]{text};
 	}
-	
+
 	/**
      * Creating a new label for displaying text.
      * @param text a given sentence.

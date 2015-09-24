@@ -116,7 +116,7 @@ public class AbstractEntityTest {
 		entity = new AbstractEntity(Point3D.ZERO, Point3D.UNITCUBE) {
 			/** Do nothing on collision */
 			@Override
-			public void collision(AbstractEntity collidee) { }
+			public void collision(final AbstractEntity collidee) { }
 		};
 		assertEquals(Point3D.ZERO, entity.getCenter());
 		assertEquals(Point3D.UNITCUBE, entity.getSize());
@@ -149,16 +149,16 @@ public class AbstractEntityTest {
 		final int centerHash = Point3D.ZERO.hashCode();
 		final int sizeHash = Point3D.UNITCUBE.hashCode();
 		final int prime = 31;
-		assertEquals(prime * prime, 
+		assertEquals(prime * prime,
 				new TestEntity(null, null).hashCode());
-		assertEquals((prime + centerHash) * prime, 
+		assertEquals((prime + centerHash) * prime,
 				new TestEntity(Point3D.ZERO, null).hashCode());
-		assertEquals(prime * prime + sizeHash, 
+		assertEquals(prime * prime + sizeHash,
 				new TestEntity(null, Point3D.UNITCUBE).hashCode());
-		assertEquals((prime + centerHash) * prime + sizeHash, 
+		assertEquals((prime + centerHash) * prime + sizeHash,
 				entity.hashCode());
 	}
-	
+
 	@Test
 	public void testEquals() {
 		AbstractEntity null1 = new TestEntity(null, Point3D.UNITCUBE);
@@ -186,7 +186,7 @@ public class AbstractEntityTest {
 		assertEquals("AbstractEntity [center=" + entity.getCenter()
 				+ ",size=" + entity.getSize() + "]", entity.toString());
 	}
-	
+
 	/**
 	 * This class extends the AbstractEntity with default behaviour because
 	 * it is easier to test.
@@ -199,13 +199,13 @@ public class AbstractEntityTest {
 		 * @param center center of the bounding box
 		 * @param size size of the bounding box
 		 */
-		public TestEntity(Point3D center, Point3D size) {
+		public TestEntity(final Point3D center, final Point3D size) {
 			super(center, size);
 		}
 
 		/** Do nothing on collision. */
 		@Override
-		public void collision(AbstractEntity collidee) { }
+		public void collision(final AbstractEntity collidee) { }
 
 	}
 }

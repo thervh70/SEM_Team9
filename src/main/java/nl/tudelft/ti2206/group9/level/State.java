@@ -110,7 +110,7 @@ public final class State {
 	public static void setTrack(final Track trck) {
 		State.track = trck;
 	}
-	
+
 	/**
 	 * Call this method to check whether the highscore should be updated.
 	 */
@@ -119,7 +119,7 @@ public final class State {
 			highscore = score;
 		}
 	}
-	
+
 	/**
 	 * @return the current highest score
 	 */

@@ -74,11 +74,11 @@ public class KeyMapTest {
         verify(action, times(1)).doAction();
     }
 
-    private void pressKey(KeyCode code) {
+    private void pressKey(final KeyCode code) {
         keyMapObject.keyPressed(code);
     }
 
-    private void releaseKey(KeyCode code) {
+    private void releaseKey(final KeyCode code) {
         keyMapObject.keyReleased(code);
     }
 }

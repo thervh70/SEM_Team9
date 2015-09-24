@@ -66,10 +66,10 @@ public class TrackPartTest {
 
     @Test
     public void testGetLength() {
-        part.setLength(5);
-        assertEquals(5, part.getLength());
+        part.setLength(2);
+        assertEquals(2, part.getLength());
 
-        part.setLength(23);
-        assertEquals(23, part.getLength());
+        part.setLength(-1);
+        assertEquals(-1, part.getLength());
     }
 }
