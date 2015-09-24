@@ -10,7 +10,6 @@ import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
@@ -170,57 +169,35 @@ public final class GameScene extends AbstractScene {
 	public static void showPauseMenu() {
 		stopTickers();
 		GameObservable.notify(Category.GAME, Game.PAUSED);
-
-		final EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
-
-			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
-				State.reset();
-				ShaftEscape.setScene(new MainMenuScene());
-				pause = null;
-			}
-		};
-
-		final EventHandler<MouseEvent> resume
-				= new EventHandler<MouseEvent>() {
-
-			public void handle(final MouseEvent e) {
-				resumeTickers();
-				pause = null;
-			}
-		};
-
-		pause = PopupMenu.makeMenu("Paused", "Resume",
-				"Return to Main Menu", resume, menu);
+		pause = new PausePopup(
+				e -> {
+					resumeTickers();
+					pause = null;
+				},
+				e -> {
+					GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+					State.reset();
+					ShaftEscape.setScene(new MainMenuScene());
+					pause = null;
+				});
 		ShaftEscape.showPopup(pause);
 	}
 
 	/** Show a death menu. */
 	public static void showDeathMenu() {
-		final EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
-
-			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
-				State.reset();
-				ShaftEscape.setScene(new MainMenuScene());
-				death = null;
-			}
-		};
-
-		final EventHandler<MouseEvent> retry
-				= new EventHandler<MouseEvent>() {
-
-			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.RETRY);
-				State.reset();
-				ShaftEscape.setScene(new GameScene());
-				death = null;
-			}
-		};
-
-		death = PopupMenu.makeFinalMenu("Game Ended",
-                (int) State.getScore(), State.getCoins(),
-                "Try again", "Return to Main Menu", retry, menu);
+		death = new DeathPopup(
+				e -> {
+					GameObservable.notify(Category.GAME, Game.RETRY);
+					State.reset();
+					ShaftEscape.setScene(new GameScene());
+					death = null;
+				},
+				e -> {
+					GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+					State.reset();
+					ShaftEscape.setScene(new MainMenuScene());
+					death = null;
+				});
 		ShaftEscape.showPopup(death);
 	}
 
