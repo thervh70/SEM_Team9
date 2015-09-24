@@ -55,10 +55,10 @@ public final class SaveGameWriter {
         mainObject.put("settings", settings);
 
         mainObject.put("playername", State.getPlayerName());
-        mainObject.put("coins", new Integer(State.getCoins()).toString());
+        mainObject.put("coins", Integer.valueOf(State.getCoins()).toString());
 
         JSONObject highscore = new JSONObject();
-        highscore.put("score", new Double(State.getHighscore()).toString());
+        highscore.put("score", Double.valueOf(State.getHighscore()).toString());
         mainObject.put("highscore", highscore);
 
         return mainObject.toJSONString();
