@@ -12,11 +12,15 @@ import javafx.scene.layout.GridPane;
  * @author Maarten
  */
 @SuppressWarnings("restriction")
-public abstract class MenuScene extends AbstractScene {
+public abstract class AbstractMenuScene extends AbstractScene {
 
+	/** Gap between grid cells. */
 	protected static final int GRID_GAP = 20;
+	/** Margin of grid cells. */
 	protected static final int GRID_MARGIN = 10;
+	/** Amount of columns in grid. */
 	protected static final int GRID_WIDTH = ShaftEscape.WIDTH / GRID_GAP;
+	/** Amount of rows in grid. */
 	protected static final int GRID_HEIGHT = ShaftEscape.HEIGHT / GRID_GAP;
 
 	/**
@@ -24,16 +28,13 @@ public abstract class MenuScene extends AbstractScene {
 	 * @return The root Node for this Scene.
 	 */
 	public Parent createRoot() {
-	    GridPane grid = initializeGrid();
-	
-	    // Adding buttons to grid.
-	    grid.getChildren().addAll(createContent());
-	    
+		final GridPane grid = initializeGrid();
+		grid.getChildren().addAll(createContent());
 		return grid;
 	}
 
 	/**
-	 * @return a list of Nodes which should be added to the Root (which is a 
+	 * @return a list of Nodes which should be added to the Root (which is a
 	 * {@link GridPane}).
 	 */
 	public abstract Node[] createContent();
@@ -68,9 +69,9 @@ public abstract class MenuScene extends AbstractScene {
 	 */
 	protected static Button createButton(final String name,
 			final int column, final int row) {
-	    Button button = new Button(name);
-	    Style.setButtonStyle(button);
-	    GridPane.setConstraints(button, column, row);
+		final Button button = new Button(name);
+		Style.setButtonStyle(button);
+		GridPane.setConstraints(button, column, row);
 		return button;
 	}
 
