@@ -8,6 +8,7 @@ import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
@@ -176,28 +177,15 @@ public class ExternalTicker extends AnimationTimer {
 		Group result = new Group();
 		final int offset = 3;
 		final double correction = 1.5;
-		final double alpha = 0.5;
-		final double beta = 0.75;
 		for (int h = 0; h < 2; h++) {
 			for (int i = 0; i < (int) Track.LENGTH; i++) {
 				for (int j = 0; j < Track.WIDTH; j++) {
-					double random = Math.random();
 					final Box wallPiece = new Box(0, 1, 1);
 					wallPiece.setTranslateY(j - offset);
 					wallPiece.setTranslateZ(i);
 					wallPiece.setTranslateX(h
 							* offset - correction);
-					if (random < alpha) {
-						wallPiece.setMaterial(
-								Style.BRICK);
-					} else if (random > alpha
-							&& random < beta) {
-						wallPiece.setMaterial(
-								Style.CRACK);
-					} else {
-						wallPiece.setMaterial(
-								Style.MOSS);
-					}
+					wallPiece.setMaterial(chooseMaterial());
 					wallPiece.setCache(true);
 					wallPiece.setCacheHint(CacheHint.SPEED);
 					result.getChildren().add(wallPiece);
@@ -205,6 +193,23 @@ public class ExternalTicker extends AnimationTimer {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * Method to return a random material for the walls.
+	 * @return The material for the wallPiece.
+	 */
+	private static PhongMaterial chooseMaterial() {
+		double random = Math.random();
+		double alpha = 0.5;
+		double beta = 0.75;
+		if (random < alpha) {
+			return Style.BRICK;
+		} else if (random > alpha && random < beta) {
+			return Style.CRACK;
+		} else {
+			return Style.MOSS;
+		}
 	}
 }
 
