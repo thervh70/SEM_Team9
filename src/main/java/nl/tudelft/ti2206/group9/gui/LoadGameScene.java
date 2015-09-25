@@ -19,7 +19,7 @@ import javafx.scene.control.ListView;
  * from which you can select one to continue playing.
  * Created by Maikel on 24/09/2015.
  */
-public class LoadGameScene extends MenuScene {
+public class LoadGameScene extends AbstractMenuScene {
 
         /**
          * Type of buttons that exist.
