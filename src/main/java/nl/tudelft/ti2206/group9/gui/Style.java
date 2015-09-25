@@ -27,6 +27,9 @@ import javafx.scene.text.FontWeight;
 @SuppressWarnings("restriction")
 public final class Style {
 
+    /** The scale with which the button should be
+     * made bigger when hovered over.
+     */
     private static final double BUTTON_HOVER_SCALE = 1.2;
 
 	/**
@@ -42,7 +45,7 @@ public final class Style {
     public static void setButtonStyle(final Button b) {
         /** Adjusting looks of button */
     	final Color color = Color.BLACK;
-    	final CornerRadii corner = new CornerRadii(3);
+    	final CornerRadii corner = new CornerRadii(4);
     	final Insets inset = new Insets(0);
     	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
     	final Background buttonBack = new Background(fill);

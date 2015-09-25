@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
@@ -27,7 +28,7 @@ public final class SettingsScene extends MenuScene {
 	 */
 	enum BType {
 		/** Back button. */
-		SETTINGS_BACK, 
+		SETTINGS_BACK,
 		/** Sound toggle. */
 		SETTING_SOUND
 	 }
@@ -46,16 +47,16 @@ public final class SettingsScene extends MenuScene {
      */
 	@Override
 	public Node[] createContent() {
-	    
-	    final Button backButton = createButton("Back", 2, 26);
-	    final Button soundButton = createButton("Sound: ON", 5, 18);
-	    
-	    // Override default button size from Style
+	    final Button backButton = createButton("BACK", 2, 26);
+	    final Button soundButton = createButton("SOUND: ON", 3, 18);
+		// Override default button size from Style
 	    final Font font = Font.font("Roboto", FontWeight.BOLD, 20);
 	    soundButton.setFont(font);
-	
 	    setButtonFunction(backButton, BType.SETTINGS_BACK);
 	    setButtonFunction(soundButton, BType.SETTING_SOUND);
+        /** Set Tooltips. */
+        soundButton.setTooltip(new Tooltip("Enable/disable sound"));
+        backButton.setTooltip(new Tooltip("Back to main menu"));
 		return new Node[]{backButton, soundButton};
 	}
 
@@ -80,7 +81,8 @@ public final class SettingsScene extends MenuScene {
 	                    s = "OFF";
 	                }
 	                button.setText("Sound: " + s);
-	                GameObservable.notify(Category.MENU, Menu.SETTING_SOUND, s);
+	                GameObservable.notify(Category.MENU, Menu.SETTING_SOUND,
+							s);
 	            }
 	        }
 	    });

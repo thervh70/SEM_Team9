@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
@@ -33,7 +34,7 @@ public final class MainMenuScene extends MenuScene {
 		/** Load Game button. */
 		LOAD
 	}
-
+	/** The input field for the name of the player. */
     final static TextField input = createTextField("PLAYER NAME", 2, 22);
 
 	/**
@@ -55,6 +56,13 @@ public final class MainMenuScene extends MenuScene {
 		setButtonFunction(settingsButton, BType.SETTINGS);
 		setButtonFunction(loadButton, BType.LOAD);
 
+        /** Set tooltips. */
+        startButton.setTooltip(new Tooltip("Start the game!"));
+        exitButton.setTooltip(new Tooltip("Are you sure?"));
+        settingsButton.setTooltip(new Tooltip("Change game settings"));
+        loadButton.setTooltip(new Tooltip("Continue a game"));
+        input.setTooltip(new Tooltip("Enter your name"));
+
 		return new Node[]{startButton, settingsButton, exitButton,
 				loadButton, nameLabel, input};
 	}
@@ -73,7 +81,7 @@ public final class MainMenuScene extends MenuScene {
 					ShaftEscape.exit();
 				} else if (type == BType.START) {
                     State.setPlayerName(input.getText());
-                    LoadGameScene.players.add(input.getText());
+                    LoadGameScene.getPlayers().add(input.getText());
                     input.clear();
 					GameObservable.notify(Category.MENU, Menu.START);
 					ShaftEscape.setScene(new GameScene());

@@ -60,7 +60,8 @@ public class ExternalTicker extends AnimationTimer {
 	 */
 	private VBox renderScore() {
 		final Label nameLabel = new Label(State.getPlayerName());
-		final Label highLabel = new Label("Highscore: "	+ State.getHighscore());
+		final Label highLabel = new Label("Highscore: "
+				+ State.getHighscore());
 		final Label scoreLabel = new Label("Score: "
 				+ State.modulo(State.getScore()));
 		final Label distanceLabel = new Label("Distance: "
