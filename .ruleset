@@ -29,14 +29,6 @@
    <rule ref="rulesets/java/basic.xml/OverrideBothEqualsAndHashcode"/>
    <rule ref="rulesets/java/basic.xml/ReturnFromFinallyBlock"/>
    <rule ref="rulesets/java/basic.xml/UnconditionalIfStatement"/>
-   <rule ref="rulesets/ecmascript/basic.xml/AvoidTrailingComma"/>
-   <rule ref="rulesets/ecmascript/basic.xml/ConsistentReturn"/>
-   <rule ref="rulesets/ecmascript/basic.xml/EqualComparison"/>
-   <rule ref="rulesets/ecmascript/basic.xml/GlobalVariable"/>
-   <rule ref="rulesets/ecmascript/basic.xml/InnaccurateNumericLiteral"/>
-   <rule ref="rulesets/ecmascript/basic.xml/ScopeForInVariable"/>
-   <rule ref="rulesets/ecmascript/basic.xml/UnreachableCode"/>
-   <rule ref="rulesets/ecmascript/basic.xml/UseBaseWithParseInt"/>
    <rule ref="rulesets/jsp/basic-jsf.xml/DontNestJsfInJstlIteration"/>
    <rule ref="rulesets/jsp/basic.xml/DuplicateJspImports"/>
    <rule ref="rulesets/jsp/basic.xml/IframeMissingSrcAttribute"/>
