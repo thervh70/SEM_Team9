@@ -7,7 +7,8 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * Ancestor class for all Entities.
  * @author Maarten
  */
-public abstract class AbstractEntity {
+public abstract class AbstractEntity {  // NOPMD - states complexity is too high
+										// because of the checkCollision method
 
 	/** Center of the bounding box of this Entity. */
 	private Point3D center;
@@ -126,8 +127,8 @@ public abstract class AbstractEntity {
 	 * @return whether this is equal to obj
 	 */
 	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj) { // NOPMD - complexity of generated
+		if (this == obj) {                    // equals method is indeed high
 			return true;
 		}
 		if (obj == null) {

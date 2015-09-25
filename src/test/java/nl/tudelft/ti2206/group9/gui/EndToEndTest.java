@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.gui.SettingsScene.isSoundEnabled;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,22 +27,22 @@ import org.testfx.framework.junit.ApplicationTest;
 
 @SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
-	
+
 	/** Saved to use <pre>rootNode()</pre>. */
 	private Stage stage;
-	
+
 	/** Multiplier for Robot sleeps. */
 	private static final long TARDINESS = 10;
 	/** Amount of milliseconds the Robot sleeps when sleeping "short". */
 	private static final long SHORT = 2 * TARDINESS;
 	/** Amount of milliseconds the Robot sleeps when sleeping "long". */
 	private static final long LONG = 5 * TARDINESS;
-	
+
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(final Stage primaryStage) {
 		letPlayerSurvive();
 		stage = primaryStage;
 		new ShaftEscape().start(stage);
@@ -51,14 +50,15 @@ public class EndToEndTest extends ApplicationTest {
 
 	@Test
 	public void test() throws IOException {
+		boolean soundEnabled = State.isSoundEnabled();
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
 
 		mainMenu(1);				// Click settings
 		settings(1);				// Toggle sound
-		assertFalse(isSoundEnabled());
+		assertFalse(State.isSoundEnabled() == soundEnabled);
 		settings(1);				// Toggle sound
-		assertTrue(isSoundEnabled());
+		assertTrue(State.isSoundEnabled() == soundEnabled);
 		settings(0);				// Click Back
 
 		mainMenu(5);				// Select textfield
@@ -81,19 +81,19 @@ public class EndToEndTest extends ApplicationTest {
 		deathPopup(0);				// Click "Try Again"
 		playerDies();				// Player dies
 		deathPopup(1);				// Click "Main Menu"
-		
+
 		mainMenu(2);				// Click quit
 		outputEventLog();
 	}
 
 	private void outputEventLog() throws IOException {
-		String log = new String(Files.readAllBytes(Paths.get(Logger.OUTFILE)),
-				StandardCharsets.UTF_8);
-		System.out.println("\n== EVENT_LOG ==");
-		System.out.println(log);
-		System.out.println("== END_EVENT_LOG ==\n");
+		final String log = new String(Files.readAllBytes(
+				Paths.get(Logger.OUTFILE)), StandardCharsets.UTF_8);
+		System.out.println("\n== EVENT_LOG ==");     //NOPMD - Intended use of
+		System.out.println(log);                     //NOPMD - System.out.print
+		System.out.println("== END_EVENT_LOG ==\n"); //NOPMD - for Travis log
 	}
-	
+
 	private void letPlayerSurvive() {
 		State.getTrack().getPlayer().setInvincible(true);
 	}
@@ -101,29 +101,29 @@ public class EndToEndTest extends ApplicationTest {
 	private void moveAround() {
 		final int before = 5;
 		final int after = 75;
-		
+
 		keyboard(KeyCode.LEFT);
 		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertTrue(State.getTrack().getPlayer().getCenter().getX() < 0);
 		keyboard(KeyCode.RIGHT);
 		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
-		
+
 		keyboard(KeyCode.D);
 		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertTrue(State.getTrack().getPlayer().getCenter().getX() > 0);
 		keyboard(KeyCode.A);
 		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
-		
+
 		keyboard(KeyCode.UP);
 		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		assertTrue(State.getTrack().getPlayer().getCenter().getY() > 1);
 		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		
+
 		keyboard(KeyCode.DOWN);
 		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getSize().getY() 
+		assertTrue(State.getTrack().getPlayer().getSize().getY()
 				< Player.HEIGHT);
 		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 	}
@@ -137,13 +137,13 @@ public class EndToEndTest extends ApplicationTest {
 		keyboard(KeyCode.D);
 	}
 
-	private void keyboard(KeyCode kc) {
+	private void keyboard(final KeyCode kc) {
 		press(kc);
 		release(kc);
 		sleep(SHORT);
 	}
-	
-	private void mainMenu(int buttonNo) {
+
+	private void mainMenu(final int buttonNo) {
 		ObservableList<Node> buttons;
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();
@@ -151,8 +151,8 @@ public class EndToEndTest extends ApplicationTest {
 		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
-	
-	private void settings(int buttonNo) {
+
+	private void settings(final int buttonNo) {
 		ObservableList<Node> buttons;
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();
@@ -167,8 +167,8 @@ public class EndToEndTest extends ApplicationTest {
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
 		sleep(SHORT);
 	}
-	
-	private void pausePopup(int buttonNo) {
+
+	private void pausePopup(final int buttonNo) {
 		ObservableList<Node> buttons;
 		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
 				.getChildren();
@@ -176,15 +176,15 @@ public class EndToEndTest extends ApplicationTest {
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
 		sleep(LONG);
 	}
-	
+
 	private void playerDies() {
 		State.getTrack().getPlayer().die();
 		sleep(2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
-	
-	private void deathPopup(int buttonNo) {
+
+	private void deathPopup(final int buttonNo) {
 		ObservableList<Node> buttons;
 		sleep(1);
 		buttons = ((VBox) GameScene.getPopup().getContent().get(1))

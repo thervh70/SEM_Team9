@@ -8,6 +8,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
@@ -18,10 +19,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  * @author Maikel, Maarten and Mitchell
  */
 @SuppressWarnings("restriction")
-public final class SettingsScene extends MenuScene {
-
-    /** Boolean for sound status. */
-    private static boolean sound = true;
+public final class SettingsScene extends AbstractMenuScene {
 
 	/**
 	 * Type of buttons that exist.
@@ -34,24 +32,23 @@ public final class SettingsScene extends MenuScene {
 	 }
 
     /**
-     * Return whether sound is enabled.
-     * @return whether sound is enabled.
-     */
-    public static boolean isSoundEnabled() {
-    	return sound;
-    }
-
-    /**
      * Creates a Sound toggle button and a Back button.
      * @return an array of Nodes to be added to the Scene.
      */
 	@Override
 	public Node[] createContent() {
-	    final Button backButton = createButton("BACK", 2, 26);
-	    final Button soundButton = createButton("SOUND: ON", 3, 18);
 		// Override default button size from Style
+	    final Button backButton = createButton("Back", 2, 26);
+		String soundToggle = "OFF";
+		if (State.isSoundEnabled()) {
+			soundToggle = "ON";
+		}
+	    final Button soundButton = createButton("Sound: " + soundToggle, 5, 18);
+
+	    // Override default button size from Style
 	    final Font font = Font.font("Roboto", FontWeight.BOLD, 20);
 	    soundButton.setFont(font);
+
 	    setButtonFunction(backButton, BType.SETTINGS_BACK);
 	    setButtonFunction(soundButton, BType.SETTING_SOUND);
         /** Set Tooltips. */
@@ -73,9 +70,9 @@ public final class SettingsScene extends MenuScene {
 	                GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
 	                ShaftEscape.setScene(new MainMenuScene());
 	            } else {
-	                sound = !sound;
+	                State.setSoundEnabled(!State.isSoundEnabled());
 	                String s;
-	                if (sound) {
+	                if (State.isSoundEnabled()) {
 	                    s = "ON";
 	                } else {
 	                    s = "OFF";

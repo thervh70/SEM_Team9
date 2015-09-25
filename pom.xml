@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.tudelft.ti2206.group9</groupId>
 	<artifactId>ti2206-sem-group-9</artifactId>
-	<version>1.1.1</version>
+	<version>1.1.2</version>
 	<repositories>
 		<repository>
 			<id>maven-central-repo</id>
@@ -38,7 +38,48 @@
 			<version>4.0.1-alpha</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+    		<groupId>com.googlecode.json-simple</groupId>
+    		<artifactId>json-simple</artifactId>
+    		<version>1.1</version>
+		</dependency>
 	</dependencies>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.6</version>
+				<reportSets>
+					<reportSet>
+						<id>main_checks</id>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+						<configuration>
+							<sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+							<includeTestSourceDirectory>false</includeTestSourceDirectory>
+							<configLocation>checkstyle.xml</configLocation>
+							<outputDirectory>${project.reporting.outputDirectory}/main-checks/</outputDirectory>
+						</configuration>
+					</reportSet>
+					<reportSet>
+						<id>test_checks</id>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+						<configuration>
+							<sourceDirectory></sourceDirectory>
+							<testSourceDirectory>${project.build.testSourceDirectory}</testSourceDirectory>
+							<includeTestSourceDirectory>true</includeTestSourceDirectory>
+							<configLocation>checkstyle-test.xml</configLocation>
+							<outputDirectory>${project.reporting.outputDirectory}/test-checks/</outputDirectory>
+						</configuration>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
 	<build>
 		<resources>
 			<resource>
@@ -61,6 +102,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.6</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -76,6 +118,7 @@
 				<configuration>
 					<failOnViolation>false</failOnViolation>
 					<configLocation>checkstyle.xml</configLocation>
+					<includeTestSourceDirectory>false</includeTestSourceDirectory>
 				</configuration>
 				<executions>
 					<execution>

@@ -59,22 +59,23 @@ public final class GameScene extends AbstractScene {
 	private static Popup death;
 
 	/**
-	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and 
+	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and
 	 * {@link ShaftEscape#HEIGHT} is created.
 	 */
 	public GameScene() {
 		super(true);
-		setFill(Color.AQUA);
+		setFill(Color.BLACK);
 	}
-	
-	/** 
+
+	/**
 	 * Creating the GameScene.
 	 * @return The root Node for this Scene.
 	 */
 	public Parent createRoot() {
 		State.reset();
+		Style.loadTextures();
 
-		Group root = new Group();
+		final Group root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
 		root.setAutoSizeChildren(true);
 
@@ -85,8 +86,11 @@ public final class GameScene extends AbstractScene {
 		startTickers();
 		return root;
 	}
-	
-	/** In this method, the SubScenes for the world and overlay are created. */
+
+	/**
+	 * In this method, the SubScenes for the world and overlay are created.
+	 * @param root the Group to which the SubScenes are added to.
+	 */
 	private static void setupSubScenes(final Group root) {
 		world = new Group();
 		overlay = new Group();
@@ -167,57 +171,39 @@ public final class GameScene extends AbstractScene {
 	public static void showPauseMenu() {
 		stopTickers();
 		GameObservable.notify(Category.GAME, Game.PAUSED);
-
-		final EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
-
+		pause = new PausePopup(new EventHandler<MouseEvent>() {
+			public void handle(final MouseEvent e) {
+				resumeTickers();
+				pause = null;
+			}
+		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
 				pause = null;
 			}
-		};
-
-		final EventHandler<MouseEvent> resume
-				= new EventHandler<MouseEvent>() {
-
-			public void handle(final MouseEvent e) {
-				resumeTickers();
-				pause = null;
-			}
-		};
-
-		pause = PopupMenu.makeMenu("Paused", "Resume",
-				"Return to Main Menu", resume, menu);
+		});
 		ShaftEscape.showPopup(pause);
 	}
 
 	/** Show a death menu. */
 	public static void showDeathMenu() {
-		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
-
-			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
-				State.reset();
-				ShaftEscape.setScene(new MainMenuScene());
-				death = null;
-			}
-		};
-
-		EventHandler<MouseEvent> retry
-				= new EventHandler<MouseEvent>() {
-
+		death = new DeathPopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				GameObservable.notify(Category.GAME, Game.RETRY);
 				State.reset();
 				ShaftEscape.setScene(new GameScene());
 				death = null;
 			}
-		};
-
-		death = PopupMenu.makeFinalMenu("Game Ended",
-                (int) State.getScore(), State.getCoins(),
-                "Try again", "Return to Main Menu", retry, menu);
+		}, new EventHandler<MouseEvent>() {
+			public void handle(final MouseEvent e) {
+				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				State.reset();
+				ShaftEscape.setScene(new MainMenuScene());
+				death = null;
+			}
+		});
 		ShaftEscape.showPopup(death);
 	}
 
@@ -248,9 +234,9 @@ public final class GameScene extends AbstractScene {
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
-	
+
 	/** @return current Popup. Is null if no Popup is present. */
-	static Popup getPopup() {
+	public static Popup getPopup() {
 		if (pause == null) {
 			return death;
 		} else {

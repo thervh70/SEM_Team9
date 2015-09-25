@@ -1,27 +1,26 @@
 package nl.tudelft.ti2206.group9.level;
 
+import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Fence;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Mathias
  */
 public class TrackParserTest {
 
-    TrackParser parser;
-    char[][] map = {
+    private TrackParser parser;
+    private final char[][] map = {
                     {'.', 'l', 'f'},
                     {'c', 'c', 'p'},
                     {'l', 'p', '.'}
                     };
-    TrackPart part;
+    private TrackPart part;
 
     @Before
     public void setUp() {
@@ -31,22 +30,25 @@ public class TrackParserTest {
     @Test
     public void testParseCharMap() {
         part = parser.parseTrackPart(map);
-        assertEquals(3, part.getLength());
-        assertEquals(7, part.getEntities().size());
+        final int expectedLength = 3,
+        		expectedEntities = 7;
+        assertEquals(expectedLength, part.getLength());
+        assertEquals(expectedEntities, part.getEntities().size());
 
-        assertTrue(part.getEntities().get(0) instanceof Log);
-        assertTrue(part.getEntities().get(1) instanceof Fence);
-        assertTrue(part.getEntities().get(2) instanceof Coin);
-        assertTrue(part.getEntities().get(3) instanceof Coin);
-        assertTrue(part.getEntities().get(4) instanceof Pillar);
-        assertTrue(part.getEntities().get(5) instanceof Log);
-        assertTrue(part.getEntities().get(6) instanceof Pillar);
+        final Class<?>[] types = new Class<?>[] {
+        		Log.class, Fence.class, Coin.class, Coin.class,
+        		Pillar.class, Log.class, Pillar.class
+        };
+        for (int i = 0; i < expectedEntities; i++) {
+        	assertEquals(types[i].getName(),
+        			part.getEntities().get(i).getClass().getName());
+        }
 
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testParseNullCharMap() {
-        char[][] map = null;
-        part = parser.parseTrackPart(map);
+        final char[][] nullMap = null;
+        part = parser.parseTrackPart(nullMap);
     }
 }

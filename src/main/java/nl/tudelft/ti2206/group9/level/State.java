@@ -8,8 +8,6 @@ package nl.tudelft.ti2206.group9.level;
  */
 public final class State {
 
-	/** Name of the player.*/
-	public static String playerName = "Player";
 	/** Current score of the player, reset every run. */
 	private static double score;
 	/** Current amount of coins. */
@@ -19,6 +17,12 @@ public final class State {
 
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
+
+	/** Name of the player. */
+	private static String playerName;
+
+	/** Boolean to determine whether sound is enabled. */
+	private static boolean soundEnabled;
 
 	/** Standard modulus number for both modulo calculation. */
 	public static final int MOD = 50;
@@ -112,7 +116,7 @@ public final class State {
 	public static void setTrack(final Track trck) {
 		State.track = trck;
 	}
-	
+
 	/**
 	 * Call this method to check whether the highscore should be updated.
 	 */
@@ -121,7 +125,7 @@ public final class State {
 			highscore = score;
 		}
 	}
-	
+
 	/**
 	 * @return the current highest score
 	 */
@@ -130,8 +134,15 @@ public final class State {
 	}
 
 	/**
-	 *
-	 * @return Player name
+	 * Set the highscore.
+ 	 * @param newScore new highscore
+	 */
+	public static void setHighscore(final double newScore) {
+		highscore = newScore;
+	}
+
+	/**
+	 * @return the name of the player
 	 */
 	public static String getPlayerName() {
 		return playerName;
@@ -141,8 +152,22 @@ public final class State {
 	 * Set Player name.
 	 * @param playerName Player name.
 	 */
-	public static void setPlayerName(String playerName) {
+	public static void setPlayerName(final String playerName) {
 		State.playerName = playerName;
 	}
 
+	/**
+	 * @return whether sound is enabled
+	 */
+	public static boolean isSoundEnabled() {
+		return soundEnabled;
+	}
+
+	/**
+	 * Change whether the sound is enabled.
+	 * @param newSoundEnabled true/false
+	 */
+	public static void setSoundEnabled(final boolean newSoundEnabled) {
+		State.soundEnabled = newSoundEnabled;
+	}
 }
