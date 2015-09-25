@@ -61,12 +61,20 @@ public class EndToEndTest extends ApplicationTest {
 		assertTrue(State.isSoundEnabled() == soundEnabled);
 		settings(0);				// Click Back
 
+		mainMenu(5);				// Select textfield
+		typeName();					// Enter name
 		mainMenu(0);				// Click start
 		keyboard(KeyCode.ESCAPE);	// Press Escape
 		pausePopup(0);				// Click resume
 		moveAround();				// Move around
 		keyboard(KeyCode.ESCAPE);	// Press Escape
 		pausePopup(1);				// Click "Main menu"
+
+		mainMenu(3);				// Click Load game
+		loadMenu(0);				// Back to main
+		mainMenu(3);				// Back to Load game
+		loadMenu(2);				// Select name
+		loadMenu(1);				// Click load
 
 		mainMenu(0);				// Click start
 		playerDies();				// Player dies
@@ -120,6 +128,15 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 	}
 
+	private void typeName() {
+		keyboard(KeyCode.CAPS);
+		keyboard(KeyCode.F);
+		keyboard(KeyCode.CAPS);
+		keyboard(KeyCode.R);
+		keyboard(KeyCode.E);
+		keyboard(KeyCode.D);
+	}
+
 	private void keyboard(final KeyCode kc) {
 		press(kc);
 		release(kc);
@@ -136,6 +153,14 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void settings(final int buttonNo) {
+		ObservableList<Node> buttons;
+		buttons = rootNode(stage).getScene().getRoot()
+				.getChildrenUnmodifiable();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(SHORT);
+	}
+
+	private void loadMenu(int buttonNo) {
 		ObservableList<Node> buttons;
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();

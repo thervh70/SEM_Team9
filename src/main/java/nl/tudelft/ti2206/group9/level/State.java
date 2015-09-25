@@ -149,11 +149,11 @@ public final class State {
 	}
 
 	/**
-	 * Set the name of the player.
-	 * @param newPlayerName the new name
+	 * Set Player name.
+	 * @param newName Player name.
 	 */
-	public static void setPlayerName(final String newPlayerName) {
-		State.playerName = newPlayerName;
+	public static void setPlayerName(final String newName) {
+		State.playerName = newName;
 	}
 
 	/**

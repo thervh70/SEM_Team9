@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
@@ -11,7 +12,6 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-
 
 /**
  * A screen for displaying a settings menu.
@@ -49,6 +49,10 @@ public final class SettingsScene extends AbstractMenuScene {
 
 	    setButtonFunction(backButton, BType.SETTINGS_BACK);
 	    setButtonFunction(soundButton, BType.SETTING_SOUND);
+
+        // Set Tooltips.
+        soundButton.setTooltip(new Tooltip("Enable/disable sound"));
+        backButton.setTooltip(new Tooltip("Back to main menu"));
 		return new Node[]{backButton, soundButton};
 	}
 

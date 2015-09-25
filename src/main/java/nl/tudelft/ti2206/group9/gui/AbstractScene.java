@@ -1,11 +1,11 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import nl.tudelft.ti2206.group9.ShaftEscape;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 
 /**
  * Ancestor of all Scenes. Implements all constructors to use the default

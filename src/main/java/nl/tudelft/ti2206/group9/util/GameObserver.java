@@ -16,7 +16,7 @@ public interface GameObserver {
 		MENU,
 		/** Player actions, see {@link Player}. */
 		PLAYER,
-	};
+	}
 
 	/** Super-enum for specific statuses/actions/... */
 	interface Specific { }
@@ -64,6 +64,13 @@ public interface GameObserver {
 		SETTINGS_BACK,
 		/** Exit button has been pressed. */
 		EXIT,
+		/** Load game button has been pressed. */
+		LOAD_MENU,
+		/** Back button for load menu has been pressed. */
+		LOAD_BACK,
+		/** Load game button has been pressed. */
+		LOAD,
+
 	}
 
 	/**

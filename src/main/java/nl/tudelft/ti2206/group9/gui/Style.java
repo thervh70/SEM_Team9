@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import nl.tudelft.ti2206.group9.ShaftEscape;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,18 +7,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 
 /**
  * Class containing the styling for the GUI.
@@ -28,7 +28,7 @@ import javafx.scene.text.FontWeight;
 @SuppressWarnings("restriction")
 public final class Style {
 
-    /** BRICK material for walls, brick wall texture. */
+   /** BRICK material for walls, brick wall texture. */
     public static final PhongMaterial BRICK = new PhongMaterial();
 
     /** MOSS material for walls, mossy brick wall texture. */
@@ -105,7 +105,7 @@ public final class Style {
 
         /** Adjusting looks of button */
     	final Color color = Color.BLACK;
-    	final CornerRadii corner = new CornerRadii(3);
+    	final CornerRadii corner = new CornerRadii(4);
     	final Insets inset = new Insets(0);
     	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
     	final Background buttonBack = new Background(fill);
@@ -138,7 +138,7 @@ public final class Style {
     public static void setPopupButtonStyle(final Button b) {
         /** Adjusting the looks of the button */
     	final Color color = Color.BLACK;
-    	final CornerRadii corner = new CornerRadii(3);
+    	final CornerRadii corner = new CornerRadii(4);
     	final Insets inset = new Insets(0);
     	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
     	final Background buttonBack = new Background(fill);
@@ -169,11 +169,11 @@ public final class Style {
      */
     public static void setLabelStyle(final Label l) {
     	final Color color = Color.BLACK;
-    	final CornerRadii corner = new CornerRadii(3);
+    	final CornerRadii corner = new CornerRadii(4);
     	final Insets inset = new Insets(-4);
     	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
     	final Background buttonBack = new Background(fill);
-    	final Font font = Font.font("Roboto", FontWeight.BOLD, 18);
+    	final Font font = Font.font("Roboto", FontWeight.BOLD, 16);
         l.setAlignment(Pos.CENTER);
         l.setBackground(buttonBack);
         l.setTextFill(Color.WHITE);
