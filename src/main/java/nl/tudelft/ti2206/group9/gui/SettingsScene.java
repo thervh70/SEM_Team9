@@ -77,8 +77,7 @@ public final class SettingsScene extends AbstractMenuScene {
 	                    s = "OFF";
 	                }
 	                button.setText("Sound: " + s);
-	                GameObservable.notify(Category.MENU, Menu.SETTING_SOUND,
-							s);
+	                GameObservable.notify(Category.MENU, Menu.SETTING_SOUND, s);
 	            }
 	        }
 	    });

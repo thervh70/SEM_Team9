@@ -32,7 +32,7 @@ public abstract class AbstractMenuScene extends AbstractScene {
 	private static final int CELL_HEIGHT = 10;
 	/** WIDTH for list. */
 	private static final int LIST_WIDTH = 80;
-    /** HEIGHT for list. */
+	/** HEIGHT for list. */
 	private static final int LIST_HEIGHT = 160;
 
 	/**
@@ -124,7 +124,7 @@ public abstract class AbstractMenuScene extends AbstractScene {
 	 * @param column Column index on Gridpane.
 	 * @param row Row index on Gridpane.
 	 * @return Returns the listview. */
-    protected static ListView<String> createList(final int column,
+	protected static ListView<String> createList(final int column,
                                                  final int row) {
 		final ListView<String> list = new ListView<String>();
 		list.setEditable(true);
