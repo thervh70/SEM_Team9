@@ -35,7 +35,7 @@ public final class MainMenuScene extends AbstractMenuScene {
 		LOAD
 	}
 	/** The input field for the name of the player. */
-    final static TextField input = createTextField("PLAYER NAME", 2, 22);
+    static final TextField INPUT = createTextField("PLAYER NAME", 2, 22);
 
 	/**
 	 * Create Start, Settings and Exit buttons.
@@ -61,10 +61,10 @@ public final class MainMenuScene extends AbstractMenuScene {
         exitButton.setTooltip(new Tooltip("Are you sure?"));
         settingsButton.setTooltip(new Tooltip("Change game settings"));
         loadButton.setTooltip(new Tooltip("Continue a game"));
-        input.setTooltip(new Tooltip("Enter your name"));
+        INPUT.setTooltip(new Tooltip("Enter your name"));
 
 		return new Node[]{startButton, settingsButton, exitButton,
-				loadButton, nameLabel, input};
+				loadButton, nameLabel, INPUT};
 	}
 
 	/**
@@ -80,9 +80,9 @@ public final class MainMenuScene extends AbstractMenuScene {
 					GameObservable.notify(Category.MENU, Menu.EXIT);
 					ShaftEscape.exit();
 				} else if (type == BType.START) {
-                    State.setPlayerName(input.getText());
-                    LoadGameScene.getPlayers().add(input.getText());
-                    input.clear();
+                    State.setPlayerName(INPUT.getText());
+                    LoadGameScene.getPlayers().add(INPUT.getText());
+                    INPUT.clear();
 					GameObservable.notify(Category.MENU, Menu.START);
 					ShaftEscape.setScene(new GameScene());
 				} else if (type == BType.LOAD) {

@@ -25,6 +25,15 @@ public abstract class AbstractMenuScene extends AbstractScene {
 	protected static final int GRID_WIDTH = ShaftEscape.WIDTH / GRID_GAP;
 	/** Amount of rows in grid. */
 	protected static final int GRID_HEIGHT = ShaftEscape.HEIGHT / GRID_GAP;
+	/** Dimensions for label and text input.*/
+	protected static final int CELL_WIDTH = 120;
+	protected static final int CELL_HEIGHT = 10;
+	/** WIDTH for list. */
+	protected static final int LIST_WIDTH = 80;
+    /** HEIGHT for list. */
+	protected static final int LIST_HEIGHT = 160;
+
+
 
 	/**
 	 * Creating the SettingsScene.
@@ -87,9 +96,9 @@ public abstract class AbstractMenuScene extends AbstractScene {
 	 */
 	protected static Label createLabel(final String text,
                                        final int column, final int row) {
-		Label label = new Label(text);
+		final Label label = new Label(text);
 		Style.setLabelStyle(label);
-		label.setMinSize(120,10);
+		label.setMinSize(CELL_WIDTH, CELL_HEIGHT);
 		GridPane.setConstraints(label, column, row);
 		return label;
 	}
@@ -103,10 +112,10 @@ public abstract class AbstractMenuScene extends AbstractScene {
      */
 	protected static TextField createTextField(
             final String promptText, final int column, final int row) {
-        TextField tf = new TextField();
+        final TextField tf = new TextField();
         tf.setPromptText(promptText);
-        tf.setPrefSize(120, 10);
-        GridPane.setConstraints(tf, column,row);
+        tf.setPrefSize(CELL_WIDTH, CELL_HEIGHT);
+        GridPane.setConstraints(tf, column, row);
         return tf;
 	}
 
@@ -114,13 +123,13 @@ public abstract class AbstractMenuScene extends AbstractScene {
 	 * Create a listview.
 	 * @param column Column index on Gridpane.
 	 * @param row Row index on Gridpane.
-	 * @return Returns the listview.
-	 */
-	protected static ListView createList(final int column, final int row) {
-		final ListView list = new ListView();
+	 * @return Returns the listview. */
+    protected static ListView<String> createList(final int column,
+                                                 final int row) {
+		final ListView<String> list = new ListView<String>();
 		list.setEditable(true);
 		GridPane.setConstraints(list, column, row);
-		list.setPrefSize(80, 160);
+		list.setPrefSize(LIST_WIDTH, LIST_HEIGHT);
 		return list;
 	}
 

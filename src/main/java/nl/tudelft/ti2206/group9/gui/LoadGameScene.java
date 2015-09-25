@@ -21,6 +21,15 @@ import javafx.scene.control.ListView;
  */
 public class LoadGameScene extends AbstractMenuScene {
 
+    /** Row in Grid of list. */
+    private static final int LIST_ROW = 16;
+
+    /** Creating the list. */
+    private static ObservableList<String> players =
+            FXCollections.observableArrayList();
+    /** Creating the listview used to display the list. */
+    private static ListView<String> list = createList(2, LIST_ROW);
+
         /**
          * Type of buttons that exist.
          */
@@ -46,14 +55,6 @@ public class LoadGameScene extends AbstractMenuScene {
     public static ListView<String> getList() {
         return list;
     }
-
-
-    /** Creating the list. */
-        static private ObservableList<String> players =
-                FXCollections.observableArrayList();
-    /** Creating the listview used to display the list. */
-        static private ListView<String> list = createList(2, 16);
-
 
         /**
          * Creates the buttons.

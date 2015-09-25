@@ -150,10 +150,10 @@ public final class State {
 
 	/**
 	 * Set Player name.
-	 * @param playerName Player name.
+	 * @param newName Player name.
 	 */
-	public static void setPlayerName(final String playerName) {
-		State.playerName = playerName;
+	public static void setPlayerName(final String newName) {
+		State.playerName = newName;
 	}
 
 	/**
