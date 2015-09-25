@@ -61,17 +61,21 @@ public class EndToEndTest extends ApplicationTest {
 		assertTrue(isSoundEnabled());
 		settings(0);				// Click Back
 
-		mainMenu(3);				// Click Load game
-		loadMenu(1);				// Click load
-		loadMenu(0);				// Back to main
-
+		mainMenu(5);				// Select textfield
+		typeName();					// Enter name
 		mainMenu(0);				// Click start
 		keyboard(KeyCode.ESCAPE);	// Press Escape
 		pausePopup(0);				// Click resume
 		moveAround();				// Move around
 		keyboard(KeyCode.ESCAPE);	// Press Escape
 		pausePopup(1);				// Click "Main menu"
-		
+
+		mainMenu(3);				// Click Load game
+		loadMenu(0);				// Back to main
+		mainMenu(3);				// Back to Load game
+		loadMenu(2);				// Select name
+		loadMenu(1);				// Click load
+
 		mainMenu(0);				// Click start
 		playerDies();				// Player dies
 		deathPopup(0);				// Click "Try Again"
@@ -122,6 +126,15 @@ public class EndToEndTest extends ApplicationTest {
 		assertTrue(State.getTrack().getPlayer().getSize().getY() 
 				< Player.HEIGHT);
 		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+	}
+
+	private void typeName() {
+		keyboard(KeyCode.CAPS);
+		keyboard(KeyCode.F);
+		keyboard(KeyCode.CAPS);
+		keyboard(KeyCode.R);
+		keyboard(KeyCode.E);
+		keyboard(KeyCode.D);
 	}
 
 	private void keyboard(KeyCode kc) {
