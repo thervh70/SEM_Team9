@@ -17,37 +17,33 @@ import java.net.URL;
  */
 public final class SaveGameParser {
 
+	/** Playername. */
+	private static String playername;
+	/** Number of coins.*/
+	private static long coins;
+	/** Players highscore. */
+	private static long highScore;
+	/** Boolean to indicate whether the sound is enabled. */
+	private static boolean soundEnabled;
+
 	/**
 	 * Private constructor.
 	 */
 	private SaveGameParser() { }
 
-	/** Playername. */
-	private static String playername;
-	/** Number of coins.*/
-	private static int coins;
-	/** Players highscore. */
-	private static double highScore;
-	/** Boolean to indicate whether the sound is enabled. */
-	private static boolean soundEnabled;
-
-	/** Default folder to read savefiles from. */
-	private static String fileFolder =
-			"src/main/resources/nl/tudelft/ti2206/group9/util/";
-
 	/**
 	 * Read a json savefile and store all data in the State class.
-	 * @param fileName path to the file to be parsed.
+	 * @param path path to the file to be parsed.
 	 */
-	public static void loadGame(final String fileName) {
+	public static void loadGame(final String path) {
 		try {
-			URL path = new File(fileFolder + fileName).toURI().toURL();
-			InputStream stream = path.openStream();
-			BufferedReader reader = new BufferedReader(
+			final URL pathURL = new File(path).toURI().toURL();
+			final InputStream stream = pathURL.openStream();
+			final BufferedReader reader = new BufferedReader(
 					new InputStreamReader(stream, "UTF-8"));
 
-			JSONParser parser = new JSONParser();
-			JSONObject mainObject = (JSONObject) parser.parse(reader);
+			final JSONParser parser = new JSONParser();
+			final JSONObject mainObject = (JSONObject) parser.parse(reader);
 
 			parseJSON(mainObject);
 			writeToState();
@@ -66,14 +62,13 @@ public final class SaveGameParser {
 	 */
 	private static void parseJSON(final JSONObject mainObject) {
 		playername = (String) mainObject.get("playername");
-		coins = Integer.parseInt((String) mainObject.get("coins"));
+		coins = (Long) mainObject.get("coins");
 
-		JSONObject settingsObj = (JSONObject) mainObject.get("settings");
-		String soundEnabledString = (String) settingsObj.get("soundEnabled");
-		soundEnabled = soundEnabledString.equals("true");
+		final JSONObject settingsObj = (JSONObject) mainObject.get("settings");
+		soundEnabled = (Boolean) settingsObj.get("soundEnabled");
 
-		JSONObject highScoreObj = (JSONObject) mainObject.get("highscore");
-		highScore = Double.parseDouble((String) highScoreObj.get("score"));
+		final JSONObject highObj = (JSONObject) mainObject.get("highscore");
+		highScore = (Long) highObj.get("score");
 	}
 
 	/**
@@ -81,8 +76,9 @@ public final class SaveGameParser {
 	 */
 	private static void writeToState() {
 		State.setPlayerName(playername);
-		State.setCoins(coins);
+		State.setCoins((int) coins);
 		State.setSoundEnabled(soundEnabled);
 		State.setHighscore(highScore);
 	}
+
 }

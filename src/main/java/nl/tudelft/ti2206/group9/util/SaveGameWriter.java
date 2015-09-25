@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.group9.util;
 
 import nl.tudelft.ti2206.group9.level.State;
+
 import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
@@ -11,10 +12,6 @@ import java.io.IOException;
  */
 public final class SaveGameWriter {
 
-    /** Default folder to write JSON savefiles to. */
-    private static String fileFolder =
-            "src/main/resources/nl/tudelft/ti2206/group9/util/";
-
     /**
      * Private constructor.
      */
@@ -22,13 +19,13 @@ public final class SaveGameWriter {
 
     /**
      * Save a game by writing it to a JSON file.
-     * @param fileName the path of the JSON file it has to be written to
+     * @param path the path of the JSON file it has to be written to
      */
-    public static void saveGame(final String fileName) {
-        String mainObject = writeToJSON();
+    public static void saveGame(final String path) {
+    	final String mainObject = writeToJSON();
 
         try {
-            FileWriter writer = new FileWriter(fileFolder + fileName);
+        	final FileWriter writer = new FileWriter(path);
 
             writer.write(mainObject);
             writer.flush();
@@ -42,23 +39,20 @@ public final class SaveGameWriter {
      * Create a JSON string from all the data
      * which can be writte to a JSON file.
      * @return the JSON string
-     */
-    private static String writeToJSON() {
-        JSONObject mainObject = new JSONObject();
+     */                      // Eclipse thinks JSONObject.put belongs to HashMap
+    @SuppressWarnings("unchecked")
+	private static String writeToJSON() {
+        final JSONObject mainObject = new JSONObject();
 
-        JSONObject settings = new JSONObject();
-        String soundString = "false";
-        if (State.isSoundEnabled()) {
-            soundString = "true";
-        }
-        settings.put("soundEnabled", soundString);
+        final JSONObject settings = new JSONObject();
+        settings.put("soundEnabled", State.isSoundEnabled());
         mainObject.put("settings", settings);
 
         mainObject.put("playername", State.getPlayerName());
-        mainObject.put("coins", Integer.valueOf(State.getCoins()).toString());
+        mainObject.put("coins", State.getCoins());
 
-        JSONObject highscore = new JSONObject();
-        highscore.put("score", Double.valueOf(State.getHighscore()).toString());
+        final JSONObject highscore = new JSONObject();
+        highscore.put("score", State.getHighscore());
         mainObject.put("highscore", highscore);
 
         return mainObject.toJSONString();

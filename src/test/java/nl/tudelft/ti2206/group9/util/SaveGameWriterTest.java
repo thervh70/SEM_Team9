@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.group9.util;
 
 import nl.tudelft.ti2206.group9.level.State;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,26 +11,27 @@ import static org.junit.Assert.assertEquals;
  */
 public final class SaveGameWriterTest {
 
-    public final static double DELTA = 0.0000001;
+    /** Default folder to write JSON savefiles to. */
+	private static String fileFolder =
+	        "src/main/resources/nl/tudelft/ti2206/group9/util/";
 
-
-    @Test
+	@Test
     public void testSaveGame() {
-        String playerName = "Henk";
+        final String playerName = "Henk";
         State.setPlayerName(playerName);
-        int coins = 45;
+        final int coins = 45;
         State.setCoins(coins);
-        double score = 34567;
-        State.setScore(score);
-        boolean soundEnabled = false;
+        final int score = 34567;
+        State.setHighscore(score);
+        final boolean soundEnabled = false;
         State.setSoundEnabled(soundEnabled);
 
-        SaveGameWriter.saveGame("testWriteRead.json");
-        SaveGameParser.loadGame("testWriteRead.json");
+        SaveGameWriter.saveGame(fileFolder + "saveGameWriterTest.json");
+        SaveGameParser.loadGame(fileFolder + "saveGameWriterTest.json");
 
         assertEquals(playerName, State.getPlayerName());
         assertEquals(coins, State.getCoins());
-        assertEquals(score, State.getScore(), DELTA);
+        assertEquals(score, State.getHighscore());
         assertEquals(soundEnabled, State.isSoundEnabled());
     }
 }

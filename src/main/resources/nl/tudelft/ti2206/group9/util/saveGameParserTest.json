@@ -1,12 +1,12 @@
 {
 	"playername": "Mathias",
-	"coins": "42",
+	"coins": 42,
 	"settings": {
-			"soundEnabled": "true",
+			"soundEnabled": true,
 			"otherSetting": "otherValue"
 	},
 	"highscore": {
-		"score": "2560.0",
-		"coins": "39"
+		"score": 2560,
+		"coins": 39
 	}
 }
