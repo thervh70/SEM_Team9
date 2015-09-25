@@ -60,6 +60,12 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+# PMD configuration
+.pmd
+
+# Checkstyle configuration
+.checkstyle
+
 
 ### Maven ###
 target/
