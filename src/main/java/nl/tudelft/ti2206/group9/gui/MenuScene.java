@@ -1,17 +1,15 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 /**
  * Ancestor for all MenuScenes. Subclasses should define an array of Nodes in
  * the abstract method {@link #createContent()}.
- * @author Maarten
+ * @author Maarten, Maikel
  */
 @SuppressWarnings("restriction")
 public abstract class MenuScene extends AbstractScene {
@@ -107,6 +105,20 @@ public abstract class MenuScene extends AbstractScene {
         tf.setPrefSize(120, 10);
         GridPane.setConstraints(tf, column,row);
         return tf;
+	}
+
+	/**
+	 * Create a listview.
+	 * @param column Column index on Gridpane.
+	 * @param row Row index on Gridpane.
+	 * @return Returns the listview.
+	 */
+	protected static ListView createList(final int column, final int row) {
+		final ListView list = new ListView();
+		list.setEditable(true);
+		GridPane.setConstraints(list, column, row);
+		list.setPrefSize(80, 160);
+		return list;
 	}
 
 

@@ -15,7 +15,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 /**
  * A Main Menu with different options/buttons like a options menu, start button
  * and exit button.
- * @author Maikel, Maarten, Mitchell and Robin
+ * @author Maikel, Maarten, Mitchell, Robin, Maikel
  */
 @SuppressWarnings("restriction")
 public final class MainMenuScene extends MenuScene {
@@ -73,6 +73,8 @@ public final class MainMenuScene extends MenuScene {
 					ShaftEscape.exit();
 				} else if (type == BType.START) {
                     State.setPlayerName(input.getText());
+                    LoadGameScene.players.add(input.getText());
+                    input.clear();
 					GameObservable.notify(Category.MENU, Menu.START);
 					ShaftEscape.setScene(new GameScene());
 				} else if (type == BType.LOAD) {
