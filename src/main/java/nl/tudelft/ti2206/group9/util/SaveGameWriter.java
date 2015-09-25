@@ -1,11 +1,13 @@
 package nl.tudelft.ti2206.group9.util;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 import nl.tudelft.ti2206.group9.level.State;
 
 import org.json.simple.JSONObject;
-
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * @author Mathias
@@ -24,15 +26,24 @@ public final class SaveGameWriter {
     public static void saveGame(final String path) {
     	final String mainObject = writeToJSON();
 
-        try {
-        	final FileWriter writer = new FileWriter(path);
-
-            writer.write(mainObject);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		BufferedWriter fw = null;
+		try {
+			fw = new BufferedWriter(new OutputStreamWriter(
+			    new FileOutputStream(path), "UTF-8"
+			));
+			fw.write(mainObject);
+			fw.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (fw != null) {
+					fw.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
     }
 
     /**
