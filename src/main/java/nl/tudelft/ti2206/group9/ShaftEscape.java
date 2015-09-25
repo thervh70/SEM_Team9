@@ -32,7 +32,7 @@ public class ShaftEscape extends Application {
 	 * the scenes are shown in.
 	 */
 	@Override
-	public void start(final Stage appStage) {
+	public final void start(final Stage appStage) {
 		setStage(appStage);
 		stage.setResizable(false);
 		stage.setWidth(ShaftEscape.WIDTH);
