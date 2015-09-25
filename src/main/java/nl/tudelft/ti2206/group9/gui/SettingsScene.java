@@ -13,7 +13,6 @@ import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
-
 /**
  * A screen for displaying a settings menu.
  * @author Maikel, Maarten and Mitchell
@@ -37,7 +36,6 @@ public final class SettingsScene extends AbstractMenuScene {
      */
 	@Override
 	public Node[] createContent() {
-		// Override default button size from Style
 	    final Button backButton = createButton("Back", 2, 26);
 		String soundToggle = "OFF";
 		if (State.isSoundEnabled()) {
@@ -51,7 +49,8 @@ public final class SettingsScene extends AbstractMenuScene {
 
 	    setButtonFunction(backButton, BType.SETTINGS_BACK);
 	    setButtonFunction(soundButton, BType.SETTING_SOUND);
-        /** Set Tooltips. */
+
+        // Set Tooltips.
         soundButton.setTooltip(new Tooltip("Enable/disable sound"));
         backButton.setTooltip(new Tooltip("Back to main menu"));
 		return new Node[]{backButton, soundButton};

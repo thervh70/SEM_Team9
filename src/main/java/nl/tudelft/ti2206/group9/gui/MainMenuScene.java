@@ -34,6 +34,7 @@ public final class MainMenuScene extends AbstractMenuScene {
 		/** Load Game button. */
 		LOAD
 	}
+
 	/** The input field for the name of the player. */
     static final TextField INPUT = createTextField("PLAYER NAME", 2, 22);
 
@@ -94,6 +95,6 @@ public final class MainMenuScene extends AbstractMenuScene {
 				}
 			}
 		});
-
 	}
+
 }

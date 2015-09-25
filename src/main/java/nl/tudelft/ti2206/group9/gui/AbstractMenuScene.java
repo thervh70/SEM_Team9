@@ -17,23 +17,23 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 @SuppressWarnings("restriction")
 public abstract class AbstractMenuScene extends AbstractScene {
 
+	/** Margin of grid cells. */
+	private static final int GRID_MARGIN = 10;
 	/** Gap between grid cells. */
 	protected static final int GRID_GAP = 20;
-	/** Margin of grid cells. */
-	protected static final int GRID_MARGIN = 10;
 	/** Amount of columns in grid. */
 	protected static final int GRID_WIDTH = ShaftEscape.WIDTH / GRID_GAP;
 	/** Amount of rows in grid. */
 	protected static final int GRID_HEIGHT = ShaftEscape.HEIGHT / GRID_GAP;
-	/** Dimensions for label and text input.*/
-	protected static final int CELL_WIDTH = 120;
-	protected static final int CELL_HEIGHT = 10;
+
+	/** Width for label and text input.*/
+	private static final int CELL_WIDTH = 120;
+	/** Height for label and text input.*/
+	private static final int CELL_HEIGHT = 10;
 	/** WIDTH for list. */
-	protected static final int LIST_WIDTH = 80;
+	private static final int LIST_WIDTH = 80;
     /** HEIGHT for list. */
-	protected static final int LIST_HEIGHT = 160;
-
-
+	private static final int LIST_HEIGHT = 160;
 
 	/**
 	 * Creating the SettingsScene.
@@ -132,7 +132,5 @@ public abstract class AbstractMenuScene extends AbstractScene {
 		list.setPrefSize(LIST_WIDTH, LIST_HEIGHT);
 		return list;
 	}
-
-
 
 }
