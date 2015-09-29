@@ -81,11 +81,11 @@ public class EndToEndTest extends ApplicationTest {
 		loadMenu(1);				// Click load
 
 		mainMenu(0);				// Click start
-		playerDies();				// Player dies
 		sleep(COUNTDOWN);
+		playerDies();				// Player dies
 		deathPopup(0);				// Click "Try Again"
-		playerDies();				// Player dies
 		sleep(COUNTDOWN);
+		playerDies();				// Player dies
 		deathPopup(1);				// Click "Main Menu"
 
 		mainMenu(2);				// Click quit
