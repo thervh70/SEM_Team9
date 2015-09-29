@@ -41,48 +41,62 @@ public class EndToEndTest extends ApplicationTest {
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
 
+	private static final int MAIN_START = 0;
+	private static final int MAIN_SETTINGS = 1;
+	private static final int MAIN_QUIT = 2;
+	private static final int MAIN_LOADGAME = 3;
+	private static final int MAIN_TEXTFIELD = 5;
+
+	private static final int LOAD_BACK = 0;
+	private static final int LOAD_START = 1;
+	private static final int LOAD_NAMECONTAINER = 2;
+
+	private static final int SETTINGS_BACK = 0;
+	private static final int SETTINGS_SOUND = 1;
+
+	private static final int PAUSE_RESUME = 0;
+	private static final int PAUSE_TOMAIN = 1;
+
+	private static final int DEATH_RETRY = 0;
+	private static final int DEATH_TOMAIN = 1;
+
 	@Override
 	public void start(final Stage primaryStage) {
 		letPlayerSurvive();
 		stage = primaryStage;
 		new ShaftEscape().start(stage);
+		State.resetAll();
 	}
 
 	@Test
-	public void test() throws IOException {
-		final boolean soundEnabled = State.isSoundEnabled();
+	public void test() throws IOException { //NOPMD - assert is done in Settings
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
+		mainMenu(MAIN_SETTINGS);
+		clickAllSettings();
+		mainMenu(MAIN_TEXTFIELD);
+		typeName();
 
-		mainMenu(1);				// Click settings
-		settings(1);				// Toggle sound
-		assertFalse(State.isSoundEnabled() == soundEnabled);
-		settings(1);				// Toggle sound
-		assertTrue(State.isSoundEnabled() == soundEnabled);
-		settings(0);				// Click Back
+		mainMenu(MAIN_START);
+		keyboard(KeyCode.ESCAPE);
+		pausePopup(PAUSE_RESUME);
+		moveAround();
+		keyboard(KeyCode.ESCAPE);
+		pausePopup(PAUSE_TOMAIN);
 
-		mainMenu(5);				// Select textfield
-		typeName();					// Enter name
-		mainMenu(0);				// Click start
-		keyboard(KeyCode.ESCAPE);	// Press Escape
-		pausePopup(0);				// Click resume
-		moveAround();				// Move around
-		keyboard(KeyCode.ESCAPE);	// Press Escape
-		pausePopup(1);				// Click "Main menu"
+		mainMenu(MAIN_LOADGAME);
+		loadMenu(LOAD_BACK);
+		mainMenu(MAIN_LOADGAME);
+		loadMenu(LOAD_NAMECONTAINER);
+		loadMenu(LOAD_START);
 
-		mainMenu(3);				// Click Load game
-		loadMenu(0);				// Back to main
-		mainMenu(3);				// Back to Load game
-		loadMenu(2);				// Select name
-		loadMenu(1);				// Click load
+		mainMenu(MAIN_START);
+		playerDies();
+		deathPopup(DEATH_RETRY);
+		playerDies();
+		deathPopup(DEATH_TOMAIN);
 
-		mainMenu(0);				// Click start
-		playerDies();				// Player dies
-		deathPopup(0);				// Click "Try Again"
-		playerDies();				// Player dies
-		deathPopup(1);				// Click "Main Menu"
-
-		mainMenu(2);				// Click quit
+		mainMenu(MAIN_QUIT);
 		outputEventLog();
 	}
 
@@ -96,6 +110,27 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void letPlayerSurvive() {
 		State.getTrack().getPlayer().setInvincible(true);
+	}
+
+	private void clickAllSettings() {
+		assertTrue(State.isSoundEnabled());
+		settings(SETTINGS_SOUND);
+		assertFalse(State.isSoundEnabled());
+		settings(SETTINGS_SOUND);
+		assertTrue(State.isSoundEnabled());
+		settings(SETTINGS_SOUND);
+		assertFalse(State.isSoundEnabled());
+
+		settings(SETTINGS_BACK);
+	}
+
+	private void typeName() {
+		keyboard(KeyCode.CAPS);
+		keyboard(KeyCode.F);
+		keyboard(KeyCode.CAPS);
+		keyboard(KeyCode.R);
+		keyboard(KeyCode.E);
+		keyboard(KeyCode.D);
 	}
 
 	private void moveAround() {
@@ -126,15 +161,6 @@ public class EndToEndTest extends ApplicationTest {
 		assertTrue(State.getTrack().getPlayer().getSize().getY()
 				< Player.HEIGHT);
 		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-	}
-
-	private void typeName() {
-		keyboard(KeyCode.CAPS);
-		keyboard(KeyCode.F);
-		keyboard(KeyCode.CAPS);
-		keyboard(KeyCode.R);
-		keyboard(KeyCode.E);
-		keyboard(KeyCode.D);
 	}
 
 	private void keyboard(final KeyCode kc) {
