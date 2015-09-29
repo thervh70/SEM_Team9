@@ -1,14 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -21,9 +12,18 @@ import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Logger;
-
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 
 @SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
@@ -37,6 +37,8 @@ public class EndToEndTest extends ApplicationTest {
 	private static final long SHORT = 2 * TARDINESS;
 	/** Amount of milliseconds the Robot sleeps when sleeping "long". */
 	private static final long LONG = 5 * TARDINESS;
+	/** Sleep countdown. */
+	private static final long COUNTDOWN = 3500;
 
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
@@ -64,8 +66,10 @@ public class EndToEndTest extends ApplicationTest {
 		mainMenu(5);				// Select textfield
 		typeName();					// Enter name
 		mainMenu(0);				// Click start
+		sleep(COUNTDOWN);
 		keyboard(KeyCode.ESCAPE);	// Press Escape
 		pausePopup(0);				// Click resume
+		sleep(COUNTDOWN);
 		moveAround();				// Move around
 		keyboard(KeyCode.ESCAPE);	// Press Escape
 		pausePopup(1);				// Click "Main menu"
@@ -78,8 +82,10 @@ public class EndToEndTest extends ApplicationTest {
 
 		mainMenu(0);				// Click start
 		playerDies();				// Player dies
+		sleep(COUNTDOWN);
 		deathPopup(0);				// Click "Try Again"
 		playerDies();				// Player dies
+		sleep(COUNTDOWN);
 		deathPopup(1);				// Click "Main Menu"
 
 		mainMenu(2);				// Click quit
