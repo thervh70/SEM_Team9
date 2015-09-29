@@ -51,7 +51,7 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	@Test
-	public void test() throws IOException, MediaException {
+	public void test() throws IOException {
 		boolean soundEnabled = State.isSoundEnabled();
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);

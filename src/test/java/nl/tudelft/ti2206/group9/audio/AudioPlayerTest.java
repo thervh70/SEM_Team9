@@ -14,16 +14,6 @@ import org.junit.Test;
 public class AudioPlayerTest {
 
 	@Test
-	public void testPlay() throws MediaException {
-		String testPath = "src/main/resources/"
-				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
-		AudioPlayer test = new AudioPlayer(testPath);
-		test.play();
-		// Sounds don't play in JUnit.
-		assertFalse(test.isRunning());
-	}
-
-	@Test
 	public void testStop() throws MediaException {
 		String testPath = "src/main/resources/"
 				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
