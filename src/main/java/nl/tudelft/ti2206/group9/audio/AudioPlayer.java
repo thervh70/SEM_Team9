@@ -15,7 +15,7 @@ import nl.tudelft.ti2206.group9.level.State;
 @SuppressWarnings("restriction")
 public class AudioPlayer {
 
-	private AudioClip audioClip = null;
+	private AudioClip audioClip;
 	private String path;
 
 	/**

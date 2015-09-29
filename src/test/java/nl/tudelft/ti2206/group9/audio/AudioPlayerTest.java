@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import javafx.scene.media.MediaException;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -14,24 +13,20 @@ import org.junit.Test;
 @SuppressWarnings("restriction")
 public class AudioPlayerTest {
 
-	private static String testPath;
-	private AudioPlayer test;
-
-	@Before
-	public void setUp() throws Exception {
-		testPath = "src/main/resources/" 
-				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
-		test = new AudioPlayer(testPath);
-	}
-
 	@Test
 	public void testPlay() throws MediaException {
+		String testPath = "src/main/resources/"
+				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
+		AudioPlayer test = new AudioPlayer(testPath);
 		test.play();
-		assertTrue(test.isRunning());
+		assertFalse(test.isRunning());
 	}
 
 	@Test
 	public void testStop() throws MediaException {
+		String testPath = "src/main/resources/"
+				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
+		AudioPlayer test = new AudioPlayer(testPath);
 		test.play();
 		test.stop();
 		assertFalse(test.isRunning());
@@ -39,7 +34,10 @@ public class AudioPlayerTest {
 
 	@Test
 	public void testSetPath() {
-		String testDifferentPath = "src/main/resources/" 
+		String testPath = "src/main/resources/"
+				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
+		AudioPlayer test = new AudioPlayer(testPath);
+		String testDifferentPath = "src/main/resources/"
 				+ "nl/tudelft/ti2206/group9/audio/test.aiff";
 		test.setPath(testDifferentPath);
 		assertTrue(testDifferentPath.equals(test.getPath()));
