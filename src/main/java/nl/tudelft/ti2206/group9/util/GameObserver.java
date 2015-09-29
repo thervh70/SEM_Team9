@@ -93,6 +93,7 @@ public interface GameObserver {
 
 	/**
 	 * Specific Exceptions thrown during the game.
+	 * optionalArgs: exception location, exception message.
 	 */
 	enum Error implements Specific {
 		/** There has been an exception with reading/writing to files.
