@@ -1,16 +1,8 @@
 package nl.tudelft.ti2206.group9.level;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.Random;
-
 import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -34,16 +26,16 @@ public class TrackTest {
 		assertEquals(1, track.getEntities().size());
 		assertEquals(new Player(), track.getEntities().get(0));
 	}
-	
+
 	@Test
 	public void testGetUnitsPerTick() {
-		final double div = Math.pow(Track.UNITS_PER_TICK_ACCEL, -1) / 2 
+		final double div = Math.pow(Track.UNITS_PER_TICK_ACCEL, -1) / 2
 				* Track.UNITS_PER_TICK_BASE * Track.UNITS_PER_TICK_BASE;
-		
+
 		Track.setDistance(div);
 		assertEquals(Track.UNITS_PER_TICK_BASE * Math.sqrt(2),
 						Track.getUnitsPerTick(), DELTA);
-		
+
 		Track.addDistance(2 * div);
 		assertEquals(Track.UNITS_PER_TICK_BASE * 2,
 						Track.getUnitsPerTick(), DELTA);
@@ -68,7 +60,7 @@ public class TrackTest {
 
 	@Test
 	public void testRemoveEntity() {
-		Coin coin = new Coin(Point3D.UNITX);
+		final Coin coin = new Coin(Point3D.UNITX);
 		track.addEntity(coin);
 		assertEquals(2, track.getEntities().size());
 		track.removeEntity(coin);
@@ -81,7 +73,7 @@ public class TrackTest {
 		assertEquals(1, track.getEntities().size());
 		assertEquals(new Player(), track.getEntities().get(0));
 	}
-	
+
 	@Test
 	public void testGetPlayer() {
 		try {

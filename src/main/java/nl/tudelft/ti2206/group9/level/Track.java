@@ -6,7 +6,7 @@ import nl.tudelft.ti2206.group9.entities.Fence;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
-import nl.tudelft.ti2206.group9.gui.GameScreen;
+import nl.tudelft.ti2206.group9.gui.GameScene;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 import java.util.Collections;
@@ -70,12 +70,12 @@ public class Track {
 	 * @param dist amount of units to move the track
 	 */
 	@SuppressWarnings("restriction")
-	public final synchronized void moveTrack(final double dist) {
+	public final void moveTrack(final double dist) {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
 					if (entity.getCenter().getZ()
-							< GameScreen.CAMERA_TRANS.getZ()) {
+							< GameScene.CAMERA_TRANS.getZ()) {
 						entity.selfDestruct();
 					}
 					moveEntity(entity, -dist);
@@ -88,18 +88,19 @@ public class Track {
 	 * Make sure the collisions are checked over the interval that the entities
 	 * are moved.
 	 * @param entity Entity that the collision is checked with.
-	 * @param distance The distance that the second entity has moved.
+	 * @param dist The distance that the second entity has moved.
 	 */
-	private void moveEntity(AbstractEntity entity, double distance) {
-		double oldZ = entity.getCenter().getZ();
-		double diffZ = 
+	private void moveEntity(final AbstractEntity entity,
+			final double dist) {
+		final double oldZ = entity.getCenter().getZ();
+		final double diffZ =
 				(getPlayer().getSize().getZ() + entity.getSize().getZ())
-				* Math.signum(distance);
-		for (double i = 0; Math.abs(i) < Math.abs(distance); i += diffZ) {
+				* Math.signum(dist);
+		for (double i = 0; Math.abs(i) < Math.abs(dist); i += diffZ) {
 			entity.getCenter().addZ(diffZ);
 			getPlayer().checkCollision(entity);
 		}
-		entity.getCenter().setZ(oldZ + distance);
+		entity.getCenter().setZ(oldZ + dist);
 	}
 
 	/**
@@ -107,7 +108,7 @@ public class Track {
 	 * @param entity entity to add
 	 * @return this Track, allowing for chaining.
 	 */
-	public final synchronized Track addEntity(final AbstractEntity entity) {
+	public final Track addEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.add(entity);
 		}
@@ -119,7 +120,7 @@ public class Track {
 	 * @param entity entity to remove
 	 * @return this Track, allowing for chaining.
 	 */
-	public final synchronized Track removeEntity(final AbstractEntity entity) {
+	public final Track removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
 			entities.remove(entity);
 		}
@@ -136,7 +137,7 @@ public class Track {
 	/**
 	 * @return the entities
 	 */
-	public final synchronized List<AbstractEntity> getEntities() {
+	public final List<AbstractEntity> getEntities() {
 		return Collections.unmodifiableList(entities);
 	}
 
@@ -176,7 +177,7 @@ public class Track {
 	 * This method should be called each ticks. It generates new coins and
 	 * obstacles. Also moves the track forward (thus making the Player run).
 	 */
-	public final synchronized void step() {
+	public final void step() {
 		synchronized (this) {
 			if (trackLeft > 0) {
 				 trackLeft -= getUnitsPerTick();
@@ -214,14 +215,6 @@ public class Track {
 			addEntity(add);
 		}
 		trackLeft = part.getLength();
-	}
-
-	/**
-	 * Set the Random generator.
-	 * @param randomGenerator Random object to set.
-	 */
-	public final void setRandom(final Random randomGenerator) {
-		random = randomGenerator;
 	}
 
 }

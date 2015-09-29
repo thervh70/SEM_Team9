@@ -4,8 +4,8 @@ import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
@@ -25,10 +25,11 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
 
 /**
+ * This scene shows the 3D Game world and the 2D score overlay.
  * @author Robin, Maarten
  */
 @SuppressWarnings("restriction")
-public final class GameScreen {
+public final class GameScene extends AbstractScene {
 
 	/** The translation of the camera. */
 	public static final Translate CAMERA_TRANS = new Translate(0, -5, -12);
@@ -41,14 +42,10 @@ public final class GameScreen {
 
 	/** The KeyMap to be used. */
 	private static KeyMap keyMap = new KeyMap();
-	/** The root. */
-	private static Group root;
 	/** The world. */
 	private static Group world;
 	/** The overlay. */
 	private static Group overlay;
-	/** The scene. */
-	private static Scene scene;
 	/** The worldscene. */
 	private static SubScene worldScene;
 	/** The overlayscene. */
@@ -58,57 +55,63 @@ public final class GameScreen {
 	private static ExternalTicker extTicker;
 	/** Indicate whether the game is running. */
 	private static boolean running;
-	/** The primarystage. */
-	private static Stage primaryStage;
 
 	/** The AudioPlayer to be used for background music. */
 	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/" 
 			+ "resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
 
+	/** The Pause popup. */
 	private static Popup pause;
 	/** The final after death popup. */
 	private static Popup death;
-	/** Hide public constructor. */
-	private GameScreen() { }
 
-	/** Start the Application.
-	 * @param stage stage
+	/**
+	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and
+	 * {@link ShaftEscape#HEIGHT} is created.
 	 */
-	public static void start(final Stage stage) {
-		State.reset();
-		
-		primaryStage = stage;
-
-		root = new Group();
-		root.setDepthTest(DepthTest.ENABLE);
-		root.setAutoSizeChildren(true);
-		scene = new Scene(root, GUIConstant.WIDTH,
-                GUIConstant.HEIGHT, true);
-		scene.setFill(Color.AQUA);
-		primaryStage.setScene(scene);
-
-		world = new Group();
-		overlay = new Group();
-		worldScene = new SubScene(world, GUIConstant.WIDTH,
-                GUIConstant.HEIGHT, true, SceneAntialiasing.BALANCED);
-		overlayScene = new SubScene(overlay, GUIConstant.WIDTH,
-				GUIConstant.HEIGHT);
-		overlayScene.setFill(Color.TRANSPARENT);
-		root.getChildren().add(worldScene);
-		root.getChildren().add(overlayScene);
-
-		setupCamera();
-		keyBindings(primaryStage);
-		primaryStage.setResizable(false);
-		primaryStage.show();
-
-        audioPlayer.play();
-		startTickers();
+	public GameScene() {
+		super(true);
+		setFill(Color.BLACK);
 	}
 
 	/**
-	 * Create and setup camera, adding it to worldScene.
+	 * Creating the GameScene.
+	 * @return The root Node for this Scene.
 	 */
+	public Parent createRoot() {
+		State.reset();
+		Style.loadTextures();
+
+		final Group root = new Group();
+		root.setDepthTest(DepthTest.ENABLE);
+		root.setAutoSizeChildren(true);
+
+		setupSubScenes(root);
+		setupCamera();
+		keyBindings();
+
+        audioPlayer.play();
+		startTickers();
+		return root;
+	}
+
+	/**
+	 * In this method, the SubScenes for the world and overlay are created.
+	 * @param root the Group to which the SubScenes are added to.
+	 */
+	private static void setupSubScenes(final Group root) {
+		world = new Group();
+		overlay = new Group();
+		worldScene = new SubScene(world, ShaftEscape.WIDTH,
+                ShaftEscape.HEIGHT, true, SceneAntialiasing.BALANCED);
+		overlayScene = new SubScene(overlay, ShaftEscape.WIDTH,
+				ShaftEscape.HEIGHT);
+		overlayScene.setFill(Color.TRANSPARENT);
+		root.getChildren().add(worldScene);
+		root.getChildren().add(overlayScene);
+	}
+
+	/** Create and setup camera, adding it to worldScene. */
 	private static void setupCamera() {
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
 		camera.getTransforms().addAll(CAMERA_TRANS, CAMERA_ROT);
@@ -117,31 +120,28 @@ public final class GameScreen {
 		worldScene.setCamera(camera);
 	}
 
-	/**
-	 * Make sure KeyEvents are handled in {@link KeyMap}.
-	 * @param primeStage the primaryStage
-	 */
-	private static void keyBindings(final Stage primeStage) {
+	/** Make sure KeyEvents are handled in {@link KeyMap}. */
+	private void keyBindings() {
 		KeyMap.defaultKeys();
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
 				if (running) {
 					keyMap.keyPressed(keyEvent.getCode());
 					if (keyEvent.getCode().equals(KeyCode.ESCAPE)
 							&& getPopup() == null) {
-						showPauseMenu(primeStage);
+						showPauseMenu();
 					}
 				}
 			}
 		});
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+		setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
 				if (running) {
 					keyMap.keyReleased(keyEvent.getCode());
 				}
 			}
 		});
-		scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
+		setOnKeyTyped(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
 				if (running) {
 					keyMap.keyTyped(keyEvent.getCode());
@@ -177,69 +177,47 @@ public final class GameScreen {
 		GameObservable.notify(Category.GAME, Game.STOPPED);
 	}
 
-	/**
-	 * Show a pause menu.
-	 * @param primeStage main stage of the game.
-	 */
-	public static void showPauseMenu(final Stage primeStage) {
+	/** Show a pause menu. */
+	public static void showPauseMenu() {
 		stopTickers();
 		GameObservable.notify(Category.GAME, Game.PAUSED);
-
-		final EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
-
+		pause = new PausePopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
-				State.reset();
-				StartScreen.start(primeStage);
-				pause = null;
-			}
-		};
-
-		final EventHandler<MouseEvent> resume
-				= new EventHandler<MouseEvent>() {
-
-			public void handle(final MouseEvent e) {
-				audioPlayer.play();
 				resumeTickers();
 				pause = null;
 			}
-		};
-
-		pause = PopupMenu.makeMenu("Paused", "Resume",
-				"Return to Main Menu", resume, menu);
-		pause.show(primaryStage);
-	}
-
-	/**
-	 * Show a death menu.
-	 */
-	public static void showDeathMenu() {
-		audioPlayer.stop();
-		EventHandler<MouseEvent> menu = new EventHandler<MouseEvent>() {
-
+		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
+				audioPlayer.play();
+				resumeTickers();
 				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
-				StartScreen.start(primaryStage);
-				death = null;
+				ShaftEscape.setScene(new MainMenuScene());
+				pause = null;
 			}
-		};
+		});
+		ShaftEscape.showPopup(pause);
+	}
 
-		EventHandler<MouseEvent> retry
-				= new EventHandler<MouseEvent>() {
-
+	/** Show a death menu. */
+	public static void showDeathMenu() {
+		audioPlayer.stop();
+		death = new DeathPopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				GameObservable.notify(Category.GAME, Game.RETRY);
 				State.reset();
-				GameScreen.start(primaryStage);
+				ShaftEscape.setScene(new GameScene());
 				death = null;
 			}
-		};
-
-		death = PopupMenu.makeFinalMenu("Game Ended", (int) State.getScore(),
-			State.getCoins(), "Try again", "Return to Main Menu", retry, menu);
-
-		death.show(primaryStage);
+		}, new EventHandler<MouseEvent>() {
+			public void handle(final MouseEvent e) {
+				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				State.reset();
+				ShaftEscape.setScene(new MainMenuScene());
+				death = null;
+			}
+		});
+		ShaftEscape.showPopup(death);
 	}
 
 	/**
@@ -251,9 +229,7 @@ public final class GameScreen {
 		return world.getChildren().add(node);
 	}
 
-	/**
-	 * Clears the world.
-	 */
+	/** Clears the world. */
 	public static void clearWorld() {
 		world.getChildren().clear();
 	}
@@ -267,14 +243,13 @@ public final class GameScreen {
 		return overlay.getChildren().add(node);
 	}
 
-	/**
-	 * Clears the overlay.
-	 */
+	/** Clears the overlay. */
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
+
 	/** @return current Popup. Is null if no Popup is present. */
-	static Popup getPopup() {
+	public static Popup getPopup() {
 		if (pause == null) {
 			return death;
 		} else {

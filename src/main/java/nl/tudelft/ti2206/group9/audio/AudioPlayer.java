@@ -3,9 +3,9 @@ package nl.tudelft.ti2206.group9.audio;
 import java.io.File;
 import java.net.MalformedURLException;
 
-import nl.tudelft.ti2206.group9.gui.SettingsScreen;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaException;
+import nl.tudelft.ti2206.group9.level.State;
 
 /**
  * Creates an AudioPlayer which you can initialize, start and stop.
@@ -24,7 +24,7 @@ public class AudioPlayer {
 	 */
 	public AudioPlayer(final String soundPath) {
 		path = soundPath;
-		if (SettingsScreen.isSoundEnabled()) {
+		if (State.isSoundEnabled()) {
 			initializeTune(path);
 		}
 	}
@@ -50,7 +50,7 @@ public class AudioPlayer {
 	public final synchronized void play() {
 		synchronized (this) {
 			try {
-				if (SettingsScreen.isSoundEnabled()) {
+				if (State.isSoundEnabled()) {
 					if (audioClip == null) {
 						initializeTune(path);
 					}
@@ -68,7 +68,7 @@ public class AudioPlayer {
 	public final synchronized void stop() {
 		synchronized (this) {
 			try {
-				if (SettingsScreen.isSoundEnabled()) {
+				if (State.isSoundEnabled()) {
 					if (audioClip == null) {
 						initializeTune(path);
 					}
@@ -106,7 +106,7 @@ public class AudioPlayer {
 	 */
 	public final void setPath(final String location) {
 		path = location;
-		if (SettingsScreen.isSoundEnabled()) {
+		if (State.isSoundEnabled()) {
 			initializeTune(path);
 		}
 	}
