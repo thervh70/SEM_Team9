@@ -58,6 +58,15 @@ public class Logger implements GameObserver {
 		STRINGS.put(Player.SLIDE, lbl + "Sliding.");
 		STRINGS.put(Player.START_MOVE, lbl + "Started moving from lane %d.");
 		STRINGS.put(Player.STOP_MOVE, lbl + "Stopped moving in lane %d.");
+
+		lbl = " [ERROR ] ";
+		final String info = "\n    in %s" + "\n    Message: %s";
+		STRINGS.put(Error.IOEXCEPTION,
+				lbl + "Exception while reading or writing files!" + info);
+		STRINGS.put(Error.MEDIAEXCEPTION,
+				lbl + "Exception with audio player!" + info);
+		STRINGS.put(Error.PARSEEXCEPTION,
+				lbl + "Exception while parsing JSON!" + info);
 	}
 
 	@Override
@@ -93,14 +102,18 @@ public class Logger implements GameObserver {
 			fw.write(str);
 			fw.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+					"    in Logger.writeToOutput(String, boolean)"
+							+ "\n    Message: " + e.getMessage());
 		} finally {
 			try {
 				if (fw != null) {
 					fw.close();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+						"    in Logger.writeToOutput(String, boolean) (2)"
+								+ "\n    Message: " + e.getMessage());
 			}
 		}
 	}

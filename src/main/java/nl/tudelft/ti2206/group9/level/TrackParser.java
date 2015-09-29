@@ -5,7 +5,10 @@ import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Fence;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
+import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.Point3D;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -59,7 +62,8 @@ public class TrackParser {
 	    	final InputStream stream = path.openStream();
 	        return parseTrackPart(stream);
     	} catch (IOException e) {
-    		e.printStackTrace();
+			GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+					"TrackParser.parseTrackPart(String)", e.getMessage());
     	}
     	return new TrackPart();
     }

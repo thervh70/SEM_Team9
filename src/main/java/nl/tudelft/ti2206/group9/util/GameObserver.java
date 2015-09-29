@@ -16,6 +16,8 @@ public interface GameObserver {
 		MENU,
 		/** Player actions, see {@link Player}. */
 		PLAYER,
+		/** Exceptions that happen during the game, see {@link Error}. */
+		ERROR,
 	}
 
 	/** Super-enum for specific statuses/actions/... */
@@ -87,6 +89,21 @@ public interface GameObserver {
 		SLIDE,
 		/** Player collides. optionalArg: name of entity collided with. */
 		COLLISION,
+	}
+
+	/**
+	 * Specific Exceptions thrown during the game.
+	 */
+	enum Error implements Specific {
+		/** There has been an exception with reading/writing to files.
+		 *  optionalArgs: exception location, exception message. */
+		IOEXCEPTION,
+		/** There has been an exception with the audio player.
+		 *  optionalArgs: exception location, exception message. */
+		MEDIAEXCEPTION,
+		/** There has been an exception with parsing JSON files.
+		 *  optionalArgs: exception location, exception message. */
+		PARSEEXCEPTION,
 	}
 
 	/**

@@ -13,6 +13,8 @@ import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.SaveGameParser;
 import nl.tudelft.ti2206.group9.util.SaveGameWriter;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 /**
  * Starting point of the Application.
@@ -70,7 +72,8 @@ public class ShaftEscape extends Application {
 			try {
 				saveDir.mkdir();
 			} catch (SecurityException e) {
-				e.printStackTrace();
+				GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+						"ShaftEscape.createSaveDirectory()", e.getMessage());
 			}
 		}
 	}

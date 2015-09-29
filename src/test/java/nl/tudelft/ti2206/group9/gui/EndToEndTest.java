@@ -50,7 +50,7 @@ public class EndToEndTest extends ApplicationTest {
 
 	@Test
 	public void test() throws IOException {
-		boolean soundEnabled = State.isSoundEnabled();
+		final boolean soundEnabled = State.isSoundEnabled();
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
 
@@ -160,7 +160,7 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(SHORT);
 	}
 
-	private void loadMenu(int buttonNo) {
+	private void loadMenu(final int buttonNo) {
 		ObservableList<Node> buttons;
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();
