@@ -19,6 +19,7 @@ public class AudioPlayerTest {
 				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
 		AudioPlayer test = new AudioPlayer(testPath);
 		test.play();
+		// Sounds don't play in JUnit.
 		assertFalse(test.isRunning());
 	}
 

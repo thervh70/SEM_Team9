@@ -15,7 +15,9 @@ import nl.tudelft.ti2206.group9.level.State;
 @SuppressWarnings("restriction")
 public class AudioPlayer {
 
+	/** The AudioClip of an AudioPlayer. */
 	private AudioClip audioClip;
+	/** Path of the AudioClip. */
 	private String path;
 
 	/**
@@ -31,11 +33,11 @@ public class AudioPlayer {
 
 	/**
 	 * Gets the audio file and prepares it for streaming.
-	 * @param path leads to the soundtrack.
+	 * @param source leads to the soundtrack.
 	 */
-	private void initializeTune(final String path) {
+	private void initializeTune(final String source) {
 		try {
-			audioClip = new AudioClip(new File(path).toURI().toURL()
+			audioClip = new AudioClip(new File(source).toURI().toURL()
 					.toString());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

@@ -57,7 +57,7 @@ public final class GameScene extends AbstractScene {
 	private static boolean running;
 
 	/** The AudioPlayer to be used for background music. */
-	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/" 
+	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/"
 			+ "resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
 
 	/** The Pause popup. */
@@ -161,7 +161,6 @@ public final class GameScene extends AbstractScene {
 
 	/** Resumes the tickers. */
 	public static void resumeTickers() {
-		audioPlayer.play();
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
@@ -170,7 +169,6 @@ public final class GameScene extends AbstractScene {
 
 	/** Stop the tickers. */
 	public static void stopTickers() {
-		audioPlayer.stop();
 		running = false;
 		extTicker.stop();
 		InternalTicker.stop();
@@ -188,7 +186,6 @@ public final class GameScene extends AbstractScene {
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				audioPlayer.play();
 				resumeTickers();
 				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
@@ -255,6 +252,14 @@ public final class GameScene extends AbstractScene {
 		} else {
 			return pause;
 		}
+	}
+
+	/**
+	 * Every GameScene has an AudioPlayer for the soundtrack.
+	 * @return the soundtrack AudioPlayer.
+	 */
+	public static AudioPlayer getAudioPlayer() {
+		return audioPlayer;
 	}
 
 }
