@@ -38,7 +38,7 @@ public class ExternalTicker extends AnimationTimer {
 	private static final int SCORE_BOX_HEIGHT = 130;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
-
+	/** Label for the countdown animation. */
 	private Label countdown = new Label();
 
 	@Override
@@ -249,7 +249,8 @@ public class ExternalTicker extends AnimationTimer {
 	 * Render the animations for the countdown method.
 	 * @param index The index to be rendered.
 	 */
-	private void countdownAnimation(final Integer index) {
+	private void countdownAnimation(
+			final Integer index) {
 		final int duration = 400;
 
 		ScaleTransition st = new ScaleTransition(
@@ -269,7 +270,7 @@ public class ExternalTicker extends AnimationTimer {
 		ft.play();
 
 		st.setOnFinished(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
+			public void handle(final ActionEvent event) {
 				if (index > 1) {
 					int count = index - 1;
 					countdown(count);

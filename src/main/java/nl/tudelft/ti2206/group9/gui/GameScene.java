@@ -248,7 +248,7 @@ public final class GameScene extends AbstractScene {
 	 * Set the running attribute of this class.
 	 * @param b New value for running.
 	 */
-	public static void setRunning(boolean b) {
+	public static void setRunning(final boolean b) {
 		running = b;
 	}
 }
