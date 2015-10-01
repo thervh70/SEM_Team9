@@ -20,7 +20,8 @@ import org.junit.Test;
  */
 public class LoggerTest {
 
-	private static final String TESTLOG = "test.log";
+	private static final String TESTLOG = "src/test/java/nl/tudelft/ti2206/"
+			+ "group9/util/test.log";
 
 	private Logger logger; //NOPMD loggers should be static+final outside tests
 
