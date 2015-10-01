@@ -49,15 +49,17 @@ public class LoggerTest {
 	public void testIOException() throws IOException {
 		GameObservable.addObserver(logger);
 		final String fakePath = "no\\folder\\exists\\test.log";
-		new Logger(fakePath);
+		new Logger(fakePath); // will catch IOException
 
 		logger.writeToFile(false);
 		final String expected =
 				"[ERROR ] Exception while reading or writing files!\n"
 				+ "    in Logger.writeToOutput(String, boolean)\n"
 				+ "    Message: " + fakePath;
-		final String log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
-				StandardCharsets.UTF_8).substring(Logger.FORMAT.length() - 1,
+		String log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
+				StandardCharsets.UTF_8);
+		System.out.println(log);
+		log = log.substring(Logger.FORMAT.length() - 1,
 						expected.length() + Logger.FORMAT.length() - 1);
 		assertEquals(expected, log);
 
