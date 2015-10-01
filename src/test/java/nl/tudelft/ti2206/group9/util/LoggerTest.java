@@ -59,8 +59,9 @@ public class LoggerTest {
 		String log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
 				StandardCharsets.UTF_8);
 		System.out.println(log);
-		log = log.substring(Logger.FORMAT.length() - 1,
-						expected.length() + Logger.FORMAT.length() - 1);
+		System.out.flush();
+/*		log = log.substring(Logger.FORMAT.length() - 1,
+						expected.length() + Logger.FORMAT.length() - 1);*/
 		assertEquals(expected, log);
 
 		GameObservable.deleteObserver(logger);
