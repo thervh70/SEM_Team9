@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.gui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -21,6 +22,7 @@ import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Logger;
+import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -69,7 +71,7 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	@Test
-	public void test() throws IOException { //NOPMD - assert is done in Settings
+	public void test() throws IOException { //NOPMD - assert is done in subs.
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
 		mainMenu(MAIN_SETTINGS);
@@ -113,13 +115,13 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void clickAllSettings() {
-		assertTrue(State.isSoundEnabled());
+		assertTrue("Sound should enabled at startup.", State.isSoundEnabled());
 		settings(SETTINGS_SOUND);
-		assertFalse(State.isSoundEnabled());
+		assertFalse("Sound disabled. (1)", State.isSoundEnabled());
 		settings(SETTINGS_SOUND);
-		assertTrue(State.isSoundEnabled());
+		assertTrue("Sound enabled. (2)", State.isSoundEnabled());
 		settings(SETTINGS_SOUND);
-		assertFalse(State.isSoundEnabled());
+		assertFalse("Sound disabled. (3)", State.isSoundEnabled());
 
 		settings(SETTINGS_BACK);
 	}
@@ -134,33 +136,34 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void moveAround() {
-		final int before = 5;
-		final int after = 75;
+		final int s1 = 5 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
+		final int s2 = 75 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
+		final Point3D center = State.getTrack().getPlayer().getCenter();
+		final Point3D size = State.getTrack().getPlayer().getSize();
 
 		keyboard(KeyCode.LEFT);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getCenter().getX() < 0);
+		sleep(s1);
+		assertTrue("Player moves to the left", center.getX() < 0);
 		keyboard(KeyCode.RIGHT);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
+		sleep(s2);
+		assertEquals("Player centers from the left", 0, center.getX(), DELTA);
 
 		keyboard(KeyCode.D);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getCenter().getX() > 0);
+		sleep(s1);
+		assertTrue("Player moves to the right", center.getX() > 0);
 		keyboard(KeyCode.A);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
+		sleep(s2);
+		assertEquals("Player centers from the right", 0, center.getX(), DELTA);
 
 		keyboard(KeyCode.UP);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getCenter().getY() > 1);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		sleep(s1);
+		assertTrue("Player jumps", center.getY() > 1);
+		sleep(s2);
 
 		keyboard(KeyCode.DOWN);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getSize().getY()
-				< Player.HEIGHT);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		sleep(s1);
+		assertTrue("Player slides", size.getY() < Player.HEIGHT);
+		sleep(s2);
 	}
 
 	private void keyboard(final KeyCode kc) {
@@ -195,6 +198,9 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void pausePopup(final int buttonNo) {
+		if (GameScene.getPopup() == null) {
+			fail("The Pause Popup is not available.");
+		}
 		ObservableList<Node> buttons;
 		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
 				.getChildren();
@@ -211,6 +217,9 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void deathPopup(final int buttonNo) {
+		if (GameScene.getPopup() == null) {
+			fail("The Death Popup is not available.");
+		}
 		ObservableList<Node> buttons;
 		sleep(1);
 		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
