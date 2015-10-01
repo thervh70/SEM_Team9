@@ -32,6 +32,8 @@ public class ShaftEscape extends Application {
 	/** Lock used so that the tickers won't use the Track concurrently. */
 	public static final Object TICKER_LOCK = new Object();
 
+	/** The logger that logs all events in the game. */
+	private static final Logger LOGGER = new Logger();
 	/** Primary stage where the Scenes are shown in. */
 	private static Stage stage;
 
@@ -59,7 +61,7 @@ public class ShaftEscape extends Application {
 			}
 		});
 
-		GameObservable.addObserver(new Logger());
+		GameObservable.addObserver(LOGGER);
 		createSaveDirectory();
 		SaveGameParser.loadGame("sav/save.json");
 		setScene(new SplashScene());
@@ -110,6 +112,7 @@ public class ShaftEscape extends Application {
 	public static void exit() {
 		createSaveDirectory();
 		SaveGameWriter.saveGame("sav/save.json");
+		LOGGER.writeToFile();
 		stage.close();
 	}
 
