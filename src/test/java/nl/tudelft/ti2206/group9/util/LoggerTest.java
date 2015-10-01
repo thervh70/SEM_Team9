@@ -48,7 +48,7 @@ public class LoggerTest {
 	@Test
 	public void testIOException() throws IOException {
 		GameObservable.addObserver(logger);
-		final String fakePath = "no\\folder\\exists\\test.log";
+		final String fakePath = "\\..\\..\\no\\folder\\exists\\test.log";
 		new Logger(fakePath); // will catch IOException
 
 		logger.writeToFile(false);
@@ -58,10 +58,8 @@ public class LoggerTest {
 				+ "    Message: " + fakePath;
 		String log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
 				StandardCharsets.UTF_8);
-		System.out.println(log);
-		System.out.flush();
-/*		log = log.substring(Logger.FORMAT.length() - 1,
-						expected.length() + Logger.FORMAT.length() - 1);*/
+		log = log.substring(Logger.FORMAT.length() - 1,
+						expected.length() + Logger.FORMAT.length() - 1);
 		assertEquals(expected, log);
 
 		GameObservable.deleteObserver(logger);
