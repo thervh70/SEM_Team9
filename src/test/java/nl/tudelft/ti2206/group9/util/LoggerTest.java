@@ -46,24 +46,4 @@ public class LoggerTest {
 		assertEquals("[PLAYER] Jumping.\n", log);
 	}
 
-	@Test
-	public void testIOException() throws IOException {
-		GameObservable.addObserver(logger);
-		final String fakePath = "\\..\\..\\no\\folder\\exists\\test.log";
-		new Logger(fakePath); // will catch IOException
-
-		logger.writeToFile(false);
-		final String expected =
-				"[ERROR ] Exception while reading or writing files!\n"
-				+ "    in Logger.writeToOutput(String, boolean)\n"
-				+ "    Message: " + fakePath;
-		String log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
-				StandardCharsets.UTF_8);
-		log = log.substring(Logger.FORMAT.length() - 1,
-						expected.length() + Logger.FORMAT.length() - 1);
-		assertEquals(expected, log);
-
-		GameObservable.deleteObserver(logger);
-	}
-
 }
