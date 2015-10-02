@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -18,7 +20,6 @@ import javafx.stage.Popup;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
@@ -148,7 +149,7 @@ public final class GameScene extends AbstractScene {
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
-		GameObservable.notify(Category.GAME, Game.STARTED);
+		OBSERVABLE.notify(Category.GAME, Game.STARTED);
 	}
 
 	/** Resumes the tickers. */
@@ -156,7 +157,7 @@ public final class GameScene extends AbstractScene {
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
-		GameObservable.notify(Category.GAME, Game.RESUMED);
+		OBSERVABLE.notify(Category.GAME, Game.RESUMED);
 	}
 
 	/** Stop the tickers. */
@@ -164,13 +165,13 @@ public final class GameScene extends AbstractScene {
 		running = false;
 		extTicker.stop();
 		InternalTicker.stop();
-		GameObservable.notify(Category.GAME, Game.STOPPED);
+		OBSERVABLE.notify(Category.GAME, Game.STOPPED);
 	}
 
 	/** Show a pause menu. */
 	public static void showPauseMenu() {
 		stopTickers();
-		GameObservable.notify(Category.GAME, Game.PAUSED);
+		OBSERVABLE.notify(Category.GAME, Game.PAUSED);
 		pause = new PausePopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				resumeTickers();
@@ -178,7 +179,7 @@ public final class GameScene extends AbstractScene {
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
 				pause = null;
@@ -191,14 +192,14 @@ public final class GameScene extends AbstractScene {
 	public static void showDeathMenu() {
 		death = new DeathPopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.RETRY);
+				OBSERVABLE.notify(Category.GAME, Game.RETRY);
 				State.reset();
 				ShaftEscape.setScene(new GameScene());
 				death = null;
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
 				death = null;

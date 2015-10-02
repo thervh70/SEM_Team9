@@ -1,10 +1,12 @@
 package nl.tudelft.ti2206.group9.util;
 
+import java.util.Observer;
+
 /**
  * Interface for observers who want to observe the game.
  * @author Maarten
  */
-public interface GameObserver {
+public interface GameObserver extends Observer {
 
 	/** Different Categories for updates. */
 	enum Category {
@@ -107,16 +109,44 @@ public interface GameObserver {
 		PARSEEXCEPTION,
 	}
 
-	/**
-	 * Is called when the game is updated. The internal classes should call
-	 * {@link GameObservable#notify(Category, Specific, Object...)}
-	 * to update GameObservers.
-	 * @param cat the Category of this update.
-	 * @param spec the Specific action of this update.
-	 * @param optionalArgs Optional arguments that come with the update
-	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
-	 */
-	void gameUpdate(final Category cat, final Specific spec,
-			final Object... optionalArgs);
+	/** Object containing information about the game update. */
+	class GameUpdate {
+
+		/** Category of the update. */
+		private final Category cat;
+		/** Specific case of the update. */
+		private final Specific spec;
+		/** Optional arguments of the update. */
+		private final Object[] args;
+
+		/**
+		 * Default constructor.
+		 * @param c Category of the update.
+		 * @param s Specific case of the update.
+		 * @param optionalArgs Optional arguments of the update.
+		 */
+		public GameUpdate(final Category c, final Specific s,
+				final Object... optionalArgs) {
+			cat = c;
+			spec = s;
+			args = optionalArgs;
+		}
+
+		/** @return the Category of the update. */
+		public Category getCat() {
+			return cat;
+		}
+
+		/** @return the Specific case of the update. */
+		public Specific getSpec() {
+			return spec;
+		}
+
+		/** @return the Optional arguments of the update. */
+		public Object[] getArgs() {
+			return args;
+		}
+
+	}
 
 }

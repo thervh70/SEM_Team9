@@ -6,6 +6,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import java.util.Observable;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +21,8 @@ public class GameObservableTest implements GameObserver {
 	/** GameObservers used for testing. */
 	private GameObserver go1, go2;
 
+	private final GameObservable obs = new GameObservable();
+
 	/** Mock observers. */
 	@Before
 	public void setUp() {
@@ -29,25 +33,28 @@ public class GameObservableTest implements GameObserver {
 	/** Test whether observers are called when there is an update. */
 	@Test
 	public void testNotifyObservers() {
-		GameObservable.addObserver(this);
-		GameObservable.addObserver(go1);
-		GameObservable.addObserver(go2);
-		GameObservable.deleteObserver(go2);
-		GameObservable.notify(Category.GAME, Game.STARTED, 0);
-		verify(go1).gameUpdate(Category.GAME, Game.STARTED, 0);
-		verify(go2, never()).gameUpdate(Category.GAME, Game.STARTED, 0);
+		final GameUpdate testUpdate =
+				new GameUpdate(Category.GAME, Game.STARTED, 0);
+
+		obs.addObserver(this);
+		obs.addObserver(go1);
+		obs.addObserver(go2);
+		obs.deleteObserver(go2);
+		obs.notify(testUpdate);
+		verify(go1).update(obs, testUpdate);
+		verify(go2, never()).update(obs, testUpdate);
 
 		// Clean up test
-		GameObservable.deleteObserver(go1);
-		GameObservable.deleteObserver(this);
+		obs.deleteObserver(go1);
+		obs.deleteObserver(this);
 	}
 
 	@Override
-	public void gameUpdate(final Category cat, final Specific spec,
-			final Object... optionalArgs) {
-		assertEquals(Category.GAME, cat);
-		assertEquals(Game.STARTED, spec);
-		assertArrayEquals(new Integer[]{0}, optionalArgs);
+	public void update(final Observable o, final Object arg) {
+		final GameUpdate update = (GameUpdate) arg;
+		assertEquals(Category.GAME, update.getCat());
+		assertEquals(Game.STARTED, update.getSpec());
+		assertArrayEquals(new Integer[]{0}, update.getArgs());
 	}
 
 }

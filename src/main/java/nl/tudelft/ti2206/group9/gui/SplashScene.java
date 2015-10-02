@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -9,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
@@ -62,9 +63,9 @@ public final class SplashScene extends AbstractMenuScene {
     private void addMouseClick() {
     	setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent me) {
-                GameObservable.notify(Category.INPUT, Input.MOUSE,
+                OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
                         me.getButton());
-                GameObservable.notify(Category.MENU, Menu.ANY_KEY);
+                OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
                 ShaftEscape.setScene(new MainMenuScene());
             }
         });
@@ -76,9 +77,9 @@ public final class SplashScene extends AbstractMenuScene {
     private void addKeyPressed() {
         setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent ke) {
-                GameObservable.notify(Category.INPUT, Input.KEYBOARD,
+                OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
                         ke.getCode());
-                GameObservable.notify(Category.MENU, Menu.ANY_KEY);
+                OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
                 ShaftEscape.setScene(new MainMenuScene());
             }
         });
