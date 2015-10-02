@@ -35,6 +35,7 @@ public final class State {
 		reset();
 		setCoins(0);
 		highscore = 0;
+		soundEnabled = true;
 	}
 
 	/** Reset data that should be reset every run. */

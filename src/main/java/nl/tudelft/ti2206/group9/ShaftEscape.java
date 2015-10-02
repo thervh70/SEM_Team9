@@ -9,10 +9,13 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import nl.tudelft.ti2206.group9.gui.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.SplashScene;
+import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.SaveGameParser;
 import nl.tudelft.ti2206.group9.util.SaveGameWriter;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 /**
  * Starting point of the Application.
@@ -29,6 +32,8 @@ public class ShaftEscape extends Application {
 	/** Lock used so that the tickers won't use the Track concurrently. */
 	public static final Object TICKER_LOCK = new Object();
 
+	/** The logger that logs all events in the game. */
+	private static final Logger LOGGER = new Logger();
 	/** Primary stage where the Scenes are shown in. */
 	private static Stage stage;
 
@@ -39,6 +44,7 @@ public class ShaftEscape extends Application {
 	 */
 	@Override
 	public final void start(final Stage appStage) {
+		State.resetAll();
 		setStage(appStage);
 		stage.setResizable(false);
 		stage.setWidth(ShaftEscape.WIDTH);
@@ -55,7 +61,7 @@ public class ShaftEscape extends Application {
 			}
 		});
 
-		GameObservable.addObserver(new Logger());
+		GameObservable.addObserver(LOGGER);
 		createSaveDirectory();
 		SaveGameParser.loadGame("sav/save.json");
 		setScene(new SplashScene());
@@ -70,7 +76,8 @@ public class ShaftEscape extends Application {
 			try {
 				saveDir.mkdir();
 			} catch (SecurityException e) {
-				e.printStackTrace();
+				GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+						"ShaftEscape.createSaveDirectory()", e.getMessage());
 			}
 		}
 	}
@@ -105,6 +112,7 @@ public class ShaftEscape extends Application {
 	public static void exit() {
 		createSaveDirectory();
 		SaveGameWriter.saveGame("sav/save.json");
+		LOGGER.writeToFile();
 		stage.close();
 	}
 
