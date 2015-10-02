@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.util;
 
+import java.util.Arrays;
 import java.util.Observer;
 
 /**
@@ -144,7 +145,7 @@ public interface GameObserver extends Observer {
 
 		/** @return the Optional arguments of the update. */
 		public Object[] getArgs() {
-			return args;
+			return Arrays.copyOf(args, args.length);
 		}
 
 	}
