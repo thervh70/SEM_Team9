@@ -23,6 +23,9 @@ public class GameObservableTest implements GameObserver {
 
 	private final GameObservable obs = new GameObservable();
 
+	private static final GameUpdate TEST_UPDATE =
+			new GameUpdate(Category.GAME, Game.STARTED, 0);
+
 	/** Mock observers. */
 	@Before
 	public void setUp() {
@@ -33,20 +36,40 @@ public class GameObservableTest implements GameObserver {
 	/** Test whether observers are called when there is an update. */
 	@Test
 	public void testNotifyObservers() {
-		final GameUpdate testUpdate =
-				new GameUpdate(Category.GAME, Game.STARTED, 0);
-
 		obs.addObserver(this);
 		obs.addObserver(go1);
 		obs.addObserver(go2);
 		obs.deleteObserver(go2);
-		obs.notify(testUpdate);
-		verify(go1).update(obs, testUpdate);
-		verify(go2, never()).update(obs, testUpdate);
+		obs.notify(TEST_UPDATE);
+		verify(go1).update(obs, TEST_UPDATE);
+		verify(go2, never()).update(obs, TEST_UPDATE);
 
 		// Clean up test
 		obs.deleteObserver(go1);
 		obs.deleteObserver(this);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Test(expected = UnsupportedOperationException.class)
+	public void testUnsupportedException() {
+		obs.notifyObservers();
+	}
+
+	@SuppressWarnings("deprecation")
+	@Test(expected = ClassCastException.class)
+	public void testClassCastException() {
+		obs.notifyObservers(0);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testDeprecatedNotifyObservers() {
+		obs.addObserver(go1);
+		obs.notifyObservers(TEST_UPDATE);
+		verify(go1).update(obs, TEST_UPDATE);
+
+		// Clean up test
+		obs.deleteObserver(go1);
 	}
 
 	@Override
