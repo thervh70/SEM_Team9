@@ -41,8 +41,9 @@ public class AudioPlayer {
 		try {
 			audioClip = new AudioClip(new File(source).toURI().toURL()
 					.toString());
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
+		} catch (MalformedURLException mue) {
+			GameObservable.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
+					"AudioPlayer.initializeTune(String)", mue.getMessage());
 		} catch (MediaException me) {
 			GameObservable.notify(Category.ERROR, Error.MEDIAEXCEPTION,
 					"AudioPlayer.initializeTune(String)", me.getMessage());

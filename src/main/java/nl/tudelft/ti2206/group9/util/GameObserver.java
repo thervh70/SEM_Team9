@@ -99,12 +99,15 @@ public interface GameObserver {
 		/** There has been an exception with reading/writing to files.
 		 *  optionalArgs: exception location, exception message. */
 		IOEXCEPTION,
+		/** There has been an exception with parsing an URL.
+		 *  optionalArgs: exception location, exception message. */
+		MALFORMEDURLEXCEPTION,
 		/** There has been an exception with the audio player.
 		 *  optionalArgs: exception location, exception message. */
 		MEDIAEXCEPTION,
 		/** There has been an exception with parsing JSON files.
 		 *  optionalArgs: exception location, exception message. */
-		PARSEEXCEPTION,
+		PARSEEXCEPTION
 	}
 
 	/**
