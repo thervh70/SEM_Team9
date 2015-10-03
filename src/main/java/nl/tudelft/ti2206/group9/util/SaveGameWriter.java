@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 import org.json.simple.JSONObject;
 
@@ -34,14 +36,16 @@ public final class SaveGameWriter {
 			fw.write(mainObject);
 			fw.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+					"SaveGameWriter.saveGame(String)", e.getMessage());
 		} finally {
 			try {
 				if (fw != null) {
 					fw.close();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+						"SaveGameWriter.saveGame(String) (2)", e.getMessage());
 			}
 		}
     }
