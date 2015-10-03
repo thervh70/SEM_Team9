@@ -6,6 +6,9 @@ import java.net.MalformedURLException;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaException;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObservable;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 /**
  * Creates an AudioPlayer which you can initialize, start and stop.
@@ -41,7 +44,8 @@ public class AudioPlayer {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (MediaException me) {
-			me.printStackTrace();
+			GameObservable.notify(Category.ERROR, Error.MEDIAEXCEPTION,
+					"AudioPlayer.initializeTune(String)", me.getMessage());
 		}
 	}
 
@@ -57,7 +61,8 @@ public class AudioPlayer {
 				audioClip.play();
 			}
 		} catch (MediaException me) {
-			me.printStackTrace();
+			GameObservable.notify(Category.ERROR, Error.MEDIAEXCEPTION,
+					"AudioPlayer.play()", me.getMessage());
 		}
 	}
 
@@ -73,7 +78,8 @@ public class AudioPlayer {
 				audioClip.stop();
 			}
 		} catch (MediaException me) {
-			me.printStackTrace();
+			GameObservable.notify(Category.ERROR, Error.MEDIAEXCEPTION,
+					"AudioPlayer.stop()", me.getMessage());
 		}
 	}
 
