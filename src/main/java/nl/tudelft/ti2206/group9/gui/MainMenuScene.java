@@ -12,6 +12,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
+import nl.tudelft.ti2206.group9.util.SaveGameWriter;
 
 /**
  * A Main Menu with different options/buttons like a options menu, start button
@@ -73,7 +74,7 @@ public final class MainMenuScene extends AbstractMenuScene {
 	 * @param button Button to be set.
 	 * @param type Type of button
 	 */
-	private static void setButtonFunction(final Button button,
+	private void setButtonFunction(final Button button,
 			final BType type) {
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(final ActionEvent event) {
@@ -82,7 +83,8 @@ public final class MainMenuScene extends AbstractMenuScene {
 					ShaftEscape.exit();
 				} else if (type == BType.START) {
                     State.setPlayerName(INPUT.getText());
-                    LoadGameScene.getPlayers().add(INPUT.getText());
+					SaveGameWriter.saveGame(State.getDefaultSaveDir()
+							+ INPUT.getText() + ".json");
                     INPUT.clear();
 					GameObservable.notify(Category.MENU, Menu.START);
 					ShaftEscape.setScene(new GameScene());

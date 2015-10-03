@@ -21,6 +21,12 @@ public final class State {
 	/** Name of the player. */
 	private static String playerName;
 
+	/**
+	 * Default savegame directory.
+	 * Attention! Only use 1 subfolder!
+	 */
+	private static String defaultSaveDir = "sav/";
+
 	/** Boolean to determine whether sound is enabled. */
 	private static boolean soundEnabled;
 
@@ -171,4 +177,18 @@ public final class State {
 	public static void setSoundEnabled(final boolean newSoundEnabled) {
 		State.soundEnabled = newSoundEnabled;
 	}
+
+	/**
+	 * Get the default savegame directory.
+	 * @return defaultSaveDir
+	 */
+	public static String getDefaultSaveDir() {
+		return defaultSaveDir;
+	}
+
+	/**
+	 * Set a new default savegame directory.
+	 * @param newSaveDir the new savegame directory
+	 */
+	public static void setDefaultSaveDir(String newSaveDir) { State.defaultSaveDir = newSaveDir; }
 }

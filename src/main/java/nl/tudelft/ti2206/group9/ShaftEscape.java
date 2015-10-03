@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.group9;
 
-import java.io.File;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Popup;
@@ -11,11 +9,12 @@ import nl.tudelft.ti2206.group9.gui.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.SplashScene;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
-import nl.tudelft.ti2206.group9.util.Logger;
-import nl.tudelft.ti2206.group9.util.SaveGameParser;
-import nl.tudelft.ti2206.group9.util.SaveGameWriter;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import nl.tudelft.ti2206.group9.util.Logger;
+import nl.tudelft.ti2206.group9.util.SaveGameWriter;
+
+import java.io.File;
 
 /**
  * Starting point of the Application.
@@ -63,18 +62,17 @@ public class ShaftEscape extends Application {
 
 		GameObservable.addObserver(LOGGER);
 		createSaveDirectory();
-		SaveGameParser.loadGame("sav/save.json");
 		setScene(new SplashScene());
 	}
 
 	/** Creates the savefile directory. */
 	private static void createSaveDirectory() {
-		final File saveDir = new File("sav");
+		final File saveDir = new File(State.getDefaultSaveDir());
 
 		// if the directory does not exist, create it
 		if (!saveDir.exists()) {
 			try {
-				saveDir.mkdir();
+				saveDir.mkdirs();
 			} catch (SecurityException e) {
 				GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
 						"ShaftEscape.createSaveDirectory()", e.getMessage());
@@ -111,7 +109,8 @@ public class ShaftEscape extends Application {
 	/** Exits the Application. */
 	public static void exit() {
 		createSaveDirectory();
-		SaveGameWriter.saveGame("sav/save.json");
+		SaveGameWriter.saveGame(State.getDefaultSaveDir()
+				+ State.getPlayerName() + ".json");
 		LOGGER.writeToFile();
 		stage.close();
 	}
