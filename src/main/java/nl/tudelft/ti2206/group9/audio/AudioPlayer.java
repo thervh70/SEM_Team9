@@ -10,13 +10,12 @@ import nl.tudelft.ti2206.group9.level.State;
 /**
  * Creates an AudioPlayer which you can initialize, start and stop.
  * @author Mitchell
- *
  */
 @SuppressWarnings("restriction")
 public class AudioPlayer {
 
 	/** The AudioClip of an AudioPlayer. */
-	private AudioClip audioClip;
+	private static AudioClip audioClip;
 	/** Path of the AudioClip. */
 	private String path;
 
@@ -49,36 +48,32 @@ public class AudioPlayer {
 	/**
 	 * Starts the initialized soundtrack.
 	 */
-	public final synchronized void play() {
-		synchronized (this) {
-			try {
-				if (State.isSoundEnabled()) {
-					if (audioClip == null) {
-						initializeTune(path);
-					}
-					audioClip.play();
+	public final void play() {
+		try {
+			if (State.isSoundEnabled()) {
+				if (audioClip == null) {
+					initializeTune(path);
 				}
-			} catch (MediaException me) {
-				me.printStackTrace();
+				audioClip.play();
 			}
+		} catch (MediaException me) {
+			me.printStackTrace();
 		}
 	}
 
 	/**
 	 * Stops the initialized soundtrack.
 	 */
-	public final synchronized void stop() {
-		synchronized (this) {
-			try {
-				if (State.isSoundEnabled()) {
-					if (audioClip == null) {
-						initializeTune(path);
-					}
-					audioClip.stop();
+	public final void stop() {
+		try {
+			if (State.isSoundEnabled()) {
+				if (audioClip == null) {
+					initializeTune(path);
 				}
-			} catch (MediaException me) {
-				me.printStackTrace();
+				audioClip.stop();
 			}
+		} catch (MediaException me) {
+			me.printStackTrace();
 		}
 	}
 
