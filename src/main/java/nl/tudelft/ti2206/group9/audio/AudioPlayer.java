@@ -18,7 +18,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 public class AudioPlayer {
 
 	/** The AudioClip of an AudioPlayer. */
-	private static AudioClip audioClip;
+	private AudioClip audioClip;
 	/** Path of the AudioClip. */
 	private String path;
 
