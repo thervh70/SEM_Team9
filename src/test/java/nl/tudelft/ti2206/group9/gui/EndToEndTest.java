@@ -16,7 +16,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaException;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.Player;
@@ -27,7 +26,6 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-
 
 @SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {

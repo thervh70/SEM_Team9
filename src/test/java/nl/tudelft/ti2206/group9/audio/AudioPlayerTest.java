@@ -15,9 +15,9 @@ public class AudioPlayerTest {
 
 	@Test
 	public void testStop() throws MediaException {
-		String testPath = "src/main/resources/"
+		final String testPath = "src/main/resources/"
 				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
-		AudioPlayer test = new AudioPlayer(testPath);
+		final AudioPlayer test = new AudioPlayer(testPath);
 		test.play();
 		test.stop();
 		assertFalse(test.isRunning());
@@ -25,10 +25,10 @@ public class AudioPlayerTest {
 
 	@Test
 	public void testSetPath() {
-		String testPath = "src/main/resources/"
+		final String testPath = "src/main/resources/"
 				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
-		AudioPlayer test = new AudioPlayer(testPath);
-		String testDifferentPath = "src/main/resources/"
+		final AudioPlayer test = new AudioPlayer(testPath);
+		final String testDifferentPath = "src/main/resources/"
 				+ "nl/tudelft/ti2206/group9/audio/test.aiff";
 		test.setPath(testDifferentPath);
 		assertTrue(testDifferentPath.equals(test.getPath()));

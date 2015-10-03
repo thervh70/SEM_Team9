@@ -90,7 +90,7 @@ public final class GameScene extends AbstractScene {
 		setupCamera();
 		keyBindings();
 
-        audioPlayer.play();
+		audioPlayer.play();
 		startTickers();
 		return root;
 	}
