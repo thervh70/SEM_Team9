@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.entities;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
+import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Direction;
@@ -51,6 +52,14 @@ public class Player extends AbstractEntity {
 	/** Whether the player is invincible. */
 	private boolean invincible;
 
+	/** The AudioPlayer to be used for the coin sound effect. */
+	private static AudioPlayer apCoin = new AudioPlayer("src/main/"
+	+ "resources/nl/tudelft/ti2206/group9/audio/coin.wav");
+	/** The AudioPlayer to be used for the death sound effect. */
+	private static AudioPlayer apDie = new AudioPlayer("src/main/"
+	+ "resources/nl/tudelft/ti2206/group9/audio/fail.wav");
+
+
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
@@ -99,12 +108,14 @@ public class Player extends AbstractEntity {
 	@Override
 	public final void collision(final AbstractEntity collidee) {
 		if (collidee instanceof Coin) {
+			apCoin.play();
 			OBSERVABLE.notify(Category.PLAYER,
 					GameObserver.Player.COLLISION, Coin.class.getSimpleName());
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
 		}
 		if (collidee instanceof AbstractObstacle) {
+			apDie.play();
 			OBSERVABLE.notify(
 					Category.PLAYER, GameObserver.Player.COLLISION,
 					AbstractObstacle.class.getSimpleName());
