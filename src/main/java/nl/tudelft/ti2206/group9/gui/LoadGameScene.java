@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import javafx.scene.control.ListView;
 
@@ -85,11 +86,11 @@ public class LoadGameScene extends AbstractMenuScene {
         button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
                 if (type == BType.LOAD_BACK) {
-                    GameObservable.notify(GameObserver.Category.MENU,
+                    OBSERVABLE.notify(GameObserver.Category.MENU,
                             GameObserver.Menu.LOAD_BACK);
                     ShaftEscape.setScene(new MainMenuScene());
                 } else {
-                    GameObservable.notify(GameObserver.Category.MENU,
+                    OBSERVABLE.notify(GameObserver.Category.MENU,
                             GameObserver.Menu.LOAD);
                     State.setPlayerName(
                             list.getSelectionModel().getSelectedItem());

@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -9,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
@@ -78,19 +79,19 @@ public final class MainMenuScene extends AbstractMenuScene {
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(final ActionEvent event) {
 				if (type == BType.EXIT) {
-					GameObservable.notify(Category.MENU, Menu.EXIT);
+					OBSERVABLE.notify(Category.MENU, Menu.EXIT);
 					ShaftEscape.exit();
 				} else if (type == BType.START) {
                     State.setPlayerName(INPUT.getText());
                     LoadGameScene.getPlayers().add(INPUT.getText());
                     INPUT.clear();
-					GameObservable.notify(Category.MENU, Menu.START);
+					OBSERVABLE.notify(Category.MENU, Menu.START);
 					ShaftEscape.setScene(new GameScene());
 				} else if (type == BType.LOAD) {
-					GameObservable.notify(Category.MENU, Menu.LOAD_MENU);
+					OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
 					ShaftEscape.setScene(new LoadGameScene());
 				} else {
-					GameObservable.notify(Category.MENU, Menu.SETTINGS);
+					OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
 					ShaftEscape.setScene(new SettingsScene());
 				}
 			}

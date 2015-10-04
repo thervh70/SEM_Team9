@@ -1,12 +1,13 @@
 package nl.tudelft.ti2206.group9.audio;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import java.io.File;
 import java.net.MalformedURLException;
 
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaException;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
@@ -42,10 +43,10 @@ public class AudioPlayer {
 			audioClip = new AudioClip(new File(source).toURI().toURL()
 					.toString());
 		} catch (MalformedURLException mue) {
-			GameObservable.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
+			OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
 					"AudioPlayer.initializeTune(String)", mue.getMessage());
 		} catch (MediaException me) {
-			GameObservable.notify(Category.ERROR, Error.MEDIAEXCEPTION,
+			OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
 					"AudioPlayer.initializeTune(String)", me.getMessage());
 		}
 	}
@@ -62,7 +63,7 @@ public class AudioPlayer {
 				audioClip.play();
 			}
 		} catch (MediaException me) {
-			GameObservable.notify(Category.ERROR, Error.MEDIAEXCEPTION,
+			OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
 					"AudioPlayer.play()", me.getMessage());
 		}
 	}
@@ -79,7 +80,7 @@ public class AudioPlayer {
 				audioClip.stop();
 			}
 		} catch (MediaException me) {
-			GameObservable.notify(Category.ERROR, Error.MEDIAEXCEPTION,
+			OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
 					"AudioPlayer.stop()", me.getMessage());
 		}
 	}

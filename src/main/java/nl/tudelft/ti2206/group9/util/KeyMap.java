@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.util;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,7 +38,7 @@ public class KeyMap {
 
 		final Action action = actionMap.get(e);
 		if (action != null && !pressed.get(e)) {	// If key not pressed
-			GameObservable.notify(Category.INPUT, Input.KEYBOARD, e);
+			OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD, e);
 			action.doAction();						// Do action
 			pressed.put(e, true);					// Mark as pressed
 		}

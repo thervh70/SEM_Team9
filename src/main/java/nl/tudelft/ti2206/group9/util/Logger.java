@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.util;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Observable;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -95,18 +98,11 @@ public class Logger implements GameObserver {
 		writeToOutput("", false);
 	}
 
-	/**
-	 * Is called when the game is updated. The internal classes should call
-	 * {@link GameObservable#notify(Category, Specific, Object...)}
-	 * to update GameObservers.
-	 * @param cat the Category of this update.
-	 * @param spec the Specific action of this update.
-	 * @param optionalArgs Optional arguments that come with the update
-	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
-	 */
-	public void gameUpdate(final Category cat, final Specific spec,
-			final Object... optionalArgs) {
-		buffer.append(getLogString(spec, optionalArgs)).append('\n');
+	@Override
+	public void update(final Observable o, final Object arg) {
+		final GameUpdate update = (GameUpdate) arg;
+		buffer.append(getLogString(update.getSpec(), update.getArgs()));
+		buffer.append('\n');
 	}
 
 	/**
@@ -167,7 +163,7 @@ public class Logger implements GameObserver {
 			fw.flush();
 		} catch (IOException e) {
 			ret = false;
-			GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+			OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
 					"Logger.writeToOutput(String, boolean)", e.getMessage());
 		} finally {
 			try {
@@ -176,7 +172,7 @@ public class Logger implements GameObserver {
 				}
 			} catch (IOException e) {
 				ret = false;
-				GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+				OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
 						"Logger.writeToOutput(String, boolean) (2)",
 						e.getMessage());
 			}

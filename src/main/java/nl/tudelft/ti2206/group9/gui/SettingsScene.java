@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -9,7 +11,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
@@ -66,7 +67,7 @@ public final class SettingsScene extends AbstractMenuScene {
 	    button.setOnAction(new EventHandler<ActionEvent>() {
 	        public void handle(final ActionEvent event) {
 	            if (type == BType.SETTINGS_BACK) {
-	                GameObservable.notify(Category.MENU, Menu.SETTINGS_BACK);
+	                OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
 	                ShaftEscape.setScene(new MainMenuScene());
 	            } else {
 	                State.setSoundEnabled(!State.isSoundEnabled());
@@ -77,7 +78,7 @@ public final class SettingsScene extends AbstractMenuScene {
 	                    s = "OFF";
 	                }
 	                button.setText("Sound: " + s);
-	                GameObservable.notify(Category.MENU, Menu.SETTING_SOUND, s);
+	                OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUND, s);
 	            }
 	        }
 	    });
