@@ -17,7 +17,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 /**
  * A Main Menu with different options/buttons like a options menu, start button
  * and exit button.
- * @author Maikel, Maarten, Mitchell, Robin, Maikel
+ * @author Maikel, Maarten, Mitchell and Robin
  */
 @SuppressWarnings("restriction")
 public final class MainMenuScene extends AbstractMenuScene {
