@@ -109,8 +109,10 @@ public class ShaftEscape extends Application {
 	/** Exits the Application. */
 	public static void exit() {
 		createSaveDirectory();
-		SaveGameWriter.saveGame(State.getDefaultSaveDir()
-				+ State.getPlayerName() + ".json");
+		if (State.getPlayerName() != null) {
+			SaveGameWriter.saveGame(State.getDefaultSaveDir()
+					+ State.getPlayerName() + ".json");
+		}
 		LOGGER.writeToFile();
 		stage.close();
 	}

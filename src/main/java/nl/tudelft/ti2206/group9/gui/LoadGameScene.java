@@ -99,7 +99,7 @@ public class LoadGameScene extends AbstractMenuScene {
                     final String loadFile =
                             list.getSelectionModel().getSelectedItem();
                     if (loadFile == null) {
-                        System.out.println("This really needs a Popup");
+                        ShaftEscape.showPopup(new GameNotFoundPopup());
                     } else {
                         SaveGameParser.loadGame(State.getDefaultSaveDir()
                                 + loadFile + ".json");

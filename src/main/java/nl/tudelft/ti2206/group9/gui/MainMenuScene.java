@@ -90,7 +90,8 @@ public final class MainMenuScene extends AbstractMenuScene {
 						GameObservable.notify(Category.MENU, Menu.START);
 						ShaftEscape.setScene(new GameScene());
 					} else {
-						System.out.println("This really needs a Popup");
+						ShaftEscape.showPopup(
+								new FaultyInputPopup());
 					}
 				} else if (type == BType.LOAD) {
 					GameObservable.notify(Category.MENU, Menu.LOAD_MENU);
