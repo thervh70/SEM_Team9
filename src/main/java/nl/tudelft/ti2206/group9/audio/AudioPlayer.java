@@ -1,109 +1,119 @@
 package nl.tudelft.ti2206.group9.audio;
 
-import java.io.IOException;
-import java.net.URL;
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.Mixer;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.net.MalformedURLException;
+
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.MediaException;
+import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 /**
- * Creates an AudioPlayer which you can initialise, start and stop.
+ * Creates an AudioPlayer which you can initialize, start and stop.
  * @author Mitchell
- *
  */
+@SuppressWarnings("restriction")
 public class AudioPlayer {
 
-	private static Mixer mixer;
-	private static Clip clip;
-	
+	/** The AudioClip of an AudioPlayer. */
+	private AudioClip audioClip;
+	/** Path of the AudioClip. */
+	private String path;
+
 	/**
-	 * 
-	 * @param myMixer given mixer
-	 * @param myClip given clip
+	 * Creates an AudioPlayer with as input a specific path.
+	 * @param soundPath given path
 	 */
-	public AudioPlayer(final Mixer myMixer, final Clip myClip) {
-		mixer = myMixer;
-		clip = myClip;
-	}
-	
-	/**
-	 * Start the initialised soundtrack.
-	 */
-	public void play() {
-		clip.start();
-	}
-	
-	/**
-	 * Stops the initialised soundtrack.
-	 */
-	public void stop() {
-		clip.stop();
-	}
-	
-	/**
-	 * Gets the audio file and prepares it for streaming.
-	 * @param path leads to the soundtrack.
-	 */
-	public void initialiseTune(final String path) {
-		Mixer.Info[] mixInfos = AudioSystem.getMixerInfo();
-		mixer = AudioSystem.getMixer(mixInfos[0]);
-		
-		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
-		
-		try { 
-			clip = (Clip) mixer.getLine(dataInfo); 
-			} catch (LineUnavailableException lue) { 
-				lue.printStackTrace(); 
-			}
-		
-		try	{
-			URL soundUrl = AudioPlayer.class.getResource(path);
-			AudioInputStream audioStream = 
-						AudioSystem.getAudioInputStream(soundUrl);
-			clip.open(audioStream);
-		} catch (LineUnavailableException lue) {
-			lue.printStackTrace(); 
-		} catch (UnsupportedAudioFileException uafe) {
-			uafe.printStackTrace(); 
-		} catch (IOException ioe) { 
-			ioe.printStackTrace(); 
+	public AudioPlayer(final String soundPath) {
+		path = soundPath;
+		if (State.isSoundEnabled()) {
+			initializeTune(path);
 		}
 	}
-	
+
 	/**
-	 * Return the current clip.
-	 * @return current clip.
+	 * Gets the audio file and prepares it for streaming.
+	 * @param source leads to the soundtrack.
 	 */
-	public Clip getClip() {
-		return clip;
-	}
-	
-	/**
-	 * @param clip the clip to set
-	 */
-	public void setClip(final Clip clip) {
-		AudioPlayer.clip = clip;
-	}
-	
-	/**
-	 * Return the current mixer.
-	 * @return current mixer.
-	 */
-	public Mixer getMixer() {
-		return mixer;
+	private void initializeTune(final String source) {
+		try {
+			audioClip = new AudioClip(new File(source).toURI().toURL()
+					.toString());
+		} catch (MalformedURLException mue) {
+			OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
+					"AudioPlayer.initializeTune(String)", mue.getMessage());
+		} catch (MediaException me) {
+			OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
+					"AudioPlayer.initializeTune(String)", me.getMessage());
+		}
 	}
 
 	/**
-	 * @param mixer the mixer to set
+	 * Starts the initialized soundtrack.
 	 */
-	public void setMixer(final Mixer mixer) {
-		AudioPlayer.mixer = mixer;
+	public final void play() {
+		try {
+			if (State.isSoundEnabled()) {
+				if (audioClip == null) {
+					initializeTune(path);
+				}
+				audioClip.play();
+			}
+		} catch (MediaException me) {
+			OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
+					"AudioPlayer.play()", me.getMessage());
+		}
 	}
 
-	
+	/**
+	 * Stops the initialized soundtrack.
+	 */
+	public final void stop() {
+		try {
+			if (State.isSoundEnabled()) {
+				if (audioClip == null) {
+					initializeTune(path);
+				}
+				audioClip.stop();
+			}
+		} catch (MediaException me) {
+			OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
+					"AudioPlayer.stop()", me.getMessage());
+		}
+	}
+
+	/**
+	 * Checks if the current audioClip is running.
+	 * @return boolean true if running, false if not.
+	 */
+	public final boolean isRunning() {
+		if (audioClip == null) {
+			return false;
+		} else {
+			return audioClip.isPlaying();
+		}
+	}
+
+	/**
+	 * Returns the path of the AudioPlayer.
+	 * @return path leads to the soundtrack.
+	 */
+	public final String getPath() {
+		return path;
+	}
+
+	/**
+	 * Sets the path of the AudioPlayer and reinitializes it.
+	 * @param location new path to a file.
+	 */
+	public final void setPath(final String location) {
+		path = location;
+		if (State.isSoundEnabled()) {
+			initializeTune(path);
+		}
+	}
+
 }

@@ -5,24 +5,18 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: JPacman Coding Standards
+    Checkstyle-Configuration: SEMCheckstyle
     Description: none
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
-    <module name="SuppressWarningsHolder" />
     <property name="tabWidth" value="4"/>
     <module name="FileContentsHolder"/>
-    <module name="JavadocMethod">
-      <property name="scope" value="package"/>
-      <property name="suppressLoadErrors" value="true"/>
-    </module>
+    <module name="SuppressWarningsHolder"/>
+    <module name="JavadocMethod"/>
     <module name="JavadocType"/>
-    <module name="JavadocVariable">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
+    <module name="JavadocVariable"/>
     <module name="JavadocStyle"/>
     <module name="ConstantName"/>
     <module name="LocalFinalVariableName"/>
@@ -39,14 +33,13 @@
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
-    <module name="LineLength">
-      <property name="max" value="80"/>
-    </module>
+    <module name="LineLength"/>
     <module name="MethodLength">
       <property name="max" value="30"/>
     </module>
     <module name="ParameterNumber"/>
     <module name="EmptyForIteratorPad"/>
+    <module name="GenericWhitespace"/>
     <module name="MethodParamPad"/>
     <module name="NoWhitespaceAfter">
       <property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS"/>
@@ -61,20 +54,13 @@
     <module name="RedundantModifier"/>
     <module name="AvoidNestedBlocks"/>
     <module name="EmptyBlock"/>
-    <module name="LeftCurly">
-      <property name="option" value="eol"/>
-    </module>
+    <module name="LeftCurly"/>
     <module name="NeedBraces"/>
-    <module name="RightCurly">
-      <property name="option" value="same"/>
-    </module>
+    <module name="RightCurly"/>
     <module name="AvoidInlineConditionals"/>
     <module name="EmptyStatement"/>
     <module name="EqualsHashCode"/>
-    <module name="HiddenField">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
+    <module name="HiddenField"/>
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
     <module name="MagicNumber"/>
@@ -86,14 +72,8 @@
     <module name="InterfaceIsType"/>
     <module name="VisibilityModifier"/>
     <module name="ArrayTypeStyle"/>
-    <module name="FinalParameters">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
-    <module name="TodoComment">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
+    <module name="FinalParameters"/>
+    <module name="TodoComment"/>
     <module name="UpperEll"/>
     <module name="FallThrough"/>
     <module name="MethodLength">
@@ -101,8 +81,7 @@
     </module>
   </module>
   <module name="NewlineAtEndOfFile">
-    <property name="severity" value="ignore"/>
-    <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    <property name="fileExtensions" value="java"/>
   </module>
   <module name="Translation"/>
   <module name="FileLength"/>
@@ -111,12 +90,10 @@
     <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
   </module>
   <module name="RegexpSingleline">
-    <property name="severity" value="ignore"/>
     <property name="format" value="\s+$"/>
     <property name="message" value="Line has trailing spaces."/>
-    <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
   </module>
   <module name="SuppressionCommentFilter"/>
   <module name="SuppressWithNearbyCommentFilter"/>
-  <module name="SuppressWarningsFilter" />
+  <module name="SuppressWarningsFilter"/>
 </module>

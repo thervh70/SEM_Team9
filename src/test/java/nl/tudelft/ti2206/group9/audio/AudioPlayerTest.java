@@ -1,45 +1,37 @@
 package nl.tudelft.ti2206.group9.audio;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.Mixer;
+import static org.junit.Assert.assertTrue;
+import javafx.scene.media.MediaException;
 
 import org.junit.Test;
 
 /**
  * AudioPlayerTest tests the AudioPlayer class.
  * @author Mitchell
- *
  */
+@SuppressWarnings("restriction")
 public class AudioPlayerTest {
 
-	private static Mixer testMixer;
-	private static Clip testClip;
-	private AudioPlayer test = new AudioPlayer(testMixer, testClip);
-
-	private static Clip otherClip;
-	private static Mixer otherMixer;
-	
 	@Test
-	public void testStop() {
-		test.initialiseTune("sounds/soundtrack.aiff");
+	public void testStop() throws MediaException {
+		final String testPath = "src/main/resources/"
+				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
+		final AudioPlayer test = new AudioPlayer(testPath);
 		test.play();
 		test.stop();
-		assertFalse(test.getClip().isRunning());
-	}
-	
-	@Test
-	public void testSetClip() {
-		test.setClip(otherClip);
-		assertEquals(otherClip, test.getClip());
+		assertFalse(test.isRunning());
 	}
 
 	@Test
-	public void testSetMixer() {
-		test.setMixer(otherMixer);
-		assertEquals(otherMixer, test.getMixer());
+	public void testSetPath() {
+		final String testPath = "src/main/resources/"
+				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
+		final AudioPlayer test = new AudioPlayer(testPath);
+		final String testDifferentPath = "src/main/resources/"
+				+ "nl/tudelft/ti2206/group9/audio/test.aiff";
+		test.setPath(testDifferentPath);
+		assertTrue(testDifferentPath.equals(test.getPath()));
 	}
-	
+
 }

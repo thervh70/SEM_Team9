@@ -1,5 +1,9 @@
 # Created by https://www.gitignore.io/api/java,eclipse,maven,intellij
 
+### ShaftEscape ###
+events.log
+sav/
+
 ### Java ###
 *.class
 
@@ -55,6 +59,12 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+# PMD configuration
+.pmd
+
+# Checkstyle configuration
+.checkstyle
 
 
 ### Maven ###

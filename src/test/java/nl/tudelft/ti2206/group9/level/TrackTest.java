@@ -1,15 +1,8 @@
 package nl.tudelft.ti2206.group9.level;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.Random;
-
+import static org.junit.Assert.fail;
 import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Obstacle;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -25,12 +18,27 @@ public class TrackTest {
 	@Before
 	public void setUp() throws Exception {
 		track = new Track();
+		Track.setDistance(0);
 	}
 
 	@Test
 	public void testTrack() {
 		assertEquals(1, track.getEntities().size());
 		assertEquals(new Player(), track.getEntities().get(0));
+	}
+
+	@Test
+	public void testGetUnitsPerTick() {
+		final double div = Math.pow(Track.UNITS_PER_TICK_ACCEL, -1) / 2
+				* Track.UNITS_PER_TICK_BASE * Track.UNITS_PER_TICK_BASE;
+
+		Track.setDistance(div);
+		assertEquals(Track.UNITS_PER_TICK_BASE * Math.sqrt(2),
+						Track.getUnitsPerTick(), DELTA);
+
+		Track.addDistance(2 * div);
+		assertEquals(Track.UNITS_PER_TICK_BASE * 2,
+						Track.getUnitsPerTick(), DELTA);
 	}
 
 	@Test
@@ -52,7 +60,7 @@ public class TrackTest {
 
 	@Test
 	public void testRemoveEntity() {
-		Coin coin = new Coin(Point3D.UNITX);
+		final Coin coin = new Coin(Point3D.UNITX);
 		track.addEntity(coin);
 		assertEquals(2, track.getEntities().size());
 		track.removeEntity(coin);
@@ -65,100 +73,29 @@ public class TrackTest {
 		assertEquals(1, track.getEntities().size());
 		assertEquals(new Player(), track.getEntities().get(0));
 	}
-	
+
 	@Test
 	public void testGetPlayer() {
-		assertTrue(track.getPlayer() instanceof Player);
-	}
-
-	@Test
-	public void testContainsCenter() {
-		Coin coin = new Coin(new Point3D(1, 0, 0));
-		assertFalse(track.containsCenter(coin.getCenter()));
-		track.addEntity(coin);
-		assertTrue(track.containsCenter(coin.getCenter()));
-	}
-	
-	@Test
-	public void testStepCoinZigZag() {
-		Random rand = mock(Random.class);
-		final double belowCoinZigZagChance = Track.COINZIGZAGCHANCE - 0.01;
-		final double aboveObstacleChance = Track.OBSTACLECHANCE + 0.01;
-		final Track track = new Track(rand);
-		final int length = 5;
-
-		when(rand.nextDouble()).thenReturn(belowCoinZigZagChance, 
-				aboveObstacleChance);
-		when(rand.nextInt(10)).thenReturn(length);
-
-		assertEquals(1, track.getEntities().size()); //player
-
-		track.step();
-		assertEquals(13, track.getEntities().size()); //player + 12 coins
-		for (int i = 1; i <13; i++) {
-			assertTrue(track.getEntities().get(i) instanceof Coin);
+		try {
+			track.getPlayer();
+		} catch (ClassCastException e) {
+			fail("Player could not be retrieved from the entities list.");
 		}
 	}
 
 	@Test
 	public void testAddDistance() {
-		track.setDistance(0);
-		track.addDistance(2.0);
-		track.addDistance(1.0);
-		assertEquals(2.0 + 1.0, track.getDistance(), DELTA);
+		Track.setDistance(0);
+		Track.addDistance(2.0);
+		Track.addDistance(1.0);
+		assertEquals(2.0 + 1.0, Track.getDistance(), DELTA);
 	}
 
 	@Test
 	public void testSetDistance() {
-		track.setDistance(2);
-		assertEquals(2, track.getDistance(), DELTA);
-		track.setDistance(1);
-		assertEquals(1, track.getDistance(), DELTA);
-	}
-
-	@Test
-	public void testStepCoinLane() {
-		Random rand = mock(Random.class);
-		final double belowCoinLaneChance = Track.COINZIGZAGCHANCE 
-				+ Track.COINLANECHANCE - 0.01;
-		final double aboveObstacleChance = Track.OBSTACLECHANCE + 0.01;
-		final Track track = new Track(rand);
-		final int length = 5;
-
-		when(rand.nextDouble()).thenReturn(belowCoinLaneChance, 
-				aboveObstacleChance);
-		when(rand.nextInt(10)).thenReturn(length);
-
-		assertEquals(1, track.getEntities().size());
-
-		track.step();
-		assertEquals(11, track.getEntities().size());
-		for (int i = 1; i < 11; i++) {
-			assertTrue(track.getEntities().get(i) instanceof Coin);
-		}
-
-		double oldCoinLeft = track.getCoinrunleft();
-		track.step();
-		double newCoinLeft = track.getCoinrunleft();
-		assertEquals(newCoinLeft, oldCoinLeft 
-				- Track.UNITS_PER_TICK / Track.COINDISTANCE, DELTA);
-	}
-
-	@Test
-	public void testSingleObstacle() {
-		Random rand = mock(Random.class);
-		final double aboveCoinLaneChance = Track.COINZIGZAGCHANCE 
-				+ Track.COINLANECHANCE + 0.01;
-		final double belowObstacleChance = Track.OBSTACLECHANCE - 0.01;
-		final Track track = new Track(rand);
-
-		when(rand.nextDouble()).thenReturn(aboveCoinLaneChance, 
-				belowObstacleChance);
-
-		assertEquals(1, track.getEntities().size());
-
-		track.step();
-		assertEquals(2, track.getEntities().size());
-		assertTrue(track.getEntities().get(1) instanceof Obstacle);
+		Track.setDistance(2);
+		assertEquals(2, Track.getDistance(), DELTA);
+		Track.setDistance(1);
+		assertEquals(1, Track.getDistance(), DELTA);
 	}
 }

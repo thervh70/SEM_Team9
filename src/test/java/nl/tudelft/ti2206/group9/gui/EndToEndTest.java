@@ -1,7 +1,15 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -9,121 +17,212 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.Logger;
+import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
 @SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
-	
+
 	/** Saved to use <pre>rootNode()</pre>. */
 	private Stage stage;
-	
+
 	/** Multiplier for Robot sleeps. */
 	private static final long TARDINESS = 10;
 	/** Amount of milliseconds the Robot sleeps when sleeping "short". */
 	private static final long SHORT = 2 * TARDINESS;
 	/** Amount of milliseconds the Robot sleeps when sleeping "long". */
 	private static final long LONG = 5 * TARDINESS;
-	
+
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
 
+	private static final int MAIN_START = 0;
+	private static final int MAIN_SETTINGS = 1;
+	private static final int MAIN_QUIT = 2;
+	private static final int MAIN_LOADGAME = 3;
+	private static final int MAIN_TEXTFIELD = 5;
+
+	private static final int LOAD_BACK = 0;
+	private static final int LOAD_START = 1;
+	private static final int LOAD_NAMECONTAINER = 2;
+
+	private static final int SETTINGS_BACK = 0;
+	private static final int SETTINGS_SOUND = 1;
+
+	private static final int PAUSE_RESUME = 0;
+	private static final int PAUSE_TOMAIN = 1;
+
+	private static final int DEATH_RETRY = 0;
+	private static final int DEATH_TOMAIN = 1;
+
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(final Stage primaryStage) {
+		letPlayerSurvive();
 		stage = primaryStage;
-		new SplashScreen().start(stage);
+		new ShaftEscape().start(stage);
+		State.resetAll();
 	}
 
 	@Test
-	public void test() {
-		sleep(LONG);
+	public void test() throws IOException { //NOPMD - assert is done in subs.
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
-		
-		mainMenu(0);				// Click start
-		
-		keyboard(KeyCode.ESCAPE);	// Press Escape
-		pausePopup(0);				// Click resume
-		moveAround();				// Move around
-		keyboard(KeyCode.ESCAPE);	// Press Escape
-		pausePopup(1);				// Click "Main menu"
-		
-		mainMenu(0);				// Click start
-		
-		playerDies();				// Player dies
-		deathPopup(0);				// Click "Try Again"
-		playerDies();				// Player dies
-		deathPopup(1);				// Click "Main Menu"
-		
-		mainMenu(2);				// Click quit
-	}
-	
-	private void moveAround() {
-		final int before = 5;
-		final int after = 50;
-		
-		keyboard(KeyCode.LEFT);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getCenter().getX() < 0);
-		keyboard(KeyCode.RIGHT);
-		sleep(after / 2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
-		
-		keyboard(KeyCode.RIGHT);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getCenter().getX() > 0);
-		keyboard(KeyCode.LEFT);
-		sleep(after / 2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
-		
-		keyboard(KeyCode.UP);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getCenter().getY() > 1);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		
-		keyboard(KeyCode.DOWN);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getSize().getY() 
-				< Player.HEIGHT);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		mainMenu(MAIN_SETTINGS);
+		clickAllSettings();
+		mainMenu(MAIN_TEXTFIELD);
+		typeName();
+
+		mainMenu(MAIN_START);
+		keyboard(KeyCode.ESCAPE);
+		pausePopup(PAUSE_RESUME);
+		moveAround();
+		keyboard(KeyCode.ESCAPE);
+		pausePopup(PAUSE_TOMAIN);
+
+		mainMenu(MAIN_LOADGAME);
+		loadMenu(LOAD_BACK);
+		mainMenu(MAIN_LOADGAME);
+		loadMenu(LOAD_NAMECONTAINER);
+		loadMenu(LOAD_START);
+
+		mainMenu(MAIN_START);
+		playerDies();
+		deathPopup(DEATH_RETRY);
+		playerDies();
+		deathPopup(DEATH_TOMAIN);
+
+		mainMenu(MAIN_QUIT);
+		outputEventLog();
 	}
 
-	private void keyboard(KeyCode kc) {
+	private void outputEventLog() throws IOException {
+		final String log = new String(Files.readAllBytes(
+				Paths.get(Logger.OUTFILE)), StandardCharsets.UTF_8);
+		System.out.println("\n== EVENT_LOG ==");     //NOPMD - Intended use of
+		System.out.println(log);                     //NOPMD - System.out.print
+		System.out.println("== END_EVENT_LOG ==\n"); //NOPMD - for Travis log
+	}
+
+	private void letPlayerSurvive() {
+		State.getTrack().getPlayer().setInvincible(true);
+	}
+
+	private void clickAllSettings() {
+		assertTrue("Sound should enabled at startup.", State.isSoundEnabled());
+		settings(SETTINGS_SOUND);
+		assertFalse("Sound disabled. (1)", State.isSoundEnabled());
+		settings(SETTINGS_SOUND);
+		assertTrue("Sound enabled. (2)", State.isSoundEnabled());
+		settings(SETTINGS_SOUND);
+		assertFalse("Sound disabled. (3)", State.isSoundEnabled());
+
+		settings(SETTINGS_BACK);
+	}
+
+	private void typeName() {
+		keyboard(KeyCode.CAPS);
+		keyboard(KeyCode.F);
+		keyboard(KeyCode.CAPS);
+		keyboard(KeyCode.R);
+		keyboard(KeyCode.E);
+		keyboard(KeyCode.D);
+	}
+
+	private void moveAround() {
+		final int s1 = 5 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
+		final int s2 = 75 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
+		final Point3D center = State.getTrack().getPlayer().getCenter();
+		final Point3D size = State.getTrack().getPlayer().getSize();
+
+		keyboard(KeyCode.LEFT);
+		sleep(s1);
+		assertTrue("Player moves to the left", center.getX() < 0);
+		keyboard(KeyCode.RIGHT);
+		sleep(s2);
+		assertEquals("Player centers from the left", 0, center.getX(), DELTA);
+
+		keyboard(KeyCode.D);
+		sleep(s1);
+		assertTrue("Player moves to the right", center.getX() > 0);
+		keyboard(KeyCode.A);
+		sleep(s2);
+		assertEquals("Player centers from the right", 0, center.getX(), DELTA);
+
+		keyboard(KeyCode.UP);
+		sleep(s1);
+		assertTrue("Player jumps", center.getY() > 1);
+		sleep(s2);
+
+		keyboard(KeyCode.DOWN);
+		sleep(s1);
+		assertTrue("Player slides", size.getY() < Player.HEIGHT);
+		sleep(s2);
+	}
+
+	private void keyboard(final KeyCode kc) {
 		press(kc);
 		release(kc);
 		sleep(SHORT);
 	}
-	
-	private void mainMenu(int buttonNo) {
+
+	private void mainMenu(final int buttonNo) {
 		ObservableList<Node> buttons;
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
-	
-	private void pausePopup(int buttonNo) {
+
+	private void settings(final int buttonNo) {
 		ObservableList<Node> buttons;
-		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
+		buttons = rootNode(stage).getScene().getRoot()
+				.getChildrenUnmodifiable();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(SHORT);
+	}
+
+	private void loadMenu(final int buttonNo) {
+		ObservableList<Node> buttons;
+		buttons = rootNode(stage).getScene().getRoot()
+				.getChildrenUnmodifiable();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(SHORT);
+	}
+
+	private void pausePopup(final int buttonNo) {
+		if (GameScene.getPopup() == null) {
+			fail("The Pause Popup is not available.");
+		}
+		ObservableList<Node> buttons;
+		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
 				.getChildren();
 		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
 		sleep(LONG);
 	}
-	
+
 	private void playerDies() {
 		State.getTrack().getPlayer().die();
 		sleep(2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
-	
-	private void deathPopup(int buttonNo) {
+
+	private void deathPopup(final int buttonNo) {
+		if (GameScene.getPopup() == null) {
+			fail("The Death Popup is not available.");
+		}
 		ObservableList<Node> buttons;
-		buttons = ((VBox) GameScreen.getPopup().getContent().get(1))
+		sleep(1);
+		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
 				.getChildren();
 		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);

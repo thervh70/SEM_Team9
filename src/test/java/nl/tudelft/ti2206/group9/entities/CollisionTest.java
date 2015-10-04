@@ -1,31 +1,32 @@
 package nl.tudelft.ti2206.group9.entities;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.StateTest;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class CollisionTest {
 
 	private Player player;
 	private Coin coin;
-	private Obstacle obstacle;
+	private AbstractObstacle obstacle;
 
 	@Before
 	public void setUp() throws Exception {
 		player = new Player();
 		coin = new Coin(Point3D.ZERO);
-		obstacle = new Obstacle(Point3D.ZERO, Point3D.UNITCUBE);
+		obstacle = new Log(Point3D.ZERO, Point3D.UNITCUBE);
+		State.resetAll();
 	}
 
 	@Test
 	public void testCollisionPlayerCoin() {
-		double oldscore = State.getScore();
-		int oldcoins = State.getCoins();
+		final double oldscore = State.getScore();
+		final int oldcoins = State.getCoins();
 		player.collision(coin);
 		assertEquals(oldscore + Coin.VALUE, State.getScore(), StateTest.DELTA);
 		assertEquals(oldcoins + 1, State.getCoins());
@@ -33,8 +34,8 @@ public class CollisionTest {
 
 	@Test
 	public void testCollisionCoinCoin() {
-		double oldscore = State.getScore();
-		int oldcoins = State.getCoins();
+		final double oldscore = State.getScore();
+		final int oldcoins = State.getCoins();
 		coin.collision(new Coin(Point3D.ZERO));
 		assertEquals(oldscore, State.getScore(), StateTest.DELTA);
 		assertEquals(oldcoins, State.getCoins());
@@ -42,8 +43,8 @@ public class CollisionTest {
 
 	@Test
 	public void testCollisionCoinPlayer() {
-		double oldscore = State.getScore();
-		int oldcoins = State.getCoins();
+		final double oldscore = State.getScore();
+		final int oldcoins = State.getCoins();
 		coin.collision(player);
 		assertEquals(oldscore, State.getScore(), StateTest.DELTA);
 		assertEquals(oldcoins, State.getCoins());

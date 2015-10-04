@@ -1,12 +1,12 @@
 package nl.tudelft.ti2206.group9.entities;
 
-//import javax.sound.sampled.Clip;
-//import javax.sound.sampled.Mixer;
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
-//import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Direction;
+import nl.tudelft.ti2206.group9.util.GameObserver;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -27,12 +27,12 @@ public class Player extends AbstractEntity {
 	/** Jump speed. This is the initial vertical speed
 	 * of the Player on jump.
 	 */
-	public static final double JUMPSPEED = 0.4;
+	public static final double JUMP_SPEED = 0.4;
 
 	/** Slide length in ticks. */
-	public static final double SLIDELENGTH = 40;
+	public static final double SLIDE_LENGTH = 40;
 	/** Lowest point in slide. */
-	public static final double SLIDINGLOW = HEIGHT / 2;
+	public static final double SLIDE_MIN_HEIGHT = HEIGHT / 2;
 
 	/** Indicates whether the Player is alive or not. */
 	private boolean alive;
@@ -48,10 +48,9 @@ public class Player extends AbstractEntity {
 	private boolean sliding;
 	/** Rate at which the Player's size in-/decreases. */
 	private double slideSpeed;
+	/** Whether the player is invincible. */
+	private boolean invincible;
 
-//	private static Mixer mixer;
-//	private static Clip clip;
-	
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
@@ -82,51 +81,65 @@ public class Player extends AbstractEntity {
 		return alive;
 	}
 
+	/** @return whether the player is invincible */
+	public final boolean isInvincible() {
+		return invincible;
+	}
+
+	/** @param set whether the Player should be invincible */
+	public void setInvincible(final boolean set) {
+		invincible = set;
+	}
+
 	/**
-     * When colliding with a coin, Coin.VALUE is added to score,
+	 * When colliding with a coin, Coin.VALUE is added to score,
 	 * and amount of coins is increased by one.
 	 * @param collidee Entity that this Player collides with.
 	 */
 	@Override
 	public final void collision(final AbstractEntity collidee) {
 		if (collidee instanceof Coin) {
+			OBSERVABLE.notify(Category.PLAYER,
+					GameObserver.Player.COLLISION, Coin.class.getSimpleName());
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
-//			AudioPlayer ap = new AudioPlayer(mixer, clip);
-//			ap.initialiseTune("sounds/coin.wav");
-//			ap.play();
 		}
-
-		if (collidee instanceof Obstacle) {
-//			AudioPlayer ap = new AudioPlayer(mixer, clip);
-//			ap.initialiseTune("sounds/fail.wav");
-//			ap.play();
-			die();		
+		if (collidee instanceof AbstractObstacle) {
+			OBSERVABLE.notify(
+					Category.PLAYER, GameObserver.Player.COLLISION,
+					AbstractObstacle.class.getSimpleName());
+			if (!isInvincible()) {
+				die();
+			}
 		}
 	}
 
-    /**
-     * Change the lane the player is currently at. The center of the player
-     * is capped between the edges of the track (currently -1.5 and +1.5).
-     * @param dir amount of units to move.
-     */
-    private void changeLane(final double dir) {
-        if (moveLane + dir >= -Track.WIDTH / 2
-        		&& moveLane + dir <= Track.WIDTH / 2) {
+	/**
+	 * Change the lane the player is currently at. The center of the player
+	 * is capped between the edges of the track (currently -1.5 and +1.5).
+	 * @param dir amount of units to move.
+	 */
+	private void changeLane(final double dir) { //NOPMD - Travis says "unused"
+		if (moveLane + dir >= -Track.WIDTH / 2
+				&& moveLane + dir <= Track.WIDTH / 2) {
+			OBSERVABLE.notify(Category.PLAYER,
+					GameObserver.Player.START_MOVE, (int) moveLane);
 			moveLane += dir;
 		}
-    }
+	}
 
 	/** Is executed each step in {@link #step()}.
 	 * Keeps the Player moving.
 	 */
-    private void changeLaneStep() {
-		double dist = moveLane - getCenter().getX();
+	private void changeLaneStep() {
+		final double dist = moveLane - getCenter().getX();
 		final double delta = 0.02; // higher means faster acceleration
 		final double slow = 5; 	// higher means lower terminal speed
-		if (Math.abs(dist) < delta) {
+		if (Math.abs(dist) < delta && hspeed != 0) {
 			getCenter().setX(moveLane);
 			hspeed = 0;
+			OBSERVABLE.notify(Category.PLAYER,
+					GameObserver.Player.STOP_MOVE, (int) moveLane);
 		} else {
 			if (Math.abs(hspeed) < Math.abs(dist) / slow) {
 				hspeed += delta * Math.signum(dist);
@@ -135,20 +148,21 @@ public class Player extends AbstractEntity {
 			}
 		}
 		getCenter().addX(hspeed);
-    }
+	}
 
-    /** Used for testability only.
-     * @return The lane where the Player is currently moving to
-     */
-    final int getMoveLane() {
-    	return (int) moveLane;
-    }
+	/** Used for testability only.
+	 * @return The lane where the Player is currently moving to
+	 */
+	int getMoveLane() {
+		return (int) moveLane;
+	}
 
 	/** Make the player jump (in the y-direction). */
 	private void jump() {
 		if (!jumping && !sliding) {
-			vspeed = JUMPSPEED;
+			vspeed = JUMP_SPEED;
 			jumping = true;
+			OBSERVABLE.notify(Category.PLAYER, GameObserver.Player.JUMP);
 		}
 	}
 
@@ -156,15 +170,13 @@ public class Player extends AbstractEntity {
 	 * Keeps the Player jumping.
 	 */
 	private void jumpStep() {
-		Point3D pos = getCenter();
+		final Point3D pos = getCenter();
 		if (jumping) {
 			vspeed -= GRAVITY;
 		}
 		pos.addY(vspeed);
 
-		Point3D bottom = new Point3D(pos);
-		double bottomToFloor = getSize().getY() / 2;
-		bottom.addY(bottomToFloor);
+		final double bottomToFloor = getSize().getY() / 2;
 		if (pos.getY() < bottomToFloor) {
 			jumping = false;
 			vspeed = 0;
@@ -180,9 +192,10 @@ public class Player extends AbstractEntity {
 		// y'' = 2 (max-min) 1/(ticks/2) 1/(ticks/2)
 		// y'(0) = 2 (max-min) 1/(ticks/2) (-ticks/2) 1/(ticks/2)
 		if (!jumping && !sliding) {
-			slideSpeed = -1 * 2 * (HEIGHT - SLIDINGLOW)
-					/ (SLIDELENGTH / 2);
+			slideSpeed = -1 * 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
+					/ (SLIDE_LENGTH / 2);
 			sliding = true;
+			OBSERVABLE.notify(Category.PLAYER, GameObserver.Player.SLIDE);
 		}
 	}
 
@@ -196,8 +209,8 @@ public class Player extends AbstractEntity {
 					/ getSize().getY()); // volume = const
 			getCenter().addY(slideSpeed / 2);
 
-			slideSpeed += 2 * (HEIGHT - SLIDINGLOW)
-					/ (SLIDELENGTH / 2) / (SLIDELENGTH / 2);
+			slideSpeed += 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
+					/ (SLIDE_LENGTH / 2) / (SLIDE_LENGTH / 2);
 		}
 		if (getSize().getY() >= HEIGHT) {
 			sliding = false;
@@ -205,22 +218,22 @@ public class Player extends AbstractEntity {
 		}
 	}
 
-    /**
-     * Decide which move methods should be called when keyboard input is
-     * detected.
-     * @param direction Left/Right/Jump/Slide
-     */
-    public final void move(final Direction direction) {
-    	if (isAlive()) {
-	        switch (direction) {
-	            case LEFT: 	changeLane(-1);	break;
-	            case RIGHT:	changeLane(1);	break;
-	            case JUMP:	jump();			break;
-	            case SLIDE:	slide();		break;
-	            default:	break;
-	        }
-    	}
-    }
+	/**
+	 * Decide which move methods should be called when keyboard input is
+	 * detected.
+	 * @param direction Left/Right/Jump/Slide
+	 */
+	public final void move(final Direction direction) {
+		if (isAlive()) {
+			switch (direction) {
+			case LEFT:  changeLane(-1.0);	break;
+			case RIGHT: changeLane(1.0);	break;
+			case JUMP:  jump();				break;
+			case SLIDE: slide();			break;
+			default:	break;
+			}
+		}
+	}
 
 	/** Is executed each step. This is done in Track. */
 	public final void step() {
