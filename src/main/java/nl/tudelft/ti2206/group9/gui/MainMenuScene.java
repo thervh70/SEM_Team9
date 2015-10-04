@@ -82,12 +82,16 @@ public final class MainMenuScene extends AbstractMenuScene {
 					GameObservable.notify(Category.MENU, Menu.EXIT);
 					ShaftEscape.exit();
 				} else if (type == BType.START) {
-                    State.setPlayerName(INPUT.getText());
-					SaveGameWriter.saveGame(State.getDefaultSaveDir()
-							+ INPUT.getText() + ".json");
-                    INPUT.clear();
-					GameObservable.notify(Category.MENU, Menu.START);
-					ShaftEscape.setScene(new GameScene());
+					if (checkPlayerName(INPUT.getText())) {
+						State.setPlayerName(INPUT.getText());
+						SaveGameWriter.saveGame(State.getDefaultSaveDir()
+								+ INPUT.getText() + ".json");
+						INPUT.clear();
+						GameObservable.notify(Category.MENU, Menu.START);
+						ShaftEscape.setScene(new GameScene());
+					} else {
+						System.out.println("This really needs a Popup");
+					}
 				} else if (type == BType.LOAD) {
 					GameObservable.notify(Category.MENU, Menu.LOAD_MENU);
 					ShaftEscape.setScene(new LoadGameScene());
@@ -97,6 +101,19 @@ public final class MainMenuScene extends AbstractMenuScene {
 				}
 			}
 		});
+	}
+
+	private boolean checkPlayerName(final String name) {
+		if (name.isEmpty()) {
+			return false;
+		} else if (name.contains(".")) {
+			return false;
+		} else if (name.contains("/")) {
+			return false;
+		} else if (name.contains("\\")) {
+			return false;
+		}
+		return true;
 	}
 
 }

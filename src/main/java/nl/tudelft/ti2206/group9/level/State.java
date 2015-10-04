@@ -190,5 +190,7 @@ public final class State {
 	 * Set a new default savegame directory.
 	 * @param newSaveDir the new savegame directory
 	 */
-	public static void setDefaultSaveDir(String newSaveDir) { State.defaultSaveDir = newSaveDir; }
+	public static void setDefaultSaveDir(final String newSaveDir) {
+		State.defaultSaveDir = newSaveDir;
+	}
 }
