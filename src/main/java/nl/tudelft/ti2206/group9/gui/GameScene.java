@@ -16,6 +16,7 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Popup;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
@@ -49,10 +50,16 @@ public final class GameScene extends AbstractScene {
 	private static SubScene worldScene;
 	/** The overlayscene. */
 	private static SubScene overlayScene;
+
 	/** The ExternalTicker to be used. */
 	private static ExternalTicker extTicker;
 	/** Indicate whether the game is running. */
 	private static boolean running;
+
+	/** The AudioPlayer to be used for background music. */
+	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/"
+			+ "resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
+
 	/** The Pause popup. */
 	private static Popup pause;
 	/** The final after death popup. */
@@ -83,6 +90,7 @@ public final class GameScene extends AbstractScene {
 		setupCamera();
 		keyBindings();
 
+		audioPlayer.play();
 		startTickers();
 		return root;
 	}
@@ -178,6 +186,7 @@ public final class GameScene extends AbstractScene {
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
+				resumeTickers();
 				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
@@ -189,6 +198,7 @@ public final class GameScene extends AbstractScene {
 
 	/** Show a death menu. */
 	public static void showDeathMenu() {
+		audioPlayer.stop();
 		death = new DeathPopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				GameObservable.notify(Category.GAME, Game.RETRY);
@@ -243,4 +253,13 @@ public final class GameScene extends AbstractScene {
 			return pause;
 		}
 	}
+
+	/**
+	 * Every GameScene has an AudioPlayer for the soundtrack.
+	 * @return the soundtrack AudioPlayer.
+	 */
+	public static AudioPlayer getAudioPlayer() {
+		return audioPlayer;
+	}
+
 }

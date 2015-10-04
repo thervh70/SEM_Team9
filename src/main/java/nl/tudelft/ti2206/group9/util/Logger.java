@@ -68,6 +68,8 @@ public class Logger implements GameObserver {
 		final String info = "\n    in %s" + "\n    Message: %s";
 		STRINGS.put(Error.IOEXCEPTION,
 				lbl + "Exception while reading or writing files!" + info);
+		STRINGS.put(Error.MALFORMEDURLEXCEPTION,
+				lbl + "Exception while parsing URL!" + info);
 		STRINGS.put(Error.MEDIAEXCEPTION,
 				lbl + "Exception with audio player!" + info);
 		STRINGS.put(Error.PARSEEXCEPTION,
@@ -93,7 +95,15 @@ public class Logger implements GameObserver {
 		writeToOutput("", false);
 	}
 
-	@Override
+	/**
+	 * Is called when the game is updated. The internal classes should call
+	 * {@link GameObservable#notify(Category, Specific, Object...)}
+	 * to update GameObservers.
+	 * @param cat the Category of this update.
+	 * @param spec the Specific action of this update.
+	 * @param optionalArgs Optional arguments that come with the update
+	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
+	 */
 	public void gameUpdate(final Category cat, final Specific spec,
 			final Object... optionalArgs) {
 		buffer.append(getLogString(spec, optionalArgs)).append('\n');
