@@ -48,6 +48,7 @@ public class EndToEndTest extends ApplicationTest {
 	private static final int MAIN_QUIT = 2;
 	private static final int MAIN_LOADGAME = 3;
 	private static final int MAIN_TEXTFIELD = 5;
+	private static final int MAIN_SHOP = 6;
 
 	private static final int LOAD_BACK = 0;
 	private static final int LOAD_START = 1;
@@ -55,6 +56,8 @@ public class EndToEndTest extends ApplicationTest {
 
 	private static final int SETTINGS_BACK = 0;
 	private static final int SETTINGS_SOUND = 1;
+
+	private static final int SHOP_BACK = 0;
 
 	private static final int PAUSE_RESUME = 0;
 	private static final int PAUSE_TOMAIN = 1;
@@ -76,9 +79,12 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(SHORT);
 		mainMenu(MAIN_SETTINGS);
 		clickAllSettings();
-		mainMenu(MAIN_TEXTFIELD);
-		typeName();
 
+		mainMenu(MAIN_SHOP);
+		shopScreen(SHOP_BACK);
+
+        mainMenu(MAIN_TEXTFIELD);
+        typeName();
 		mainMenu(MAIN_START);
 		keyboard(KeyCode.ESCAPE);
 		pausePopup(PAUSE_RESUME);
@@ -190,6 +196,14 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void loadMenu(final int buttonNo) {
+		ObservableList<Node> buttons;
+		buttons = rootNode(stage).getScene().getRoot()
+				.getChildrenUnmodifiable();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(SHORT);
+	}
+
+	private void shopScreen(final int buttonNo) {
 		ObservableList<Node> buttons;
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();

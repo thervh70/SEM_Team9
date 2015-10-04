@@ -81,7 +81,7 @@ public final class SettingsScene extends AbstractMenuScene {
 	                } else {
 	                    s = "OFF";
 	                }
-	                button.setText("Sound: " + s);
+	                button.setText("SOUND: " + s);
 	                OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUND, s);
 	            }
 	        }
