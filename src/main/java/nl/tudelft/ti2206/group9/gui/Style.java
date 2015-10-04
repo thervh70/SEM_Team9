@@ -58,6 +58,9 @@ public final class Style {
 	/** Size of a button while hovering (relative to 1). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
 
+    /** Preferred width of buttons. */
+    private static final int BUTTON_WIDTH = 120;
+
     /** Hide public constructor. */
     private Style() { }
 
@@ -113,6 +116,7 @@ public final class Style {
         b.setTextFill(Color.WHITE);
         b.setBackground(buttonBack);
         b.setFont(font);
+        b.setPrefWidth(BUTTON_WIDTH);
 
         b.setOnMouseEntered(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent e) {

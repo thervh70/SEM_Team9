@@ -33,11 +33,16 @@ public final class MainMenuScene extends AbstractMenuScene {
 		/** Settings button. */
 		SETTINGS,
 		/** Load Game button. */
-		LOAD
+		LOAD,
+        /** Shop button. */
+        SHOP
 	}
 
 	/** The input field for the name of the player. */
     static final TextField INPUT = createTextField("PLAYER NAME", 2, 22);
+
+	/** ExitButton width. */
+	private static final int EXIT_BUTTON_WIDTH = 60;
 
 	/**
 	 * Create Start, Settings and Exit buttons.
@@ -47,16 +52,18 @@ public final class MainMenuScene extends AbstractMenuScene {
 	public Node[] createContent() {
         final Button startButton = createButton("START!", 4, 22);
 		final Button settingsButton = createButton("SETTINGS", 0, 24);
-		final Button exitButton = createButton("EXIT", 4, 24);
+		final Button exitButton = createButton("EXIT", 0, 0);
 		final Button loadButton = createButton("LOAD GAME", 2, 24);
+		final Button shopButton = createButton("SHOP", 4, 24);
 		final Label nameLabel = createLabel("NEW PLAYER:", 0, 22);
-
+		exitButton.setMaxWidth(EXIT_BUTTON_WIDTH);
 
         /** Set functions of buttons.*/
 		setButtonFunction(exitButton, BType.EXIT);
 		setButtonFunction(startButton, BType.START);
 		setButtonFunction(settingsButton, BType.SETTINGS);
 		setButtonFunction(loadButton, BType.LOAD);
+        setButtonFunction(shopButton, BType.SHOP);
 
         /** Set tooltips. */
         startButton.setTooltip(new Tooltip("Start the game!"));
@@ -66,7 +73,7 @@ public final class MainMenuScene extends AbstractMenuScene {
         INPUT.setTooltip(new Tooltip("Enter your name"));
 
 		return new Node[]{startButton, settingsButton, exitButton,
-				loadButton, nameLabel, INPUT};
+				loadButton, nameLabel, INPUT, shopButton};
 	}
 
 	/**
@@ -90,10 +97,13 @@ public final class MainMenuScene extends AbstractMenuScene {
 				} else if (type == BType.LOAD) {
 					OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
 					ShaftEscape.setScene(new LoadGameScene());
-				} else {
+				} else if (type == BType.SETTINGS){
 					OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
 					ShaftEscape.setScene(new SettingsScene());
-				}
+				} else {
+                    OBSERVABLE.notify(Category.MENU, Menu.SHOP);
+                    ShaftEscape.setScene(new ShopScene());
+                }
 			}
 		});
 	}

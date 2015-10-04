@@ -31,18 +31,22 @@ public final class SettingsScene extends AbstractMenuScene {
 		SETTING_SOUND
 	 }
 
+	private static final int TOGGLE_WIDTH = 150;
+
     /**
      * Creates a Sound toggle button and a Back button.
      * @return an array of Nodes to be added to the Scene.
      */
 	@Override
 	public Node[] createContent() {
-	    final Button backButton = createButton("Back", 2, 26);
+	    final Button backButton = createButton("BACK", 0, 25);
 		String soundToggle = "OFF";
 		if (State.isSoundEnabled()) {
 			soundToggle = "ON";
 		}
-	    final Button soundButton = createButton("Sound: " + soundToggle, 5, 18);
+	    final Button soundButton = createButton("Sound: " + soundToggle, 2, 18);
+
+		soundButton.setPrefWidth(TOGGLE_WIDTH);
 
 	    // Override default button size from Style
 	    final Font font = Font.font("Roboto", FontWeight.BOLD, 20);
