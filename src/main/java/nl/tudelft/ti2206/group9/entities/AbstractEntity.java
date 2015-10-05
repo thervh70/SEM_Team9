@@ -161,7 +161,7 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
 	 */
 	@Override
 	public String toString() {
-		return "AbstractEntity [center=" + center + ","
+		return this.getClass().getSimpleName() + " [center=" + center + ","
 				+ "size=" + size + "]";
 	}
 

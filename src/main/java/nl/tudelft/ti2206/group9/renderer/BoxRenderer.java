@@ -14,7 +14,7 @@ import nl.tudelft.ti2206.group9.gui.Style;
  * @author Maarten
  */
 @SuppressWarnings("restriction")
-public class BoxRenderer extends Box {
+public class BoxRenderer extends Box implements Renderer {
 
 	/** The Entity that is traced by this Renderer. */
 	private final AbstractEntity traced;
@@ -53,6 +53,11 @@ public class BoxRenderer extends Box {
 		setWidth(traced.getSize().getX());
 		setHeight(traced.getSize().getY());
 		setDepth(traced.getSize().getZ());
+	}
+
+	/** Updates the position of this BoxRenderer. */
+	public void update() {
+		updatePosition();
 	}
 
 }

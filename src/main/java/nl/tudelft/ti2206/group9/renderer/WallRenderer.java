@@ -12,7 +12,7 @@ import javafx.scene.shape.Box;
  * @author Maarten
  */
 @SuppressWarnings("restriction")
-public class WallRenderer extends Group {
+public class WallRenderer extends Group implements Renderer {
 
 	/** Default constructor. */
 	public WallRenderer() {
@@ -52,5 +52,8 @@ public class WallRenderer extends Group {
 			return Style.MOSS;
 		}
 	}
+
+	/** Does nothing yet. */
+	public void update() { } //NOPMD - nothing should be updated yet
 
 }

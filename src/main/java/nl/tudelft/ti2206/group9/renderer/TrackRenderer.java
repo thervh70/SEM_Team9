@@ -11,7 +11,7 @@ import javafx.scene.shape.Box;
  * @author Maarten
  */
 @SuppressWarnings("restriction")
-public class TrackRenderer extends Group {
+public class TrackRenderer extends Group implements Renderer {
 
 	/**
 	 * Default constructor.
@@ -33,5 +33,8 @@ public class TrackRenderer extends Group {
 			}
 		}
 	}
+
+	/** Does nothing yet. */
+	public void update() { } //NOPMD - nothing should be updated yet
 
 }

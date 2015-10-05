@@ -3,29 +3,58 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.animation.AnimationTimer;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
-import javafx.scene.CacheHint;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.renderer.BoxRenderer;
+import nl.tudelft.ti2206.group9.renderer.Renderer;
 import nl.tudelft.ti2206.group9.renderer.TrackRenderer;
 import nl.tudelft.ti2206.group9.renderer.WallRenderer;
+import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
 
 /**
  * @author Maarten.
  */
 @SuppressWarnings("restriction")
-public class ExternalTicker extends AnimationTimer {
+public class ExternalTicker extends AnimationTimer implements Listener {
 
 	/** Height of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_HEIGHT = 130;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
+
+	/** List that stores the entities, to be held up-to-date with Track. */
+	private final Group entities;
+	/** Group that stores the wall. */
+	private final WallRenderer wall;
+	/** Group that stores the track. */
+	private final TrackRenderer track;
+
+	/** Default constructor. */
+	public ExternalTicker() {
+		super();
+		State.getTrack().addEntitiesListener(this);
+		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
+			entities = new Group();
+			wall = new WallRenderer();
+			track = new TrackRenderer();
+			for (final AbstractEntity e : State.getTrack().getEntities()) {
+				entities.getChildren().add(new BoxRenderer(e));
+			}
+			GameScene.addWorld(entities);
+			GameScene.addWorld(wall);
+			GameScene.addWorld(track);
+		} else {
+			entities = null;
+			wall = null;
+			track = null;
+		}
+	}
 
 	@Override
 	public final void handle(final long now) {
@@ -38,15 +67,19 @@ public class ExternalTicker extends AnimationTimer {
      * This method renders the scene.
      */
 	private void renderScene() {
-		GameScene.clearWorld();
 		GameScene.clearOverlay();
+		GameScene.addOverlay(renderScore());
 
-		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
-			final Group entities = renderEntities();
-			GameScene.addWorld(entities);
+		if (!Platform.isSupported(ConditionalFeature.SCENE3D)) {
+			return;
 		}
 
-		GameScene.addOverlay(renderScore());
+		entities.setDepthTest(DepthTest.ENABLE);
+		for (final Node renderer : entities.getChildren()) {
+			((Renderer) renderer).update();
+		}
+		wall.update();
+		track.update();
 	}
 
 	/**
@@ -76,27 +109,27 @@ public class ExternalTicker extends AnimationTimer {
 		return scoreBox;
 	}
 
-    /**
-     * This method renders all Entities.
-     * @return group
-     */
-	private Group renderEntities() {
-		final Group entities = new Group();
-		entities.setDepthTest(DepthTest.ENABLE);
-		synchronized (State.getTrack()) {
-
-			entities.getChildren().addAll(new TrackRenderer(),
-					new WallRenderer());
-
-			for (final AbstractEntity entity : State.getTrack().getEntities()) {
-				final Box entityBox = new BoxRenderer(entity);
-
-				entityBox.setCache(true);
-				entityBox.setCacheHint(CacheHint.SPEED);
-				entities.getChildren().add(entityBox);
-            }
+	@Override
+	public void update(final Type type, final Object item, final int index) {
+		if (!Platform.isSupported(ConditionalFeature.SCENE3D)) {
+			return;
 		}
-		return entities;
+		switch (type) {
+		case ADD_FIRST:
+			entities.getChildren().add(0,
+					new BoxRenderer((AbstractEntity) item));
+			break;
+		case ADD_LAST:
+			entities.getChildren().add(new BoxRenderer((AbstractEntity) item));
+			break;
+		case REMOVE:
+			// TODO ehm... how to remove the BoxRenderer associated with this?
+			break;
+		case REMOVE_INDEX:
+			entities.getChildren().remove(index);
+			break;
+		default: break;
+		}
 	}
 
 }

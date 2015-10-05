@@ -60,7 +60,7 @@ public class ObservableLinkedList<T> extends LinkedList<T> {
 	/**
 	 * Interface for Listening to this ObservableLinkedList.
 	 */
-	interface Listener {
+	public interface Listener {
 		/** Enumeration for the update types. */
 		enum Type {
 			/** When an element is added to the end of the list. */
