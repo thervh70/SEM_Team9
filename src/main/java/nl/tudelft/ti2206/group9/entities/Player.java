@@ -61,7 +61,9 @@ public class Player extends AbstractEntity {
 	/** The AudioPlayer to be used for the jump sound effect. */
 	private static AudioPlayer apJump = new AudioPlayer("src/main/"
 	+ "resources/nl/tudelft/ti2206/group9/audio/jump.wav");
-
+	/** The AudioPlayer to be used for the jump sound effect. */
+	private static AudioPlayer apSlide = new AudioPlayer("src/main/"
+	+ "resources/nl/tudelft/ti2206/group9/audio/slide.wav");
 
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -207,6 +209,7 @@ public class Player extends AbstractEntity {
 		// y'' = 2 (max-min) 1/(ticks/2) 1/(ticks/2)
 		// y'(0) = 2 (max-min) 1/(ticks/2) (-ticks/2) 1/(ticks/2)
 		if (!jumping && !sliding) {
+			apSlide.play();
 			slideSpeed = -1 * 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
 					/ (SLIDE_LENGTH / 2);
 			sliding = true;
