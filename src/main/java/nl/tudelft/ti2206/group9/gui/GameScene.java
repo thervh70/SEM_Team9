@@ -13,7 +13,6 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
@@ -151,7 +150,7 @@ public final class GameScene extends AbstractScene {
 		final int countdown = 3;
 		extTicker = new ExternalTicker();
 		extTicker.start();
-		InternalTicker.start();
+		extTicker.countdown(countdown);
 		running = true;
 		OBSERVABLE.notify(Category.GAME, Game.STARTED);
 	}
@@ -160,7 +159,7 @@ public final class GameScene extends AbstractScene {
 	public static void resumeTickers() {
 		final int countdown = 3;
 		extTicker.start();
-		InternalTicker.start();
+		extTicker.countdown(countdown);
 		running = true;
 		OBSERVABLE.notify(Category.GAME, Game.RESUMED);
 	}
