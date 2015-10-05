@@ -83,6 +83,7 @@ public final class MainMenuScene extends AbstractMenuScene {
 			final BType type) {
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(final ActionEvent event) {
+				SplashScene.getButtonAudioPlayer().play();
 				if (type == BType.EXIT) {
 					apMainMenu.stop();
 					OBSERVABLE.notify(Category.MENU, Menu.EXIT);
