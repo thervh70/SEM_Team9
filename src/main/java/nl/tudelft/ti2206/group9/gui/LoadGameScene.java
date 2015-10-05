@@ -8,11 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
-import javafx.scene.control.ListView;
 
 /**
  * Scene that displays a list of previous player names,
@@ -90,6 +90,7 @@ public class LoadGameScene extends AbstractMenuScene {
                             GameObserver.Menu.LOAD_BACK);
                     ShaftEscape.setScene(new MainMenuScene());
                 } else {
+                	MainMenuScene.getAudioPlayer().stop();
                     OBSERVABLE.notify(GameObserver.Category.MENU,
                             GameObserver.Menu.LOAD);
                     State.setPlayerName(
@@ -101,5 +102,3 @@ public class LoadGameScene extends AbstractMenuScene {
     }
 
 }
-
-

@@ -36,7 +36,7 @@ public class AudioPlayer {
 
 	/**
 	 * Gets the audio file and prepares it for streaming.
-	 * @param source leads to the soundtrack.
+	 * @param source leads to the audio file.
 	 */
 	private void initializeTune(final String source) {
 		try {
@@ -52,7 +52,7 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Starts the initialized soundtrack.
+	 * Starts the initialized tune.
 	 */
 	public final void play() {
 		try {
@@ -65,6 +65,16 @@ public class AudioPlayer {
 		} catch (MediaException me) {
 			OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
 					"AudioPlayer.play()", me.getMessage());
+		}
+	}
+
+	/**
+	 * Check whether an AudioPlayer is already running or not,
+	 * and if not, also starts the AudioPlayer.
+	 */
+	public final void playCheck() {
+		if (!this.isRunning()) {
+			this.play();
 		}
 	}
 

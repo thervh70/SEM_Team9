@@ -70,6 +70,7 @@ public final class SettingsScene extends AbstractMenuScene {
 	                OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
 	                ShaftEscape.setScene(new MainMenuScene());
 	            } else {
+	                MainMenuScene.getAudioPlayer().stop();
 	                State.setSoundEnabled(!State.isSoundEnabled());
 	                String s;
 	                if (State.isSoundEnabled()) {
