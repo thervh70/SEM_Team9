@@ -52,21 +52,20 @@ public class Player extends AbstractEntity {
 	/** Whether the player is invincible. */
 	private boolean invincible;
 
+	/** The path for any audio file. */
+	private static String audioPath = "src/main/"
+	+ "resources/nl/tudelft/ti2206/group9/audio/";
 	/** The AudioPlayer to be used for the coin sound effect. */
-	private static AudioPlayer apCoin = new AudioPlayer("src/main/"
-	+ "resources/nl/tudelft/ti2206/group9/audio/coin.wav");
+	private static AudioPlayer apCoin = new AudioPlayer(audioPath + "coin.wav");
 	/** The AudioPlayer to be used for the death sound effect. */
-	private static AudioPlayer apDie = new AudioPlayer("src/main/"
-	+ "resources/nl/tudelft/ti2206/group9/audio/fail.wav");
+	private static AudioPlayer apDie = new AudioPlayer(audioPath + "fail.wav");
 	/** The AudioPlayer to be used for the jump sound effect. */
-	private static AudioPlayer apJump = new AudioPlayer("src/main/"
-	+ "resources/nl/tudelft/ti2206/group9/audio/jump.wav");
+	private static AudioPlayer apJump = new AudioPlayer(audioPath + "jump.wav");
 	/** The AudioPlayer to be used for the move sound effect. */
-	private static AudioPlayer apMove = new AudioPlayer("src/main/"
-	+ "resources/nl/tudelft/ti2206/group9/audio/move.wav");
-	/** The AudioPlayer to be used for the jump sound effect. */
-	private static AudioPlayer apSlide = new AudioPlayer("src/main/"
-	+ "resources/nl/tudelft/ti2206/group9/audio/slide.wav");
+	private static AudioPlayer apMove = new AudioPlayer(audioPath + "move.wav");
+	/** The AudioPlayer to be used for the slide sound effect. */
+	private static AudioPlayer apSlide = new AudioPlayer(audioPath
+			+ "slide.wav");
 
 	/**
 	 * Constructs a new Player at the "center" of the game.
