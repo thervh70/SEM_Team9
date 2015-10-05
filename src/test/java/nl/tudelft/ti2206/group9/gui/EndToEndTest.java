@@ -12,6 +12,7 @@ import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Logger;
+import nl.tudelft.ti2206.group9.util.Point3D;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -20,9 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 @SuppressWarnings("restriction")
@@ -43,52 +42,66 @@ public class EndToEndTest extends ApplicationTest {
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
 
+	private static final int MAIN_START = 0;
+	private static final int MAIN_SETTINGS = 1;
+	private static final int MAIN_QUIT = 2;
+	private static final int MAIN_LOADGAME = 3;
+	private static final int MAIN_TEXTFIELD = 5;
+
+	private static final int LOAD_BACK = 0;
+	private static final int LOAD_START = 1;
+	private static final int LOAD_NAMECONTAINER = 2;
+
+	private static final int SETTINGS_BACK = 0;
+	private static final int SETTINGS_SOUND = 1;
+
+	private static final int PAUSE_RESUME = 0;
+	private static final int PAUSE_TOMAIN = 1;
+
+	private static final int DEATH_RETRY = 0;
+	private static final int DEATH_TOMAIN = 1;
+
 	@Override
 	public void start(final Stage primaryStage) {
 		letPlayerSurvive();
 		stage = primaryStage;
 		new ShaftEscape().start(stage);
+		State.resetAll();
 	}
 
 	@Test
-	public void test() throws IOException {
-		boolean soundEnabled = State.isSoundEnabled();
+	public void test() throws IOException { //NOPMD - assert is done in subs.
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
+		mainMenu(MAIN_SETTINGS);
+		clickAllSettings();
+		mainMenu(MAIN_TEXTFIELD);
+		typeName();
 
-		mainMenu(1);				// Click settings
-		settings(1);				// Toggle sound
-		assertFalse(State.isSoundEnabled() == soundEnabled);
-		settings(1);				// Toggle sound
-		assertTrue(State.isSoundEnabled() == soundEnabled);
-		settings(0);				// Click Back
-
-		mainMenu(5);				// Select textfield
-		typeName();					// Enter name
-		mainMenu(0);				// Click start
+		mainMenu(MAIN_START);
 		sleep(COUNTDOWN);
-		keyboard(KeyCode.ESCAPE);	// Press Escape
-		pausePopup(0);				// Click resume
+		keyboard(KeyCode.ESCAPE);
+		pausePopup(PAUSE_RESUME);
 		sleep(COUNTDOWN);
-		moveAround();				// Move around
-		keyboard(KeyCode.ESCAPE);	// Press Escape
-		pausePopup(1);				// Click "Main menu"
+		moveAround();
+		keyboard(KeyCode.ESCAPE);
+		pausePopup(PAUSE_TOMAIN);
 
-		mainMenu(3);				// Click Load game
-		loadMenu(0);				// Back to main
-		mainMenu(3);				// Back to Load game
-		loadMenu(2);				// Select name
-		loadMenu(1);				// Click load
+		mainMenu(MAIN_LOADGAME);
+		loadMenu(LOAD_BACK);
+		mainMenu(MAIN_LOADGAME);
+		loadMenu(LOAD_NAMECONTAINER);
+		loadMenu(LOAD_START);
 
-		mainMenu(0);				// Click start
+		mainMenu(MAIN_START);
 		sleep(COUNTDOWN);
-		playerDies();				// Player dies
-		deathPopup(0);				// Click "Try Again"
+		playerDies();
+		deathPopup(DEATH_RETRY);
 		sleep(COUNTDOWN);
-		playerDies();				// Player dies
-		deathPopup(1);				// Click "Main Menu"
+		playerDies();
+		deathPopup(DEATH_TOMAIN);
 
-		mainMenu(2);				// Click quit
+		mainMenu(MAIN_QUIT);
 		outputEventLog();
 	}
 
@@ -104,34 +117,16 @@ public class EndToEndTest extends ApplicationTest {
 		State.getTrack().getPlayer().setInvincible(true);
 	}
 
-	private void moveAround() {
-		final int before = 5;
-		final int after = 75;
+	private void clickAllSettings() {
+		assertTrue("Sound should enabled at startup.", State.isSoundEnabled());
+		settings(SETTINGS_SOUND);
+		assertFalse("Sound disabled. (1)", State.isSoundEnabled());
+		settings(SETTINGS_SOUND);
+		assertTrue("Sound enabled. (2)", State.isSoundEnabled());
+		settings(SETTINGS_SOUND);
+		assertFalse("Sound disabled. (3)", State.isSoundEnabled());
 
-		keyboard(KeyCode.LEFT);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getCenter().getX() < 0);
-		keyboard(KeyCode.RIGHT);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
-
-		keyboard(KeyCode.D);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getCenter().getX() > 0);
-		keyboard(KeyCode.A);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertEquals(0, State.getTrack().getPlayer().getCenter().getX(), DELTA);
-
-		keyboard(KeyCode.UP);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getCenter().getY() > 1);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-
-		keyboard(KeyCode.DOWN);
-		sleep(before * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-		assertTrue(State.getTrack().getPlayer().getSize().getY()
-				< Player.HEIGHT);
-		sleep(after * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		settings(SETTINGS_BACK);
 	}
 
 	private void typeName() {
@@ -141,6 +136,37 @@ public class EndToEndTest extends ApplicationTest {
 		keyboard(KeyCode.R);
 		keyboard(KeyCode.E);
 		keyboard(KeyCode.D);
+	}
+
+	private void moveAround() {
+		final int s1 = 5 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
+		final int s2 = 75 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
+		final Point3D center = State.getTrack().getPlayer().getCenter();
+		final Point3D size = State.getTrack().getPlayer().getSize();
+
+		keyboard(KeyCode.LEFT);
+		sleep(s1);
+		assertTrue("Player moves to the left", center.getX() < 0);
+		keyboard(KeyCode.RIGHT);
+		sleep(s2);
+		assertEquals("Player centers from the left", 0, center.getX(), DELTA);
+
+		keyboard(KeyCode.D);
+		sleep(s1);
+		assertTrue("Player moves to the right", center.getX() > 0);
+		keyboard(KeyCode.A);
+		sleep(s2);
+		assertEquals("Player centers from the right", 0, center.getX(), DELTA);
+
+		keyboard(KeyCode.UP);
+		sleep(s1);
+		assertTrue("Player jumps", center.getY() > 1);
+		sleep(s2);
+
+		keyboard(KeyCode.DOWN);
+		sleep(s1);
+		assertTrue("Player slides", size.getY() < Player.HEIGHT);
+		sleep(s2);
 	}
 
 	private void keyboard(final KeyCode kc) {
@@ -166,7 +192,7 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(SHORT);
 	}
 
-	private void loadMenu(int buttonNo) {
+	private void loadMenu(final int buttonNo) {
 		ObservableList<Node> buttons;
 		buttons = rootNode(stage).getScene().getRoot()
 				.getChildrenUnmodifiable();
@@ -175,6 +201,9 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void pausePopup(final int buttonNo) {
+		if (GameScene.getPopup() == null) {
+			fail("The Pause Popup is not available.");
+		}
 		ObservableList<Node> buttons;
 		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
 				.getChildren();
@@ -191,6 +220,9 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void deathPopup(final int buttonNo) {
+		if (GameScene.getPopup() == null) {
+			fail("The Death Popup is not available.");
+		}
 		ObservableList<Node> buttons;
 		sleep(1);
 		buttons = ((VBox) GameScene.getPopup().getContent().get(1))

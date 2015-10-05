@@ -1,13 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.event.EventHandler;
-import javafx.scene.DepthTest;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.SceneAntialiasing;
-import javafx.scene.SubScene;
+import javafx.scene.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -16,12 +10,15 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Popup;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * This scene shows the 3D Game world and the 2D score overlay.
@@ -49,10 +46,16 @@ public final class GameScene extends AbstractScene {
 	private static SubScene worldScene;
 	/** The overlayscene. */
 	private static SubScene overlayScene;
+
 	/** The ExternalTicker to be used. */
 	private static ExternalTicker extTicker;
 	/** Indicate whether the game is running. */
 	private static boolean running;
+
+	/** The AudioPlayer to be used for background music. */
+	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/"
+			+ "resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
+
 	/** The Pause popup. */
 	private static Popup pause;
 	/** The final after death popup. */
@@ -83,6 +86,7 @@ public final class GameScene extends AbstractScene {
 		setupCamera();
 		keyBindings();
 
+		audioPlayer.play();
 		startTickers();
 		return root;
 	}
@@ -147,16 +151,18 @@ public final class GameScene extends AbstractScene {
 		final int countdown = 3;
 		extTicker = new ExternalTicker();
 		extTicker.start();
-		GameObservable.notify(Category.GAME, Game.STARTED);
-		extTicker.countdown(countdown);
+		InternalTicker.start();
+		running = true;
+		OBSERVABLE.notify(Category.GAME, Game.STARTED);
 	}
 
 	/** Resumes the tickers. */
 	public static void resumeTickers() {
 		final int countdown = 3;
 		extTicker.start();
-		GameObservable.notify(Category.GAME, Game.RESUMED);
-		extTicker.countdown(countdown);
+		InternalTicker.start();
+		running = true;
+		OBSERVABLE.notify(Category.GAME, Game.RESUMED);
 	}
 
 	/** Stop the tickers. */
@@ -164,13 +170,13 @@ public final class GameScene extends AbstractScene {
 		running = false;
 		extTicker.stop();
 		InternalTicker.stop();
-		GameObservable.notify(Category.GAME, Game.STOPPED);
+		OBSERVABLE.notify(Category.GAME, Game.STOPPED);
 	}
 
 	/** Show a pause menu. */
 	public static void showPauseMenu() {
 		stopTickers();
-		GameObservable.notify(Category.GAME, Game.PAUSED);
+		OBSERVABLE.notify(Category.GAME, Game.PAUSED);
 		pause = new PausePopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				resumeTickers();
@@ -178,7 +184,7 @@ public final class GameScene extends AbstractScene {
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
 				pause = null;
@@ -189,16 +195,17 @@ public final class GameScene extends AbstractScene {
 
 	/** Show a death menu. */
 	public static void showDeathMenu() {
+		audioPlayer.stop();
 		death = new DeathPopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.RETRY);
+				OBSERVABLE.notify(Category.GAME, Game.RETRY);
 				State.reset();
 				ShaftEscape.setScene(new GameScene());
 				death = null;
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
 				death = null;
@@ -251,4 +258,13 @@ public final class GameScene extends AbstractScene {
 	public static void setRunning(final boolean b) {
 		running = b;
 	}
+
+	/**
+	 * Every GameScene has an AudioPlayer for the soundtrack.
+	 * @return the soundtrack AudioPlayer.
+	 */
+	public static AudioPlayer getAudioPlayer() {
+		return audioPlayer;
+	}
+
 }

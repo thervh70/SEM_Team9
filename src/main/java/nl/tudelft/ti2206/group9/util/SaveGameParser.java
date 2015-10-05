@@ -1,6 +1,11 @@
 package nl.tudelft.ti2206.group9.util;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -50,9 +55,11 @@ public final class SaveGameParser {
 
 			reader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
+					"SaveGameParser.loadGame(String)", e.getMessage());
 		} catch (ParseException e) {
-			e.printStackTrace();
+			OBSERVABLE.notify(Category.ERROR, Error.PARSEEXCEPTION,
+					"SaveGameParser.loadGame(String)", e.getMessage());
 		}
 	}
 
