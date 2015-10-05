@@ -36,10 +36,12 @@ public class ExternalTicker extends AnimationTimer {
 
 	/** Height of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_HEIGHT = 130;
+	/** The integer 1, used to avoid PMD warning. */
+	private static final int INT_ONE = 1;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
-	/** Label for the countdown animation. */
-	private Label countdown = new Label();
+	/** Label for the countdownLabel animation. */
+	private final Label countdownLabel = new Label();
 
 	@Override
 	public final void handle(final long now) {
@@ -61,7 +63,7 @@ public class ExternalTicker extends AnimationTimer {
 		}
 
 		GameScene.addOverlay(renderScore());
-		GameScene.addOverlay(countdown);
+		GameScene.addOverlay(countdownLabel);
 	}
 
 	/**
@@ -228,7 +230,7 @@ public class ExternalTicker extends AnimationTimer {
 	}
 
 	/**
-	 * Render the countdown method.
+	 * Render the countdownLabel method.
 	 * @param index The index to be rendered.
 	 */
 	public void countdown(final Integer index) {
@@ -236,33 +238,33 @@ public class ExternalTicker extends AnimationTimer {
 		final int offsetX = 20;
 		final int offsetY = 50;
 
-		countdown.setText(index.toString());
-		countdown.setFont(Font.font("Roboto", FontWeight.BOLD, textSize));
-		countdown.setTextFill(Color.WHITE);
-		countdown.setLayoutX(ShaftEscape.WIDTH / 2 - offsetX);
-		countdown.setLayoutY(ShaftEscape.HEIGHT / 2 - offsetY);
+		countdownLabel.setText(index.toString());
+		countdownLabel.setFont(Font.font("Roboto", FontWeight.BOLD, textSize));
+		countdownLabel.setTextFill(Color.WHITE);
+		countdownLabel.setLayoutX(ShaftEscape.WIDTH / 2 - offsetX);
+		countdownLabel.setLayoutY(ShaftEscape.HEIGHT / 2 - offsetY);
 
 		countdownAnimation(index);
 	}
 
 	/**
-	 * Render the animations for the countdown method.
+	 * Render the animations for the countdownLabel method.
 	 * @param index The index to be rendered.
 	 */
 	private void countdownAnimation(
 			final Integer index) {
 		final int duration = 400;
 
-		ScaleTransition st = new ScaleTransition(
-				Duration.millis(duration), countdown);
+		final ScaleTransition st = new ScaleTransition(
+				Duration.millis(duration), countdownLabel);
 		st.setByY(1);
 		st.setByX(1);
 		st.setCycleCount(2);
 		st.setAutoReverse(true);
 		st.play();
 
-		FadeTransition ft = new FadeTransition(
-				Duration.millis(duration), countdown);
+		final FadeTransition ft = new FadeTransition(
+				Duration.millis(duration), countdownLabel);
 		ft.setAutoReverse(true);
 		ft.setCycleCount(2);
 		ft.setToValue(1);
@@ -271,9 +273,8 @@ public class ExternalTicker extends AnimationTimer {
 
 		st.setOnFinished(new EventHandler<ActionEvent>() {
 			public void handle(final ActionEvent event) {
-				if (index > 1) {
-					int count = index - 1;
-					countdown(count);
+				if (index > INT_ONE) {
+					countdown(index - 1);
 				} else {
 					InternalTicker.start();
 					GameScene.setRunning(true);
