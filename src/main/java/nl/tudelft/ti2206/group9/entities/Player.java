@@ -61,6 +61,9 @@ public class Player extends AbstractEntity {
 	/** The AudioPlayer to be used for the jump sound effect. */
 	private static AudioPlayer apJump = new AudioPlayer("src/main/"
 	+ "resources/nl/tudelft/ti2206/group9/audio/jump.wav");
+	/** The AudioPlayer to be used for the move sound effect. */
+	private static AudioPlayer apMove = new AudioPlayer("src/main/"
+	+ "resources/nl/tudelft/ti2206/group9/audio/move.wav");
 	/** The AudioPlayer to be used for the jump sound effect. */
 	private static AudioPlayer apSlide = new AudioPlayer("src/main/"
 	+ "resources/nl/tudelft/ti2206/group9/audio/slide.wav");
@@ -138,6 +141,7 @@ public class Player extends AbstractEntity {
 	private void changeLane(final double dir) { //NOPMD - Travis says "unused"
 		if (moveLane + dir >= -Track.WIDTH / 2
 				&& moveLane + dir <= Track.WIDTH / 2) {
+			apMove.play();
 			OBSERVABLE.notify(Category.PLAYER,
 					GameObserver.Player.START_MOVE, (int) moveLane);
 			moveLane += dir;
