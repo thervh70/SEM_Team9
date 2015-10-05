@@ -14,12 +14,16 @@ public class GameNotFoundPopup extends AbstractWarningPopup {
     /**
      * Default constructor.
      * Calls super and links the button to an Event.
+     * @param okEvent the Event to be executed
      */
-    public GameNotFoundPopup() {
+    public GameNotFoundPopup(final EventHandler<MouseEvent> okEvent) {
         super(new Button("OK"));
+
         getButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent event) {
+
+            public void handle(final MouseEvent y) {
                 hide();
+                okEvent.handle(y);
             }
         });
     }

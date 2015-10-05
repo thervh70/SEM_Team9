@@ -14,6 +14,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver;
 import javafx.scene.control.ListView;
 import nl.tudelft.ti2206.group9.util.SaveGameParser;
 
+import javafx.scene.input.MouseEvent;
 import java.io.File;
 
 /**
@@ -99,7 +100,13 @@ public class LoadGameScene extends AbstractMenuScene {
                     final String loadFile =
                             list.getSelectionModel().getSelectedItem();
                     if (loadFile == null) {
-                        ShaftEscape.showPopup(new GameNotFoundPopup());
+                        setPopup(new GameNotFoundPopup(
+                                new EventHandler<MouseEvent>() {
+                            public void handle(final MouseEvent event) {
+                                setPopup(null);
+                            }
+                        }));
+                        ShaftEscape.showPopup(getPopup());
                     } else {
                         SaveGameParser.loadGame(State.getDefaultSaveDir()
                                 + loadFile + ".json");

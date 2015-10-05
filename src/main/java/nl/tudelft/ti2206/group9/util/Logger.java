@@ -93,7 +93,6 @@ public class Logger implements GameObserver {
 		writeToOutput("", false);
 	}
 
-	@Override
 	public void gameUpdate(final Category cat, final Specific spec,
 			final Object... optionalArgs) {
 		buffer.append(getLogString(spec, optionalArgs)).append('\n');

@@ -86,6 +86,14 @@ public class ShaftEscape extends Application {
 	}
 
 	/**
+	 * Get the Scene at which the stage is currently on.
+	 * @return an AbstractScene
+	 */
+	public static AbstractScene getScene() {
+		return (AbstractScene) stage.getScene();
+	}
+
+	/**
 	 * Setting the right scene and displaying it.
 	 * @param newScene the new Scene that is to be showed.
 	 */

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
@@ -90,8 +91,13 @@ public final class MainMenuScene extends AbstractMenuScene {
 						GameObservable.notify(Category.MENU, Menu.START);
 						ShaftEscape.setScene(new GameScene());
 					} else {
-						ShaftEscape.showPopup(
-								new FaultyInputPopup());
+						setPopup(new FaultyInputPopup(
+								new EventHandler<MouseEvent>() {
+							public void handle(final MouseEvent event) {
+								setPopup(null);
+							}
+						}));
+						ShaftEscape.showPopup(getPopup());
 					}
 				} else if (type == BType.LOAD) {
 					GameObservable.notify(Category.MENU, Menu.LOAD_MENU);
@@ -104,6 +110,18 @@ public final class MainMenuScene extends AbstractMenuScene {
 		});
 	}
 
+	/**
+	 * Checks whether the playername is a valid name.
+	 * Invalid options:
+	 * <a>
+	 *     <li>Empty name</li>
+	 *     <li>Name contains a '.'</li>
+	 *     <li>Name contains a '/'</li>
+	 *     <li>Name contains a '\'</li>
+	 * </a>
+	 * @param name the name to be checked
+	 * @return boolean to indicate whether the name is valid
+	 */
 	private boolean checkPlayerName(final String name) {
 		if (name.isEmpty()) {
 			return false;

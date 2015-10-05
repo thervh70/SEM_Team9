@@ -14,12 +14,16 @@ public class FaultyInputPopup extends AbstractWarningPopup {
     /**
      * Default constructor.
      * Calls super and links the button to an Event.
+     * @param okEvent the Event to be executed
      */
-    public FaultyInputPopup() {
+    public FaultyInputPopup(final EventHandler<MouseEvent> okEvent) {
         super(new Button("OK"));
+
         getButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent event) {
+
+            public void handle(final MouseEvent y) {
                 hide();
+                okEvent.handle(y);
             }
         });
     }
