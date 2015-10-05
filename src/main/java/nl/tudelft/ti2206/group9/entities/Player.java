@@ -58,6 +58,9 @@ public class Player extends AbstractEntity {
 	/** The AudioPlayer to be used for the death sound effect. */
 	private static AudioPlayer apDie = new AudioPlayer("src/main/"
 	+ "resources/nl/tudelft/ti2206/group9/audio/fail.wav");
+	/** The AudioPlayer to be used for the jump sound effect. */
+	private static AudioPlayer apJump = new AudioPlayer("src/main/"
+	+ "resources/nl/tudelft/ti2206/group9/audio/jump.wav");
 
 
 	/**
@@ -171,6 +174,7 @@ public class Player extends AbstractEntity {
 	/** Make the player jump (in the y-direction). */
 	private void jump() {
 		if (!jumping && !sliding) {
+			apJump.play();
 			vspeed = JUMP_SPEED;
 			jumping = true;
 			OBSERVABLE.notify(Category.PLAYER, GameObserver.Player.JUMP);
