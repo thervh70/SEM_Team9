@@ -157,7 +157,6 @@ public final class GameScene extends AbstractScene {
 		extTicker = new ExternalTicker();
 		extTicker.start();
 		extTicker.countdown(countdown);
-		running = true;
 		OBSERVABLE.notify(Category.GAME, Game.STARTED);
 	}
 
@@ -166,7 +165,6 @@ public final class GameScene extends AbstractScene {
 		final int countdown = 3;
 		extTicker.start();
 		extTicker.countdown(countdown);
-		running = true;
 		OBSERVABLE.notify(Category.GAME, Game.RESUMED);
 	}
 
