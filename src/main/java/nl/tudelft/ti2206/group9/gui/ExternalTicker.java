@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
+import javafx.scene.PointLight;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -20,10 +21,10 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
-import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
+import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
@@ -58,6 +59,21 @@ public class ExternalTicker extends AnimationTimer {
 		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
 			final Group entities = renderEntities();
 			GameScene.addWorld(entities);
+
+			PointLight lightA = new PointLight(Color.WHITE);
+			lightA.setLightOn(true);
+			lightA.setTranslateZ(-50);
+			lightA.setTranslateY(-5);
+			GameScene.addWorld(lightA);
+
+			PointLight lightB = new PointLight(Color.WHITE);
+			lightB.setLightOn(true);
+			lightB.setTranslateZ(50);
+			lightB.setTranslateY(-5);
+			GameScene.addWorld(lightB);
+//
+//			Light.Point point = new Light.Point(0, -5, -15, Color.WHITE);
+
 		}
 
 		GameScene.addOverlay(renderScore());
