@@ -12,10 +12,11 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
-import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
+import nl.tudelft.ti2206.group9.entities.Player;
+import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 
@@ -33,6 +34,9 @@ public class ExternalTicker extends AnimationTimer {
 	@Override
 	public final void handle(final long now) {
 		synchronized (ShaftEscape.TICKER_LOCK) {
+			if (InternalTicker.isRunning()) {
+				GameScene.getAudioPlayer().playCheck();
+			}
 			renderScene();
 		}
 	}

@@ -11,6 +11,7 @@ import nl.tudelft.ti2206.group9.gui.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.GameScene;
 import nl.tudelft.ti2206.group9.gui.MainMenuScene;
 import nl.tudelft.ti2206.group9.gui.SplashScene;
+import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -114,13 +115,13 @@ public class ShaftEscape extends Application {
 
 	/** Exits the Application. */
 	public static void exit() {
-		MainMenuScene.getAudioPlayer().stopCheck();
-		GameScene.getAudioPlayer().stopCheck();
-
 		createSaveDirectory();
 		SaveGameWriter.saveGame("sav/save.json");
 		LOGGER.writeToFile();
 		stage.close();
+		InternalTicker.stop();
+		MainMenuScene.getAudioPlayer().stopCheck();
+		GameScene.getAudioPlayer().stopCheck();
 	}
 
 	/**

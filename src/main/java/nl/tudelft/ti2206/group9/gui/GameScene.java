@@ -143,7 +143,6 @@ public final class GameScene extends AbstractScene {
 				if (running) {
 					keyMap.keyReleased(keyEvent.getCode());
 				}
-				audioPlayer.playCheck();
 			}
 		});
 		setOnKeyTyped(new EventHandler<KeyEvent>() {

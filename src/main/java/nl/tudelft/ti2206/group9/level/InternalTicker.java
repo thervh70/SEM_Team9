@@ -104,4 +104,13 @@ public final class InternalTicker extends TimerTask {
 	public static void stop() {
 		running = false;
 	}
+
+	/**
+	 * Indicates whether the InternalTicker is running or not.
+	 * @return running true if ticking, false if not.
+	 */
+	public static boolean isRunning() {
+		return running;
+	}
+
 }
