@@ -1,15 +1,23 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
@@ -30,6 +38,8 @@ public class ExternalTicker extends AnimationTimer {
 	private static final int SCORE_BOX_HEIGHT = 130;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
+	/** Label for the countdownLabel animation. */
+	private final Label countdownLabel = new Label();
 
 	@Override
 	public final void handle(final long now) {
@@ -54,6 +64,7 @@ public class ExternalTicker extends AnimationTimer {
 		}
 
 		GameScene.addOverlay(renderScore());
+		GameScene.addOverlay(countdownLabel);
 	}
 
 	/**
@@ -217,6 +228,59 @@ public class ExternalTicker extends AnimationTimer {
 		} else {
 			return Style.MOSS;
 		}
+	}
+
+	/**
+	 * Render the countdownLabel method.
+	 * @param index The index to be rendered.
+	 */
+	public void countdown(final int index) {
+		final int textSize = 64;
+		final int offsetX = 20;
+		final int offsetY = 50;
+
+		countdownLabel.setText(Integer.toString(index));
+		countdownLabel.setFont(Font.font("Roboto", FontWeight.BOLD, textSize));
+		countdownLabel.setTextFill(Color.WHITE);
+		countdownLabel.setLayoutX(ShaftEscape.WIDTH / 2 - offsetX);
+		countdownLabel.setLayoutY(ShaftEscape.HEIGHT / 2 - offsetY);
+
+		countdownAnimation(index);
+	}
+
+	/**
+	 * Render the animations for the countdownLabel method.
+	 * @param index The index to be rendered.
+	 */
+	private void countdownAnimation(final int index) {
+		final int duration = 400;
+		final ScaleTransition st = new ScaleTransition(
+				Duration.millis(duration), countdownLabel);
+		st.setByY(1);
+		st.setByX(1);
+		st.setCycleCount(2);
+		st.setAutoReverse(true);
+		st.play();
+
+		final FadeTransition ft = new FadeTransition(
+				Duration.millis(duration), countdownLabel);
+		ft.setAutoReverse(true);
+		ft.setCycleCount(2);
+		ft.setToValue(1);
+		ft.setFromValue(0);
+		ft.play();
+
+		st.setOnFinished(new EventHandler<ActionEvent>() {
+			public void handle(final ActionEvent event) {
+				final int newIndex = index - 1;
+				if (newIndex > 0) {
+					countdown(newIndex);
+				} else {
+					InternalTicker.start();
+					GameScene.setRunning(true);
+				}
+			}
+		});
 	}
 }
 

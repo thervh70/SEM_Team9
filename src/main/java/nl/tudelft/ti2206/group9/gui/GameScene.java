@@ -156,18 +156,18 @@ public final class GameScene extends AbstractScene {
 
 	/** Start the tickers. */
 	public static void startTickers() {
+		final int countdown = 3;
 		extTicker = new ExternalTicker();
 		extTicker.start();
-		InternalTicker.start();
-		running = true;
+		extTicker.countdown(countdown);
 		OBSERVABLE.notify(Category.GAME, Game.STARTED);
 	}
 
 	/** Resumes the tickers. */
 	public static void resumeTickers() {
+		final int countdown = 3;
 		extTicker.start();
-		InternalTicker.start();
-		running = true;
+		extTicker.countdown(countdown);
 		OBSERVABLE.notify(Category.GAME, Game.RESUMED);
 	}
 
@@ -255,6 +255,14 @@ public final class GameScene extends AbstractScene {
 		} else {
 			return pause;
 		}
+	}
+
+	/**
+	 * Set the running attribute of this class.
+	 * @param b New value for running.
+	 */
+	public static void setRunning(final boolean b) {
+		running = b;
 	}
 
 	/**
