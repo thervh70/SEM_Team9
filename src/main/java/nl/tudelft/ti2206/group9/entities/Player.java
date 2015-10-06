@@ -1,8 +1,6 @@
 package nl.tudelft.ti2206.group9.entities;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
-import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Direction;
@@ -52,21 +50,6 @@ public class Player extends AbstractEntity {
 	/** Whether the player is invincible. */
 	private boolean invincible;
 
-	/** The path for any audio file. */
-	private static String audioPath = "src/main/"
-	+ "resources/nl/tudelft/ti2206/group9/audio/";
-	/** The AudioPlayer to be used for the coin sound effect. */
-	private static AudioPlayer apCoin = new AudioPlayer(audioPath + "coin.wav");
-	/** The AudioPlayer to be used for the death sound effect. */
-	private static AudioPlayer apDie = new AudioPlayer(audioPath + "death.wav");
-	/** The AudioPlayer to be used for the jump sound effect. */
-	private static AudioPlayer apJump = new AudioPlayer(audioPath + "jump.wav");
-	/** The AudioPlayer to be used for the move sound effect. */
-	private static AudioPlayer apMove = new AudioPlayer(audioPath + "move.wav");
-	/** The AudioPlayer to be used for the slide sound effect. */
-	private static AudioPlayer apSlide = new AudioPlayer(audioPath
-			+ "slide.wav");
-
 	/**
 	 * Constructs a new Player at the "center" of the game.
 	 */
@@ -115,14 +98,12 @@ public class Player extends AbstractEntity {
 	@Override
 	public final void collision(final AbstractEntity collidee) {
 		if (collidee instanceof Coin) {
-			apCoin.play(false);
 			OBSERVABLE.notify(Category.PLAYER,
 					GameObserver.Player.COLLISION, Coin.class.getSimpleName());
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
 		}
 		if (collidee instanceof AbstractObstacle) {
-			apDie.play(false);
 			OBSERVABLE.notify(
 					Category.PLAYER, GameObserver.Player.COLLISION,
 					AbstractObstacle.class.getSimpleName());
@@ -140,7 +121,6 @@ public class Player extends AbstractEntity {
 	private void changeLane(final double dir) { //NOPMD - Travis says "unused"
 		if (moveLane + dir >= -Track.WIDTH / 2
 				&& moveLane + dir <= Track.WIDTH / 2) {
-			apMove.play(false);
 			OBSERVABLE.notify(Category.PLAYER,
 					GameObserver.Player.START_MOVE, (int) moveLane);
 			moveLane += dir;
@@ -179,7 +159,6 @@ public class Player extends AbstractEntity {
 	/** Make the player jump (in the y-direction). */
 	private void jump() {
 		if (!jumping && !sliding) {
-			apJump.play(false);
 			vspeed = JUMP_SPEED;
 			jumping = true;
 			OBSERVABLE.notify(Category.PLAYER, GameObserver.Player.JUMP);
@@ -212,7 +191,6 @@ public class Player extends AbstractEntity {
 		// y'' = 2 (max-min) 1/(ticks/2) 1/(ticks/2)
 		// y'(0) = 2 (max-min) 1/(ticks/2) (-ticks/2) 1/(ticks/2)
 		if (!jumping && !sliding) {
-			apSlide.play(false);
 			slideSpeed = -1 * 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
 					/ (SLIDE_LENGTH / 2);
 			sliding = true;

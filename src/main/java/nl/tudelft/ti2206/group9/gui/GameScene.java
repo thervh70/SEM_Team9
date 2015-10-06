@@ -4,7 +4,6 @@ package nl.tudelft.ti2206.group9.gui;
  * @author Robin, Maarten
  */
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
 import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -22,6 +21,7 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Popup;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.AudioPlayer;
+import nl.tudelft.ti2206.group9.audio.SoundEffectsPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -68,6 +68,9 @@ public final class GameScene extends AbstractScene {
 	private static Popup pause;
 	/** The final after death popup. */
 	private static Popup death;
+	/** The Sound-effects player. */
+	private static SoundEffectsPlayer soundEffectsPlayer =
+			new SoundEffectsPlayer();
 
 	/**
 	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and
@@ -160,6 +163,7 @@ public final class GameScene extends AbstractScene {
 		extTicker = new ExternalTicker();
 		extTicker.start();
 		extTicker.countdown(countdown);
+		OBSERVABLE.addObserver(soundEffectsPlayer);
 		OBSERVABLE.notify(Category.GAME, Game.STARTED);
 	}
 
@@ -168,6 +172,7 @@ public final class GameScene extends AbstractScene {
 		final int countdown = 3;
 		extTicker.start();
 		extTicker.countdown(countdown);
+		OBSERVABLE.addObserver(soundEffectsPlayer);
 		OBSERVABLE.notify(Category.GAME, Game.RESUMED);
 	}
 
@@ -176,6 +181,7 @@ public final class GameScene extends AbstractScene {
 		running = false;
 		extTicker.stop();
 		InternalTicker.stop();
+		OBSERVABLE.deleteObserver(soundEffectsPlayer);
 		OBSERVABLE.notify(Category.GAME, Game.STOPPED);
 	}
 
