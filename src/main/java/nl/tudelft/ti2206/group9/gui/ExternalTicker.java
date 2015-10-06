@@ -71,7 +71,7 @@ public class ExternalTicker extends AnimationTimer {
 			lightB.setTranslateZ(50);
 			lightB.setTranslateY(-5);
 			GameScene.addWorld(lightB);
-//
+
 //			Light.Point point = new Light.Point(0, -5, -15, Color.WHITE);
 
 		}
