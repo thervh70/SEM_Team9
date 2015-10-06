@@ -11,12 +11,12 @@ import javafx.scene.shape.Box;
  * @author Maarten
  */
 @SuppressWarnings("restriction")
-public class TrackRenderer extends Group implements Renderer {
+public class GroupTrackRenderer extends Group implements Renderer {
 
 	/**
 	 * Default constructor.
 	 */
-	public TrackRenderer() {
+	public GroupTrackRenderer() {
 		super();
 		final double trackBoxX = 1.5;
 		final double trackBoxZ = 1.5;
