@@ -58,7 +58,7 @@ public class Player extends AbstractEntity {
 	/** The AudioPlayer to be used for the coin sound effect. */
 	private static AudioPlayer apCoin = new AudioPlayer(audioPath + "coin.wav");
 	/** The AudioPlayer to be used for the death sound effect. */
-	private static AudioPlayer apDie = new AudioPlayer(audioPath + "fail.wav");
+	private static AudioPlayer apDie = new AudioPlayer(audioPath + "death.wav");
 	/** The AudioPlayer to be used for the jump sound effect. */
 	private static AudioPlayer apJump = new AudioPlayer(audioPath + "jump.wav");
 	/** The AudioPlayer to be used for the move sound effect. */
