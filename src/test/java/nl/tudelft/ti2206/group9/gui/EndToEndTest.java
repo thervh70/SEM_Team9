@@ -1,10 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -27,6 +22,8 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import static org.junit.Assert.*;
 
 @SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
@@ -80,7 +77,7 @@ public class EndToEndTest extends ApplicationTest {
 		mainMenu(MAIN_SETTINGS);
 		clickAllSettings();
 		mainMenu(MAIN_START);
-		clickPopup(WARNING_OK);
+		assertNull(ShaftEscape.getScene().getPopup());
 		mainMenu(MAIN_TEXTFIELD);
 		typeFaultyName();
 		mainMenu(MAIN_START);

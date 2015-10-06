@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -29,8 +27,7 @@ public class LoadGameScene extends AbstractMenuScene {
     private static final int LIST_ROW = 16;
 
     /** Creating the list. */
-    private static ObservableList<String> players =
-            FXCollections.observableArrayList();
+
     /** Creating the listview used to display the list. */
     private static ListView<String> list = createList(2, LIST_ROW);
 
@@ -42,14 +39,6 @@ public class LoadGameScene extends AbstractMenuScene {
         LOAD_BACK,
         /** Button to load a game. */
         LOAD_START
-    }
-
-    /**
-     * Returns the list of players.
-     * @return List of players.
-     */
-    public static ObservableList<String> getPlayers() {
-        return players;
     }
 
     /**
@@ -67,7 +56,7 @@ public class LoadGameScene extends AbstractMenuScene {
     @Override
     public Node[] createContent() {
         readPlayerNames();
-        list.setItems(players);
+        list.setItems(State.getSaveGames());
         final Button backButton = createButton("BACK", 0, 20);
         final Button loadButton = createButton("LOAD & START!", 2, 20);
         /** Set button functions. */
@@ -92,7 +81,7 @@ public class LoadGameScene extends AbstractMenuScene {
                 if (type == BType.LOAD_BACK) {
                     GameObservable.notify(GameObserver.Category.MENU,
                             GameObserver.Menu.LOAD_BACK);
-                    players.clear();
+                    State.getSaveGames().clear();
                     ShaftEscape.setScene(new MainMenuScene());
                 } else {
                     GameObservable.notify(GameObserver.Category.MENU,
@@ -108,11 +97,7 @@ public class LoadGameScene extends AbstractMenuScene {
                         }));
                         ShaftEscape.showPopup(getPopup());
                     } else {
-                        SaveGameParser.loadGame(State.getDefaultSaveDir()
-                                + loadFile + ".json");
-                        State.setPlayerName(loadFile);
-                        players.clear();
-                        ShaftEscape.setScene(new GameScene());
+                        loadGame(loadFile);
                     }
                 }
             }
@@ -123,14 +108,14 @@ public class LoadGameScene extends AbstractMenuScene {
      * Read all names of the files in the default savegame directory
      * and store them in ObservableList players.
      */
-    private void readPlayerNames() {
+    protected static void readPlayerNames() {
         final File folder = new File(State.getDefaultSaveDir());
         for (final File file : folder.listFiles()) {
             if (file.isDirectory()) {
                 continue;
             }
             final String fileName = removeExtension(file.getName());
-            players.add(fileName);
+            State.getSaveGames().add(fileName);
         }
     }
 
@@ -139,11 +124,22 @@ public class LoadGameScene extends AbstractMenuScene {
      * @param file the file from which the extension should be removed
      * @return a String containing the trimmed filename
      */
-    private String removeExtension(final String file) {
+    private static String removeExtension(final String file) {
         if (file.lastIndexOf('.') == -1) {
             return file;
         }
         return file.substring(0, file.lastIndexOf('.'));
+    }
+
+    /**
+     * Load an existing game with the given name.
+     * @param loadFile the name of the game to be loaded
+     */
+    private static void loadGame(final String loadFile) {
+        SaveGameParser.loadGame(State.getDefaultSaveDir()
+                + loadFile + ".json");
+        State.getSaveGames().clear();
+        ShaftEscape.setScene(new GameScene());
     }
 
 }

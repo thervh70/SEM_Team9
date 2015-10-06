@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
+import nl.tudelft.ti2206.group9.util.SaveGameParser;
 import nl.tudelft.ti2206.group9.util.SaveGameWriter;
 
 /**
@@ -47,6 +49,8 @@ public final class MainMenuScene extends AbstractMenuScene {
 	@Override
 	public Node[] createContent() {
         final Button startButton = createButton("START!", 4, 22);
+		startButton.disableProperty().bind(
+				Bindings.isEmpty(INPUT.textProperty()));
 		final Button settingsButton = createButton("SETTINGS", 0, 24);
 		final Button exitButton = createButton("EXIT", 4, 24);
 		final Button loadButton = createButton("LOAD GAME", 2, 24);
@@ -84,12 +88,7 @@ public final class MainMenuScene extends AbstractMenuScene {
 					ShaftEscape.exit();
 				} else if (type == BType.START) {
 					if (checkPlayerName(INPUT.getText())) {
-						State.setPlayerName(INPUT.getText());
-						SaveGameWriter.saveGame(State.getDefaultSaveDir()
-								+ INPUT.getText() + ".json");
-						INPUT.clear();
-						GameObservable.notify(Category.MENU, Menu.START);
-						ShaftEscape.setScene(new GameScene());
+						createNewGame();
 					} else {
 						setPopup(new FaultyInputPopup(
 								new EventHandler<MouseEvent>() {
@@ -123,16 +122,39 @@ public final class MainMenuScene extends AbstractMenuScene {
 	 * @return boolean to indicate whether the name is valid
 	 */
 	private boolean checkPlayerName(final String name) {
-		if (name.isEmpty()) {
-			return false;
-		} else if (name.contains(".")) {
-			return false;
-		} else if (name.contains("/")) {
-			return false;
-		} else if (name.contains("\\")) {
-			return false;
+		return !(name.contains(".") | name.contains("/") | name.contains("\\"));
+	}
+
+	/**
+	 * Check whether the given input corresponds to
+	 * an already existing savefile. If so, load
+	 * that file, otherwise create a new game with that name.
+	 */
+	private static void createNewGame() {
+		State.setPlayerName(INPUT.getText());
+		if (!tryLoadPlayerName(INPUT.getText())) {
+			SaveGameWriter.saveGame(State.getDefaultSaveDir()
+					+ INPUT.getText() + ".json");
 		}
-		return true;
+		INPUT.clear();
+		State.getSaveGames().clear();
+		GameObservable.notify(Category.MENU, Menu.START);
+		ShaftEscape.setScene(new GameScene());
+	}
+
+	/**
+	 * Check if the given name corresponds with an alread existing
+	 * file. If so, return true, otherwise, retrn false.
+	 * @param name the given name to check against the savefiles
+	 * @return boolean to indiccate whether a savfile was found
+	 */
+	private static boolean tryLoadPlayerName(final String name) {
+		LoadGameScene.readPlayerNames();
+		if (State.getSaveGames().contains(name)) {
+			SaveGameParser.loadGame(State.getDefaultSaveDir() + name + ".json");
+			return true;
+		}
+		return false;
 	}
 
 }
