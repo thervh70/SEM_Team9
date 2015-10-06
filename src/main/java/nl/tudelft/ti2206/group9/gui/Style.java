@@ -52,11 +52,14 @@ public final class Style {
     /** FENCE material used for fences, mossy brick stone texture.*/
     public static final PhongMaterial FENCE = new PhongMaterial();
 
-    /** PLAYER material used for the player. */
+    /** PLAYER material used for the player at start. */
     public static final PhongMaterial PLAYER = new PhongMaterial();
 
 	/** Size of a button while hovering (relative to 1). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
+
+    /** Standard path for textures.*/
+    public static final String path = "nl/tudelft/ti2206/group9/gui/";
 
     /** Hide public constructor. */
     private Style() { }
@@ -66,8 +69,6 @@ public final class Style {
      * They are loaded into Phongmaterials.
      */
     public static void loadTextures() {
-        final String path = "nl/tudelft/ti2206/group9/gui/";
-
         final Image brickTexture = new Image(path + "texture_brick.png");
         BRICK.setDiffuseMap(brickTexture);
 
@@ -92,14 +93,17 @@ public final class Style {
         final Image fenceTexture = new Image(path + "texture_fence.png");
         FENCE.setDiffuseMap(fenceTexture);
 
-        final Image playerTexture = new Image(path + "texture_b.png");
+        final Image playerTexture = new Image(path + "texture_start.png");
         PLAYER.setDiffuseMap(playerTexture);
     }
 
-    public static void setAllButtonStyles(final Button... buttons) {
-        for (final Button b : buttons) {
-            setButtonStyle(b);
-        }
+    /** Method to load the texture for the player.
+     *
+     * @param textureName New texture name.
+     */
+    public static void loadPlayerTexture(final String textureName) {
+        final Image playerTexture = new Image(path + "texture_" + textureName + ".png");
+        PLAYER.setDiffuseMap(playerTexture);
     }
 
     /**
