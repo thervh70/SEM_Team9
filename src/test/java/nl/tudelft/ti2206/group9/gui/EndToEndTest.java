@@ -1,15 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -23,9 +13,16 @@ import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.*;
+
 
 @SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
@@ -39,6 +36,8 @@ public class EndToEndTest extends ApplicationTest {
 	private static final long SHORT = 2 * TARDINESS;
 	/** Amount of milliseconds the Robot sleeps when sleeping "long". */
 	private static final long LONG = 5 * TARDINESS;
+	/** Sleep countdown. */
+	private static final long COUNTDOWN = 3500;
 
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
@@ -80,8 +79,10 @@ public class EndToEndTest extends ApplicationTest {
 		typeName();
 
 		mainMenu(MAIN_START);
+		sleep(COUNTDOWN);
 		keyboard(KeyCode.ESCAPE);
 		pausePopup(PAUSE_RESUME);
+		sleep(COUNTDOWN);
 		moveAround();
 		keyboard(KeyCode.ESCAPE);
 		pausePopup(PAUSE_TOMAIN);
@@ -93,8 +94,10 @@ public class EndToEndTest extends ApplicationTest {
 		loadMenu(LOAD_START);
 
 		mainMenu(MAIN_START);
+		sleep(COUNTDOWN);
 		playerDies();
 		deathPopup(DEATH_RETRY);
+		sleep(COUNTDOWN);
 		playerDies();
 		deathPopup(DEATH_TOMAIN);
 
