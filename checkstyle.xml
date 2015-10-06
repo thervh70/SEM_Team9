@@ -80,7 +80,9 @@
       <property name="max" value="30"/>
     </module>
   </module>
-  <module name="NewlineAtEndOfFile"/>
+  <module name="NewlineAtEndOfFile">
+    <property name="fileExtensions" value="java"/>
+  </module>
   <module name="Translation"/>
   <module name="FileLength"/>
   <module name="FileTabCharacter">

@@ -38,6 +38,7 @@ public class PausePopup extends AbstractInfoPopup {
             public void handle(final MouseEvent n) {
                 hide();
                 menuEvent.handle(n);
+                GameScene.getAudioPlayer().stop();
             }
         });
     }

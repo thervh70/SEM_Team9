@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.util;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Observable;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -68,6 +71,8 @@ public class Logger implements GameObserver {
 		final String info = "\n    in %s" + "\n    Message: %s";
 		STRINGS.put(Error.IOEXCEPTION,
 				lbl + "Exception while reading or writing files!" + info);
+		STRINGS.put(Error.MALFORMEDURLEXCEPTION,
+				lbl + "Exception while parsing URL!" + info);
 		STRINGS.put(Error.MEDIAEXCEPTION,
 				lbl + "Exception with audio player!" + info);
 		STRINGS.put(Error.PARSEEXCEPTION,
@@ -93,9 +98,10 @@ public class Logger implements GameObserver {
 		writeToOutput("", false);
 	}
 
-	public void gameUpdate(final Category cat, final Specific spec,
-			final Object... optionalArgs) {
-		buffer.append(getLogString(spec, optionalArgs)).append('\n');
+	public void update(final Observable o, final Object arg) {
+		final GameUpdate update = (GameUpdate) arg;
+		buffer.append(getLogString(update.getSpec(), update.getArgs()));
+		buffer.append('\n');
 	}
 
 	/**
@@ -156,7 +162,7 @@ public class Logger implements GameObserver {
 			fw.flush();
 		} catch (IOException e) {
 			ret = false;
-			GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+			OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
 					"Logger.writeToOutput(String, boolean)", e.getMessage());
 		} finally {
 			try {
@@ -165,7 +171,7 @@ public class Logger implements GameObserver {
 				}
 			} catch (IOException e) {
 				ret = false;
-				GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+				OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
 						"Logger.writeToOutput(String, boolean) (2)",
 						e.getMessage());
 			}

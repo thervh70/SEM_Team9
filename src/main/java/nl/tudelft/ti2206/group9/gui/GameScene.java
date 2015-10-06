@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -15,9 +17,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
@@ -48,10 +50,16 @@ public final class GameScene extends AbstractScene {
 	private static SubScene worldScene;
 	/** The overlayscene. */
 	private static SubScene overlayScene;
+
 	/** The ExternalTicker to be used. */
 	private static ExternalTicker extTicker;
 	/** Indicate whether the game is running. */
 	private static boolean running;
+
+	/** The AudioPlayer to be used for background music. */
+	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/"
+			+ "resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
+
 
 	/**
 	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and
@@ -78,6 +86,7 @@ public final class GameScene extends AbstractScene {
 		setupCamera();
 		keyBindings();
 
+		audioPlayer.play();
 		startTickers();
 		return root;
 	}
@@ -143,7 +152,7 @@ public final class GameScene extends AbstractScene {
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
-		GameObservable.notify(Category.GAME, Game.STARTED);
+		OBSERVABLE.notify(Category.GAME, Game.STARTED);
 	}
 
 	/** Resumes the tickers. */
@@ -151,7 +160,7 @@ public final class GameScene extends AbstractScene {
 		extTicker.start();
 		InternalTicker.start();
 		running = true;
-		GameObservable.notify(Category.GAME, Game.RESUMED);
+		OBSERVABLE.notify(Category.GAME, Game.RESUMED);
 	}
 
 	/** Stop the tickers. */
@@ -159,13 +168,13 @@ public final class GameScene extends AbstractScene {
 		running = false;
 		extTicker.stop();
 		InternalTicker.stop();
-		GameObservable.notify(Category.GAME, Game.STOPPED);
+		OBSERVABLE.notify(Category.GAME, Game.STOPPED);
 	}
 
 	/** Show a pause menu. */
 	public static void showPauseMenu() {
 		stopTickers();
-		GameObservable.notify(Category.GAME, Game.PAUSED);
+		OBSERVABLE.notify(Category.GAME, Game.PAUSED);
 		setPopup(new PausePopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				resumeTickers();
@@ -173,7 +182,7 @@ public final class GameScene extends AbstractScene {
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
 				setPopup(null);
@@ -184,16 +193,17 @@ public final class GameScene extends AbstractScene {
 
 	/** Show a death menu. */
 	public static void showDeathMenu() {
+		audioPlayer.stop();
 		setPopup(new DeathPopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.RETRY);
+				OBSERVABLE.notify(Category.GAME, Game.RETRY);
 				State.reset();
 				ShaftEscape.setScene(new GameScene());
 				setPopup(null);
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
-				GameObservable.notify(Category.GAME, Game.TO_MAIN_MENU);
+				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
 				setPopup(null);
@@ -229,4 +239,13 @@ public final class GameScene extends AbstractScene {
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
 	}
+
+	/**
+	 * Every GameScene has an AudioPlayer for the soundtrack.
+	 * @return the soundtrack AudioPlayer.
+	 */
+	public static AudioPlayer getAudioPlayer() {
+		return audioPlayer;
+	}
+
 }

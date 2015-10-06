@@ -1,9 +1,9 @@
 package nl.tudelft.ti2206.group9.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Observable;
 
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.GameUpdate;
 import nl.tudelft.ti2206.group9.util.GameObserver.Specific;
 
 /**
@@ -13,28 +13,25 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Specific;
  * observers.
  * @author Maarten
  */
-public final class GameObservable {
-
-	/** List of observers observing this game. */
-	private static List<GameObserver> observers = new ArrayList<GameObserver>();
-
-	/** Hiding public constructor. */
-	private GameObservable() { }
+public final class GameObservable extends Observable {
 
 	/**
-	 * Add observer to the observers list.
-	 * @param go GameObserver to add to the list.
+	 * @throws UnsupportedOperationException
+	 *         because notifyObservers() must be called with argument.
 	 */
-	public static void addObserver(final GameObserver go) {
-		observers.add(go);
+	@Deprecated
+	public void notifyObservers() throws UnsupportedOperationException {
+		throw new UnsupportedOperationException("notifyObservers() must be "
+				+ "called with a GameUpdate as argument.");
 	}
 
 	/**
-	 * Remove observer from the observers list.
-	 * @param go GameObserver to remove from the list.
+	 * Deprecated, because notifyObservers() must be called with GameUpdate.
+	 * @param arg any GameUpdate
 	 */
-	public static void deleteObserver(final GameObserver go) {
-		observers.remove(go);
+	@Deprecated
+	public void notifyObservers(final Object arg) {
+		notify((GameUpdate) arg);
 	}
 
 	/**
@@ -44,11 +41,22 @@ public final class GameObservable {
 	 * @param optionalArgs Optional arguments that come with the update
 	 * 			(e.g. lane numbers, mouse buttons, keyboard keys, ...)
 	 */
-	public static void notify(final Category cat, final Specific spec,
+	public void notify(final Category cat, final Specific spec,
 			final Object... optionalArgs) {
-		for (final GameObserver go : observers) {
-			go.gameUpdate(cat, spec, optionalArgs);
-		}
+		notify(new GameUpdate(cat, spec, optionalArgs));
+	}
+
+	/**
+	 * If this object has changed, as indicated by the hasChanged method,
+	 * then notify all of its observers and then call the clearChanged method to
+	 * indicate that this object has no longer changed.
+	 * Each observer has its update method called with two arguments:
+	 * this observable object and the arg argument.
+	 * @param arg any GameUpdate
+	 */
+	public void notify(final GameUpdate arg) {
+		setChanged();
+		super.notifyObservers(arg);
 	}
 
 }

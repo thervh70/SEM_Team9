@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.util;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,7 +38,7 @@ public final class SaveGameWriter {
 			fw.write(mainObject);
 			fw.flush();
 		} catch (IOException e) {
-			GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+			OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
 					"SaveGameWriter.saveGame(String)", e.getMessage());
 		} finally {
 			try {
@@ -44,7 +46,7 @@ public final class SaveGameWriter {
 					fw.close();
 				}
 			} catch (IOException e) {
-				GameObservable.notify(Category.ERROR, Error.IOEXCEPTION,
+				OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
 						"SaveGameWriter.saveGame(String) (2)", e.getMessage());
 			}
 		}
