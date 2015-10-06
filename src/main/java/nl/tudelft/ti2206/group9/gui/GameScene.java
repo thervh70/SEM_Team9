@@ -81,7 +81,6 @@ public final class GameScene extends AbstractScene {
 	 */
 	public Parent createRoot() {
 		State.reset();
-		Style.loadTextures();
 
 		final Group root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);

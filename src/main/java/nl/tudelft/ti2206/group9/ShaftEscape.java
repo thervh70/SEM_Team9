@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import nl.tudelft.ti2206.group9.gui.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.SplashScene;
+import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.Logger;
@@ -55,6 +56,9 @@ public class ShaftEscape extends Application {
 		stage.setMinHeight(ShaftEscape.HEIGHT);
 		stage.setMaxWidth(ShaftEscape.WIDTH);
 		stage.setMaxHeight(ShaftEscape.HEIGHT);
+
+		//Loading textures
+		Style.loadTextures();
 
 		// Make sure the game is saved on exit
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
