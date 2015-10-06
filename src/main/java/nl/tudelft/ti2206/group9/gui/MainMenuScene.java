@@ -91,12 +91,12 @@ public final class MainMenuScene extends AbstractMenuScene {
 					if (checkPlayerName(INPUT.getText())) {
 						createNewGame();
 					} else {
-						setPopup(new FaultyInputPopup(
+						setPopup(new WarningPopup(
 								new EventHandler<MouseEvent>() {
 							public void handle(final MouseEvent event) {
 								setPopup(null);
 							}
-						}));
+						}, "The given name is invalid."));
 						ShaftEscape.showPopup(getPopup());
 					}
 				} else if (type == BType.LOAD) {

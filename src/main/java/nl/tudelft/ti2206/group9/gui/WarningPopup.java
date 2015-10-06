@@ -1,12 +1,15 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Popup;
 
 import java.util.Arrays;
@@ -14,7 +17,7 @@ import java.util.Arrays;
 /**
  * @author Mathias
  */
-public abstract class AbstractWarningPopup extends Popup {
+public class WarningPopup extends Popup {
 
     /** Width of the PopUpMenu. */
     public static final double WIDTH = 260;
@@ -27,23 +30,25 @@ public abstract class AbstractWarningPopup extends Popup {
 
     /** The left button in the Popup. */
     private final Button button;
+    /** The message this Popup displays. */
+    private final String message;
 
     /**
      * Constructs a new Popup with default {@link #WIDTH} and {@link #HEIGHT}.
-     * @param bttn Button that should be shown in the bottom-center.
+     * @param okEvent Eventhandler that handles the MouseEvent
+     *                'click OK button'.
+     * @param mssg String that contains the message the Popup displays.
      */
-    public AbstractWarningPopup(final Button bttn) {
+    public WarningPopup(final EventHandler<MouseEvent> okEvent,
+                        final String mssg) {
         super();
-        button = bttn;
+        button = new Button("OK");
+        message = mssg;
 
-        setWidth(WIDTH);
-        setHeight(HEIGHT);
-        setHideOnEscape(false);
+        setStyle();
 
         final Rectangle rect = new Rectangle(WIDTH, HEIGHT, Color.WHITESMOKE);
         rect.setStroke(Color.BLACK);
-
-        Style.setPopupButtonStyle(button);
 
         final HBox hbox = new HBox(HBOX_SPACING, button);
         hbox.setAlignment(Pos.CENTER);
@@ -55,6 +60,14 @@ public abstract class AbstractWarningPopup extends Popup {
         vbox.setAlignment(Pos.CENTER);
 
         getContent().addAll(rect, vbox);
+
+        getButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            public void handle(final MouseEvent y) {
+                hide();
+                okEvent.handle(y);
+            }
+        });
     }
 
     /**
@@ -62,12 +75,25 @@ public abstract class AbstractWarningPopup extends Popup {
      * Popup. Each next node will be placed below the previous.
      * @return A list of Nodes to be added to the VBox of the Popup.
      */
-    public abstract Node[] createContent();
+    public final Node[] createContent() {
+        final Text messageText = new Text(message);
+        return new Node[]{messageText};
+    }
 
     /**
      * @return the main Button
      */
     public Button getButton() {
         return button;
+    }
+
+    /**
+     * Set the style properties of the warningPopups.
+     */
+    private void setStyle() {
+        setWidth(WIDTH);
+        setHeight(HEIGHT);
+        setHideOnEscape(false);
+        Style.setPopupButtonStyle(button);
     }
 }

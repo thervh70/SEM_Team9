@@ -90,12 +90,12 @@ public class LoadGameScene extends AbstractMenuScene {
                     final String loadFile =
                             list.getSelectionModel().getSelectedItem();
                     if (loadFile == null) {
-                        setPopup(new GameNotFoundPopup(
+                        setPopup(new WarningPopup(
                                 new EventHandler<MouseEvent>() {
                             public void handle(final MouseEvent event) {
                                 setPopup(null);
                             }
-                        }));
+                        }, "Please select a valid file!"));
                         ShaftEscape.showPopup(getPopup());
                     } else {
                         loadGame(loadFile);
