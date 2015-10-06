@@ -68,7 +68,7 @@ public final class SplashScene extends AbstractMenuScene {
     private void addMouseClick() {
     	setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent me) {
-            	apButton.play();
+            	apButton.play(false);
                 OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
                         me.getButton());
                 OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
@@ -83,7 +83,7 @@ public final class SplashScene extends AbstractMenuScene {
     private void addKeyPressed() {
         setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent ke) {
-            	apButton.play();
+            	apButton.play(false);
                 OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
                         ke.getCode());
                 OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);

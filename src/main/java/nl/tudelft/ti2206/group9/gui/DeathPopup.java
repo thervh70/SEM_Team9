@@ -28,7 +28,7 @@ public class DeathPopup extends AbstractPopup {
         getLeftButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(final MouseEvent y) {
-				SplashScene.getButtonAudioPlayer().play();
+				SplashScene.getButtonAudioPlayer().play(false);
                 hide();
                 retryEvent.handle(y);
             }
@@ -37,7 +37,7 @@ public class DeathPopup extends AbstractPopup {
         getRightButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(final MouseEvent n) {
-				SplashScene.getButtonAudioPlayer().play();
+				SplashScene.getButtonAudioPlayer().play(false);
                 hide();
                 menuEvent.handle(n);
             }

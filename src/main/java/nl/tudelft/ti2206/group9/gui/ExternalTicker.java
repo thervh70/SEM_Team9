@@ -45,7 +45,7 @@ public class ExternalTicker extends AnimationTimer {
 	public final void handle(final long now) {
 		synchronized (ShaftEscape.TICKER_LOCK) {
 			if (InternalTicker.isRunning()) {
-				GameScene.getAudioPlayer().playCheck();
+				GameScene.getAudioPlayer().play(true);
 			}
 			renderScene();
 		}

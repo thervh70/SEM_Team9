@@ -120,8 +120,8 @@ public class ShaftEscape extends Application {
 		LOGGER.writeToFile();
 		stage.close();
 		InternalTicker.stop();
-		MainMenuScene.getAudioPlayer().stopCheck();
-		GameScene.getAudioPlayer().stopCheck();
+		MainMenuScene.getAudioPlayer().stop();
+		GameScene.getAudioPlayer().stop();
 	}
 
 	/**

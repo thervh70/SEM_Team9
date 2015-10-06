@@ -50,7 +50,7 @@ public final class MainMenuScene extends AbstractMenuScene {
 	 */
 	@Override
 	public Node[] createContent() {
-		apMainMenu.playCheck();
+		apMainMenu.play(true);
         final Button startButton = createButton("START!", 4, 22);
 		final Button settingsButton = createButton("SETTINGS", 0, 24);
 		final Button exitButton = createButton("EXIT", 4, 24);
@@ -83,7 +83,7 @@ public final class MainMenuScene extends AbstractMenuScene {
 			final BType type) {
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(final ActionEvent event) {
-				SplashScene.getButtonAudioPlayer().play();
+				SplashScene.getButtonAudioPlayer().play(false);
 				if (type == BType.EXIT) {
 					apMainMenu.stop();
 					OBSERVABLE.notify(Category.MENU, Menu.EXIT);

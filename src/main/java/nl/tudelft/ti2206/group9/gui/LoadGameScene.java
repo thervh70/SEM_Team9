@@ -85,7 +85,7 @@ public class LoadGameScene extends AbstractMenuScene {
                                             final BType type) {
         button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
-				SplashScene.getButtonAudioPlayer().play();
+				SplashScene.getButtonAudioPlayer().play(false);
                 if (type == BType.LOAD_BACK) {
                     OBSERVABLE.notify(GameObserver.Category.MENU,
                             GameObserver.Menu.LOAD_BACK);

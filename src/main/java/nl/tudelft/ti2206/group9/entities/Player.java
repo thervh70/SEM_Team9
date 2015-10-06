@@ -115,14 +115,14 @@ public class Player extends AbstractEntity {
 	@Override
 	public final void collision(final AbstractEntity collidee) {
 		if (collidee instanceof Coin) {
-			apCoin.play();
+			apCoin.play(false);
 			OBSERVABLE.notify(Category.PLAYER,
 					GameObserver.Player.COLLISION, Coin.class.getSimpleName());
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
 		}
 		if (collidee instanceof AbstractObstacle) {
-			apDie.play();
+			apDie.play(false);
 			OBSERVABLE.notify(
 					Category.PLAYER, GameObserver.Player.COLLISION,
 					AbstractObstacle.class.getSimpleName());
@@ -140,7 +140,7 @@ public class Player extends AbstractEntity {
 	private void changeLane(final double dir) { //NOPMD - Travis says "unused"
 		if (moveLane + dir >= -Track.WIDTH / 2
 				&& moveLane + dir <= Track.WIDTH / 2) {
-			apMove.play();
+			apMove.play(false);
 			OBSERVABLE.notify(Category.PLAYER,
 					GameObserver.Player.START_MOVE, (int) moveLane);
 			moveLane += dir;
@@ -179,7 +179,7 @@ public class Player extends AbstractEntity {
 	/** Make the player jump (in the y-direction). */
 	private void jump() {
 		if (!jumping && !sliding) {
-			apJump.play();
+			apJump.play(false);
 			vspeed = JUMP_SPEED;
 			jumping = true;
 			OBSERVABLE.notify(Category.PLAYER, GameObserver.Player.JUMP);
@@ -212,7 +212,7 @@ public class Player extends AbstractEntity {
 		// y'' = 2 (max-min) 1/(ticks/2) 1/(ticks/2)
 		// y'(0) = 2 (max-min) 1/(ticks/2) (-ticks/2) 1/(ticks/2)
 		if (!jumping && !sliding) {
-			apSlide.play();
+			apSlide.play(false);
 			slideSpeed = -1 * 2 * (HEIGHT - SLIDE_MIN_HEIGHT)
 					/ (SLIDE_LENGTH / 2);
 			sliding = true;

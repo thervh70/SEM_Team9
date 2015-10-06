@@ -28,7 +28,7 @@ public class PausePopup extends AbstractPopup {
         getLeftButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(final MouseEvent y) {
-				SplashScene.getButtonAudioPlayer().play();
+				SplashScene.getButtonAudioPlayer().play(false);
                 hide();
                 resumeEvent.handle(y);
             }
@@ -37,7 +37,7 @@ public class PausePopup extends AbstractPopup {
         getRightButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(final MouseEvent n) {
-				SplashScene.getButtonAudioPlayer().play();
+				SplashScene.getButtonAudioPlayer().play(false);
                 hide();
                 menuEvent.handle(n);
                 GameScene.getAudioPlayer().stop();

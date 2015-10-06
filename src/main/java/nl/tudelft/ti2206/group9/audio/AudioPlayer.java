@@ -53,14 +53,23 @@ public class AudioPlayer {
 
 	/**
 	 * Starts the initialized tune.
+	 * If the AudioPlayer has to be checked whether it is running,
+	 * it is checked. If not, then it's not.
+	 * @param checkStopped indicates whether to check the audioPlayer.
 	 */
-	public final void play() {
+	public final void play(final boolean checkStopped) {
 		try {
 			if (State.isSoundEnabled()) {
 				if (audioClip == null) {
 					initializeTune(path);
 				}
-				audioClip.play();
+				if (checkStopped) {
+					if (!this.isRunning()) {
+						audioClip.play();
+					}
+				} else {
+					audioClip.play();
+				}
 			}
 		} catch (MediaException me) {
 			OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
@@ -69,28 +78,8 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Check whether an AudioPlayer is already running or not,
-	 * and if not, also starts the AudioPlayer.
-	 */
-	public final void playCheck() {
-		if (!this.isRunning()) {
-			this.play();
-		}
-
-	}
-
-	/**
-	 * Check whether an AudioPlayer is already running or not,
-	 * and if so, also stop the AudioPlayer.
-	 */
-	public final void stopCheck() {
-		if (this.isRunning()) {
-			this.stop();
-		}
-	}
-
-	/**
-	 * Stops the initialized soundtrack.
+	 * Stops the initialized soundtrack if
+	 * the AudioPlayer is actually running and if the sound is enabled.
 	 */
 	public final void stop() {
 		try {
