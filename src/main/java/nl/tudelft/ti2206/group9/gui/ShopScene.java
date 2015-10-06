@@ -11,7 +11,6 @@ import javafx.scene.control.ListView;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
-
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
@@ -19,6 +18,7 @@ import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
  *
  * Created by Maikel on 04/10/2015.
  */
+@SuppressWarnings("restriction")
 public class ShopScene extends AbstractMenuScene {
 
     /**

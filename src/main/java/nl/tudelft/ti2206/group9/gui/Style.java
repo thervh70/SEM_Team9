@@ -1,5 +1,12 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,10 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 
 /**
  * Class containing the styling for the GUI.
@@ -219,7 +223,8 @@ public final class Style {
                    File("src/main/resources/nl/tudelft/"
                     + "ti2206/group9/gui/8bit.ttf")), size);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
+            		"Style.getFont(int)", e.getMessage());
         }
         return font;
     }
