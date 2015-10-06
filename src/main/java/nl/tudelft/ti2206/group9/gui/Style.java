@@ -92,8 +92,14 @@ public final class Style {
         final Image fenceTexture = new Image(path + "texture_fence.png");
         FENCE.setDiffuseMap(fenceTexture);
 
-        final Image playerTexture = new Image(path + "texture_player.png");
+        final Image playerTexture = new Image(path + "texture_b.png");
         PLAYER.setDiffuseMap(playerTexture);
+    }
+
+    public static void setAllButtonStyles(final Button... buttons) {
+        for (final Button b : buttons) {
+            setButtonStyle(b);
+        }
     }
 
     /**
