@@ -60,17 +60,26 @@ public class ExternalTicker extends AnimationTimer {
 			final Group entities = renderEntities();
 			GameScene.addWorld(entities);
 
+			//Light behind camera
 			PointLight lightA = new PointLight(Color.WHITE);
 			lightA.setLightOn(true);
-			lightA.setTranslateZ(-50);
+			lightA.setTranslateZ(-30);
 			lightA.setTranslateY(-5);
 			GameScene.addWorld(lightA);
 
-			PointLight lightB = new PointLight(Color.WHITE);
+			//Far light
+			PointLight lightB = new PointLight(Color.DARKORANGE);
 			lightB.setLightOn(true);
 			lightB.setTranslateZ(50);
 			lightB.setTranslateY(-5);
 			GameScene.addWorld(lightB);
+
+			//Near Light
+			PointLight lightC = new PointLight(Color.DARKORANGE);
+			lightC.setLightOn(true);
+			lightC.setTranslateZ(15);
+			lightC.setTranslateY(-5);
+			GameScene.addWorld(lightC);
 
 //			Light.Point point = new Light.Point(0, -5, -15, Color.WHITE);
 
