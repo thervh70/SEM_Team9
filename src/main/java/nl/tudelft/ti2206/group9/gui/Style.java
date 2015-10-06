@@ -216,8 +216,8 @@ public final class Style {
         Font font = null;
         try {
             font = Font.loadFont(new FileInputStream(new
-                   File("src\\main\\resources" + "\\nl\\tudelft\\"
-                    + "ti2206\\group9\\gui\\8bit.ttf")), size);
+                   File("src/main/resources/nl/tudelft/"
+                    + "ti2206/group9/gui/8bit.ttf")), size);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
