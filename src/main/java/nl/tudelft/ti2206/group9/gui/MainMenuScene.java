@@ -15,8 +15,7 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-import nl.tudelft.ti2206.group9.util.SaveGameParser;
-import nl.tudelft.ti2206.group9.util.SaveGameWriter;
+import nl.tudelft.ti2206.group9.util.SaveGame;
 
 /**
  * A Main Menu with different options/buttons like a options menu, start button
@@ -134,8 +133,7 @@ public final class MainMenuScene extends AbstractMenuScene {
 	private static void createNewGame() {
 		State.setPlayerName(INPUT.getText());
 		if (!tryLoadPlayerName(INPUT.getText())) {
-			SaveGameWriter.saveGame(State.getDefaultSaveDir()
-					+ INPUT.getText() + ".json");
+			SaveGame.saveGame();
 		}
 		INPUT.clear();
 		State.getSaveGames().clear();
@@ -150,9 +148,9 @@ public final class MainMenuScene extends AbstractMenuScene {
 	 * @return boolean to indiccate whether a savfile was found
 	 */
 	private static boolean tryLoadPlayerName(final String name) {
-		LoadGameScene.readPlayerNames();
+		SaveGame.readPlayerNames();
 		if (State.getSaveGames().contains(name)) {
-			SaveGameParser.loadGame(State.getDefaultSaveDir() + name + ".json");
+			SaveGame.loadGame(name);
 			return true;
 		}
 		return false;

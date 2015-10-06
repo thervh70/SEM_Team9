@@ -11,10 +11,10 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import javafx.scene.control.ListView;
-import nl.tudelft.ti2206.group9.util.SaveGameParser;
 
 import javafx.scene.input.MouseEvent;
-import java.io.File;
+import nl.tudelft.ti2206.group9.util.SaveGame;
+
 
 /**
  * Scene that displays a list of previous player names,
@@ -26,8 +26,6 @@ public class LoadGameScene extends AbstractMenuScene {
 
     /** Row in Grid of list. */
     private static final int LIST_ROW = 16;
-
-    /** Creating the list. */
 
     /** Creating the listview used to display the list. */
     private static ListView<String> list = createList(2, LIST_ROW);
@@ -56,7 +54,7 @@ public class LoadGameScene extends AbstractMenuScene {
      */
     @Override
     public Node[] createContent() {
-        readPlayerNames();
+        SaveGame.readPlayerNames();
         list.setItems(State.getSaveGames());
         final Button backButton = createButton("BACK", 0, 20);
         final Button loadButton = createButton("LOAD & START!", 2, 20);
@@ -106,39 +104,11 @@ public class LoadGameScene extends AbstractMenuScene {
     }
 
     /**
-     * Read all names of the files in the default savegame directory
-     * and store them in ObservableList players.
-     */
-    protected static void readPlayerNames() {
-        final File folder = new File(State.getDefaultSaveDir());
-        for (final File file : folder.listFiles()) {
-            if (file.isDirectory()) {
-                continue;
-            }
-            final String fileName = removeExtension(file.getName());
-            State.getSaveGames().add(fileName);
-        }
-    }
-
-    /**
-     * Removes the extension from a filename.
-     * @param file the file from which the extension should be removed
-     * @return a String containing the trimmed filename
-     */
-    private static String removeExtension(final String file) {
-        if (file.lastIndexOf('.') == -1) {
-            return file;
-        }
-        return file.substring(0, file.lastIndexOf('.'));
-    }
-
-    /**
      * Load an existing game with the given name.
      * @param loadFile the name of the game to be loaded
      */
     private static void loadGame(final String loadFile) {
-        SaveGameParser.loadGame(State.getDefaultSaveDir()
-                + loadFile + ".json");
+        SaveGame.loadGame(loadFile);
         State.getSaveGames().clear();
         ShaftEscape.setScene(new GameScene());
     }

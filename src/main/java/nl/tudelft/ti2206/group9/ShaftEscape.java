@@ -12,7 +12,7 @@ import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Logger;
-import nl.tudelft.ti2206.group9.util.SaveGameWriter;
+import nl.tudelft.ti2206.group9.util.SaveGame;
 
 import java.io.File;
 
@@ -120,8 +120,7 @@ public class ShaftEscape extends Application {
 	public static void exit() {
 		createSaveDirectory();
 		if (State.getPlayerName() != null) {
-			SaveGameWriter.saveGame(State.getDefaultSaveDir()
-					+ State.getPlayerName() + ".json");
+			SaveGame.saveGame();
 		}
 		LOGGER.writeToFile();
 		stage.close();
