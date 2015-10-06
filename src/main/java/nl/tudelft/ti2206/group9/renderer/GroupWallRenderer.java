@@ -1,18 +1,17 @@
 package nl.tudelft.ti2206.group9.renderer;
 
-import nl.tudelft.ti2206.group9.gui.Style;
-import nl.tudelft.ti2206.group9.level.Track;
 import javafx.scene.CacheHint;
-import javafx.scene.Group;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.level.Track;
 
 /**
  * This class renders the two Walls in the scene.
  * @author Maarten
  */
 @SuppressWarnings("restriction")
-public class GroupWallRenderer extends Group implements Renderer {
+public class GroupWallRenderer extends AbstractGroupRenderer {
 
 	/** Default constructor. */
 	public GroupWallRenderer() {

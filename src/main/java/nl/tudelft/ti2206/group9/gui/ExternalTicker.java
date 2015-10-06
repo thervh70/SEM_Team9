@@ -7,7 +7,6 @@ import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.DepthTest;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -17,6 +16,7 @@ import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.renderer.AbstractGroupRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupEntitiesRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupTrackRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupWallRenderer;
@@ -35,11 +35,11 @@ public class ExternalTicker extends AnimationTimer {
 	private final Label countdownLabel = new Label();
 
 	/** List that stores the entities, to be held up-to-date with Track. */
-	private final GroupEntitiesRenderer entities;
+	private final AbstractGroupRenderer entities;
 	/** Group that stores the wall. */
-	private final GroupWallRenderer wall;
+	private final AbstractGroupRenderer wall;
 	/** Group that stores the track. */
-	private final GroupTrackRenderer track;
+	private final AbstractGroupRenderer track;
 
 	/** Default constructor. */
 	public ExternalTicker() {
@@ -50,7 +50,6 @@ public class ExternalTicker extends AnimationTimer {
 			wall = new GroupWallRenderer();
 			track = new GroupTrackRenderer();
 
-			entities.setDepthTest(DepthTest.ENABLE);
 			GameScene.addWorld(entities, wall, track);
 		} else {
 			entities = null;
