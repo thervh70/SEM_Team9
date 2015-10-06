@@ -36,8 +36,6 @@ public class ExternalTicker extends AnimationTimer {
 
 	/** Height of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_HEIGHT = 130;
-	/** The integer 1, used to avoid PMD warning. */
-	private static final int INT_ONE = 1;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
 	/** Label for the countdownLabel animation. */
@@ -273,8 +271,9 @@ public class ExternalTicker extends AnimationTimer {
 
 		st.setOnFinished(new EventHandler<ActionEvent>() {
 			public void handle(final ActionEvent event) {
-				if (index > INT_ONE) {
-					countdown(index - 1);
+				int newIndex = index - 1;
+				if (newIndex > 0) {
+					countdown(newIndex);
 				} else {
 					InternalTicker.start();
 					GameScene.setRunning(true);
