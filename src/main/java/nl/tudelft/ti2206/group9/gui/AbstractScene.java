@@ -21,6 +21,7 @@ public abstract class AbstractScene extends Scene {
 	/** Default root, is an empty StackPane. */
 	public static final StackPane DEFAULT_ROOT = new StackPane();
 
+	/** The Popup a AbstractScene can have. */
 	private static Popup popup;
 
 	/**

@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
 import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -23,6 +21,8 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * This scene shows the 3D Game world and the 2D score overlay.
@@ -148,18 +148,18 @@ public final class GameScene extends AbstractScene {
 
 	/** Start the tickers. */
 	public static void startTickers() {
+		final int countdown = 3;
 		extTicker = new ExternalTicker();
 		extTicker.start();
-		InternalTicker.start();
-		running = true;
+		extTicker.countdown(countdown);
 		OBSERVABLE.notify(Category.GAME, Game.STARTED);
 	}
 
 	/** Resumes the tickers. */
 	public static void resumeTickers() {
+		final int countdown = 3;
 		extTicker.start();
-		InternalTicker.start();
-		running = true;
+		extTicker.countdown(countdown);
 		OBSERVABLE.notify(Category.GAME, Game.RESUMED);
 	}
 
@@ -238,6 +238,14 @@ public final class GameScene extends AbstractScene {
 	/** Clears the overlay. */
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
+	}
+
+	/**
+	 * Set the running attribute of this class.
+	 * @param b New value for running.
+	 */
+	public static void setRunning(final boolean b) {
+		running = b;
 	}
 
 	/**

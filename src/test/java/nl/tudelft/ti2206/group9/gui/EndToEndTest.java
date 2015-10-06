@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -19,11 +18,11 @@ import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
 import static org.junit.Assert.*;
+
 
 @SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
@@ -37,6 +36,8 @@ public class EndToEndTest extends ApplicationTest {
 	private static final long SHORT = 2 * TARDINESS;
 	/** Amount of milliseconds the Robot sleeps when sleeping "long". */
 	private static final long LONG = 5 * TARDINESS;
+	/** Sleep countdown. */
+	private static final long COUNTDOWN = 3500;
 
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
@@ -87,8 +88,10 @@ public class EndToEndTest extends ApplicationTest {
 		typeName();
 
 		mainMenu(MAIN_START);
+		sleep(COUNTDOWN);
 		keyboard(KeyCode.ESCAPE);
 		clickPopup(PAUSE_RESUME);
+		sleep(COUNTDOWN);
 		moveAround();
 		keyboard(KeyCode.ESCAPE);
 		clickPopup(PAUSE_TOMAIN);
@@ -101,9 +104,11 @@ public class EndToEndTest extends ApplicationTest {
 		loadMenu(LOAD_NAMECONTAINER);
 		loadMenu(LOAD_START);
 
-		mainMenu(MAIN_START);
+		sleep(COUNTDOWN);
 		playerDies();
+		sleep(SHORT);
 		clickPopup(DEATH_RETRY);
+		sleep(COUNTDOWN);
 		playerDies();
 		clickPopup(DEATH_TOMAIN);
 
