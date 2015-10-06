@@ -249,10 +249,8 @@ public class ExternalTicker extends AnimationTimer {
 	 * Render the animations for the countdownLabel method.
 	 * @param index The index to be rendered.
 	 */
-	private void countdownAnimation(
-			final int index) {
+	private void countdownAnimation(final int index) {
 		final int duration = 400;
-
 		final ScaleTransition st = new ScaleTransition(
 				Duration.millis(duration), countdownLabel);
 		st.setByY(1);
@@ -271,7 +269,7 @@ public class ExternalTicker extends AnimationTimer {
 
 		st.setOnFinished(new EventHandler<ActionEvent>() {
 			public void handle(final ActionEvent event) {
-				int newIndex = index - 1;
+				final int newIndex = index - 1;
 				if (newIndex > 0) {
 					countdown(newIndex);
 				} else {
