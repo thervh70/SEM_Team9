@@ -18,7 +18,7 @@ public class AudioPlayerTest {
 		final String testPath = "src/main/resources/"
 				+ "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
 		final AudioPlayer test = new AudioPlayer(testPath);
-		test.play();
+		test.play(false);
 		test.stop();
 		assertFalse(test.isRunning());
 	}
