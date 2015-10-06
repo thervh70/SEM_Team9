@@ -20,7 +20,6 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.renderer.BoxRenderer;
 import nl.tudelft.ti2206.group9.renderer.Renderer;
 import nl.tudelft.ti2206.group9.renderer.TrackRenderer;
 import nl.tudelft.ti2206.group9.renderer.WallRenderer;
@@ -55,7 +54,7 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 			wall = new WallRenderer();
 			track = new TrackRenderer();
 			for (final AbstractEntity e : State.getTrack().getEntities()) {
-				entities.getChildren().add(new BoxRenderer(e));
+				entities.getChildren().add(e.createRenderer());
 			}
 			GameScene.addWorld(entities);
 			GameScene.addWorld(wall);
@@ -129,10 +128,11 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 		switch (type) {
 		case ADD_FIRST:
 			entities.getChildren().add(0,
-					new BoxRenderer((AbstractEntity) item));
+					((AbstractEntity) item).createRenderer());
 			break;
 		case ADD_LAST:
-			entities.getChildren().add(new BoxRenderer((AbstractEntity) item));
+			entities.getChildren().add(
+					((AbstractEntity) item).createRenderer());
 			break;
 		case REMOVE:
 			// TODO ehm... how to remove the BoxRenderer associated with this?
