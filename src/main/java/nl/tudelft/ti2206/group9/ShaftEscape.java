@@ -8,14 +8,16 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import nl.tudelft.ti2206.group9.gui.AbstractScene;
+import nl.tudelft.ti2206.group9.gui.GameScene;
+import nl.tudelft.ti2206.group9.gui.MainMenuScene;
 import nl.tudelft.ti2206.group9.gui.SplashScene;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.SaveGameParser;
 import nl.tudelft.ti2206.group9.util.SaveGameWriter;
-import nl.tudelft.ti2206.group9.util.GameObserver.Category;
-import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 /**
  * Starting point of the Application.
@@ -112,6 +114,9 @@ public class ShaftEscape extends Application {
 
 	/** Exits the Application. */
 	public static void exit() {
+		MainMenuScene.getAudioPlayer().stopCheck();
+		GameScene.getAudioPlayer().stopCheck();
+
 		createSaveDirectory();
 		SaveGameWriter.saveGame("sav/save.json");
 		LOGGER.writeToFile();

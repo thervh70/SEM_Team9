@@ -76,6 +76,17 @@ public class AudioPlayer {
 		if (!this.isRunning()) {
 			this.play();
 		}
+
+	}
+
+	/**
+	 * Check whether an AudioPlayer is already running or not,
+	 * and if so, also stop the AudioPlayer.
+	 */
+	public final void stopCheck() {
+		if (this.isRunning()) {
+			this.stop();
+		}
 	}
 
 	/**
