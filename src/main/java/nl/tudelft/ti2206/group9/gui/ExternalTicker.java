@@ -29,6 +29,8 @@ public class ExternalTicker extends AnimationTimer {
 	private static final int SCORE_BOX_HEIGHT = 130;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
+	/** Distance between labels in overlay. */
+	private static final int LABEL_DISTANCE = 16;
 
 	@Override
 	public final void handle(final long now) {
@@ -71,8 +73,8 @@ public class ExternalTicker extends AnimationTimer {
 		Style.setLabelStyle(scoreLabel);
 		Style.setLabelStyle(distanceLabel);
 		Style.setLabelStyle(coinsLabel);
-
-		final VBox scoreBox = new VBox(nameLabel, highLabel, scoreLabel,
+		final VBox scoreBox = new VBox(LABEL_DISTANCE, nameLabel,
+                highLabel, scoreLabel,
 				distanceLabel, coinsLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);

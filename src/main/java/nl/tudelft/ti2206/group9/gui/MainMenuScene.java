@@ -43,6 +43,8 @@ public final class MainMenuScene extends AbstractMenuScene {
 
 	/** ExitButton width. */
 	private static final int EXIT_BUTTON_WIDTH = 60;
+	/** Font size for input. */
+	private static final int FONT_SIZE = 12;
 
 	/**
 	 * Create Start, Settings and Exit buttons.
@@ -71,6 +73,7 @@ public final class MainMenuScene extends AbstractMenuScene {
         settingsButton.setTooltip(new Tooltip("Change game settings"));
         loadButton.setTooltip(new Tooltip("Continue a game"));
         INPUT.setTooltip(new Tooltip("Enter your name"));
+		INPUT.setFont(Style.getFont(FONT_SIZE));
 
 		return new Node[]{startButton, settingsButton, exitButton,
 				loadButton, nameLabel, INPUT, shopButton};
@@ -97,7 +100,7 @@ public final class MainMenuScene extends AbstractMenuScene {
 				} else if (type == BType.LOAD) {
 					OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
 					ShaftEscape.setScene(new LoadGameScene());
-				} else if (type == BType.SETTINGS){
+				} else if (type == BType.SETTINGS) {
 					OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
 					ShaftEscape.setScene(new SettingsScene());
 				} else {
