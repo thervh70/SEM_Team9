@@ -233,12 +233,12 @@ public class ExternalTicker extends AnimationTimer {
 	 * Render the countdownLabel method.
 	 * @param index The index to be rendered.
 	 */
-	public void countdown(final Integer index) {
+	public void countdown(final int index) {
 		final int textSize = 64;
 		final int offsetX = 20;
 		final int offsetY = 50;
 
-		countdownLabel.setText(index.toString());
+		countdownLabel.setText(Integer.toString(index));
 		countdownLabel.setFont(Font.font("Roboto", FontWeight.BOLD, textSize));
 		countdownLabel.setTextFill(Color.WHITE);
 		countdownLabel.setLayoutX(ShaftEscape.WIDTH / 2 - offsetX);
@@ -252,7 +252,7 @@ public class ExternalTicker extends AnimationTimer {
 	 * @param index The index to be rendered.
 	 */
 	private void countdownAnimation(
-			final Integer index) {
+			final int index) {
 		final int duration = 400;
 
 		final ScaleTransition st = new ScaleTransition(
