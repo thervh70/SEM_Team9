@@ -59,10 +59,10 @@ public final class SettingsScene extends AbstractMenuScene {
 	 * @param button Button to be set.
 	 * @param type Type of button
 	 */
-	protected static void setButtonFunction(final Button button,
-			final BType type) {
-	    button.setOnAction(event -> {
-			SplashScene.getButtonAudioPlayer().play(false);
+    protected static void setButtonFunction(final Button button,
+            final BType type) {
+        button.setOnAction(event -> {
+            SplashScene.getButtonAudioPlayer().play(false);
             if (type == BType.SETTINGS_BACK) {
                 OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
                 ShaftEscape.setScene(new MainMenuScene());
@@ -77,8 +77,8 @@ public final class SettingsScene extends AbstractMenuScene {
                 button.setText("Sound: " + s);
                 OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUND, s);
             }
-	    });
-	}
+        });
+    }
 
 	/** Override background, the Settings background shows "Settings". */
 	@Override

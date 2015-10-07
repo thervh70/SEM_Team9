@@ -62,8 +62,8 @@ public final class SplashScene extends AbstractMenuScene {
      * Defining what has happens in case of a mouseClickEvent.
      */
     private void addMouseClick() {
-    	setOnMouseClicked(me -> {
-        	apButton.play(false);
+        setOnMouseClicked(me -> {
+            apButton.play(false);
             OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
                     me.getButton());
             OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
@@ -76,7 +76,7 @@ public final class SplashScene extends AbstractMenuScene {
      */
     private void addKeyPressed() {
         setOnKeyPressed(ke -> {
-        	apButton.play(false);
+            apButton.play(false);
             OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
                     ke.getCode());
             OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);

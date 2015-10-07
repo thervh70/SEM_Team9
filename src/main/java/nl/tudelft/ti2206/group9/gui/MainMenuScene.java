@@ -84,9 +84,9 @@ public final class MainMenuScene extends AbstractMenuScene {
 				OBSERVABLE.notify(Category.MENU, Menu.EXIT);
 				ShaftEscape.exit();
 			} else if (type == BType.START) {
-                State.setPlayerName(INPUT.getText());
-                LoadGameScene.getPlayers().add(INPUT.getText());
-                INPUT.clear();
+				State.setPlayerName(INPUT.getText());
+				LoadGameScene.getPlayers().add(INPUT.getText());
+				INPUT.clear();
 				OBSERVABLE.notify(Category.MENU, Menu.START);
 				ShaftEscape.setScene(new GameScene());
 			} else if (type == BType.LOAD) {
