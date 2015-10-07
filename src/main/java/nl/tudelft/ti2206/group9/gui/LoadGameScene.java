@@ -81,6 +81,7 @@ public class LoadGameScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
                                             final BType type) {
         button.setOnAction(event -> {
+			SplashScene.getButtonAudioPlayer().play(false);
             if (type == BType.LOAD_BACK) {
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.LOAD_BACK);
@@ -96,5 +97,3 @@ public class LoadGameScene extends AbstractMenuScene {
     }
 
 }
-
-

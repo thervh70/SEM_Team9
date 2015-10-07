@@ -26,11 +26,13 @@ public class DeathPopup extends AbstractPopup {
 		super(new Button("Try Again"), new Button("Return to Main Menu"));
 
         getLeftButton().setOnMouseClicked(mouseEvent -> {
+			SplashScene.getButtonAudioPlayer().play(false);
             hide();
             retryEvent.handle(mouseEvent);
         });
 
         getRightButton().setOnMouseClicked(mouseEvent -> {
+			SplashScene.getButtonAudioPlayer().play(false);
             hide();
             menuEvent.handle(mouseEvent);
         });
