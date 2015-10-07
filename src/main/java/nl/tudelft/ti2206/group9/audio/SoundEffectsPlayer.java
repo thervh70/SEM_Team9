@@ -38,11 +38,10 @@ public class SoundEffectsPlayer implements GameObserver { //NOPMD - complexity
 		case START_MOVE: apMove.play(false); break;
 		case STOP_MOVE:  break;
 		case COLLISION:
-			final String collidee = (String) update.getArgs()[0];
-			if (collidee.equals("AbstractObstacle")) {
-				apDie.play(false);
-			} else if (collidee.equals("Coin")) {
-				apCoin.play(false);
+			switch ((String) update.getArgs()[0]) {
+			case "AbstractObstacle": apDie.play(false); break;
+			case "Coin":             apCoin.play(false); break;
+			default: break;
 			}
 			break;
 		default:
