@@ -15,8 +15,7 @@ import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * Class that creates the content for a shop screen.
- *
- * Created by Maikel on 04/10/2015.
+ * @author Maikel on 04/10/2015.
  */
 @SuppressWarnings("restriction")
 public class ShopScene extends AbstractMenuScene {
@@ -32,8 +31,6 @@ public class ShopScene extends AbstractMenuScene {
     /** Row the list is put on. */
     private static final int LIST_ROW = 16;
 
-
-
     /** Creating a list. */
     private static ObservableList<String> items =
             FXCollections.observableArrayList();
@@ -45,8 +42,6 @@ public class ShopScene extends AbstractMenuScene {
         itemList.setItems(items);
         items.addAll("Iron man skin - $99999,-",
                 "Andy Zaidman skin - $99999,-", "Pokemon Tune - $999999,-");
-
-
 
         final Button backButton = createButton("BACK", 0, 24);
         final Label coinsLabel = createLabel("COINS:", 2, 24);
@@ -74,6 +69,7 @@ public class ShopScene extends AbstractMenuScene {
             }
         });
     }
+
     /**
      * Return the list with shop items.
      * @return List to return.
