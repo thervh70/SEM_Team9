@@ -106,7 +106,7 @@ public class EndToEndTest extends ApplicationTest {
 
 		sleep(COUNTDOWN);
 		playerDies();
-		sleep(SHORT);
+		sleep(LONG);
 		clickPopup(DEATH_RETRY);
 		sleep(COUNTDOWN);
 		playerDies();

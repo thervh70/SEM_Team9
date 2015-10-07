@@ -46,6 +46,7 @@ public final class SaveGame {
         }
     }
 
+
     /**
      * Removes the extension from a filename.
      * @param file the file from which the extension should be removed

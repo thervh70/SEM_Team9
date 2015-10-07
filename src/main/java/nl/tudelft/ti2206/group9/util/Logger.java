@@ -98,6 +98,7 @@ public class Logger implements GameObserver {
 		writeToOutput("", false);
 	}
 
+	@Override
 	public void update(final Observable o, final Object arg) {
 		final GameUpdate update = (GameUpdate) arg;
 		buffer.append(getLogString(update.getSpec(), update.getArgs()));

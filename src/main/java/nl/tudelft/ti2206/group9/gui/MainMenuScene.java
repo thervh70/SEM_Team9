@@ -20,7 +20,7 @@ import nl.tudelft.ti2206.group9.util.SaveGame;
 /**
  * A Main Menu with different options/buttons like a options menu, start button
  * and exit button.
- * @author Maikel, Maarten, Mitchell and Robin
+ * @author Maikel, Maarten, Mathias, Mitchell and Robin
  */
 @SuppressWarnings("restriction")
 public final class MainMenuScene extends AbstractMenuScene {
@@ -112,17 +112,17 @@ public final class MainMenuScene extends AbstractMenuScene {
 	/**
 	 * Checks whether the playername is a valid name.
 	 * Invalid options:
-	 * <a>
+	 * <ul>
 	 *     <li>Empty name</li>
 	 *     <li>Name contains a '.'</li>
 	 *     <li>Name contains a '/'</li>
 	 *     <li>Name contains a '\'</li>
-	 * </a>
+	 * </ul>
 	 * @param name the name to be checked
 	 * @return boolean to indicate whether the name is valid
 	 */
 	private boolean checkPlayerName(final String name) {
-		return !(name.contains(".") | name.contains("/") | name.contains("\\"));
+		return !(name.contains(".") || name.contains("/") || name.contains("\\"));
 	}
 
 	/**
