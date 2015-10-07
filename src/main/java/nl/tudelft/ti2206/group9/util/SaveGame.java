@@ -46,7 +46,8 @@ public final class SaveGame {
                 final String fileName = removeExtension(file.getName());
                 State.getSaveGames().add(fileName);
             }
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) { //NOPMD
+        // NulPointer is needed, but PMD doesn't like
            OBSERVABLE.notify(GameObserver.Category.ERROR,
                    GameObserver.Error.NULLPOINTEREXCEPTION,
                    "SaveGame.readPlayerNames()", e.getMessage());
