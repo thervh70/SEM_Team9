@@ -131,7 +131,6 @@ public final class MainMenuScene extends AbstractMenuScene {
 	 * that file, otherwise create a new game with that name.
 	 */
 	private static void createNewGame() {
-		State.resetAll();
 		State.setPlayerName(INPUT.getText());
 		if (!tryLoadPlayerName(INPUT.getText())) {
 			SaveGame.saveGame();
