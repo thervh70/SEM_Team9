@@ -122,7 +122,8 @@ public final class MainMenuScene extends AbstractMenuScene {
 	 * @return boolean to indicate whether the name is valid
 	 */
 	private boolean checkPlayerName(final String name) {
-		return !(name.contains(".") || name.contains("/") || name.contains("\\"));
+		return !(name.contains(".") || name.contains("/")
+				|| name.contains("\\"));
 	}
 
 	/**

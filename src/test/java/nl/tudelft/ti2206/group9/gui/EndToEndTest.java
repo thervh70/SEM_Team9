@@ -100,9 +100,6 @@ public class EndToEndTest extends ApplicationTest {
 		loadMenu(LOAD_BACK);
 		mainMenu(MAIN_LOADGAME);
 		loadMenu(LOAD_START);
-		clickPopup(WARNING_OK);
-		loadMenu(LOAD_NAMECONTAINER);
-		loadMenu(LOAD_START);
 
 		sleep(COUNTDOWN);
 		playerDies();

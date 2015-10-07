@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.group9.util;
 
 import nl.tudelft.ti2206.group9.level.State;
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 import java.io.File;
 
@@ -36,16 +37,21 @@ public final class SaveGame {
      * and store them in ObservableList players.
      */
     public static void readPlayerNames() {
-        final File folder = new File(State.getDefaultSaveDir());
-        for (final File file : folder.listFiles()) {
-            if (file.isDirectory()) {
-                continue;
+        try {
+            final File folder = new File(State.getDefaultSaveDir());
+            for (final File file : folder.listFiles()) {
+                if (file.isDirectory()) {
+                    continue;
+                }
+                final String fileName = removeExtension(file.getName());
+                State.getSaveGames().add(fileName);
             }
-            final String fileName = removeExtension(file.getName());
-            State.getSaveGames().add(fileName);
+        } catch(NullPointerException e) {
+           OBSERVABLE.notify(GameObserver.Category.ERROR,
+                   GameObserver.Error.NULLPOINTEREXCEPTION,
+                   "SaveGame.readPlayerNames()", e.getMessage());
         }
     }
-
 
     /**
      * Removes the extension from a filename.

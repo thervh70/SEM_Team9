@@ -56,6 +56,7 @@ public class LoadGameScene extends AbstractMenuScene {
     public Node[] createContent() {
         SaveGame.readPlayerNames();
         list.setItems(State.getSaveGames());
+        list.getSelectionModel().selectFirst();
         final Button backButton = createButton("BACK", 0, 20);
         final Button loadButton = createButton("LOAD & START!", 2, 20);
         /** Set button functions. */
@@ -108,7 +109,7 @@ public class LoadGameScene extends AbstractMenuScene {
      * @param loadFile the name of the game to be loaded
      */
     private static void loadGame(final String loadFile) {
-        if(State.getPlayerName() != null) {
+        if (State.getPlayerName() != null) {
             SaveGame.saveGame();
         }
         SaveGame.loadGame(loadFile);
