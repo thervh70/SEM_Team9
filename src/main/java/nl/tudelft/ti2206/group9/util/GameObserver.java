@@ -110,7 +110,13 @@ public interface GameObserver extends Observer {
 		MEDIAEXCEPTION,
 		/** There has been an exception with parsing JSON files.
 		 *  optionalArgs: exception location, exception message. */
-		PARSEEXCEPTION
+		PARSEEXCEPTION,
+		/** There has been an exception with encoding of Strings.
+		 *  optionalArgs: exception location, exception message. */
+		UNSUPPORTEDENCODINGEXCEPTION,
+		/** There has been an exception with decoding of Strings.
+		 *  optionalArgs: exception location, exception message. */
+		UNSUPPORTEDDECODINGEXCEPTION
 	}
 
 	/** Object containing information about the game update. */
