@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import javafx.event.EventHandler;
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -9,8 +9,6 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
@@ -22,8 +20,6 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
-
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * This scene shows the 3D Game world and the 2D score overlay.
@@ -124,29 +120,23 @@ public final class GameScene extends AbstractScene {
 	/** Make sure KeyEvents are handled in {@link KeyMap}. */
 	private void keyBindings() {
 		KeyMap.defaultKeys();
-		setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(final KeyEvent keyEvent) {
-				if (running) {
-					keyMap.keyPressed(keyEvent.getCode());
-					if (keyEvent.getCode().equals(KeyCode.ESCAPE)
-							&& getPopup() == null) {
-						showPauseMenu();
-					}
+		setOnKeyPressed(keyEvent -> {
+			if (running) {
+				keyMap.keyPressed(keyEvent.getCode());
+				if (keyEvent.getCode().equals(KeyCode.ESCAPE)
+						&& getPopup() == null) {
+					showPauseMenu();
 				}
 			}
 		});
-		setOnKeyReleased(new EventHandler<KeyEvent>() {
-			public void handle(final KeyEvent keyEvent) {
-				if (running) {
-					keyMap.keyReleased(keyEvent.getCode());
-				}
+		setOnKeyReleased(keyEvent -> {
+			if (running) {
+				keyMap.keyReleased(keyEvent.getCode());
 			}
 		});
-		setOnKeyTyped(new EventHandler<KeyEvent>() {
-			public void handle(final KeyEvent keyEvent) {
-				if (running) {
-					keyMap.keyTyped(keyEvent.getCode());
-				}
+		setOnKeyTyped(keyEvent -> {
+			if (running) {
+				keyMap.keyTyped(keyEvent.getCode());
 			}
 		});
 	}
@@ -180,18 +170,14 @@ public final class GameScene extends AbstractScene {
 	public static void showPauseMenu() {
 		stopTickers();
 		OBSERVABLE.notify(Category.GAME, Game.PAUSED);
-		pause = new PausePopup(new EventHandler<MouseEvent>() {
-			public void handle(final MouseEvent e) {
-				resumeTickers();
-				pause = null;
-			}
-		}, new EventHandler<MouseEvent>() {
-			public void handle(final MouseEvent e) {
-				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
-				State.reset();
-				ShaftEscape.setScene(new MainMenuScene());
-				pause = null;
-			}
+		pause = new PausePopup(e -> {
+			resumeTickers();
+			pause = null;
+		}, e -> {
+			OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
+			State.reset();
+			ShaftEscape.setScene(new MainMenuScene());
+			pause = null;
 		});
 		ShaftEscape.showPopup(pause);
 	}
@@ -199,20 +185,16 @@ public final class GameScene extends AbstractScene {
 	/** Show a death menu. */
 	public static void showDeathMenu() {
 		audioPlayer.stop();
-		death = new DeathPopup(new EventHandler<MouseEvent>() {
-			public void handle(final MouseEvent e) {
-				OBSERVABLE.notify(Category.GAME, Game.RETRY);
-				State.reset();
-				ShaftEscape.setScene(new GameScene());
-				death = null;
-			}
-		}, new EventHandler<MouseEvent>() {
-			public void handle(final MouseEvent e) {
-				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
-				State.reset();
-				ShaftEscape.setScene(new MainMenuScene());
-				death = null;
-			}
+		death = new DeathPopup(e -> {
+			OBSERVABLE.notify(Category.GAME, Game.RETRY);
+			State.reset();
+			ShaftEscape.setScene(new GameScene());
+			death = null;
+		}, e -> {
+			OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
+			State.reset();
+			ShaftEscape.setScene(new MainMenuScene());
+			death = null;
 		});
 		ShaftEscape.showPopup(death);
 	}

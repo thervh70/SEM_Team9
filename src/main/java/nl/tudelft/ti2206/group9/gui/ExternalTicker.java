@@ -5,8 +5,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -20,10 +18,10 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
-import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
+import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
@@ -267,15 +265,13 @@ public class ExternalTicker extends AnimationTimer {
 		ft.setFromValue(0);
 		ft.play();
 
-		st.setOnFinished(new EventHandler<ActionEvent>() {
-			public void handle(final ActionEvent event) {
-				final int newIndex = index - 1;
-				if (newIndex > 0) {
-					countdown(newIndex);
-				} else {
-					InternalTicker.start();
-					GameScene.setRunning(true);
-				}
+		st.setOnFinished(event -> {
+			final int newIndex = index - 1;
+			if (newIndex > 0) {
+				countdown(newIndex);
+			} else {
+				InternalTicker.start();
+				GameScene.setRunning(true);
 			}
 		});
 	}

@@ -25,20 +25,14 @@ public class DeathPopup extends AbstractPopup {
     		final EventHandler<MouseEvent> menuEvent) {
 		super(new Button("Try Again"), new Button("Return to Main Menu"));
 
-        getLeftButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(final MouseEvent y) {
-                hide();
-                retryEvent.handle(y);
-            }
+        getLeftButton().setOnMouseClicked(mouseEvent -> {
+            hide();
+            retryEvent.handle(mouseEvent);
         });
 
-        getRightButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(final MouseEvent n) {
-                hide();
-                menuEvent.handle(n);
-            }
+        getRightButton().setOnMouseClicked(mouseEvent -> {
+            hide();
+            menuEvent.handle(mouseEvent);
         });
     }
 

@@ -1,9 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -64,23 +61,21 @@ public final class SettingsScene extends AbstractMenuScene {
 	 */
 	protected static void setButtonFunction(final Button button,
 			final BType type) {
-	    button.setOnAction(new EventHandler<ActionEvent>() {
-	        public void handle(final ActionEvent event) {
-	            if (type == BType.SETTINGS_BACK) {
-	                OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
-	                ShaftEscape.setScene(new MainMenuScene());
-	            } else {
-	                State.setSoundEnabled(!State.isSoundEnabled());
-	                String s;
-	                if (State.isSoundEnabled()) {
-	                    s = "ON";
-	                } else {
-	                    s = "OFF";
-	                }
-	                button.setText("Sound: " + s);
-	                OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUND, s);
-	            }
-	        }
+	    button.setOnAction(event -> {
+            if (type == BType.SETTINGS_BACK) {
+                OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
+                ShaftEscape.setScene(new MainMenuScene());
+            } else {
+                State.setSoundEnabled(!State.isSoundEnabled());
+                String s;
+                if (State.isSoundEnabled()) {
+                    s = "ON";
+                } else {
+                    s = "OFF";
+                }
+                button.setText("Sound: " + s);
+                OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUND, s);
+            }
 	    });
 	}
 

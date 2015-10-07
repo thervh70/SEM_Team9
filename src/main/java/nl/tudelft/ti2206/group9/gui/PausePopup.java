@@ -25,21 +25,15 @@ public class PausePopup extends AbstractPopup {
     		final EventHandler<MouseEvent> menuEvent) {
 		super(new Button("Resume"), new Button("Return to Main Menu"));
 
-        getLeftButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(final MouseEvent y) {
-                hide();
-                resumeEvent.handle(y);
-            }
+        getLeftButton().setOnMouseClicked(mouseEvent -> {
+            hide();
+            resumeEvent.handle(mouseEvent);
         });
 
-        getRightButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(final MouseEvent n) {
-                hide();
-                menuEvent.handle(n);
-                GameScene.getAudioPlayer().stop();
-            }
+        getRightButton().setOnMouseClicked(mouseEvent -> {
+            hide();
+            menuEvent.handle(mouseEvent);
+            GameScene.getAudioPlayer().stop();
         });
     }
 

@@ -1,13 +1,9 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
 import javafx.animation.FadeTransition;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
@@ -61,13 +57,11 @@ public final class SplashScene extends AbstractMenuScene {
      * Defining what has happens in case of a mouseClickEvent.
      */
     private void addMouseClick() {
-    	setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent me) {
-                OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
-                        me.getButton());
-                OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
-                ShaftEscape.setScene(new MainMenuScene());
-            }
+    	setOnMouseClicked(me -> {
+            OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
+                    me.getButton());
+            OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
+            ShaftEscape.setScene(new MainMenuScene());
         });
     }
 
@@ -75,13 +69,11 @@ public final class SplashScene extends AbstractMenuScene {
      * Defining what happens in case of a random keyPressedEvent.
      */
     private void addKeyPressed() {
-        setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent ke) {
-                OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
-                        ke.getCode());
-                OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
-                ShaftEscape.setScene(new MainMenuScene());
-            }
+        setOnKeyPressed(ke -> {
+            OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
+                    ke.getCode());
+            OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
+            ShaftEscape.setScene(new MainMenuScene());
         });
     }
 
