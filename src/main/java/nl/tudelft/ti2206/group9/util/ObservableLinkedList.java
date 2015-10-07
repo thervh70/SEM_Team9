@@ -70,7 +70,7 @@ public class ObservableLinkedList<T> extends LinkedList<T> {
 			/** When an element is removed from the list. */
 			REMOVE,
 			/** When an element is removed from the list by index. */
-			REMOVE_INDEX,
+			REMOVE_INDEX
 		}
 
 		/**
