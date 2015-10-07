@@ -22,8 +22,19 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
 	 */
 	public AbstractEntity(final Point3D cent, final Point3D siz) {
 		super();
-		this.center = cent;
-		this.size = siz;
+
+		if (cent == null) {
+			center = null;
+		} else {
+			// Copying point to prevent references being unintendedly updated
+			center = new Point3D(cent);
+		}
+
+		if (siz == null) {
+			size = null;
+		} else {
+			size = new Point3D(siz);
+		}
 	}
 
 	/**
@@ -161,7 +172,7 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
 	 */
 	@Override
 	public String toString() {
-		return "AbstractEntity [center=" + center + ","
+		return this.getClass().getSimpleName() + " [center=" + center + ","
 				+ "size=" + size + "]";
 	}
 
