@@ -70,6 +70,9 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 	@Override
 	public final void handle(final long now) {
 		synchronized (ShaftEscape.TICKER_LOCK) {
+			if (InternalTicker.isRunning()) {
+				GameScene.getAudioPlayer().play(true);
+			}
 			renderScene();
 		}
 	}
