@@ -109,9 +109,9 @@ public class LoadGameScene extends AbstractMenuScene {
      * @param loadFile the name of the game to be loaded
      */
     private static void loadGame(final String loadFile) {
-        if (State.getPlayerName() != null) {
-            SaveGame.saveGame();
-        }
+//        if (State.getPlayerName() != null) {
+//            SaveGame.saveGame();
+//        }
         SaveGame.loadGame(loadFile);
         State.getSaveGames().clear();
         ShaftEscape.setScene(new GameScene());
