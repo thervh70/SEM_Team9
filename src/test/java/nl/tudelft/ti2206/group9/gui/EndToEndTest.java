@@ -100,9 +100,11 @@ public class EndToEndTest extends ApplicationTest {
 		loadMenu(LOAD_BACK);
 		mainMenu(MAIN_LOADGAME);
 		loadMenu(LOAD_START);
+		System.out.println(ShaftEscape.getScene());
 
 		sleep(COUNTDOWN);
 		playerDies();
+		System.out.println(ShaftEscape.getScene().getPopup());
 		sleep(LONG);
 		clickPopup(DEATH_RETRY);
 		sleep(COUNTDOWN);
