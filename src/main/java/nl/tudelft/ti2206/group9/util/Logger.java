@@ -98,15 +98,7 @@ public class Logger implements GameObserver {
 		writeToOutput("", false);
 	}
 
-    /**
-     * This method is called whenever the observed object is changed. An
-     * application calls an <tt>Observable</tt> object's
-     * <code>notifyObservers</code> method to have all the object's
-     * observers notified of the change.
-     * @param   o     the observable object.
-     * @param   arg   an argument passed to the <code>notifyObservers</code>
-     *                 method.
-     */
+	@Override
 	public void update(final Observable o, final Object arg) {
 		final GameUpdate update = (GameUpdate) arg;
 		buffer.append(getLogString(update.getSpec(), update.getArgs()));
@@ -116,7 +108,7 @@ public class Logger implements GameObserver {
 	/**
 	 * Writes the current buffer to the output file. This should be called
 	 * before exiting the application. The buffer is used instead of writing to
-	 * the log file on each {@link #gameUpdate} call.
+	 * the log file on each {@link #update(Observable, Object)} call.
 	 * @param append whether the buffer should be appended to the current log
 	 *        file or not. A new file is created at every application startup.
 	 * @return whether the writing has been successful.

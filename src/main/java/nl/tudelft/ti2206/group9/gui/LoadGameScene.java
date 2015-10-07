@@ -1,11 +1,8 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -83,21 +80,18 @@ public class LoadGameScene extends AbstractMenuScene {
      */
     protected static void setButtonFunction(final Button button,
                                             final BType type) {
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(final ActionEvent event) {
-				SplashScene.getButtonAudioPlayer().play(false);
-                if (type == BType.LOAD_BACK) {
-                    OBSERVABLE.notify(GameObserver.Category.MENU,
-                            GameObserver.Menu.LOAD_BACK);
-                    ShaftEscape.setScene(new MainMenuScene());
-                } else {
-                	MainMenuScene.getAudioPlayer().stop();
-                    OBSERVABLE.notify(GameObserver.Category.MENU,
-                            GameObserver.Menu.LOAD);
-                    State.setPlayerName(
-                            list.getSelectionModel().getSelectedItem());
-                    ShaftEscape.setScene(new GameScene());
-                }
+        button.setOnAction(event -> {
+			SplashScene.getButtonAudioPlayer().play(false);
+            if (type == BType.LOAD_BACK) {
+                OBSERVABLE.notify(GameObserver.Category.MENU,
+                        GameObserver.Menu.LOAD_BACK);
+                ShaftEscape.setScene(new MainMenuScene());
+            } else {
+                OBSERVABLE.notify(GameObserver.Category.MENU,
+                        GameObserver.Menu.LOAD);
+                State.setPlayerName(
+                        list.getSelectionModel().getSelectedItem());
+                ShaftEscape.setScene(new GameScene());
             }
         });
     }
