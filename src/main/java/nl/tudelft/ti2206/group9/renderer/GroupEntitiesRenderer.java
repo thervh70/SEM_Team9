@@ -34,19 +34,18 @@ public class GroupEntitiesRenderer extends AbstractGroupRenderer
 
 	@Override
 	public void update(final Type type, final Object item, final int index) {
+		final AbstractEntity entity = (AbstractEntity) item;
+		final AbstractBoxRenderer<?> renderer = entity.createRenderer();
 		switch (type) {
-		case ADD_FIRST:
-			getChildren().add(0, ((AbstractEntity) item).createRenderer());
-			break;
-		case ADD_LAST:
-			getChildren().add(((AbstractEntity) item).createRenderer());
-			break;
+		case ADD_FIRST:    getChildren().add(0, renderer); break;
+		case ADD_LAST:     getChildren().add(renderer); break;
+		case REMOVE_INDEX: getChildren().remove(index); break;
 		case REMOVE:
-			// TODO ehm... how to remove the BoxRenderer associated with this?
-			// Currently, this type of remove is not called. But you never know.
-			break;
-		case REMOVE_INDEX:
-			getChildren().remove(index);
+			// It is not possible to call remove(entity) on the children of this
+			// BoxRenderer. Track.children contains Entities,
+			// this.children contains BoxRenderers.
+			final int indexOf = State.getTrack().getEntities().indexOf(entity);
+			getChildren().remove(indexOf);
 			break;
 		default: break;
 		}
