@@ -90,10 +90,10 @@ public class LoadGameScene extends AbstractMenuScene {
                     if (loadFile == null) {
                         setPopup(new WarningPopup(
                                 new EventHandler<MouseEvent>() {
-                            public void handle(final MouseEvent event) {
-                                setPopup(null);
-                            }
-                        }, "Please select a valid file!"));
+                                    public void handle(final MouseEvent event) {
+                                        setPopup(null);
+                                    }
+                                }, "Please select a valid file!"));
                         ShaftEscape.showPopup(getPopup());
                     } else {
                         loadGame(loadFile);
@@ -108,6 +108,9 @@ public class LoadGameScene extends AbstractMenuScene {
      * @param loadFile the name of the game to be loaded
      */
     private static void loadGame(final String loadFile) {
+        if(State.getPlayerName() != null) {
+            SaveGame.saveGame();
+        }
         SaveGame.loadGame(loadFile);
         State.getSaveGames().clear();
         ShaftEscape.setScene(new GameScene());
