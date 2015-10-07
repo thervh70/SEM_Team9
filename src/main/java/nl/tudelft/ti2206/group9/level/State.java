@@ -1,5 +1,9 @@
 package nl.tudelft.ti2206.group9.level;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+
 /**
  * This utility class stores the State of the game,
  * for example the score and the distance run.
@@ -21,9 +25,18 @@ public final class State {
 	/** Name of the player. */
 	private static String playerName;
 
+	/**
+	 * Default savegame directory.
+	 * Attention! Only use 1 subfolder!
+	 */
+	private static String defaultSaveDir = "sav/";
+
 	/** Boolean to determine whether sound is enabled. */
 	private static boolean soundEnabled;
 
+	/** List of the names of all the saved games. */
+	private static ObservableList<String> saveGames =
+			FXCollections.observableArrayList();
 	/** Standard modulus number for both modulo calculation. */
 	public static final int MOD = 50;
 
@@ -170,5 +183,29 @@ public final class State {
 	 */
 	public static void setSoundEnabled(final boolean newSoundEnabled) {
 		State.soundEnabled = newSoundEnabled;
+	}
+
+	/**
+	 * Get the default savegame directory.
+	 * @return defaultSaveDir
+	 */
+	public static String getDefaultSaveDir() {
+		return defaultSaveDir;
+	}
+
+	/**
+	 * Set a new default savegame directory.
+	 * @param newSaveDir the new savegame directory
+	 */
+	public static void setDefaultSaveDir(final String newSaveDir) {
+		State.defaultSaveDir = newSaveDir;
+	}
+
+	/**
+	 * Get the list of the names of all the saved games.
+	 * @return ObservableList which contains all names of the saved games
+	 */
+	public static ObservableList<String> getSaveGames() {
+		return saveGames;
 	}
 }

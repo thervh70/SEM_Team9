@@ -12,7 +12,7 @@ import nl.tudelft.ti2206.group9.level.State;
  * @author Maarten, Robin
  */
 @SuppressWarnings("restriction")
-public class DeathPopup extends AbstractPopup {
+public class DeathPopup extends AbstractInfoPopup {
 
 	/**
 	 * Creates a new DeathPopup.

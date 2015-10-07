@@ -110,7 +110,10 @@ public interface GameObserver extends Observer {
 		MEDIAEXCEPTION,
 		/** There has been an exception with parsing JSON files.
 		 *  optionalArgs: exception location, exception message. */
-		PARSEEXCEPTION
+		PARSEEXCEPTION,
+		/** There has been an exception with referencing a null object.
+		 * optionalArgs: exception location, exception message */
+		NULLPOINTEREXCEPTION
 	}
 
 	/** Object containing information about the game update. */

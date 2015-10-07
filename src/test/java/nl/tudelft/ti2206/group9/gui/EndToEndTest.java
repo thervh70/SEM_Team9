@@ -1,5 +1,10 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -15,11 +20,6 @@ import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
 
@@ -61,6 +61,8 @@ public class EndToEndTest extends ApplicationTest {
 	private static final int DEATH_RETRY = 0;
 	private static final int DEATH_TOMAIN = 1;
 
+	private static final int WARNING_OK = 0;
+
 	@Override
 	public void start(final Stage primaryStage) {
 		letPlayerSurvive();
@@ -75,31 +77,37 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(SHORT);
 		mainMenu(MAIN_SETTINGS);
 		clickAllSettings();
+		mainMenu(MAIN_START);
+		assertNull(ShaftEscape.getScene().getPopup());
 		mainMenu(MAIN_TEXTFIELD);
+		typeFaultyName();
+		mainMenu(MAIN_START);
+		clickPopup(WARNING_OK);
+		mainMenu(MAIN_TEXTFIELD);
+		keyboard(KeyCode.BACK_SPACE);
 		typeName();
 
 		mainMenu(MAIN_START);
 		sleep(COUNTDOWN);
 		keyboard(KeyCode.ESCAPE);
-		pausePopup(PAUSE_RESUME);
+		clickPopup(PAUSE_RESUME);
 		sleep(COUNTDOWN);
 		moveAround();
 		keyboard(KeyCode.ESCAPE);
-		pausePopup(PAUSE_TOMAIN);
+		clickPopup(PAUSE_TOMAIN);
 
 		mainMenu(MAIN_LOADGAME);
 		loadMenu(LOAD_BACK);
 		mainMenu(MAIN_LOADGAME);
-		loadMenu(LOAD_NAMECONTAINER);
 		loadMenu(LOAD_START);
 
-		mainMenu(MAIN_START);
 		sleep(COUNTDOWN);
 		playerDies();
-		deathPopup(DEATH_RETRY);
+		sleep(LONG);
+		clickPopup(DEATH_RETRY);
 		sleep(COUNTDOWN);
 		playerDies();
-		deathPopup(DEATH_TOMAIN);
+		clickPopup(DEATH_TOMAIN);
 
 		mainMenu(MAIN_QUIT);
 		outputEventLog();
@@ -136,6 +144,10 @@ public class EndToEndTest extends ApplicationTest {
 		keyboard(KeyCode.R);
 		keyboard(KeyCode.E);
 		keyboard(KeyCode.D);
+	}
+
+	private void typeFaultyName() {
+		keyboard(KeyCode.SLASH);
 	}
 
 	private void moveAround() {
@@ -200,18 +212,6 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(SHORT);
 	}
 
-	private void pausePopup(final int buttonNo) {
-		if (GameScene.getPopup() == null) {
-			fail("The Pause Popup is not available.");
-		}
-		ObservableList<Node> buttons;
-		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
-				.getChildren();
-		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
-		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-		sleep(LONG);
-	}
-
 	private void playerDies() {
 		State.getTrack().getPlayer().die();
 		sleep(2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
@@ -219,17 +219,21 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(LONG);
 	}
 
-	private void deathPopup(final int buttonNo) {
-		if (GameScene.getPopup() == null) {
-			fail("The Death Popup is not available.");
+	private void clickPopup(final int buttonNo) {
+		AbstractScene scene = ShaftEscape.getScene();
+		if (scene.getPopup() == null) {
+			fail("The Popup is not available.");
 		}
 		ObservableList<Node> buttons;
 		sleep(1);
-		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
+		buttons = ((VBox) scene.getPopup().getContent().get(1))
 				.getChildren();
 		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
-		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		try {
+			clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		} catch(ArrayIndexOutOfBoundsException e) {
+			fail("ButtonNo " + buttonNo + " does not exist");
+		}
 		sleep(SHORT);
 	}
-
 }

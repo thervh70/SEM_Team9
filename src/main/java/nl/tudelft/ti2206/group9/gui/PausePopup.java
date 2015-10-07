@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
  * @author Maarten, Robin
  */
 @SuppressWarnings("restriction")
-public class PausePopup extends AbstractPopup {
+public class PausePopup extends AbstractInfoPopup {
 
 	/**
 	 * Creates a new PausePopup.

@@ -96,13 +96,21 @@ public class StateTest {
 		State.checkHighscore();
 		assertEquals(2, State.getHighscore());
 	}
-
+ 
 	@Test
 	public void testSetPlayerName() {
 		State.setPlayerName("Jan");
 		assertEquals("Jan", State.getPlayerName());
 		State.setPlayerName("Piet");
 		assertEquals("Piet", State.getPlayerName());
+	}
+
+	@Test
+	public void testGetDefaultSaveDir() {
+		assertEquals("sav/", State.getDefaultSaveDir());
+
+		State.setDefaultSaveDir("save/");
+		assertEquals("save/", State.getDefaultSaveDir());
 	}
 
 }

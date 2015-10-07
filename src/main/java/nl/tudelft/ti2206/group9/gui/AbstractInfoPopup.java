@@ -16,7 +16,7 @@ import javafx.stage.Popup;
  * @author Maarten, Robin
  */
 @SuppressWarnings("restriction")
-public abstract class AbstractPopup extends Popup {
+public abstract class AbstractInfoPopup extends Popup {
 
     /** Width of the PopUpMenu. */
     public static final double WIDTH = 260;
@@ -37,7 +37,8 @@ public abstract class AbstractPopup extends Popup {
      * @param leftButton Button that should be shown in the bottom-left.
      * @param rightButton Button that should be shown in the bottom-right.
      */
-    public AbstractPopup(final Button leftButton, final Button rightButton) {
+    public AbstractInfoPopup(final Button leftButton,
+                             final Button rightButton) {
         super();
         left = leftButton;
         right = rightButton;

@@ -14,20 +14,22 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import org.json.simple.JSONObject;
 
 /**
+ * This class takes care of the writing of JSON
+ * into external files. This way games can be saved.
  * @author Mathias
  */
-public final class SaveGameWriter {
+public final class Writer {
 
     /**
      * Private constructor.
      */
-    private SaveGameWriter() { }
+    private Writer() { }
 
     /**
      * Save a game by writing it to a JSON file.
      * @param path the path of the JSON file it has to be written to
      */
-    public static void saveGame(final String path) {
+    static void saveGame(final String path) {
     	final String mainObject = writeToJSON();
 
 		BufferedWriter fw = null;
@@ -39,7 +41,7 @@ public final class SaveGameWriter {
 			fw.flush();
 		} catch (IOException e) {
 			OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
-					"SaveGameWriter.saveGame(String)", e.getMessage());
+					"Writer.saveGame(String)", e.getMessage());
 		} finally {
 			try {
 				if (fw != null) {
@@ -47,7 +49,7 @@ public final class SaveGameWriter {
 				}
 			} catch (IOException e) {
 				OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
-						"SaveGameWriter.saveGame(String) (2)", e.getMessage());
+						"Writer.saveGame(String) (2)", e.getMessage());
 			}
 		}
     }

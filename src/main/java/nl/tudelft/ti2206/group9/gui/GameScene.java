@@ -14,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
-import javafx.stage.Popup;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
@@ -61,10 +60,6 @@ public final class GameScene extends AbstractScene {
 	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/"
 			+ "resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
 
-	/** The Pause popup. */
-	private static Popup pause;
-	/** The final after death popup. */
-	private static Popup death;
 
 	/**
 	 * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and
@@ -180,41 +175,41 @@ public final class GameScene extends AbstractScene {
 	public static void showPauseMenu() {
 		stopTickers();
 		OBSERVABLE.notify(Category.GAME, Game.PAUSED);
-		pause = new PausePopup(new EventHandler<MouseEvent>() {
+		setPopup(new PausePopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				resumeTickers();
-				pause = null;
+				setPopup(null);
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
-				pause = null;
+				setPopup(null);
 			}
-		});
-		ShaftEscape.showPopup(pause);
+		}));
+		ShaftEscape.showPopup(getPopup());
 	}
 
 	/** Show a death menu. */
 	public static void showDeathMenu() {
 		audioPlayer.stop();
-		death = new DeathPopup(new EventHandler<MouseEvent>() {
+		setPopup(new DeathPopup(new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				OBSERVABLE.notify(Category.GAME, Game.RETRY);
 				State.reset();
 				ShaftEscape.setScene(new GameScene());
-				death = null;
+				setPopup(null);
 			}
 		}, new EventHandler<MouseEvent>() {
 			public void handle(final MouseEvent e) {
 				OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
 				State.reset();
 				ShaftEscape.setScene(new MainMenuScene());
-				death = null;
+				setPopup(null);
 			}
-		});
-		ShaftEscape.showPopup(death);
+		}));
+		ShaftEscape.showPopup(getPopup());
 	}
 
 	/**
@@ -243,15 +238,6 @@ public final class GameScene extends AbstractScene {
 	/** Clears the overlay. */
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
-	}
-
-	/** @return current Popup. Is null if no Popup is present. */
-	public static Popup getPopup() {
-		if (pause == null) {
-			return death;
-		} else {
-			return pause;
-		}
 	}
 
 	/**
