@@ -123,7 +123,6 @@ public final class MainMenuScene extends AbstractMenuScene {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Checks whether the playername is a valid name.
 	 * Invalid options:
 	 * <a>
