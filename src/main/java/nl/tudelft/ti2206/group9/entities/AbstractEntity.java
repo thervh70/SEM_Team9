@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.group9.entities;
 
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.renderer.AbstractBoxRenderer;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -84,6 +85,13 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
 	 * @param collidee Entity that this entity collides with.
 	 */
 	public abstract void collision(final AbstractEntity collidee);
+
+	/**
+	 * Creates a new renderer that encapsulates this entity.
+	 * @return a new renderer that encapsulates this entity.
+	 */
+	public abstract AbstractBoxRenderer<? extends AbstractEntity>
+			createRenderer();
 
 	/**
 	 * @return the center
