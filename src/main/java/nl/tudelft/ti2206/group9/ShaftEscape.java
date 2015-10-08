@@ -46,8 +46,7 @@ public class ShaftEscape extends Application {
 	 */
 	@Override
 	public final void start(final Stage appStage) {
-		State.
-				resetAll();
+		State.resetAll();
 		setStage(appStage);
 		stage.setResizable(false);
 		stage.setWidth(ShaftEscape.WIDTH);

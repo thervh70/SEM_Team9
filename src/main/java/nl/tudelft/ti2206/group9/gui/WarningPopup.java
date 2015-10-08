@@ -17,6 +17,7 @@ import java.util.Arrays;
 /**
  * @author Mathias
  */
+@SuppressWarnings("restriction")
 public class WarningPopup extends Popup {
 
     /** Width of the PopUpMenu. */
