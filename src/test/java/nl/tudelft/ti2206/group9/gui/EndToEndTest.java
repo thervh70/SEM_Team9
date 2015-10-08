@@ -1,5 +1,16 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -13,15 +24,9 @@ import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.*;
 
 
 @SuppressWarnings("restriction")
@@ -38,6 +43,8 @@ public class EndToEndTest extends ApplicationTest {
 	private static final long LONG = 5 * TARDINESS;
 	/** Sleep countdown. */
 	private static final long COUNTDOWN = 3500;
+	/** Sleep factor playerDies. */
+	private static final long SLEEP_FACTOR = 2;
 
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
@@ -47,19 +54,23 @@ public class EndToEndTest extends ApplicationTest {
 	private static final int MAIN_QUIT = 2;
 	private static final int MAIN_LOADGAME = 3;
 	private static final int MAIN_TEXTFIELD = 5;
+	private static final int MAIN_SHOP = 6;
 
 	private static final int LOAD_BACK = 0;
 	private static final int LOAD_START = 1;
-	private static final int LOAD_NAMECONTAINER = 2;
 
 	private static final int SETTINGS_BACK = 0;
 	private static final int SETTINGS_SOUND = 1;
+
+	private static final int SHOP_BACK = 0;
 
 	private static final int PAUSE_RESUME = 0;
 	private static final int PAUSE_TOMAIN = 1;
 
 	private static final int DEATH_RETRY = 0;
 	private static final int DEATH_TOMAIN = 1;
+
+	private static final int WARNING_OK = 0;
 
 	@Override
 	public void start(final Stage primaryStage) {
@@ -73,33 +84,34 @@ public class EndToEndTest extends ApplicationTest {
 	public void test() throws IOException { //NOPMD - assert is done in subs.
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
-		mainMenu(MAIN_SETTINGS);
-		clickAllSettings();
-		mainMenu(MAIN_TEXTFIELD);
-		typeName();
+
+		goThroughSettings();
+		goThroughShop();
 
 		mainMenu(MAIN_START);
-		sleep(COUNTDOWN);
-		keyboard(KeyCode.ESCAPE);
-		pausePopup(PAUSE_RESUME);
-		sleep(COUNTDOWN);
-		moveAround();
-		keyboard(KeyCode.ESCAPE);
-		pausePopup(PAUSE_TOMAIN);
+		assertNull(AbstractScene.getPopup());
+		mainMenu(MAIN_TEXTFIELD);
+		typeFaultyName();
+		mainMenu(MAIN_START);
+		clickPopup(WARNING_OK);
+		mainMenu(MAIN_TEXTFIELD);
+		keyboard(KeyCode.BACK_SPACE);
+		typeName();
+
+		goThroughGamePlay();
 
 		mainMenu(MAIN_LOADGAME);
 		loadMenu(LOAD_BACK);
 		mainMenu(MAIN_LOADGAME);
-		loadMenu(LOAD_NAMECONTAINER);
 		loadMenu(LOAD_START);
 
-		mainMenu(MAIN_START);
 		sleep(COUNTDOWN);
 		playerDies();
-		deathPopup(DEATH_RETRY);
+		sleep(SHORT);
+		clickPopup(DEATH_RETRY);
 		sleep(COUNTDOWN);
 		playerDies();
-		deathPopup(DEATH_TOMAIN);
+		clickPopup(DEATH_TOMAIN);
 
 		mainMenu(MAIN_QUIT);
 		outputEventLog();
@@ -117,7 +129,9 @@ public class EndToEndTest extends ApplicationTest {
 		State.getTrack().getPlayer().setInvincible(true);
 	}
 
-	private void clickAllSettings() {
+	private void goThroughSettings() {
+		mainMenu(MAIN_SETTINGS);
+
 		assertTrue("Sound should enabled at startup.", State.isSoundEnabled());
 		settings(SETTINGS_SOUND);
 		assertFalse("Sound disabled. (1)", State.isSoundEnabled());
@@ -129,6 +143,25 @@ public class EndToEndTest extends ApplicationTest {
 		settings(SETTINGS_BACK);
 	}
 
+	private void goThroughShop() {
+		mainMenu(MAIN_SHOP);
+		shopScreen(SHOP_BACK);
+	}
+
+	private void goThroughGamePlay() {
+		mainMenu(MAIN_START);
+		sleep(COUNTDOWN);
+
+		keyboard(KeyCode.ESCAPE);
+		clickPopup(PAUSE_RESUME);
+		sleep(COUNTDOWN);
+
+		moveAround();
+
+		keyboard(KeyCode.ESCAPE);
+		pausePopup(PAUSE_TOMAIN);
+	}
+
 	private void typeName() {
 		keyboard(KeyCode.CAPS);
 		keyboard(KeyCode.F);
@@ -136,6 +169,10 @@ public class EndToEndTest extends ApplicationTest {
 		keyboard(KeyCode.R);
 		keyboard(KeyCode.E);
 		keyboard(KeyCode.D);
+	}
+
+	private void typeFaultyName() {
+		keyboard(KeyCode.SLASH);
 	}
 
 	private void moveAround() {
@@ -200,6 +237,14 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(SHORT);
 	}
 
+	private void shopScreen(final int buttonNo) {
+		ObservableList<Node> buttons;
+		buttons = rootNode(stage).getScene().getRoot()
+				.getChildrenUnmodifiable();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(SHORT);
+	}
+
 	private void pausePopup(final int buttonNo) {
 		if (GameScene.getPopup() == null) {
 			fail("The Pause Popup is not available.");
@@ -214,22 +259,24 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void playerDies() {
 		State.getTrack().getPlayer().die();
-		sleep(2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
 
-	private void deathPopup(final int buttonNo) {
-		if (GameScene.getPopup() == null) {
-			fail("The Death Popup is not available.");
+	private void clickPopup(final int buttonNo) {
+		if (AbstractScene.getPopup() != null) {
+			ObservableList<Node> buttons;
+			sleep(1);
+			buttons = ((VBox) AbstractScene.getPopup().getContent().get(1))
+					.getChildren();
+			buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
+			try {
+				clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				fail("ButtonNo " + buttonNo + " does not exist");
+			}
+			sleep(SHORT);
 		}
-		ObservableList<Node> buttons;
-		sleep(1);
-		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
-				.getChildren();
-		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
-		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-		sleep(SHORT);
 	}
-
 }

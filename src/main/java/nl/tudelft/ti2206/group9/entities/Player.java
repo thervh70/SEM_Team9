@@ -1,9 +1,10 @@
 package nl.tudelft.ti2206.group9.entities;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
+import nl.tudelft.ti2206.group9.renderer.AbstractBoxRenderer;
+import nl.tudelft.ti2206.group9.renderer.PlayerRenderer;
 import nl.tudelft.ti2206.group9.util.Direction;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -104,7 +105,6 @@ public class Player extends AbstractEntity {
 			State.addScore(Coin.VALUE);
 			State.addCoins(1);
 		}
-
 		if (collidee instanceof AbstractObstacle) {
 			OBSERVABLE.notify(
 					Category.PLAYER, GameObserver.Player.COLLISION,
@@ -242,4 +242,10 @@ public class Player extends AbstractEntity {
 		jumpStep();
 		slideStep();
 	}
+
+    @Override
+    public AbstractBoxRenderer<? extends AbstractEntity> createRenderer() {
+        return new PlayerRenderer(this);
+    }
+
 }

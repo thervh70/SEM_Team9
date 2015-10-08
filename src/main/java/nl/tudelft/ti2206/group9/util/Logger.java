@@ -59,6 +59,8 @@ public class Logger implements GameObserver {
 		STRINGS.put(Menu.LOAD_MENU, lbl + "Pressed \"Load game\".");
 		STRINGS.put(Menu.LOAD_BACK, lbl + "Back to main menu.");
 		STRINGS.put(Menu.LOAD, lbl + "Pressed \"Start load game\".");
+		STRINGS.put(Menu.SHOP, lbl + "Pressed \"Shop\"");
+		STRINGS.put(Menu.SHOP_BACK, lbl + "Back to main menu");
 
 		lbl = " [PLAYER] ";
 		STRINGS.put(Player.COLLISION, lbl + "Collided with %s.");
@@ -108,7 +110,7 @@ public class Logger implements GameObserver {
 	/**
 	 * Writes the current buffer to the output file. This should be called
 	 * before exiting the application. The buffer is used instead of writing to
-	 * the log file on each {@link #gameUpdate} call.
+	 * the log file on each {@link #update(Observable, Object)} call.
 	 * @param append whether the buffer should be appended to the current log
 	 *        file or not. A new file is created at every application startup.
 	 * @return whether the writing has been successful.

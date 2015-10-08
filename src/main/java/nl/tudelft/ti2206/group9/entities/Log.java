@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.entities;
 
+import nl.tudelft.ti2206.group9.renderer.AbstractBoxRenderer;
+import nl.tudelft.ti2206.group9.renderer.LogRenderer;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -27,4 +29,10 @@ public class Log extends AbstractObstacle {
     public Log(final Point3D center, final Point3D size) {
         super(center, size);
     }
+
+	@Override
+    public AbstractBoxRenderer<? extends AbstractEntity> createRenderer() {
+	    return new LogRenderer(this);
+	}
+
 }

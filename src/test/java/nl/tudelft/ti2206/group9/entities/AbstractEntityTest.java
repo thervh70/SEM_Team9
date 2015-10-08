@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import nl.tudelft.ti2206.group9.renderer.AbstractBoxRenderer;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Before;
@@ -117,6 +118,12 @@ public class AbstractEntityTest {
 			/** Do nothing on collision */
 			@Override
 			public void collision(final AbstractEntity collidee) { } //NOPMD
+
+			@Override
+			public AbstractBoxRenderer<? extends AbstractEntity>
+					createRenderer() {
+				return null;
+			}
 		};
 		assertEquals(Point3D.ZERO, entity.getCenter());
 		assertEquals(Point3D.UNITCUBE, entity.getSize());
@@ -183,7 +190,7 @@ public class AbstractEntityTest {
 
 	@Test
 	public void testToString() {
-		assertEquals("AbstractEntity [center=" + entity.getCenter()
+		assertEquals("TestEntity [center=" + entity.getCenter()
 				+ ",size=" + entity.getSize() + "]", entity.toString());
 	}
 
@@ -206,6 +213,11 @@ public class AbstractEntityTest {
 		/** Do nothing on collision. */
 		@Override
 		public void collision(final AbstractEntity collidee) { } // NOPMD
+
+		@Override
+		public AbstractBoxRenderer<? extends AbstractEntity> createRenderer() {
+			return null;
+		}
 
 	}
 }

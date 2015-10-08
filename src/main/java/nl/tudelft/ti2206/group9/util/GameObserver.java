@@ -75,7 +75,10 @@ public interface GameObserver extends Observer {
 		LOAD_BACK,
 		/** Load game button has been pressed. */
 		LOAD,
-
+		/** Shop button in main menu has been pressed. */
+		SHOP,
+        /** Back button in ShopScene has been pressed. */
+        SHOP_BACK
 	}
 
 	/**
@@ -116,7 +119,10 @@ public interface GameObserver extends Observer {
 		UNSUPPORTEDENCODINGEXCEPTION,
 		/** There has been an exception with decoding of Strings.
 		 *  optionalArgs: exception location, exception message. */
-		UNSUPPORTEDDECODINGEXCEPTION
+		UNSUPPORTEDDECODINGEXCEPTION,
+		/** There has been an exception with null pointers.
+		 * optionalArgs: exception location, exception message. */
+		NULLPOINTEREXCEPTION
 	}
 
 	/** Object containing information about the game update. */
