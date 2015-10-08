@@ -14,6 +14,7 @@ import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.renderer.AbstractGroupRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupEntitiesRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupTrackRenderer;
@@ -61,6 +62,7 @@ public class ExternalTicker extends AnimationTimer {
 	public final void handle(final long now) {
 		synchronized (ShaftEscape.TICKER_LOCK) {
 			if (InternalTicker.isRunning()) {
+				GameScene.getAudioPlayer().setSpeed(Track.getUnitsPerTick());
 				GameScene.getAudioPlayer().play(true);
 			}
 			renderScene();
