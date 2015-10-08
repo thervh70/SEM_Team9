@@ -11,7 +11,7 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * @author Maarten
  *
  */
-public class Coin extends Pickup {
+public class Coin extends AbstractPickup {
 
 	/** Value added to the score when picked up. */
 	public static final int VALUE = 100;
@@ -22,9 +22,9 @@ public class Coin extends Pickup {
 	/**
 	 * Default constructor.
 	 * @param center center of the bounding box of the Coin
-	 * @param decorating the Pickup that this Coin is decorating.
+	 * @param decorating the AbstractPickup that this Coin is decorating.
 	 */
-	public Coin(final Point3D center, final Pickup decorating) {
+	public Coin(final Point3D center, final AbstractPickup decorating) {
 		super(center, SIZE, decorating);
 	}
 

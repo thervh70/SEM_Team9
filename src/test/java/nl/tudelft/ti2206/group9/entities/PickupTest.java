@@ -14,7 +14,7 @@ public class PickupTest {
 	private static final double DELTA = 0.000001;
 
 	private int testActions;
-	private Pickup pickup;
+	private AbstractPickup pickup;
 
 	@Before
 	public void setUp() {
@@ -45,9 +45,9 @@ public class PickupTest {
 		assertEquals(2, testActions);
 	}
 
-	class TestPickup extends Pickup {
+	class TestPickup extends AbstractPickup {
 
-		public TestPickup(final Pickup decorating) {
+		public TestPickup(final AbstractPickup decorating) {
 			super(Point3D.ZERO, Point3D.UNITCUBE, decorating);
 		}
 

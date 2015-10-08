@@ -8,7 +8,7 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * while.
  * @author Maarten
  */
-public class PowerupInvulnerable extends Pickup {
+public class PowerupInvulnerable extends AbstractPickup {
 
 	/** The default size for this Powerup. */
 	public static final Point3D SIZE = new Point3D(0.5, 0.5, 0.5);
@@ -18,7 +18,8 @@ public class PowerupInvulnerable extends Pickup {
 	 * @param cent the center of this Powerup.
 	 * @param decorating the Pickup that this Powerup is decorating.
 	 */
-	public PowerupInvulnerable(final Point3D cent, final Pickup decorating) {
+	public PowerupInvulnerable(final Point3D cent,
+			final AbstractPickup decorating) {
 		super(cent, SIZE, decorating);
 	}
 
