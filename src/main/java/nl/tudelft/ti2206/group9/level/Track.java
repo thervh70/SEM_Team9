@@ -1,19 +1,23 @@
 package nl.tudelft.ti2206.group9.level;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.entities.AbstractPickup;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Fence;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
+import nl.tudelft.ti2206.group9.entities.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.gui.GameScene;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
 import nl.tudelft.ti2206.group9.util.Point3D;
+import nl.tudelft.ti2206.group9.level.TrackPart.Node;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -213,6 +217,7 @@ public class Track {
 			}
 		}
 		getPlayer().step();
+		PowerupInvulnerable.step();
 
 		distance += getUnitsPerTick();
 		State.addScore(getUnitsPerTick());
@@ -225,21 +230,34 @@ public class Track {
 	 */
 	private void addTrackPartToTrack(final TrackPart part) {
 		AbstractEntity add = null;
-		for (final AbstractEntity entity : part.getEntities()) {
+		for (final Node entity : part.getEntities()) {
 			final Point3D center = new Point3D(entity.getCenter());
 			center.addZ(LENGTH);
-			if (entity instanceof Coin) {
+			if (entity.getType().equals(AbstractPickup.class)) {
+				add = randomPowerup(center);
+			} else if (entity.getType().equals(Coin.class)) {
 				add = new Coin(center);
-			} else if (entity instanceof Fence) {
+			} else if (entity.getType().equals(Fence.class)) {
 				add = new Fence(center);
-			} else if (entity instanceof Log) {
+			} else if (entity.getType().equals(Log.class)) {
 				add = new Log(center);
-			} else if (entity instanceof Pillar) {
+			} else if (entity.getType().equals(Pillar.class)) {
 				add = new Pillar(center);
 			}
 			addEntity(add);
 		}
 		trackLeft = part.getLength();
 	}
+
+    /**
+     * @param center the center of the new Powerup.
+     * @return a random Powerup.
+     */
+    private AbstractPickup randomPowerup(final Point3D center) {
+        final ArrayList<AbstractPickup> list = new ArrayList<AbstractPickup>();
+        list.add(new Coin(center));
+        list.add(new PowerupInvulnerable(center));
+        return list.get((int) (Math.random() * list.size()));
+    }
 
 }

@@ -27,7 +27,7 @@ public class CoinRenderer extends AbstractBoxRenderer<Coin> {
 
 	@Override
 	protected void setMaterial() {
-		setMaterial(Style.PICKUP);
+		setMaterial(Style.COIN);
 	}
 
 	@Override

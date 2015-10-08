@@ -259,4 +259,9 @@ public final class GameScene extends AbstractScene {
 		return audioPlayer;
 	}
 
+	/** @return the ExternalTicker of the GameScene. */
+	public static ExternalTicker getExternalTicker() {
+		return extTicker;
+	}
+
 }

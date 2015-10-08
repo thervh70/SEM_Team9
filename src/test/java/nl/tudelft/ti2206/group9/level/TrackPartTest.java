@@ -1,16 +1,17 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.entities.AbstractEntity;
-import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Log;
-import nl.tudelft.ti2206.group9.util.Point3D;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.Log;
+import nl.tudelft.ti2206.group9.level.TrackPart.Node;
+import nl.tudelft.ti2206.group9.util.Point3D;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Mathias
@@ -19,22 +20,22 @@ public class TrackPartTest {
 
     private TrackPart part;
 
-    private Coin coin;
-    private Log log; //NOPMD - confuses Log with Logger
+    private Node coin;
+    private Node log; //NOPMD - confuses Log with Logger
 
     @Before
     public void setUp() {
         part = new TrackPart();
-        coin = new Coin(new Point3D(0, 0, 0));
-        log = new Log(new Point3D(1, 0, 0));
+        coin = new Node(Coin.class, Point3D.ZERO);
+        log = new Node(Log.class, Point3D.UNITX);
     }
 
     @Test
     public void testGetEntities() {
         part.addEntity(coin);
         part.addEntity(log);
-        final List<AbstractEntity> actual = part.getEntities();
-        final List<AbstractEntity> expected = new LinkedList<AbstractEntity>();
+        final List<Node> actual = part.getEntities();
+        final List<Node> expected = new LinkedList<Node>();
         expected.add(coin);
         expected.add(log);
 
