@@ -83,6 +83,7 @@ public class LoadGameScene extends AbstractMenuScene {
                 State.getSaveGames().clear();
                 ShaftEscape.setScene(new MainMenuScene());
             } else {
+                MainMenuScene.getAudioPlayer().stop();
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.LOAD);
                 final String loadFile =

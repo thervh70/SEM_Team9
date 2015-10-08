@@ -95,9 +95,11 @@ public final class MainMenuScene extends AbstractMenuScene {
 		button.setOnAction(event -> {
 			SplashScene.getButtonAudioPlayer().play(false);
 				if (type == BType.EXIT) {
+					apMainMenu.stop();
 					OBSERVABLE.notify(Category.MENU, Menu.EXIT);
 					ShaftEscape.exit();
 				} else if (type == BType.START) {
+					apMainMenu.stop();
 					if (checkPlayerName(INPUT.getText())) {
 						createNewGame();
 					} else {
