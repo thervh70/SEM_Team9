@@ -38,8 +38,8 @@ public final class Style {
     /** FLOOR material used for floors, mossy cobblestone floor texture. */
     public static final PhongMaterial FLOOR = new PhongMaterial();
 
-    /** COIN material used for coins, question mark box coin texture. */
-    public static final PhongMaterial COIN = new PhongMaterial();
+    /** PICKUP material used for coins, question mark box coin texture. */
+    public static final PhongMaterial PICKUP = new PhongMaterial();
 
     /** WOOD material used for logs, wooden planks obstacle texture. */
     public static final PhongMaterial WOOD = new PhongMaterial();
@@ -79,7 +79,7 @@ public final class Style {
         FLOOR.setDiffuseMap(floorTexture);
 
         final Image coinTexture = new Image(path + "texture_coin.png");
-        COIN.setDiffuseMap(coinTexture);
+        PICKUP.setDiffuseMap(coinTexture);
 
         final Image woodTexture = new Image(path + "texture_wood.png");
         WOOD.setDiffuseMap(woodTexture);

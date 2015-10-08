@@ -40,7 +40,7 @@ public abstract class AbstractBoxRenderer<T extends AbstractEntity>
 		setDepth(traced.getSize().getZ());
 	}
 
-	/** Updates the position of this AbstractBoxRenderer. */
+	@Override
 	public void update() {
 		updatePosition();
 	}
