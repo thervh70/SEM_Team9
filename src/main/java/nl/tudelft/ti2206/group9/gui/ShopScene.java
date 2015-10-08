@@ -41,7 +41,7 @@ public class ShopScene extends AbstractMenuScene {
             FXCollections.observableArrayList();
     /** Creating the listview used to display the list. */
     private static TableView<AbstractSkin> itemTable =
-            createSkinTable(2, LIST_ROW);
+            createSkinTable(1, LIST_ROW);
 
     @Override
     public Node[] createContent() {
@@ -67,9 +67,11 @@ public class ShopScene extends AbstractMenuScene {
 
         TableColumn<AbstractSkin, String> name = new TableColumn<>("Name");
         name.setCellValueFactory(new PropertyValueFactory<>("skinName"));
+        name.setResizable(false);
 
         TableColumn<AbstractSkin, Integer> price = new TableColumn<>("Price");
         price.setCellValueFactory(new PropertyValueFactory<>("skinPrice"));
+        name.setResizable(false);
 
         itemTable.getColumns().add(name);
         itemTable.getColumns().add(price);

@@ -36,6 +36,10 @@ public abstract class AbstractMenuScene extends AbstractScene {
 	private static final int LIST_WIDTH = 80;
 	/** HEIGHT for list. */
 	private static final int LIST_HEIGHT = 160;
+	/** Rowspan for the TableView */
+	private static final int ROW_SPAN = 7;
+	/** Columnspan for the TableView */
+	private static final int COLUMN_SPAN = 3;
 
 	/**
 	 * Creating the SettingsScene.
@@ -145,6 +149,8 @@ public abstract class AbstractMenuScene extends AbstractScene {
 		final TableView<AbstractSkin> table = new TableView<>();
 		table.setEditable(true);
 		GridPane.setConstraints(table, column, row);
+		GridPane.setColumnSpan(table, COLUMN_SPAN);
+		GridPane.setRowSpan(table, ROW_SPAN);
 		table.setPrefSize(LIST_WIDTH, LIST_HEIGHT);
 		return table;
 	}
