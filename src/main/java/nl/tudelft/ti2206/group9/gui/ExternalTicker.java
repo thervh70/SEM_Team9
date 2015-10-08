@@ -45,7 +45,7 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 	private final WallRenderer wall;
 	/** Group that stores the track. */
 	private final TrackRenderer track;
-	/** Group that stores the lights */
+	/** Group that stores the lights. */
 	private final LightRenderer light;
 
 	/** Default constructor. */
@@ -99,6 +99,7 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 			((Renderer) renderer).update();
 		}
 		wall.update();
+		light.update();
 		track.update();
 	}
 
