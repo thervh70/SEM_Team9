@@ -28,8 +28,8 @@ public class CollisionTest {
 		final double oldscore = State.getScore();
 		final int oldcoins = State.getCoins();
 		player.collision(coin);
-		assertEquals(oldscore + Coin.VALUE, State.getScore(), StateTest.DELTA);
-		assertEquals(oldcoins + 1, State.getCoins());
+		assertEquals(oldscore, State.getScore(), StateTest.DELTA);
+		assertEquals(oldcoins, State.getCoins());
 	}
 
 	@Test
@@ -46,8 +46,8 @@ public class CollisionTest {
 		final double oldscore = State.getScore();
 		final int oldcoins = State.getCoins();
 		coin.collision(player);
-		assertEquals(oldscore, State.getScore(), StateTest.DELTA);
-		assertEquals(oldcoins, State.getCoins());
+		assertEquals(oldscore + Coin.VALUE, State.getScore(), StateTest.DELTA);
+		assertEquals(oldcoins + 1, State.getCoins());
 		// selfDestruct is not tested because this involves threads and is
 		// very complicated with timing. If anybody knows how, go ahead!
 	}
