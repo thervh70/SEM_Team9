@@ -90,6 +90,7 @@ public class LoadGameScene extends AbstractMenuScene {
                         GameObserver.Menu.LOAD_BACK);
                 ShaftEscape.setScene(new MainMenuScene());
             } else {
+                MainMenuScene.getAudioPlayer().stop();
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.LOAD);
                 State.setPlayerName(
