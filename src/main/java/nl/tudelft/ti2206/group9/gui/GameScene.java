@@ -210,8 +210,8 @@ public final class GameScene extends AbstractScene {
 	 * @param node the Node
 	 * @return true (as specified by Collections.add)
 	 */
-	public static boolean addWorld(final Node node) {
-		return world.getChildren().add(node);
+	public static boolean addWorld(final Node... node) {
+		return world.getChildren().addAll(node);
 	}
 
 	/** Clears the world. */
@@ -224,8 +224,8 @@ public final class GameScene extends AbstractScene {
 	 * @param node the Node
 	 * @return true (as specified by Collections.add)
 	 */
-	public static boolean addOverlay(final Node node) {
-		return overlay.getChildren().add(node);
+	public static boolean addOverlay(final Node... node) {
+		return overlay.getChildren().addAll(node);
 	}
 
 	/** Clears the overlay. */

@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9.entities;
 
+import nl.tudelft.ti2206.group9.renderer.AbstractBoxRenderer;
+import nl.tudelft.ti2206.group9.renderer.CoinRenderer;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -32,6 +34,11 @@ public class Coin extends AbstractEntity {
 		if (collidee instanceof Player) {
 			selfDestruct();
 		}
+	}
+
+	@Override
+	public AbstractBoxRenderer<? extends AbstractEntity> createRenderer() {
+		return new CoinRenderer(this);
 	}
 
 }

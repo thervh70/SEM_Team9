@@ -1,22 +1,21 @@
 package nl.tudelft.ti2206.group9.renderer;
 
+import javafx.scene.CacheHint;
+import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.level.Track;
-import javafx.scene.CacheHint;
-import javafx.scene.Group;
-import javafx.scene.shape.Box;
 
 /**
  * Renders the entire Track. The Track is a collection of tiles.
  * @author Maarten
  */
 @SuppressWarnings("restriction")
-public class TrackRenderer extends Group implements Renderer {
+public class GroupTrackRenderer extends AbstractGroupRenderer {
 
 	/**
 	 * Default constructor.
 	 */
-	public TrackRenderer() {
+	public GroupTrackRenderer() {
 		super();
 		final double trackBoxX = 1.5;
 		final double trackBoxZ = 1.5;
