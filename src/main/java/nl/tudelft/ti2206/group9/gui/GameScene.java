@@ -1,9 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-/**
- * @author Robin, Maarten
- */
-import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
