@@ -116,7 +116,7 @@ public class Logger implements GameObserver {
 	/**
 	 * Writes the current buffer to the output file. This should be called
 	 * before exiting the application. The buffer is used instead of writing to
-	 * the log file on each {@link #gameUpdate} call.
+	 * the log file on each {@link #update(Observable, Object)} call.
 	 * @param append whether the buffer should be appended to the current log
 	 *        file or not. A new file is created at every application startup.
 	 * @return whether the writing has been successful.

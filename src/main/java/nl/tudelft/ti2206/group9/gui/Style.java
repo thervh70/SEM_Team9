@@ -1,32 +1,23 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.util.GameObserver.Error;
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 /**
  * Class containing the styling for the GUI.
@@ -127,19 +118,15 @@ public final class Style {
         b.setFont(font);
         b.setMinWidth(BUTTON_WIDTH);
 
-        b.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent e) {
-                b.setScaleX(BUTTON_HOVER_SCALE);
-                b.setScaleY(BUTTON_HOVER_SCALE);
-            }
+        b.setOnMouseEntered(e -> {
+            b.setScaleX(BUTTON_HOVER_SCALE);
+            b.setScaleY(BUTTON_HOVER_SCALE);
         });
 
         /** Action to be taken on MouseExited Event. */
-        b.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent e) {
-                b.setScaleX(1);
-                b.setScaleY(1);
-            }
+        b.setOnMouseExited(e -> {
+            b.setScaleX(1);
+            b.setScaleY(1);
         });
     }
 
@@ -160,18 +147,10 @@ public final class Style {
         b.setFont(getFont(POPUP_TEXT));
 
         /** Action to be taken on MouseEntered Event */
-        b.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent e) {
-                b.setTextFill(Color.CORNFLOWERBLUE);
-            }
-        });
+        b.setOnMouseEntered(e -> b.setTextFill(Color.CORNFLOWERBLUE));
 
         /** Action to be taken on MouseExited Event. */
-        b.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent e) {
-                b.setTextFill(Color.WHITE);
-            }
-        });
+        b.setOnMouseExited(e -> b.setTextFill(Color.WHITE));
     }
 
     /**
