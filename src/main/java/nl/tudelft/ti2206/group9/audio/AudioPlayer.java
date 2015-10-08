@@ -137,7 +137,7 @@ public class AudioPlayer {
 	 * It is recommended to keep this rate between 0.125 and 8.0.
 	 */
 	public final void setSpeed(final double rate) {
-		if (rate >= LOWER & rate <= UPPER) {
+		if (State.isSoundEnabled() & rate >= LOWER & rate <= UPPER) {
 			audioClip.setRate(rate);
 		}
 	}
@@ -148,14 +148,19 @@ public class AudioPlayer {
 	 * @return double rate current rate of the AudioPlayer.
 	 */
 	public final double getSpeed() {
-		return audioClip.getRate();
+		if (State.isSoundEnabled()) {
+			return audioClip.getRate();
+		}
+		return 1.0;
 	}
 
 	/**
 	 * Resets the speed of the music played by the AudioPlayer.
 	 */
 	public final void resetSpeed() {
-		audioClip.setRate(1.0);
+		if (State.isSoundEnabled()) {
+			audioClip.setRate(1.0);
+		}
 	}
 
 }
