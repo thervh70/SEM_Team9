@@ -60,6 +60,8 @@ public class ShopScene extends AbstractMenuScene {
      * Method to fill the table with skins.
      */
     private static void setUpTable() {
+        items.clear();
+        itemTable.getColumns().clear();
         itemTable.setItems(items);
         items.addAll(Style.getAndy(), Style.getBoy(),
                 Style.getCaptain(), Style.getIronMan(),

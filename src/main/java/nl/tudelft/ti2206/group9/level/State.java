@@ -18,8 +18,10 @@ public final class State {
 	/** Highest score ever obtained. */
 	private static double highscore;
 
-	/** Skin to be used. Noob is the Default. */
-	private static AbstractSkin skin = Style.getNoob();
+	/** Skin to be used. */
+	private static AbstractSkin skin;
+	/** Flag for default skin. */
+	private static boolean defaultSkin = true;
 
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
@@ -183,6 +185,9 @@ public final class State {
 	 * @return The skin.
 	 */
 	public static AbstractSkin getSkin() {
+		if (defaultSkin) {
+			return Style.getNoob();
+		}
 		return skin;
 	}
 
@@ -191,6 +196,7 @@ public final class State {
 	 * @param newSkin The new skin.
 	 */
 	public static void setSkin(final AbstractSkin newSkin) {
+		defaultSkin = false;
 		skin = newSkin;
 	}
 }
