@@ -134,8 +134,8 @@ public final class MainMenuScene extends AbstractMenuScene {
 		if(State.getPlayerName() != null) {
 			SaveGame.saveGame();
 		}
-		boolean load = tryLoadPlayerName(INPUT.getText());
-		if(!load) {
+		final boolean load = tryLoadPlayerName(INPUT.getText());
+		if (!load) {
 			State.setPlayerName(INPUT.getText());
 		}
 		INPUT.clear();
