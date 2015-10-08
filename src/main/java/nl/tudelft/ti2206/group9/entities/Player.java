@@ -1,16 +1,15 @@
 package nl.tudelft.ti2206.group9.entities;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skins.AbstractSkin;
-import nl.tudelft.ti2206.group9.gui.skins.NoobSkin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Direction;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * Player entity that is controllable by the user.
@@ -22,7 +21,7 @@ public class Player extends AbstractEntity {
 	public static final double HEIGHT = 1.8;
 	/** Width of the Player's bounding box. */
 	public static final double WIDTH = 0.8;
-	/** Depth of the Players bounding box */
+	/** Depth of the Players bounding box. */
 	public static final double DEPTH = 0.1;
 
 	/** Gravity. This is added to the vertical speed
@@ -55,8 +54,8 @@ public class Player extends AbstractEntity {
 	private double slideSpeed;
 	/** Whether the player is invincible. */
 	private boolean invincible;
-	/** Skin to be used. */
-	private AbstractSkin skin = Style.andy;
+	/** Skin to be used. Noob is the Default. */
+	private AbstractSkin skin = Style.getNoob();
 
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -249,11 +248,19 @@ public class Player extends AbstractEntity {
 		slideStep();
 	}
 
+	/**
+	 * Getter for the current skin.
+	 * @return The skin.
+	 */
 	public AbstractSkin getSkin() {
 		return skin;
 	}
 
-	public void setSkin(AbstractSkin skin) {
-		this.skin = skin;
+	/**
+	 * If new skins are bought and applied it can be done via this setter.
+	 * @param newSkin The new skin.
+	 */
+	public void setSkin(final AbstractSkin newSkin) {
+		this.skin = newSkin;
 	}
 }

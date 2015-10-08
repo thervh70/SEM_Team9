@@ -1,13 +1,18 @@
 package nl.tudelft.ti2206.group9.gui.skins;
 
-import javafx.scene.paint.PhongMaterial;
-
 /**
  * @author  Maikel on 08/10/2015.
  */
 public class PlankSkin extends AbstractSkin {
 
-    public PlankSkin(int price, String name, PhongMaterial material) {
-        super(price, name, material);
+    /**
+     * Constructor for a Plank skin.
+     * @param price price
+     * @param name name
+     * @param location location in resources
+     */
+    public PlankSkin(final int price,
+                     final String name, final String location) {
+        super(price, name, location);
     }
 }

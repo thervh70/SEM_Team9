@@ -1,13 +1,17 @@
 package nl.tudelft.ti2206.group9.gui.skins;
 
-import javafx.scene.paint.PhongMaterial;
-
 /**
  * @author Maikel on 08/10/2015.
  */
-public class BoySkin extends AbstractSkin{
+public class BoySkin extends AbstractSkin {
 
-    public BoySkin(int price, String name, PhongMaterial material) {
-        super(price, name, material);
+    /**
+     * Constructor for a Boy skin.
+     * @param price price
+     * @param name name
+     * @param location location in resources
+     */
+    public BoySkin(final int price, final String name, final String location) {
+        super(price, name, location);
     }
 }

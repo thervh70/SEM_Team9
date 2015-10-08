@@ -1,35 +1,58 @@
 package nl.tudelft.ti2206.group9.gui.skins;
 
 import javafx.scene.paint.PhongMaterial;
-import nl.tudelft.ti2206.group9.gui.MainMenuScene;
+import nl.tudelft.ti2206.group9.gui.Style;
 
 /**
  * @author Maikel on 08/10/2015.
  */
 public abstract class AbstractSkin {
 
+    /** The price of this skin in the shop. */
+    private final int skinPrice;
 
-    private static  int skinPrice;
+    /** The name to display in the shop. */
+    private final String skinName;
 
-    private static String skinName;
+    /** The real material used by this skin. */
+    private final PhongMaterial skinMaterial;
 
-    private static PhongMaterial skinMaterial;
-
-    public AbstractSkin(int price, String name, PhongMaterial material) {
+    /**
+     * Constructor for the skin.
+     * It calls the Style.loadPlayerTexture
+     * to load the image into the PhongMaterial.
+     * @param price Price of this skin in shop.
+     * @param name Name to display.
+     * @param location Location of this skin in the resources folder
+     */
+    public AbstractSkin(final int price,
+                        final String name, final String location) {
         skinPrice = price;
         skinName = name;
-        skinMaterial = material;
+        skinMaterial = Style.loadPlayerTexture(location);
     }
 
-    public static int getSkinPrice() {
+    /**
+     * Getter for the price.
+     * @return price
+     */
+    public int getSkinPrice() {
         return skinPrice;
     }
 
-    public static String getSkinName() {
+    /**
+     * Getter for the name.
+     * @return name
+     */
+    public String getSkinName() {
         return skinName;
     }
 
-    public static PhongMaterial getSkinMaterial() {
+    /**
+     * Getter for the PhongMaterial.
+     * @return material
+     */
+    public PhongMaterial getSkinMaterial() {
         return skinMaterial;
     }
 }
