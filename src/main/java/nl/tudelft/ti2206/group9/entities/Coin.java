@@ -17,7 +17,7 @@ public class Coin extends AbstractPickup {
 	public static final int VALUE = 100;
 
 	/** Standard bounding box size of a Coin. */
-	public static final Point3D SIZE = new Point3D(0.5, 0.5, 0.1);
+	public static final Point3D SIZE = new Point3D(0.5, 0.5, 0.001);
 
 	/**
 	 * Default constructor.
