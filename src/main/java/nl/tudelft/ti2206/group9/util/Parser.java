@@ -18,9 +18,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
+ * This class takes care of the parsing of JSON objects
+ * into the game. This way already saved games can be loaded.
  * @author Mathias
  */
-public final class SaveGameParser {
+public final class Parser {
 
 	/** Playername. */
 	private static String playername;
@@ -34,13 +36,13 @@ public final class SaveGameParser {
 	/**
 	 * Private constructor.
 	 */
-	private SaveGameParser() { }
+	private Parser() { }
 
 	/**
 	 * Read a json savefile and store all data in the State class.
 	 * @param path path to the file to be parsed.
 	 */
-	public static void loadGame(final String path) {
+	static void loadGame(final String path) {
 		try {
 			final URL pathURL = new File(path).toURI().toURL();
 			final InputStream stream = pathURL.openStream();
@@ -56,10 +58,10 @@ public final class SaveGameParser {
 			reader.close();
 		} catch (IOException e) {
 			OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
-					"SaveGameParser.loadGame(String)", e.getMessage());
+					"Parser.loadGame(String)", e.getMessage());
 		} catch (ParseException e) {
 			OBSERVABLE.notify(Category.ERROR, Error.PARSEEXCEPTION,
-					"SaveGameParser.loadGame(String)", e.getMessage());
+					"Parser.loadGame(String)", e.getMessage());
 		}
 	}
 

@@ -1,8 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -10,6 +7,10 @@ import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
+import nl.tudelft.ti2206.group9.util.SaveGame;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 
 /**
  * Scene that displays a list of previous player names,
@@ -22,9 +23,6 @@ public class LoadGameScene extends AbstractMenuScene {
     /** Row in Grid of list. */
     private static final int LIST_ROW = 16;
 
-    /** Creating the list. */
-    private static ObservableList<String> players =
-            FXCollections.observableArrayList();
     /** Creating the listview used to display the list. */
     private static ListView<String> list = createList(2, LIST_ROW);
     /** LOAD button width. */
@@ -41,14 +39,6 @@ public class LoadGameScene extends AbstractMenuScene {
     }
 
     /**
-     * Returns the list of players.
-     * @return List of players.
-     */
-    public static ObservableList<String> getPlayers() {
-        return players;
-    }
-
-    /**
      * Returns the list view itself.
      * @return a list.
      */
@@ -62,7 +52,9 @@ public class LoadGameScene extends AbstractMenuScene {
      */
     @Override
     public Node[] createContent() {
-        list.setItems(players);
+        SaveGame.readPlayerNames();
+        list.setItems(State.getSaveGames());
+        list.getSelectionModel().selectFirst();
         final Button backButton = createButton("BACK", 0, 20);
         final Button loadButton = createButton("LOAD & START!", 2, 20);
         loadButton.setMinWidth(LOAD_WIDTH);
@@ -83,21 +75,39 @@ public class LoadGameScene extends AbstractMenuScene {
      */
     protected static void setButtonFunction(final Button button,
                                             final BType type) {
-        button.setOnAction(event -> {
-			SplashScene.getButtonAudioPlayer().play(false);
+    button.setOnAction(event -> {
+        SplashScene.getButtonAudioPlayer().play(false);
             if (type == BType.LOAD_BACK) {
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.LOAD_BACK);
+                State.getSaveGames().clear();
                 ShaftEscape.setScene(new MainMenuScene());
             } else {
                 MainMenuScene.getAudioPlayer().stop();
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.LOAD);
-                State.setPlayerName(
-                        list.getSelectionModel().getSelectedItem());
-                ShaftEscape.setScene(new GameScene());
+                final String loadFile =
+                        list.getSelectionModel().getSelectedItem();
+                if (loadFile == null) {
+                    setPopup(new WarningPopup(
+                            event1 -> setPopup(null),
+                            "Please select a valid file!"));
+                    ShaftEscape.showPopup(getPopup());
+                } else {
+                    loadGame(loadFile);
+                }
             }
         });
+    }
+
+    /**
+     * Load an existing game with the given name.
+     * @param loadFile the name of the game to be loaded
+     */
+    private static void loadGame(final String loadFile) {
+        SaveGame.loadGame(loadFile);
+        State.getSaveGames().clear();
+        ShaftEscape.setScene(new GameScene());
     }
 
 }
