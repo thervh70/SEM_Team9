@@ -5,9 +5,9 @@ import javafx.scene.paint.PhongMaterial;
 /**
  * @author Maikel on 08/10/2015.
  */
-public class IronManSkin extends AbstractSkin {
+public class BoySkin extends AbstractSkin{
 
-    public IronManSkin(int price, String name, PhongMaterial material) {
+    public BoySkin(int price, String name, PhongMaterial material) {
         super(price, name, material);
     }
 }

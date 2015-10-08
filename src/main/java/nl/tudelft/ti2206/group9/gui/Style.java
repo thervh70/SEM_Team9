@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.gui.skins.*;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 
 import java.io.File;
@@ -57,9 +58,25 @@ public final class Style {
 
     /** FENCE material used for fences, mossy brick stone texture.*/
     public static final PhongMaterial FENCE = new PhongMaterial();
-
     /** PLAYER material used for the player at start. */
-    public static final PhongMaterial PLAYER = new PhongMaterial();
+    public static final PhongMaterial NOOB = new PhongMaterial();
+    /** Optional Player material */
+    public static final PhongMaterial IRON_MAN = new PhongMaterial();
+    /** Optional Player material */
+    public static final PhongMaterial PLANK = new PhongMaterial();
+    /** Optional Player material */
+    public static final PhongMaterial CAPTAIN = new PhongMaterial();
+    /** Optional Player material */
+    public static final PhongMaterial BOY = new PhongMaterial();
+    /** Optional Player material */
+    public static final PhongMaterial ANDY = new PhongMaterial();
+
+    public static IronManSkin ironMan;
+    public static NoobSkin noob;
+    public static CaptainSkin captain;
+    public static PlankSkin plank;
+    public static BoySkin boy;
+    public static AndySkin andy;
 
 	/** Size of a button while hovering (relative to 1). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
@@ -104,17 +121,39 @@ public final class Style {
         final Image fenceTexture = new Image(path + "texture_fence.png");
         FENCE.setDiffuseMap(fenceTexture);
 
-        final Image playerTexture = new Image(path + "texture_start.png");
-        PLAYER.setDiffuseMap(playerTexture);
+        final Image noobTexture = new Image(path + "texture_noob.png");
+        NOOB.setDiffuseMap(noobTexture);
+
+        final Image ironTexture = new Image(path + "texture_iron_man.png");
+        IRON_MAN.setDiffuseMap(ironTexture);
+
+        final Image captainTexture = new Image(path + "texture_captain.png");
+        CAPTAIN.setDiffuseMap(captainTexture);
+
+        final Image boyTexture = new Image(path + "texture_b.png");
+        BOY.setDiffuseMap(boyTexture);
+
+        final Image andyTexture = new Image(path + "texture_andy.png");
+        ANDY.setDiffuseMap(andyTexture);
+
+        final Image plankTexture = new Image(path + "texture_plank.png");
+        PLANK.setDiffuseMap(plankTexture);
     }
 
     /** Method to load the texture for the player.
      *
-     * @param textureName New texture name.
      */
-    public static void loadPlayerTexture(final String textureName) {
-        final Image playerTexture = new Image(path + "texture_" + textureName + ".png");
-        PLAYER.setDiffuseMap(playerTexture);
+    public static void loadSkins() {
+        ironMan = new IronManSkin(9999, "Iron Man", IRON_MAN);
+        captain = new CaptainSkin(9999, "Captain", CAPTAIN);
+        andy = new AndySkin(9999, "Andy", ANDY);
+        noob = new NoobSkin(0, "Noob", NOOB);
+        boy = new BoySkin(9999, "B-man", BOY);
+        plank = new PlankSkin(9999, "Plank", PLANK);
+    }
+
+    public static void setSkin(AbstractSkin skin) {
+
     }
 
     /**

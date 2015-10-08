@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.group9.gui.skins;
 
+import javafx.scene.paint.PhongMaterial;
+import nl.tudelft.ti2206.group9.gui.MainMenuScene;
+
 /**
  * @author Maikel on 08/10/2015.
  */
@@ -10,12 +13,12 @@ public abstract class AbstractSkin {
 
     private static String skinName;
 
-    private static String skinPath;
+    private static PhongMaterial skinMaterial;
 
-    public void AbstractSkin(int price, String name, String path) {
+    public AbstractSkin(int price, String name, PhongMaterial material) {
         skinPrice = price;
         skinName = name;
-        skinPath = path;
+        skinMaterial = material;
     }
 
     public static int getSkinPrice() {
@@ -26,7 +29,7 @@ public abstract class AbstractSkin {
         return skinName;
     }
 
-    public static String getSkinPath() {
-        return skinPath;
+    public static PhongMaterial getSkinMaterial() {
+        return skinMaterial;
     }
 }

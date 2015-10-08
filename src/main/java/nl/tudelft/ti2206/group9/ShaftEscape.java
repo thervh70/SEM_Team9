@@ -60,6 +60,7 @@ public class ShaftEscape extends Application {
 
 		//Loading textures
 		Style.loadTextures();
+		Style.loadSkins();
 
 		// Make sure the game is saved on exit
 		stage.setOnCloseRequest(e -> exit());

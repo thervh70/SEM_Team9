@@ -33,7 +33,7 @@ public class BoxRenderer extends Box implements Renderer {
 	/** Sets the material according to the traced entity. */
 	private void setMaterial() {
 		if (traced instanceof Player) {
-			setMaterial(Style.PLAYER);
+			setMaterial(((Player) traced).getSkin().getSkinMaterial());
 		} else if (traced instanceof Coin) {
 			setMaterial(Style.COIN);
 		} else if (traced instanceof Log) {

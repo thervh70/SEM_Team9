@@ -1,6 +1,10 @@
 package nl.tudelft.ti2206.group9.entities;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
+import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.gui.skins.AbstractSkin;
+import nl.tudelft.ti2206.group9.gui.skins.NoobSkin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Direction;
@@ -51,6 +55,8 @@ public class Player extends AbstractEntity {
 	private double slideSpeed;
 	/** Whether the player is invincible. */
 	private boolean invincible;
+	/** Skin to be used. */
+	private AbstractSkin skin = Style.andy;
 
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -241,5 +247,13 @@ public class Player extends AbstractEntity {
 		changeLaneStep();
 		jumpStep();
 		slideStep();
+	}
+
+	public AbstractSkin getSkin() {
+		return skin;
+	}
+
+	public void setSkin(AbstractSkin skin) {
+		this.skin = skin;
 	}
 }
