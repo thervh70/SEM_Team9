@@ -64,6 +64,7 @@ public class TrackTest {
 		track.addEntity(coin);
 		assertEquals(2, track.getEntities().size());
 		track.removeEntity(coin);
+		track.moveTrack(0);
 		assertEquals(1, track.getEntities().size());
 		assertEquals(new Player(), track.getEntities().get(0));
 	}
