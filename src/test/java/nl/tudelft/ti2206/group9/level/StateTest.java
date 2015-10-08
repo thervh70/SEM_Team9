@@ -96,7 +96,7 @@ public class StateTest {
 		State.checkHighscore();
 		assertEquals(2, State.getHighscore());
 	}
- 
+
 	@Test
 	public void testSetPlayerName() {
 		State.setPlayerName("Jan");

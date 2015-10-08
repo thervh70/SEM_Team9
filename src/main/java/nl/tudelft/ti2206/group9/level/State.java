@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
  *
  * @author Maarten, Mitchell
  */
+@SuppressWarnings("restriction")
 public final class State {
 
 	/** Current score of the player, reset every run. */
