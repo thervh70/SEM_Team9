@@ -36,13 +36,15 @@ public final class SplashScene extends AbstractMenuScene {
         addKeyPressed();
 
         final int labelRows = 2;
-        final int labelCols = 12;
+        final int labelCols = 16;
         final Label text = createLabel("Press any key to continue");
+        final int labelWidth = 350;
+        text.setMinWidth(labelWidth);
         generateFadeTransition(text);
         text.setPrefWidth(labelCols * GRID_GAP);
         text.setPrefHeight(labelRows * GRID_GAP);
-	    GridPane.setConstraints(text, GRID_WIDTH / 2 - labelCols / 2,
-	    		GRID_HEIGHT / 2 + 2 - labelRows / 2);
+	    GridPane.setConstraints(text, labelRows,
+	    		labelCols);
 
         return new Node[]{text};
 	}

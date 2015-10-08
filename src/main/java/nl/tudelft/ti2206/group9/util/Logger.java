@@ -59,6 +59,8 @@ public class Logger implements GameObserver {
 		STRINGS.put(Menu.LOAD_MENU, lbl + "Pressed \"Load game\".");
 		STRINGS.put(Menu.LOAD_BACK, lbl + "Back to main menu.");
 		STRINGS.put(Menu.LOAD, lbl + "Pressed \"Start load game\".");
+		STRINGS.put(Menu.SHOP, lbl + "Pressed \"Shop\"");
+		STRINGS.put(Menu.SHOP_BACK, lbl + "Back to main menu");
 
 		lbl = " [PLAYER] ";
 		STRINGS.put(Player.COLLISION, lbl + "Collided with %s.");
@@ -98,7 +100,13 @@ public class Logger implements GameObserver {
 		writeToOutput("", false);
 	}
 
-	@Override
+	/**
+	 * The update method adds a new String to the buffer containing the message
+	 * that is being logged.
+	 * @param o the Observable that sent out the update.
+	 * @param arg the argument that comes with the update (in this case, it is
+	 * 			a GameUpdate object.
+	 */
 	public void update(final Observable o, final Object arg) {
 		final GameUpdate update = (GameUpdate) arg;
 		buffer.append(getLogString(update.getSpec(), update.getArgs()));

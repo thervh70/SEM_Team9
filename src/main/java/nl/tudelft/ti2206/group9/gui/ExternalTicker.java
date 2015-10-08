@@ -34,9 +34,10 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 	private static final int SCORE_BOX_HEIGHT = 130;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
+	/** Distance between labels in overlay. */
+	private static final int LABEL_DISTANCE = 16;
 	/** Label for the countdownLabel animation. */
 	private final Label countdownLabel = new Label();
-
 	/** List that stores the entities, to be held up-to-date with Track. */
 	private final Group entities;
 	/** Group that stores the wall. */
@@ -114,8 +115,8 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 		Style.setLabelStyle(scoreLabel);
 		Style.setLabelStyle(distanceLabel);
 		Style.setLabelStyle(coinsLabel);
-
-		final VBox scoreBox = new VBox(nameLabel, highLabel, scoreLabel,
+		final VBox scoreBox = new VBox(LABEL_DISTANCE, nameLabel,
+                highLabel, scoreLabel,
 				distanceLabel, coinsLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);

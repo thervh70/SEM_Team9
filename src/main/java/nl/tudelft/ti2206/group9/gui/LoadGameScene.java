@@ -27,6 +27,8 @@ public class LoadGameScene extends AbstractMenuScene {
             FXCollections.observableArrayList();
     /** Creating the listview used to display the list. */
     private static ListView<String> list = createList(2, LIST_ROW);
+    /** LOAD button width. */
+    private static final int LOAD_WIDTH = 150;
 
     /**
      * Type of buttons that exist.
@@ -63,6 +65,7 @@ public class LoadGameScene extends AbstractMenuScene {
         list.setItems(players);
         final Button backButton = createButton("BACK", 0, 20);
         final Button loadButton = createButton("LOAD & START!", 2, 20);
+        loadButton.setMinWidth(LOAD_WIDTH);
         /** Set button functions. */
         setButtonFunction(backButton, BType.LOAD_BACK);
         setButtonFunction(loadButton, BType.LOAD_START);
