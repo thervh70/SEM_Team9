@@ -6,11 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -52,7 +50,6 @@ public class EndToEndTest extends ApplicationTest {
 
 	private static final int LOAD_BACK = 0;
 	private static final int LOAD_START = 1;
-	private static final int LOAD_NAMECONTAINER = 2;
 
 	private static final int SETTINGS_BACK = 0;
 	private static final int SETTINGS_SOUND = 1;
@@ -101,9 +98,6 @@ public class EndToEndTest extends ApplicationTest {
 		mainMenu(MAIN_LOADGAME);
 		loadMenu(LOAD_BACK);
 		mainMenu(MAIN_LOADGAME);
-		loadMenu(LOAD_START);
-		clickPopup(WARNING_OK);
-		loadMenu(LOAD_NAMECONTAINER);
 		loadMenu(LOAD_START);
 
 		sleep(COUNTDOWN);
