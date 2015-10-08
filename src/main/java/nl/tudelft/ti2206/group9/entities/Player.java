@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.group9.entities;
 
-import nl.tudelft.ti2206.group9.gui.Style;
-import nl.tudelft.ti2206.group9.gui.skins.AbstractSkin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Direction;
@@ -54,8 +52,6 @@ public class Player extends AbstractEntity {
 	private double slideSpeed;
 	/** Whether the player is invincible. */
 	private boolean invincible;
-	/** Skin to be used. Noob is the Default. */
-	private AbstractSkin skin = Style.getNoob();
 
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -246,21 +242,5 @@ public class Player extends AbstractEntity {
 		changeLaneStep();
 		jumpStep();
 		slideStep();
-	}
-
-	/**
-	 * Getter for the current skin.
-	 * @return The skin.
-	 */
-	public AbstractSkin getSkin() {
-		return skin;
-	}
-
-	/**
-	 * If new skins are bought and applied it can be done via this setter.
-	 * @param newSkin The new skin.
-	 */
-	public void setSkin(final AbstractSkin newSkin) {
-		this.skin = newSkin;
 	}
 }

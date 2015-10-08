@@ -7,6 +7,7 @@ import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.level.State;
 
 /**
  * This class renders an entity, meaning that it will create the looks of an
@@ -33,7 +34,7 @@ public class BoxRenderer extends Box implements Renderer {
 	/** Sets the material according to the traced entity. */
 	private void setMaterial() {
 		if (traced instanceof Player) {
-			setMaterial(((Player) traced).getSkin().getSkinMaterial());
+			setMaterial(State.getSkin().getSkinMaterial());
 		} else if (traced instanceof Coin) {
 			setMaterial(Style.COIN);
 		} else if (traced instanceof Log) {

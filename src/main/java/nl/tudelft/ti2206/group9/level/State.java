@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.group9.level;
 
+import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.gui.skins.AbstractSkin;
+
 /**
  * This utility class stores the State of the game,
  * for example the score and the distance run.
@@ -14,6 +17,9 @@ public final class State {
 	private static int coins;
 	/** Highest score ever obtained. */
 	private static double highscore;
+
+	/** Skin to be used. Noob is the Default. */
+	private static AbstractSkin skin = Style.getNoob();
 
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
@@ -170,5 +176,21 @@ public final class State {
 	 */
 	public static void setSoundEnabled(final boolean newSoundEnabled) {
 		State.soundEnabled = newSoundEnabled;
+	}
+
+	/**
+	 * Getter for the current skin.
+	 * @return The skin.
+	 */
+	public static AbstractSkin getSkin() {
+		return skin;
+	}
+
+	/**
+	 * If new skins are bought and applied it can be done via this setter.
+	 * @param newSkin The new skin.
+	 */
+	public static void setSkin(final AbstractSkin newSkin) {
+		skin = newSkin;
 	}
 }
