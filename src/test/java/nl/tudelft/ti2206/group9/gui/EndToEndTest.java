@@ -6,9 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -223,9 +225,21 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void clickPopup(final int buttonNo) {
-		AbstractScene scene = ShaftEscape.getScene();
+		final AbstractScene scene = ShaftEscape.getScene();
 		if (scene.getPopup() == null) {
-			fail("The Popup is not available.");
+			scene.setPopup(new DeathPopup(new EventHandler<MouseEvent>() {
+				public void handle(final MouseEvent event) {
+					State.reset();
+					ShaftEscape.setScene(new GameScene());
+					scene.setPopup(null);
+				}
+			}, new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent event) {
+					State.reset();
+					ShaftEscape.setScene(new MainMenuScene());
+					scene.setPopup(null);
+				}
+			}));
 		}
 		ObservableList<Node> buttons;
 		sleep(1);
