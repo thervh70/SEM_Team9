@@ -1,5 +1,9 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -18,6 +22,7 @@ import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -47,12 +52,15 @@ public class EndToEndTest extends ApplicationTest {
 	private static final int MAIN_QUIT = 2;
 	private static final int MAIN_LOADGAME = 3;
 	private static final int MAIN_TEXTFIELD = 5;
+	private static final int MAIN_SHOP = 6;
 
 	private static final int LOAD_BACK = 0;
 	private static final int LOAD_START = 1;
 
 	private static final int SETTINGS_BACK = 0;
 	private static final int SETTINGS_SOUND = 1;
+
+	private static final int SHOP_BACK = 0;
 
 	private static final int PAUSE_RESUME = 0;
 	private static final int PAUSE_TOMAIN = 1;
@@ -74,8 +82,10 @@ public class EndToEndTest extends ApplicationTest {
 	public void test() throws IOException { //NOPMD - assert is done in subs.
 		clickOn(stage, MouseButton.PRIMARY);
 		sleep(SHORT);
-		mainMenu(MAIN_SETTINGS);
-		clickAllSettings();
+
+		goThroughSettings();
+		goThroughShop();
+
 		mainMenu(MAIN_START);
 		assertNull(ShaftEscape.getScene().getPopup());
 		mainMenu(MAIN_TEXTFIELD);
@@ -86,14 +96,7 @@ public class EndToEndTest extends ApplicationTest {
 		keyboard(KeyCode.BACK_SPACE);
 		typeName();
 
-		mainMenu(MAIN_START);
-		sleep(COUNTDOWN);
-		keyboard(KeyCode.ESCAPE);
-		clickPopup(PAUSE_RESUME);
-		sleep(COUNTDOWN);
-		moveAround();
-		keyboard(KeyCode.ESCAPE);
-		clickPopup(PAUSE_TOMAIN);
+		goThroughGamePlay();
 
 		mainMenu(MAIN_LOADGAME);
 		loadMenu(LOAD_BACK);
@@ -124,7 +127,9 @@ public class EndToEndTest extends ApplicationTest {
 		State.getTrack().getPlayer().setInvincible(true);
 	}
 
-	private void clickAllSettings() {
+	private void goThroughSettings() {
+		mainMenu(MAIN_SETTINGS);
+
 		assertTrue("Sound should enabled at startup.", State.isSoundEnabled());
 		settings(SETTINGS_SOUND);
 		assertFalse("Sound disabled. (1)", State.isSoundEnabled());
@@ -134,6 +139,25 @@ public class EndToEndTest extends ApplicationTest {
 		assertFalse("Sound disabled. (3)", State.isSoundEnabled());
 
 		settings(SETTINGS_BACK);
+	}
+
+	private void goThroughShop() {
+		mainMenu(MAIN_SHOP);
+		shopScreen(SHOP_BACK);
+	}
+
+	private void goThroughGamePlay() {
+		mainMenu(MAIN_START);
+		sleep(COUNTDOWN);
+
+		keyboard(KeyCode.ESCAPE);
+		clickPopup(PAUSE_RESUME);
+		sleep(COUNTDOWN);
+
+		moveAround();
+
+		keyboard(KeyCode.ESCAPE);
+		pausePopup(PAUSE_TOMAIN);
 	}
 
 	private void typeName() {
@@ -209,6 +233,26 @@ public class EndToEndTest extends ApplicationTest {
 				.getChildrenUnmodifiable();
 		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
 		sleep(SHORT);
+	}
+
+	private void shopScreen(final int buttonNo) {
+		ObservableList<Node> buttons;
+		buttons = rootNode(stage).getScene().getRoot()
+				.getChildrenUnmodifiable();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(SHORT);
+	}
+
+	private void pausePopup(final int buttonNo) {
+		if (GameScene.getPopup() == null) {
+			fail("The Pause Popup is not available.");
+		}
+		ObservableList<Node> buttons;
+		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
+				.getChildren();
+		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
+		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+		sleep(LONG);
 	}
 
 	private void playerDies() {

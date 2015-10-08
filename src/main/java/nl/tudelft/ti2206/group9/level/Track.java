@@ -1,5 +1,9 @@
 package nl.tudelft.ti2206.group9.level;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Fence;
@@ -7,12 +11,9 @@ import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.gui.GameScene;
+import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
+import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -35,7 +36,7 @@ public class Track {
 	private static double distance;
 
 	/** List of entities on the track. */
-	private final List<AbstractEntity> entities;
+	private final ObservableLinkedList<AbstractEntity> entities;
 	/** Index of the player entity in the entities list. */
 	private int player;
 
@@ -57,7 +58,7 @@ public class Track {
 	 * @param generator the Random generator to use for this Track.
 	 */
 	public Track(final Random generator) {
-		entities = new LinkedList<AbstractEntity>();
+		entities = new ObservableLinkedList<AbstractEntity>();
 		trackParts = new TrackParser().parseTrack();
 		entities.add(new Player());
 		player = 0;
@@ -74,12 +75,22 @@ public class Track {
 		synchronized (this) {
 			for (final AbstractEntity entity : entities) {
 				if (!(entity instanceof Player)) {
-					if (entity.getCenter().getZ()
-							< GameScene.CAMERA_TRANS.getZ()) {
-						entity.selfDestruct();
-					}
 					moveEntity(entity, -dist);
 				}
+			}
+			int index = 0;
+			if (index == player) {
+				index++;
+			}
+			while (true) {
+				if (index >= entities.size()) {
+					break;
+				}
+				if (entities.get(index).getCenter().getZ()
+						> GameScene.CAMERA_TRANS.getZ()) {
+					break;
+				}
+				entities.remove(index);
 			}
 		}
 	}
@@ -120,9 +131,10 @@ public class Track {
 	 * @param entity entity to remove
 	 * @return this Track, allowing for chaining.
 	 */
+	@SuppressWarnings("restriction")
 	public final Track removeEntity(final AbstractEntity entity) {
 		synchronized (this) {
-			entities.remove(entity);
+			entity.getCenter().setZ(GameScene.CAMERA_TRANS.getZ() - 1);
 		}
 		return this;
 	}
@@ -139,6 +151,19 @@ public class Track {
 	 */
 	public final List<AbstractEntity> getEntities() {
 		return Collections.unmodifiableList(entities);
+	}
+
+	/** @param listener The listener to add to the Observable entities list. */
+	public final void addEntitiesListener(final Listener listener) {
+		entities.addListener(listener);
+	}
+
+	/**
+	 * @param listener
+	 * 			The listener to remove from the Observable entities list.
+	 */
+	public final void removeEntitiesListener(final Listener listener) {
+		entities.removeListener(listener);
 	}
 
 	/**
@@ -195,7 +220,7 @@ public class Track {
 	}
 
 	/**
-	 * Adds al entities from the TrackPart to the Track.
+	 * Adds all entities from the TrackPart to the Track.
 	 * @param part the TrackPart to be added
 	 */
 	private void addTrackPartToTrack(final TrackPart part) {

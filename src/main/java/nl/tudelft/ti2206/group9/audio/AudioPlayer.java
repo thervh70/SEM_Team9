@@ -36,7 +36,7 @@ public class AudioPlayer {
 
 	/**
 	 * Gets the audio file and prepares it for streaming.
-	 * @param source leads to the soundtrack.
+	 * @param source leads to the audio file.
 	 */
 	private void initializeTune(final String source) {
 		try {
@@ -52,15 +52,24 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Starts the initialized soundtrack.
+	 * Starts the initialized tune.
+	 * If the AudioPlayer has to be checked whether it is running,
+	 * it is checked. If not, then it's not.
+	 * @param checkStopped indicates whether to check the audioPlayer.
 	 */
-	public final void play() {
+	public final void play(final boolean checkStopped) {
 		try {
 			if (State.isSoundEnabled()) {
 				if (audioClip == null) {
 					initializeTune(path);
 				}
-				audioClip.play();
+				if (checkStopped) {
+					if (!this.isRunning()) {
+						audioClip.play();
+					}
+				} else {
+					audioClip.play();
+				}
 			}
 		} catch (MediaException me) {
 			OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
@@ -69,7 +78,8 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Stops the initialized soundtrack.
+	 * Stops the initialized soundtrack if
+	 * the AudioPlayer is actually running and if the sound is enabled.
 	 */
 	public final void stop() {
 		try {

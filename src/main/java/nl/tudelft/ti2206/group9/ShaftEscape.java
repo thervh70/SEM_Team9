@@ -1,12 +1,13 @@
 package nl.tudelft.ti2206.group9;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import nl.tudelft.ti2206.group9.gui.AbstractScene;
+import nl.tudelft.ti2206.group9.gui.GameScene;
+import nl.tudelft.ti2206.group9.gui.MainMenuScene;
 import nl.tudelft.ti2206.group9.gui.SplashScene;
+import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -57,11 +58,7 @@ public class ShaftEscape extends Application {
 		stage.setMaxHeight(ShaftEscape.HEIGHT);
 
 		// Make sure the game is saved on exit
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			public void handle(final WindowEvent arg0) {
-				exit();
-			}
-		});
+		stage.setOnCloseRequest(e -> exit());
 
 		OBSERVABLE.addObserver(LOGGER);
 		createSaveDirectory();
@@ -125,6 +122,9 @@ public class ShaftEscape extends Application {
 		}
 		LOGGER.writeToFile();
 		stage.close();
+		InternalTicker.stop();
+		MainMenuScene.getAudioPlayer().stop();
+		GameScene.getAudioPlayer().stop();
 	}
 
 	/**
