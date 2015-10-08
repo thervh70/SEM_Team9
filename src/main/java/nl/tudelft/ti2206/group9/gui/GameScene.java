@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -21,6 +20,8 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * This scene shows the 3D Game world and the 2D score overlay.
