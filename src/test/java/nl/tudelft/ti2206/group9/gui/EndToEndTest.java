@@ -217,7 +217,7 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void playerDies() {
 		State.getTrack().getPlayer().die();
-		sleep(2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		sleep(20 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}

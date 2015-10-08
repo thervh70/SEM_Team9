@@ -131,9 +131,13 @@ public final class MainMenuScene extends AbstractMenuScene {
 	 * that file, otherwise create a new game with that name.
 	 */
 	private static void createNewGame() {
-		State.setPlayerName(INPUT.getText());
-		if (!tryLoadPlayerName(INPUT.getText())) {
+		if(State.getPlayerName() != null) {
 			SaveGame.saveGame();
+		}
+		boolean load = tryLoadPlayerName(INPUT.getText());
+		if(!load) {
+			State.resetAll();
+			State.setPlayerName(INPUT.getText());
 		}
 		INPUT.clear();
 		State.getSaveGames().clear();
@@ -142,12 +146,13 @@ public final class MainMenuScene extends AbstractMenuScene {
 	}
 
 	/**
-	 * Check if the given name corresponds with an alread existing
-	 * file. If so, return true, otherwise, retrn false.
+	 * Check if the given name corresponds with an already existing
+	 * file. If so, return true, otherwise, return false.
 	 * @param name the given name to check against the savefiles
-	 * @return boolean to indiccate whether a savfile was found
+	 * @return boolean to indicate whether a savfile was found
 	 */
 	private static boolean tryLoadPlayerName(final String name) {
+
 		SaveGame.readPlayerNames();
 		if (State.getSaveGames().contains(name)) {
 			SaveGame.loadGame(name);
