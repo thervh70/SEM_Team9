@@ -226,31 +226,18 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void clickPopup(final int buttonNo) {
 		final AbstractScene scene = ShaftEscape.getScene();
-		if (scene.getPopup() == null) {
-			scene.setPopup(new DeathPopup(new EventHandler<MouseEvent>() {
-				public void handle(final MouseEvent event) {
-					State.reset();
-					ShaftEscape.setScene(new GameScene());
-					scene.setPopup(null);
-				}
-			}, new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent event) {
-					State.reset();
-					ShaftEscape.setScene(new MainMenuScene());
-					scene.setPopup(null);
-				}
-			}));
+		if (scene.getPopup() != null) {
+			ObservableList<Node> buttons;
+			sleep(1);
+			buttons = ((VBox) scene.getPopup().getContent().get(1))
+					.getChildren();
+			buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
+			try {
+				clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				fail("ButtonNo " + buttonNo + " does not exist");
+			}
+			sleep(SHORT);
 		}
-		ObservableList<Node> buttons;
-		sleep(1);
-		buttons = ((VBox) scene.getPopup().getContent().get(1))
-				.getChildren();
-		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
-		try {
-			clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-		} catch(ArrayIndexOutOfBoundsException e) {
-			fail("ButtonNo " + buttonNo + " does not exist");
-		}
-		sleep(SHORT);
 	}
 }
