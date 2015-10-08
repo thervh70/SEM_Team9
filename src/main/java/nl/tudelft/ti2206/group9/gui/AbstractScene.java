@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import javafx.stage.Popup;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 
 /**
@@ -19,6 +20,9 @@ public abstract class AbstractScene extends Scene {
 
 	/** Default root, is an empty StackPane. */
 	public static final StackPane DEFAULT_ROOT = new StackPane();
+
+	/** The Popup a AbstractScene can have. */
+	private static Popup popup;
 
 	/**
 	 * Scene of default {@link ShaftEscape#WIDTH} and
@@ -61,6 +65,22 @@ public abstract class AbstractScene extends Scene {
 	public AbstractScene() {
 		super(DEFAULT_ROOT, ShaftEscape.WIDTH, ShaftEscape.HEIGHT);
 		setRoot(createRoot());
+	}
+
+	/**
+	 * Get the Popup.
+	 * @return the Popup
+	 */
+	public static Popup getPopup() {
+		return popup;
+	}
+
+	/**
+	 * Set the Popup.
+	 * @param newPopup the Popup to be set
+	 */
+	protected static void setPopup(final Popup newPopup) {
+		popup = newPopup;
 	}
 
 	/**

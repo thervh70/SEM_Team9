@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.gui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -42,6 +43,8 @@ public class EndToEndTest extends ApplicationTest {
 	private static final long LONG = 5 * TARDINESS;
 	/** Sleep countdown. */
 	private static final long COUNTDOWN = 3500;
+	/** Sleep factor playerDies. */
+	private static final long SLEEP_FACTOR = 2;
 
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
@@ -55,7 +58,6 @@ public class EndToEndTest extends ApplicationTest {
 
 	private static final int LOAD_BACK = 0;
 	private static final int LOAD_START = 1;
-	private static final int LOAD_NAMECONTAINER = 2;
 
 	private static final int SETTINGS_BACK = 0;
 	private static final int SETTINGS_SOUND = 1;
@@ -67,6 +69,8 @@ public class EndToEndTest extends ApplicationTest {
 
 	private static final int DEATH_RETRY = 0;
 	private static final int DEATH_TOMAIN = 1;
+
+	private static final int WARNING_OK = 0;
 
 	@Override
 	public void start(final Stage primaryStage) {
@@ -84,23 +88,30 @@ public class EndToEndTest extends ApplicationTest {
 		goThroughSettings();
 		goThroughShop();
 
-        mainMenu(MAIN_TEXTFIELD);
-        typeName();
+		mainMenu(MAIN_START);
+		assertNull(AbstractScene.getPopup());
+		mainMenu(MAIN_TEXTFIELD);
+		typeFaultyName();
+		mainMenu(MAIN_START);
+		clickPopup(WARNING_OK);
+		mainMenu(MAIN_TEXTFIELD);
+		keyboard(KeyCode.BACK_SPACE);
+		typeName();
+
 		goThroughGamePlay();
 
 		mainMenu(MAIN_LOADGAME);
 		loadMenu(LOAD_BACK);
 		mainMenu(MAIN_LOADGAME);
-		loadMenu(LOAD_NAMECONTAINER);
 		loadMenu(LOAD_START);
 
-		mainMenu(MAIN_START);
 		sleep(COUNTDOWN);
 		playerDies();
-		deathPopup(DEATH_RETRY);
+		sleep(SHORT);
+		clickPopup(DEATH_RETRY);
 		sleep(COUNTDOWN);
 		playerDies();
-		deathPopup(DEATH_TOMAIN);
+		clickPopup(DEATH_TOMAIN);
 
 		mainMenu(MAIN_QUIT);
 		outputEventLog();
@@ -142,7 +153,7 @@ public class EndToEndTest extends ApplicationTest {
 		sleep(COUNTDOWN);
 
 		keyboard(KeyCode.ESCAPE);
-		pausePopup(PAUSE_RESUME);
+		clickPopup(PAUSE_RESUME);
 		sleep(COUNTDOWN);
 
 		moveAround();
@@ -158,6 +169,10 @@ public class EndToEndTest extends ApplicationTest {
 		keyboard(KeyCode.R);
 		keyboard(KeyCode.E);
 		keyboard(KeyCode.D);
+	}
+
+	private void typeFaultyName() {
+		keyboard(KeyCode.SLASH);
 	}
 
 	private void moveAround() {
@@ -244,22 +259,24 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void playerDies() {
 		State.getTrack().getPlayer().die();
-		sleep(2 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
 
-	private void deathPopup(final int buttonNo) {
-		if (GameScene.getPopup() == null) {
-			fail("The Death Popup is not available.");
+	private void clickPopup(final int buttonNo) {
+		if (AbstractScene.getPopup() != null) {
+			ObservableList<Node> buttons;
+			sleep(1);
+			buttons = ((VBox) AbstractScene.getPopup().getContent().get(1))
+					.getChildren();
+			buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
+			try {
+				clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				fail("ButtonNo " + buttonNo + " does not exist");
+			}
+			sleep(SHORT);
 		}
-		ObservableList<Node> buttons;
-		sleep(1);
-		buttons = ((VBox) GameScene.getPopup().getContent().get(1))
-				.getChildren();
-		buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
-		clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-		sleep(SHORT);
 	}
-
 }

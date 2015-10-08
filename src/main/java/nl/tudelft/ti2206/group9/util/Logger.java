@@ -100,13 +100,7 @@ public class Logger implements GameObserver {
 		writeToOutput("", false);
 	}
 
-	/**
-	 * The update method adds a new String to the buffer containing the message
-	 * that is being logged.
-	 * @param o the Observable that sent out the update.
-	 * @param arg the argument that comes with the update (in this case, it is
-	 * 			a GameUpdate object.
-	 */
+	@Override
 	public void update(final Observable o, final Object arg) {
 		final GameUpdate update = (GameUpdate) arg;
 		buffer.append(getLogString(update.getSpec(), update.getArgs()));

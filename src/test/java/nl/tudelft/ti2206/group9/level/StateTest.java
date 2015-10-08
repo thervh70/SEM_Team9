@@ -105,4 +105,12 @@ public class StateTest {
 		assertEquals("Piet", State.getPlayerName());
 	}
 
+	@Test
+	public void testGetDefaultSaveDir() {
+		assertEquals("sav/", State.getDefaultSaveDir());
+
+		State.setDefaultSaveDir("save/");
+		assertEquals("save/", State.getDefaultSaveDir());
+	}
+
 }

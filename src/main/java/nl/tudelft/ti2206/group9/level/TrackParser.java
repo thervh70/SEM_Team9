@@ -1,15 +1,13 @@
 package nl.tudelft.ti2206.group9.level;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
 import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.entities.Coin;
 import nl.tudelft.ti2206.group9.entities.Fence;
 import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.entities.Pillar;
-import nl.tudelft.ti2206.group9.util.Point3D;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import nl.tudelft.ti2206.group9.util.Point3D;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,6 +17,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * @author Mathias
