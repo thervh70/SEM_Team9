@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +10,8 @@ import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * A Main Menu with different options/buttons like a options menu, start button
@@ -101,6 +102,9 @@ public final class MainMenuScene extends AbstractMenuScene {
 			} else if (type == BType.LOAD) {
 				OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
 				ShaftEscape.setScene(new LoadGameScene());
+			} else if (type == BType.SHOP) {
+				OBSERVABLE.notify(Category.MENU, Menu.SHOP);
+				ShaftEscape.setScene(new ShopScene());
 			} else {
 				OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
 				ShaftEscape.setScene(new SettingsScene());
