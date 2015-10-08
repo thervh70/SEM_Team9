@@ -5,9 +5,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
-import javafx.scene.DepthTest;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -15,21 +12,19 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.entities.AbstractEntity;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.renderer.BoxRenderer;
-import nl.tudelft.ti2206.group9.renderer.LightRenderer;
-import nl.tudelft.ti2206.group9.renderer.Renderer;
-import nl.tudelft.ti2206.group9.renderer.TrackRenderer;
-import nl.tudelft.ti2206.group9.renderer.WallRenderer;
-import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
+import nl.tudelft.ti2206.group9.renderer.AbstractGroupRenderer;
+import nl.tudelft.ti2206.group9.renderer.GroupEntitiesRenderer;
+import nl.tudelft.ti2206.group9.renderer.GroupLightRenderer;
+import nl.tudelft.ti2206.group9.renderer.GroupTrackRenderer;
+import nl.tudelft.ti2206.group9.renderer.GroupWallRenderer;
 
 /**
  * @author Maarten.
  */
 @SuppressWarnings("restriction")
-public class ExternalTicker extends AnimationTimer implements Listener {
+public class ExternalTicker extends AnimationTimer {
 
 	/** Height of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_HEIGHT = 130;
@@ -40,30 +35,26 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 	/** Label for the countdownLabel animation. */
 	private final Label countdownLabel = new Label();
 	/** List that stores the entities, to be held up-to-date with Track. */
-	private final Group entities;
+	private final AbstractGroupRenderer entities;
 	/** Group that stores the wall. */
-	private final WallRenderer wall;
+	private final AbstractGroupRenderer wall;
 	/** Group that stores the track. */
-	private final TrackRenderer track;
+	private final AbstractGroupRenderer track;
 	/** Group that stores the lights. */
-	private final LightRenderer light;
+	private final GroupLightRenderer light;
 
 	/** Default constructor. */
 	public ExternalTicker() {
 		super();
-		State.getTrack().addEntitiesListener(this);
+
 		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
-			entities = new Group();
-			wall = new WallRenderer();
-			track = new TrackRenderer();
-			light = new LightRenderer();
-			for (final AbstractEntity e : State.getTrack().getEntities()) {
-				entities.getChildren().add(new BoxRenderer(e));
-			}
-			GameScene.addWorld(entities);
-			GameScene.addWorld(wall);
-			GameScene.addWorld(track);
-			GameScene.addWorld(light);
+			entities = new GroupEntitiesRenderer();
+			wall = new GroupWallRenderer();
+			track = new GroupTrackRenderer();
+			light = new GroupLightRenderer();
+
+			GameScene.addWorld(entities, wall, track, light);
+
 		} else {
 			entities = null;
 			wall = null;
@@ -87,20 +78,14 @@ public class ExternalTicker extends AnimationTimer implements Listener {
      */
 	private void renderScene() {
 		GameScene.clearOverlay();
-		GameScene.addOverlay(renderScore());
-		GameScene.addOverlay(countdownLabel);
+		GameScene.addOverlay(renderScore(), countdownLabel);
 
-		if (!Platform.isSupported(ConditionalFeature.SCENE3D)) {
-			return;
+		if (Platform.isSupported(ConditionalFeature.SCENE3D)) {
+			entities.update();
+			wall.update();
+			track.update();
+			light.update();
 		}
-
-		entities.setDepthTest(DepthTest.ENABLE);
-		for (final Node renderer : entities.getChildren()) {
-			((Renderer) renderer).update();
-		}
-		wall.update();
-		light.update();
-		track.update();
 	}
 
 	/**
@@ -128,29 +113,6 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
 		return scoreBox;
-	}
-
-	@Override
-	public void update(final Type type, final Object item, final int index) {
-		if (!Platform.isSupported(ConditionalFeature.SCENE3D)) {
-			return;
-		}
-		switch (type) {
-		case ADD_FIRST:
-			entities.getChildren().add(0,
-					new BoxRenderer((AbstractEntity) item));
-			break;
-		case ADD_LAST:
-			entities.getChildren().add(new BoxRenderer((AbstractEntity) item));
-			break;
-		case REMOVE:
-			// TODO ehm... how to remove the BoxRenderer associated with this?
-			break;
-		case REMOVE_INDEX:
-			entities.getChildren().remove(index);
-			break;
-		default: break;
-		}
 	}
 
 	/**

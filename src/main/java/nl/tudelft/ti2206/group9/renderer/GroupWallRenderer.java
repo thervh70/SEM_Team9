@@ -1,26 +1,25 @@
 package nl.tudelft.ti2206.group9.renderer;
 
-import nl.tudelft.ti2206.group9.gui.Style;
-import nl.tudelft.ti2206.group9.level.Track;
 import javafx.scene.CacheHint;
-import javafx.scene.Group;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.level.Track;
 
 /**
  * This class renders the two Walls in the scene.
  * @author Maarten
  */
 @SuppressWarnings("restriction")
-public class WallRenderer extends Group implements Renderer {
+public class GroupWallRenderer extends AbstractGroupRenderer {
 
 	/** Default constructor. */
-	public WallRenderer() {
+	public GroupWallRenderer() {
 		super();
 		final int offset = 3;
 		final double correction = 1.5;
 		for (int h = 0; h < 2; h++) { //two walls
-			for (int i = 0; i < (int) Track.LENGTH; i++) {	// 500 units long
+			for (int i = 0; i < (int) Track.LENGTH; i++) {	// 100 units long
 				for (int j = 0; j < Track.WIDTH; j++) {		// height of walls
 					final Box wallPiece = new Box(0, 1, 1);
 					wallPiece.setTranslateX(h * offset - correction);

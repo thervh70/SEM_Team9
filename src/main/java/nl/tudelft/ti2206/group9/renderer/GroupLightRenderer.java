@@ -8,12 +8,12 @@ import nl.tudelft.ti2206.group9.gui.GameScene;
 /**
  * @author Robin
  */
-public class LightRenderer extends Group implements Renderer {
+public class GroupLightRenderer extends Group implements Renderer {
 
     /**
      * This method sets up the Entities.
      */
-    public LightRenderer() {
+    public GroupLightRenderer() {
         super();
 
         final int translateY = -5;
