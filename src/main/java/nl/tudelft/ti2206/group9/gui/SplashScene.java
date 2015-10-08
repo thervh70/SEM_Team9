@@ -1,13 +1,9 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
 import javafx.animation.FadeTransition;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
@@ -40,13 +36,15 @@ public final class SplashScene extends AbstractMenuScene {
         addKeyPressed();
 
         final int labelRows = 2;
-        final int labelCols = 12;
+        final int labelCols = 16;
         final Label text = createLabel("Press any key to continue");
+        final int labelWidth = 350;
+        text.setMinWidth(labelWidth);
         generateFadeTransition(text);
         text.setPrefWidth(labelCols * GRID_GAP);
         text.setPrefHeight(labelRows * GRID_GAP);
-	    GridPane.setConstraints(text, GRID_WIDTH / 2 - labelCols / 2,
-	    		GRID_HEIGHT / 2 + 2 - labelRows / 2);
+	    GridPane.setConstraints(text, labelRows,
+	    		labelCols);
 
         return new Node[]{text};
 	}
@@ -66,14 +64,12 @@ public final class SplashScene extends AbstractMenuScene {
      * Defining what has happens in case of a mouseClickEvent.
      */
     private void addMouseClick() {
-    	setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent me) {
-            	apButton.play(false);
-                OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
-                        me.getButton());
-                OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
-                ShaftEscape.setScene(new MainMenuScene());
-            }
+        setOnMouseClicked(me -> {
+            apButton.play(false);
+            OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
+                    me.getButton());
+            OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
+            ShaftEscape.setScene(new MainMenuScene());
         });
     }
 
@@ -81,14 +77,12 @@ public final class SplashScene extends AbstractMenuScene {
      * Defining what happens in case of a random keyPressedEvent.
      */
     private void addKeyPressed() {
-        setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent ke) {
-            	apButton.play(false);
-                OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
-                        ke.getCode());
-                OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
-                ShaftEscape.setScene(new MainMenuScene());
-            }
+        setOnKeyPressed(ke -> {
+            apButton.play(false);
+            OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
+                    ke.getCode());
+            OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
+            ShaftEscape.setScene(new MainMenuScene());
         });
     }
 

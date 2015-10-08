@@ -59,6 +59,8 @@ public class Logger implements GameObserver {
 		STRINGS.put(Menu.LOAD_MENU, lbl + "Pressed \"Load game\".");
 		STRINGS.put(Menu.LOAD_BACK, lbl + "Back to main menu.");
 		STRINGS.put(Menu.LOAD, lbl + "Pressed \"Start load game\".");
+		STRINGS.put(Menu.SHOP, lbl + "Pressed \"Shop\"");
+		STRINGS.put(Menu.SHOP_BACK, lbl + "Back to main menu");
 
 		lbl = " [PLAYER] ";
 		STRINGS.put(Player.COLLISION, lbl + "Collided with %s.");
@@ -98,15 +100,13 @@ public class Logger implements GameObserver {
 		writeToOutput("", false);
 	}
 
-    /**
-     * This method is called whenever the observed object is changed. An
-     * application calls an <tt>Observable</tt> object's
-     * <code>notifyObservers</code> method to have all the object's
-     * observers notified of the change.
-     * @param   o     the observable object.
-     * @param   arg   an argument passed to the <code>notifyObservers</code>
-     *                 method.
-     */
+	/**
+	 * The update method adds a new String to the buffer containing the message
+	 * that is being logged.
+	 * @param o the Observable that sent out the update.
+	 * @param arg the argument that comes with the update (in this case, it is
+	 * 			a GameUpdate object.
+	 */
 	public void update(final Observable o, final Object arg) {
 		final GameUpdate update = (GameUpdate) arg;
 		buffer.append(getLogString(update.getSpec(), update.getArgs()));
@@ -116,7 +116,7 @@ public class Logger implements GameObserver {
 	/**
 	 * Writes the current buffer to the output file. This should be called
 	 * before exiting the application. The buffer is used instead of writing to
-	 * the log file on each {@link #gameUpdate} call.
+	 * the log file on each {@link #update(Observable, Object)} call.
 	 * @param append whether the buffer should be appended to the current log
 	 *        file or not. A new file is created at every application startup.
 	 * @return whether the writing has been successful.

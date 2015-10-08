@@ -50,26 +50,24 @@ public final class InternalTicker extends TimerTask {
 	 * Thread method.
 	 */
 	public void run() {
-		Platform.runLater(new Runnable() {
-			public void run() {
-				synchronized (ShaftEscape.TICKER_LOCK) {
-					final Timer newTimer = new Timer();
+		Platform.runLater(() -> {
+			synchronized (ShaftEscape.TICKER_LOCK) {
+				final Timer newTimer = new Timer();
 
-					try {
-						InternalTicker.this.step(); // First, perform tick.
-						// Then, kill the timer that scheduled the task.
-						if (timer != null) {
-							timer.cancel();
-						}
-					} finally {
-						if (running) {
-							scheduleTime = scheduleTime.plusNanos(
-									NANOS_PER_TICK);
-							newTimer.schedule(new InternalTicker(newTimer),
-									Date.from(scheduleTime));
-						} else {
-							newTimer.cancel();
-						}
+				try {
+					InternalTicker.this.step(); // First, perform tick.
+					// Then, kill the timer that scheduled the task.
+					if (timer != null) {
+						timer.cancel();
+					}
+				} finally {
+					if (running) {
+						scheduleTime = scheduleTime.plusNanos(
+								NANOS_PER_TICK);
+						newTimer.schedule(new InternalTicker(newTimer),
+								Date.from(scheduleTime));
+					} else {
+						newTimer.cancel();
 					}
 				}
 			}

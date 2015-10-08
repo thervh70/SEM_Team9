@@ -5,8 +5,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -37,9 +35,10 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 	private static final int SCORE_BOX_HEIGHT = 130;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
+	/** Distance between labels in overlay. */
+	private static final int LABEL_DISTANCE = 16;
 	/** Label for the countdownLabel animation. */
 	private final Label countdownLabel = new Label();
-
 	/** List that stores the entities, to be held up-to-date with Track. */
 	private final Group entities;
 	/** Group that stores the wall. */
@@ -122,8 +121,8 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 		Style.setLabelStyle(scoreLabel);
 		Style.setLabelStyle(distanceLabel);
 		Style.setLabelStyle(coinsLabel);
-
-		final VBox scoreBox = new VBox(nameLabel, highLabel, scoreLabel,
+		final VBox scoreBox = new VBox(LABEL_DISTANCE, nameLabel,
+                highLabel, scoreLabel,
 				distanceLabel, coinsLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
@@ -193,15 +192,13 @@ public class ExternalTicker extends AnimationTimer implements Listener {
 		ft.setFromValue(0);
 		ft.play();
 
-		st.setOnFinished(new EventHandler<ActionEvent>() {
-			public void handle(final ActionEvent event) {
-				final int newIndex = index - 1;
-				if (newIndex > 0) {
-					countdown(newIndex);
-				} else {
-					InternalTicker.start();
-					GameScene.setRunning(true);
-				}
+		st.setOnFinished(event -> {
+			final int newIndex = index - 1;
+			if (newIndex > 0) {
+				countdown(newIndex);
+			} else {
+				InternalTicker.start();
+				GameScene.setRunning(true);
 			}
 		});
 	}

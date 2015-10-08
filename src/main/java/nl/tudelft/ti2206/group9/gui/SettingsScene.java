@@ -1,14 +1,9 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -31,22 +26,25 @@ public final class SettingsScene extends AbstractMenuScene {
 		SETTING_SOUND
 	 }
 
+	/** Toggle width. */
+	private static final int TOGGLE_WIDTH = 150;
+	/** Toggle text size. */
+	private static final int TOGGLE_TEXT_SIZE = 16;
     /**
      * Creates a Sound toggle button and a Back button.
      * @return an array of Nodes to be added to the Scene.
      */
 	@Override
 	public Node[] createContent() {
-	    final Button backButton = createButton("Back", 2, 26);
+	    final Button backButton = createButton("BACK", 0, 25);
+
 		String soundToggle = "OFF";
 		if (State.isSoundEnabled()) {
 			soundToggle = "ON";
 		}
-	    final Button soundButton = createButton("Sound: " + soundToggle, 5, 18);
-
-	    // Override default button size from Style
-	    final Font font = Font.font("Roboto", FontWeight.BOLD, 20);
-	    soundButton.setFont(font);
+	    final Button soundButton = createButton("Sound: " + soundToggle, 2, 18);
+		soundButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
+		soundButton.setPrefWidth(TOGGLE_WIDTH);
 
 	    setButtonFunction(backButton, BType.SETTINGS_BACK);
 	    setButtonFunction(soundButton, BType.SETTING_SOUND);
@@ -62,29 +60,27 @@ public final class SettingsScene extends AbstractMenuScene {
 	 * @param button Button to be set.
 	 * @param type Type of button
 	 */
-	protected static void setButtonFunction(final Button button,
-			final BType type) {
-	    button.setOnAction(new EventHandler<ActionEvent>() {
-	        public void handle(final ActionEvent event) {
-				SplashScene.getButtonAudioPlayer().play(false);
-	            if (type == BType.SETTINGS_BACK) {
-	                OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
-	                ShaftEscape.setScene(new MainMenuScene());
-	            } else {
-	                MainMenuScene.getAudioPlayer().stop();
-	                State.setSoundEnabled(!State.isSoundEnabled());
-	                String s;
-	                if (State.isSoundEnabled()) {
-	                    s = "ON";
-	                } else {
-	                    s = "OFF";
-	                }
-	                button.setText("Sound: " + s);
-	                OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUND, s);
-	            }
-	        }
-	    });
-	}
+    protected static void setButtonFunction(final Button button,
+            final BType type) {
+        button.setOnAction(event -> {
+            SplashScene.getButtonAudioPlayer().play(false);
+            if (type == BType.SETTINGS_BACK) {
+                OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
+                ShaftEscape.setScene(new MainMenuScene());
+            } else {
+                State.setSoundEnabled(!State.isSoundEnabled());
+                String s;
+                if (State.isSoundEnabled()) {
+                    s = "ON";
+                } else {
+                    s = "OFF";
+                }
+                button.setText("Sound: " + s);
+                OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUND, s);
+            }
+        });
+    }
+
 
 	/** Override background, the Settings background shows "Settings". */
 	@Override

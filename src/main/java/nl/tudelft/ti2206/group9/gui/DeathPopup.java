@@ -25,22 +25,16 @@ public class DeathPopup extends AbstractPopup {
     		final EventHandler<MouseEvent> menuEvent) {
 		super(new Button("Try Again"), new Button("Return to Main Menu"));
 
-        getLeftButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(final MouseEvent y) {
-				SplashScene.getButtonAudioPlayer().play(false);
-                hide();
-                retryEvent.handle(y);
-            }
+        getLeftButton().setOnMouseClicked(mouseEvent -> {
+			SplashScene.getButtonAudioPlayer().play(false);
+            hide();
+            retryEvent.handle(mouseEvent);
         });
 
-        getRightButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(final MouseEvent n) {
-				SplashScene.getButtonAudioPlayer().play(false);
-                hide();
-                menuEvent.handle(n);
-            }
+        getRightButton().setOnMouseClicked(mouseEvent -> {
+			SplashScene.getButtonAudioPlayer().play(false);
+            hide();
+            menuEvent.handle(mouseEvent);
         });
     }
 
