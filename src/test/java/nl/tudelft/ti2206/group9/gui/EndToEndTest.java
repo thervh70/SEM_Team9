@@ -43,6 +43,8 @@ public class EndToEndTest extends ApplicationTest {
 	private static final long LONG = 5 * TARDINESS;
 	/** Sleep countdown. */
 	private static final long COUNTDOWN = 3500;
+	/** Sleep factor playerDies. */
+	private static final long SLEEP_FACTOR = 2;
 
 	/** Delta for double equality. */
 	private static final double DELTA = 0.000001;
@@ -87,7 +89,7 @@ public class EndToEndTest extends ApplicationTest {
 		goThroughShop();
 
 		mainMenu(MAIN_START);
-		assertNull(ShaftEscape.getScene().getPopup());
+		assertNull(AbstractScene.getPopup());
 		mainMenu(MAIN_TEXTFIELD);
 		typeFaultyName();
 		mainMenu(MAIN_START);
@@ -257,17 +259,16 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void playerDies() {
 		State.getTrack().getPlayer().die();
-		sleep(20 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+		sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
 		letPlayerSurvive();			// Make sure there are no obstacles
 		sleep(LONG);
 	}
 
 	private void clickPopup(final int buttonNo) {
-		final AbstractScene scene = ShaftEscape.getScene();
-		if (scene.getPopup() != null) {
+		if (AbstractScene.getPopup() != null) {
 			ObservableList<Node> buttons;
 			sleep(1);
-			buttons = ((VBox) scene.getPopup().getContent().get(1))
+			buttons = ((VBox) AbstractScene.getPopup().getContent().get(1))
 					.getChildren();
 			buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
 			try {

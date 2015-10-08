@@ -19,6 +19,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
+import nl.tudelft.ti2206.group9.util.SaveGame;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
@@ -178,6 +179,7 @@ public final class GameScene extends AbstractScene {
             setPopup(null);
         }, e -> {
             OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
+			SaveGame.saveGame();
             State.reset();
             ShaftEscape.setScene(new MainMenuScene());
             setPopup(null);
@@ -195,6 +197,7 @@ public final class GameScene extends AbstractScene {
             setPopup(null);
         }, e -> {
             OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
+			SaveGame.saveGame();
             State.reset();
             ShaftEscape.setScene(new MainMenuScene());
             setPopup(null);
