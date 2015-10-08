@@ -22,7 +22,7 @@ public class Coin extends AbstractEntity {
 	 * @param center center of the bounding box of the Coin
 	 */
 	public Coin(final Point3D center) {
-		super(new Point3D(center), SIZE);
+		super(center, SIZE);
 	}
 
 	/**

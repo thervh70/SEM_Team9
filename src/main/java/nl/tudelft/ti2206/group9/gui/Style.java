@@ -1,12 +1,10 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
@@ -114,19 +112,15 @@ public final class Style {
         b.setBackground(buttonBack);
         b.setFont(font);
 
-        b.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent e) {
-                b.setScaleX(BUTTON_HOVER_SCALE);
-                b.setScaleY(BUTTON_HOVER_SCALE);
-            }
+        b.setOnMouseEntered(e -> {
+            b.setScaleX(BUTTON_HOVER_SCALE);
+            b.setScaleY(BUTTON_HOVER_SCALE);
         });
 
         /** Action to be taken on MouseExited Event. */
-        b.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent e) {
-                b.setScaleX(1);
-                b.setScaleY(1);
-            }
+        b.setOnMouseExited(e -> {
+            b.setScaleX(1);
+            b.setScaleY(1);
         });
     }
 
@@ -148,18 +142,10 @@ public final class Style {
         b.setFont(font);
 
         /** Action to be taken on MouseEntered Event */
-        b.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent e) {
-                b.setTextFill(Color.CORNFLOWERBLUE);
-            }
-        });
+        b.setOnMouseEntered(e -> b.setTextFill(Color.CORNFLOWERBLUE));
 
         /** Action to be taken on MouseExited Event. */
-        b.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent e) {
-                b.setTextFill(Color.WHITE);
-            }
-        });
+        b.setOnMouseExited(e -> b.setTextFill(Color.WHITE));
     }
 
     /**

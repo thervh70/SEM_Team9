@@ -5,8 +5,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -61,6 +59,9 @@ public class ExternalTicker extends AnimationTimer {
 	@Override
 	public final void handle(final long now) {
 		synchronized (ShaftEscape.TICKER_LOCK) {
+			if (InternalTicker.isRunning()) {
+				GameScene.getAudioPlayer().play(true);
+			}
 			renderScene();
 		}
 	}
@@ -146,15 +147,13 @@ public class ExternalTicker extends AnimationTimer {
 		ft.setFromValue(0);
 		ft.play();
 
-		st.setOnFinished(new EventHandler<ActionEvent>() {
-			public void handle(final ActionEvent event) {
-				final int newIndex = index - 1;
-				if (newIndex > 0) {
-					countdown(newIndex);
-				} else {
-					InternalTicker.start();
-					GameScene.setRunning(true);
-				}
+		st.setOnFinished(event -> {
+			final int newIndex = index - 1;
+			if (newIndex > 0) {
+				countdown(newIndex);
+			} else {
+				InternalTicker.start();
+				GameScene.setRunning(true);
 			}
 		});
 	}
