@@ -114,7 +114,7 @@ public class EndToEndTest extends ApplicationTest {
 		clickPopup(DEATH_TOMAIN);
 
 		sleep(LONG);
-		mainMenu(MAIN_QUIT);
+		stage.close();
 		outputEventLog();
 	}
 
