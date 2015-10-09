@@ -6,6 +6,7 @@ import nl.tudelft.ti2206.group9.gui.Style;
 /**
  * @author Maikel on 08/10/2015.
  */
+@SuppressWarnings("restriction")
 public abstract class AbstractSkin {
 
     /** The price of this skin in the shop. */

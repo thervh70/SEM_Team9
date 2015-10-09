@@ -88,16 +88,7 @@ public class EndToEndTest extends ApplicationTest {
 		goThroughSettings();
 		goThroughShop();
 
-		mainMenu(MAIN_START);
-		assertNull(AbstractScene.getPopup());
-		mainMenu(MAIN_TEXTFIELD);
-		typeFaultyName();
-		mainMenu(MAIN_START);
-		clickPopup(WARNING_OK);
-		mainMenu(MAIN_TEXTFIELD);
-		keyboard(KeyCode.BACK_SPACE);
-		typeName();
-
+		goThroughNameTyping();
 		goThroughGamePlay();
 
 		mainMenu(MAIN_LOADGAME);
@@ -146,6 +137,18 @@ public class EndToEndTest extends ApplicationTest {
 	private void goThroughShop() {
 		mainMenu(MAIN_SHOP);
 		shopScreen(SHOP_BACK);
+	}
+
+	private void goThroughNameTyping() {
+		mainMenu(MAIN_START);
+		assertNull(AbstractScene.getPopup()); // Assert that Game does not start
+		mainMenu(MAIN_TEXTFIELD);
+		typeFaultyName();
+		mainMenu(MAIN_START);
+		clickPopup(WARNING_OK);
+		mainMenu(MAIN_TEXTFIELD);
+		keyboard(KeyCode.BACK_SPACE);
+		typeName();
 	}
 
 	private void goThroughGamePlay() {

@@ -36,9 +36,9 @@ public abstract class AbstractMenuScene extends AbstractScene {
 	private static final int LIST_WIDTH = 80;
 	/** HEIGHT for list. */
 	private static final int LIST_HEIGHT = 160;
-	/** Rowspan for the TableView */
+	/** Rowspan for the TableView. */
 	private static final int ROW_SPAN = 7;
-	/** Columnspan for the TableView */
+	/** Columnspan for the TableView. */
 	private static final int COLUMN_SPAN = 3;
 
 	/**
