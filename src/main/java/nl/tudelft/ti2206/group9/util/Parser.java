@@ -2,15 +2,6 @@ package nl.tudelft.ti2206.group9.util;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
-import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObserver.Category;
-import nl.tudelft.ti2206.group9.util.GameObserver.Error;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import sun.misc.BASE64Decoder; //NOPMD - I need this package
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -20,11 +11,22 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import sun.misc.BASE64Decoder; //NOPMD - I need this package
+
 /**
  * This class takes care of the parsing of JSON objects
  * into the game. This way already saved games can be loaded.
  * @author Mathias
  */
+@SuppressWarnings("restriction")
 public final class Parser {
 
 	/** Playername. */
@@ -58,9 +60,7 @@ public final class Parser {
 			}
 
 			final String mainString = createString(lines);
-
 			final String decryptedMain = decrypt(mainString);
-
 
 			final JSONParser parser = new JSONParser();
 			final JSONObject mainObject =
@@ -68,7 +68,6 @@ public final class Parser {
 
 			parseJSON(mainObject);
 			writeToState();
-
 			reader.close();
 		} catch (IOException e) {
 			OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,

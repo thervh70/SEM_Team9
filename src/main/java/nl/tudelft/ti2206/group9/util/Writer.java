@@ -13,6 +13,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 import org.json.simple.JSONObject;
+
 import sun.misc.BASE64Encoder; //NOPMD - I need this package
 
 /**
@@ -20,6 +21,7 @@ import sun.misc.BASE64Encoder; //NOPMD - I need this package
  * into external files. This way games can be saved.
  * @author Mathias
  */
+@SuppressWarnings("restriction")
 public final class Writer {
 
     /**
