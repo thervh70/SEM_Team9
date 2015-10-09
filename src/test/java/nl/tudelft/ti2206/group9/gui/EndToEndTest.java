@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -112,7 +113,7 @@ public class EndToEndTest extends ApplicationTest {
 		playerDies();
 		clickPopup(DEATH_TOMAIN);
 
-		mainMenu(MAIN_QUIT);
+		Platform.runLater(stage::close);
 		outputEventLog();
 	}
 
