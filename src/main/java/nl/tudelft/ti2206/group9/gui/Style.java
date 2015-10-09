@@ -55,8 +55,11 @@ public final class Style {
     /** FLOOR material used for floors, mossy cobblestone floor texture. */
     public static final PhongMaterial FLOOR = new PhongMaterial();
 
-    /** COIN material used for coins, question mark box coin texture. */
+    /** COIN material used for coins, 8-bit coin texture. */
     public static final PhongMaterial COIN = new PhongMaterial();
+
+    /** PICKUP material used for coins, question mark box texture. */
+    public static final PhongMaterial PICKUP = new PhongMaterial();
 
     /** WOOD material used for logs, wooden planks obstacle texture. */
     public static final PhongMaterial WOOD = new PhongMaterial();
@@ -107,29 +110,17 @@ public final class Style {
      * They are loaded into the public static final PhongMaterials.
      */
     public static void loadTextures() {
-        final Image brickTexture = new Image(PATH + "texture_brick.png");
-        BRICK.setDiffuseMap(brickTexture);
+        final String path = "nl/tudelft/ti2206/group9/gui/texture_";
 
-        final Image mossTexture = new Image(PATH + "texture_moss.png");
-        MOSS.setDiffuseMap(mossTexture);
-
-        final Image crackTexture = new Image(PATH + "texture_crack.png");
-        CRACK.setDiffuseMap(crackTexture);
-
-        final Image floorTexture = new Image(PATH + "texture_cobblestone.png");
-        FLOOR.setDiffuseMap(floorTexture);
-
-        final Image coinTexture = new Image(PATH + "texture_coin.png");
-        COIN.setDiffuseMap(coinTexture);
-
-        final Image woodTexture = new Image(PATH + "texture_wood.png");
-        WOOD.setDiffuseMap(woodTexture);
-
-        final Image pillarTexture = new Image(PATH + "texture_pillar.png");
-        PILLAR.setDiffuseMap(pillarTexture);
-
-        final Image fenceTexture = new Image(PATH + "texture_fence.png");
-        FENCE.setDiffuseMap(fenceTexture);
+        BRICK .setDiffuseMap(new Image(path +       "brick.png"));
+        MOSS  .setDiffuseMap(new Image(path +        "moss.png"));
+        CRACK .setDiffuseMap(new Image(path +       "crack.png"));
+        FLOOR .setDiffuseMap(new Image(path + "cobblestone.png"));
+        COIN  .setDiffuseMap(new Image(path +        "coin.png"));
+        PICKUP.setDiffuseMap(new Image(path +      "pickup.png"));
+        WOOD  .setDiffuseMap(new Image(path +        "wood.png"));
+        PILLAR.setDiffuseMap(new Image(path +      "pillar.png"));
+        FENCE .setDiffuseMap(new Image(path +       "fence.png"));
     }
 
     /**

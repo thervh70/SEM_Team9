@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.entities;
 
-import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.renderer.AbstractBoxRenderer;
 import nl.tudelft.ti2206.group9.renderer.PlayerRenderer;
@@ -52,8 +51,6 @@ public class Player extends AbstractEntity {
 	private boolean sliding;
 	/** Rate at which the Player's size in-/decreases. */
 	private double slideSpeed;
-	/** Whether the player is invincible. */
-	private boolean invincible;
 
 	/**
 	 * Constructs a new Player at the "center" of the game.
@@ -85,16 +82,6 @@ public class Player extends AbstractEntity {
 		return alive;
 	}
 
-	/** @return whether the player is invincible */
-	public final boolean isInvincible() {
-		return invincible;
-	}
-
-	/** @param set whether the Player should be invincible */
-	public void setInvincible(final boolean set) {
-		invincible = set;
-	}
-
 	/**
 	 * When colliding with a coin, Coin.VALUE is added to score,
 	 * and amount of coins is increased by one.
@@ -102,17 +89,11 @@ public class Player extends AbstractEntity {
 	 */
 	@Override
 	public final void collision(final AbstractEntity collidee) {
-		if (collidee instanceof Coin) {
-			OBSERVABLE.notify(Category.PLAYER,
-					GameObserver.Player.COLLISION, Coin.class.getSimpleName());
-			State.addScore(Coin.VALUE);
-			State.addCoins(1);
-		}
 		if (collidee instanceof AbstractObstacle) {
-			OBSERVABLE.notify(
-					Category.PLAYER, GameObserver.Player.COLLISION,
-					AbstractObstacle.class.getSimpleName());
-			if (!isInvincible()) {
+			if (!PowerupInvulnerable.isActive()) {
+				OBSERVABLE.notify(
+						Category.PLAYER, GameObserver.Player.COLLISION,
+						AbstractObstacle.class.getSimpleName());
 				die();
 			}
 		}

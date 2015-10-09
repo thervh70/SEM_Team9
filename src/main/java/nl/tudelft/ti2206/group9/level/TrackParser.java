@@ -1,13 +1,6 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.entities.AbstractEntity;
-import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Fence;
-import nl.tudelft.ti2206.group9.entities.Log;
-import nl.tudelft.ti2206.group9.entities.Pillar;
-import nl.tudelft.ti2206.group9.util.GameObserver.Category;
-import nl.tudelft.ti2206.group9.util.GameObserver.Error;
-import nl.tudelft.ti2206.group9.util.Point3D;
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,7 +11,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import nl.tudelft.ti2206.group9.entities.AbstractPickup;
+import nl.tudelft.ti2206.group9.entities.Coin;
+import nl.tudelft.ti2206.group9.entities.Fence;
+import nl.tudelft.ti2206.group9.entities.Log;
+import nl.tudelft.ti2206.group9.entities.Pillar;
+import nl.tudelft.ti2206.group9.level.TrackPart.Node;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import nl.tudelft.ti2206.group9.util.Point3D;
+
 
 /**
  * @author Mathias
@@ -58,15 +60,15 @@ public class TrackParser {
      * @return TrackPart the created TrackPart
      */
     public final TrackPart parseTrackPart(final String infile) {
-    	try {
-	    	final URL path = new File(infile).toURI().toURL();
-	    	final InputStream stream = path.openStream();
-	        return parseTrackPart(stream);
-    	} catch (IOException e) {
-			OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
-					"TrackParser.parseTrackPart(String)", e.getMessage());
-    	}
-    	return new TrackPart();
+        try {
+            final URL path = new File(infile).toURI().toURL();
+            final InputStream stream = path.openStream();
+            return parseTrackPart(stream);
+        } catch (IOException e) {
+            OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
+                    "TrackParser.parseTrackPart(String)", e.getMessage());
+        }
+        return new TrackPart();
     }
 
     /**
@@ -76,10 +78,10 @@ public class TrackParser {
      * @throws IOException IOException
      */
     protected final TrackPart parseTrackPart(final InputStream stream)
-    		throws IOException {
-    	final BufferedReader reader = new BufferedReader(
-        		new InputStreamReader(stream, "UTF-8"));
-    	final List<String> lines = new ArrayList<String>();
+            throws IOException {
+        final BufferedReader reader = new BufferedReader(
+                new InputStreamReader(stream, "UTF-8"));
+        final List<String> lines = new ArrayList<String>();
         while (reader.ready()) {
             lines.add(reader.readLine());
         }
@@ -125,17 +127,22 @@ public class TrackParser {
      */
     // NOPMD used because PMD wants map to be a vararg parameter
     protected final TrackPart parseTrackPart(final char[][] map) { //NOPMD
-    	final TrackPart part = new TrackPart();
+        final TrackPart part = new TrackPart();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-            	final char c = map[i][j];
-                AbstractEntity entity;
+                final char c = map[i][j];
+                Node entity;
                 switch (c) { //NOPMD - default case contains no break, duh.
-                case 'c': entity = new Coin(new Point3D(i - 1, 1, j)); break;
-                case 'l': entity = new Log(new Point3D(i - 1, 1, j)); break;
-                case 'p': entity = new Pillar(new Point3D(i - 1, 1, j)); break;
-                case 'f': entity = new Fence(new Point3D(i - 1,
-                    			FENCE_CENTER_HEIGHT, j)); break;
+                case 'c': entity = new Node(Coin.class,
+                		new Point3D(i - 1, 1, j)); break;
+                case 'l': entity = new Node(Log.class,
+                		new Point3D(i - 1, 1, j)); break;
+                case 'p': entity = new Node(Pillar.class,
+                		new Point3D(i - 1, 1, j)); break;
+                case 'P': entity = new Node(AbstractPickup.class,
+                		new Point3D(i - 1, 1, j)); break;
+                case 'f': entity = new Node(Fence.class,
+                		new Point3D(i - 1, FENCE_CENTER_HEIGHT, j)); break;
                 default : continue;
                 }
                 part.addEntity(entity);
@@ -144,4 +151,5 @@ public class TrackParser {
         part.setLength(map[0].length);
         return part;
     }
+
 }
