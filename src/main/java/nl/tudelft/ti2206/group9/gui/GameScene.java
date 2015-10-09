@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
