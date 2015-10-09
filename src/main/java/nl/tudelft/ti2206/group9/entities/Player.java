@@ -88,10 +88,10 @@ public class Player extends AbstractEntity {
 	@Override
 	public final void collision(final AbstractEntity collidee) {
 		if (collidee instanceof AbstractObstacle) {
-			OBSERVABLE.notify(
-					Category.PLAYER, GameObserver.Player.COLLISION,
-					AbstractObstacle.class.getSimpleName());
 			if (!PowerupInvulnerable.isActive()) {
+				OBSERVABLE.notify(
+						Category.PLAYER, GameObserver.Player.COLLISION,
+						AbstractObstacle.class.getSimpleName());
 				die();
 			}
 		}
