@@ -1,12 +1,12 @@
 package nl.tudelft.ti2206.group9.renderer;
 
 import javafx.application.Platform;
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.entities.PowerupInvulnerable;
-import nl.tudelft.ti2206.group9.gui.GameScene;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 
@@ -28,8 +28,11 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 	private final Box invulBox = new Box();
 	/** Current hue value. */
 	private double hue;
-	/** Whether has box. */
+	/** Whether the player has overlay box. */
 	private boolean hasBox;
+
+	/** The overlays group used in {@link GroupEntitiesRenderer}. */
+	private Group overlays;
 
 	/**
 	 * Default constructor.
@@ -53,8 +56,7 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 		if (PowerupInvulnerable.isActive()) {
 			if (!hasBox) {
 				Platform.runLater(() -> {
-					GameScene.getExternalTicker().getEntitiesRenderer()
-					.getChildren().add(invulBox);
+					overlays.getChildren().add(invulBox);
 					hasBox = true;
 				});
 			}
@@ -62,8 +64,7 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 		} else {
 			if (hasBox) {
 				Platform.runLater(() -> {
-					GameScene.getExternalTicker().getEntitiesRenderer()
-					.getChildren().remove(invulBox);
+					overlays.getChildren().remove(invulBox);
 					hasBox = false;
 				});
 			}
@@ -79,6 +80,15 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 		invulBox.setWidth(getWidth() * INVUL_SCALE);
 		invulBox.setHeight(getHeight() * INVUL_SCALE);
 		invulBox.setDepth(getDepth() * INVUL_SCALE);
+	}
+
+	/**
+	 * Package visibility because this only has to be done in
+	 * {@link GroupEntitiesRenderer}.
+	 * @param overlayGroup the overlays group to set
+	 */
+	void setOverlays(final Group overlayGroup) {
+		overlays = overlayGroup;
 	}
 
 }
