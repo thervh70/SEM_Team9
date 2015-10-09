@@ -83,37 +83,18 @@ public final class Style {
      * They are loaded into the public static final PhongMaterials.
      */
     public static void loadTextures() {
-        final String path = "nl/tudelft/ti2206/group9/gui/";
+        final String path = "nl/tudelft/ti2206/group9/gui/texture_";
 
-        final Image brickTexture = new Image(path + "texture_brick.png");
-        BRICK.setDiffuseMap(brickTexture);
-
-        final Image mossTexture = new Image(path + "texture_moss.png");
-        MOSS.setDiffuseMap(mossTexture);
-
-        final Image crackTexture = new Image(path + "texture_crack.png");
-        CRACK.setDiffuseMap(crackTexture);
-
-        final Image floorTexture = new Image(path + "texture_cobblestone.png");
-        FLOOR.setDiffuseMap(floorTexture);
-
-        final Image coinTexture = new Image(path + "texture_coin.png");
-        COIN.setDiffuseMap(coinTexture);
-
-        final Image pickupTexture = new Image(path + "texture_pickup.png");
-        PICKUP.setDiffuseMap(pickupTexture);
-
-        final Image woodTexture = new Image(path + "texture_wood.png");
-        WOOD.setDiffuseMap(woodTexture);
-
-        final Image pillarTexture = new Image(path + "texture_pillar.png");
-        PILLAR.setDiffuseMap(pillarTexture);
-
-        final Image fenceTexture = new Image(path + "texture_fence.png");
-        FENCE.setDiffuseMap(fenceTexture);
-
-        final Image playerTexture = new Image(path + "texture_player.png");
-        PLAYER.setDiffuseMap(playerTexture);
+        BRICK .setDiffuseMap(new Image(path +       "brick.png"));
+        MOSS  .setDiffuseMap(new Image(path +        "moss.png"));
+        CRACK .setDiffuseMap(new Image(path +       "crack.png"));
+        FLOOR .setDiffuseMap(new Image(path + "cobblestone.png"));
+        COIN  .setDiffuseMap(new Image(path +        "coin.png"));
+        PICKUP.setDiffuseMap(new Image(path +      "pickup.png"));
+        WOOD  .setDiffuseMap(new Image(path +        "wood.png"));
+        PILLAR.setDiffuseMap(new Image(path +      "pillar.png"));
+        FENCE .setDiffuseMap(new Image(path +       "fence.png"));
+        PLAYER.setDiffuseMap(new Image(path +      "player.png"));
     }
 
     /**

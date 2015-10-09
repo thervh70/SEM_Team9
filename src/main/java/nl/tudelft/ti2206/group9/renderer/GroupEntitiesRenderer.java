@@ -28,7 +28,11 @@ public class GroupEntitiesRenderer extends AbstractGroupRenderer
 	@Override
 	public void update() {
 		for (final Node renderer : getChildren()) {
-			((Renderer) renderer).update();
+			try {
+				((Renderer) renderer).update();
+			} catch (ClassCastException e) { //NOPMD
+				// If the node is not a renderer, no update is needed.
+			}
 		}
 	}
 
