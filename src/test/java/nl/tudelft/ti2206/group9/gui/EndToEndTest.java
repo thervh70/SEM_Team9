@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -52,7 +53,7 @@ public class EndToEndTest extends ApplicationTest {
 
 	private static final int MAIN_START = 0;
 	private static final int MAIN_SETTINGS = 1;
-	private static final int MAIN_QUIT = 2;
+//	private static final int MAIN_QUIT = 2;
 	private static final int MAIN_LOADGAME = 3;
 	private static final int MAIN_TEXTFIELD = 5;
 	private static final int MAIN_SHOP = 6;
@@ -106,7 +107,8 @@ public class EndToEndTest extends ApplicationTest {
 		playerDies();
 		clickPopup(DEATH_TOMAIN);
 
-		mainMenu(MAIN_QUIT);
+//		mainMenu(MAIN_QUIT);
+		Platform.runLater(stage::close);
 		outputEventLog();
 	}
 

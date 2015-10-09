@@ -114,6 +114,12 @@ public interface GameObserver extends Observer {
 		/** There has been an exception with parsing JSON files.
 		 *  optionalArgs: exception location, exception message. */
 		PARSEEXCEPTION,
+		/** There has been an exception with encoding of Strings.
+		 *  optionalArgs: exception location, exception message. */
+		UNSUPPORTEDENCODINGEXCEPTION,
+		/** There has been an exception with decoding of Strings.
+		 *  optionalArgs: exception location, exception message. */
+		UNSUPPORTEDDECODINGEXCEPTION,
 		/** There has been an exception with null pointers.
 		 * optionalArgs: exception location, exception message. */
 		NULLPOINTEREXCEPTION

@@ -2,6 +2,15 @@ package nl.tudelft.ti2206.group9.util;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
@@ -10,18 +19,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
+import sun.misc.BASE64Decoder; //NOPMD - I need this package
 
 /**
  * This class takes care of the parsing of JSON objects
  * into the game. This way already saved games can be loaded.
  * @author Mathias
  */
+@SuppressWarnings("restriction")
 public final class Parser {
 
 	/** Playername. */
@@ -44,17 +49,25 @@ public final class Parser {
 	 */
 	static void loadGame(final String path) {
 		try {
+			final List<String> lines  = new ArrayList<>();
 			final URL pathURL = new File(path).toURI().toURL();
 			final InputStream stream = pathURL.openStream();
 			final BufferedReader reader = new BufferedReader(
 					new InputStreamReader(stream, "UTF-8"));
 
+			while (reader.ready()) {
+				lines.add(reader.readLine());
+			}
+
+			final String mainString = createString(lines);
+			final String decryptedMain = decrypt(mainString);
+
 			final JSONParser parser = new JSONParser();
-			final JSONObject mainObject = (JSONObject) parser.parse(reader);
+			final JSONObject mainObject =
+					(JSONObject) parser.parse(decryptedMain);
 
 			parseJSON(mainObject);
 			writeToState();
-
 			reader.close();
 		} catch (IOException e) {
 			OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
@@ -62,6 +75,24 @@ public final class Parser {
 		} catch (ParseException e) {
 			OBSERVABLE.notify(Category.ERROR, Error.PARSEEXCEPTION,
 					"Parser.loadGame(String)", e.getMessage());
+		}
+	}
+
+	/**
+	 * Decrypt a given String.
+	 * @param input the String to be decrypted
+	 * @return the decrypted version of the input
+	 */
+	static String decrypt(final String input) {
+		final BASE64Decoder decoder = new BASE64Decoder();
+		try {
+			final byte[] decodedBytes = decoder.decodeBuffer(input);
+			return new String(decodedBytes, "UTF8");
+		} catch (IOException e) {
+			OBSERVABLE.notify(GameObserver.Category.ERROR,
+					GameObserver.Error.IOEXCEPTION,
+					"Parser.decode()", e.getMessage());
+			return null;
 		}
 	}
 
@@ -88,6 +119,17 @@ public final class Parser {
 		State.setCoins((int) coins);
 		State.setSoundEnabled(soundEnabled);
 		State.setHighscore(highScore);
+	}
+
+	/**
+	 * Create a single String from a list of Strings.
+	 * @param lines the list of Strings
+	 * @return a single String
+	 */
+	private static String createString(final List<String> lines) {
+		final StringBuilder builder = new StringBuilder();
+		lines.forEach(builder::append);
+		return builder.toString();
 	}
 
 }
