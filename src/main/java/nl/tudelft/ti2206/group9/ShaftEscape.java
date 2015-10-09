@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9;
 
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -15,8 +17,6 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.SaveGame;
-
-import java.io.File;
 
 /**
  * Starting point of the Application.

@@ -133,11 +133,11 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void goThroughShop() {
 		mainMenu(MAIN_SHOP);
-        assertEquals(State.getSkin(), Style.getNoob());
-        shopScreen(SHOP_LIST);
-        shopScreen(SHOP_LIST);
-        assertNotEquals(State.getSkin(), Style.getNoob());
-        shopScreen(SHOP_BACK);
+		assertEquals(State.getSkin(), Style.getNoob());
+		shopScreen(SHOP_LIST);
+		shopScreen(SHOP_LIST);
+		assertNotEquals(State.getSkin(), Style.getNoob());
+		shopScreen(SHOP_BACK);
 	}
 
 	private void goThroughNameTyping() {
