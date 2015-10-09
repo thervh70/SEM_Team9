@@ -65,7 +65,7 @@ public class Track {
 		entities = new ObservableLinkedList<AbstractEntity>();
 		trackParts = new TrackParser().parseTrack();
 		entities.add(new Player());
-//		entities.add(new PowerupInvulnerable(new Point3D(0, 1, 3))); //TODO DEBUG - To be removed before deploy
+		entities.add(new PowerupInvulnerable(new Point3D(0, 1, 3))); //TODO DEBUG - To be removed before deploy
 		player = 0;
 		random = generator;
 	}

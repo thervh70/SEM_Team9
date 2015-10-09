@@ -53,8 +53,12 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 		if (PowerupInvulnerable.isActive()) {
 			invulMat.setDiffuseColor(
 					Color.hsb(hue, 1, OVERLAY_BRIGHT, OVERLAY_ALPHA));
+			invulBox.setVisible(true);
+			invulBox.setManaged(true);
 		} else {
 			invulMat.setDiffuseColor(Color.hsb(hue, 0, 0, 0));
+			invulBox.setVisible(false);
+			invulBox.setManaged(false);
 		}
 	}
 
