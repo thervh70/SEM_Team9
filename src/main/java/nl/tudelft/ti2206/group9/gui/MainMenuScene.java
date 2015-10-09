@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;
 
 import javafx.beans.binding.Bindings;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

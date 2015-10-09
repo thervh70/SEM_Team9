@@ -54,8 +54,13 @@ public final class SaveGame {
         }
     }
 
+    /**
+     * Checks whether the extension of a file is .ses.
+     * @param file The file of which the extension is checked
+     * @return a boolean to idicate whether the extension equals .ses
+     */
     private static boolean checkExtention(final String file) {
-        String ses = file.substring(file.lastIndexOf('.'));
+        final String ses = file.substring(file.lastIndexOf('.'));
         return ses.equals(".ses");
     }
 
