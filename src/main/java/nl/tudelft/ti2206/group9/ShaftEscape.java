@@ -128,6 +128,7 @@ public class ShaftEscape extends Application {
 		stage.close();
 		InternalTicker.stop();
 		MainMenuScene.getAudioPlayer().stop();
+		GameScene.getAudioPlayer().resetSpeed();
 		GameScene.getAudioPlayer().stop();
 	}
 

@@ -15,6 +15,7 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.renderer.AbstractGroupRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupEntitiesRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupLightRenderer;
@@ -43,6 +44,8 @@ public class ExternalTicker extends AnimationTimer {
 	private final AbstractGroupRenderer track;
 	/** Group that stores the lights. */
 	private final GroupLightRenderer light;
+	/** Constant for the speed increase formula of the soundtrack. */
+	private static final double RATE_DIVISION = 4;
 
 	/** Default constructor. */
 	public ExternalTicker() {
@@ -68,6 +71,8 @@ public class ExternalTicker extends AnimationTimer {
 	public final void handle(final long now) {
 		synchronized (ShaftEscape.TICKER_LOCK) {
 			if (InternalTicker.isRunning()) {
+				GameScene.getAudioPlayer().setSpeed(1
+						+ (Track.getUnitsPerTick()) / RATE_DIVISION);
 				GameScene.getAudioPlayer().play(true);
 			}
 			renderScene();

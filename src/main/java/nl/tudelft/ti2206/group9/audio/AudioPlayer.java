@@ -18,6 +18,11 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 @SuppressWarnings("restriction")
 public class AudioPlayer {
 
+	/** Minimum rate of the AudioPlayer. */
+	private static final double LOWER = 0.125;
+	/** Maximum rate of the AudioPlayer. */
+	private static final double UPPER = 8.0;
+
 	/** The AudioClip of an AudioPlayer. */
 	private AudioClip audioClip;
 	/** Path of the AudioClip. */
@@ -123,6 +128,38 @@ public class AudioPlayer {
 		path = location;
 		if (State.isSoundEnabled()) {
 			initializeTune(path);
+		}
+	}
+
+	/**
+	 * Increases the speed of the music played by the AudioPlayer.
+	 * @param rate rate to be set to.
+	 * It is recommended to keep this rate between 0.125 and 8.0.
+	 */
+	public final void setSpeed(final double rate) {
+		if (State.isSoundEnabled() & rate >= LOWER & rate <= UPPER) {
+			audioClip.setRate(rate);
+		}
+	}
+
+	/**
+	 * Gets the current speed to which the AudioPlayer is set.
+	 * (For testing purposes.)
+	 * @return double rate current rate of the AudioPlayer.
+	 */
+	public final double getSpeed() {
+		if (State.isSoundEnabled()) {
+			return audioClip.getRate();
+		}
+		return 1.0;
+	}
+
+	/**
+	 * Resets the speed of the music played by the AudioPlayer.
+	 */
+	public final void resetSpeed() {
+		if (State.isSoundEnabled()) {
+			audioClip.setRate(1.0);
 		}
 	}
 
