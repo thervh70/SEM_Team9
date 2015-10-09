@@ -1,31 +1,40 @@
-package nl.tudelft.ti2206.group9.gui;
+package nl.tudelft.ti2206.group9.gui;	// NOPMD - too many imports
+										// because don't want to use .*
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.gui.skins.AndySkin;
+import nl.tudelft.ti2206.group9.gui.skins.BoySkin;
+import nl.tudelft.ti2206.group9.gui.skins.CaptainSkin;
+import nl.tudelft.ti2206.group9.gui.skins.IronManSkin;
+import nl.tudelft.ti2206.group9.gui.skins.NoobSkin;
+import nl.tudelft.ti2206.group9.gui.skins.PlankSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-import static nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 /**
  * Class containing the styling for the GUI.
@@ -61,11 +70,29 @@ public final class Style {
     /** FENCE material used for fences, mossy brick stone texture.*/
     public static final PhongMaterial FENCE = new PhongMaterial();
 
-    /** PLAYER material used for the player. */
-    public static final PhongMaterial PLAYER = new PhongMaterial();
+    /** IRON MAN skin for player. */
+    private static IronManSkin ironMan;
+
+    /** NOOB skin for player, this is the starting skin. */
+    private static NoobSkin noob;
+
+    /** CAPTAIN skin for the player. */
+    private static CaptainSkin captain;
+
+    /** PLANK skin for the player. */
+    private static PlankSkin plank;
+
+    /** BOY skin for the player. */
+    private static BoySkin boy;
+
+    /** ANDY skin for the player. */
+    private static AndySkin andy;
 
     /** Size of a button while hovering (relative to 1). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
+
+    /** Standard path for textures.*/
+    public static final String PATH = "nl/tudelft/ti2206/group9/gui/";
 
     /** Preferred width of buttons. */
     private static final int BUTTON_WIDTH = 120;
@@ -73,7 +100,7 @@ public final class Style {
     private static final int POPUP_TEXT = 11;
 
     /** Font used to render everything. */
-    private static Font globalFont;
+    private static Map<Integer, Font> globalFont = new ConcurrentHashMap<>();
 
     /** Hide public constructor. */
     private Style() { }
@@ -94,7 +121,32 @@ public final class Style {
         WOOD  .setDiffuseMap(new Image(path +        "wood.png"));
         PILLAR.setDiffuseMap(new Image(path +      "pillar.png"));
         FENCE .setDiffuseMap(new Image(path +       "fence.png"));
-        PLAYER.setDiffuseMap(new Image(path +      "player.png"));
+    }
+
+    /**
+     * Method to load a playerTexture with the
+     * name "texture_[texture_name].png".
+     * @param textureName path of texture.
+     * @return The phongmaterial of this texture
+     */
+    public static PhongMaterial loadPlayerTexture(final String textureName) {
+        final Image playerTexture = new Image(
+                PATH + "texture_" + textureName + ".png");
+        final PhongMaterial material = new PhongMaterial();
+        material.setDiffuseMap(playerTexture);
+        return material;
+    }
+
+    /**
+     * Method that creates all the skins.
+     */
+    public static void loadSkins() {
+        ironMan = new IronManSkin();
+        captain = new CaptainSkin();
+        andy = new AndySkin();
+        noob = new NoobSkin();
+        boy = new BoySkin();
+        plank = new PlankSkin();
     }
 
     /**
@@ -194,20 +246,68 @@ public final class Style {
      * @return returns the font.
      */
     public static Font getFont(final int size) {
-        if (globalFont != null) {
-            return globalFont;
+        if (globalFont.get(size) != null) {
+            return globalFont.get(size);
         }
         try {
-            globalFont = Font.loadFont(new FileInputStream(new
+            globalFont.put(size, Font.loadFont(new FileInputStream(new
                     File("src/main/resources/nl/tudelft/"
-                            + "ti2206/group9/gui/8bit.ttf")), size);
+                            + "ti2206/group9/gui/Minecraftia.ttf")), size));
         } catch (FileNotFoundException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
                     "Style.getFont(int)",
                     e.getMessage() + " - Default globalFont used");
-            globalFont = Font.font("Roboto", FontWeight.BOLD, size);
+            globalFont.put(size, Font.font("Roboto", FontWeight.BOLD, size));
         }
-        return globalFont;
+        return globalFont.get(size);
+    }
+
+    /**
+     * Simple getter for IronManSkin.
+     * @return Skin
+     */
+    public static IronManSkin getIronMan() {
+        return ironMan;
+    }
+
+    /**
+     * Simple getter for NoobSkin.
+     * @return Skin
+     */
+    public static NoobSkin getNoob() {
+        return noob;
+    }
+
+    /**
+     * Simple getter for CaptainSkin.
+     * @return Skin
+     */
+    public static CaptainSkin getCaptain() {
+        return captain;
+    }
+
+    /**
+     * Simple getter for PlankSkin.
+     * @return Skin
+     */
+    public static PlankSkin getPlank() {
+        return plank;
+    }
+
+    /**
+     * Simple getter for BoySkin.
+     * @return Skin
+     */
+    public static BoySkin getBoy() {
+        return boy;
+    }
+
+    /**
+     * Simple getter for AndySkin.
+     * @return Skin
+     */
+    public static AndySkin getAndy() {
+        return andy;
     }
 
 }
