@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Mathias
  */
-public class SaveGameParserTest {
+public class ParserTest {
 
     /** Default folder to read savefiles from. */
 	private static String fileFolder =
@@ -17,7 +17,7 @@ public class SaveGameParserTest {
 
 	@Test
     public void testParser() {
-        SaveGameParser.loadGame(fileFolder + "saveGameParserTest.json");
+        Parser.loadGame(fileFolder + "saveGameParserTest.json");
 
         final int expectedCoins = 42;
         final int expectedHigh = 2560;

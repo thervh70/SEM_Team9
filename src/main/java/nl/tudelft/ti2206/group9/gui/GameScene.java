@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -12,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
-import javafx.stage.Popup;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.audio.SoundEffectsPlayer;
@@ -21,6 +19,9 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
+import nl.tudelft.ti2206.group9.util.SaveGame;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * This scene shows the 3D Game world and the 2D score overlay.
@@ -58,10 +59,6 @@ public final class GameScene extends AbstractScene {
 	private static AudioPlayer audioPlayer = new AudioPlayer("src/main/"
 			+ "resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
 
-	/** The Pause popup. */
-	private static Popup pause;
-	/** The final after death popup. */
-	private static Popup death;
 	/** The Sound-effects player. */
 	private static SoundEffectsPlayer soundEffectsPlayer =
 			new SoundEffectsPlayer();
@@ -177,33 +174,35 @@ public final class GameScene extends AbstractScene {
 	public static void showPauseMenu() {
 		stopTickers();
 		OBSERVABLE.notify(Category.GAME, Game.PAUSED);
-		pause = new PausePopup(e -> {
-			resumeTickers();
-			pause = null;
-		}, e -> {
-			OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
-			State.reset();
-			ShaftEscape.setScene(new MainMenuScene());
-			pause = null;
-		});
-		ShaftEscape.showPopup(pause);
+		setPopup(new PausePopup(e -> {
+            resumeTickers();
+            setPopup(null);
+        }, e -> {
+            OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
+			SaveGame.saveGame();
+            State.reset();
+            ShaftEscape.setScene(new MainMenuScene());
+            setPopup(null);
+        }));
+		ShaftEscape.showPopup(getPopup());
 	}
 
 	/** Show a death menu. */
 	public static void showDeathMenu() {
 		audioPlayer.stop();
-		death = new DeathPopup(e -> {
-			OBSERVABLE.notify(Category.GAME, Game.RETRY);
-			State.reset();
-			ShaftEscape.setScene(new GameScene());
-			death = null;
-		}, e -> {
-			OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
-			State.reset();
-			ShaftEscape.setScene(new MainMenuScene());
-			death = null;
-		});
-		ShaftEscape.showPopup(death);
+		setPopup(new DeathPopup(e -> {
+            OBSERVABLE.notify(Category.GAME, Game.RETRY);
+            State.reset();
+            ShaftEscape.setScene(new GameScene());
+            setPopup(null);
+        }, e -> {
+            OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
+			SaveGame.saveGame();
+            State.reset();
+            ShaftEscape.setScene(new MainMenuScene());
+            setPopup(null);
+        }));
+		ShaftEscape.showPopup(getPopup());
 	}
 
 	/**
@@ -232,15 +231,6 @@ public final class GameScene extends AbstractScene {
 	/** Clears the overlay. */
 	public static void clearOverlay() {
 		overlay.getChildren().clear();
-	}
-
-	/** @return current Popup. Is null if no Popup is present. */
-	public static Popup getPopup() {
-		if (pause == null) {
-			return death;
-		} else {
-			return pause;
-		}
 	}
 
 	/**

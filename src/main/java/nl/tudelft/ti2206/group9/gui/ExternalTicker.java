@@ -17,6 +17,7 @@ import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.renderer.AbstractGroupRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupEntitiesRenderer;
+import nl.tudelft.ti2206.group9.renderer.GroupLightRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupTrackRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupWallRenderer;
 
@@ -30,15 +31,18 @@ public class ExternalTicker extends AnimationTimer {
 	private static final int SCORE_BOX_HEIGHT = 130;
 	/** Width of the box in-game where the score is displayed. */
 	private static final int SCORE_BOX_WIDTH = 140;
+	/** Distance between labels in overlay. */
+	private static final int LABEL_DISTANCE = 16;
 	/** Label for the countdownLabel animation. */
 	private final Label countdownLabel = new Label();
-
 	/** List that stores the entities, to be held up-to-date with Track. */
 	private final AbstractGroupRenderer entities;
 	/** Group that stores the wall. */
 	private final AbstractGroupRenderer wall;
 	/** Group that stores the track. */
 	private final AbstractGroupRenderer track;
+	/** Group that stores the lights. */
+	private final GroupLightRenderer light;
 
 	/** Default constructor. */
 	public ExternalTicker() {
@@ -48,12 +52,15 @@ public class ExternalTicker extends AnimationTimer {
 			entities = new GroupEntitiesRenderer();
 			wall = new GroupWallRenderer();
 			track = new GroupTrackRenderer();
+			light = new GroupLightRenderer();
 
-			GameScene.addWorld(entities, wall, track);
+			GameScene.addWorld(entities, wall, track, light);
+
 		} else {
 			entities = null;
 			wall = null;
 			track = null;
+			light = null;
 		}
 	}
 
@@ -78,6 +85,7 @@ public class ExternalTicker extends AnimationTimer {
 			entities.update();
 			wall.update();
 			track.update();
+			light.update();
 		}
 	}
 
@@ -104,7 +112,8 @@ public class ExternalTicker extends AnimationTimer {
 		Style.setLabelStyle(coinsLabel);
 		Style.setLabelStyle(powerupLabel);
 
-		final VBox scoreBox = new VBox(nameLabel, highLabel, scoreLabel,
+		final VBox scoreBox = new VBox(LABEL_DISTANCE, nameLabel,
+                highLabel, scoreLabel,
 				distanceLabel, coinsLabel, powerupLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
