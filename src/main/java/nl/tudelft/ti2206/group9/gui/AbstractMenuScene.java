@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.skins.AbstractSkin;
+import nl.tudelft.ti2206.group9.gui.skins.Skin;
 
 /**
  * Ancestor for all MenuScenes. Subclasses should define an array of Nodes in
@@ -144,9 +144,9 @@ public abstract class AbstractMenuScene extends AbstractScene {
 	 * @param column Column index on Gridpane.
 	 * @param row Row index on Gridpane.
 	 * @return Returns the listview. */
-	protected static TableView<AbstractSkin> createSkinTable(final int column,
+	protected static TableView<Skin> createSkinTable(final int column,
 												 final int row) {
-		final TableView<AbstractSkin> table = new TableView<>();
+		final TableView<Skin> table = new TableView<>();
 		table.setEditable(true);
 		GridPane.setConstraints(table, column, row);
 		GridPane.setColumnSpan(table, COLUMN_SPAN);

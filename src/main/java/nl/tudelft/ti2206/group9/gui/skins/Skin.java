@@ -7,7 +7,7 @@ import nl.tudelft.ti2206.group9.gui.Style;
  * @author Maikel on 08/10/2015.
  */
 @SuppressWarnings("restriction")
-public abstract class AbstractSkin {
+public class Skin {
 
     /** The price of this skin in the shop. */
     private final int skinPrice;
@@ -26,8 +26,8 @@ public abstract class AbstractSkin {
      * @param name Name to display.
      * @param path Location of this skin in the resources folder
      */
-    public AbstractSkin(final int price,
-                        final String name, final String path) {
+    public Skin(final int price,
+                final String name, final String path) {
         skinPrice = price;
         skinName = name;
         skinMaterial = Style.loadPlayerTexture(path);

@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.gui.skins.AbstractSkin;
+import nl.tudelft.ti2206.group9.gui.skins.Skin;
 
 import nl.tudelft.ti2206.group9.gui.Style;
 import javafx.collections.FXCollections;
@@ -23,7 +23,7 @@ public final class State {
 	private static double highscore;
 
 	/** Skin to be used. */
-	private static AbstractSkin skin;
+	private static Skin skin;
 
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
@@ -196,7 +196,7 @@ public final class State {
 	 * Getter for the current skin.
 	 * @return The skin.
 	 */
-	public static AbstractSkin getSkin() {
+	public static Skin getSkin() {
 		return skin;
 	}
 
@@ -204,7 +204,7 @@ public final class State {
 	 * If new skins are bought and applied it can be done via this setter.
 	 * @param newSkin The new skin.
 	 */
-	public static void setSkin(final AbstractSkin newSkin) {
+	public static void setSkin(final Skin newSkin) {
 		skin = newSkin;
 	}
 

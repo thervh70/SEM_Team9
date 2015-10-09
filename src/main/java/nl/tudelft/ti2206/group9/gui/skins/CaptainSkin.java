@@ -3,12 +3,12 @@ package nl.tudelft.ti2206.group9.gui.skins;
 /**
  * @author Maikel on 08/10/2015.
  */
-public class CaptainSkin extends AbstractSkin {
+public class CaptainSkin extends Skin {
 
     /**
      * Constructor for a Captain skin.
      */
     public CaptainSkin() {
-        super(9999, "Captain", "captain");
+        super(1, "Captain", "captain");
     }
 }

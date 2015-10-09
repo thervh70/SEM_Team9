@@ -2,8 +2,6 @@ package nl.tudelft.ti2206.group9.gui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -13,7 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.skins.AbstractSkin;
+import nl.tudelft.ti2206.group9.gui.skins.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
@@ -38,10 +36,10 @@ public class ShopScene extends AbstractMenuScene {
     private static final int LIST_ROW = 16;
 
     /** Creating a list. */
-    private static ObservableList<AbstractSkin> items =
+    private static ObservableList<Skin> items =
             FXCollections.observableArrayList();
     /** Creating the listview used to display the list. */
-    private static TableView<AbstractSkin> itemTable =
+    private static TableView<Skin> itemTable =
             createSkinTable(1, LIST_ROW);
 
     @Override
@@ -69,19 +67,19 @@ public class ShopScene extends AbstractMenuScene {
                 Style.getCaptain(), Style.getIronMan(),
                 Style.getNoob(), Style.getPlank());
 
-        final TableColumn<AbstractSkin, String> name =
+        final TableColumn<Skin, String> name =
         		new TableColumn<>("Name");
         name.setCellValueFactory(new PropertyValueFactory<>("skinName"));
         name.setResizable(false);
 
-        final TableColumn<AbstractSkin, Integer> price =
+        final TableColumn<Skin, Integer> price =
         		new TableColumn<>("Price");
         price.setCellValueFactory(new PropertyValueFactory<>("skinPrice"));
         name.setResizable(false);
         itemTable.getColumns().add(name);
         itemTable.getColumns().add(price);
         itemTable.setRowFactory(e -> {
-        	final TableRow<AbstractSkin> row = new TableRow<>();
+        	final TableRow<Skin> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     State.setSkin(row.getItem());
