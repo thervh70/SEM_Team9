@@ -7,12 +7,8 @@ public class CaptainSkin extends AbstractSkin {
 
     /**
      * Constructor for a Captain skin.
-     * @param price price
-     * @param name name
-     * @param location location in resources
      */
-    public CaptainSkin(final int price,
-                       final String name, final String location) {
-        super(price, name, location);
+    public CaptainSkin() {
+        super(9999, "Captain", "captain");
     }
 }

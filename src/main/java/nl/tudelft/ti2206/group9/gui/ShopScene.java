@@ -6,10 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.skins.AbstractSkin;
@@ -63,6 +64,7 @@ public class ShopScene extends AbstractMenuScene {
         items.clear();
         itemTable.getColumns().clear();
         itemTable.setItems(items);
+        itemTable.setTooltip(new Tooltip("Double click to change appearance"));
         items.addAll(Style.getAndy(), Style.getBoy(),
                 Style.getCaptain(), Style.getIronMan(),
                 Style.getNoob(), Style.getPlank());
@@ -76,7 +78,6 @@ public class ShopScene extends AbstractMenuScene {
         		new TableColumn<>("Price");
         price.setCellValueFactory(new PropertyValueFactory<>("skinPrice"));
         name.setResizable(false);
-
         itemTable.getColumns().add(name);
         itemTable.getColumns().add(price);
         itemTable.setRowFactory(e -> {
@@ -97,14 +98,12 @@ public class ShopScene extends AbstractMenuScene {
      */
     protected static void setButtonFunction(final Button button,
                                             final BType type) {
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(final ActionEvent event) {
+        button.setOnAction(event1 ->  {
                 if (type == BType.SHOP_BACK) {
                     OBSERVABLE.notify(GameObserver.Category.MENU,
                             GameObserver.Menu.SHOP_BACK);
                     ShaftEscape.setScene(new MainMenuScene());
                 }
-            }
         });
     }
 }

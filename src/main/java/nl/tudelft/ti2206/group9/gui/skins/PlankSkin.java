@@ -7,12 +7,8 @@ public class PlankSkin extends AbstractSkin {
 
     /**
      * Constructor for a Plank skin.
-     * @param price price
-     * @param name name
-     * @param location location in resources
      */
-    public PlankSkin(final int price,
-                     final String name, final String location) {
-        super(price, name, location);
+    public PlankSkin() {
+        super(9999, "Plank", "plank");
     }
 }

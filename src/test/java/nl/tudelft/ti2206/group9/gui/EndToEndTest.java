@@ -63,8 +63,9 @@ public class EndToEndTest extends ApplicationTest {
 	private static final int SETTINGS_SOUND = 1;
 
 	private static final int SHOP_BACK = 0;
+    private static final int SHOP_LIST = 3;
 
-	private static final int PAUSE_RESUME = 0;
+    private static final int PAUSE_RESUME = 0;
 	private static final int PAUSE_TOMAIN = 1;
 
 	private static final int DEATH_RETRY = 0;
@@ -136,7 +137,9 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void goThroughShop() {
 		mainMenu(MAIN_SHOP);
-		shopScreen(SHOP_BACK);
+        shopScreen(SHOP_LIST);
+        shopScreen(SHOP_LIST);
+        shopScreen(SHOP_BACK);
 	}
 
 	private void goThroughNameTyping() {

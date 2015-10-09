@@ -7,11 +7,8 @@ public class BoySkin extends AbstractSkin {
 
     /**
      * Constructor for a Boy skin.
-     * @param price price
-     * @param name name
-     * @param location location in resources
      */
-    public BoySkin(final int price, final String name, final String location) {
-        super(price, name, location);
+    public BoySkin() {
+        super(9999, "B-man", "b_man");
     }
 }

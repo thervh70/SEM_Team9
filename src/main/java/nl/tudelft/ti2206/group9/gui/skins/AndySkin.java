@@ -7,11 +7,9 @@ public class AndySkin extends AbstractSkin {
 
     /**
      * Constructor for a Andy skin.
-     * @param price price
-     * @param name name
-     * @param location location in resources
+     *
      */
-    public AndySkin(final int price, final String name, final String location) {
-        super(price, name, location);
+    public AndySkin() {
+        super(9999, "Andy", "andy");
     }
 }

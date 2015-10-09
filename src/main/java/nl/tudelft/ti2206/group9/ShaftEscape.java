@@ -47,6 +47,10 @@ public class ShaftEscape extends Application {
 	 */
 	@Override
 	public final void start(final Stage appStage) {
+		//Loading textures
+		Style.loadTextures();
+		Style.loadSkins();
+
 		State.resetAll();
 		setStage(appStage);
 		stage.setResizable(false);
@@ -56,10 +60,6 @@ public class ShaftEscape extends Application {
 		stage.setMinHeight(ShaftEscape.HEIGHT);
 		stage.setMaxWidth(ShaftEscape.WIDTH);
 		stage.setMaxHeight(ShaftEscape.HEIGHT);
-
-		//Loading textures
-		Style.loadTextures();
-		Style.loadSkins();
 
 		// Make sure the game is saved on exit
 		stage.setOnCloseRequest(e -> exit());

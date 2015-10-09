@@ -24,13 +24,13 @@ public abstract class AbstractSkin {
      * to load the image into the PhongMaterial.
      * @param price Price of this skin in shop.
      * @param name Name to display.
-     * @param location Location of this skin in the resources folder
+     * @param path Location of this skin in the resources folder
      */
     public AbstractSkin(final int price,
-                        final String name, final String location) {
+                        final String name, final String path) {
         skinPrice = price;
         skinName = name;
-        skinMaterial = Style.loadPlayerTexture(location);
+        skinMaterial = Style.loadPlayerTexture(path);
     }
 
     /**

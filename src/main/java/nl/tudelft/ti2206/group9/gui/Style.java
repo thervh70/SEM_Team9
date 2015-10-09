@@ -127,12 +127,12 @@ public final class Style {
 
     /**
      * Method to load a playerTexture.
-     * @param location name of the texture.
+     * @param path path of texture.
      * @return The phongmaterial of this texture
      */
-    public static PhongMaterial loadPlayerTexture(final String location) {
+    public static PhongMaterial loadPlayerTexture(final String path) {
         final Image playerTexture = new Image(
-                PATH + "texture_" + location + ".png");
+                PATH + "texture_" + path + ".png");
         final PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(playerTexture);
         return material;
@@ -142,13 +142,12 @@ public final class Style {
      * Method that creates all the skins.
      */
     public static void loadSkins() {
-        final int price = 9999;
-        ironMan = new IronManSkin(price, "Iron Man", "iron_man");
-        captain = new CaptainSkin(price, "Captain", "captain");
-        andy = new AndySkin(price, "Andy", "andy");
-        noob = new NoobSkin(0, "Noob", "noob");
-        boy = new BoySkin(price, "B-man", "b");
-        plank = new PlankSkin(price, "Plank", "plank");
+        ironMan = new IronManSkin();
+        captain = new CaptainSkin();
+        andy = new AndySkin();
+        noob = new NoobSkin();
+        boy = new BoySkin();
+        plank = new PlankSkin();
     }
 
     /**
@@ -252,7 +251,7 @@ public final class Style {
         try {
             font = Font.loadFont(new FileInputStream(new
                    File("src/main/resources/nl/tudelft/"
-                    + "ti2206/group9/gui/8bit.ttf")), size);
+                    + "ti2206/group9/gui/Minecraftia.ttf")), size);
         } catch (FileNotFoundException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
             		"Style.getFont(int)", e.getMessage());
