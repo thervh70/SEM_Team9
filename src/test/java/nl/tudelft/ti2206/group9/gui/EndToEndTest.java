@@ -113,6 +113,7 @@ public class EndToEndTest extends ApplicationTest {
 		playerDies();
 		clickPopup(DEATH_TOMAIN);
 
+		sleep(LONG);
 		mainMenu(MAIN_QUIT);
 		outputEventLog();
 	}

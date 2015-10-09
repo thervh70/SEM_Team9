@@ -47,7 +47,7 @@ public final class Parser {
 	 */
 	static void loadGame(final String path) {
 		try {
-			final List<String> lines  = new ArrayList<String>();
+			final List<String> lines  = new ArrayList<>();
 			final URL pathURL = new File(path).toURI().toURL();
 			final InputStream stream = pathURL.openStream();
 			final BufferedReader reader = new BufferedReader(

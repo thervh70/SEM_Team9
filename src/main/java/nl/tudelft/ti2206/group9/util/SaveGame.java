@@ -19,7 +19,7 @@ public final class SaveGame {
      * @param fileName the file to be loaded
      */
     public static void loadGame(final String fileName) {
-        final String filePath = State.getDefaultSaveDir() + fileName + ".json";
+        final String filePath = State.getDefaultSaveDir() + fileName + ".ses";
         Parser.loadGame(filePath);
     }
 
@@ -28,7 +28,7 @@ public final class SaveGame {
      */
     public static void saveGame() {
         final String filePath = State.getDefaultSaveDir()
-                + State.getPlayerName() + ".json";
+                + State.getPlayerName() + ".ses";
         Writer.saveGame(filePath);
     }
 
@@ -40,7 +40,7 @@ public final class SaveGame {
         try {
             final File folder = new File(State.getDefaultSaveDir());
             for (final File file : folder.listFiles()) {
-                if (file.isDirectory()) {
+                if (file.isDirectory() || !checkExtention(file.getName())) {
                     continue;
                 }
                 final String fileName = removeExtension(file.getName());
@@ -52,6 +52,11 @@ public final class SaveGame {
                     GameObserver.Error.NULLPOINTEREXCEPTION,
                     "SaveGame.readPlayerNames()", e.getMessage());
         }
+    }
+
+    private static boolean checkExtention(final String file) {
+        String ses = file.substring(file.lastIndexOf('.'));
+        return ses.equals(".ses");
     }
 
     /**
