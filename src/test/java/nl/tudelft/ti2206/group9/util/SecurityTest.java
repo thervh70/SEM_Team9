@@ -11,17 +11,23 @@ public class SecurityTest {
 
     @Test
     public void testEncypt() {
-        assertEquals("YWJj", Security.encrypt("abc"));
-        assertEquals("MTIz", Security.encrypt("123"));
-        assertEquals("e31bXTosLg==", Security.encrypt("{}[]:,."));
-        assertEquals("Ig==", Security.encrypt("\""));
+        assertEquals("YWJj", Writer.encrypt("abc"));
+        assertEquals("MTIz", Writer.encrypt("123"));
+        assertEquals("e31bXTosLg==", Writer.encrypt("{}[]:,."));
+        assertEquals("Ig==", Writer.encrypt("\""));
     }
 
     @Test
     public void testDecrypt() {
-        assertEquals("abc", Security.decrypt("YWJj"));
-        assertEquals("123", Security.decrypt("MTIz"));
-        assertEquals("{}[]:,.", Security.decrypt("e31bXTosLg=="));
-        assertEquals("\"", Security.decrypt("Ig=="));
+        assertEquals("abc", Parser.decrypt("YWJj"));
+        assertEquals("123", Parser.decrypt("MTIz"));
+        assertEquals("{}[]:,.", Parser.decrypt("e31bXTosLg=="));
+        assertEquals("\"", Parser.decrypt("Ig=="));
+    }
+
+    @Test
+    public void testFullJSON() {
+        String JSON = "{\"test\":0}";
+        assertEquals("eyJ0ZXN0IjowfQ==", Writer.encrypt(JSON));
     }
 }
