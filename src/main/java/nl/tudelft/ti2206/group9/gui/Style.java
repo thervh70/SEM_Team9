@@ -126,13 +126,14 @@ public final class Style {
     }
 
     /**
-     * Method to load a playerTexture.
-     * @param path path of texture.
+     * Method to load a playerTexture with the
+     * name "texture_[texture_name].png".
+     * @param textureName path of texture.
      * @return The phongmaterial of this texture
      */
-    public static PhongMaterial loadPlayerTexture(final String path) {
+    public static PhongMaterial loadPlayerTexture(final String textureName) {
         final Image playerTexture = new Image(
-                PATH + "texture_" + path + ".png");
+                PATH + "texture_" + textureName + ".png");
         final PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(playerTexture);
         return material;

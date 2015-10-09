@@ -1,11 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -27,6 +21,8 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import static org.junit.Assert.*;
 
 
 @SuppressWarnings("restriction")
@@ -137,8 +133,10 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void goThroughShop() {
 		mainMenu(MAIN_SHOP);
+        assertEquals(State.getSkin(), Style.getNoob());
         shopScreen(SHOP_LIST);
         shopScreen(SHOP_LIST);
+        assertNotEquals(State.getSkin(), Style.getNoob());
         shopScreen(SHOP_BACK);
 	}
 

@@ -21,16 +21,17 @@ public class Skin {
     /**
      * Constructor for the skin.
      * It calls the Style.loadPlayerTexture
-     * to load the image into the PhongMaterial.
+     * to load the image into the PhongMaterial
+     * with the name "texture_[texture_name].png".
      * @param price Price of this skin in shop.
      * @param name Name to display.
-     * @param path Location of this skin in the resources folder
+     * @param textureName Name of texture.
      */
     public Skin(final int price,
-                final String name, final String path) {
+                final String name, final String textureName) {
         skinPrice = price;
         skinName = name;
-        skinMaterial = Style.loadPlayerTexture(path);
+        skinMaterial = Style.loadPlayerTexture(textureName);
     }
 
     /**
