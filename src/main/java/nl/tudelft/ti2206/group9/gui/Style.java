@@ -13,10 +13,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 
@@ -34,7 +34,7 @@ import static nl.tudelft.ti2206.group9.util.GameObserver.Error;
 @SuppressWarnings("restriction")
 public final class Style {
 
-   /** BRICK material for walls, brick wall texture. */
+    /** BRICK material for walls, brick wall texture. */
     public static final PhongMaterial BRICK = new PhongMaterial();
 
     /** MOSS material for walls, mossy brick wall texture. */
@@ -64,20 +64,23 @@ public final class Style {
     /** PLAYER material used for the player. */
     public static final PhongMaterial PLAYER = new PhongMaterial();
 
-	/** Size of a button while hovering (relative to 1). */
+    /** Size of a button while hovering (relative to 1). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
 
     /** Preferred width of buttons. */
     private static final int BUTTON_WIDTH = 120;
-    /** Popup font size. */
+    /** Popup globalFont size. */
     private static final int POPUP_TEXT = 11;
+
+    /** Font used to render everything. */
+    private static Font globalFont;
 
     /** Hide public constructor. */
     private Style() { }
 
     /**
-     * Method is called once to load all textures.
-     * They are loaded into Phongmaterials.
+     * Method should be called once in order to load all textures from disk.
+     * They are loaded into the public static final PhongMaterials.
      */
     public static void loadTextures() {
         final String path = "nl/tudelft/ti2206/group9/gui/";
@@ -121,12 +124,12 @@ public final class Style {
     public static void setButtonStyle(final Button b) {
 
         /** Adjusting looks of button */
-    	final Color color = Color.BLACK;
-    	final CornerRadii corner = new CornerRadii(4);
-    	final Insets inset = new Insets(0);
-    	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
-    	final Background buttonBack = new Background(fill);
-    	final Font font = getFont(14);
+        final Color color = Color.BLACK;
+        final CornerRadii corner = new CornerRadii(4);
+        final Insets inset = new Insets(0);
+        final BackgroundFill fill = new BackgroundFill(color, corner, inset);
+        final Background buttonBack = new Background(fill);
+        final Font font = getFont(14);
         b.setTextFill(Color.WHITE);
         b.setBackground(buttonBack);
         b.setFont(font);
@@ -151,11 +154,11 @@ public final class Style {
      */
     public static void setPopupButtonStyle(final Button b) {
         /** Adjusting the looks of the button */
-    	final Color color = Color.BLACK;
-    	final CornerRadii corner = new CornerRadii(4);
-    	final Insets inset = new Insets(0);
-    	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
-    	final Background buttonBack = new Background(fill);
+        final Color color = Color.BLACK;
+        final CornerRadii corner = new CornerRadii(4);
+        final Insets inset = new Insets(0);
+        final BackgroundFill fill = new BackgroundFill(color, corner, inset);
+        final Background buttonBack = new Background(fill);
         b.setTextFill(Color.WHITE);
         b.setBackground(buttonBack);
         b.setFont(getFont(POPUP_TEXT));
@@ -173,12 +176,12 @@ public final class Style {
      * @param l Label to be changed.
      */
     public static void setLabelStyle(final Label l) {
-    	final Color color = Color.BLACK;
-    	final CornerRadii corner = new CornerRadii(4);
-    	final Insets inset = new Insets(-4);
-    	final BackgroundFill fill = new BackgroundFill(color, corner, inset);
-    	final Background buttonBack = new Background(fill);
-    	final Font font = getFont(14);
+        final Color color = Color.BLACK;
+        final CornerRadii corner = new CornerRadii(4);
+        final Insets inset = new Insets(-4);
+        final BackgroundFill fill = new BackgroundFill(color, corner, inset);
+        final Background buttonBack = new Background(fill);
+        final Font font = getFont(14);
         l.setAlignment(Pos.CENTER);
         l.setBackground(buttonBack);
         l.setTextFill(Color.WHITE);
@@ -192,34 +195,38 @@ public final class Style {
      * @param p The pane.
      */
     public static void setBackground(final String src, final Pane p) {
-    	final Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
-    	final BackgroundSize backgroundSize = new BackgroundSize(
-    			ShaftEscape.WIDTH, ShaftEscape.HEIGHT,
+        final Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
+        final BackgroundSize backgroundSize = new BackgroundSize(
+                ShaftEscape.WIDTH, ShaftEscape.HEIGHT,
                 true, true, true, false);
-    	final BackgroundImage backgroundImage = new BackgroundImage(image,
-        		BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-        		BackgroundPosition.CENTER, backgroundSize);
-    	final Background background = new Background(backgroundImage);
+        final BackgroundImage backgroundImage = new BackgroundImage(image,
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER, backgroundSize);
+        final Background background = new Background(backgroundImage);
         p.setBackground(background);
     }
 
     /**
-     * Getting a font from the folder.
-     *
+     * Getting a font from the folder. If the font is already loaded, it is
+     * returned immediately without reloading it.
      * @param size Size of text.
-     * @return Font Returns a font.
+     * @return returns the font.
      */
     public static Font getFont(final int size) {
-        Font font = null;
+        if (globalFont != null) {
+            return globalFont;
+        }
         try {
-            font = Font.loadFont(new FileInputStream(new
-                   File("src/main/resources/nl/tudelft/"
-                    + "ti2206/group9/gui/8bit.ttf")), size);
+            globalFont = Font.loadFont(new FileInputStream(new
+                    File("src/main/resources/nl/tudelft/"
+                            + "ti2206/group9/gui/8bit.ttf")), size);
         } catch (FileNotFoundException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
-            		"Style.getFont(int)", e.getMessage());
+                    "Style.getFont(int)",
+                    e.getMessage() + " - Default globalFont used");
+            globalFont = Font.font("Roboto", FontWeight.BOLD, size);
         }
-        return font;
+        return globalFont;
     }
 
 }
