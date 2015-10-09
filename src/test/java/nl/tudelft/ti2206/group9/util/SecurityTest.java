@@ -27,7 +27,7 @@ public class SecurityTest {
 
     @Test
     public void testFullJSON() {
-        final String Json = "{\"test\":0}";
-        assertEquals("eyJ0ZXN0IjowfQ==", Writer.encrypt(Json));
+        final String json = "{\"test\":0}";
+        assertEquals("eyJ0ZXN0IjowfQ==", Writer.encrypt(json));
     }
 }
