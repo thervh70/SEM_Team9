@@ -5,9 +5,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.gui.skins.Skin;
 
 /**
  * Ancestor for all MenuScenes. Subclasses should define an array of Nodes in
@@ -34,6 +36,10 @@ public abstract class AbstractMenuScene extends AbstractScene {
 	private static final int LIST_WIDTH = 80;
 	/** HEIGHT for list. */
 	private static final int LIST_HEIGHT = 160;
+	/** Rowspan for the TableView. */
+	private static final int ROW_SPAN = 7;
+	/** Columnspan for the TableView. */
+	private static final int COLUMN_SPAN = 3;
 
 	/**
 	 * Creating the SettingsScene.
@@ -131,6 +137,22 @@ public abstract class AbstractMenuScene extends AbstractScene {
 		GridPane.setConstraints(list, column, row);
 		list.setPrefSize(LIST_WIDTH, LIST_HEIGHT);
 		return list;
+	}
+
+	/**
+	 * Create a listview.
+	 * @param column Column index on Gridpane.
+	 * @param row Row index on Gridpane.
+	 * @return Returns the listview. */
+	protected static TableView<Skin> createSkinTable(final int column,
+												 final int row) {
+		final TableView<Skin> table = new TableView<>();
+		table.setEditable(true);
+		GridPane.setConstraints(table, column, row);
+		GridPane.setColumnSpan(table, COLUMN_SPAN);
+		GridPane.setRowSpan(table, ROW_SPAN);
+		table.setPrefSize(LIST_WIDTH, LIST_HEIGHT);
+		return table;
 	}
 
 }

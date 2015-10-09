@@ -1,8 +1,10 @@
 package nl.tudelft.ti2206.group9.level;
 
+import nl.tudelft.ti2206.group9.gui.skins.Skin;
+
+import nl.tudelft.ti2206.group9.gui.Style;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 
 /**
  * This utility class stores the State of the game,
@@ -19,6 +21,9 @@ public final class State {
 	private static int coins;
 	/** Highest score ever obtained. */
 	private static double highscore;
+
+	/** Skin to be used. */
+	private static Skin skin;
 
 	/** Current track, contains all entities. */
 	private static Track track = new Track();
@@ -49,6 +54,7 @@ public final class State {
 		reset();
 		setCoins(0);
 		highscore = 0;
+		skin = Style.getNoob();
 		soundEnabled = true;
 	}
 
@@ -184,6 +190,22 @@ public final class State {
 	 */
 	public static void setSoundEnabled(final boolean newSoundEnabled) {
 		State.soundEnabled = newSoundEnabled;
+	}
+
+	/**
+	 * Getter for the current skin.
+	 * @return The skin.
+	 */
+	public static Skin getSkin() {
+		return skin;
+	}
+
+	/**
+	 * If new skins are bought and applied it can be done via this setter.
+	 * @param newSkin The new skin.
+	 */
+	public static void setSkin(final Skin newSkin) {
+		skin = newSkin;
 	}
 
 	/**

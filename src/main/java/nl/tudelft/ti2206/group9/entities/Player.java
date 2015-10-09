@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.entities;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.renderer.AbstractBoxRenderer;
@@ -9,6 +8,8 @@ import nl.tudelft.ti2206.group9.util.Direction;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * Player entity that is controllable by the user.
@@ -20,6 +21,8 @@ public class Player extends AbstractEntity {
 	public static final double HEIGHT = 1.8;
 	/** Width of the Player's bounding box. */
 	public static final double WIDTH = 0.8;
+	/** Depth of the Players bounding box. */
+	public static final double DEPTH = 0.1;
 
 	/** Gravity. This is added to the vertical speed
 	 * of the Player each tick.
@@ -64,7 +67,7 @@ public class Player extends AbstractEntity {
 	 * @param center user-defined center.
 	 */
 	public Player(final Point3D center) {
-		super(center, new Point3D(WIDTH, HEIGHT, WIDTH));
+		super(center, new Point3D(WIDTH, HEIGHT, DEPTH));
 	}
 
 	/** Lets the player die. */
@@ -206,7 +209,7 @@ public class Player extends AbstractEntity {
 	private void slideStep() {
 		if (sliding) {
 			getSize().addY(slideSpeed);
-			getSize().setZ(HEIGHT * WIDTH
+			getSize().setZ(HEIGHT * DEPTH
 					/ getSize().getY()); // volume = const
 			getCenter().addY(slideSpeed / 2);
 

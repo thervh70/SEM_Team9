@@ -1,11 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -27,6 +21,8 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import static org.junit.Assert.*;
 
 
 @SuppressWarnings("restriction")
@@ -63,8 +59,9 @@ public class EndToEndTest extends ApplicationTest {
 	private static final int SETTINGS_SOUND = 1;
 
 	private static final int SHOP_BACK = 0;
+    private static final int SHOP_LIST = 3;
 
-	private static final int PAUSE_RESUME = 0;
+    private static final int PAUSE_RESUME = 0;
 	private static final int PAUSE_TOMAIN = 1;
 
 	private static final int DEATH_RETRY = 0;
@@ -88,16 +85,7 @@ public class EndToEndTest extends ApplicationTest {
 		goThroughSettings();
 		goThroughShop();
 
-		mainMenu(MAIN_START);
-		assertNull(AbstractScene.getPopup());
-		mainMenu(MAIN_TEXTFIELD);
-		typeFaultyName();
-		mainMenu(MAIN_START);
-		clickPopup(WARNING_OK);
-		mainMenu(MAIN_TEXTFIELD);
-		keyboard(KeyCode.BACK_SPACE);
-		typeName();
-
+		goThroughNameTyping();
 		goThroughGamePlay();
 
 		mainMenu(MAIN_LOADGAME);
@@ -145,7 +133,23 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void goThroughShop() {
 		mainMenu(MAIN_SHOP);
+		assertEquals(State.getSkin(), Style.getNoob());
+		shopScreen(SHOP_LIST);
+		shopScreen(SHOP_LIST);
+		assertNotEquals(State.getSkin(), Style.getNoob());
 		shopScreen(SHOP_BACK);
+	}
+
+	private void goThroughNameTyping() {
+		mainMenu(MAIN_START);
+		assertNull(AbstractScene.getPopup()); // Assert that Game does not start
+		mainMenu(MAIN_TEXTFIELD);
+		typeFaultyName();
+		mainMenu(MAIN_START);
+		clickPopup(WARNING_OK);
+		mainMenu(MAIN_TEXTFIELD);
+		keyboard(KeyCode.BACK_SPACE);
+		typeName();
 	}
 
 	private void goThroughGamePlay() {

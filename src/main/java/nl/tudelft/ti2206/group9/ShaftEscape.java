@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9;
 
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -7,6 +9,7 @@ import nl.tudelft.ti2206.group9.gui.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.GameScene;
 import nl.tudelft.ti2206.group9.gui.MainMenuScene;
 import nl.tudelft.ti2206.group9.gui.SplashScene;
+import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObservable;
@@ -14,8 +17,6 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.SaveGame;
-
-import java.io.File;
 
 /**
  * Starting point of the Application.
@@ -46,6 +47,10 @@ public class ShaftEscape extends Application {
 	 */
 	@Override
 	public final void start(final Stage appStage) {
+		//Loading textures
+		Style.loadTextures();
+		Style.loadSkins();
+
 		State.resetAll();
 		setStage(appStage);
 		stage.setResizable(false);

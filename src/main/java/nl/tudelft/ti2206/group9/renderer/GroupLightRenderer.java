@@ -8,6 +8,7 @@ import nl.tudelft.ti2206.group9.gui.GameScene;
 /**
  * @author Robin
  */
+@SuppressWarnings("restriction")
 public class GroupLightRenderer extends Group implements Renderer {
 
     /**

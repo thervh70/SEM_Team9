@@ -22,7 +22,6 @@ import nl.tudelft.ti2206.group9.util.KeyMap;
 import nl.tudelft.ti2206.group9.util.SaveGame;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
 /**
  * This scene shows the 3D Game world and the 2D score overlay.
  * @author Robin, Maarten
@@ -78,7 +77,6 @@ public final class GameScene extends AbstractScene {
 	 */
 	public Parent createRoot() {
 		State.reset();
-		Style.loadTextures();
 
 		final Group root = new Group();
 		root.setDepthTest(DepthTest.ENABLE);
