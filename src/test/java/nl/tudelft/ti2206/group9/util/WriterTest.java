@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Mathias
  */
-public final class SaveGameWriterTest {
+public final class WriterTest {
 
     /** Default folder to write JSON savefiles to. */
 	private static String fileFolder =
@@ -26,8 +26,8 @@ public final class SaveGameWriterTest {
         final boolean soundEnabled = false;
         State.setSoundEnabled(soundEnabled);
 
-        SaveGameWriter.saveGame(fileFolder + "saveGameWriterTest.json");
-        SaveGameParser.loadGame(fileFolder + "saveGameWriterTest.json");
+        Writer.saveGame(fileFolder + "saveGameWriterTest.json");
+        Parser.loadGame(fileFolder + "saveGameWriterTest.json");
 
         assertEquals(playerName, State.getPlayerName());
         assertEquals(coins, State.getCoins());

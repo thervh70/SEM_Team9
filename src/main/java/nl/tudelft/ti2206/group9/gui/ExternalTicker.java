@@ -17,6 +17,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.renderer.AbstractGroupRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupEntitiesRenderer;
+import nl.tudelft.ti2206.group9.renderer.GroupLightRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupTrackRenderer;
 import nl.tudelft.ti2206.group9.renderer.GroupWallRenderer;
 
@@ -40,6 +41,8 @@ public class ExternalTicker extends AnimationTimer {
 	private final AbstractGroupRenderer wall;
 	/** Group that stores the track. */
 	private final AbstractGroupRenderer track;
+	/** Group that stores the lights. */
+	private final GroupLightRenderer light;
 
 	/** Default constructor. */
 	public ExternalTicker() {
@@ -49,12 +52,15 @@ public class ExternalTicker extends AnimationTimer {
 			entities = new GroupEntitiesRenderer();
 			wall = new GroupWallRenderer();
 			track = new GroupTrackRenderer();
+			light = new GroupLightRenderer();
 
-			GameScene.addWorld(entities, wall, track);
+			GameScene.addWorld(entities, wall, track, light);
+
 		} else {
 			entities = null;
 			wall = null;
 			track = null;
+			light = null;
 		}
 	}
 
@@ -80,6 +86,7 @@ public class ExternalTicker extends AnimationTimer {
 			entities.update();
 			wall.update();
 			track.update();
+			light.update();
 		}
 	}
 
