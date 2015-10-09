@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import nl.tudelft.ti2206.group9.gui.GameScene;
 
 /**
+ * Renders the entire group of lights.
  * @author Robin
  */
 @SuppressWarnings("restriction")

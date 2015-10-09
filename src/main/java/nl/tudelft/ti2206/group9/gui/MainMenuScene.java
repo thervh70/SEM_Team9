@@ -1,12 +1,13 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import nl.tudelft.ti2206.group9.ShaftEscape;
+
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -94,26 +95,29 @@ public final class MainMenuScene extends AbstractMenuScene {
 			final BType type) {
 		button.setOnAction(event -> {
 			SplashScene.getButtonAudioPlayer().play(false);
-				if (type == BType.EXIT) {
-					apMainMenu.stop();
-					OBSERVABLE.notify(Category.MENU, Menu.EXIT);
-					ShaftEscape.exit();
-				} else if (type == BType.START) {
-					apMainMenu.stop();
-					if (checkPlayerName(INPUT.getText())) {
-						createNewGame();
-					} else {
-						setPopup(new WarningPopup(
-								event1 -> setPopup(null),
-								"The given name is invalid."));
-						ShaftEscape.showPopup(getPopup());
-					}
-				} else if (type == BType.LOAD) {
-					OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
-					ShaftEscape.setScene(new LoadGameScene());
+			if (type == BType.EXIT) {
+				apMainMenu.stop();
+				OBSERVABLE.notify(Category.MENU, Menu.EXIT);
+				ShaftEscape.exit();
+			} else if (type == BType.START) {
+				apMainMenu.stop();
+				if (checkPlayerName(INPUT.getText())) {
+					createNewGame();
 				} else {
-					OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
-					ShaftEscape.setScene(new SettingsScene());
+					setPopup(new WarningPopup(
+							event1 -> setPopup(null),
+							"The given name is invalid."));
+					ShaftEscape.showPopup(getPopup());
+				}
+			} else if (type == BType.LOAD) {
+				OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
+				ShaftEscape.setScene(new LoadGameScene());
+			} else if (type == BType.SHOP) {
+				OBSERVABLE.notify(Category.MENU, Menu.SHOP);
+				ShaftEscape.setScene(new ShopScene());
+			} else {
+				OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
+				ShaftEscape.setScene(new SettingsScene());
 			}
 		});
 	}

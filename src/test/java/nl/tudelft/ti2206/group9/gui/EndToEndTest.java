@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.entities.Player;
+import nl.tudelft.ti2206.group9.entities.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Logger;
@@ -24,6 +25,7 @@ import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -63,8 +65,9 @@ public class EndToEndTest extends ApplicationTest {
 	private static final int SETTINGS_SOUND = 1;
 
 	private static final int SHOP_BACK = 0;
+    private static final int SHOP_LIST = 3;
 
-	private static final int PAUSE_RESUME = 0;
+    private static final int PAUSE_RESUME = 0;
 	private static final int PAUSE_TOMAIN = 1;
 
 	private static final int DEATH_RETRY = 0;
@@ -88,16 +91,7 @@ public class EndToEndTest extends ApplicationTest {
 		goThroughSettings();
 		goThroughShop();
 
-		mainMenu(MAIN_START);
-		assertNull(AbstractScene.getPopup());
-		mainMenu(MAIN_TEXTFIELD);
-		typeFaultyName();
-		mainMenu(MAIN_START);
-		clickPopup(WARNING_OK);
-		mainMenu(MAIN_TEXTFIELD);
-		keyboard(KeyCode.BACK_SPACE);
-		typeName();
-
+		goThroughNameTyping();
 		goThroughGamePlay();
 
 		mainMenu(MAIN_LOADGAME);
@@ -126,7 +120,7 @@ public class EndToEndTest extends ApplicationTest {
 	}
 
 	private void letPlayerSurvive() {
-		State.getTrack().getPlayer().setInvincible(true);
+		PowerupInvulnerable.cheat(true);
 	}
 
 	private void goThroughSettings() {
@@ -145,7 +139,23 @@ public class EndToEndTest extends ApplicationTest {
 
 	private void goThroughShop() {
 		mainMenu(MAIN_SHOP);
+		assertEquals(State.getSkin(), Style.getNoob());
+		shopScreen(SHOP_LIST);
+		shopScreen(SHOP_LIST);
+		assertNotEquals(State.getSkin(), Style.getNoob());
 		shopScreen(SHOP_BACK);
+	}
+
+	private void goThroughNameTyping() {
+		mainMenu(MAIN_START);
+		assertNull(AbstractScene.getPopup()); // Assert that Game does not start
+		mainMenu(MAIN_TEXTFIELD);
+		typeFaultyName();
+		mainMenu(MAIN_START);
+		clickPopup(WARNING_OK);
+		mainMenu(MAIN_TEXTFIELD);
+		keyboard(KeyCode.BACK_SPACE);
+		typeName();
 	}
 
 	private void goThroughGamePlay() {

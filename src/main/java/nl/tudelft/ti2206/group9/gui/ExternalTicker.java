@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.entities.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.renderer.AbstractGroupRenderer;
@@ -101,15 +102,19 @@ public class ExternalTicker extends AnimationTimer {
 				+ State.modulo(State.getDistance()));
 		final Label coinsLabel = new Label("Coins: "
 				+ State.getCoins());
+		final Label powerupLabel = new Label("Invulnerable: "
+				+ (int) Math.ceil(PowerupInvulnerable.getSecondsLeft()));
 
 		Style.setLabelStyle(nameLabel);
 		Style.setLabelStyle(highLabel);
 		Style.setLabelStyle(scoreLabel);
 		Style.setLabelStyle(distanceLabel);
 		Style.setLabelStyle(coinsLabel);
+		Style.setLabelStyle(powerupLabel);
+
 		final VBox scoreBox = new VBox(LABEL_DISTANCE, nameLabel,
                 highLabel, scoreLabel,
-				distanceLabel, coinsLabel);
+				distanceLabel, coinsLabel, powerupLabel);
 		scoreBox.setStyle(" -fx-background-color:BLACK;");
 		scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
 		return scoreBox;
@@ -164,6 +169,11 @@ public class ExternalTicker extends AnimationTimer {
 				GameScene.setRunning(true);
 			}
 		});
+	}
+
+	/** @return the entities renderer */
+	public AbstractGroupRenderer getEntitiesRenderer() {
+		return entities;
 	}
 
 }

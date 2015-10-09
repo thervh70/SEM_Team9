@@ -41,7 +41,7 @@ public class TrackParserTest {
         };
         for (int i = 0; i < expectedEntities; i++) {
         	assertEquals(types[i].getName(),
-        			part.getEntities().get(i).getClass().getName());
+        			part.getEntities().get(i).getType().getName());
         }
 
     }

@@ -1,9 +1,10 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.entities.AbstractEntity;
-
 import java.util.LinkedList;
 import java.util.List;
+
+import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
  * @author Mathias
@@ -11,8 +12,7 @@ import java.util.List;
 public class TrackPart {
 
     /** List of all entities in this trackpart. */
-	private final List<AbstractEntity> entities =
-			new LinkedList<AbstractEntity>();
+    private final List<Node> entities = new LinkedList<Node>();
 
     /** Size of the TrackPart. */
     private int length;
@@ -21,7 +21,7 @@ public class TrackPart {
      * Get the list of entities.
      * @return List of entities
      */
-    public final List<AbstractEntity> getEntities() {
+    public final List<Node> getEntities() {
         return entities;
     }
 
@@ -29,7 +29,7 @@ public class TrackPart {
      * Adds an entity to the entities list.
      * @param entity entity to be added
      */
-    public final void addEntity(final AbstractEntity entity) {
+    public final void addEntity(final Node entity) {
         entities.add(entity);
     }
 
@@ -37,7 +37,7 @@ public class TrackPart {
      * Removes an entity from the entities list.
      * @param entity entity to be removed
      */
-    public final void removeEntity(final AbstractEntity entity) {
+    public final void removeEntity(final Node entity) {
         entities.remove(entity);
     }
 
@@ -56,4 +56,41 @@ public class TrackPart {
     public final void setLength(final int lngth) {
         length = lngth;
     }
+
+    /**
+     * A node of the TrackPart.
+     * @author Maarten
+     */
+    static class Node {
+    	/** Type of the node. */
+    	private final Class<? extends AbstractEntity> type;
+    	/** Center of the Entity. */
+    	private final Point3D center;
+
+		/**
+		 * @param nodeType the type of the Node.
+		 * @param entityCenter the center of the Entity.
+		 */
+		public Node(final Class<? extends AbstractEntity> nodeType,
+				final Point3D entityCenter) {
+			super();
+			this.type = nodeType;
+			this.center = entityCenter;
+		}
+
+		/**
+		 * @return the type of the Node.
+		 */
+		public Class<? extends AbstractEntity> getType() {
+			return type;
+		}
+
+		/**
+		 * @return the center of the Entity.
+		 */
+		public Point3D getCenter() {
+			return center;
+		}
+    }
+
 }
