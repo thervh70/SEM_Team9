@@ -12,15 +12,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.entities.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.gui.renderer.AbstractGroupRenderer;
+import nl.tudelft.ti2206.group9.gui.renderer.GroupEntitiesRenderer;
+import nl.tudelft.ti2206.group9.gui.renderer.GroupLightRenderer;
+import nl.tudelft.ti2206.group9.gui.renderer.GroupTrackRenderer;
+import nl.tudelft.ti2206.group9.gui.renderer.GroupWallRenderer;
+import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
-import nl.tudelft.ti2206.group9.renderer.AbstractGroupRenderer;
-import nl.tudelft.ti2206.group9.renderer.GroupEntitiesRenderer;
-import nl.tudelft.ti2206.group9.renderer.GroupLightRenderer;
-import nl.tudelft.ti2206.group9.renderer.GroupTrackRenderer;
-import nl.tudelft.ti2206.group9.renderer.GroupWallRenderer;
+import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 
 /**
  * @author Maarten.

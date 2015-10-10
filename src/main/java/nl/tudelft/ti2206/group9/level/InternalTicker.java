@@ -7,7 +7,7 @@ import java.util.TimerTask;
 
 import javafx.application.Platform;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.GameScene;
+import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 
 /**
  * This thread handles the ticks of the internal system. On each tick, the track

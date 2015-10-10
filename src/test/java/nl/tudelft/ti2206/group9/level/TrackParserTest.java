@@ -1,10 +1,10 @@
 package nl.tudelft.ti2206.group9.level;
 
 import static org.junit.Assert.assertEquals;
-import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Fence;
-import nl.tudelft.ti2206.group9.entities.Log;
-import nl.tudelft.ti2206.group9.entities.Pillar;
+import nl.tudelft.ti2206.group9.level.entity.Coin;
+import nl.tudelft.ti2206.group9.level.entity.Fence;
+import nl.tudelft.ti2206.group9.level.entity.Log;
+import nl.tudelft.ti2206.group9.level.entity.Pillar;
 
 import org.junit.Before;
 import org.junit.Test;

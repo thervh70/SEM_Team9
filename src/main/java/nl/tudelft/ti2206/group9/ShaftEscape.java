@@ -5,18 +5,18 @@ import java.io.File;
 import javafx.application.Application;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import nl.tudelft.ti2206.group9.gui.AbstractScene;
-import nl.tudelft.ti2206.group9.gui.GameScene;
-import nl.tudelft.ti2206.group9.gui.MainMenuScene;
-import nl.tudelft.ti2206.group9.gui.SplashScene;
 import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
+import nl.tudelft.ti2206.group9.gui.scene.GameScene;
+import nl.tudelft.ti2206.group9.gui.scene.MainMenuScene;
+import nl.tudelft.ti2206.group9.gui.scene.SplashScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Logger;
-import nl.tudelft.ti2206.group9.util.SaveGame;
 
 /**
  * Starting point of the Application.

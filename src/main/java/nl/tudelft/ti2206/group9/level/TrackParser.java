@@ -11,12 +11,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.ti2206.group9.entities.AbstractPickup;
-import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Fence;
-import nl.tudelft.ti2206.group9.entities.Log;
-import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.level.TrackPart.Node;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPickup;
+import nl.tudelft.ti2206.group9.level.entity.Coin;
+import nl.tudelft.ti2206.group9.level.entity.Fence;
+import nl.tudelft.ti2206.group9.level.entity.Log;
+import nl.tudelft.ti2206.group9.level.entity.Pillar;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Point3D;

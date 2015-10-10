@@ -27,12 +27,12 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.skins.AndySkin;
-import nl.tudelft.ti2206.group9.gui.skins.BoySkin;
-import nl.tudelft.ti2206.group9.gui.skins.CaptainSkin;
-import nl.tudelft.ti2206.group9.gui.skins.IronManSkin;
-import nl.tudelft.ti2206.group9.gui.skins.NoobSkin;
-import nl.tudelft.ti2206.group9.gui.skins.PlankSkin;
+import nl.tudelft.ti2206.group9.gui.skin.AndySkin;
+import nl.tudelft.ti2206.group9.gui.skin.BoySkin;
+import nl.tudelft.ti2206.group9.gui.skin.CaptainSkin;
+import nl.tudelft.ti2206.group9.gui.skin.IronManSkin;
+import nl.tudelft.ti2206.group9.gui.skin.NoobSkin;
+import nl.tudelft.ti2206.group9.gui.skin.PlankSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 

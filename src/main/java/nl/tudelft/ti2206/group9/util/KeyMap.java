@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.scene.input.KeyCode;
-import nl.tudelft.ti2206.group9.entities.Player;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 

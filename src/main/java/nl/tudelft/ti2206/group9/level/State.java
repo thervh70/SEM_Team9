@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.gui.skins.Skin;
-
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.gui.Style;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

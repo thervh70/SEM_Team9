@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Log;
 import nl.tudelft.ti2206.group9.level.TrackPart.Node;
+import nl.tudelft.ti2206.group9.level.entity.Coin;
+import nl.tudelft.ti2206.group9.level.entity.Log;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Before;

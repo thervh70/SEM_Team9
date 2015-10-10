@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.group9.level;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
