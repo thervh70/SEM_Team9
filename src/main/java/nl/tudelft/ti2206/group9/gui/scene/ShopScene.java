@@ -68,18 +68,18 @@ public class ShopScene extends AbstractMenuScene {
                 Style.getNoob(), Style.getPlank());
 
         final TableColumn<Skin, String> name =
-        		new TableColumn<>("Name");
+                new TableColumn<>("Name");
         name.setCellValueFactory(new PropertyValueFactory<>("skinName"));
         name.setResizable(false);
 
         final TableColumn<Skin, Integer> price =
-        		new TableColumn<>("Price");
+                new TableColumn<>("Price");
         price.setCellValueFactory(new PropertyValueFactory<>("skinPrice"));
         name.setResizable(false);
         itemTable.getColumns().add(name);
         itemTable.getColumns().add(price);
         itemTable.setRowFactory(e -> {
-        	final TableRow<Skin> row = new TableRow<>();
+            final TableRow<Skin> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     State.setSkin(row.getItem());

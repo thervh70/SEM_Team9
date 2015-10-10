@@ -30,9 +30,9 @@ public class Log extends AbstractObstacle {
         super(center, size);
     }
 
-	@Override
+    @Override
     public AbstractBoxRenderer<? extends AbstractEntity> createRenderer() {
-	    return new LogRenderer(this);
-	}
+        return new LogRenderer(this);
+    }
 
 }

@@ -10,17 +10,17 @@ import nl.tudelft.ti2206.group9.level.entity.Fence;
 @SuppressWarnings("restriction")
 public class FenceRenderer extends AbstractBoxRenderer<Fence> {
 
-	/**
-	 * Default constructor.
-	 * @param entity the entity to Trace.
-	 */
-	public FenceRenderer(final Fence entity) {
-		super(entity);
-	}
+    /**
+     * Default constructor.
+     * @param entity the entity to Trace.
+     */
+    public FenceRenderer(final Fence entity) {
+        super(entity);
+    }
 
-	@Override
-	protected void setMaterial() {
-		setMaterial(Style.FENCE);
-	}
+    @Override
+    protected void setMaterial() {
+        setMaterial(Style.FENCE);
+    }
 
 }

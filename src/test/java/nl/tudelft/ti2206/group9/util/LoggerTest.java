@@ -21,34 +21,34 @@ import org.junit.Test;
  */
 public class LoggerTest {
 
-	private static final String TESTLOG = "src/test/java/nl/tudelft/ti2206/"
-			+ "group9/util/test.log";
+    private static final String TESTLOG = "src/test/java/nl/tudelft/ti2206/"
+            + "group9/util/test.log";
 
-	private Logger logger; //NOPMD loggers should be static+final outside tests
+    private Logger logger; //NOPMD loggers should be static+final outside tests
 
-	@Before
-	public void setUp() {
-		logger = new Logger(TESTLOG);
-	}
+    @Before
+    public void setUp() {
+        logger = new Logger(TESTLOG);
+    }
 
-	@Test
-	public void testWriteToFile() throws IOException {
-		final GameUpdate testUpdate =
-				new GameUpdate(Category.PLAYER, Player.JUMP);
-		final String testUpdateString = "[PLAYER] Jumping.\n";
+    @Test
+    public void testWriteToFile() throws IOException {
+        final GameUpdate testUpdate =
+                new GameUpdate(Category.PLAYER, Player.JUMP);
+        final String testUpdateString = "[PLAYER] Jumping.\n";
 
-		logger.update(null, testUpdate);
-		logger.writeToFile();
-		String log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
-				StandardCharsets.UTF_8).substring(Logger.FORMAT.length() - 1);
-		assertEquals(testUpdateString, log);
+        logger.update(null, testUpdate);
+        logger.writeToFile();
+        String log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
+                StandardCharsets.UTF_8).substring(Logger.FORMAT.length() - 1);
+        assertEquals(testUpdateString, log);
 
-		// append = false, thus a new file should be created
-		logger.update(null, testUpdate);
-		logger.writeToFile(false);
-		log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
-				StandardCharsets.UTF_8).substring(Logger.FORMAT.length() - 1);
-		assertEquals(testUpdateString, log);
-	}
+        // append = false, thus a new file should be created
+        logger.update(null, testUpdate);
+        logger.writeToFile(false);
+        log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
+                StandardCharsets.UTF_8).substring(Logger.FORMAT.length() - 1);
+        assertEquals(testUpdateString, log);
+    }
 
 }

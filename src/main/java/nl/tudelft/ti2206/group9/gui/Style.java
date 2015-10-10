@@ -1,5 +1,5 @@
-package nl.tudelft.ti2206.group9.gui;	// NOPMD - too many imports
-										// because don't want to use .*
+package nl.tudelft.ti2206.group9.gui;    // NOPMD - too many imports
+                                        // because don't want to use .*
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 

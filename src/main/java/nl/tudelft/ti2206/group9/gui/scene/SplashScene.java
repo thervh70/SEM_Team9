@@ -23,16 +23,16 @@ public final class SplashScene extends AbstractMenuScene {
     /** Duration of transition in ms. */
     private static final int TRANSITION_TIME = 750;
 
-	/** The AudioPlayer to be used for a button sound effect. */
-	private static AudioPlayer apButton = new AudioPlayer("src/main/"
-			+ "resources/nl/tudelft/ti2206/group9/audio/button.wav");
+    /** The AudioPlayer to be used for a button sound effect. */
+    private static AudioPlayer apButton = new AudioPlayer("src/main/"
+            + "resources/nl/tudelft/ti2206/group9/audio/button.wav");
 
     /**
      * Create Splash label and set AnyKey event handlers.
      * @return an array of Nodes to be added to the Scene.
      */
-	@Override
-	public Node[] createContent() {
+    @Override
+    public Node[] createContent() {
         addMouseClick();
         addKeyPressed();
 
@@ -44,13 +44,13 @@ public final class SplashScene extends AbstractMenuScene {
         generateFadeTransition(text);
         text.setPrefWidth(labelCols * GRID_GAP);
         text.setPrefHeight(labelRows * GRID_GAP);
-	    GridPane.setConstraints(text, labelRows,
-	    		labelCols);
+        GridPane.setConstraints(text, labelRows,
+                labelCols);
 
         return new Node[]{text};
-	}
+    }
 
-	/**
+    /**
      * Creating a new label for displaying text.
      * @param text a given sentence.
      * @return label resulting label.
@@ -58,8 +58,8 @@ public final class SplashScene extends AbstractMenuScene {
     private Label createLabel(final String text) {
         final Label label = new Label(text);
         Style.setLabelStyle(label);
-		return label;
-	}
+        return label;
+    }
 
     /**
      * Defining what has happens in case of a mouseClickEvent.
@@ -91,7 +91,7 @@ public final class SplashScene extends AbstractMenuScene {
      * Generates a fade transition for a specific label.
      * @param label given label.
      */
-	private static void generateFadeTransition(final Label label) {
+    private static void generateFadeTransition(final Label label) {
         final FadeTransition ft = new FadeTransition(
                 Duration.millis(TRANSITION_TIME), label);
         ft.setFromValue(1.0);
@@ -99,14 +99,14 @@ public final class SplashScene extends AbstractMenuScene {
         ft.setCycleCount(TRANSITION_TIME * 2);
         ft.setAutoReverse(true);
         ft.play();
-	}
+    }
 
-	/**
-	 * Every Button has an AudioPlayer for a sound effect.
-	 * @return the button AudioPlayer.
-	 */
-	public static AudioPlayer getButtonAudioPlayer() {
-		return apButton;
-	}
+    /**
+     * Every Button has an AudioPlayer for a sound effect.
+     * @return the button AudioPlayer.
+     */
+    public static AudioPlayer getButtonAudioPlayer() {
+        return apButton;
+    }
 
 }

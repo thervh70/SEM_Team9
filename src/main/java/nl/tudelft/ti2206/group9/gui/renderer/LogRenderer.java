@@ -10,17 +10,17 @@ import nl.tudelft.ti2206.group9.level.entity.Log;
 @SuppressWarnings("restriction")
 public class LogRenderer extends AbstractBoxRenderer<Log> {
 
-	/**
-	 * Default constructor.
-	 * @param entity the entity to Trace.
-	 */
-	public LogRenderer(final Log entity) {
-		super(entity);
-	}
+    /**
+     * Default constructor.
+     * @param entity the entity to Trace.
+     */
+    public LogRenderer(final Log entity) {
+        super(entity);
+    }
 
-	@Override
-	protected void setMaterial() {
-		setMaterial(Style.WOOD);
-	}
+    @Override
+    protected void setMaterial() {
+        setMaterial(Style.WOOD);
+    }
 
 }

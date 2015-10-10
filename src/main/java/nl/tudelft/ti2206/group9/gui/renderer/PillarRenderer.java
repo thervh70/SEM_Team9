@@ -10,17 +10,17 @@ import nl.tudelft.ti2206.group9.level.entity.Pillar;
 @SuppressWarnings("restriction")
 public class PillarRenderer extends AbstractBoxRenderer<Pillar> {
 
-	/**
-	 * Default constructor.
-	 * @param entity the entity to Trace.
-	 */
-	public PillarRenderer(final Pillar entity) {
-		super(entity);
-	}
+    /**
+     * Default constructor.
+     * @param entity the entity to Trace.
+     */
+    public PillarRenderer(final Pillar entity) {
+        super(entity);
+    }
 
-	@Override
-	protected void setMaterial() {
-		setMaterial(Style.PILLAR);
-	}
+    @Override
+    protected void setMaterial() {
+        setMaterial(Style.PILLAR);
+    }
 
 }

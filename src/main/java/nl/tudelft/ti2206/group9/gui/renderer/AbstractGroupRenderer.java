@@ -10,16 +10,16 @@ import javafx.scene.Group;
 @SuppressWarnings("restriction")
 public abstract class AbstractGroupRenderer extends Group implements Renderer {
 
-	/** Default constructor, enabling DepthTest. */
-	public AbstractGroupRenderer() {
-		super();
-		setDepthTest(DepthTest.ENABLE);
-	}
+    /** Default constructor, enabling DepthTest. */
+    public AbstractGroupRenderer() {
+        super();
+        setDepthTest(DepthTest.ENABLE);
+    }
 
-	/**
-	 * When this method is called, the Renderer should update its appearance
-	 * according to the environment.
-	 */
-	public abstract void update();
+    /**
+     * When this method is called, the Renderer should update its appearance
+     * according to the environment.
+     */
+    public abstract void update();
 
 }

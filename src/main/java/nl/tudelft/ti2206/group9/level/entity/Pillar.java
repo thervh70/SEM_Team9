@@ -30,9 +30,9 @@ public class Pillar extends AbstractObstacle {
         super(center, size);
     }
 
-	@Override
+    @Override
     public AbstractBoxRenderer<? extends AbstractEntity> createRenderer() {
-	    return new PillarRenderer(this);
-	}
+        return new PillarRenderer(this);
+    }
 
 }

@@ -134,15 +134,15 @@ public class TrackParser {
                 Node entity;
                 switch (c) { //NOPMD - default case contains no break, duh.
                 case 'c': entity = new Node(Coin.class,
-                		new Point3D(i - 1, 1, j)); break;
+                        new Point3D(i - 1, 1, j)); break;
                 case 'l': entity = new Node(Log.class,
-                		new Point3D(i - 1, 1, j)); break;
+                        new Point3D(i - 1, 1, j)); break;
                 case 'p': entity = new Node(Pillar.class,
-                		new Point3D(i - 1, 1, j)); break;
+                        new Point3D(i - 1, 1, j)); break;
                 case 'P': entity = new Node(AbstractPickup.class,
-                		new Point3D(i - 1, 1, j)); break;
+                        new Point3D(i - 1, 1, j)); break;
                 case 'f': entity = new Node(Fence.class,
-                		new Point3D(i - 1, FENCE_CENTER_HEIGHT, j)); break;
+                        new Point3D(i - 1, FENCE_CENTER_HEIGHT, j)); break;
                 default : continue;
                 }
                 part.addEntity(entity);

@@ -15,7 +15,7 @@ public class GroupLightRenderer extends Group implements Renderer {
     /**
      * This method sets up the Entities.
      */
-	public GroupLightRenderer() {
+    public GroupLightRenderer() {
         super();
 
         final int translateY = -5;

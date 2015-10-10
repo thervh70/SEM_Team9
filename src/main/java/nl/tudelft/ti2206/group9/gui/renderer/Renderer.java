@@ -6,10 +6,10 @@ package nl.tudelft.ti2206.group9.gui.renderer;
  */
 public interface Renderer {
 
-	/**
-	 * Called every tick. Updates the current Renderer
-	 * (e.g. position, size, ...)
-	 */
-	void update();
+    /**
+     * Called every tick. Updates the current Renderer
+     * (e.g. position, size, ...)
+     */
+    void update();
 
 }

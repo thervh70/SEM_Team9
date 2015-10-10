@@ -15,32 +15,32 @@ import nl.tudelft.ti2206.group9.level.State;
 @SuppressWarnings("restriction")
 public class DeathPopup extends AbstractInfoPopup {
 
-	/**
-	 * Creates a new DeathPopup.
-	 * @param retryEvent event that should happen when "Try Again" button is
-	 * clicked.
-	 * @param menuEvent event that should happen when "Main Menu" button is
-	 * clicked.
-	 */
-	public DeathPopup(final EventHandler<MouseEvent> retryEvent,
-    		final EventHandler<MouseEvent> menuEvent) {
-		super(new Button("Try Again"), new Button("Return to Main Menu"));
+    /**
+     * Creates a new DeathPopup.
+     * @param retryEvent event that should happen when "Try Again" button is
+     * clicked.
+     * @param menuEvent event that should happen when "Main Menu" button is
+     * clicked.
+     */
+    public DeathPopup(final EventHandler<MouseEvent> retryEvent,
+            final EventHandler<MouseEvent> menuEvent) {
+        super(new Button("Try Again"), new Button("Return to Main Menu"));
 
         getLeftButton().setOnMouseClicked(mouseEvent -> {
-			SplashScene.getButtonAudioPlayer().play(false);
+            SplashScene.getButtonAudioPlayer().play(false);
             hide();
             retryEvent.handle(mouseEvent);
         });
 
         getRightButton().setOnMouseClicked(mouseEvent -> {
-			SplashScene.getButtonAudioPlayer().play(false);
+            SplashScene.getButtonAudioPlayer().play(false);
             hide();
             menuEvent.handle(mouseEvent);
         });
     }
 
-	@Override
-	public Node[] createContent() {
+    @Override
+    public Node[] createContent() {
         final Text text = new Text("Game Ended");
 
         final String s = "Final Score: " + (int) State.getScore();
@@ -52,7 +52,7 @@ public class DeathPopup extends AbstractInfoPopup {
         final String c = "Total amount of coins: " + State.getCoins();
         final Text finalCoins = new Text(c);
 
-		return new Node[]{text, finalScore, finalHigh, finalCoins};
-	}
+        return new Node[]{text, finalScore, finalHigh, finalCoins};
+    }
 
 }

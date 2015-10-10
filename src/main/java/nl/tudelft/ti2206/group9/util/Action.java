@@ -5,7 +5,7 @@ package nl.tudelft.ti2206.group9.util;
  */
 public interface Action {
 
-	/** Action to perform. */
+    /** Action to perform. */
     void doAction();
 
 }

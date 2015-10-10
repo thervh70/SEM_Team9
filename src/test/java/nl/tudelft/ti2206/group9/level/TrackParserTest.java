@@ -31,17 +31,17 @@ public class TrackParserTest {
     public void testParseCharMap() {
         part = parser.parseTrackPart(map);
         final int expectedLength = 3,
-        		expectedEntities = 7;
+                expectedEntities = 7;
         assertEquals(expectedLength, part.getLength());
         assertEquals(expectedEntities, part.getEntities().size());
 
         final Class<?>[] types = new Class<?>[] {
-        		Log.class, Fence.class, Coin.class, Coin.class,
-        		Pillar.class, Log.class, Pillar.class
+                Log.class, Fence.class, Coin.class, Coin.class,
+                Pillar.class, Log.class, Pillar.class
         };
         for (int i = 0; i < expectedEntities; i++) {
-        	assertEquals(types[i].getName(),
-        			part.getEntities().get(i).getType().getName());
+            assertEquals(types[i].getName(),
+                    part.getEntities().get(i).getType().getName());
         }
 
     }
