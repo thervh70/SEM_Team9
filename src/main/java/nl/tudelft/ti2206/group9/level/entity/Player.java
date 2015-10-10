@@ -210,10 +210,10 @@ public class Player extends AbstractEntity {
     public final void move(final Direction direction) {
         if (isAlive()) {
             switch (direction) {
-            case LEFT:  changeLane(-1.0);    break;
-            case RIGHT: changeLane(1.0);    break;
-            case JUMP:  jump();                break;
-            case SLIDE: slide();            break;
+            case LEFT:  changeLane(-1.0); break;
+            case RIGHT: changeLane(1.0);  break;
+            case JUMP:  jump();           break;
+            case SLIDE: slide();          break;
             default:    break;
             }
         }
