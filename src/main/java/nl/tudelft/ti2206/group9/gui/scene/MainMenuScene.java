@@ -125,12 +125,12 @@ public final class MainMenuScene extends AbstractMenuScene {
     /**
      * Checks whether the playername is a valid name.
      * Invalid options:
-     * <a>
+     * <ul>
      *     <li>Empty name</li>
      *     <li>Name contains a '.'</li>
      *     <li>Name contains a '/'</li>
      *     <li>Name contains a '\'</li>
-     * </a>
+     * </ul>
      * @param name the name to be checked
      * @return boolean to indicate whether the name is valid
      */

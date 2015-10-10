@@ -20,7 +20,7 @@ public interface GameObserver extends Observer {
         /** Player actions, see {@link Player}. */
         PLAYER,
         /** Exceptions that happen during the game, see {@link Error}. */
-        ERROR,
+        ERROR
     }
 
     /** Super-enum for specific statuses/actions/... */
@@ -39,7 +39,7 @@ public interface GameObserver extends Observer {
         /** Game restarted. */
         RETRY,
         /** Game exited to main menu. */
-        TO_MAIN_MENU,
+        TO_MAIN_MENU
     }
 
     /**
@@ -50,7 +50,7 @@ public interface GameObserver extends Observer {
         /** Keyboard input. optionalArg: KeyCode. */
         KEYBOARD,
         /** Mouse input. optionalArg: MouseButton. */
-        MOUSE,
+        MOUSE
     }
 
     /**
@@ -94,7 +94,7 @@ public interface GameObserver extends Observer {
         /** Player slides. */
         SLIDE,
         /** Player collides. optionalArg: name of entity collided with. */
-        COLLISION,
+        COLLISION
     }
 
     /**

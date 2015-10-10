@@ -79,6 +79,12 @@ public class Logger implements GameObserver {
                 lbl + "Exception with audio player!" + info);
         STRINGS.put(Error.PARSEEXCEPTION,
                 lbl + "Exception while parsing JSON!" + info);
+        STRINGS.put(Error.UNSUPPORTEDENCODINGEXCEPTION,
+                lbl + "Exception while encoding JSON!" + info);
+        STRINGS.put(Error.UNSUPPORTEDDECODINGEXCEPTION,
+                lbl + "Exception while decoding JSON!" + info);
+        STRINGS.put(Error.NULLPOINTEREXCEPTION,
+                lbl + "Something is pointing to void space!" + info);
     }
 
     /**

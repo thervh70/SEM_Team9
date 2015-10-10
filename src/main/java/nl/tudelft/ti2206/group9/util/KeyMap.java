@@ -39,8 +39,8 @@ public class KeyMap {
         final Action action = actionMap.get(e);
         if (action != null && !pressed.get(e)) {    // If key not pressed
             OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD, e);
-            action.doAction();                        // Do action
-            pressed.put(e, true);                    // Mark as pressed
+            action.doAction();                      // Do action
+            pressed.put(e, true);                   // Mark as pressed
         }
     }
 
@@ -89,13 +89,13 @@ public class KeyMap {
      */
     public static void defaultKeys() {
         // NOPMD used for "private constructor" from MoveAction.
-        KeyMap.addKey(KeyCode.UP, new MoveAction(Direction.JUMP)); //NOPMD
+        KeyMap.addKey(KeyCode.UP, new MoveAction(Direction.JUMP));     //NOPMD
         KeyMap.addKey(KeyCode.W, getKey(KeyCode.UP));
 
-        KeyMap.addKey(KeyCode.DOWN, new MoveAction(Direction.SLIDE)); //NOPMD
+        KeyMap.addKey(KeyCode.DOWN, new MoveAction(Direction.SLIDE));  //NOPMD
         KeyMap.addKey(KeyCode.S, getKey(KeyCode.DOWN));
 
-        KeyMap.addKey(KeyCode.LEFT, new MoveAction(Direction.LEFT)); //NOPMD
+        KeyMap.addKey(KeyCode.LEFT, new MoveAction(Direction.LEFT));   //NOPMD
         KeyMap.addKey(KeyCode.A, getKey(KeyCode.LEFT));
 
         KeyMap.addKey(KeyCode.RIGHT, new MoveAction(Direction.RIGHT)); //NOPMD
