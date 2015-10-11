@@ -12,7 +12,7 @@ public class ParserTest {
 
     /** Default folder to read savefiles from. */
     private static String fileFolder =
-            "src/main/resources/nl/tudelft/ti2206/group9/util/";
+            "src/test/resources/nl/tudelft/ti2206/group9/util/";
 
     @Test
     public void testParser() {

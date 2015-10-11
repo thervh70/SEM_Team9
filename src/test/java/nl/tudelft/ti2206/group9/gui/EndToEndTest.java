@@ -116,6 +116,7 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void outputEventLog() throws IOException {
+        ShaftEscape.LOGGER.writeToFile();
         final String log = new String(Files.readAllBytes(
                 Paths.get(Logger.OUTFILE)), StandardCharsets.UTF_8);
         System.out.println("\n== EVENT_LOG ==");     //NOPMD - Intended use of
