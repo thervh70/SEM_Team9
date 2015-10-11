@@ -71,7 +71,7 @@ public class TrackPart {
          * @param nodeType the type of the Node.
          * @param entityCenter the center of the Entity.
          */
-        public Node(final Class<? extends AbstractEntity> nodeType,
+        Node(final Class<? extends AbstractEntity> nodeType,
                 final Point3D entityCenter) {
             super();
             this.type = nodeType;

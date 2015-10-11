@@ -141,7 +141,7 @@ public interface GameObserver extends Observer {
          * @param s Specific case of the update.
          * @param optionalArgs Optional arguments of the update.
          */
-        public GameUpdate(final Category c, final Specific s,
+        GameUpdate(final Category c, final Specific s,
                 final Object... optionalArgs) {
             cat = c;
             spec = s;
