@@ -5,7 +5,7 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: SEMCheckstyleTest
+    Checkstyle-Configuration: SEMtest
     Description: none
 -->
 <module name="Checker">
@@ -20,6 +20,7 @@
     </module>
     <module name="JavadocType">
       <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
     <module name="JavadocVariable">
       <property name="severity" value="ignore"/>
@@ -96,8 +97,8 @@
   <module name="Translation"/>
   <module name="FileLength"/>
   <module name="FileTabCharacter">
-    <property name="severity" value="ignore"/>
-    <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    <property name="eachLine" value="true"/>
+    <property name="fileExtensions" value="java"/>
   </module>
   <module name="RegexpSingleline">
     <property name="format" value="\s+$"/>

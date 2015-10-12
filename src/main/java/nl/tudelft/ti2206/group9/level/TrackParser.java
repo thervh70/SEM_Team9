@@ -11,12 +11,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.ti2206.group9.entities.AbstractPickup;
-import nl.tudelft.ti2206.group9.entities.Coin;
-import nl.tudelft.ti2206.group9.entities.Fence;
-import nl.tudelft.ti2206.group9.entities.Log;
-import nl.tudelft.ti2206.group9.entities.Pillar;
 import nl.tudelft.ti2206.group9.level.TrackPart.Node;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPickup;
+import nl.tudelft.ti2206.group9.level.entity.Coin;
+import nl.tudelft.ti2206.group9.level.entity.Fence;
+import nl.tudelft.ti2206.group9.level.entity.Log;
+import nl.tudelft.ti2206.group9.level.entity.Pillar;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Point3D;
@@ -134,15 +134,15 @@ public class TrackParser {
                 Node entity;
                 switch (c) { //NOPMD - default case contains no break, duh.
                 case 'c': entity = new Node(Coin.class,
-                		new Point3D(i - 1, 1, j)); break;
+                        new Point3D(i - 1, 1, j)); break;
                 case 'l': entity = new Node(Log.class,
-                		new Point3D(i - 1, 1, j)); break;
+                        new Point3D(i - 1, 1, j)); break;
                 case 'p': entity = new Node(Pillar.class,
-                		new Point3D(i - 1, 1, j)); break;
+                        new Point3D(i - 1, 1, j)); break;
                 case 'P': entity = new Node(AbstractPickup.class,
-                		new Point3D(i - 1, 1, j)); break;
+                        new Point3D(i - 1, 1, j)); break;
                 case 'f': entity = new Node(Fence.class,
-                		new Point3D(i - 1, FENCE_CENTER_HEIGHT, j)); break;
+                        new Point3D(i - 1, FENCE_CENTER_HEIGHT, j)); break;
                 default : continue;
                 }
                 part.addEntity(entity);

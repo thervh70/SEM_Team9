@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.group9.level;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.ti2206.group9.entities.AbstractEntity;
+import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -62,35 +62,35 @@ public class TrackPart {
      * @author Maarten
      */
     static class Node {
-    	/** Type of the node. */
-    	private final Class<? extends AbstractEntity> type;
-    	/** Center of the Entity. */
-    	private final Point3D center;
+        /** Type of the node. */
+        private final Class<? extends AbstractEntity> type;
+        /** Center of the Entity. */
+        private final Point3D center;
 
-		/**
-		 * @param nodeType the type of the Node.
-		 * @param entityCenter the center of the Entity.
-		 */
-		public Node(final Class<? extends AbstractEntity> nodeType,
-				final Point3D entityCenter) {
-			super();
-			this.type = nodeType;
-			this.center = entityCenter;
-		}
+        /**
+         * @param nodeType the type of the Node.
+         * @param entityCenter the center of the Entity.
+         */
+        Node(final Class<? extends AbstractEntity> nodeType,
+                final Point3D entityCenter) {
+            super();
+            this.type = nodeType;
+            this.center = entityCenter;
+        }
 
-		/**
-		 * @return the type of the Node.
-		 */
-		public Class<? extends AbstractEntity> getType() {
-			return type;
-		}
+        /**
+         * @return the type of the Node.
+         */
+        public Class<? extends AbstractEntity> getType() {
+            return type;
+        }
 
-		/**
-		 * @return the center of the Entity.
-		 */
-		public Point3D getCenter() {
-			return center;
-		}
+        /**
+         * @return the center of the Entity.
+         */
+        public Point3D getCenter() {
+            return center;
+        }
     }
 
 }

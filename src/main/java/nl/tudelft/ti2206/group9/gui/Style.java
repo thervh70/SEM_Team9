@@ -1,5 +1,5 @@
-package nl.tudelft.ti2206.group9.gui;	// NOPMD - too many imports
-										// because don't want to use .*
+package nl.tudelft.ti2206.group9.gui;    // NOPMD - too many imports
+// because don't want to use .*
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
@@ -27,12 +27,12 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.skins.AndySkin;
-import nl.tudelft.ti2206.group9.gui.skins.BoySkin;
-import nl.tudelft.ti2206.group9.gui.skins.CaptainSkin;
-import nl.tudelft.ti2206.group9.gui.skins.IronManSkin;
-import nl.tudelft.ti2206.group9.gui.skins.NoobSkin;
-import nl.tudelft.ti2206.group9.gui.skins.PlankSkin;
+import nl.tudelft.ti2206.group9.gui.skin.AndySkin;
+import nl.tudelft.ti2206.group9.gui.skin.BoySkin;
+import nl.tudelft.ti2206.group9.gui.skin.CaptainSkin;
+import nl.tudelft.ti2206.group9.gui.skin.IronManSkin;
+import nl.tudelft.ti2206.group9.gui.skin.NoobSkin;
+import nl.tudelft.ti2206.group9.gui.skin.PlankSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
@@ -91,9 +91,6 @@ public final class Style {
     /** Size of a button while hovering (relative to 1). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
 
-    /** Standard path for textures.*/
-    public static final String PATH = "nl/tudelft/ti2206/group9/gui/";
-
     /** Preferred width of buttons. */
     private static final int BUTTON_WIDTH = 120;
     /** Popup globalFont size. */
@@ -130,8 +127,9 @@ public final class Style {
      * @return The phongmaterial of this texture
      */
     public static PhongMaterial loadPlayerTexture(final String textureName) {
+        final String path = "nl/tudelft/ti2206/group9/gui/skin/";
         final Image playerTexture = new Image(
-                PATH + "texture_" + textureName + ".png");
+                path + "texture_" + textureName + ".png");
         final PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(playerTexture);
         return material;
@@ -228,7 +226,8 @@ public final class Style {
      * @param p The pane.
      */
     public static void setBackground(final String src, final Pane p) {
-        final Image image = new Image("nl/tudelft/ti2206/group9/gui/" + src);
+        final Image image = new Image("nl/tudelft/ti2206/group9/gui/scene/"
+                + src);
         final BackgroundSize backgroundSize = new BackgroundSize(
                 ShaftEscape.WIDTH, ShaftEscape.HEIGHT,
                 true, true, true, false);
