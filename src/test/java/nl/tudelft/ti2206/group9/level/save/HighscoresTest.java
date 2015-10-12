@@ -14,8 +14,8 @@ public class HighscoresTest {
 
     @Before
     public void setUp() throws InterruptedException {
-        Highscores.login("mpsijm", "ff6d54", () -> { },
-                () -> fail("Could not login with mpsijm!"));
+        Highscores.login("TravisCI", "dce59e", () -> { },
+                () -> fail("Could not login with TravisCI!"));
     }
 
     @Test
