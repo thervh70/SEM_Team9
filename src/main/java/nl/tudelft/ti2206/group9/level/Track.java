@@ -77,10 +77,12 @@ public class Track {
     @SuppressWarnings("restriction")
     public final void moveTrack(final double dist) {
         synchronized (this) {
-            for (final AbstractEntity entity : entities) {
-                if (!(entity instanceof Player)) {
-                    moveEntity(entity, -dist);
+            for (int i = 0; i < entities.size(); i++) {
+                if (i == player) {
+                    continue;
                 }
+                AbstractEntity entity = entities.get(i);
+                moveEntity(entity, -dist);
             }
             int index = 0;
             if (index == player) {
