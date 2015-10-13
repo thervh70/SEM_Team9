@@ -129,7 +129,7 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void letPlayerSurvive() {
-        PowerupInvulnerable.cheat(true);
+        PowerupInvulnerable.setCheat(true);
     }
 
     private void goThroughSettings() {
