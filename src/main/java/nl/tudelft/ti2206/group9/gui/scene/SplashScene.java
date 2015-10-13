@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.audio.AudioPlayer;
+import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Input;
@@ -24,8 +24,8 @@ public final class SplashScene extends AbstractMenuScene {
     private static final int TRANSITION_TIME = 750;
 
     /** The AudioPlayer to be used for a button sound effect. */
-    private static AudioPlayer apButton = new AudioPlayer("src/main/"
-            + "resources/nl/tudelft/ti2206/group9/audio/button.wav");
+    private static SoundEffectPlayer apButton = new SoundEffectPlayer(
+            "src/main/resources/nl/tudelft/ti2206/group9/audio/button.wav");
 
     /**
      * Create Splash label and set AnyKey event handlers.
@@ -66,7 +66,7 @@ public final class SplashScene extends AbstractMenuScene {
      */
     private void addMouseClick() {
         setOnMouseClicked(me -> {
-            apButton.play(false);
+            apButton.play();
             OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
                     me.getButton());
             OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
@@ -79,7 +79,7 @@ public final class SplashScene extends AbstractMenuScene {
      */
     private void addKeyPressed() {
         setOnKeyPressed(ke -> {
-            apButton.play(false);
+            apButton.play();
             OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
                     ke.getCode());
             OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
@@ -105,7 +105,7 @@ public final class SplashScene extends AbstractMenuScene {
      * Every Button has an AudioPlayer for a sound effect.
      * @return the button AudioPlayer.
      */
-    public static AudioPlayer getButtonAudioPlayer() {
+    public static SoundEffectPlayer getButtonAudioPlayer() {
         return apButton;
     }
 

@@ -1,20 +1,20 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import nl.tudelft.ti2206.group9.ShaftEscape;
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import nl.tudelft.ti2206.group9.audio.AudioPlayer;
+import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * A Main Menu with different options/buttons like a options menu, start button
@@ -47,8 +47,8 @@ public final class MainMenuScene extends AbstractMenuScene {
     /** Font size for input. */
     private static final int FONT_SIZE = 12;
     /** The AudioPlayer to be used for background music. */
-    private static AudioPlayer apMainMenu = new AudioPlayer("src/main/"
-            + "resources/nl/tudelft/ti2206/group9/audio/intro.wav");
+    private static SoundtrackPlayer apMainMenu = new SoundtrackPlayer(
+    		"src/main/resources/nl/tudelft/ti2206/group9/audio/intro.wav");
 
     /**
      * Create Start, Settings and Exit buttons.
@@ -56,7 +56,7 @@ public final class MainMenuScene extends AbstractMenuScene {
      */
     @Override
     public Node[] createContent() {
-        apMainMenu.play(true);
+    	apMainMenu.play();
         final Button startButton = createButton("START!", 4, 22);
         startButton.disableProperty().bind(
                 Bindings.isEmpty(INPUT.textProperty()));
@@ -94,7 +94,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     private void setButtonFunction(final Button button,
             final BType type) {
         button.setOnAction(event -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            SplashScene.getButtonAudioPlayer().play();
             if (type == BType.EXIT) {
                 apMainMenu.stop();
                 OBSERVABLE.notify(Category.MENU, Menu.EXIT);
@@ -178,7 +178,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     /** Every MainMenuScene has an AudioPlayer for the soundtrack.
      * @return the apMainMenu AudioPlayer.
      */
-    public static AudioPlayer getAudioPlayer() {
+    public static SoundtrackPlayer getAudioPlayer() {
         return apMainMenu;
     }
 }

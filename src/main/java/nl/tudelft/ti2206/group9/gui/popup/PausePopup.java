@@ -28,17 +28,18 @@ public class PausePopup extends AbstractInfoPopup {
         super(new Button("Resume"), new Button("Return to Main Menu"));
 
         getLeftButton().setOnMouseClicked(mouseEvent -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            SplashScene.getButtonAudioPlayer().play();
             hide();
             resumeEvent.handle(mouseEvent);
+            GameScene.getSoundtrackPlayer().play();
         });
 
         getRightButton().setOnMouseClicked(mouseEvent -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            SplashScene.getButtonAudioPlayer().play();
             hide();
             menuEvent.handle(mouseEvent);
-            GameScene.getAudioPlayer().resetSpeed();
-            GameScene.getAudioPlayer().stop();
+            GameScene.getSoundtrackPlayer().resetSpeed();
+            GameScene.getSoundtrackPlayer().stop();
         });
     }
 

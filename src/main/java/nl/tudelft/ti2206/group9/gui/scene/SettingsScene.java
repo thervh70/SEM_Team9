@@ -64,7 +64,7 @@ public final class SettingsScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
             final BType type) {
         button.setOnAction(event -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            SplashScene.getButtonAudioPlayer().play();
             if (type == BType.SETTINGS_BACK) {
                 OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
                 ShaftEscape.setScene(new MainMenuScene());
