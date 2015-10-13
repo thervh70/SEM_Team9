@@ -12,30 +12,29 @@ public abstract class AbstractAudioPlayer {
      * Gets the audio file and prepares it for streaming.
      * @param source leads to the audio file.
      */
-    protected abstract void initializeTune(final String source);
+    protected abstract void initializeAudio(final String source);
 
     /**
-     * Starts the initialized tune.
-     * If the AudioPlayer has to be checked whether it is running,
-     * it is checked. If not, then it's not.
+     * Starts playing the initialized audio.
+     * The sound should be enabled for this.
      */
     public abstract void play();
 
     /**
-     * Stops the initialized soundtrack if
-     * the AudioPlayer is actually running and if the sound is enabled.
+     * Stops the initialized audio.
+     * The sound should be enabled for this.
      */
     public abstract void stop();
 
     /**
-     * Checks if the current audioClip is running.
+     * Checks if the current AudioPlayer is running.
      * @return boolean true if running, false if not.
      */
     public abstract boolean isRunning();
 
     /**
      * Returns the path of the AudioPlayer.
-     * @return path leads to the soundtrack.
+     * @return path leads to the audio.
      */
     public abstract String getPath();
 
