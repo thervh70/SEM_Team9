@@ -20,7 +20,7 @@ public class Player extends AbstractEntity {
     /** Width of the Player's bounding box. */
     public static final double WIDTH = 0.8;
     /** Depth of the Players bounding box. */
-    public static final double DEPTH = 0.1;
+    public static final double DEPTH = 0.001;
 
     /** Gravity. This is added to the vertical speed
      * of the Player each tick.
