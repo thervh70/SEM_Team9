@@ -62,11 +62,12 @@ public class GroupLightRenderer extends AbstractGroupRenderer {
             }
 
             int index = 0;
+            final int renderspace = 20;
             while (true) {
                 if (index >= this.getChildren().size()) {
                     break;
                 } else if (this.getChildren().get(index).getTranslateZ()
-                        > GameScene.CAMERA_TRANS.getZ()) {
+                        + renderspace > GameScene.CAMERA_TRANS.getZ()) {
                     break;
                 }
 

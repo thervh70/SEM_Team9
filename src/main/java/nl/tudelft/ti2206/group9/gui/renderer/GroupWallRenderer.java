@@ -28,6 +28,7 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
     private void renderWall(final int zIndex) {
         final int xOffset = 3;
         final int yOffset = 10;
+        final int zOffset = 4;
         final double correction = 1.5;
         for (int h = 0; h < 2; h++) {
             for (int i = zIndex; i < zIndex + Track.LENGTH; i++) {
@@ -35,7 +36,7 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
                     final Box wallPiece = new Box(0, 1, 1);
                     wallPiece.setTranslateX(h * xOffset - correction);
                     wallPiece.setTranslateY(j - yOffset);
-                    wallPiece.setTranslateZ(i);
+                    wallPiece.setTranslateZ(i - zOffset);
                     wallPiece.setMaterial(Style.BRICK);
                     wallPiece.setCache(true);
                     wallPiece.setCacheHint(CacheHint.SPEED);
