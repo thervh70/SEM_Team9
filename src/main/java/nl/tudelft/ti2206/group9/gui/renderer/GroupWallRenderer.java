@@ -1,9 +1,11 @@
 package nl.tudelft.ti2206.group9.gui.renderer;
 
 import javafx.scene.CacheHint;
-import javafx.scene.paint.PhongMaterial;
+import javafx.scene.Node;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.gui.scene.GameScene;
+import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.Track;
 
 /**
@@ -16,16 +18,25 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
     /** Default constructor. */
     public GroupWallRenderer() {
         super();
-        final int offset = 3;
+        renderWall(0);
+    }
+
+    /**
+     * Method to render the walls.
+     * @param zIndex Depth of the render.
+     */
+    private void renderWall(final int zIndex) {
+        final int xOffset = 3;
+        final int yOffset = 10;
         final double correction = 1.5;
-        for (int h = 0; h < 2; h++) { //two walls
-            for (int i = 0; i < (int) Track.LENGTH; i++) {    // 100 units long
-                for (int j = 0; j < Track.WIDTH; j++) {       // height of walls
+        for (int h = 0; h < 2; h++) {
+            for (int i = zIndex; i < zIndex + Track.LENGTH; i++) {
+                for (int j = 0; j < yOffset + 1; j++) {
                     final Box wallPiece = new Box(0, 1, 1);
-                    wallPiece.setTranslateX(h * offset - correction);
-                    wallPiece.setTranslateY(j - offset);
+                    wallPiece.setTranslateX(h * xOffset - correction);
+                    wallPiece.setTranslateY(j - yOffset);
                     wallPiece.setTranslateZ(i);
-                    wallPiece.setMaterial(randomMaterial());
+                    wallPiece.setMaterial(Style.BRICK);
                     wallPiece.setCache(true);
                     wallPiece.setCacheHint(CacheHint.SPEED);
                     getChildren().add(wallPiece);
@@ -34,25 +45,33 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
         }
     }
 
-    /**
-     * Method to return a random material for the walls.
-     * @return The material for the wallPiece.
-     */
-    private static PhongMaterial randomMaterial() {
-        final double random = Math.random();
-        final double alpha = 0.5;
-        final double beta = 0.75;
+    /** Does nothing yet. */
+    public void update() {
+        if (InternalTicker.isRunning()) {
+            for (final Node node : this.getChildren()) {
+                node.setTranslateZ(node.getTranslateZ()
+                        - Track.getUnitsPerTick());
+            }
 
-        if (random < alpha) {
-            return Style.BRICK;
-        } else if (random > alpha && random < beta) {
-            return Style.CRACK;
-        } else {
-            return Style.MOSS;
+            double wallDepth = this.getChildren().get(
+                    this.getChildren().size() - 1).getTranslateZ();
+            if (wallDepth < Track.LENGTH) {
+                renderWall((int) wallDepth);
+            }
+
+            int index = 0;
+            while (true) {
+                if (index >= this.getChildren().size()) {
+                    break;
+                } else if (this.getChildren().get(index).getTranslateZ()
+                        > GameScene.CAMERA_TRANS.getZ()) {
+                    break;
+                }
+
+                this.getChildren().remove(index);
+                index++;
+            }
         }
     }
-
-    /** Does nothing yet. */
-    public void update() { } //NOPMD - nothing should be updated yet
 
 }

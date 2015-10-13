@@ -1,14 +1,6 @@
 package nl.tudelft.ti2206.group9.level;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
-import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
-import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
-import nl.tudelft.ti2206.group9.util.Point3D;
 import nl.tudelft.ti2206.group9.level.TrackPart.Node;
 import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
 import nl.tudelft.ti2206.group9.level.entity.AbstractPickup;
@@ -18,6 +10,14 @@ import nl.tudelft.ti2206.group9.level.entity.Log;
 import nl.tudelft.ti2206.group9.level.entity.Pillar;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
+import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
+import nl.tudelft.ti2206.group9.util.Point3D;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -30,7 +30,7 @@ public class Track {
     /** Width of the track (amount of lanes). */
     public static final int WIDTH = 3;
     /** Length of the track. */
-    public static final double LENGTH = 100;
+    public static final double LENGTH = 75;
 
     /** Amount of units the track should move per tick, initially. */
     static final double UNITS_PER_TICK_BASE = 0.4;
