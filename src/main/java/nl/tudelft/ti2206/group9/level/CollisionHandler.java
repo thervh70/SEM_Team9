@@ -14,7 +14,7 @@ import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
  * Add all the collision handlers to a CollisionMap.
  * @author Mathias
  */
-public class CrashMap {
+public class CollisionHandler {
 
     /** The CollisionMap were the collions will be stored. */
     private CollisionMap collisions = defaultCollisions();

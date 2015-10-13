@@ -40,7 +40,7 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
 
     /**
      * Call this method to check if this entity is colliding to another one.
-     * The method CrashMap.collide is called when entities
+     * The method CollisionHandler.collide is called when entities
      * collide.
      * @param other AbstractEntity to check collision with.
      */
