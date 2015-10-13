@@ -65,7 +65,7 @@ public class CrashMap {
      * This method is only used for testing purposes.
      * @param collisionMap the new CollisionMap
      */
-    public void setCollisions(CollisionMap collisionMap) {
+    public void setCollisions(final CollisionMap collisionMap) {
         collisions = collisionMap;
     }
 

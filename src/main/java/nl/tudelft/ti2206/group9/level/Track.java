@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
-import nl.tudelft.ti2206.group9.util.CollisionMap;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
 import nl.tudelft.ti2206.group9.util.Point3D;
@@ -277,7 +276,7 @@ public class Track {
      * Set the collision.
      * @param crashMap the new CrashMap.
      */
-    public void setCollisions(CrashMap crashMap) {
+    public void setCollisions(final CrashMap crashMap) {
         collisions = crashMap;
     }
 }
