@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
+import nl.tudelft.ti2206.group9.util.CollisionMap;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
 import nl.tudelft.ti2206.group9.util.Point3D;
@@ -48,6 +49,8 @@ public class Track {
     private Random random;
     /** List of all TrackParts the Track can consist of. */
     private List<TrackPart> trackParts;
+    /** CollisionMap that stores all collisions. */
+    private CrashMap collisions = new CrashMap();
 
     /** Length of the track that is already created. */
     private double trackLeft;
@@ -262,4 +265,19 @@ public class Track {
         return list.get((int) (Math.random() * list.size()));
     }
 
+    /**
+     * Get the CrashMap with all the collisions.
+     * @return CrashMap that contains all collisions and their handlers.
+     */
+    public CrashMap getCollisions() {
+        return collisions;
+    }
+
+    /**
+     * Set the collision.
+     * @param crashMap the new CrashMap.
+     */
+    public void setCollisions(CrashMap crashMap) {
+        collisions = crashMap;
+    }
 }
