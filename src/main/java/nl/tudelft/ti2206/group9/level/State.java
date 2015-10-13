@@ -1,9 +1,10 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
-import nl.tudelft.ti2206.group9.gui.Style;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
+import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 
 /**
  * This utility class stores the State of the game,
@@ -63,6 +64,7 @@ public final class State {
         setScore(0);
         Track.setDistance(0);
         track.getPlayer().respawn();
+        PowerupInvulnerable.resetCounter();
     }
 
     /**
