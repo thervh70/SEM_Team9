@@ -34,9 +34,9 @@ public class ShaftEscape extends Application {
     public static final Object TICKER_LOCK = new Object();
     /** GameObservable that is used to log actions in the game. */
     public static final GameObservable OBSERVABLE = new GameObservable();
-
     /** The logger that logs all events in the game. */
-    private static final Logger LOGGER = new Logger();
+    public static final Logger LOGGER = new Logger();
+
     /** Primary stage where the Scenes are shown in. */
     private static Stage stage;
 

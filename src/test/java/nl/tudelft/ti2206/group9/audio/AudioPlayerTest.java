@@ -28,7 +28,7 @@ public class AudioPlayerTest {
         final String testPath = "src/main/resources/"
                 + "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
         final AudioPlayer test = new AudioPlayer(testPath);
-        final String testDifferentPath = "src/main/resources/"
+        final String testDifferentPath = "src/test/resources/"
                 + "nl/tudelft/ti2206/group9/audio/test.aiff";
         test.setPath(testDifferentPath);
         assertTrue(testDifferentPath.equals(test.getPath()));
