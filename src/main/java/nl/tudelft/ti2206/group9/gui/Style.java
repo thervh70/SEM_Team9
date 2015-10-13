@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -27,12 +29,7 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.skin.AndySkin;
-import nl.tudelft.ti2206.group9.gui.skin.BoySkin;
-import nl.tudelft.ti2206.group9.gui.skin.CaptainSkin;
-import nl.tudelft.ti2206.group9.gui.skin.IronManSkin;
-import nl.tudelft.ti2206.group9.gui.skin.NoobSkin;
-import nl.tudelft.ti2206.group9.gui.skin.PlankSkin;
+import nl.tudelft.ti2206.group9.gui.skin.*;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
@@ -145,6 +142,22 @@ public final class Style {
         noob = new NoobSkin();
         boy = new BoySkin();
         plank = new PlankSkin();
+    }
+
+
+    /**
+     * Method that creates all the skins.
+     */
+    public static ObservableList<Skin> loadSkinsToList() {
+        ObservableList<Skin> list = FXCollections.observableArrayList();
+        ironMan = new IronManSkin();
+        captain = new CaptainSkin();
+        andy = new AndySkin();
+        noob = new NoobSkin();
+        boy = new BoySkin();
+        plank = new PlankSkin();
+        list.addAll(ironMan, captain, andy, noob, boy, plank);
+        return list;
     }
 
     /**

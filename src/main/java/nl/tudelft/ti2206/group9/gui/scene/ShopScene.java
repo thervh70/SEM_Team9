@@ -2,18 +2,19 @@ package nl.tudelft.ti2206.group9.gui.scene;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
@@ -35,58 +36,85 @@ public class ShopScene extends AbstractMenuScene {
     /** Row the list is put on. */
     private static final int LIST_ROW = 16;
 
-    /** Creating a list. */
-    private static ObservableList<Skin> items =
-            FXCollections.observableArrayList();
-    /** Creating the listview used to display the list. */
-    private static TableView<Skin> itemTable =
-            createSkinTable(1, LIST_ROW);
+    private static HBox itemBox = new HBox(10);
+
+    final static Label amountLabel = createLabel("", 4, 6);
+
 
     @Override
     public Node[] createContent() {
-        setUpTable();
 
-        final Button backButton = createButton("BACK", 0, 24);
-        final Label coinsLabel = createLabel("COINS:", 2, 24);
-        final Label amountLabel = createLabel(Integer
-                .toString(State.getCoins()), 4, 24);
+        ObservableList<Skin> items = Style.loadSkinsToList();
+
+        final Button backButton = createButton("BACK", 0, 6);
+        final Label coinsLabel = createLabel("COINS: ", 2, 6);
+
+        amountLabel.setText(Integer.toString(State.getCoins()));
+
 
         setButtonFunction(backButton, BType.SHOP_BACK);
-        return new Node[]{backButton, coinsLabel, amountLabel, itemTable};
+
+        final ScrollPane scrollPane = new ScrollPane();
+
+
+        scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: transparent");
+
+        itemBox.setAlignment(Pos.CENTER);
+
+        for (Skin s : items) {
+            itemBox.getChildren().add(createCarousel(s));
+        }
+
+        scrollPane.setContent(itemBox);
+
+        GridPane.setColumnSpan(scrollPane, 5);
+        GridPane.setConstraints(scrollPane, 0, 5);
+
+        return new Node[]{scrollPane, backButton, coinsLabel, amountLabel};
     }
 
     /**
-     * Method to fill the table with skins.
+     * Method to fill the shop with skins.
      */
-    private static void setUpTable() {
-        items.clear();
-        itemTable.getColumns().clear();
-        itemTable.setItems(items);
-        itemTable.setTooltip(new Tooltip("Double click to change appearance"));
-        items.addAll(Style.getAndy(), Style.getBoy(),
-                Style.getCaptain(), Style.getIronMan(),
-                Style.getNoob(), Style.getPlank());
+    private static VBox createCarousel(Skin s) {
+        Label price = createLabel("Price", 0, 0);
+        Label name = createLabel("Name", 0, 0);
 
-        final TableColumn<Skin, String> name =
-                new TableColumn<>("Name");
-        name.setCellValueFactory(new PropertyValueFactory<>("skinName"));
-        name.setResizable(false);
+        Button buy = createButton("BUY", 0, 0);
 
-        final TableColumn<Skin, Integer> price =
-                new TableColumn<>("Price");
-        price.setCellValueFactory(new PropertyValueFactory<>("skinPrice"));
-        name.setResizable(false);
-        itemTable.getColumns().add(name);
-        itemTable.getColumns().add(price);
-        itemTable.setRowFactory(e -> {
-            final TableRow<Skin> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && !row.isEmpty()) {
-                    State.setSkin(row.getItem());
+        if (s.getSkinUnlocked()) {
+            buy.setText("EQUIP");
+        }
+
+        buy.setOnAction((event -> {
+            if(s.getSkinUnlocked()) {
+                State.setSkin(s);
+            } else {
+                if(State.getCoins() >= s.getSkinPrice() ) {
+                    State.setCoins(State.getCoins() - s.getSkinPrice());
+                    s.buySkin();
+                    amountLabel.setText(Integer.toString(State.getCoins()));
+                    buy.setText("EQUIP");
                 }
-            });
-            return row;
-        });
+            }
+
+        }));
+
+        Image image;
+        ImageView imgview = new ImageView();
+
+        VBox vbox = new VBox(10);
+        vbox.setAlignment(Pos.CENTER);
+
+            price.setText(Integer.toString(s.getSkinPrice()));
+            name.setText(s.getSkinName());
+            image = s.getSkinMaterial().getDiffuseMap();
+            imgview.setImage(image);
+
+            vbox.getChildren().addAll(imgview, name, price, buy);
+            vbox.setStyle("-fx-background-color: transparent");
+        return vbox;
     }
 
     /**

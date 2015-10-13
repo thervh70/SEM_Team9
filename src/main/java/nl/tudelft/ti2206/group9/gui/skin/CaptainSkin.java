@@ -9,6 +9,6 @@ public class CaptainSkin extends Skin {
      * Constructor for a Captain skin.
      */
     public CaptainSkin() {
-        super(1, "Captain", "captain");
+        super(1, "Captain", "captain", false);
     }
 }

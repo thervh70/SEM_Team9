@@ -10,6 +10,6 @@ public class AndySkin extends Skin {
      *
      */
     public AndySkin() {
-        super(1, "Andy", "andy");
+        super(1, "Andy", "andy", false);
     }
 }

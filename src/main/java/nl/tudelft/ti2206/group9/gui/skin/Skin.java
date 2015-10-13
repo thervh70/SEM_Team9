@@ -18,6 +18,9 @@ public class Skin {
     /** The real material used by this skin. */
     private final PhongMaterial skinMaterial;
 
+    /** Boolean value for if skin is unlocked. */
+    private boolean skinUnlocked = false;
+
     /**
      * Constructor for the skin.
      * It calls the Style.loadPlayerTexture
@@ -28,10 +31,11 @@ public class Skin {
      * @param textureName Name of texture.
      */
     public Skin(final int price,
-                final String name, final String textureName) {
+                final String name, final String textureName, boolean unlocked) {
         skinPrice = price;
         skinName = name;
         skinMaterial = Style.loadPlayerTexture(textureName);
+        skinUnlocked = unlocked;
     }
 
     /**
@@ -56,5 +60,20 @@ public class Skin {
      */
     public PhongMaterial getSkinMaterial() {
         return skinMaterial;
+    }
+
+    /**
+     * Getter for skinUnlocked.
+     * @return boolean
+     */
+    public boolean getSkinUnlocked() {
+        return skinUnlocked;
+    }
+
+    /**
+     * Buy method.
+     */
+    public void buySkin() {
+        skinUnlocked = !skinUnlocked;
     }
 }
