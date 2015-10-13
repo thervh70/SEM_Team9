@@ -47,8 +47,10 @@ public class GroupLightRenderer extends AbstractGroupRenderer {
         }
     }
 
-    /** Needed for moving of lights. */
-    public void update() { //NOPMD - not implemented yet
+    /**
+     * Updates the position, adds and deletes lights from the scene.
+     */
+    public void update() {
         if (InternalTicker.isRunning()) {
             for (final Node node : this.getChildren()) {
                 node.setTranslateZ(node.getTranslateZ()

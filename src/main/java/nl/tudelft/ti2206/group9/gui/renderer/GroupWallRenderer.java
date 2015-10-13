@@ -46,7 +46,9 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
         }
     }
 
-    /** Does nothing yet. */
+    /**
+     * This method is responsible for updating, adding and removing wall pieces.
+     */
     public void update() {
         if (InternalTicker.isRunning()) {
             for (final Node node : this.getChildren()) {

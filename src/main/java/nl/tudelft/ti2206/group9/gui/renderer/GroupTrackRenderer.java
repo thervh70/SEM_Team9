@@ -45,7 +45,9 @@ public class GroupTrackRenderer extends AbstractGroupRenderer {
         }
     }
 
-    /** Does nothing yet. */
+    /**
+     * This method is responsible for moving, deleting and adding track pieces.
+     */
     public void update() {
         if (InternalTicker.isRunning()) {
             for (final Node node : this.getChildren()) {
