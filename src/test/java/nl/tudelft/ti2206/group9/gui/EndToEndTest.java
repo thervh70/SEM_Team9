@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
+import nl.tudelft.ti2206.group9.gui.scene.ShopScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.entity.Player;
@@ -50,6 +52,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final long COUNTDOWN = 3500;
     /** Sleep factor playerDies. */
     private static final long SLEEP_FACTOR = 2;
+    /** Amount of coins for e2e. */
+    private static final int COINS = 9999;
 
     /** Delta for double equality. */
     private static final double DELTA = 0.000001;
@@ -67,8 +71,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SETTINGS_BACK = 0;
     private static final int SETTINGS_SOUND = 1;
 
-    private static final int SHOP_BACK = 0;
-    private static final int SHOP_LIST = 3;
+    private static final int SHOP_BACK = 1;
+//    private static final int SHOP_BUY_SKIN = 5;
 
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
@@ -143,11 +147,12 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void goThroughShop() {
+        State.setCoins(COINS);
         mainMenu(MAIN_SHOP);
-        assertEquals(State.getSkin(), Style.getNoob());
-        shopScreen(SHOP_LIST);
-        shopScreen(SHOP_LIST);
-        assertNotEquals(State.getSkin(), Style.getNoob());
+//        assertEquals(State.getSkin(), Style.getNoob());
+//        shopScreen(SHOP_BUY_SKIN);
+//        shopScreen(SHOP_BUY_SKIN);
+//        assertNotEquals(State.getSkin(), Style.getNoob());
         shopScreen(SHOP_BACK);
     }
 
@@ -253,9 +258,16 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void shopScreen(final int buttonNo) {
+        //Make sure player has enough coins
         ObservableList<Node> buttons;
         buttons = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
+
+//        ScrollPane pane = (ScrollPane) buttons.get(0);
+//        HBox hbox = (HBox) pane.getContent();
+//        VBox vbox = (VBox) hbox.getChildren().get(0);
+//        buttons.add(vbox.getChildren().get(3));
+
         clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
         sleep(SHORT);
     }

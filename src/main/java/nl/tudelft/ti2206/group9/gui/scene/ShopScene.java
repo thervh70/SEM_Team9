@@ -15,6 +15,7 @@ import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.entity.Player;
+import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
@@ -36,51 +37,55 @@ public class ShopScene extends AbstractMenuScene {
     /** Row the list is put on. */
     private static final int LIST_ROW = 16;
 
+    /** Label for displaying current skin. */
+    private static Label currentSkin;
+
+    /** Box to contain all item vboxes. */
     private static HBox itemBox = new HBox(10);
 
-    final static Label amountLabel = createLabel("", 4, 6);
+    /** Label with amount of coins. */
+    private static Label amountLabel = createLabel("", 4, 6);
 
 
     @Override
     public Node[] createContent() {
-
         ObservableList<Skin> items = Style.loadSkinsToList();
 
+        currentSkin = createLabel("CURRENT SKIN: " + State.getSkin().getSkinName(), 1, 5);
+        currentSkin.setMinWidth(200);
         final Button backButton = createButton("BACK", 0, 6);
         final Label coinsLabel = createLabel("COINS: ", 2, 6);
 
         amountLabel.setText(Integer.toString(State.getCoins()));
-
-
         setButtonFunction(backButton, BType.SHOP_BACK);
 
         final ScrollPane scrollPane = new ScrollPane();
-
+        scrollPane.setStyle("-fx-focus-color: transparent");
 
         scrollPane.setFitToHeight(true);
-        scrollPane.setStyle("-fx-background-color: transparent");
-
         itemBox.setAlignment(Pos.CENTER);
 
-        for (Skin s : items) {
-            itemBox.getChildren().add(createCarousel(s));
+        if (itemBox.getChildren().isEmpty()) {
+            for (Skin s : items) {
+                itemBox.getChildren().add(createCarousel(s));
+            }
         }
-
         scrollPane.setContent(itemBox);
 
         GridPane.setColumnSpan(scrollPane, 5);
-        GridPane.setConstraints(scrollPane, 0, 5);
+        GridPane.setColumnSpan(currentSkin, 5);
+        GridPane.setConstraints(scrollPane, 0, 4);
 
-        return new Node[]{scrollPane, backButton, coinsLabel, amountLabel};
+        return new Node[]{scrollPane, backButton, coinsLabel, amountLabel, currentSkin};
     }
 
     /**
      * Method to fill the shop with skins.
+     * @param s Skin.
      */
-    private static VBox createCarousel(Skin s) {
+    private static VBox createCarousel(final Skin s) {
         Label price = createLabel("Price", 0, 0);
         Label name = createLabel("Name", 0, 0);
-
         Button buy = createButton("BUY", 0, 0);
 
         if (s.getSkinUnlocked()) {
@@ -88,17 +93,18 @@ public class ShopScene extends AbstractMenuScene {
         }
 
         buy.setOnAction((event -> {
-            if(s.getSkinUnlocked()) {
+            if (s.getSkinUnlocked()) {
                 State.setSkin(s);
+                currentSkin.setText("CURRENT SKIN: " + State.getSkin().getSkinName());
             } else {
-                if(State.getCoins() >= s.getSkinPrice() ) {
+                if (State.getCoins() >= s.getSkinPrice() ) {
                     State.setCoins(State.getCoins() - s.getSkinPrice());
                     s.buySkin();
                     amountLabel.setText(Integer.toString(State.getCoins()));
                     buy.setText("EQUIP");
                 }
             }
-
+            SaveGame.saveGame();
         }));
 
         Image image;
@@ -113,7 +119,6 @@ public class ShopScene extends AbstractMenuScene {
             imgview.setImage(image);
 
             vbox.getChildren().addAll(imgview, name, price, buy);
-            vbox.setStyle("-fx-background-color: transparent");
         return vbox;
     }
 
