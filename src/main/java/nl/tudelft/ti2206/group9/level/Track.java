@@ -51,7 +51,7 @@ public class Track {
     /** List of all TrackParts the Track can consist of. */
     private List<TrackPart> trackParts;
     /** CollisionMap that stores all collisions. */
-    private CrashMap collisions = new CrashMap();
+    private CollisionHandler collisions = new CollisionHandler();
     /** Map that contains all createEntityCommands. */
     private static Map<Class<? extends AbstractEntity>, CreateEntityCommand>
             createEntityMap = new ConcurrentHashMap<>();
@@ -101,8 +101,7 @@ public class Track {
                 if (i == player) {
                     continue;
                 }
-                AbstractEntity entity = entities.get(i);
-                moveEntity(entity, -dist);
+                moveEntity(entities.get(i), -dist);
             }
             int index = 0;
             if (index == player) {
@@ -262,19 +261,19 @@ public class Track {
     }
 
     /**
-     * Get the CrashMap with all the collisions.
-     * @return CrashMap that contains all collisions and their handlers.
+     * Get the CollisionHandler with all the collisions.
+     * @return CollisionHandler that contains all collisions and their handlers.
      */
-    public CrashMap getCollisions() {
+    public CollisionHandler getCollisions() {
         return collisions;
     }
 
     /**
      * Set the collision.
-     * @param crashMap the new CrashMap.
+     * @param collisionHandler the new CollisionHandler.
      */
-    public void setCollisions(final CrashMap crashMap) {
-        collisions = crashMap;
+    public void setCollisions(final CollisionHandler collisionHandler) {
+        collisions = collisionHandler;
     }
 
     /**

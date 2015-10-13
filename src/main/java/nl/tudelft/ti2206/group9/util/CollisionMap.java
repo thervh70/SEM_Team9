@@ -81,9 +81,8 @@ public class CollisionMap {
                     new HashMap<>());
         }
 
-        Map<Class<? extends AbstractEntity>, CollisionHandler<?, ?>
-                > map = handlers
-                .get(collider);
+        final Map<Class<? extends AbstractEntity>, CollisionHandler<?, ?>
+                > map = handlers.get(collider);
         map.put(collidee, handler);
     }
 
@@ -98,23 +97,22 @@ public class CollisionMap {
      */
     public <C1 extends AbstractEntity, C2 extends AbstractEntity> void
     collide(final C1 collider, final C2 collidee) {
-        Class<? extends AbstractEntity> colliderKey
+        final Class<? extends AbstractEntity> colliderKey
                 = getMostSpecificClass(handlers, collider.getClass());
         if (colliderKey == null) {
             return;
         }
 
-        Map<Class<? extends AbstractEntity>, CollisionHandler<?, ?>> map
+        final Map<Class<? extends AbstractEntity>, CollisionHandler<?, ?>> map
                 = handlers.get(colliderKey);
-        Class<? extends AbstractEntity> collideeKey = getMostSpecificClass(map,
-                collidee.getClass());
+        final Class<? extends AbstractEntity> collideeKey
+                = getMostSpecificClass(map, collidee.getClass());
         if (collideeKey == null) {
             return;
         }
 
-        CollisionHandler<C1, C2> collisionHandler
-                = (CollisionHandler<C1, C2>) map
-                .get(collideeKey);
+        final CollisionHandler<C1, C2> collisionHandler
+                = (CollisionHandler<C1, C2>) map.get(collideeKey);
         if (collisionHandler == null) {
             return;
         }
@@ -133,9 +131,10 @@ public class CollisionMap {
     private Class<? extends AbstractEntity> getMostSpecificClass(
             final Map<Class<? extends AbstractEntity>, ?> map,
             final Class<? extends AbstractEntity> key) {
-        List<Class<? extends AbstractEntity>> collideeInheritance
+        final List<Class<? extends AbstractEntity>> collideeInheritance
                 = getInheritance(key);
-        for (Class<? extends AbstractEntity> pointer : collideeInheritance) {
+        for (final Class<? extends AbstractEntity> pointer
+                : collideeInheritance) {
             if (map.containsKey(pointer)) {
                 return pointer;
             }
@@ -149,22 +148,23 @@ public class CollisionMap {
      * @param clazz The class to create a list of super classes and
      *              interfaces for.
      * @return A list of all classes and interfaces the class inherits.
-     */
+     */         //found.add((Class<? extends AbstractEntity>) is unchecked,
+                //thats what the SuppressWarnings is for.
     @SuppressWarnings("unchecked")
     private List<Class<? extends AbstractEntity>> getInheritance(
             final Class<? extends AbstractEntity> clazz) {
-        List<Class<? extends AbstractEntity>> found = new ArrayList<>();
+        final List<Class<? extends AbstractEntity>> found = new ArrayList<>();
         found.add(clazz);
 
         int index = 0;
         while (found.size() > index) {
-            Class<?> current = found.get(index);
-            Class<?> superClass = current.getSuperclass();
+            final Class<?> current = found.get(index);
+            final Class<?> superClass = current.getSuperclass();
             if (superClass != null
                     && AbstractEntity.class.isAssignableFrom(superClass)) {
                 found.add((Class<? extends AbstractEntity>) superClass);
             }
-            for (Class<?> classInterface : current.getInterfaces()) {
+            for (final Class<?> classInterface : current.getInterfaces()) {
                 if (AbstractEntity.class.isAssignableFrom(classInterface)) {
                     found.add((Class<? extends AbstractEntity>) classInterface);
                 }
