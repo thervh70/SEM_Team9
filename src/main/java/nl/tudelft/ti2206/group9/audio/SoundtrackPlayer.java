@@ -9,6 +9,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
@@ -154,7 +155,16 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
      * Loops the SoundtrackPlayer.
      */
     private void loopAudio() {
+    	try {
         mediaPlayer.setCycleCount(INDEFINITE);
+    	} catch (NullPointerException ne) { // NOPMD
+    		// This try-catch block is just here for testing.
+            // The loopAudio method can result in a NullPointer (according to
+            // JUnit), because JUnit can't really play audio neither can Travis.
+            OBSERVABLE.notify(GameObserver.Category.ERROR,
+                    GameObserver.Error.NULLPOINTEREXCEPTION,
+                    "SoundtrackPlayer.loopAudio()", ne.getMessage());
+        }
     }
 
 	@Override
