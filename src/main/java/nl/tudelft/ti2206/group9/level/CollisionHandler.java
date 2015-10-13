@@ -34,7 +34,7 @@ public class CollisionHandler {
      * @return CollisionMap that contains all the collisions
      */
     public CollisionMap defaultCollisions() {
-        CollisionMap collisionMap = new CollisionMap();
+        final CollisionMap collisionMap = new CollisionMap();
 
         collisionMap.onCollision(Player.class, AbstractObstacle.class,
                 (collider, collidee) -> {
