@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.group9.level.entity;
 
 import nl.tudelft.ti2206.group9.level.InternalTicker;
-import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Action;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -21,7 +20,7 @@ public class PowerupInvulnerable extends AbstractPickup {
     private static int countdown;
 
     /** Cheat boolean. */
-    private static boolean cheat = false;
+    private static boolean cheat;
 
     /**
      * Default constructor.
@@ -55,7 +54,7 @@ public class PowerupInvulnerable extends AbstractPickup {
 
     /** Activates this Powerup foreveerrrrr.
      *  @param enable whether the cheat should be enabled */
-    public static void cheat(final boolean enable) {
+    public static void setCheat(final boolean enable) {
         cheat = enable;
     }
 
