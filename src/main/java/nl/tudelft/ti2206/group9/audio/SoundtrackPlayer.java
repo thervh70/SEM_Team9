@@ -121,6 +121,13 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundtrackPlayer.pause()", me.getMessage());
+        } catch (NullPointerException ne) { // NOPMD
+    		// This try-catch block is just here for testing.
+            // The pause method can result in a NullPointer (according to
+            // JUnit), because JUnit can't really play audio neither can Travis.
+            OBSERVABLE.notify(GameObserver.Category.ERROR,
+                    GameObserver.Error.NULLPOINTEREXCEPTION,
+                    "SoundtrackPlayer.play()", ne.getMessage());
         }
     }
 

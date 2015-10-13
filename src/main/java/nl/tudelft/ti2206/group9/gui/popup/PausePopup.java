@@ -38,7 +38,7 @@ public class PausePopup extends AbstractInfoPopup {
             SplashScene.getButtonAudioPlayer().play();
             hide();
             menuEvent.handle(mouseEvent);
-            GameScene.getSoundtrackPlayer().resetSpeed();
+//          GameScene.getSoundtrackPlayer().resetSpeed();
             GameScene.getSoundtrackPlayer().stop();
         });
     }
