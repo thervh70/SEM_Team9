@@ -29,7 +29,13 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.skin.*;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
+import nl.tudelft.ti2206.group9.gui.skin.AndySkin;
+import nl.tudelft.ti2206.group9.gui.skin.BoySkin;
+import nl.tudelft.ti2206.group9.gui.skin.CaptainSkin;
+import nl.tudelft.ti2206.group9.gui.skin.IronManSkin;
+import nl.tudelft.ti2206.group9.gui.skin.PlankSkin;
+import nl.tudelft.ti2206.group9.gui.skin.NoobSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
@@ -147,15 +153,10 @@ public final class Style {
 
     /**
      * Method that creates all the skins.
+     * @return ObservableList<Skin> Returns list with skins.
      */
     public static ObservableList<Skin> loadSkinsToList() {
         ObservableList<Skin> list = FXCollections.observableArrayList();
-        ironMan = new IronManSkin();
-        captain = new CaptainSkin();
-        andy = new AndySkin();
-        noob = new NoobSkin();
-        boy = new BoySkin();
-        plank = new PlankSkin();
         list.addAll(ironMan, captain, andy, noob, boy, plank);
         return list;
     }

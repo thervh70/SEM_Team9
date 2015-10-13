@@ -29,9 +29,11 @@ public class Skin {
      * @param price Price of this skin in shop.
      * @param name Name to display.
      * @param textureName Name of texture.
+     * @param unlocked Skin unlocked?
      */
     public Skin(final int price,
-                final String name, final String textureName, boolean unlocked) {
+                final String name, final String textureName,
+                final boolean unlocked) {
         skinPrice = price;
         skinName = name;
         skinMaterial = Style.loadPlayerTexture(textureName);
