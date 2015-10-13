@@ -1,9 +1,7 @@
 package nl.tudelft.ti2206.group9.level.entity;
 
 import nl.tudelft.ti2206.group9.gui.renderer.AbstractBoxRenderer;
-import nl.tudelft.ti2206.group9.level.CrashMap;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**

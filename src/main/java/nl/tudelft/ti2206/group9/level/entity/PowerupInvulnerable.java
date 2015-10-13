@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.group9.level.entity;
 
 import nl.tudelft.ti2206.group9.level.InternalTicker;
-import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Action;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -41,7 +40,7 @@ public class PowerupInvulnerable extends AbstractPickup {
         this(cent, null);
     }
 
-    /** Is called every step in {@link Track}. */
+    /** Is called every step in Track. */
     public static void step() {
         if (!cheat && countdown > 0) {
             countdown--;

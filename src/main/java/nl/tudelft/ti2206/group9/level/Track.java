@@ -1,6 +1,9 @@
 package nl.tudelft.ti2206.group9.level;
 
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
+import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
+import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
+import nl.tudelft.ti2206.group9.util.Point3D;
 import nl.tudelft.ti2206.group9.level.TrackPart.Node;
 import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
 import nl.tudelft.ti2206.group9.level.entity.AbstractPickup;
@@ -276,7 +279,7 @@ public class Track {
      * Set the collision.
      * @param crashMap the new CrashMap.
      */
-    public void setCollisions(CrashMap crashMap) {
+    public void setCollisions(final CrashMap crashMap) {
         collisions = crashMap;
     }
 }
