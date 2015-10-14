@@ -27,12 +27,12 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
      */
     private void renderWall(final int zIndex) {
         final int xOffset = 3;
-        final int yOffset = 10;
+        final int yOffset = 7;
         final int zOffset = 4;
         final double correction = 1.5;
         for (int h = 0; h < 2; h++) {
-            for (int i = zIndex; i < zIndex + Track.LENGTH; i++) {
-                for (int j = 0; j < yOffset + 1; j++) {
+            for (int j = 0; j < yOffset + 1; j++) {
+                for (int i = zIndex; i < zIndex + Track.LENGTH; i++) {
                     final Box wallPiece = new Box(0, 1, 1);
                     wallPiece.setTranslateX(h * xOffset - correction);
                     wallPiece.setTranslateY(j - yOffset);
@@ -51,12 +51,12 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
      */
     public void update() {
         if (InternalTicker.isRunning()) {
+            final double unitsPerTick = Track.getUnitsPerTick();
             for (final Node node : this.getChildren()) {
-                node.setTranslateZ(node.getTranslateZ()
-                        - Track.getUnitsPerTick());
+                node.setTranslateZ(node.getTranslateZ() - unitsPerTick);
             }
 
-            double wallDepth = this.getChildren().get(
+            final double wallDepth = this.getChildren().get(
                     this.getChildren().size() - 1).getTranslateZ();
             if (wallDepth < Track.LENGTH) {
                 renderWall((int) wallDepth);

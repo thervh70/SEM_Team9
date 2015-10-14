@@ -31,16 +31,20 @@ public class GroupTrackRenderer extends AbstractGroupRenderer {
     private void renderTrack(final int zIndex) {
         final double trackBoxX = 1.5;
         final double trackBoxZ = 1.5;
-        for (int i = zIndex; i < zIndex + Track.LENGTH; i++) {
+        final double translateY = -6.5;
+        for (int h = 0; h < 2; h++) {
             for (int j = 0; j < Track.WIDTH; j++) {
-                final Box trackPiece = new Box(
-                        trackBoxX, 0, trackBoxZ);
-                trackPiece.setTranslateX(j - 1);
-                trackPiece.setTranslateZ(i);
-                trackPiece.setMaterial(Style.FLOOR);
-                trackPiece.setCache(true);
-                trackPiece.setCacheHint(CacheHint.SPEED);
-                getChildren().add(trackPiece);
+                for (int i = zIndex; i < zIndex + Track.LENGTH; i++) {
+                    final Box trackPiece = new Box(
+                            trackBoxX, 0, trackBoxZ);
+                    trackPiece.setTranslateX(j - 1);
+                    trackPiece.setTranslateY(h * translateY);
+                    trackPiece.setTranslateZ(i);
+                    trackPiece.setMaterial(Style.FLOOR);
+                    trackPiece.setCache(true);
+                    trackPiece.setCacheHint(CacheHint.SPEED);
+                    getChildren().add(trackPiece);
+                }
             }
         }
     }
@@ -50,11 +54,12 @@ public class GroupTrackRenderer extends AbstractGroupRenderer {
      */
     public void update() {
         if (InternalTicker.isRunning()) {
+            final double unitsPerTick = Track.getUnitsPerTick();
             for (final Node node : this.getChildren()) {
-                node.setTranslateZ(node.getTranslateZ()
-                        - Track.getUnitsPerTick());
+                node.setTranslateZ(node.getTranslateZ() - unitsPerTick);
             }
-            double trackDepth = this.getChildren().
+
+            final double trackDepth = this.getChildren().
                     get(this.getChildren().size() - 1).getTranslateZ();
             if (trackDepth < Track.LENGTH) {
                 renderTrack((int) trackDepth);

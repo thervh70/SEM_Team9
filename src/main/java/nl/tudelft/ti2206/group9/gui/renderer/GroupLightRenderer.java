@@ -37,7 +37,7 @@ public class GroupLightRenderer extends AbstractGroupRenderer {
      */
     private void renderLight(final int zIndex) {
         final int amount = 3;
-        final int translateY = -5;
+        final int translateY = -4;
 
         for (int i = 0; i < amount; i++) {
             final PointLight light = new PointLight(Color.GRAY);
@@ -52,12 +52,12 @@ public class GroupLightRenderer extends AbstractGroupRenderer {
      */
     public void update() {
         if (InternalTicker.isRunning()) {
+            final double unitsPerTick = Track.getUnitsPerTick();
             for (final Node node : this.getChildren()) {
-                node.setTranslateZ(node.getTranslateZ()
-                        - Track.getUnitsPerTick());
+                node.setTranslateZ(node.getTranslateZ() - unitsPerTick);
             }
 
-            double lightDepth = this.getChildren().get(
+            final double lightDepth = this.getChildren().get(
                     this.getChildren().size() - 1).getTranslateZ();
             if (lightDepth < Track.LENGTH) {
                 renderLight((int) lightDepth);
