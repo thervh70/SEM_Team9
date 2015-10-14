@@ -17,7 +17,7 @@ import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 public class CollisionHandler {
 
     /** The CollisionMap were the collions will be stored. */
-    private CollisionMap collisions = defaultCollisions();
+    private final CollisionMap collisions = defaultCollisions();
 
     /**
      * Delegate the collision method to CollisionMap.collide(collider,collidee).
@@ -51,7 +51,7 @@ public class CollisionHandler {
                 (collider, collidee) -> {
                     OBSERVABLE.notify(GameObserver.Category.PLAYER,
                             GameObserver.Player.COLLISION,
-                            this.getClass().getSimpleName());
+                            collidee.getClass().getSimpleName());
                     collidee.doAction();
                     collidee.selfDestruct();
                 });
