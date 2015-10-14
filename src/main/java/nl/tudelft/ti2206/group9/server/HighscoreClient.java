@@ -26,7 +26,7 @@ public class HighscoreClient {
     public HighscoreClient() {
         super();
 
-        final String hostName = "127.0.0.1";
+        final String hostName = "localhost";
 
         try {
             socket = new Socket(hostName, HighscoreServer.PORT);
@@ -35,10 +35,9 @@ public class HighscoreClient {
                     new InputStreamReader(socket.getInputStream()));
             connected = true;
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host " + hostName);
+            System.err.println("Client does not know about host " + hostName);
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to "
-                    + hostName);
+            System.err.println("Client could not connect to " + hostName);
         }
     }
 

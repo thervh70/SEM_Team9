@@ -32,8 +32,8 @@ public class HighscoreServerThread extends Thread {
             toClient = new PrintWriter(socket.getOutputStream(), true);
             fromClient = new BufferedReader(new InputStreamReader(
                     socket.getInputStream()));
-            HighscoreServer.log(socket.getRemoteSocketAddress().toString()
-                    + " is connected to me ("
+            final String clientIP = socket.getRemoteSocketAddress().toString();
+            HighscoreServer.log(clientIP + " is connected to me ("
                     + socket.getLocalSocketAddress().toString() + ")");
             String from;
             String to;
@@ -48,8 +48,7 @@ public class HighscoreServerThread extends Thread {
                 toClient.println(to);
             }
             socket.close();
-            HighscoreServer.log(socket.getRemoteSocketAddress().toString()
-                    + " disconnected.");
+            HighscoreServer.log(clientIP + " disconnected.");
         } catch (IOException e) {
             e.printStackTrace();
         }
