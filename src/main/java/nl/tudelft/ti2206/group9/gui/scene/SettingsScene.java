@@ -23,37 +23,53 @@ public final class SettingsScene extends AbstractMenuScene {
     enum BType {
         /** Back button. */
         SETTINGS_BACK,
-        /** Sound toggle. */
-        SETTING_SOUND
+        /** Sound Effects toggle. */
+        SETTING_SOUNDEFFECTS,
+        /** Soundtrack toggle. */
+        SETTING_SOUNDTRACK
      }
 
     /** Toggle width. */
-    private static final int TOGGLE_WIDTH = 150;
+    private static final int TOGGLE_WIDTH = 270;
     /** Toggle text size. */
     private static final int TOGGLE_TEXT_SIZE = 16;
+    /** Initially the toggles are set to off. */
+    private static final String INIT_TOGGLE = "OFF";
+
     /**
      * Creates a Sound toggle button and a Back button.
      * @return an array of Nodes to be added to the Scene.
      */
     @Override
     public Node[] createContent() {
-        final Button backButton = createButton("BACK", 0, 25);
+        final Button backButton = createButton("BACK", 5, 24);
 
-        String soundToggle = "OFF";
-        if (State.isSoundEnabled()) {
-            soundToggle = "ON";
+        String soundtrToggle = INIT_TOGGLE;
+        if (State.isSoundtrackEnabled()) {
+        	soundtrToggle = "ON";
         }
-        final Button soundButton = createButton("Sound: " + soundToggle, 2, 18);
-        soundButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
-        soundButton.setPrefWidth(TOGGLE_WIDTH);
+        final Button soundtrButton = createButton("Soundtrack: "
+        + soundtrToggle, 5, 14);
+        soundtrButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
+        soundtrButton.setPrefWidth(TOGGLE_WIDTH);
+        String soundEfToggle = INIT_TOGGLE;
+        if (State.isSoundEffectsEnabled()) {
+        	soundEfToggle = "ON";
+        }
+        final Button soundEfButton = createButton("Sound effects: "
+        + soundEfToggle, 5, 17);
+        soundEfButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
+        soundEfButton.setPrefWidth(TOGGLE_WIDTH);
 
         setButtonFunction(backButton, BType.SETTINGS_BACK);
-        setButtonFunction(soundButton, BType.SETTING_SOUND);
+        setButtonFunction(soundtrButton, BType.SETTING_SOUNDTRACK);
+        setButtonFunction(soundEfButton, BType.SETTING_SOUNDEFFECTS);
 
         // Set Tooltips.
-        soundButton.setTooltip(new Tooltip("Enable/disable sound"));
+        soundtrButton.setTooltip(new Tooltip("Enable/disable soundtrack"));
+        soundEfButton.setTooltip(new Tooltip("Enable/disable sound effects"));
         backButton.setTooltip(new Tooltip("Back to main menu"));
-        return new Node[]{backButton, soundButton};
+        return new Node[]{backButton, soundtrButton, soundEfButton};
     }
 
     /**
@@ -65,20 +81,29 @@ public final class SettingsScene extends AbstractMenuScene {
             final BType type) {
         button.setOnAction(event -> {
             SplashScene.getButtonAudioPlayer().play();
+            String s;
             if (type == BType.SETTINGS_BACK) {
                 OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
                 ShaftEscape.setScene(new MainMenuScene());
-            } else {
+                } else if (type == BType.SETTING_SOUNDTRACK) {
                 MainMenuScene.getAudioPlayer().stop();
-                State.setSoundEnabled(!State.isSoundEnabled());
-                String s;
-                if (State.isSoundEnabled()) {
+                State.setSoundtrackEnabled(!State.isSoundtrackEnabled());
+                if (State.isSoundtrackEnabled()) {
                     s = "ON";
                 } else {
-                    s = "OFF";
+                    s = INIT_TOGGLE;
                 }
-                button.setText("Sound: " + s);
-                OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUND, s);
+                button.setText("Soundtrack: " + s);
+                OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDTRACK, s);
+            } else {
+                State.setSoundEffectsEnabled(!State.isSoundEffectsEnabled());
+                if (State.isSoundEffectsEnabled()) {
+                    s = "ON";
+                } else {
+                    s = INIT_TOGGLE;
+                }
+                button.setText("Sound effects: " + s);
+                OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDEFFECTS, s);
             }
         });
     }

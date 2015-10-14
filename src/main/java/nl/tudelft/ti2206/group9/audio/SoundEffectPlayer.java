@@ -31,7 +31,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
     public SoundEffectPlayer(final String soundPath) {
         super();
         path = soundPath;
-        if (State.isSoundEnabled()) {
+        if (State.isSoundEffectsEnabled()) {
             initializeAudio(path);
         }
     }
@@ -53,7 +53,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
     @Override
     public final void play() {
         try {
-            if (State.isSoundEnabled()) {
+            if (State.isSoundEffectsEnabled()) {
                 if (audioClip == null) {
                 	initializeAudio(path);
                 }
@@ -68,7 +68,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
     @Override
     public final void stop() {
         try {
-            if (State.isSoundEnabled()) {
+            if (State.isSoundEffectsEnabled()) {
                 if (audioClip == null) {
                 	initializeAudio(path);
                 }
@@ -97,7 +97,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
 	@Override
 	public final void setPath(final String location) {
         path = location;
-        if (State.isSoundEnabled()) {
+        if (State.isSoundEffectsEnabled()) {
         	initializeAudio(path);
         }
 	}

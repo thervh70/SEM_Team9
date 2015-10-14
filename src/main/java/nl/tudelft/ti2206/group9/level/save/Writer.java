@@ -87,9 +87,15 @@ public final class Writer {
     private static String writeToJSON() {
         final JSONObject mainObject = new JSONObject();
 
-        final JSONObject settings = new JSONObject();
-        settings.put("soundEnabled", State.isSoundEnabled());
-        mainObject.put("settings", settings);
+        final JSONObject soundtracksettings = new JSONObject();
+        soundtracksettings.put("soundtrackEnabled",
+                State.isSoundtrackEnabled());
+        mainObject.put("soundtracksettings", soundtracksettings);
+
+        final JSONObject soundeffectsettings = new JSONObject();
+        soundeffectsettings.put("soundEffectsEnabled",
+                State.isSoundEffectsEnabled());
+        mainObject.put("soundEffectssettings", soundeffectsettings);
 
         mainObject.put("playername", State.getPlayerName());
         mainObject.put("coins", State.getCoins());

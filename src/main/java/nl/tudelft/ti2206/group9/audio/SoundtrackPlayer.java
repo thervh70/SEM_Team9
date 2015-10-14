@@ -41,7 +41,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
     public SoundtrackPlayer(final String soundPath) {
     	super();
         path = soundPath;
-        if (State.isSoundEnabled()) {
+        if (State.isSoundtrackEnabled()) {
         	initializeAudio(path);
         }
         // A soundtrackPlayer must always loop.
@@ -65,7 +65,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
     @Override
     public final void play() {
         try {
-            if (State.isSoundEnabled()) {
+            if (State.isSoundtrackEnabled()) {
                 if (mediaPlayer == null) {
                 	initializeAudio(path);
                 }
@@ -87,7 +87,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
     @Override
     public final void stop() {
         try {
-            if (State.isSoundEnabled()) {
+            if (State.isSoundtrackEnabled()) {
                 if (mediaPlayer == null) {
                 	initializeAudio(path);
                 }
@@ -112,7 +112,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
      */
     public final void pause() {
         try {
-            if (State.isSoundEnabled()) {
+            if (State.isSoundtrackEnabled()) {
                 if (mediaPlayer == null) {
                 	initializeAudio(path);
                 }
@@ -146,7 +146,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
      * It is recommended to keep this rate between 0.125 and 8.0.
      */
     public final void setSpeed(final double rate) {
-        if (State.isSoundEnabled() & rate >= LOWER & rate <= UPPER) {
+        if (State.isSoundtrackEnabled() & rate >= LOWER & rate <= UPPER) {
             mediaPlayer.setRate(rate);
         }
     }
@@ -157,7 +157,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
      * @return double rate current rate of the SoundtrackPlayer.
      */
     public final double getSpeed() {
-        if (State.isSoundEnabled()) {
+        if (State.isSoundtrackEnabled()) {
             return mediaPlayer.getRate();
         }
         return 1.0;
@@ -167,7 +167,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
      * Resets the speed of the soundtrack played by the SoundtrackPlayer.
      */
     public final void resetSpeed() {
-        if (State.isSoundEnabled()) {
+        if (State.isSoundtrackEnabled()) {
             mediaPlayer.setRate(1.0);
         }
     }
@@ -196,7 +196,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
 	@Override
 	public final void setPath(final String location) {
         path = location;
-        if (State.isSoundEnabled()) {
+        if (State.isSoundtrackEnabled()) {
         	initializeAudio(path);
         }
 	}
