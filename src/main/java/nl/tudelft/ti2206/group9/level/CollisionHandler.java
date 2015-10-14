@@ -59,14 +59,4 @@ public class CollisionHandler {
         return collisionMap;
     }
 
-    /**
-     * Set the CollisionMap.
-     * Default: defaultCollisions().
-     * This method is only used for testing purposes.
-     * @param collisionMap the new CollisionMap
-     */
-    public void setCollisions(final CollisionMap collisionMap) {
-        collisions = collisionMap;
-    }
-
 }
