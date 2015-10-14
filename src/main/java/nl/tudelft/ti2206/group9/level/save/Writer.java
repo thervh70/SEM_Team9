@@ -82,7 +82,7 @@ public final class Writer {
      * Create a JSON string from all the data
      * which can be writte to a JSON file.
      * @return the JSON string
-     */                      // Eclipse thinks JSONObject.put belongs to HashMap
+     */         // JSONObject.put uses HashMap, that gives unchecked warnings.
     @SuppressWarnings("unchecked")
     private static String writeToJSON() {
         final JSONObject mainObject = new JSONObject();

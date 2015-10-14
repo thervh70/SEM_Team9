@@ -18,13 +18,4 @@ public abstract class AbstractObstacle extends AbstractEntity {
         super(center, size);
     }
 
-    /**
-     * Collisions handled in {@link Player}. This collision does nothing.
-     * @param collidee Entity that this Coin collides with.
-     * @see nl.tudelft.ti2206.group9.level.entity.AbstractEntity#collision
-     * (nl.tudelft.ti2206.group9.level.entity.AbstractEntity)
-     */
-    @Override
-    public void collision(final AbstractEntity collidee) { } //NOPMD
-
 }
