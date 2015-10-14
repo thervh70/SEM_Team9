@@ -1,12 +1,14 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
@@ -14,6 +16,9 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
+
+import javax.swing.text.html.ListView;
+
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
@@ -49,6 +54,10 @@ public final class MainMenuScene extends AbstractMenuScene {
     /** The AudioPlayer to be used for background music. */
     private static AudioPlayer apMainMenu = new AudioPlayer("src/main/"
             + "resources/nl/tudelft/ti2206/group9/audio/intro.wav");
+    /**
+     * Table for highscores.
+     */
+    private static TableView<String> scoreTable = new TableView<>();
 
     /**
      * Create Start, Settings and Exit buttons.
@@ -82,8 +91,23 @@ public final class MainMenuScene extends AbstractMenuScene {
         INPUT.setTooltip(new Tooltip("Enter your name"));
         INPUT.setFont(Style.getFont(FONT_SIZE));
 
+        createScoreTable();
         return new Node[]{startButton, settingsButton, exitButton,
-                loadButton, nameLabel, INPUT, shopButton};
+                loadButton, nameLabel, INPUT, shopButton, scoreTable};
+    }
+
+    public static void createScoreTable() {
+        GridPane.setRowSpan(scoreTable, 2);
+        GridPane.setColumnSpan(scoreTable, 3);
+        GridPane.setConstraints(scoreTable, 1, 14);
+
+
+        TableColumn numberColumn = new TableColumn("#");
+        TableColumn scoreColumn = new TableColumn("SCORE");
+
+//        numberColumn.setCellValueFactory(State, State.getHighscore());
+
+        scoreTable.getColumns().addAll(numberColumn, scoreColumn);
     }
 
     /**
