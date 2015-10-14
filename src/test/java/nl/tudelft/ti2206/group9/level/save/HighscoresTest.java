@@ -4,11 +4,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import nl.tudelft.ti2206.group9.level.save.Highscores.Highscore;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import com.gamejolt.highscore.Highscore;
 
 public class HighscoresTest {
 

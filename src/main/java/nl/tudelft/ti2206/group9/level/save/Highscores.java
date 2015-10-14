@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.level.save;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.ti2206.group9.util.Action;
@@ -7,7 +8,6 @@ import nl.tudelft.ti2206.group9.util.Action;
 import com.gamejolt.GameJolt;
 import com.gamejolt.UnverifiedUserException;
 import com.gamejolt.UserVerificationListener;
-import com.gamejolt.highscore.Highscore;
 
 /**
  * Uploads the highscores get in the game to GameJolt.
@@ -80,11 +80,48 @@ public final class Highscores {
      * Get the top <pre>amount</pre> highscores from the online list.
      * WARNING: this method is synchronous! Running it will take some time,
      * usually a few seconds!
+     * NOTE: Currently still relying on the GameJolt API, will soon change to
+     * the new Server-Client system.
      * @param amount amount of scores to fetch.
      * @return A list of {@link Highscore}s.
      */
     public static List<Highscore> get(final int amount) {
-        return gj.getAllHighscores(amount);
+        final List<com.gamejolt.highscore.Highscore> list =
+                gj.getAllHighscores(amount);
+        final List<Highscore> reslist = new ArrayList<>();
+        for (final com.gamejolt.highscore.Highscore h : list) {
+            reslist.add(new Highscore(h.getUser(), h.getScore()));
+        }
+        return reslist;
+    }
+
+    /**
+     * Data class, containing a highscore entry.
+     * @author Maarten
+     */
+    public static class Highscore {
+
+        /** User name of this Highscore entry. */
+        private final String user;
+        /** Score value of this Highscore entry. */
+        private final int score;
+        /** Default constructor.
+         *  @param userName the user name of this entry.
+         *  @param scoreValue the score value of this entry. */
+        public Highscore(final String userName, final int scoreValue) {
+            user = userName;
+            score = scoreValue;
+        }
+
+        /** @return the user name. */
+        public String getUser() {
+            return user;
+        }
+
+        /** @return the score (integer). */
+        public int getScore() {
+            return score;
+        }
     }
 
 }
