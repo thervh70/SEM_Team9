@@ -38,6 +38,7 @@ public final class HighscoreServer {
         new Thread(new CLIThread()).start();
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             ss = serverSocket;
+            log("Server is now accepting clients.");
             while (running) {
                 new HighscoreServerThread(serverSocket.accept()).start();
             }
@@ -75,9 +76,11 @@ public final class HighscoreServer {
         public void run() {
             final Scanner sc = new Scanner(System.in);
             String command;
+            log("Type \"stop\" to exit.");
             while (running) {
                 command = sc.nextLine();
                 switch (command) {
+                case "q":
                 case "stop":
                 case "exit":
                 case "evacuate":
