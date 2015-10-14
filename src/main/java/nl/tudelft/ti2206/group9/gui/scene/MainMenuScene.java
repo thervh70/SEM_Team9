@@ -150,7 +150,6 @@ public final class MainMenuScene extends AbstractMenuScene {
         }
         final boolean load = tryLoadPlayerName(INPUT.getText());
         if (!load) {
-            State.resetAll();
             State.setPlayerName(INPUT.getText());
         }
         INPUT.clear();
