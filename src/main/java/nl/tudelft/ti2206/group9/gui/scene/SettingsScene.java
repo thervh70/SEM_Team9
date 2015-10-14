@@ -46,7 +46,7 @@ public final class SettingsScene extends AbstractMenuScene {
 
         String soundtrToggle = INIT_TOGGLE;
         if (State.isSoundtrackEnabled()) {
-        	soundtrToggle = "ON";
+            soundtrToggle = "ON";
         }
         final Button soundtrButton = createButton("Soundtrack: "
         + soundtrToggle, 5, 14);
@@ -54,7 +54,7 @@ public final class SettingsScene extends AbstractMenuScene {
         soundtrButton.setPrefWidth(TOGGLE_WIDTH);
         String soundEfToggle = INIT_TOGGLE;
         if (State.isSoundEffectsEnabled()) {
-        	soundEfToggle = "ON";
+            soundEfToggle = "ON";
         }
         final Button soundEfButton = createButton("Sound effects: "
         + soundEfToggle, 5, 17);

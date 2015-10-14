@@ -27,7 +27,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
     /** Maximum rate of the SoundtrackPlayer. */
     private static final double UPPER = 8.0;
     /** Constant for making the SoundtrackPlayer loop forever. */
-	private static final int INDEFINITE = -1;
+    private static final int INDEFINITE = -1;
 
     /** The MediaPlayer of a SoundtrackPlayer. */
     private MediaPlayer mediaPlayer;
@@ -39,10 +39,10 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
      * @param soundPath given path to the soundtrack.
      */
     public SoundtrackPlayer(final String soundPath) {
-    	super();
+        super();
         path = soundPath;
         if (State.isSoundtrackEnabled()) {
-        	initializeAudio(path);
+            initializeAudio(path);
         }
         // A soundtrackPlayer must always loop.
         this.loopAudio();
@@ -52,7 +52,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
     protected void initializeAudio(final String source) {
         try {
             mediaPlayer = new MediaPlayer(new Media(new File(source).toURI()
-            	    .toURL().toString()));
+                    .toURL().toString()));
         } catch (MalformedURLException mue) {
             OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
             "SoundtrackPlayer.initializeTune(String)", mue.getMessage());
@@ -67,7 +67,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         try {
             if (State.isSoundtrackEnabled()) {
                 if (mediaPlayer == null) {
-                	initializeAudio(path);
+                    initializeAudio(path);
                 }
                 mediaPlayer.play();
             }
@@ -75,7 +75,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundtrackPlayer.play()", me.getMessage());
         } catch (NullPointerException ne) { // NOPMD
-    		// This try-catch block is just here for testing.
+            // This try-catch block is just here for testing.
             // The play method can result in a NullPointer (according to
             // JUnit), because JUnit can't really play audio neither can Travis.
             OBSERVABLE.notify(GameObserver.Category.ERROR,
@@ -89,7 +89,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         try {
             if (State.isSoundtrackEnabled()) {
                 if (mediaPlayer == null) {
-                	initializeAudio(path);
+                    initializeAudio(path);
                 }
                 mediaPlayer.stop();
             }
@@ -97,7 +97,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundtrackPlayer.stop()", me.getMessage());
         } catch (NullPointerException ne) { // NOPMD
-    		// This try-catch block is just here for testing.
+            // This try-catch block is just here for testing.
             // The stop method can result in a NullPointer (according to
             // JUnit), because JUnit can't really play audio neither can Travis.
             OBSERVABLE.notify(GameObserver.Category.ERROR,
@@ -114,7 +114,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         try {
             if (State.isSoundtrackEnabled()) {
                 if (mediaPlayer == null) {
-                	initializeAudio(path);
+                    initializeAudio(path);
                 }
                 mediaPlayer.pause();
             }
@@ -122,7 +122,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundtrackPlayer.pause()", me.getMessage());
         } catch (NullPointerException ne) { // NOPMD
-    		// This try-catch block is just here for testing.
+            // This try-catch block is just here for testing.
             // The pause method can result in a NullPointer (according to
             // JUnit), because JUnit can't really play audio neither can Travis.
             OBSERVABLE.notify(GameObserver.Category.ERROR,
@@ -176,10 +176,10 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
      * Loops the SoundtrackPlayer.
      */
     private void loopAudio() {
-    	try {
+        try {
         mediaPlayer.setCycleCount(INDEFINITE);
-    	} catch (NullPointerException ne) { // NOPMD
-    		// This try-catch block is just here for testing.
+        } catch (NullPointerException ne) { // NOPMD
+            // This try-catch block is just here for testing.
             // The loopAudio method can result in a NullPointer (according to
             // JUnit), because JUnit can't really play audio neither can Travis.
             OBSERVABLE.notify(GameObserver.Category.ERROR,
@@ -188,17 +188,17 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         }
     }
 
-	@Override
-	public final String getPath() {
+    @Override
+    public final String getPath() {
         return path;
-	}
+    }
 
-	@Override
-	public final void setPath(final String location) {
+    @Override
+    public final void setPath(final String location) {
         path = location;
         if (State.isSoundtrackEnabled()) {
-        	initializeAudio(path);
+            initializeAudio(path);
         }
-	}
+    }
 
 }

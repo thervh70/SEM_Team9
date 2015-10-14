@@ -127,7 +127,7 @@ public final class GameScene extends AbstractScene {
                 keyMap.keyPressed(keyEvent.getCode());
                 if (keyEvent.getCode().equals(KeyCode.ESCAPE)
                         && getPopup() == null) {
-                	soundtrackPlayer.pause();
+                    soundtrackPlayer.pause();
                     showPauseMenu();
                 }
             }
@@ -191,8 +191,8 @@ public final class GameScene extends AbstractScene {
 
     /** Show a death menu. */
     public static void showDeathMenu() {
-//    	soundtrackPlayer.resetSpeed();
-    	soundtrackPlayer.stop();
+//      soundtrackPlayer.resetSpeed();
+        soundtrackPlayer.stop();
         setPopup(new DeathPopup(e -> {
             OBSERVABLE.notify(Category.GAME, Game.RETRY);
             State.reset();

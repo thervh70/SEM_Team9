@@ -48,7 +48,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     private static final int FONT_SIZE = 12;
     /** The AudioPlayer to be used for background music. */
     private static SoundtrackPlayer apMainMenu = new SoundtrackPlayer(
-    		"src/main/resources/nl/tudelft/ti2206/group9/audio/intro.wav");
+                "src/main/resources/nl/tudelft/ti2206/group9/audio/intro.wav");
 
     /**
      * Create Start, Settings and Exit buttons.
@@ -56,7 +56,7 @@ public final class MainMenuScene extends AbstractMenuScene {
      */
     @Override
     public Node[] createContent() {
-    	apMainMenu.play();
+        apMainMenu.play();
         final Button startButton = createButton("START!", 4, 22);
         startButton.disableProperty().bind(
                 Bindings.isEmpty(INPUT.textProperty()));

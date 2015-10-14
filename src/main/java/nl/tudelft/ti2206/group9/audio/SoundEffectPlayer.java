@@ -37,7 +37,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
     }
 
     @Override
-	protected final void initializeAudio(final String source) {
+    protected final void initializeAudio(final String source) {
         try {
             audioClip = new AudioClip(new File(source).toURI().toURL()
                     .toString());
@@ -55,7 +55,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
         try {
             if (State.isSoundEffectsEnabled()) {
                 if (audioClip == null) {
-                	initializeAudio(path);
+                    initializeAudio(path);
                 }
                 audioClip.play();
             }
@@ -70,7 +70,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
         try {
             if (State.isSoundEffectsEnabled()) {
                 if (audioClip == null) {
-                	initializeAudio(path);
+                    initializeAudio(path);
                 }
                 audioClip.stop();
             }
@@ -89,17 +89,17 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
         }
     }
 
-	@Override
-	public final String getPath() {
+    @Override
+    public final String getPath() {
         return path;
-	}
+    }
 
-	@Override
-	public final void setPath(final String location) {
+    @Override
+    public final void setPath(final String location) {
         path = location;
         if (State.isSoundEffectsEnabled()) {
-        	initializeAudio(path);
+            initializeAudio(path);
         }
-	}
+    }
 
 }

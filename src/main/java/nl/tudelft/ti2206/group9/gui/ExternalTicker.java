@@ -73,7 +73,7 @@ public class ExternalTicker extends AnimationTimer {
         synchronized (ShaftEscape.TICKER_LOCK) {
 // Controls the discrete increase of soundtrack, temporarily disabled!
 //            if (InternalTicker.isRunning()) {
-//            	GameScene.getAudioPlayer().setSpeed(1
+//                GameScene.getAudioPlayer().setSpeed(1
 //                        + (Track.getUnitsPerTick()) / RATE_DIVISION);
 //            }
             renderScene();
