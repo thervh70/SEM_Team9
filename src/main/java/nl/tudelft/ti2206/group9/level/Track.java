@@ -3,7 +3,9 @@ package nl.tudelft.ti2206.group9.level;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
@@ -48,6 +50,24 @@ public class Track {
     private Random random;
     /** List of all TrackParts the Track can consist of. */
     private List<TrackPart> trackParts;
+    /** CollisionMap that stores all collisions. */
+    private CollisionHandler collisions = new CollisionHandler();
+    /** Map that contains all createEntityCommands. */
+    private static Map<Class<? extends AbstractEntity>, CreateEntityCommand>
+            createEntityMap = new ConcurrentHashMap<>();
+
+    static {
+        createEntityMap.put(Coin.class, p -> new Coin(p));
+        createEntityMap.put(Log.class, p -> new Log(p));
+        createEntityMap.put(Pillar.class, p -> new Pillar(p));
+        createEntityMap.put(Fence.class, p -> new Fence(p));
+        createEntityMap.put(AbstractPickup.class, p -> {
+            final ArrayList<AbstractPickup> list = new ArrayList<>();
+            list.add(new Coin(p));
+            list.add(new PowerupInvulnerable(p));
+            return list.get((int) (Math.random() * list.size()));
+        });
+    }
 
     /** Length of the track that is already created. */
     private double trackLeft;
@@ -77,10 +97,11 @@ public class Track {
     @SuppressWarnings("restriction")
     public final void moveTrack(final double dist) {
         synchronized (this) {
-            for (final AbstractEntity entity : entities) {
-                if (!(entity instanceof Player)) {
-                    moveEntity(entity, -dist);
+            for (int i = 0; i < entities.size(); i++) {
+                if (i == player) {
+                    continue;
                 }
+                moveEntity(entities.get(i), -dist);
             }
             int index = 0;
             if (index == player) {
@@ -233,31 +254,40 @@ public class Track {
         for (final Node entity : part.getEntities()) {
             final Point3D center = new Point3D(entity.getCenter());
             center.addZ(LENGTH);
-            if (entity.getType().equals(AbstractPickup.class)) {
-                add = randomPowerup(center);
-            } else if (entity.getType().equals(Coin.class)) {
-                add = new Coin(center);
-            } else if (entity.getType().equals(Fence.class)) {
-                add = new Fence(center);
-            } else if (entity.getType().equals(Log.class)) {
-                add = new Log(center);
-            } else if (entity.getType().equals(Pillar.class)) {
-                add = new Pillar(center);
-            }
+            add = createEntityMap.get(entity.getType()).createEntity(center);
             addEntity(add);
         }
         trackLeft = part.getLength();
     }
 
     /**
-     * @param center the center of the new Powerup.
-     * @return a random Powerup.
+     * Get the CollisionHandler with all the collisions.
+     * @return CollisionHandler that contains all collisions and their handlers.
      */
-    private AbstractPickup randomPowerup(final Point3D center) {
-        final ArrayList<AbstractPickup> list = new ArrayList<AbstractPickup>();
-        list.add(new Coin(center));
-        list.add(new PowerupInvulnerable(center));
-        return list.get((int) (Math.random() * list.size()));
+    public CollisionHandler getCollisions() {
+        return collisions;
+    }
+
+    /**
+     * Set the collision.
+     * @param collisionHandler the new CollisionHandler.
+     */
+    public void setCollisions(final CollisionHandler collisionHandler) {
+        collisions = collisionHandler;
+    }
+
+    /**
+     * Interface that is a Command, used to render the Track.
+     *
+     * @author Mathias
+     */
+    public interface CreateEntityCommand {
+        /**
+         * Create an Entity upon call.
+         * @param center the cente of the Entity
+         * @return the created Entity
+         */
+        AbstractEntity createEntity(Point3D center);
     }
 
 }

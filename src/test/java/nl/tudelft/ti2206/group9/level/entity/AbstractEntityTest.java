@@ -3,11 +3,11 @@ package nl.tudelft.ti2206.group9.level.entity;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
 import nl.tudelft.ti2206.group9.gui.renderer.AbstractBoxRenderer;
+import nl.tudelft.ti2206.group9.level.CollisionHandler;
+import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Before;
@@ -22,12 +22,16 @@ public class AbstractEntityTest {
 
     private transient AbstractEntity entity;
 
+    private CollisionHandler collisionHandler;
+
     @Before
     public void setUp() throws Exception {
         first = mock(AbstractEntity.class);
         second = mock(AbstractEntity.class);
 
         entity = new TestEntity(Point3D.ZERO, Point3D.UNITCUBE);
+        collisionHandler = mock(CollisionHandler.class);
+        State.getTrack().setCollisions(collisionHandler);
     }
 
     @Test
@@ -36,16 +40,16 @@ public class AbstractEntityTest {
                     Point3D.UNITX, Point3D.UNITCUBE);
         first.checkCollision(second);
 
-        verify(first).collision(second);
+        verify(collisionHandler).collide(first, second);
     }
 
     @Test
     public void testCheckCollisionDistance3Size1() {
         setEntities(Point3D.ZERO, Point3D.UNITCUBE,
-                    new Point3D(THREE, 0, 0), Point3D.UNITCUBE);
+                new Point3D(THREE, 0, 0), Point3D.UNITCUBE);
         first.checkCollision(second);
 
-        verify(first, never()).collision(second);
+        verify(collisionHandler, never()).collide(first, second);
     }
 
     @Test
@@ -54,7 +58,7 @@ public class AbstractEntityTest {
                     new Point3D(1, 1, 0), Point3D.UNITCUBE);
         first.checkCollision(second);
 
-        verify(first).collision(second);
+        verify(collisionHandler).collide(first, second);
     }
 
     @Test
@@ -63,7 +67,7 @@ public class AbstractEntityTest {
                     Point3D.ZERO, Point3D.UNITCUBE);
         first.checkCollision(second);
 
-        verify(first).collision(second);
+        verify(collisionHandler).collide(first, second);
     }
 
     @Test
@@ -72,7 +76,7 @@ public class AbstractEntityTest {
                     new Point3D(1.0 / 2.0, 0, 0), Point3D.UNITCUBE);
         first.checkCollision(second);
 
-        verify(first).collision(second);
+        verify(collisionHandler).collide(first, second);
     }
 
     @Test
@@ -81,7 +85,7 @@ public class AbstractEntityTest {
                     Point3D.UNITX, new Point3D(2, 2, 2));
         first.checkCollision(second);
 
-        verify(first).collision(second);
+        verify(collisionHandler).collide(first, second);
     }
 
     @Test
@@ -90,7 +94,7 @@ public class AbstractEntityTest {
                     new Point3D(2, 0, 0), new Point3D(2, 2, 2));
         first.checkCollision(second);
 
-        verify(first).collision(second);
+        verify(collisionHandler).collide(first, second);
     }
 
     @Test
@@ -99,7 +103,7 @@ public class AbstractEntityTest {
                     new Point3D(THREE, 0, 0), new Point3D(2, 2, 2));
         first.checkCollision(second);
 
-        verify(first, never()).collision(second);
+        verify(collisionHandler, never()).collide(first, second);
     }
 
     public void setEntities(final Point3D firstCenter, final Point3D firstSize,
@@ -115,9 +119,6 @@ public class AbstractEntityTest {
     @Test
     public void testAbstractEntity() {
         entity = new AbstractEntity(Point3D.ZERO, Point3D.UNITCUBE) {
-            /** Do nothing on collision */
-            @Override
-            public void collision(final AbstractEntity collidee) { } //NOPMD
 
             @Override
             public AbstractBoxRenderer<? extends AbstractEntity>
@@ -209,10 +210,6 @@ public class AbstractEntityTest {
         public TestEntity(final Point3D center, final Point3D size) {
             super(center, size);
         }
-
-        /** Do nothing on collision. */
-        @Override
-        public void collision(final AbstractEntity collidee) { } // NOPMD
 
         @Override
         public AbstractBoxRenderer<? extends AbstractEntity> createRenderer() {
