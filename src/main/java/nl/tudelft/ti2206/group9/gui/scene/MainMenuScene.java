@@ -62,7 +62,7 @@ public final class MainMenuScene extends AbstractMenuScene {
                 Bindings.isEmpty(INPUT.textProperty()));
         final Button settingsButton = createButton("SETTINGS", 0, 24);
         final Button exitButton = createButton("EXIT", 0, 0);
-        final Button loadButton = createButton("LOAD GAME", 2, 24);
+        final Button loadButton = createButton("ACCOUNTS", 2, 24);
         final Button shopButton = createButton("SHOP", 4, 24);
         final Label nameLabel = createLabel("NEW PLAYER:", 0, 22);
         exitButton.setMaxWidth(EXIT_BUTTON_WIDTH);
@@ -78,7 +78,7 @@ public final class MainMenuScene extends AbstractMenuScene {
         startButton.setTooltip(new Tooltip("Start the game!"));
         exitButton.setTooltip(new Tooltip("Are you sure?"));
         settingsButton.setTooltip(new Tooltip("Change game settings"));
-        loadButton.setTooltip(new Tooltip("Continue a game"));
+        loadButton.setTooltip(new Tooltip("Load an account"));
         INPUT.setTooltip(new Tooltip("Enter your name"));
         INPUT.setFont(Style.getFont(FONT_SIZE));
 
@@ -111,7 +111,7 @@ public final class MainMenuScene extends AbstractMenuScene {
                 }
             } else if (type == BType.LOAD) {
                 OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
-                ShaftEscape.setScene(new LoadGameScene());
+                ShaftEscape.setScene(new AccountScene());
             } else if (type == BType.SHOP) {
                 OBSERVABLE.notify(Category.MENU, Menu.SHOP);
                 ShaftEscape.setScene(new ShopScene());

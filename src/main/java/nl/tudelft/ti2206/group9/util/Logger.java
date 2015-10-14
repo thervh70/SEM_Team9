@@ -61,6 +61,9 @@ public class Logger implements GameObserver {
         STRINGS.put(Menu.LOAD, lbl + "Pressed \"Start load game\".");
         STRINGS.put(Menu.SHOP, lbl + "Pressed \"Shop\"");
         STRINGS.put(Menu.SHOP_BACK, lbl + "Back to main menu");
+        STRINGS.put(Menu.ACC_LOAD, lbl + "Pressed \"Load\"");
+        STRINGS.put(Menu.ACC_NEW, lbl + "Pressed \"New\"");
+        STRINGS.put(Menu.ACC_BACK, lbl + "Back to main menu");
 
         lbl = " [PLAYER] ";
         STRINGS.put(Player.COLLISION, lbl + "Collided with %s.");

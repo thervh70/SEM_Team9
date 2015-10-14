@@ -78,7 +78,13 @@ public interface GameObserver extends Observer {
         /** Shop button in main menu has been pressed. */
         SHOP,
         /** Back button in ShopScene has been pressed. */
-        SHOP_BACK
+        SHOP_BACK,
+        /** Back button in AccountScene has been pressed. */
+        ACC_BACK,
+        /** Load button in AccountScene has been pressed. */
+        ACC_LOAD,
+        /** New button in AccountScene has been pressed. */
+        ACC_NEW
     }
 
     /**
