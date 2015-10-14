@@ -94,7 +94,8 @@ public class CollisionMap {
      * @param <C2> The collidee (AbstractEntity that was moved into) type.
      * @param collider The collider.
      * @param collidee The collidee.
-     */
+     */             //type of collisionHandler is unchecked, so suppresswarnings
+    @SuppressWarnings("unchecked")
     public <C1 extends AbstractEntity, C2 extends AbstractEntity> void
     collide(final C1 collider, final C2 collidee) {
         final Class<? extends AbstractEntity> colliderKey
