@@ -66,19 +66,47 @@ public class HighscoreClient {
     }
 
     /**
-     * Query the server for information.
-     * @param query the query to be sent to the server.
+     * Query the server to get the top <pre>amount</pre> highscores.
+     * @param amount amount of highscores to get.
      * @param callback the action to be performed on return.
      */
-    public void query(final String query, final QueryCallback callback) {
+    public void get(final int amount, final QueryCallback callback) {
+        query("get " + amount, amount, callback);
+    }
+
+    /**
+     * Send a score to the server.
+     * @param name the name of the user.
+     * @param score the score of the user.
+     * @param callback the action to be performed on return.
+     */
+    public void add(final String name, final int score,
+                     final QueryCallback callback) {
+        query("add " + name + " " + score, 1, callback);
+    }
+
+    /**
+     * Query the server for information.
+     * @param query the query to be sent to the server.
+     * @param responseLines the amount of lines expected from server.
+     * @param callback the action to be performed on return.
+     */
+    private void query(final String query, final int responseLines,
+                       final QueryCallback callback) {
         if (!connected) {
-            callback.callback(null);
+            callback.callback("FAILED");
         }
         new Thread(() -> {
             try {
                 toServer.println(query);
-                final String response = fromServer.readLine();
-                callback.callback(response);
+                final StringBuilder response = new StringBuilder();
+                for (int i = 0; i < responseLines; i++) {
+                    if (i > 0) {
+                        response.append('\n');
+                    }
+                    response.append(fromServer.readLine());
+                }
+                callback.callback(response.toString());
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

@@ -122,6 +122,12 @@ public final class Highscores {
         public int getScore() {
             return score;
         }
+
+        // TODO write a parser for a Highscore string.
+        @Override
+        public String toString() {
+            return "Highscore[" + user + ", " + score + "]";
+        }
     }
 
 }
