@@ -43,8 +43,7 @@ public final class HighscoreServer {
             }
         } catch (IOException e) {
             if (running) { // Only log if running
-                logError("Could not listen on port " + PORT);
-                System.exit(-1); // NOPMD - Command-line Interface
+                logError("Could not listen on port " + PORT + ", exiting!");
             }
         }
     }

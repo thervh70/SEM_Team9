@@ -18,7 +18,7 @@ public class HighscoreClient {
     /** Text stream from server. */
     private BufferedReader fromServer;
     /** Whether the Client is connected to the server. */
-    private boolean isConnected;
+    private boolean connected;
     /** Socket used for communication. */
     private Socket socket;
 
@@ -33,20 +33,23 @@ public class HighscoreClient {
             toServer = new PrintWriter(socket.getOutputStream(), true);
             fromServer = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));
-            isConnected = true;
+            connected = true;
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
-            System.exit(1);
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to "
                     + hostName);
-            System.exit(1);
         }
+    }
+
+    /** @return whether the client is connected to the server. */
+    public boolean isConnected() {
+        return connected;
     }
 
     /** Disconnects from the server. */
     public void disconnect() {
-        if (!isConnected) {
+        if (!connected) {
             return;
         }
         new Thread(() -> {
@@ -69,7 +72,7 @@ public class HighscoreClient {
      * @param callback the action to be performed on return.
      */
     public void query(final String query, final QueryCallback callback) {
-        if (!isConnected) {
+        if (!connected) {
             callback.callback(null);
         }
         new Thread(() -> {
@@ -95,16 +98,6 @@ public class HighscoreClient {
          *        if is null, the server could not respond.
          */
         void callback(String response);
-    }
-
-    /**
-     * Used for testing.
-     * @param args none
-     */
-    public static void main(final String... args) {
-        final HighscoreClient client = new HighscoreClient();
-        client.query("get user", response -> System.out.println(response));
-        client.disconnect();
     }
 
 }
