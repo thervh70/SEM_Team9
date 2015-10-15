@@ -45,24 +45,21 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
         final float wallXPos = leftRight * (float) (Track.WIDTH + 1) / 2f;
 
         final TriangleMesh mesh = new TriangleMesh();
-        mesh.getPoints().addAll(new float[]{
-                wallXPos, 0, 0,
+        mesh.getPoints().addAll(wallXPos, 0, 0,
                 wallXPos, 0, wallDepth,
                 wallXPos, -wallHeight, wallDepth,
-                wallXPos, -wallHeight, 0, // Negative, because y is inverted
-        });
-        mesh.getTexCoords().addAll(new float[]{
-                0, 0,
+                wallXPos, -wallHeight, 0 // Negative, because y is inverted
+        );
+        mesh.getTexCoords().addAll(0, 0,
                 0, wallDepth,
                 wallHeight, wallDepth,
-                wallHeight, 0,
-        });
+                wallHeight, 0);
         if (leftRight < 0) {  // the faces have to face right
-            mesh.getFaces().addAll(new int[]{ 0, 0, 1, 1, 2, 2,
-                    2, 2, V3, V3, 0, 0 });
+            mesh.getFaces().addAll(0, 0, 1, 1, 2, 2,
+                    2, 2, V3, V3, 0, 0);
         } else {              // the faces have to face left
-            mesh.getFaces().addAll(new int[]{ 2, 2, 1, 1, 0, 0,
-                    0, 0, V3, V3, 2, 2 });
+            mesh.getFaces().addAll(2, 2, 1, 1, 0, 0,
+                    0, 0, V3, V3, 2, 2);
         }
         final MeshView box = new MeshView(mesh);
         box.setTranslateZ(zOffset);

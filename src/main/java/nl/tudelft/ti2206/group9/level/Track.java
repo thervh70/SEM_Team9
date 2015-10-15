@@ -57,10 +57,10 @@ public class Track {
             createEntityMap = new ConcurrentHashMap<>();
 
     static {
-        createEntityMap.put(Coin.class, p -> new Coin(p));
-        createEntityMap.put(Log.class, p -> new Log(p));
-        createEntityMap.put(Pillar.class, p -> new Pillar(p));
-        createEntityMap.put(Fence.class, p -> new Fence(p));
+        createEntityMap.put(Coin.class, Coin::new);
+        createEntityMap.put(Log.class, Log::new);
+        createEntityMap.put(Pillar.class, Pillar::new);
+        createEntityMap.put(Fence.class, Fence::new);
         createEntityMap.put(AbstractPickup.class, p -> {
             final ArrayList<AbstractPickup> list = new ArrayList<>();
             list.add(new Coin(p));
@@ -82,7 +82,7 @@ public class Track {
      * @param generator the Random generator to use for this Track.
      */
     public Track(final Random generator) {
-        entities = new ObservableLinkedList<AbstractEntity>();
+        entities = new ObservableLinkedList<>();
         trackParts = new TrackParser().parseTrack();
         entities.add(new Player());
         player = 0;
@@ -184,31 +184,23 @@ public class Track {
     }
 
     /**
-     * @param listener
-     *             The listener to remove from the Observable entities list.
-     */
-    public final void removeEntitiesListener(final Listener listener) {
-        entities.removeListener(listener);
-    }
-
-    /**
      * @param amount the amount to be added
      */
-    static final void addDistance(final double amount) {
+    static void addDistance(final double amount) {
         distance += amount;
     }
 
     /**
      * @return the distance
      */
-    static final double getDistance() {
+    static double getDistance() {
         return distance;
     }
 
     /**
      * @param dist the distance to set
      */
-    static final void setDistance(final double dist) {
+    static void setDistance(final double dist) {
         Track.distance = dist;
     }
 
@@ -216,7 +208,7 @@ public class Track {
      * Get the number of Units that pass by per tick at this moment.
      * @return double Units per Tick
      */
-    public static final double getUnitsPerTick() {
+    public static double getUnitsPerTick() {
         final double div = Math.pow(UNITS_PER_TICK_ACCEL, -1) / 2
                 * UNITS_PER_TICK_BASE * UNITS_PER_TICK_BASE;
         return UNITS_PER_TICK_BASE
@@ -250,7 +242,7 @@ public class Track {
      * @param part the TrackPart to be added
      */
     private void addTrackPartToTrack(final TrackPart part) {
-        AbstractEntity add = null;
+        AbstractEntity add;
         for (final Node entity : part.getEntities()) {
             final Point3D center = new Point3D(entity.getCenter());
             center.addZ(LENGTH);
