@@ -1,5 +1,16 @@
 package nl.tudelft.ti2206.group9.gui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -12,7 +23,6 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
-import nl.tudelft.ti2206.group9.gui.scene.ShopScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.entity.Player;
@@ -22,18 +32,6 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 
 @SuppressWarnings("restriction")
@@ -72,7 +70,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SETTINGS_SOUND = 1;
 
     private static final int SHOP_BACK = 1;
-//    private static final int SHOP_BUY_SKIN = 5;
+    private static final int SHOP_SKIN_IRONMAN = 0;
+    private static final int SHOP_SKIN_CAPTAIN = 1;
 
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
@@ -147,12 +146,17 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void goThroughShop() {
-        State.setCoins(COINS);
+        State.setCoins(COINS); //Make sure player has enough coins
         mainMenu(MAIN_SHOP);
-//        assertEquals(State.getSkin(), Style.getNoob());
-//        shopScreen(SHOP_BUY_SKIN);
-//        shopScreen(SHOP_BUY_SKIN);
-//        assertNotEquals(State.getSkin(), Style.getNoob());
+        assertEquals(State.getSkin(), Style.getNoob());
+        shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
+        assertEquals(State.getSkin(), Style.getNoob());
+        shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
+        assertEquals(State.getSkin(), Style.getNoob());
+        shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
+        assertEquals(State.getSkin(), Style.getCaptain());
+        shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
+        assertEquals(State.getSkin(), Style.getIronMan());
         shopScreen(SHOP_BACK);
     }
 
@@ -258,17 +262,25 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void shopScreen(final int buttonNo) {
-        //Make sure player has enough coins
         ObservableList<Node> buttons;
         buttons = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
 
-//        ScrollPane pane = (ScrollPane) buttons.get(0);
-//        HBox hbox = (HBox) pane.getContent();
-//        VBox vbox = (VBox) hbox.getChildren().get(0);
-//        buttons.add(vbox.getChildren().get(3));
-
         clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+        sleep(SHORT);
+    }
+
+    private void shopBuyEquipSkin(final int skinNo) {
+        ObservableList<Node> gridPaneNodes;
+        gridPaneNodes = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+
+        final ScrollPane pane = (ScrollPane) gridPaneNodes.get(0);
+        final HBox hbox = (HBox) pane.getContent();
+        final VBox vbox = (VBox) hbox.getChildren().get(skinNo);
+
+        final int buyEquip = 3; // Is the same for each skin
+        clickOn(vbox.getChildren().get(buyEquip), MouseButton.PRIMARY);
         sleep(SHORT);
     }
 
