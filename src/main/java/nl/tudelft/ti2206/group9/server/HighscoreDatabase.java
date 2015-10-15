@@ -46,22 +46,29 @@ public final class HighscoreDatabase {
      * @return the result of the query.
      */
     private static String queryGet(final Scanner sc,
-                                   final StringBuffer theOutput) {
+            final StringBuffer theOutput) {
         if (!sc.hasNextInt()) {
             sc.close();
             return "USAGE get <amount:int>";
         }
         final int amount = sc.nextInt();
         int i = 0;
+        int entries = 0;
         for (final Highscore h : database) {
             if (i == amount) {
                 break;
             }
-            if (i > 0) {
-                theOutput.append('\n');
+            if (!theOutput.toString().contains("[" + h.getUser() + ",")) {
+                if (entries > 0) {
+                    theOutput.append('\n');
+                }
+                theOutput.append(h.toString());
+                entries++;
             }
-            theOutput.append(h.toString());
             i++;
+        }
+        for (; entries < amount; entries++) {
+            theOutput.append('\n');
         }
         sc.close();
         return theOutput.toString();

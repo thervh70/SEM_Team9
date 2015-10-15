@@ -51,23 +51,28 @@ public class HighscoreClientTest {
 
     @Test
     public final void test() throws InterruptedException {
-        final int[] scores = {42, 21, 84};
-        client.add("Kees", scores[0], callback);
+        final int[] scores = {42, 21, 84, 63};
+        int i = -1;
+        client.add("Kees", scores[++i], callback);
+        haltTestUntilServerResponds();
+        assertEquals("SUCCESS", actualResponse); // NOPMD - 4 * SUCCESS
+
+        client.add("Piet", scores[++i], callback);
         haltTestUntilServerResponds();
         assertEquals("SUCCESS", actualResponse);
 
-        client.add("Piet", scores[1], callback);
+        client.add("Jaap", scores[++i], callback);
         haltTestUntilServerResponds();
         assertEquals("SUCCESS", actualResponse);
 
-        client.add("Jaap", scores[2], callback);
+        client.add("Piet", scores[++i], callback);
         haltTestUntilServerResponds();
         assertEquals("SUCCESS", actualResponse);
 
-        client.get(scores.length, callback);
+        client.get(scores.length + 1, callback);
         haltTestUntilServerResponds();
-        assertEquals("Highscore[Jaap, 84]\nHighscore[Kees, 42]\n"
-                + "Highscore[Piet, 21]", actualResponse);
+        assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]\n"
+                + "Highscore[Kees, 42]\n\n", actualResponse);
     }
 
     /**
