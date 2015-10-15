@@ -177,7 +177,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
      */
     private void loopAudio() {
         try {
-        mediaPlayer.setCycleCount(INDEFINITE);
+            mediaPlayer.setCycleCount(INDEFINITE);
         } catch (NullPointerException ne) { // NOPMD
             // This try-catch block is just here for testing.
             // The loopAudio method can result in a NullPointer (according to

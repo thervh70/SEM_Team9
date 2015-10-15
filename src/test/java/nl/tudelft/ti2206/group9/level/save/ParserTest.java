@@ -16,7 +16,7 @@ public class ParserTest {
 
     @Test
     public void testParser() {
-        Parser.loadGame(fileFolder + "saveGameParserTest.json");
+        Parser.loadGame(fileFolder + "saveGameParserTest.ses");
 
         final int expectedCoins = 42;
         final int expectedHigh = 2560;

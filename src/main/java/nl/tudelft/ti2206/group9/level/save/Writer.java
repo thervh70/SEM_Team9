@@ -87,15 +87,17 @@ public final class Writer {
     private static String writeToJSON() {
         final JSONObject mainObject = new JSONObject();
 
+        final JSONObject settings = new JSONObject();
+
         final JSONObject soundtracksettings = new JSONObject();
         soundtracksettings.put("soundtrackEnabled",
                 State.isSoundtrackEnabled());
-        mainObject.put("soundtracksettings", soundtracksettings);
+        settings.put("soundtracksettings", soundtracksettings);
 
         final JSONObject soundeffectsettings = new JSONObject();
         soundeffectsettings.put("soundEffectsEnabled",
                 State.isSoundEffectsEnabled());
-        mainObject.put("soundEffectssettings", soundeffectsettings);
+        settings.put("soundEffectssettings", soundeffectsettings);
 
         mainObject.put("playername", State.getPlayerName());
         mainObject.put("coins", State.getCoins());
@@ -104,6 +106,7 @@ public final class Writer {
         highscore.put("score", State.getHighscore());
         mainObject.put("highscore", highscore);
 
+        mainObject.put("settings", settings);
         return mainObject.toJSONString();
     }
 }

@@ -48,7 +48,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     private static final int FONT_SIZE = 12;
     /** The AudioPlayer to be used for background music. */
     private static SoundtrackPlayer apMainMenu = new SoundtrackPlayer(
-                "src/main/resources/nl/tudelft/ti2206/group9/audio/intro.wav");
+            "src/main/resources/nl/tudelft/ti2206/group9/audio/intro.wav");
 
     /**
      * Create Start, Settings and Exit buttons.
@@ -94,7 +94,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     private void setButtonFunction(final Button button,
             final BType type) {
         button.setOnAction(event -> {
-            SplashScene.getButtonAudioPlayer().play();
+            ShaftEscape.getButtonAudioPlayer().play();
             if (type == BType.EXIT) {
                 apMainMenu.stop();
                 OBSERVABLE.notify(Category.MENU, Menu.EXIT);

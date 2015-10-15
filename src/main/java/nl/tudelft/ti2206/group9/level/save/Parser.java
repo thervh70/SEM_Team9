@@ -107,12 +107,15 @@ public final class Parser {
         playername = (String) mainObject.get("playername");
         coins = (Long) mainObject.get("coins");
 
+        final JSONObject settingsObj =
+                (JSONObject) mainObject.get("settings");
+
         final JSONObject soundtrObj =
-                (JSONObject) mainObject.get("soundtracksettings");
+                (JSONObject) settingsObj.get("soundtracksettings");
         soundtrackEnabled = (Boolean) soundtrObj.get("soundtrackEnabled");
 
         final JSONObject soundEfObj =
-                (JSONObject) mainObject.get("soundEffectssettings");
+                (JSONObject) settingsObj.get("soundEffectssettings");
         soundEffectsEnabled = (Boolean) soundEfObj.get("soundEffectsEnabled");
 
         final JSONObject highObj = (JSONObject) mainObject.get("highscore");

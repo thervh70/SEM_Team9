@@ -26,8 +26,8 @@ public final class WriterTest {
         State.setSoundtrackEnabled(soundEnabled);
         State.setSoundEffectsEnabled(soundEnabled);
 
-        Writer.saveGame(fileFolder + "saveGameWriterTest.json");
-        Parser.loadGame(fileFolder + "saveGameWriterTest.json");
+        Writer.saveGame(fileFolder + "saveGameWriterTest.ses");
+        Parser.loadGame(fileFolder + "saveGameWriterTest.ses");
 
         assertEquals(playerName, State.getPlayerName());
         assertEquals(coins, State.getCoins());

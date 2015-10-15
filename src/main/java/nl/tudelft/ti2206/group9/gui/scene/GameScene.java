@@ -191,7 +191,6 @@ public final class GameScene extends AbstractScene {
 
     /** Show a death menu. */
     public static void showDeathMenu() {
-//      soundtrackPlayer.resetSpeed();
         soundtrackPlayer.stop();
         setPopup(new DeathPopup(e -> {
             OBSERVABLE.notify(Category.GAME, Game.RETRY);

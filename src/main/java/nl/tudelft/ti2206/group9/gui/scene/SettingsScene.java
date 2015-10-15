@@ -35,6 +35,8 @@ public final class SettingsScene extends AbstractMenuScene {
     private static final int TOGGLE_TEXT_SIZE = 16;
     /** Initially the toggles are set to off. */
     private static final String INIT_TOGGLE = "OFF";
+    /** Standard string for toggles that are set to on. */
+    private static final String ACTIVE_TOGGLE = "ON";
 
     /**
      * Creates a Sound toggle button and a Back button.
@@ -46,18 +48,18 @@ public final class SettingsScene extends AbstractMenuScene {
 
         String soundtrToggle = INIT_TOGGLE;
         if (State.isSoundtrackEnabled()) {
-            soundtrToggle = "ON";
+            soundtrToggle = ACTIVE_TOGGLE;
         }
         final Button soundtrButton = createButton("Soundtrack: "
-        + soundtrToggle, 5, 14);
+            + soundtrToggle, 5, 14);
         soundtrButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
         soundtrButton.setPrefWidth(TOGGLE_WIDTH);
         String soundEfToggle = INIT_TOGGLE;
         if (State.isSoundEffectsEnabled()) {
-            soundEfToggle = "ON";
+            soundEfToggle = ACTIVE_TOGGLE;
         }
         final Button soundEfButton = createButton("Sound effects: "
-        + soundEfToggle, 5, 17);
+            + soundEfToggle, 5, 17);
         soundEfButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
         soundEfButton.setPrefWidth(TOGGLE_WIDTH);
 
@@ -80,16 +82,16 @@ public final class SettingsScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
             final BType type) {
         button.setOnAction(event -> {
-            SplashScene.getButtonAudioPlayer().play();
+            ShaftEscape.getButtonAudioPlayer().play();
             String s;
             if (type == BType.SETTINGS_BACK) {
                 OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
                 ShaftEscape.setScene(new MainMenuScene());
-                } else if (type == BType.SETTING_SOUNDTRACK) {
+            } else if (type == BType.SETTING_SOUNDTRACK) {
                 MainMenuScene.getAudioPlayer().stop();
                 State.setSoundtrackEnabled(!State.isSoundtrackEnabled());
                 if (State.isSoundtrackEnabled()) {
-                    s = "ON";
+                    s = ACTIVE_TOGGLE;
                 } else {
                     s = INIT_TOGGLE;
                 }
@@ -98,7 +100,7 @@ public final class SettingsScene extends AbstractMenuScene {
             } else {
                 State.setSoundEffectsEnabled(!State.isSoundEffectsEnabled());
                 if (State.isSoundEffectsEnabled()) {
-                    s = "ON";
+                    s = ACTIVE_TOGGLE;
                 } else {
                     s = INIT_TOGGLE;
                 }
