@@ -146,6 +146,7 @@ public class EndToEndTest extends ApplicationTest {
         mainMenu(MAIN_SHOP);
         assertEquals(State.getSkin(), Style.getNoob());
         shopScreen(SHOP_LIST);
+        sleep(LONG);
         shopScreen(SHOP_LIST);
         assertNotEquals(State.getSkin(), Style.getNoob());
         shopScreen(SHOP_BACK);
