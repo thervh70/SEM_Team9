@@ -1,10 +1,12 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import javafx.beans.binding.Bindings;
@@ -13,11 +15,13 @@ import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.save.Highscores;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
-import javax.swing.text.html.ListView;
+
+import java.util.List;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
@@ -51,13 +55,33 @@ public final class MainMenuScene extends AbstractMenuScene {
     private static final int EXIT_BUTTON_WIDTH = 60;
     /** Font size for input. */
     private static final int FONT_SIZE = 12;
+    /**
+     * Label height.
+     */
+    private static final int LABEL_HEIGHT = 20;
+    /**
+     * ScoreTable heifht.
+     */
+    private static final int SCORETABLE_HEIGHT = 120;
+    /**
+     * Span for table.
+     */
+    private static final int TABLE_SPAN = 3;
+    /**
+     * Constraint for table.
+     */
+    private static final int TABLE_ROW = 16;
+    /**
+     * Amount of score to retrieve from server.
+     */
+    private static final int SCORE_COUNT = 5;
     /** The AudioPlayer to be used for background music. */
     private static AudioPlayer apMainMenu = new AudioPlayer("src/main/"
             + "resources/nl/tudelft/ti2206/group9/audio/intro.wav");
     /**
      * Table for highscores.
      */
-    private static TableView<String> scoreTable = new TableView<>();
+    private static ListView<String> scoreTable = new ListView<>();
 
     /**
      * Create Start, Settings and Exit buttons.
@@ -74,40 +98,51 @@ public final class MainMenuScene extends AbstractMenuScene {
         final Button loadButton = createButton("LOAD GAME", 2, 24);
         final Button shopButton = createButton("SHOP", 4, 24);
         final Label nameLabel = createLabel("NEW PLAYER:", 0, 22);
+        final Label highscoreLabel = createLabel("HIGHSCORES", 2, 13);
+        highscoreLabel.setMinHeight(LABEL_HEIGHT);
         exitButton.setMaxWidth(EXIT_BUTTON_WIDTH);
-
         /** Set functions of buttons.*/
         setButtonFunction(exitButton, BType.EXIT);
         setButtonFunction(startButton, BType.START);
         setButtonFunction(settingsButton, BType.SETTINGS);
         setButtonFunction(loadButton, BType.LOAD);
         setButtonFunction(shopButton, BType.SHOP);
-
-        /** Set tooltips. */
         startButton.setTooltip(new Tooltip("Start the game!"));
         exitButton.setTooltip(new Tooltip("Are you sure?"));
         settingsButton.setTooltip(new Tooltip("Change game settings"));
         loadButton.setTooltip(new Tooltip("Continue a game"));
         INPUT.setTooltip(new Tooltip("Enter your name"));
         INPUT.setFont(Style.getFont(FONT_SIZE));
-
         createScoreTable();
         return new Node[]{startButton, settingsButton, exitButton,
-                loadButton, nameLabel, INPUT, shopButton, scoreTable};
+                loadButton, nameLabel, INPUT, shopButton,
+                scoreTable, highscoreLabel};
     }
 
+    /**
+     * Create a table with highscores drawn from
+     * the gamejolt server.
+     */
     public static void createScoreTable() {
         GridPane.setRowSpan(scoreTable, 2);
-        GridPane.setColumnSpan(scoreTable, 3);
-        GridPane.setConstraints(scoreTable, 1, 14);
+        GridPane.setColumnSpan(scoreTable, TABLE_SPAN);
+        GridPane.setConstraints(scoreTable, 1, TABLE_ROW);
+        scoreTable.setMinHeight(SCORETABLE_HEIGHT);
+        scoreTable.setFocusTraversable(false);
 
+        List<Highscores.Highscore> highscoreList = Highscores.get(SCORE_COUNT);
 
-        TableColumn numberColumn = new TableColumn("#");
-        TableColumn scoreColumn = new TableColumn("SCORE");
+        ObservableList<String> observableScoreList =
+                FXCollections.observableArrayList();
 
-//        numberColumn.setCellValueFactory(State, State.getHighscore());
+        for (Highscores.Highscore hs : highscoreList) {
 
-        scoreTable.getColumns().addAll(numberColumn, scoreColumn);
+            String score = hs.getUser() + "  -  "
+                    + Integer.toString(hs.getScore());
+            observableScoreList.add(score);
+        }
+
+        scoreTable.setItems(observableScoreList);
     }
 
     /**
