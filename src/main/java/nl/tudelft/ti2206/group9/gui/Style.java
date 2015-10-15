@@ -160,7 +160,7 @@ public final class Style {
         final Insets inset = new Insets(0);
         final BackgroundFill fill = new BackgroundFill(color, corner, inset);
         final Background buttonBack = new Background(fill);
-        final Font font = getFont(14);
+        final Font font = getFont(13);
         b.setTextFill(Color.WHITE);
         b.setBackground(buttonBack);
         b.setFont(font);
@@ -212,7 +212,7 @@ public final class Style {
         final Insets inset = new Insets(-4);
         final BackgroundFill fill = new BackgroundFill(color, corner, inset);
         final Background buttonBack = new Background(fill);
-        final Font font = getFont(14);
+        final Font font = getFont(13);
         l.setAlignment(Pos.CENTER);
         l.setBackground(buttonBack);
         l.setTextFill(Color.WHITE);

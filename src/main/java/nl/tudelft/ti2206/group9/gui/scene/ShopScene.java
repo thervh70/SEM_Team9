@@ -50,9 +50,10 @@ public class ShopScene extends AbstractMenuScene {
         final Label coinsLabel = createLabel("COINS:", 2, 24);
         final Label amountLabel = createLabel(Integer
                 .toString(State.getCoins()), 4, 24);
-
+        final Label playerName = getPlayerLabelContent();
         setButtonFunction(backButton, BType.SHOP_BACK);
-        return new Node[]{backButton, coinsLabel, amountLabel, itemTable};
+        return new Node[]{backButton, coinsLabel, amountLabel, itemTable,
+                playerName};
     }
 
     /**

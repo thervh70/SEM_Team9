@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
+import nl.tudelft.ti2206.group9.level.State;
 
 /**
  * Ancestor for all MenuScenes. Subclasses should define an array of Nodes in
@@ -154,6 +155,22 @@ public abstract class AbstractMenuScene extends AbstractScene {
         GridPane.setRowSpan(table, ROW_SPAN);
         table.setPrefSize(LIST_WIDTH, LIST_HEIGHT);
         return table;
+    }
+
+    /**
+     * Create a Label in the left-upper corner with the name of
+     * the current selected account in it. Value is 'Guest' when no
+     * account is selected.
+     * @return the Label containing the players name
+     */
+    protected static Label getPlayerLabelContent() {
+        String name = "";
+        if (State.getPlayerName() == null) {
+            name = "Guest";
+        } else {
+            name = State.getPlayerName();
+        }
+        return createLabel(name, 0, 0);
     }
 
 }

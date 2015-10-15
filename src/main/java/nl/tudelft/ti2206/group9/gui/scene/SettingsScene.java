@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.gui.scene;
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.Style;
@@ -44,6 +45,7 @@ public final class SettingsScene extends AbstractMenuScene {
             soundToggle = "ON";
         }
         final Button soundButton = createButton("Sound: " + soundToggle, 2, 18);
+        final Label playerName = getPlayerLabelContent();
         soundButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
         soundButton.setPrefWidth(TOGGLE_WIDTH);
 
@@ -53,7 +55,7 @@ public final class SettingsScene extends AbstractMenuScene {
         // Set Tooltips.
         soundButton.setTooltip(new Tooltip("Enable/disable sound"));
         backButton.setTooltip(new Tooltip("Back to main menu"));
-        return new Node[]{backButton, soundButton};
+        return new Node[]{backButton, soundButton, playerName};
     }
 
     /**
