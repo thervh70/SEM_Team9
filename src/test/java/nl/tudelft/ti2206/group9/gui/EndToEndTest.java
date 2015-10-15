@@ -145,10 +145,12 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughShop() {
         mainMenu(MAIN_SHOP);
         assertEquals(State.getSkin(), Style.getNoob());
+        System.out.println("\t\tSkin A: " + State.getSkin().getSkinName());
         shopScreen(SHOP_LIST);
         sleep(LONG);
         shopScreen(SHOP_LIST);
         assertNotEquals(State.getSkin(), Style.getNoob());
+        System.out.println("\t\tSkin B: " + State.getSkin().getSkinName());
         shopScreen(SHOP_BACK);
     }
 
