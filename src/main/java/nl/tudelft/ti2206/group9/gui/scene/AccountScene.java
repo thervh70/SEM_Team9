@@ -24,13 +24,15 @@ public class AccountScene extends AbstractMenuScene {
 
     /** Row in Grid of list. */
     private static final int LIST_ROW = 16;
+    /** Colomn of the list position. */
+    private static final int LIST_COLOMN = 4;
     /** Font size for input. */
     private static final int FONT_SIZE = 12;
     /** Height of the ListView. */
     private static final double LIST_HEIGHT = 160;
 
     /** Creating the listview used to display the list. */
-    private static ListView<String> list = createList(4, LIST_ROW);
+    private static ListView<String> list = createList(LIST_COLOMN, LIST_ROW);
     /** The input field for the name of the player. */
     static final TextField INPUT = createTextField("PLAYER NAME", 2, 16);
 

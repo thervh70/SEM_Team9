@@ -1,11 +1,9 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.AudioPlayer;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
@@ -43,8 +41,6 @@ public final class MainMenuScene extends AbstractMenuScene {
 
     /** ExitButton width. */
     private static final int EXIT_BUTTON_WIDTH = 60;
-    /** Width for large buttons. */
-    private static final int LARGE_BUTTON_WIDTH = 130;
     /** The AudioPlayer to be used for background music. */
     private static AudioPlayer apMainMenu = new AudioPlayer("src/main/"
             + "resources/nl/tudelft/ti2206/group9/audio/intro.wav");
