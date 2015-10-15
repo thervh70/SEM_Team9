@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -38,6 +39,8 @@ public final class Parser {
     private static long highScore;
     /** Boolean to indicate whether the sound is enabled. */
     private static boolean soundEnabled;
+    /** Boolean to indicate if skins are unlocked. */
+    private static boolean andy, captain, boy, plank, iron;
 
     /**
      * Private constructor.
@@ -59,16 +62,15 @@ public final class Parser {
             while (reader.ready()) {
                 lines.add(reader.readLine());
             }
-
             final String mainString = createString(lines);
             final String decryptedMain = decrypt(mainString);
-
             final JSONParser parser = new JSONParser();
             final JSONObject mainObject =
                     (JSONObject) parser.parse(decryptedMain);
 
             parseJSON(mainObject);
             writeToState();
+            writeToSkins();
             reader.close();
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
@@ -110,6 +112,12 @@ public final class Parser {
 
         final JSONObject highObj = (JSONObject) mainObject.get("highscore");
         highScore = (Long) highObj.get("score");
+
+        andy = (boolean) mainObject.get("andy");
+        boy = (boolean) mainObject.get("boy");
+        captain = (boolean) mainObject.get("captain");
+        iron = (boolean) mainObject.get("iron");
+        plank = (boolean) mainObject.get("plank");
     }
 
     /**
@@ -120,6 +128,17 @@ public final class Parser {
         State.setCoins((int) coins);
         State.setSoundEnabled(soundEnabled);
         State.setHighscore(highScore);
+    }
+
+    /**
+     * Write states of skins to Style.
+     */
+    private static void writeToSkins() {
+        Style.getAndy().setSkinUnlocked(andy);
+        Style.getCaptain().setSkinUnlocked(captain);
+        Style.getBoy().setSkinUnlocked(boy);
+        Style.getIronMan().setSkinUnlocked(iron);
+        Style.getPlank().setSkinUnlocked(plank);
     }
 
     /**

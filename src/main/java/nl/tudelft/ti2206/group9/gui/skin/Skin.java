@@ -72,6 +72,13 @@ public class Skin {
         return skinUnlocked;
     }
 
+    /** Setting the value for unlocked.
+     * @param unlocked unlocked?
+     */
+    public void setSkinUnlocked(final boolean unlocked) {
+        skinUnlocked = unlocked;
+    }
+
     /**
      * Buy method.
      */
