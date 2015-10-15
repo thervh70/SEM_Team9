@@ -53,28 +53,24 @@ public class GroupLightRenderer extends AbstractGroupRenderer {
     public void update() {
         if (InternalTicker.isRunning()) {
             final double unitsPerTick = Track.getUnitsPerTick();
-            for (final Node node : this.getChildren()) {
+            for (final Node node : getChildren()) {
                 node.setTranslateZ(node.getTranslateZ() - unitsPerTick);
             }
 
-            final double lightDepth = this.getChildren().get(
-                    this.getChildren().size() - 1).getTranslateZ();
+            final double lightDepth = getChildren().get(
+                    getChildren().size() - 1).getTranslateZ();
             if (lightDepth < Track.LENGTH) {
                 renderLight((int) lightDepth);
             }
 
-            int index = 0;
-            final int renderspace = 20;
-            while (true) {
-                if (index >= this.getChildren().size()) {
-                    break;
-                } else if (this.getChildren().get(index).getTranslateZ()
+            final int renderspace = (int) Track.LENGTH;
+            for (int i = 0; i < getChildren().size(); i++) {
+                if (this.getChildren().get(i).getTranslateZ()
                         + renderspace > GameScene.CAMERA_TRANS.getZ()) {
                     break;
                 }
 
-                this.getChildren().remove(index);
-                index++;
+                getChildren().remove(i);
             }
         }
     }
