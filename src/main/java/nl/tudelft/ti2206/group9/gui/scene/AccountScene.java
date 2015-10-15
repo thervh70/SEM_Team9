@@ -84,18 +84,24 @@ public class AccountScene extends AbstractMenuScene {
                                             final BType type) {
         button.setOnAction(event -> {
             if (type == BType.ACC_LOAD) {
-                OBSERVABLE.notify(Category.MENU, Menu.ACC_LOAD);
-                SaveGame.loadGame(list.getSelectionModel().getSelectedItem());
-                refreshContent();
+                if (list.getSelectionModel().getSelectedItem() == null) {
+                    setPopup(new WarningPopup(event1 -> {
+                        setPopup(null);
+                    }, "Select an account to load"));
+                    ShaftEscape.showPopup(getPopup());
+                } else {
+                    OBSERVABLE.notify(Category.MENU, Menu.ACC_LOAD);
+                    SaveGame.loadGame(
+                            list.getSelectionModel().getSelectedItem());
+                    refreshContent();
+                }
             } else if (type == BType.ACC_NEW) {
                 if (checkPlayerName(INPUT.getText())) {
-                    OBSERVABLE.notify(Category.MENU, Menu.ACC_NEW);
-                    State.resetAll();
-                    State.setPlayerName(INPUT.getText());
-                    SaveGame.saveGame();
+                    createNewAccount(INPUT.getText());
                 } else {
                     setPopup(new WarningPopup(event1 -> setPopup(null),
-                            "The given name is invalid"));
+                            "The given name is either invalid\n"
+                                    + "or already exists"));
                     ShaftEscape.showPopup(getPopup());
                 }
             } else {
@@ -140,6 +146,18 @@ public class AccountScene extends AbstractMenuScene {
     }
 
     /**
+     * Create a new account with the given name.
+     * @param name the name of the new account
+     */
+    private static void createNewAccount(final String name) {
+        OBSERVABLE.notify(Category.MENU, Menu.ACC_NEW);
+        State.resetAll();
+        State.setPlayerName(name);
+        SaveGame.saveGame();
+        refreshContent();
+    }
+
+    /**
      * Checks whether the playername is a valid name.
      * Invalid options:
      * <ul>
@@ -152,7 +170,17 @@ public class AccountScene extends AbstractMenuScene {
      * @return boolean to indicate whether the name is valid
      */
     private static boolean checkPlayerName(final String name) {
+
         return !(name.contains(".") || name.contains("/")
-                || name.contains("\\"));
+                || name.contains("\\") || alreadyExists(name));
+    }
+
+    /**
+     * Checks whether there already exists a file with the given name.
+     * @param name name to be checked
+     * @return a boolean to indicate whether the name already exists
+     */
+    private static boolean alreadyExists(final String name) {
+        return State.getSaveGames().contains(name);
     }
 }

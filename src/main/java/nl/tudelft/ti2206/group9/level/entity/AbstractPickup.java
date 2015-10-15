@@ -1,13 +1,10 @@
 package nl.tudelft.ti2206.group9.level.entity;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import nl.tudelft.ti2206.group9.gui.renderer.AbstractBoxRenderer;
 import nl.tudelft.ti2206.group9.gui.renderer.PickupRenderer;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Action;
-import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Point3D;
-import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 
 /**
  * An abstract class defining a Pickup. This can be anything: a Coin, Powerup,
@@ -71,22 +68,6 @@ public abstract class AbstractPickup extends AbstractEntity {
      * @return The action that this pickup should perform when picked up.
      */
     protected abstract Action thisAction();
-
-    /**
-     * When colliding with Player, Pickup should be removed from the field.
-     * Also, the action defined in {@link AbstractPickup#doAction()} is
-     * performed.
-     * @param collidee Entity that this Pickup collides with.
-     */
-    @Override
-    public final void collision(final AbstractEntity collidee) {
-        if (collidee instanceof Player) {
-            OBSERVABLE.notify(Category.PLAYER, GameObserver.Player.COLLISION,
-                    this.getClass().getSimpleName());
-            doAction();
-            selfDestruct();
-        }
-    }
 
     @Override
     public AbstractBoxRenderer<? extends AbstractEntity> createRenderer() {

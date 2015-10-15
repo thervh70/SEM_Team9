@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.audio.AudioPlayer;
+import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -42,8 +42,8 @@ public final class MainMenuScene extends AbstractMenuScene {
     /** ExitButton width. */
     private static final int EXIT_BUTTON_WIDTH = 60;
     /** The AudioPlayer to be used for background music. */
-    private static AudioPlayer apMainMenu = new AudioPlayer("src/main/"
-            + "resources/nl/tudelft/ti2206/group9/audio/intro.wav");
+    private static SoundtrackPlayer apMainMenu = new SoundtrackPlayer(
+            "src/main/resources/nl/tudelft/ti2206/group9/audio/intro.wav");
 
     /**
      * Create Start, Settings and Exit buttons.
@@ -51,7 +51,7 @@ public final class MainMenuScene extends AbstractMenuScene {
      */
     @Override
     public Node[] createContent() {
-        apMainMenu.play(true);
+        apMainMenu.play();
         final Button startButton = createButton("START!", 2, 22);
         final Button settingsButton = createButton("SETTINGS", 0, 24);
         final Button exitButton = createButton("EXIT", 4, 24);
@@ -87,7 +87,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     private void setButtonFunction(final Button button,
             final BType type) {
         button.setOnAction(event -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            ShaftEscape.getButtonAudioPlayer().play();
             if (type == BType.EXIT) {
                 apMainMenu.stop();
                 OBSERVABLE.notify(Category.MENU, Menu.EXIT);
@@ -119,7 +119,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     /** Every MainMenuScene has an AudioPlayer for the soundtrack.
      * @return the apMainMenu AudioPlayer.
      */
-    public static AudioPlayer getAudioPlayer() {
+    public static SoundtrackPlayer getAudioPlayer() {
         return apMainMenu;
     }
 }
