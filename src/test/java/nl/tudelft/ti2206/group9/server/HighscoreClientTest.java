@@ -43,7 +43,7 @@ public class HighscoreClientTest {
 
     @Before
     public void setUp() {
-        client = new HighscoreClient();
+        client = new HighscoreClient("localhost");
     }
 
     @After
@@ -59,7 +59,7 @@ public class HighscoreClientTest {
         haltTestUntilServerResponds();
         assertEquals("SUCCESS", actualResponse); // NOPMD - 4 * SUCCESS
 
-        client.add("Piet", scores[++i], callback);
+        client.add("Piet", scores[++i], callback); // NOPMD - 5 * Piet
         haltTestUntilServerResponds();
         assertEquals("SUCCESS", actualResponse);
 
@@ -80,6 +80,14 @@ public class HighscoreClientTest {
         haltTestUntilServerResponds();
         assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]",
                 actualResponse);
+
+        client.getGlobal(-1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("", actualResponse);
+
+        client.getUser("Kees", -1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("", actualResponse);
 
         client.getUser("Piet", 1, callback);
         haltTestUntilServerResponds();

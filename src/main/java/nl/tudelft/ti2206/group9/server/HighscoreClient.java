@@ -28,11 +28,12 @@ public class HighscoreClient {
     /** Socket used for communication. */
     private Socket socket;
 
-    /** Default constructor. */
-    public HighscoreClient() {
+    /**
+     * Default constructor.
+     * @param hostName the host name of the server.
+     */
+    public HighscoreClient(final String hostName) {
         super();
-
-        final String hostName = "localhost";
 
         try {
             socket = new Socket(hostName, HighscoreServer.PORT);
@@ -81,7 +82,7 @@ public class HighscoreClient {
      * @param callback the action to be performed on return.
      */
     public void getGlobal(final int amount, final QueryCallback callback) {
-        query("get global " + amount, amount, callback);
+        query("get global " + amount, Math.max(amount, 1), callback);
     }
 
     /**
@@ -92,7 +93,7 @@ public class HighscoreClient {
      */
     public void getUser(final String user, final int amount,
             final QueryCallback callback) {
-        query("get user " + user + " " + amount, amount, callback);
+        query("get user " + user + " " + amount, Math.max(amount, 1), callback);
     }
 
     /**
@@ -122,11 +123,16 @@ public class HighscoreClient {
             try {
                 toServer.println(query);
                 final StringBuilder response = new StringBuilder();
+                String from;
                 for (int i = 0; i < responseLines; i++) {
                     if (i > 0) {
                         response.append('\n');
                     }
-                    response.append(fromServer.readLine());
+                    from = fromServer.readLine();
+                    response.append(from);
+                    if (from.startsWith("USAGE")) {
+                        break;
+                    }
                 }
                 callback.callback(response.toString());
             } catch (IOException e) {

@@ -75,6 +75,9 @@ public final class HighscoreDatabase {
             return "USAGE get user " + user + " <amount:int>";
         }
         final int amount = sc.nextInt();
+        if (amount < 0) {
+            return "";
+        }
         int entries = 0;
         for (final Highscore h : database) {
             if (entries == amount) {
@@ -107,6 +110,9 @@ public final class HighscoreDatabase {
             return "USAGE get global <amount:int>";
         }
         final int amount = sc.nextInt();
+        if (amount < 0) {
+            return "";
+        }
         int i = 0;
         int entries = 0;
         for (final Highscore h : database) {
