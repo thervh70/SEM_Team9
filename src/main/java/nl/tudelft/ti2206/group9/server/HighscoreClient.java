@@ -80,8 +80,19 @@ public class HighscoreClient {
      * @param amount amount of highscores to get.
      * @param callback the action to be performed on return.
      */
-    public void get(final int amount, final QueryCallback callback) {
-        query("get " + amount, amount, callback);
+    public void getGlobal(final int amount, final QueryCallback callback) {
+        query("get global " + amount, amount, callback);
+    }
+
+    /**
+     * Query the server to get the user's top <pre>amount</pre> highscores.
+     * @param user the user to get the highscores for.
+     * @param amount amount of highscores to get.
+     * @param callback the action to be performed on return.
+     */
+    public void getUser(final String user, final int amount,
+            final QueryCallback callback) {
+        query("get user " + user + " " + amount, amount, callback);
     }
 
     /**

@@ -71,14 +71,29 @@ public class HighscoreClientTest {
         haltTestUntilServerResponds();
         assertEquals("SUCCESS", actualResponse);
 
-        client.get(scores.length + 1, callback);
+        client.getGlobal(scores.length + 1, callback);
         haltTestUntilServerResponds();
         assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]\n"
                 + "Highscore[Kees, 42]\n\n", actualResponse);
 
-        client.get(2, callback);
+        client.getGlobal(2, callback);
         haltTestUntilServerResponds();
         assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]",
+                actualResponse);
+
+        client.getUser("Piet", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("Highscore[Piet, 63]",
+                actualResponse);
+
+        client.getUser("Piet", 2, callback);
+        haltTestUntilServerResponds();
+        assertEquals("Highscore[Piet, 63]\nHighscore[Piet, 21]",
+                actualResponse);
+
+        client.getUser("Piet", 2 + 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("Highscore[Piet, 63]\nHighscore[Piet, 21]\n",
                 actualResponse);
     }
 
@@ -94,7 +109,25 @@ public class HighscoreClientTest {
 
         client.query("get", 1, callback);
         haltTestUntilServerResponds();
-        assertEquals("USAGE get <amount:int>", actualResponse);
+        assertEquals("USAGE get user|global <args>", actualResponse);
+
+        client.query("get nothing", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("USAGE get user|global <args>", actualResponse);
+
+        client.query("get global", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("USAGE get global <amount:int>", actualResponse);
+
+        client.query("get user", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("USAGE get user <name:string> <amount:int>",
+                actualResponse);
+
+        client.query("get user Kees", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("USAGE get user Kees <amount:int>",
+                actualResponse);
 
         client.query("add", 1, callback);
         haltTestUntilServerResponds();
@@ -112,7 +145,7 @@ public class HighscoreClientTest {
             Thread.sleep(2); // Do nothing until disconnected
         }
 
-        client.get(1, callback);
+        client.getGlobal(1, callback);
         // haltTestUntilServerResponds(); not needed, because connected = false.
         assertEquals("DISCONNECTED", actualResponse);
     }

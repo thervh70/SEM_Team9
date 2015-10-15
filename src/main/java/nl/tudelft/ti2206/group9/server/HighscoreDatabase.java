@@ -47,9 +47,64 @@ public final class HighscoreDatabase {
      */
     private static String queryGet(final Scanner sc,
             final StringBuffer theOutput) {
+        if (!sc.hasNext()) {
+            sc.close();
+            return "USAGE get user|global <args>";
+        }
+        switch (sc.next()) {
+        case "user":   return queryGetUser(sc, theOutput);
+        case "global": return queryGetGlobal(sc, theOutput);
+        default:       return "USAGE get user|global <args>";
+        }
+    }
+
+    /**
+     * @param sc Scanner that contains the arguments for the query.
+     * @param theOutput Pointer to the StringBuffer that will be filled.
+     * @return the result of the query.
+     */
+    private static String queryGetUser(final Scanner sc,
+            final StringBuffer theOutput) {
+        if (!sc.hasNext()) {
+            sc.close();
+            return "USAGE get user <name:string> <amount:int>";
+        }
+        final String user = sc.next();
         if (!sc.hasNextInt()) {
             sc.close();
-            return "USAGE get <amount:int>";
+            return "USAGE get user " + user + " <amount:int>";
+        }
+        final int amount = sc.nextInt();
+        int entries = 0;
+        for (final Highscore h : database) {
+            if (entries == amount) {
+                break;
+            }
+            if (h.getUser().equals(user)) {
+                if (entries > 0) {
+                    theOutput.append('\n');
+                }
+                theOutput.append(h.toString());
+                entries++;
+            }
+        }
+        for (; entries < amount; entries++) {
+            theOutput.append('\n');
+        }
+        sc.close();
+        return theOutput.toString();
+    }
+
+    /**
+     * @param sc Scanner that contains the arguments for the query.
+     * @param theOutput Pointer to the StringBuffer that will be filled.
+     * @return the result of the query.
+     */
+    private static String queryGetGlobal(final Scanner sc,
+            final StringBuffer theOutput) {
+        if (!sc.hasNextInt()) {
+            sc.close();
+            return "USAGE get global <amount:int>";
         }
         final int amount = sc.nextInt();
         int i = 0;
@@ -73,7 +128,6 @@ public final class HighscoreDatabase {
         sc.close();
         return theOutput.toString();
     }
-
 
     /**
      * @param sc Scanner that contains the arguments for the query.
