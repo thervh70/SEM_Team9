@@ -19,6 +19,9 @@ public class PowerupInvulnerable extends AbstractPickup {
     /** The amount of ticks that this countdown still lasts. */
     private static int countdown;
 
+    /** Cheat boolean. */
+    private static boolean cheat;
+
     /**
      * Default constructor.
      * @param cent the center of this Powerup.
@@ -37,26 +40,29 @@ public class PowerupInvulnerable extends AbstractPickup {
         this(cent, null);
     }
 
-    /** Is called every step in {@link Track}. */
+    /** Is called every step in Track. */
     public static void step() {
-        if (countdown != 0) {
+        if (!cheat && countdown > 0) {
             countdown--;
         }
     }
 
     /** @return Whether this Powerup is active. */
     public static boolean isActive() {
-        return countdown != 0;
+        return countdown != 0 || cheat;
     }
 
     /** Activates this Powerup foreveerrrrr.
      *  @param enable whether the cheat should be enabled */
-    public static void cheat(final boolean enable) {
-        if (enable) {
-            countdown = -1;
-        } else {
-            countdown = 0;
-        }
+    public static void setCheat(final boolean enable) {
+        cheat = enable;
+    }
+
+    /**
+     * Reset the counter.
+     */
+    public static void resetCounter() {
+        countdown = 0;
     }
 
     @Override

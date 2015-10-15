@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import nl.tudelft.ti2206.group9.gui.scene.SplashScene;
+import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 
 /**
@@ -27,13 +27,13 @@ public class DeathPopup extends AbstractInfoPopup {
         super(new Button("Try Again"), new Button("Return to Main Menu"));
 
         getLeftButton().setOnMouseClicked(mouseEvent -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            ShaftEscape.getButtonAudioPlayer().play();
             hide();
             retryEvent.handle(mouseEvent);
         });
 
         getRightButton().setOnMouseClicked(mouseEvent -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            ShaftEscape.getButtonAudioPlayer().play();
             hide();
             menuEvent.handle(mouseEvent);
         });

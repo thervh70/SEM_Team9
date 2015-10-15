@@ -6,7 +6,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import org.junit.Test;
 
 /**
- * @author Mathias
+ * @author Mathias and Mitchell
  */
 public class ParserTest {
 
@@ -16,13 +16,14 @@ public class ParserTest {
 
     @Test
     public void testParser() {
-        Parser.loadGame(fileFolder + "saveGameParserTest.json");
+        Parser.loadGame(fileFolder + "saveGameParserTest.ses");
 
         final int expectedCoins = 42;
         final int expectedHigh = 2560;
         assertEquals("Mathias", State.getPlayerName());
         assertEquals(expectedCoins, State.getCoins());
         assertEquals(expectedHigh, State.getHighscore());
-        assertEquals(true, State.isSoundEnabled());
+        assertEquals(true, State.isSoundtrackEnabled());
+        assertEquals(true, State.isSoundEffectsEnabled());
     }
 }

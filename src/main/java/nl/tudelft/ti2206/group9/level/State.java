@@ -1,9 +1,10 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
-import nl.tudelft.ti2206.group9.gui.Style;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
+import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 
 /**
  * This utility class stores the State of the game,
@@ -36,8 +37,10 @@ public final class State {
      */
     private static String defaultSaveDir = "sav/";
 
-    /** Boolean to determine whether sound is enabled. */
-    private static boolean soundEnabled;
+    /** Boolean to determine whether soundtracks are enabled. */
+    private static boolean soundtrackEnabled;
+    /** Boolean to determine whether sound effects are enabled. */
+    private static boolean soundEffectsEnabled;
 
     /** List of the names of all the saved games. */
     private static ObservableList<String> saveGames =
@@ -54,7 +57,8 @@ public final class State {
         setCoins(0);
         highscore = 0;
         skin = Style.getNoob();
-        soundEnabled = true;
+        soundtrackEnabled = true;
+        soundEffectsEnabled = true;
     }
 
     /** Reset data that should be reset every run. */
@@ -63,6 +67,7 @@ public final class State {
         setScore(0);
         Track.setDistance(0);
         track.getPlayer().respawn();
+        PowerupInvulnerable.resetCounter();
     }
 
     /**
@@ -177,18 +182,33 @@ public final class State {
     }
 
     /**
-     * @return whether sound is enabled
+     * @return whether soundtracks are enabled.
      */
-    public static boolean isSoundEnabled() {
-        return soundEnabled;
+    public static boolean isSoundtrackEnabled() {
+        return soundtrackEnabled;
     }
 
     /**
-     * Change whether the sound is enabled.
-     * @param newSoundEnabled true/false
+     * @return whether sound effects are enabled.
      */
-    public static void setSoundEnabled(final boolean newSoundEnabled) {
-        State.soundEnabled = newSoundEnabled;
+    public static boolean isSoundEffectsEnabled() {
+        return soundEffectsEnabled;
+    }
+
+    /**
+     * Change whether the soundtrack is enabled.
+     * @param newSoundEnabled true/false soundtrack.
+     */
+    public static void setSoundtrackEnabled(final boolean newSoundEnabled) {
+        State.soundtrackEnabled = newSoundEnabled;
+    }
+
+    /**
+     * Change whether the soundtrack is enabled.
+     * @param newSoundEnabled true/false sound effects.
+     */
+    public static void setSoundEffectsEnabled(final boolean newSoundEnabled) {
+        State.soundEffectsEnabled = newSoundEnabled;
     }
 
     /**

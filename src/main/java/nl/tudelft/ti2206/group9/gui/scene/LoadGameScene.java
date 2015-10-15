@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -9,7 +10,6 @@ import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver;
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 
 /**
@@ -76,7 +76,7 @@ public class LoadGameScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
                                             final BType type) {
     button.setOnAction(event -> {
-        SplashScene.getButtonAudioPlayer().play(false);
+        ShaftEscape.getButtonAudioPlayer().play();
             if (type == BType.LOAD_BACK) {
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.LOAD_BACK);

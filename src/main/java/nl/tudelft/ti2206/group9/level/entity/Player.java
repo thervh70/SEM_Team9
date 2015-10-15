@@ -20,7 +20,7 @@ public class Player extends AbstractEntity {
     /** Width of the Player's bounding box. */
     public static final double WIDTH = 0.8;
     /** Depth of the Players bounding box. */
-    public static final double DEPTH = 0.1;
+    public static final double DEPTH = 0.001;
 
     /** Gravity. This is added to the vertical speed
      * of the Player each tick.
@@ -79,23 +79,6 @@ public class Player extends AbstractEntity {
     /** @return whether the player is alive. */
     public final boolean isAlive() {
         return alive;
-    }
-
-    /**
-     * When colliding with a coin, Coin.VALUE is added to score,
-     * and amount of coins is increased by one.
-     * @param collidee Entity that this Player collides with.
-     */
-    @Override
-    public final void collision(final AbstractEntity collidee) {
-        if (collidee instanceof AbstractObstacle) {
-            if (!PowerupInvulnerable.isActive()) {
-                OBSERVABLE.notify(
-                        Category.PLAYER, GameObserver.Player.COLLISION,
-                        AbstractObstacle.class.getSimpleName());
-                die();
-            }
-        }
     }
 
     /**
