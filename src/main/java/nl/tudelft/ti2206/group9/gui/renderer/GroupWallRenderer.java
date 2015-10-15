@@ -21,7 +21,8 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
     /** Default constructor. */
     public GroupWallRenderer() {
         super();
-        renderWalls(-1);
+        final double zPosition = -3;
+        renderWalls(zPosition);
     }
 
     /**
