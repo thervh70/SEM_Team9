@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.audio;
 
 import java.util.Observable;
 
+import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
 /**
@@ -10,6 +11,9 @@ import nl.tudelft.ti2206.group9.util.GameObserver;
  * @author Maarten and Mitchell
  */
 public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
+
+    /** Constant which is used for increasing the speed of the soundtrack. */
+    private static final double SPEED_INCREASE = 0.01;
 
     /** The path for any audio file. */
     private static String audioPath = "src/main/"
@@ -37,10 +41,10 @@ public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
             return;
         }
         switch ((Player) update.getSpec()) {
-        case JUMP:       apJump.play(); break;
-        case SLIDE:      apSlide.play(); break;
-        case START_MOVE: apMove.play(); break;
-        case STOP_MOVE:  break;
+        case DISTANCE_INCREASE:  newSpeed(); break;
+        case JUMP:               apJump.play(); break;
+        case SLIDE:              apSlide.play(); break;
+        case START_MOVE:         apMove.play(); break;
         case COLLISION:
             switch ((String) update.getArgs()[0]) {
             case "AbstractObstacle": apDie.play(); break;
@@ -51,6 +55,13 @@ public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
         default:
             break;
         }
+    }
+
+    /** Sets the new speed of the soundtrack, based on a constant. */
+    private void newSpeed() {
+        GameScene.getSoundtrackPlayer().
+            setSpeed(GameScene.getSoundtrackPlayer().
+                getSpeed() + SPEED_INCREASE);
     }
 
 }
