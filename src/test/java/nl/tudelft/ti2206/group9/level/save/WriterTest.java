@@ -6,7 +6,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import org.junit.Test;
 
 /**
- * @author Mathias
+ * @author Mathias and Mitchell
  */
 public final class WriterTest {
 
@@ -23,14 +23,16 @@ public final class WriterTest {
         final int score = 34567;
         State.setHighscore(score);
         final boolean soundEnabled = false;
-        State.setSoundEnabled(soundEnabled);
+        State.setSoundtrackEnabled(soundEnabled);
+        State.setSoundEffectsEnabled(soundEnabled);
 
-        Writer.saveGame(fileFolder + "saveGameWriterTest.json");
-        Parser.loadGame(fileFolder + "saveGameWriterTest.json");
+        Writer.saveGame(fileFolder + "saveGameWriterTest.ses");
+        Parser.loadGame(fileFolder + "saveGameWriterTest.ses");
 
         assertEquals(playerName, State.getPlayerName());
         assertEquals(coins, State.getCoins());
         assertEquals(score, State.getHighscore());
-        assertEquals(soundEnabled, State.isSoundEnabled());
+        assertEquals(soundEnabled, State.isSoundtrackEnabled());
+        assertEquals(soundEnabled, State.isSoundEffectsEnabled());
     }
 }
