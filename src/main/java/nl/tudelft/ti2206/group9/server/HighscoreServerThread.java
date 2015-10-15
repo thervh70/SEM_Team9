@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -30,9 +31,10 @@ public class HighscoreServerThread extends Thread {
         BufferedReader fromClient;  // Text stream from client
         String clientIP = "<no IP yet>";
         try {
-            toClient = new PrintWriter(socket.getOutputStream(), true);
+            toClient = new PrintWriter(new OutputStreamWriter(
+                    socket.getOutputStream(), "UTF-8"), true);
             fromClient = new BufferedReader(new InputStreamReader(
-                    socket.getInputStream()));
+                    socket.getInputStream(), "UTF-8"));
             clientIP = socket.getRemoteSocketAddress().toString();
             HighscoreServer.log(clientIP + " is connected to me ("
                     + socket.getLocalSocketAddress().toString() + ")");

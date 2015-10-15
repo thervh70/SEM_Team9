@@ -5,6 +5,7 @@ import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -35,9 +36,10 @@ public class HighscoreClient {
 
         try {
             socket = new Socket(hostName, HighscoreServer.PORT);
-            toServer = new PrintWriter(socket.getOutputStream(), true);
-            fromServer = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
+            toServer = new PrintWriter(new OutputStreamWriter(
+                    socket.getOutputStream(), "UTF-8"), true);
+            fromServer = new BufferedReader(new InputStreamReader(
+                    socket.getInputStream(), "UTF-8"));
             connected = true;
         } catch (UnknownHostException e) {
             OBSERVABLE.notify(Category.ERROR, Error.CLIENTCOULDNOTCONNECT,

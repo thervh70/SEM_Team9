@@ -74,7 +74,7 @@ public final class HighscoreServer {
     static class CLIThread implements Runnable {
         @Override
         public void run() {
-            final Scanner sc = new Scanner(System.in);
+            final Scanner sc = new Scanner(System.in, "UTF-8");
             String command;
             log("Type \"stop\" to exit.");
             while (running) {
