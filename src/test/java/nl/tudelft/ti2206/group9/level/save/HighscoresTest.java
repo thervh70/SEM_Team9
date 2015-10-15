@@ -1,37 +1,19 @@
 package nl.tudelft.ti2206.group9.level.save;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.group9.level.save.Highscores.Highscore;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class HighscoresTest {
 
-    @Before
-    public void setUp() throws InterruptedException {
-        Highscores.login("TravisCI", "dce59e", () -> { },
-                () -> fail("Could not login with TravisCI!"));
-    }
-
     @Test
-    public final void testLogout() {
-        Highscores.logout();
-        assertFalse(Highscores.add(0));
-    }
-
-    @Test
-    public final void testAdd() {
-        assertTrue(Highscores.add(1));
-    }
-
-    @Test
-    public final void testGet() {
-        final Highscore test = Highscores.get(1).get(0);
-        assertNotEquals(null, test.getUser());
+    public final void testHighscoreParse() {
+        final Highscore h = new Highscore("Kees", 2);
+        assertEquals(h, Highscore.parse(h.toString()));
+        assertEquals(null, Highscore.parse("Highscore[, 42]"));
+        assertEquals(null, Highscore.parse("Highscore[Kees, ]"));
+        assertEquals(null, Highscore.parse("Highscore[, ]"));
     }
 
 }

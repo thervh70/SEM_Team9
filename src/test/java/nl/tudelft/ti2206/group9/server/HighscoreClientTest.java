@@ -14,8 +14,8 @@ public class HighscoreClientTest {
 
     private static final Object LOCK = new Object();
     private HighscoreClient client;
-    private String actualResponse;
-    private QueryCallback callback = response -> {
+    private String actualResponse; // NOPMD - field cannot be local field
+    private final QueryCallback callback = response -> {
         actualResponse = response;
         resumeTest();
     };
@@ -66,7 +66,8 @@ public class HighscoreClientTest {
 
         client.get(scores.length, callback);
         haltTestUntilServerResponds();
-        assertEquals("Jaap 84\nKees 42\nPiet 21", actualResponse);
+        assertEquals("Highscore[Jaap, 84]\nHighscore[Kees, 42]\n"
+                + "Highscore[Piet, 21]", actualResponse);
     }
 
     /**

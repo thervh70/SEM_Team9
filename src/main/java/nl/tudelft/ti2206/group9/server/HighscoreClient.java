@@ -1,11 +1,16 @@
 package nl.tudelft.ti2206.group9.server;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 /**
  * Client used for retrieving/sending data to the Server.
@@ -35,9 +40,11 @@ public class HighscoreClient {
                     new InputStreamReader(socket.getInputStream()));
             connected = true;
         } catch (UnknownHostException e) {
-            System.err.println("Client does not know about host " + hostName);
+            OBSERVABLE.notify(Category.ERROR, Error.CLIENTCOULDNOTCONNECT,
+                    "HighscoreClient.<init> (UnknownHost)", e.getMessage());
         } catch (IOException e) {
-            System.err.println("Client could not connect to " + hostName);
+            OBSERVABLE.notify(Category.ERROR, Error.CLIENTCOULDNOTCONNECT,
+                    "HighscoreClient.<init> (IOException)", e.getMessage());
         }
     }
 
@@ -59,8 +66,8 @@ public class HighscoreClient {
                     socket.close();
                 }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                OBSERVABLE.notify(Category.ERROR, Error.CLIENTCOULDNOTCONNECT,
+                        "HighscoreClient.disconnect", e.getMessage());
             }
         }).start();
     }
@@ -108,8 +115,8 @@ public class HighscoreClient {
                 }
                 callback.callback(response.toString());
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                OBSERVABLE.notify(Category.ERROR, Error.CLIENTCOULDNOTCONNECT,
+                        "HighscoreClient.query(" + query + ")", e.getMessage());
             }
         }).start();
     }

@@ -60,7 +60,7 @@ public final class HighscoreDatabase {
             if (i > 0) {
                 theOutput.append('\n');
             }
-            theOutput.append(h.getUser() + " " + h.getScore());
+            theOutput.append(h.toString());
             i++;
         }
         sc.close();
