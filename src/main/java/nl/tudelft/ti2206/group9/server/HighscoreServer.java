@@ -35,7 +35,7 @@ public final class HighscoreServer {
      * @throws IOException when something unexpected happens.
      */
     public static void main(final String... args) throws IOException {
-        new Thread(new CLIThread()).start();
+        new Thread(new CLIThread(), "CLIThread").start();
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             ss = serverSocket;
             log("Server is now accepting clients.");
