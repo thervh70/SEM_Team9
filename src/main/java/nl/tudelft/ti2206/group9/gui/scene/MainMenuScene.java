@@ -59,7 +59,7 @@ public final class MainMenuScene extends AbstractMenuScene {
         final Button startButton = createButton("START!", 2, 22);
         final Button settingsButton = createButton("SETTINGS", 0, 24);
         final Button exitButton = createButton("EXIT", 4, 24);
-        final Button loadButton = createButton("ACCOUNTS", 0, 22);
+        final Button accountsButton = createButton("ACCOUNTS", 0, 22);
         final Button shopButton = createButton("SHOP", 4, 22);
         final Button highScoreButton = createButton("HIGHSCORES", 2, 24);
         final Label playerName = getPlayerLabelContent();
@@ -68,7 +68,7 @@ public final class MainMenuScene extends AbstractMenuScene {
         setButtonFunction(exitButton, BType.EXIT);
         setButtonFunction(startButton, BType.START);
         setButtonFunction(settingsButton, BType.SETTINGS);
-        setButtonFunction(loadButton, BType.LOAD);
+        setButtonFunction(accountsButton, BType.LOAD);
         setButtonFunction(shopButton, BType.SHOP);
         setButtonFunction(highScoreButton, BType.HIGHSCORES);
 
@@ -76,11 +76,11 @@ public final class MainMenuScene extends AbstractMenuScene {
         startButton.setTooltip(new Tooltip("Start the game!"));
         exitButton.setTooltip(new Tooltip("Are you sure?"));
         settingsButton.setTooltip(new Tooltip("Change game settings"));
-        loadButton.setTooltip(new Tooltip("Load an account"));
+        accountsButton.setTooltip(new Tooltip("Load an account"));
         highScoreButton.setTooltip(new Tooltip("Check the highscores"));
 
         return new Node[]{startButton, settingsButton, exitButton,
-                loadButton, shopButton, highScoreButton, playerName};
+                accountsButton, shopButton, highScoreButton, playerName};
     }
 
     /**

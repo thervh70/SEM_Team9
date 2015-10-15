@@ -69,7 +69,7 @@ public class AccountScene extends AbstractMenuScene {
         list.setTooltip(new Tooltip("Select player"));
         INPUT.setTooltip(new Tooltip("Enter your name"));
         INPUT.setFont(Style.getFont(FONT_SIZE));
-        return new Node[]{loadButton, newButton, backButton, textLabel,
+        return new Node[]{backButton, loadButton, newButton, textLabel,
                 INPUT, list};
     }
 

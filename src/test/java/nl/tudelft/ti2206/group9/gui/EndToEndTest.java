@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.gui;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -26,12 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 
 @SuppressWarnings("restriction")
@@ -57,12 +53,15 @@ public class EndToEndTest extends ApplicationTest {
     private static final int MAIN_START = 0;
     private static final int MAIN_SETTINGS = 1;
 //    private static final int MAIN_QUIT = 2;
-    private static final int MAIN_LOADGAME = 3;
-    private static final int MAIN_TEXTFIELD = 5;
-    private static final int MAIN_SHOP = 6;
+    private static final int MAIN_ACCOUNTS = 3;
+    private static final int MAIN_SHOP = 4;
+//    private static final int MAIN_HIGHSCORE = 5;
 
-    private static final int LOAD_BACK = 0;
-    private static final int LOAD_START = 1;
+    private static final int ACCOUNT_BACK = 0;
+    private static final int ACCOUNT_LOAD = 1;
+    private static final int ACCOUNT_NEW = 2;
+    private static final int ACCOUNT_TEXTFIELD = 4;
+    private static final int ACCOUNT_LIST = 5;
 
     private static final int SETTINGS_BACK = 0;
     private static final int SETTINGS_SOUND = 1;
@@ -94,14 +93,19 @@ public class EndToEndTest extends ApplicationTest {
         goThroughSettings();
         goThroughShop();
 
+        mainMenu(MAIN_START);
+        clickPopup(WARNING_OK);
+
         goThroughNameTyping();
         goThroughGamePlay();
 
-        mainMenu(MAIN_LOADGAME);
-        loadMenu(LOAD_BACK);
-        mainMenu(MAIN_LOADGAME);
-        loadMenu(LOAD_START);
+        mainMenu(MAIN_ACCOUNTS);
+        accountScreen(ACCOUNT_LIST);
+        accountScreen(ACCOUNT_LOAD);
+        assertNotNull(State.getPlayerName());
+        accountScreen(ACCOUNT_BACK);
 
+        mainMenu(MAIN_START);
         sleep(COUNTDOWN);
         playerDies();
         sleep(SHORT);
@@ -152,15 +156,18 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void goThroughNameTyping() {
-        mainMenu(MAIN_START);
+        accountScreen(ACCOUNT_NEW);
         assertNull(AbstractScene.getPopup()); // Assert that Game does not start
-        mainMenu(MAIN_TEXTFIELD);
+        accountScreen(ACCOUNT_TEXTFIELD);
         typeFaultyName();
-        mainMenu(MAIN_START);
+        accountScreen(ACCOUNT_NEW);
         clickPopup(WARNING_OK);
-        mainMenu(MAIN_TEXTFIELD);
-        keyboard(KeyCode.BACK_SPACE);
+        accountScreen(ACCOUNT_TEXTFIELD);
+        clearTextField();
         typeName();
+        accountScreen(ACCOUNT_NEW);
+        assertEquals("Fred", State.getPlayerName());
+        accountScreen(ACCOUNT_BACK);
     }
 
     private void goThroughGamePlay() {
@@ -244,7 +251,7 @@ public class EndToEndTest extends ApplicationTest {
         sleep(SHORT);
     }
 
-    private void loadMenu(final int buttonNo) {
+    private void accountScreen(final int buttonNo) {
         ObservableList<Node> buttons;
         buttons = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
@@ -293,5 +300,13 @@ public class EndToEndTest extends ApplicationTest {
             }
             sleep(SHORT);
         }
+    }
+
+    private void clearTextField() {
+        ObservableList<Node> children;
+        children = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+        TextField text = (TextField) children.get(ACCOUNT_TEXTFIELD);
+        text.clear();
     }
 }
