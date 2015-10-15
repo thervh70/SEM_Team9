@@ -2,7 +2,6 @@ package nl.tudelft.ti2206.group9.level;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 
@@ -54,7 +53,7 @@ public final class State {
         reset();
         setCoins(0);
         highscore = 0;
-        skin = Style.getNoob();
+        skin = Skin.getNoob();
         soundEnabled = true;
     }
 

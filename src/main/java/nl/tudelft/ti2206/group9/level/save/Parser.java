@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -134,11 +134,11 @@ public final class Parser {
      * Write states of skins to Style.
      */
     private static void writeToSkins() {
-        Style.getAndy().setSkinUnlocked(andy);
-        Style.getCaptain().setSkinUnlocked(captain);
-        Style.getBoy().setSkinUnlocked(boy);
-        Style.getIronMan().setSkinUnlocked(iron);
-        Style.getPlank().setSkinUnlocked(plank);
+        Skin.setUnlocked("Andy", andy);
+        Skin.setUnlocked("B-man", boy);
+        Skin.setUnlocked("Captain", captain);
+        Skin.setUnlocked("Iron Man", iron);
+        Skin.setUnlocked("Plank", plank);
     }
 
     /**

@@ -9,6 +9,6 @@ public class NoobSkin extends Skin {
      * Constructor for a Noob skin.
      */
     public NoobSkin() {
-        super(0, "Noob", "noob", true);
+        super(0, "Noob", "noob");
     }
 }

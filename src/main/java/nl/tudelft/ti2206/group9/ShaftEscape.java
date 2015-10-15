@@ -10,6 +10,7 @@ import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.gui.scene.MainMenuScene;
 import nl.tudelft.ti2206.group9.gui.scene.SplashScene;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
@@ -49,7 +50,8 @@ public class ShaftEscape extends Application {
     public final void start(final Stage appStage) {
         //Loading textures
         Style.loadTextures();
-        Style.loadSkins();
+        Skin.loadSkins();
+        Skin.createUnlockedHashmap();
 
         State.resetAll();
         setStage(appStage);

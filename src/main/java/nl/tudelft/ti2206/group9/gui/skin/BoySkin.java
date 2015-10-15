@@ -10,6 +10,6 @@ public class BoySkin extends Skin {
      * Constructor for a Boy skin.
      */
     public BoySkin() {
-        super(PRICE, "B-man", "b_man", false);
+        super(PRICE, "B-man", "b_man");
     }
 }

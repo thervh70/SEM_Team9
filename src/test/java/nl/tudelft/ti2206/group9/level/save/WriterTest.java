@@ -19,7 +19,7 @@ public final class WriterTest {
 
     @Test
     public void testSaveGame() {
-        Style.loadSkins();
+        Skin.createUnlockedHashmap();
 
         final String playerName = "Henk";
         State.setPlayerName(playerName);
@@ -29,16 +29,10 @@ public final class WriterTest {
         State.setHighscore(score);
         final boolean soundEnabled = true;
         State.setSoundEnabled(soundEnabled);
-        final boolean andy = false;
-        Style.getAndy().setSkinUnlocked(andy);
-        final boolean boy = false;
-        Style.getBoy().setSkinUnlocked(boy);
-        final boolean captain = false;
-        Style.getCaptain().setSkinUnlocked(captain);
         final boolean iron = true;
-        Style.getIronMan().setSkinUnlocked(iron);
+        Skin.setUnlocked("Iron Man", iron);
         final boolean plank = true;
-        Style.getPlank().setSkinUnlocked(plank);
+        Skin.setUnlocked("Plank", plank);
 
         Writer.saveGame(fileFolder + "saveGameWriterTest.json");
         Parser.loadGame(fileFolder + "saveGameWriterTest.json");
@@ -47,11 +41,10 @@ public final class WriterTest {
         assertEquals(coins, State.getCoins());
         assertEquals(score, State.getHighscore());
         assertEquals(soundEnabled, State.isSoundEnabled());
-        assertEquals(andy, Style.getAndy().getSkinUnlocked());
-        assertEquals(boy, Style.getBoy().getSkinUnlocked());
-        assertEquals(captain, Style.getCaptain().getSkinUnlocked());
-        assertEquals(iron, Style.getIronMan().getSkinUnlocked());
-        assertEquals(plank, Style.getPlank().getSkinUnlocked());
+        assertEquals(false, Skin.getUnlocked("Andy"));
+        assertEquals(true, Skin.getUnlocked("Noob"));
+        assertEquals(iron, Skin.getUnlocked("Iron Man"));
+        assertEquals(plank, Skin.getUnlocked("Plank"));
 
     }
 }

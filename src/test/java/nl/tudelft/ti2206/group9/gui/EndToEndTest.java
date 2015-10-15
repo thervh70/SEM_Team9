@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.entity.Player;
@@ -148,15 +149,15 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughShop() {
         State.setCoins(COINS); //Make sure player has enough coins
         mainMenu(MAIN_SHOP);
-        assertEquals(State.getSkin(), Style.getNoob());
+        assertEquals(State.getSkin(), Skin.getNoob());
         shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), Style.getNoob());
+        assertEquals(State.getSkin(), Skin.getNoob());
         shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), Style.getNoob());
+        assertEquals(State.getSkin(), Skin.getNoob());
         shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), Style.getCaptain());
+        assertEquals(State.getSkin(), Skin.getCaptain());
         shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), Style.getIronMan());
+        assertEquals(State.getSkin(), Skin.getIronMan());
         shopScreen(SHOP_BACK);
     }
 

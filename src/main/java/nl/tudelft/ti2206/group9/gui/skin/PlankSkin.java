@@ -10,6 +10,6 @@ public class PlankSkin extends Skin {
      * Constructor for a Plank skin.
      */
     public PlankSkin() {
-        super(PRICE, "Plank", "plank", false);
+        super(PRICE, "Plank", "plank");
     }
 }

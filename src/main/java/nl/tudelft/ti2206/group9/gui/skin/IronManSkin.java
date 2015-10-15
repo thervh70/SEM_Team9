@@ -10,6 +10,6 @@ public class IronManSkin extends Skin {
      * Constructor for a Iron Man skin.
      */
     public IronManSkin() {
-        super(PRICE, "Iron Man", "iron_man", false);
+        super(PRICE, "Iron Man", "iron_man");
     }
 }

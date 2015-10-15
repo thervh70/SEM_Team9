@@ -11,7 +11,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
@@ -69,7 +68,7 @@ public class ShopScene extends AbstractMenuScene {
             COLUMN_CONSTRAINT, ROW_CONSTRAINT);
     @Override
     public Node[] createContent() {
-        ObservableList<Skin> items = Style.loadSkinsToList();
+        ObservableList<Skin> items = Skin.loadSkinsToList();
         currentSkin = createLabel("CURRENT SKIN: "
                 + State.getSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
         currentSkin.setMinWidth(LABEL_WIDTH);
@@ -105,18 +104,18 @@ public class ShopScene extends AbstractMenuScene {
         Label price = createLabel("Price", 0, 0);
         Label name = createLabel("Name", 0, 0);
         Button buy = createButton("BUY", 0, 0);
-        if (s.getSkinUnlocked()) {
+        if (Skin.getUnlocked(s.getSkinName())) {
             buy.setText("EQUIP");
         }
         buy.setOnAction((event -> {
-            if (s.getSkinUnlocked()) {
+            if (Skin.getUnlocked(s.getSkinName())) {
                 State.setSkin(s);
                 currentSkin.setText("CURRENT SKIN: "
                         + State.getSkin().getSkinName());
             } else {
                 if (State.getCoins() >= s.getSkinPrice()) {
                     State.setCoins(State.getCoins() - s.getSkinPrice());
-                    s.buySkin();
+                    Skin.setUnlocked(s.getSkinName(), true);
                     amountLabel.setText(Integer.toString(State.getCoins()));
                     buy.setText("EQUIP");
                 }
