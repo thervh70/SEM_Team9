@@ -17,7 +17,9 @@ public class HighscoreClientTest {
     private String actualResponse; // NOPMD - field cannot be local field
     private final QueryCallback callback = response -> {
         actualResponse = response;
-        resumeTest();
+        synchronized (LOCK) {
+            LOCK.notifyAll();   // Resume test
+        }
     };
 
     @BeforeClass
@@ -50,7 +52,7 @@ public class HighscoreClientTest {
     }
 
     @Test
-    public final void test() throws InterruptedException {
+    public final void testGoodWeather() throws InterruptedException {
         final int[] scores = {42, 21, 84, 63};
         int i = -1;
         client.add("Kees", scores[++i], callback);
@@ -73,6 +75,46 @@ public class HighscoreClientTest {
         haltTestUntilServerResponds();
         assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]\n"
                 + "Highscore[Kees, 42]\n\n", actualResponse);
+
+        client.get(2, callback);
+        haltTestUntilServerResponds();
+        assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]",
+                actualResponse);
+    }
+
+    @Test
+    public void testBadWeather() throws InterruptedException {
+        client.query("", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("USAGE get|add <args>", actualResponse);
+
+        client.query("doNothingOrSomething", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("USAGE get|add <args>", actualResponse);
+
+        client.query("get", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("USAGE get <amount:int>", actualResponse);
+
+        client.query("add", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("USAGE add <name:string> <score:int>", actualResponse);
+
+        client.query("add Kees", 1, callback);
+        haltTestUntilServerResponds();
+        assertEquals("USAGE add Kees <score:int>", actualResponse);
+    }
+
+    @Test
+    public void testDisconnect() throws InterruptedException {
+        client.disconnect();
+        while (client.isConnected()) {
+            Thread.sleep(2); // Do nothing until disconnected
+        }
+
+        client.get(1, callback);
+        // haltTestUntilServerResponds(); not needed, because connected = false.
+        assertEquals("DISCONNECTED", actualResponse);
     }
 
     /**
@@ -82,13 +124,6 @@ public class HighscoreClientTest {
     private void haltTestUntilServerResponds() throws InterruptedException {
         synchronized (LOCK) {
             LOCK.wait();
-        }
-    }
-
-    /** To be called in callback; resumes the test. */
-    private void resumeTest() {
-        synchronized (LOCK) {
-            LOCK.notifyAll();
         }
     }
 

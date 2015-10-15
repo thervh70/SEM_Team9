@@ -64,6 +64,7 @@ public class HighscoreClient {
                 final String response = fromServer.readLine();
                 if (response.equals("exit")) {
                     socket.close();
+                    connected = false;
                 }
             } catch (IOException e) {
                 OBSERVABLE.notify(Category.ERROR, Error.CLIENTCOULDNOTCONNECT,
@@ -98,10 +99,11 @@ public class HighscoreClient {
      * @param responseLines the amount of lines expected from server.
      * @param callback the action to be performed on return.
      */
-    private void query(final String query, final int responseLines,
+    void query(final String query, final int responseLines,
                        final QueryCallback callback) {
         if (!connected) {
-            callback.callback("FAILED");
+            callback.callback("DISCONNECTED");
+            return;
         }
         new Thread(() -> {
             try {
