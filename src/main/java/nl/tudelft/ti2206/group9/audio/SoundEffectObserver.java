@@ -43,7 +43,7 @@ public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
     private static SoundEffectPlayer apSlide =
             new SoundEffectPlayer(audioPath + "slide.wav");
 
-    @Override
+    @Override //Method is 33 lines but can't be made any shorter
     public void update(final Observable o, final Object arg) {
         final GameUpdate update = (GameUpdate) arg;
         if (update.getCat() != Category.PLAYER) {
@@ -77,5 +77,4 @@ public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
                 break;
         }
     }
-
 }

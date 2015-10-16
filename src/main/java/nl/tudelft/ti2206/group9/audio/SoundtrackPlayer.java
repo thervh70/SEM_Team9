@@ -67,10 +67,12 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
                     .toURL().toString()));
         } catch (MalformedURLException mue) {
             OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
-                    "SoundtrackPlayer.initializeTune(String)", mue.getMessage());
+                    "SoundtrackPlayer.initializeTune(String)",
+                    mue.getMessage());
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
-                    "SoundtrackPlayer.initializeTune(String)", me.getMessage());
+                    "SoundtrackPlayer.initializeTune(String)",
+                    me.getMessage());
         }
     }
 
