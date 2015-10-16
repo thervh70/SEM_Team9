@@ -8,6 +8,7 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
@@ -31,8 +32,8 @@ public final class MainMenuScene extends AbstractMenuScene {
         START,
         /** Settings button. */
         SETTINGS,
-        /** Load Game button. */
-        LOAD,
+        /** Accounts button. */
+        ACCOUNT,
         /** Shop button. */
         SHOP,
         /** Highscores button. */
@@ -64,7 +65,7 @@ public final class MainMenuScene extends AbstractMenuScene {
         setButtonFunction(exitButton, BType.EXIT);
         setButtonFunction(startButton, BType.START);
         setButtonFunction(settingsButton, BType.SETTINGS);
-        setButtonFunction(accountsButton, BType.LOAD);
+        setButtonFunction(accountsButton, BType.ACCOUNT);
         setButtonFunction(shopButton, BType.SHOP);
         setButtonFunction(highScoreButton, BType.HIGHSCORES);
 
@@ -94,7 +95,7 @@ public final class MainMenuScene extends AbstractMenuScene {
                 ShaftEscape.exit();
             } else if (type == BType.START) {
                 apMainMenu.stop();
-                if (State.getPlayerName() ==  null) {
+                if (State.getPlayerName() == null) {
                     setPopup(new WarningPopup(event1 -> {
                         setPopup(null);
                         ShaftEscape.setScene(new AccountScene());
@@ -103,8 +104,9 @@ public final class MainMenuScene extends AbstractMenuScene {
                 } else {
                     ShaftEscape.setScene(new GameScene());
                 }
-            } else if (type == BType.LOAD) {
+            } else if (type == BType.ACCOUNT) {
                 OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
+                SaveGame.saveGame();
                 ShaftEscape.setScene(new AccountScene());
             } else if (type == BType.SHOP) {
                 OBSERVABLE.notify(Category.MENU, Menu.SHOP);
