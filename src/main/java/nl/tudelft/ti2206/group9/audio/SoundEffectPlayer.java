@@ -49,10 +49,13 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
                     .toString());
         } catch (MalformedURLException mue) {
             OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
-                "SoundEffectPlayer.initializeAudio(String)", mue.getMessage());
+                    "SoundEffectPlayer.initializeAudio(String)",
+                    mue.getMessage());
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
-                "SoundEffectPlayer.initializeAudio(String)", me.getMessage());
+                    "SoundEffectPlayer.initializeAudio(String)",
+                   me.getMessage());
+
         }
     }
 

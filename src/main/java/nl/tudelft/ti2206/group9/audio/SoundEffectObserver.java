@@ -41,22 +41,20 @@ public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
             return;
         }
         switch ((Player) update.getSpec()) {
-        case DISTANCE_INCREASE:  newSpeed(); break;
-        case JUMP:               apJump.play(); break;
-        case SLIDE:              apSlide.play(); break;
-        case START_MOVE:         apMove.play(); break;
-        case COLLISION:
-            switch ((String) update.getArgs()[0]) {
-            case "AbstractObstacle": apDie.play(); break;
-            case "Coin":             apCoin.play(); break;
+            case JUMP:       apJump.play(); break;
+            case SLIDE:      apSlide.play(); break;
+            case START_MOVE: apMove.play(); break;
+            case STOP_MOVE:  break;
+            case COLLISION:
+                switch ((String) update.getArgs()[0]) {
+                    case "AbstractObstacle": apDie.play(); break;
+                    case "Coin":             apCoin.play(); break;
+                    default:                 break;
+                }
+                break;
             default: break;
-            }
-            break;
-        default:
-            break;
         }
     }
-
     /** Sets the new speed of the soundtrack, based on a constant. */
     private void newSpeed() {
         new Thread(
@@ -65,5 +63,6 @@ public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
                         + SPEED_INCREASE)
                 ).start();
     }
+
 
 }

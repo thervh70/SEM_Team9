@@ -94,15 +94,12 @@ public final class Writer {
         soundtracksettings.put("soundtrackEnabled",
                 State.isSoundtrackEnabled());
         settings.put("soundtracksettings", soundtracksettings);
-
         final JSONObject soundeffectsettings = new JSONObject();
         soundeffectsettings.put("soundEffectsEnabled",
                 State.isSoundEffectsEnabled());
         settings.put("soundEffectssettings", soundeffectsettings);
-
         mainObject.put("playername", State.getPlayerName());
         mainObject.put("coins", State.getCoins());
-
         final JSONObject highscore = new JSONObject();
         highscore.put("score", State.getHighscore());
         mainObject.put("highscore", highscore);
