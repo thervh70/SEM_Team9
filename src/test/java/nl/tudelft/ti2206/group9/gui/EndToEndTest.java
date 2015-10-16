@@ -155,9 +155,9 @@ public class EndToEndTest extends ApplicationTest {
         shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
         assertEquals(State.getSkin(), Skin.getNoob());
         shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), Skin.getCaptain());
+        assertEquals(State.getSkin(), Skin.getAndy());
         shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), Skin.getIronMan());
+        assertEquals(State.getSkin(), Skin.getNoob());
         shopScreen(SHOP_BACK);
     }
 
