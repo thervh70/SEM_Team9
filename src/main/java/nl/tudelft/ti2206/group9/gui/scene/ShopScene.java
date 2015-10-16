@@ -30,7 +30,7 @@ public class ShopScene extends AbstractMenuScene {
      */
     enum BType {
         /** Back button. */
-        SHOP_BACK
+        SHOP_BACK,
     }
 
     /**
@@ -79,12 +79,10 @@ public class ShopScene extends AbstractMenuScene {
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
-
-        if (itemBox.getChildren().isEmpty()) {
+            itemBox.getChildren().clear();
             for (Skin s : items) {
                 itemBox.getChildren().add(createCarousel(s));
             }
-        }
         scrollPane.setContent(itemBox);
         GridPane.setColumnSpan(scrollPane, ROW_CONSTRAINT_SPAN);
         GridPane.setColumnSpan(currentSkin, ROW_CONSTRAINT_SPAN);
@@ -104,9 +102,7 @@ public class ShopScene extends AbstractMenuScene {
         Label price = createLabel("Price", 0, 0);
         Label name = createLabel("Name", 0, 0);
         Button buy = createButton("BUY", 0, 0);
-        if (Skin.getUnlocked(s.getSkinName())) {
-            buy.setText("EQUIP");
-        }
+        setBuyButtonVisability(buy, s);
         buy.setOnAction((event -> {
             if (Skin.getUnlocked(s.getSkinName())) {
                 State.setSkin(s);
@@ -129,6 +125,23 @@ public class ShopScene extends AbstractMenuScene {
         name.setText(s.getSkinName());
         vbox.getChildren().addAll(imgview, name, price, buy);
         return vbox;
+    }
+
+    /**
+     * Change te button visability if skin is buyable/unlocked.
+     * @param buy Button to set.
+     * @param s Skin.
+     */
+    private static void setBuyButtonVisability(final Button buy, final Skin s) {
+        if (s.getSkinPrice() >= State.getCoins()
+                && !Skin.getUnlocked(s.getSkinName())) {
+            buy.setDisable(true);
+        } else {
+            buy.setDisable(false);
+        }
+        if (Skin.getUnlocked(s.getSkinName())) {
+            buy.setText("EQUIP");
+        }
     }
 
     /**
