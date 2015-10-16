@@ -26,14 +26,10 @@ public final class WriterTest {
         final int score = 3560;
         State.setHighscore(score);
 
-        final boolean iron = true;
-        Skin.setUnlocked("Iron Man", iron);
-        final boolean plank = true;
-        Skin.setUnlocked("Plank", plank);
-
-        final boolean soundEnabled = false;
-        State.setSoundtrackEnabled(soundEnabled);
-        State.setSoundEffectsEnabled(soundEnabled);
+        Skin.setUnlocked("Iron Man", true);
+        Skin.setUnlocked("Plank", true);
+        State.setSoundtrackEnabled(false);
+        State.setSoundEffectsEnabled(false);
 
         Writer.saveGame(fileFolder + "saveGameWriterTest.ses");
         Parser.loadGame(fileFolder + "saveGameWriterTest.ses");
@@ -44,11 +40,10 @@ public final class WriterTest {
 
         assertEquals(false, Skin.getUnlocked("Andy"));
         assertEquals(true, Skin.getUnlocked("Noob"));
-        assertEquals(iron, Skin.getUnlocked("Iron Man"));
-        assertEquals(plank, Skin.getUnlocked("Plank"));
-
-        assertEquals(soundEnabled, State.isSoundtrackEnabled());
-        assertEquals(soundEnabled, State.isSoundEffectsEnabled());
+        assertEquals(true, Skin.getUnlocked("Iron Man"));
+        assertEquals(true, Skin.getUnlocked("Plank"));
+        assertEquals(false, State.isSoundtrackEnabled());
+        assertEquals(false, State.isSoundEffectsEnabled());
 
     }
 }
