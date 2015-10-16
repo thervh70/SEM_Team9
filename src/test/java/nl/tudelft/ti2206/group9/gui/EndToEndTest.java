@@ -86,6 +86,35 @@ public class EndToEndTest extends ApplicationTest {
         State.resetAll();
     }
 
+    /**
+     * Overview of the EndToEndTest:
+     *
+     *  - Click on screen to get passed the SplashScreen
+     *  - Go through the settings by clicking on settings button in the
+     *     main menu, toggle the settings
+     *  - Go through the shop, buy a skin and return
+     *  - Go through the accounts, testing the new game button
+     *      - First clicking whithout a name
+     *      - Then clicking with a faulty name
+     *      - Then clicking with a valid name
+     *      - The game will now start
+     *  - Go through the gameplay
+     *      - Click the pause button and resume game
+     *      - Go through playermovement
+     *      - Click the pause button and return to main menu
+     *  - Go through account loading
+     *      - Click account button in main menu
+     *      - Select the account list
+     *      - Click load
+     *      - Return to main menu
+     *  - Go through diePopup
+     *      - Start game
+     *      - Let player die; click retry
+     *      - Let player die; click back to main
+     *  - Close application
+     *  - Output Log
+     * @throws IOException
+     */
     @Test
     public void test() throws IOException { //NOPMD - assert is done in subs.
         clickOn(stage, MouseButton.PRIMARY);
