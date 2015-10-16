@@ -130,7 +130,10 @@ public interface GameObserver extends Observer {
         UNSUPPORTEDDECODINGEXCEPTION,
         /** There has been an exception with null pointers.
          * optionalArgs: exception location, exception message. */
-        NULLPOINTEREXCEPTION
+        NULLPOINTEREXCEPTION,
+        /** There has been an exception while connecting to the HighscoreServer.
+         * optionalArgs: exception location, exception message. */
+        CLIENTCOULDNOTCONNECT
     }
 
     /** Object containing information about the game update. */

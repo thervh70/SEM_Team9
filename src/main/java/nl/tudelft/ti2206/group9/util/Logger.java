@@ -88,6 +88,8 @@ public class Logger implements GameObserver {
                 lbl + "Exception while decoding JSON!" + info);
         STRINGS.put(Error.NULLPOINTEREXCEPTION,
                 lbl + "Something is pointing to void space!" + info);
+        STRINGS.put(Error.CLIENTCOULDNOTCONNECT,
+                lbl + "Could not connect to a HighscoreServer!" + info);
     }
 
     /**
