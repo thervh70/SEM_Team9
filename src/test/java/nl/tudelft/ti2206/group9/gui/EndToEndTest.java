@@ -57,11 +57,10 @@ public class EndToEndTest extends ApplicationTest {
     private static final int MAIN_SHOP = 4;
 //    private static final int MAIN_HIGHSCORE = 5;
 
-    private static final int ACCOUNT_BACK = 0;
-    private static final int ACCOUNT_LOAD = 1;
-    private static final int ACCOUNT_NEW = 2;
-    private static final int ACCOUNT_TEXTFIELD = 4;
-    private static final int ACCOUNT_LIST = 5;
+    private static final int ACCOUNT_LOAD = 0;
+    private static final int ACCOUNT_NEW = 1;
+    private static final int ACCOUNT_TEXTFIELD = 3;
+    private static final int ACCOUNT_LIST = 4;
 
     private static final int SETTINGS_BACK = 0;
     private static final int SETTINGS_SOUNDTRACK = 1;
@@ -133,7 +132,7 @@ public class EndToEndTest extends ApplicationTest {
         accountScreen(ACCOUNT_LIST);
         accountScreen(ACCOUNT_LOAD);
         assertNotNull(State.getPlayerName());
-        accountScreen(ACCOUNT_BACK);
+//        accountScreen(ACCOUNT_BACK);
 
         mainMenu(MAIN_START);
         sleep(COUNTDOWN);
@@ -211,7 +210,7 @@ public class EndToEndTest extends ApplicationTest {
         typeName();
         accountScreen(ACCOUNT_NEW);
         assertEquals("Fred", State.getPlayerName());
-        accountScreen(ACCOUNT_BACK);
+//        accountScreen(ACCOUNT_BACK);
     }
 
     private void goThroughGamePlay() {

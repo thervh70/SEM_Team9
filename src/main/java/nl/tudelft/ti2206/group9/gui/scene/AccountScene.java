@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.text.Text;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
@@ -43,9 +44,7 @@ public class AccountScene extends AbstractMenuScene {
         /** Load button. */
         ACC_LOAD,
         /** Newgame button. */
-        ACC_NEW,
-        /** Back button. */
-        ACC_BACK
+        ACC_NEW
     }
 
     @Override
@@ -54,24 +53,23 @@ public class AccountScene extends AbstractMenuScene {
         /** Create Buttons. */
         final Button newButton = createButton("NEW", 2, 18);
         final Button loadButton = createButton("LOAD", 4, 18);
-        final Button backButton = createButton("BACK", 0, 18);
         list.setMinHeight(LIST_HEIGHT);
+        list.setPlaceholder(new Text("No content"));
         /** Set Button Functions .*/
         setButtonFunction(loadButton, BType.ACC_LOAD);
         setButtonFunction(newButton, BType.ACC_NEW);
-        setButtonFunction(backButton, BType.ACC_BACK);
         newButton.disableProperty().bind(
                 Bindings.isEmpty(INPUT.textProperty()));
+        loadButton.disableProperty().bind(Bindings.isEmpty(list.getItems()));
         final String text = setTextLabel();
         final Label textLabel = createLabel(text, 0, 16);
         /** Set tooltips. */
         loadButton.setTooltip(new Tooltip("Load an existing game"));
         newButton.setTooltip(new Tooltip("Create a new game"));
-        backButton.setTooltip(new Tooltip("Back to Main Menu"));
         list.setTooltip(new Tooltip("Select player"));
         INPUT.setTooltip(new Tooltip("Enter your name"));
         INPUT.setFont(Style.getFont(FONT_SIZE));
-        return new Node[]{backButton, loadButton, newButton, textLabel,
+        return new Node[]{loadButton, newButton, textLabel,
                 INPUT, list};
     }
 
@@ -93,21 +91,20 @@ public class AccountScene extends AbstractMenuScene {
                     OBSERVABLE.notify(Category.MENU, Menu.ACC_LOAD);
                     SaveGame.loadGame(
                             list.getSelectionModel().getSelectedItem());
-                    refreshContent();
+                    clearAccountScene();
+                    ShaftEscape.setScene(new MainMenuScene());
                 }
             } else if (type == BType.ACC_NEW) {
                 if (checkPlayerName(INPUT.getText())) {
                     createNewAccount(INPUT.getText());
+                    clearAccountScene();
+                    ShaftEscape.setScene(new MainMenuScene());
                 } else {
                     setPopup(new WarningPopup(event1 -> setPopup(null),
                             "The given name is either invalid\n"
                                     + "or already exists"));
                     ShaftEscape.showPopup(getPopup());
                 }
-            } else {
-                OBSERVABLE.notify(Category.MENU, Menu.ACC_BACK);
-                State.getSaveGames().clear();
-                ShaftEscape.setScene(new MainMenuScene());
             }
         });
     }
@@ -119,6 +116,14 @@ public class AccountScene extends AbstractMenuScene {
         State.getSaveGames().clear();
         final AbstractScene scene = ShaftEscape.getScene();
         scene.setRoot(scene.createRoot());
+    }
+
+    /**
+     * Clear all textfields and lists in AccountScene.
+     */
+    private static void clearAccountScene() {
+        State.getSaveGames().clear();
+        INPUT.clear();
     }
 
     /**

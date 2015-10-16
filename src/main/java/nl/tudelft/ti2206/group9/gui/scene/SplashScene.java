@@ -65,7 +65,7 @@ public final class SplashScene extends AbstractMenuScene {
             OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
                     me.getButton());
             OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
-            ShaftEscape.setScene(new MainMenuScene());
+            ShaftEscape.setScene(new AccountScene());
         });
     }
 
@@ -78,7 +78,7 @@ public final class SplashScene extends AbstractMenuScene {
             OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
                     ke.getCode());
             OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
-            ShaftEscape.setScene(new MainMenuScene());
+            ShaftEscape.setScene(new AccountScene());
         });
     }
 
