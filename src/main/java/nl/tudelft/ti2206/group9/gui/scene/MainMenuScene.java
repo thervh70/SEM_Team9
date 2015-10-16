@@ -66,7 +66,6 @@ public final class MainMenuScene extends AbstractMenuScene {
         setButtonFunction(settingsButton, BType.SETTINGS);
         setButtonFunction(accountsButton, BType.ACCOUNT);
         setButtonFunction(shopButton, BType.SHOP);
-
         setButtonFunction(highScoreButton, BType.HIGHSCORES);
 
         /** Set tooltips. */
@@ -103,8 +102,8 @@ public final class MainMenuScene extends AbstractMenuScene {
                 OBSERVABLE.notify(Category.MENU, Menu.SHOP);
                 ShaftEscape.setScene(new ShopScene());
             } else {
-                OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
-                ShaftEscape.setScene(new SettingsScene());
+                OBSERVABLE.notify(Category.MENU, Menu.HIGHSCORES);
+                ShaftEscape.setScene(new HighScoreScene());
             }
         });
     }
