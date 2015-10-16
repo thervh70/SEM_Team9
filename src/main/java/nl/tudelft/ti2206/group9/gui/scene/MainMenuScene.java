@@ -101,6 +101,9 @@ public final class MainMenuScene extends AbstractMenuScene {
             } else if (type == BType.SHOP) {
                 OBSERVABLE.notify(Category.MENU, Menu.SHOP);
                 ShaftEscape.setScene(new ShopScene());
+            } else if (type == BType.SETTINGS) {
+                    OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
+                    ShaftEscape.setScene(new SettingsScene());
             } else {
                 OBSERVABLE.notify(Category.MENU, Menu.HIGHSCORES);
                 ShaftEscape.setScene(new HighScoreScene());
