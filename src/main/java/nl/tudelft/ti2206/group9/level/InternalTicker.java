@@ -6,7 +6,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.application.Platform;
-import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 
 /**
  * This thread handles the ticks of the internal system. On each tick, the track
@@ -77,12 +76,6 @@ public final class InternalTicker extends TimerTask {
      */
     private void step() {
         State.getTrack().step();
-
-        if (!State.getTrack().getPlayer().isAlive()) {
-            State.checkHighscore();
-            GameScene.stopTickers();
-            GameScene.showDeathMenu();
-        }
     }
 
     /**
