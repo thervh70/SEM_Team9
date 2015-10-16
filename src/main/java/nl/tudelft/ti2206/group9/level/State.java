@@ -36,9 +36,13 @@ public final class State {
      */
     private static String defaultSaveDir = "sav/";
 
-    /** Boolean to determine whether soundtracks are enabled. */
+    /**
+     * Boolean to determine whether soundtracks are enabled.
+     */
     private static boolean soundtrackEnabled;
-    /** Boolean to determine whether sound effects are enabled. */
+    /**
+     * Boolean to determine whether sound effects are enabled.
+     */
     private static boolean soundEffectsEnabled;
 
     /** List of the names of all the saved games. */
@@ -196,6 +200,7 @@ public final class State {
 
     /**
      * Change whether the soundtrack is enabled.
+     *
      * @param newSoundEnabled true/false soundtrack.
      */
     public static void setSoundtrackEnabled(final boolean newSoundEnabled) {
@@ -204,6 +209,7 @@ public final class State {
 
     /**
      * Change whether the soundtrack is enabled.
+     *
      * @param newSoundEnabled true/false sound effects.
      */
     public static void setSoundEffectsEnabled(final boolean newSoundEnabled) {

@@ -152,7 +152,7 @@ public class ShopScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
                                             final BType type) {
         button.setOnAction(event1 ->  {
-                ShaftEscape.getButtonAudioPlayer().play();
+            ShaftEscape.getButtonAudioPlayer().play();
                 if (type == BType.SHOP_BACK) {
                     OBSERVABLE.notify(GameObserver.Category.MENU,
                             GameObserver.Menu.SHOP_BACK);

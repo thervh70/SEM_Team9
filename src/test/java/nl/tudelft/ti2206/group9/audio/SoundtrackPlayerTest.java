@@ -7,11 +7,14 @@ import org.junit.Test;
 
 /**
  * SoundtrackPlayerTest tests the SoundtrackPlayer class.
+ *
  * @author Mitchell
  */
 public class SoundtrackPlayerTest {
 
-    /** Path to a test audio file. */
+    /**
+     * Path to a test audio file.
+     */
     private final String testPath = "src/main/resources/"
             + "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
 

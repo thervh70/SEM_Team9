@@ -39,9 +39,13 @@ public final class Parser {
     private static long highScore;
     /** Boolean to indicate if skins are unlocked. */
     private static boolean andy, captain, boy, plank, iron;
-    /** Boolean for sound track enabled. */
+    /**
+     * Boolean for sound track enabled.
+     */
     private static boolean soundtrackEnabled;
-    /** Boolean to indicate whether the sound is enabled. */
+    /**
+     * Boolean to indicate whether the sound is enabled.
+     */
     private static boolean soundEffectsEnabled;
 
     /**

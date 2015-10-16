@@ -39,7 +39,9 @@ public class ShaftEscape extends Application {
     /** The logger that logs all events in the game. */
     public static final Logger LOGGER = new Logger();
 
-    /** The AudioPlayer to be used for a button sound effect. */
+    /**
+     * The AudioPlayer to be used for a button sound effect.
+     */
     private static SoundEffectPlayer apButton = new SoundEffectPlayer(
             "src/main/resources/nl/tudelft/ti2206/group9/audio/button.wav");
 
@@ -140,6 +142,7 @@ public class ShaftEscape extends Application {
 
     /**
      * Every Button has an AudioPlayer for a sound effect.
+     *
      * @return the button AudioPlayer.
      */
     public static SoundEffectPlayer getButtonAudioPlayer() {
