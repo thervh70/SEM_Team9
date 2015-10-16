@@ -67,6 +67,7 @@ public class Logger implements GameObserver {
 
         lbl = " [PLAYER] ";
         STRINGS.put(Player.COLLISION, lbl + "Collided with %s.");
+        STRINGS.put(Player.DISTANCE_INCREASE, lbl + "Distance is now %d.");
         STRINGS.put(Player.JUMP, lbl + "Jumping.");
         STRINGS.put(Player.SLIDE, lbl + "Sliding.");
         STRINGS.put(Player.START_MOVE, lbl + "Started moving from lane %d.");

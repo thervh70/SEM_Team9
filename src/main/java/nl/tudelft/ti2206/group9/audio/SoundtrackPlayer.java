@@ -67,10 +67,10 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
                     .toURL().toString()));
         } catch (MalformedURLException mue) {
             OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
-                    "SoundtrackPlayer.initializeTune(String)", mue.getMessage());
+                "SoundtrackPlayer.initializeTune(String)", mue.getMessage());
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
-                    "SoundtrackPlayer.initializeTune(String)", me.getMessage());
+                "SoundtrackPlayer.initializeTune(String)", me.getMessage());
         }
     }
 
@@ -148,7 +148,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         if (mediaPlayer == null) {
             return false;
         } else {
-            return mediaPlayer.getStatus().equals("PLAYING");
+            return mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING);
         }
     }
 

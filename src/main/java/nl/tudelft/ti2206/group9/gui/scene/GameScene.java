@@ -59,7 +59,7 @@ public final class GameScene extends AbstractScene {
 
     /** The AudioPlayer to be used for background music. */
     private static SoundtrackPlayer soundtrackPlayer = new SoundtrackPlayer(
-            "src/main/resources/nl/tudelft/ti2206/group9/audio/tempo.wav");
+        "src/main/resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
 
     /** The Sound-effects player. */
     private static SoundEffectObserver soundEffectObserver =
@@ -191,6 +191,7 @@ public final class GameScene extends AbstractScene {
 
     /** Show a death menu. */
     public static void showDeathMenu() {
+        soundtrackPlayer.resetSpeed();
         soundtrackPlayer.stop();
         setPopup(new DeathPopup(e -> {
             OBSERVABLE.notify(Category.GAME, Game.RETRY);

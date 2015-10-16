@@ -102,7 +102,9 @@ public interface GameObserver extends Observer {
         /** Player slides. */
         SLIDE,
         /** Player collides. optionalArg: name of entity collided with. */
-        COLLISION
+        COLLISION,
+        /** The distance has increased a certain amount. optinalArg: newDist */
+        DISTANCE_INCREASE
     }
 
     /**
