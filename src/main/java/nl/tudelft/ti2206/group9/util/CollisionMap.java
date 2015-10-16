@@ -9,11 +9,14 @@ import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
 
 /**
  * A map of possible collisions and their handlers.
+ *
  * @author Mathias
  */
 public class CollisionMap {
 
-    /** The collection of collision handlers. */
+    /**
+     * The collection of collision handlers.
+     */
     private final Map<Class<? extends AbstractEntity>,
             Map<Class<? extends AbstractEntity>, CollisionHandler<?, ?>>
             > handlers;
@@ -29,11 +32,11 @@ public class CollisionMap {
      * Adds a two-way collision interaction to this collection, i.e. the
      * collision handler will be used for both C1 versus C2 and C2 versus C1.
      *
-     * @param <C1> The collider type.
-     * @param <C2> The collidee (AbstractEntity that was moved into) type.
+     * @param <C1>     The collider type.
+     * @param <C2>     The collidee (AbstractEntity that was moved into) type.
      * @param collider The collider type.
      * @param collidee The collidee type.
-     * @param handler The handler that handles the collision.
+     * @param handler  The handler that handles the collision.
      */
     public <C1 extends AbstractEntity, C2 extends AbstractEntity> void
     onCollision(
@@ -45,14 +48,14 @@ public class CollisionMap {
     /**
      * Adds a collision interaction to this collection.
      *
-     * @param <C1> The collider type.
-     * @param <C2> The collidee (AbstractEntity that was moved into) type.
+     * @param <C1>     The collider type.
+     * @param <C2>     The collidee (AbstractEntity that was moved into) type.
      * @param collider The collider type.
      * @param collidee The collidee type.
      * @param symetric <code>true</code> if this collision is used for both
-     *                  C1 against C2 and vice versa;
-     *                  <code>false</code> if only for C1 against C2.
-     * @param handler The handler that handles the collision.
+     *                 C1 against C2 and vice versa;
+     *                 <code>false</code> if only for C1 against C2.
+     * @param handler  The handler that handles the collision.
      */
     public <C1 extends AbstractEntity, C2 extends AbstractEntity> void
     onCollision(
@@ -70,7 +73,7 @@ public class CollisionMap {
      *
      * @param collider The collider type.
      * @param collidee The collidee type.
-     * @param handler The handler that handles the collision.
+     * @param handler  The handler that handles the collision.
      */
     private void addHandler(final Class<? extends AbstractEntity> collider,
                             final Class<? extends AbstractEntity> collidee,
@@ -90,8 +93,8 @@ public class CollisionMap {
      * Handles the collision between two colliding parties, if a suitable
      * collision handler is listed.
      *
-     * @param <C1> The collider type.
-     * @param <C2> The collidee (AbstractEntity that was moved into) type.
+     * @param <C1>     The collider type.
+     * @param <C2>     The collidee (AbstractEntity that was moved into) type.
      * @param collider The collider.
      * @param collidee The collidee.
      */             //type of collisionHandler is unchecked, so suppresswarnings
@@ -150,7 +153,7 @@ public class CollisionMap {
      *              interfaces for.
      * @return A list of all classes and interfaces the class inherits.
      */         //found.add((Class<? extends AbstractEntity>) is unchecked,
-                //thats what the SuppressWarnings is for.
+    //thats what the SuppressWarnings is for.
     @SuppressWarnings("unchecked")
     private List<Class<? extends AbstractEntity>> getInheritance(
             final Class<? extends AbstractEntity> clazz) {
@@ -179,16 +182,16 @@ public class CollisionMap {
     /**
      * Handles the collision between two colliding parties.
      *
-     * @author Mathias
-     *
      * @param <C1> The collider type.
      * @param <C2> The collidee type.
+     * @author Mathias
      */
     public interface CollisionHandler<C1 extends AbstractEntity,
             C2 extends AbstractEntity> {
 
         /**
          * Handles the collision between two colliding parties.
+         *
          * @param collider The collider.
          * @param collidee The collidee.
          */
@@ -198,10 +201,9 @@ public class CollisionMap {
     /**
      * An symmetrical copy of a collision hander.
      *
-     * @author Mathias
-     *
      * @param <C1> The collider type.
      * @param <C2> The collidee type.
+     * @author Mathias
      */
     private static class InverseCollisionHandler<C1 extends AbstractEntity,
             C2 extends AbstractEntity>
@@ -214,6 +216,7 @@ public class CollisionMap {
 
         /**
          * Creates a new collision handler.
+         *
          * @param hndlr The symmetric handler for this collision.
          */
         InverseCollisionHandler(final CollisionHandler<C2, C1> hndlr) {

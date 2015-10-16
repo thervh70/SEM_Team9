@@ -32,7 +32,7 @@ public abstract class AbstractMenuScene extends AbstractScene {
     /** Width for label and text input.*/
     private static final int CELL_WIDTH = 120;
     /** Height for label and text input.*/
-    private static final int CELL_HEIGHT = 10;
+    private static final int CELL_HEIGHT = 20;
     /** WIDTH for list. */
     private static final int LIST_WIDTH = 80;
     /** HEIGHT for list. */
@@ -133,7 +133,7 @@ public abstract class AbstractMenuScene extends AbstractScene {
      * @return Returns the listview. */
     protected static ListView<String> createList(final int column,
                                                  final int row) {
-        final ListView<String> list = new ListView<String>();
+        final ListView<String> list = new ListView<>();
         list.setEditable(true);
         GridPane.setConstraints(list, column, row);
         list.setPrefSize(LIST_WIDTH, LIST_HEIGHT);

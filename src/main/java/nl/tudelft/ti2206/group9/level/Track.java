@@ -50,9 +50,13 @@ public class Track {
     private Random random;
     /** List of all TrackParts the Track can consist of. */
     private List<TrackPart> trackParts;
-    /** CollisionMap that stores all collisions. */
+    /**
+     * CollisionMap that stores all collisions.
+     */
     private CollisionHandler collisions = new CollisionHandler();
-    /** Map that contains all createEntityCommands. */
+    /**
+     * Map that contains all createEntityCommands.
+     */
     private static Map<Class<? extends AbstractEntity>, CreateEntityCommand>
             createEntityMap = new ConcurrentHashMap<>();
 
@@ -262,6 +266,7 @@ public class Track {
 
     /**
      * Set the collision.
+     *
      * @param collisionHandler the new CollisionHandler.
      */
     public void setCollisions(final CollisionHandler collisionHandler) {
@@ -276,6 +281,7 @@ public class Track {
     public interface CreateEntityCommand {
         /**
          * Create an Entity upon call.
+         *
          * @param center the cente of the Entity
          * @return the created Entity
          */

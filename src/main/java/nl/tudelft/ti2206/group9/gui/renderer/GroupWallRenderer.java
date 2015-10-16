@@ -15,7 +15,9 @@ import nl.tudelft.ti2206.group9.level.Track;
 @SuppressWarnings("restriction")
 public class GroupWallRenderer extends AbstractGroupRenderer {
 
-    /** Used to point to the third vertex in the faces array of the Mesh. */
+    /**
+     * Used to point to the third vertex in the faces array of the Mesh.
+     */
     private static final int V3 = 3;
 
     /** Default constructor. */
@@ -36,7 +38,8 @@ public class GroupWallRenderer extends AbstractGroupRenderer {
 
     /**
      * Creates a wall mesh.
-     * @param zOffset the z offset.
+     *
+     * @param zOffset   the z offset.
      * @param leftRight -1: left. 1: right.
      * @return a wall mesh.
      */

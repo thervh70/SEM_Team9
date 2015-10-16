@@ -16,9 +16,13 @@ import nl.tudelft.ti2206.group9.level.Track;
 @SuppressWarnings("restriction")
 public class GroupTrackRenderer extends AbstractGroupRenderer {
 
-    /** Height of ceiling. Negative, because y is inverted. */
+    /**
+     * Height of ceiling. Negative, because y is inverted.
+     */
     private static final int CEILING_HEIGHT = -8;
-    /** Used to point to the third vertex in the faces array of the Mesh. */
+    /**
+     * Used to point to the third vertex in the faces array of the Mesh.
+     */
     private static final int V3 = 3;
 
     /**
@@ -31,6 +35,7 @@ public class GroupTrackRenderer extends AbstractGroupRenderer {
 
     /**
      * Method to render the walls.
+     *
      * @param zPosition Depth of the render.
      */
     private void renderTracks(final double zPosition) {
@@ -40,8 +45,9 @@ public class GroupTrackRenderer extends AbstractGroupRenderer {
 
     /**
      * Creates a track mesh.
+     *
      * @param zOffset the z offset.
-     * @param yPos the y position of the track.
+     * @param yPos    the y position of the track.
      * @return a track mesh.
      */
     private MeshView createMesh(final double zOffset, final int yPos) {
@@ -62,11 +68,11 @@ public class GroupTrackRenderer extends AbstractGroupRenderer {
                 trackWidth, 0,
         });
         if (yPos < -1) {       // on the floor, the faces have to face up
-            mesh.getFaces().addAll(new int[]{ 0, 0, 1, 1, 2, 2,
-                    2, 2, V3, V3, 0, 0 });
+            mesh.getFaces().addAll(new int[]{0, 0, 1, 1, 2, 2,
+                    2, 2, V3, V3, 0, 0});
         } else {               // on the ceiling, the faces have to face down
-            mesh.getFaces().addAll(new int[]{ 2, 2, 1, 1, 0, 0,
-                    0, 0, V3, V3, 2, 2 });
+            mesh.getFaces().addAll(new int[]{2, 2, 1, 1, 0, 0,
+                    0, 0, V3, V3, 2, 2});
         }
         final MeshView box = new MeshView(mesh);
         box.setTranslateZ(zOffset);

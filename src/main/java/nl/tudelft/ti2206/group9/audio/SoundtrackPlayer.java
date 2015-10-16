@@ -17,25 +17,37 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Error;
  * Creates a SoundTrackPlayer which you can initialize, start, pause and stop.
  * Besides, you can loop and increase the speed of the soundtrack.
  * The purpose of a SoundtrackPlayer is to play only soundtracks.
+ *
  * @author Mitchell
  */
 @SuppressWarnings("restriction")
 public class SoundtrackPlayer extends AbstractAudioPlayer {
 
-    /** Minimum rate of the SoundtrackPlayer. */
+    /**
+     * Minimum rate of the SoundtrackPlayer.
+     */
     private static final double LOWER = 0.125;
-    /** Maximum rate of the SoundtrackPlayer. */
+    /**
+     * Maximum rate of the SoundtrackPlayer.
+     */
     private static final double UPPER = 8.0;
-    /** Constant for making the SoundtrackPlayer loop forever. */
+    /**
+     * Constant for making the SoundtrackPlayer loop forever.
+     */
     private static final int INDEFINITE = -1;
 
-    /** The MediaPlayer of a SoundtrackPlayer. */
+    /**
+     * The MediaPlayer of a SoundtrackPlayer.
+     */
     private MediaPlayer mediaPlayer;
-    /** Path of the MediaPlayer. */
+    /**
+     * Path of the MediaPlayer.
+     */
     private String path;
 
     /**
      * Creates a SoundtrackPlayer with as input a specific path.
+     *
      * @param soundPath given path to the soundtrack.
      */
     public SoundtrackPlayer(final String soundPath) {
@@ -55,10 +67,10 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
                     .toURL().toString()));
         } catch (MalformedURLException mue) {
             OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
-            "SoundtrackPlayer.initializeTune(String)", mue.getMessage());
+                    "SoundtrackPlayer.initializeTune(String)", mue.getMessage());
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
-            "SoundtrackPlayer.initializeTune(String)", me.getMessage());
+                    "SoundtrackPlayer.initializeTune(String)", me.getMessage());
         }
     }
 
@@ -142,8 +154,9 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
 
     /**
      * Increases the speed of the soundtrack played by the SoundtrackPlayer.
+     *
      * @param rate rate to be set to.
-     * It is recommended to keep this rate between 0.125 and 8.0.
+     *             It is recommended to keep this rate between 0.125 and 8.0.
      */
     public final void setSpeed(final double rate) {
         if (State.isSoundtrackEnabled() & rate >= LOWER & rate <= UPPER) {
@@ -154,6 +167,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
     /**
      * Gets the current speed to which the SoundtrackPlayer is set.
      * (For testing purposes.)
+     *
      * @return double rate current rate of the SoundtrackPlayer.
      */
     public final double getSpeed() {

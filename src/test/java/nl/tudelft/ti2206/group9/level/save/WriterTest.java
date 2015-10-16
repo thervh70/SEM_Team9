@@ -1,6 +1,9 @@
 package nl.tudelft.ti2206.group9.level.save;
 
 import static org.junit.Assert.assertEquals;
+
+import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.gui.skin.*;
 import nl.tudelft.ti2206.group9.level.State;
 
 import org.junit.Test;
@@ -16,15 +19,24 @@ public final class WriterTest {
 
     @Test
     public void testSaveGame() {
+        Skin.createUnlockedHashmap();
+
         final String playerName = "Henk";
         State.setPlayerName(playerName);
         final int coins = 45;
         State.setCoins(coins);
-        final int score = 34567;
+        final int score = 3560;
         State.setHighscore(score);
+
+        final boolean iron = true;
+        Skin.setUnlocked("Iron Man", iron);
+        final boolean plank = true;
+        Skin.setUnlocked("Plank", plank);
+
         final boolean soundEnabled = false;
         State.setSoundtrackEnabled(soundEnabled);
         State.setSoundEffectsEnabled(soundEnabled);
+
 
         Writer.saveGame(fileFolder + "saveGameWriterTest.ses");
         Parser.loadGame(fileFolder + "saveGameWriterTest.ses");
@@ -32,7 +44,15 @@ public final class WriterTest {
         assertEquals(playerName, State.getPlayerName());
         assertEquals(coins, State.getCoins());
         assertEquals(score, State.getHighscore());
+
+        assertEquals(false, Skin.getUnlocked("Andy"));
+        assertEquals(true, Skin.getUnlocked("Noob"));
+        assertEquals(iron, Skin.getUnlocked("Iron Man"));
+        assertEquals(plank, Skin.getUnlocked("Plank"));
+
+
         assertEquals(soundEnabled, State.isSoundtrackEnabled());
         assertEquals(soundEnabled, State.isSoundEffectsEnabled());
+
     }
 }

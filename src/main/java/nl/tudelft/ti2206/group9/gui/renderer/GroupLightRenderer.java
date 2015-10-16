@@ -33,6 +33,7 @@ public class GroupLightRenderer extends AbstractGroupRenderer {
 
     /**
      * Render method for the lights.
+     *
      * @param zIndex Depth to render the lights.
      */
     private void renderLight(final int zIndex) {
@@ -41,7 +42,7 @@ public class GroupLightRenderer extends AbstractGroupRenderer {
 
         for (int i = 0; i < amount; i++) {
             final PointLight light = new PointLight(Color.GRAY);
-            light.setTranslateZ(i * Track.LENGTH  + zIndex * 2);
+            light.setTranslateZ(i * Track.LENGTH + zIndex * 2);
             light.setTranslateY(translateY);
             getChildren().add(light);
         }
