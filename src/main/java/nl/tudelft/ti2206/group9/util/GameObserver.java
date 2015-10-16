@@ -63,8 +63,12 @@ public interface GameObserver extends Observer {
         START,
         /** Settings button has been pressed. */
         SETTINGS,
-        /** Setting "sound" has been toggled. optionalArg: isSoundEnabled. */
-        SETTING_SOUND,
+        /** Setting "soundtrack" has been toggled.
+         * optionalArg: whether soundtrack is enabled ("ON"/"OFF"). */
+        SETTING_SOUNDTRACK,
+        /** Setting "sound effects" has been toggled.
+         * optionalArg: whether sound effect are enabled ("ON"/"OFF"). */
+        SETTING_SOUNDEFFECTS,
         /** Back from settings screen to main menu. */
         SETTINGS_BACK,
         /** Exit button has been pressed. */

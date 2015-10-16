@@ -68,7 +68,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final int LOAD_START = 1;
 
     private static final int SETTINGS_BACK = 0;
-    private static final int SETTINGS_SOUND = 1;
+    private static final int SETTINGS_SOUNDTRACK = 1;
+    private static final int SETTINGS_SOUNDEFFECTS = 2;
 
     private static final int SHOP_BACK = 1;
     private static final int SHOP_SKIN_IRONMAN = 0;
@@ -135,13 +136,27 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughSettings() {
         mainMenu(MAIN_SETTINGS);
 
-        assertTrue("Sound should enabled at startup.", State.isSoundEnabled());
-        settings(SETTINGS_SOUND);
-        assertFalse("Sound disabled. (1)", State.isSoundEnabled());
-        settings(SETTINGS_SOUND);
-        assertTrue("Sound enabled. (2)", State.isSoundEnabled());
-        settings(SETTINGS_SOUND);
-        assertFalse("Sound disabled. (3)", State.isSoundEnabled());
+        // Soundtrack toggle test.
+        assertTrue("Soundtrack should be enabled at startup.",
+                State.isSoundtrackEnabled());
+        settings(SETTINGS_SOUNDTRACK);
+        assertFalse("Soundtrack disabled. (1)", State.isSoundtrackEnabled());
+        settings(SETTINGS_SOUNDTRACK);
+        assertTrue("Soundtrack enabled. (2)", State.isSoundtrackEnabled());
+        settings(SETTINGS_SOUNDTRACK);
+        assertFalse("Soundtrack disabled. (3)", State.isSoundtrackEnabled());
+
+        // Sound effects toggle test.
+        assertTrue("Sound effects should be enabled at startup.",
+                State.isSoundEffectsEnabled());
+        settings(SETTINGS_SOUNDEFFECTS);
+        assertFalse("Sound effects disabled. (1)",
+                State.isSoundEffectsEnabled());
+        settings(SETTINGS_SOUNDEFFECTS);
+        assertTrue("Sound effects enabled. (2)", State.isSoundEffectsEnabled());
+        settings(SETTINGS_SOUNDEFFECTS);
+        assertFalse("Sound effects disabled. (3)",
+                State.isSoundEffectsEnabled());
 
         settings(SETTINGS_BACK);
     }
@@ -149,6 +164,7 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughShop() {
         State.setCoins(COINS); //Make sure player has enough coins
         mainMenu(MAIN_SHOP);
+
         assertEquals(State.getSkin(), Skin.getNoob());
         shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
         assertEquals(State.getSkin(), Skin.getNoob());
@@ -158,6 +174,7 @@ public class EndToEndTest extends ApplicationTest {
         assertEquals(State.getSkin(), Skin.getAndy());
         shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
         assertEquals(State.getSkin(), Skin.getNoob());
+
         shopScreen(SHOP_BACK);
     }
 

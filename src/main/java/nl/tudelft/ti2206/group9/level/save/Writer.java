@@ -83,14 +83,22 @@ public final class Writer {
      * Create a JSON string from all the data
      * which can be writte to a JSON file.
      * @return the JSON string
-     */                      // Eclipse thinks JSONObject.put belongs to HashMap
+     */         // JSONObject.put uses HashMap, that gives unchecked warnings.
     @SuppressWarnings("unchecked")
     private static String writeToJSON() {
         final JSONObject mainObject = new JSONObject();
 
         final JSONObject settings = new JSONObject();
-        settings.put("soundEnabled", State.isSoundEnabled());
-        mainObject.put("settings", settings);
+
+        final JSONObject soundtracksettings = new JSONObject();
+        soundtracksettings.put("soundtrackEnabled",
+                State.isSoundtrackEnabled());
+        settings.put("soundtracksettings", soundtracksettings);
+
+        final JSONObject soundeffectsettings = new JSONObject();
+        soundeffectsettings.put("soundEffectsEnabled",
+                State.isSoundEffectsEnabled());
+        settings.put("soundEffectssettings", soundeffectsettings);
 
         mainObject.put("playername", State.getPlayerName());
         mainObject.put("coins", State.getCoins());
@@ -104,6 +112,8 @@ public final class Writer {
         mainObject.put("captain", Skin.getUnlocked("Captain"));
         mainObject.put("iron", Skin.getUnlocked("Iron Man"));
         mainObject.put("plank", Skin.getUnlocked("Plank"));
+
+        mainObject.put("settings", settings);
 
         return mainObject.toJSONString();
     }

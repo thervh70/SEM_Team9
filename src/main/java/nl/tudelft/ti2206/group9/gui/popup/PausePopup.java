@@ -1,13 +1,13 @@
 package nl.tudelft.ti2206.group9.gui.popup;
 
-import nl.tudelft.ti2206.group9.gui.scene.GameScene;
-import nl.tudelft.ti2206.group9.gui.scene.SplashScene;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 
 /**
  * PausePopup, to be shown when the Game is paused.
@@ -28,17 +28,17 @@ public class PausePopup extends AbstractInfoPopup {
         super(new Button("Resume"), new Button("Return to Main Menu"));
 
         getLeftButton().setOnMouseClicked(mouseEvent -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            ShaftEscape.getButtonAudioPlayer().play();
             hide();
             resumeEvent.handle(mouseEvent);
+            GameScene.getSoundtrackPlayer().play();
         });
 
         getRightButton().setOnMouseClicked(mouseEvent -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            ShaftEscape.getButtonAudioPlayer().play();
             hide();
             menuEvent.handle(mouseEvent);
-            GameScene.getAudioPlayer().resetSpeed();
-            GameScene.getAudioPlayer().stop();
+            GameScene.getSoundtrackPlayer().stop();
         });
     }
 

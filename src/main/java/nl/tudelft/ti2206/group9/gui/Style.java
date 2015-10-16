@@ -1,14 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;    // NOPMD - too many imports
 // because don't want to use .*
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -31,6 +23,14 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
 /**
  * Class containing the styling for the GUI.
  * @author Maikel
@@ -40,12 +40,6 @@ public final class Style {
 
     /** BRICK material for walls, brick wall texture. */
     public static final PhongMaterial BRICK = new PhongMaterial();
-
-    /** MOSS material for walls, mossy brick wall texture. */
-    public static final PhongMaterial MOSS = new PhongMaterial();
-
-    /** CRACK material used for walls, cracked brick wall texture. */
-    public static final PhongMaterial CRACK = new PhongMaterial();
 
     /** FLOOR material used for floors, mossy cobblestone floor texture. */
     public static final PhongMaterial FLOOR = new PhongMaterial();
@@ -88,8 +82,6 @@ public final class Style {
         final String path = "nl/tudelft/ti2206/group9/gui/texture_";
 
         BRICK .setDiffuseMap(new Image(path +       "brick.png"));
-        MOSS  .setDiffuseMap(new Image(path +        "moss.png"));
-        CRACK .setDiffuseMap(new Image(path +       "crack.png"));
         FLOOR .setDiffuseMap(new Image(path + "cobblestone.png"));
         COIN  .setDiffuseMap(new Image(path +        "coin.png"));
         PICKUP.setDiffuseMap(new Image(path +      "pickup.png"));
