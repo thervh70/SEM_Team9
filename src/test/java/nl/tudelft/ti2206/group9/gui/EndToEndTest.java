@@ -89,14 +89,14 @@ public class EndToEndTest extends ApplicationTest {
      * Overview of the EndToEndTest:
      *
      *  - Click on screen to get passed the SplashScreen
-     *  - Go through the settings by clicking on settings button in the
-     *     main menu, toggle the settings
-     *  - Go through the shop, buy a skin and return
      *  - Go through the accounts, testing the new game button
      *      - First clicking whithout a name
      *      - Then clicking with a faulty name
      *      - Then clicking with a valid name
-     *      - The game will now start
+     *      - You are in the main menu
+     *  - Go through the settings by clicking on settings button in the
+     *     main menu, toggle the settings
+     *  - Go through the shop, buy a skin and return
      *  - Go through the gameplay
      *      - Click the pause button and resume game
      *      - Go through playermovement
@@ -119,20 +119,17 @@ public class EndToEndTest extends ApplicationTest {
         clickOn(stage, MouseButton.PRIMARY);
         sleep(SHORT);
 
+        goThroughNameTyping();
+
         goThroughSettings();
         goThroughShop();
 
-        mainMenu(MAIN_START);
-        clickPopup(WARNING_OK);
-
-        goThroughNameTyping();
         goThroughGamePlay();
 
         mainMenu(MAIN_ACCOUNTS);
         accountScreen(ACCOUNT_LIST);
         accountScreen(ACCOUNT_LOAD);
         assertNotNull(State.getPlayerName());
-//        accountScreen(ACCOUNT_BACK);
 
         mainMenu(MAIN_START);
         sleep(COUNTDOWN);
@@ -210,7 +207,6 @@ public class EndToEndTest extends ApplicationTest {
         typeName();
         accountScreen(ACCOUNT_NEW);
         assertEquals("Fred", State.getPlayerName());
-//        accountScreen(ACCOUNT_BACK);
     }
 
     private void goThroughGamePlay() {
