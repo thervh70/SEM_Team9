@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -12,8 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.audio.AudioPlayer;
-import nl.tudelft.ti2206.group9.audio.SoundEffectsPlayer;
+import nl.tudelft.ti2206.group9.audio.SoundEffectObserver;
+import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.gui.ExternalTicker;
 import nl.tudelft.ti2206.group9.gui.popup.DeathPopup;
 import nl.tudelft.ti2206.group9.gui.popup.PausePopup;
@@ -23,7 +24,6 @@ import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * This scene shows the 3D Game world and the 2D score overlay.
@@ -58,12 +58,12 @@ public final class GameScene extends AbstractScene {
     private static boolean running;
 
     /** The AudioPlayer to be used for background music. */
-    private static AudioPlayer audioPlayer = new AudioPlayer("src/main/"
-            + "resources/nl/tudelft/ti2206/group9/audio/tempo.wav");
+    private static SoundtrackPlayer soundtrackPlayer = new SoundtrackPlayer(
+        "src/main/resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
 
     /** The Sound-effects player. */
-    private static SoundEffectsPlayer soundEffectsPlayer =
-            new SoundEffectsPlayer();
+    private static SoundEffectObserver soundEffectObserver =
+            new SoundEffectObserver();
 
     /**
      * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and
@@ -89,7 +89,7 @@ public final class GameScene extends AbstractScene {
         setupCamera();
         keyBindings();
 
-        audioPlayer.play(false);
+        soundtrackPlayer.play();
         startTickers();
         return root;
     }
@@ -127,6 +127,7 @@ public final class GameScene extends AbstractScene {
                 keyMap.keyPressed(keyEvent.getCode());
                 if (keyEvent.getCode().equals(KeyCode.ESCAPE)
                         && getPopup() == null) {
+                    soundtrackPlayer.pause();
                     showPauseMenu();
                 }
             }
@@ -149,7 +150,7 @@ public final class GameScene extends AbstractScene {
         extTicker = new ExternalTicker();
         extTicker.start();
         extTicker.countdown(countdown);
-        OBSERVABLE.addObserver(soundEffectsPlayer);
+        OBSERVABLE.addObserver(soundEffectObserver);
         OBSERVABLE.notify(Category.GAME, Game.STARTED);
     }
 
@@ -158,7 +159,7 @@ public final class GameScene extends AbstractScene {
         final int countdown = 3;
         extTicker.start();
         extTicker.countdown(countdown);
-        OBSERVABLE.addObserver(soundEffectsPlayer);
+        OBSERVABLE.addObserver(soundEffectObserver);
         OBSERVABLE.notify(Category.GAME, Game.RESUMED);
     }
 
@@ -167,7 +168,7 @@ public final class GameScene extends AbstractScene {
         running = false;
         extTicker.stop();
         InternalTicker.stop();
-        OBSERVABLE.deleteObserver(soundEffectsPlayer);
+        OBSERVABLE.deleteObserver(soundEffectObserver);
         OBSERVABLE.notify(Category.GAME, Game.STOPPED);
     }
 
@@ -190,8 +191,8 @@ public final class GameScene extends AbstractScene {
 
     /** Show a death menu. */
     public static void showDeathMenu() {
-        audioPlayer.resetSpeed();
-        audioPlayer.stop();
+        soundtrackPlayer.resetSpeed();
+        soundtrackPlayer.stop();
         setPopup(new DeathPopup(e -> {
             OBSERVABLE.notify(Category.GAME, Game.RETRY);
             State.reset();
@@ -247,8 +248,8 @@ public final class GameScene extends AbstractScene {
      * Every GameScene has an AudioPlayer for the soundtrack.
      * @return the soundtrack AudioPlayer.
      */
-    public static AudioPlayer getAudioPlayer() {
-        return audioPlayer;
+    public static SoundtrackPlayer getSoundtrackPlayer() {
+        return soundtrackPlayer;
     }
 
     /** @return the ExternalTicker of the GameScene. */

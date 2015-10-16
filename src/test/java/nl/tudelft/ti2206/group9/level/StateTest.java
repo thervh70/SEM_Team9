@@ -111,6 +111,9 @@ public class StateTest {
 
         State.setDefaultSaveDir("save/");
         assertEquals("save/", State.getDefaultSaveDir());
+
+        // Clean up after test
+        State.setDefaultSaveDir("sav/");
     }
 
 }

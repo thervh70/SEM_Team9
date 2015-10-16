@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
+import nl.tudelft.ti2206.group9.level.State;
 
 /**
  * Ancestor for all MenuScenes. Subclasses should define an array of Nodes in
@@ -32,7 +33,7 @@ public abstract class AbstractMenuScene extends AbstractScene {
     /** Width for label and text input.*/
     private static final int CELL_WIDTH = 120;
     /** Height for label and text input.*/
-    private static final int CELL_HEIGHT = 10;
+    private static final int CELL_HEIGHT = 20;
     /** WIDTH for list. */
     private static final int LIST_WIDTH = 80;
     /** HEIGHT for list. */
@@ -133,7 +134,7 @@ public abstract class AbstractMenuScene extends AbstractScene {
      * @return Returns the listview. */
     protected static ListView<String> createList(final int column,
                                                  final int row) {
-        final ListView<String> list = new ListView<String>();
+        final ListView<String> list = new ListView<>();
         list.setEditable(true);
         GridPane.setConstraints(list, column, row);
         list.setPrefSize(LIST_WIDTH, LIST_HEIGHT);
@@ -154,6 +155,24 @@ public abstract class AbstractMenuScene extends AbstractScene {
         GridPane.setRowSpan(table, ROW_SPAN);
         table.setPrefSize(LIST_WIDTH, LIST_HEIGHT);
         return table;
+    }
+
+    /**
+     * Create a Label in the left-upper corner with the name of
+     * the current selected account in it. Value is 'Guest' when no
+     * account is selected.
+     * @return the Label containing the players name
+     */
+    protected static Label getPlayerLabelContent() {
+        String name = "";
+        if (State.getPlayerName() == null) {
+            name = "Guest";
+        } else {
+            name = State.getPlayerName();
+        }
+        final Label res = createLabel(name, 0, 0);
+        GridPane.setRowSpan(res, 2);
+        return res;
     }
 
 }

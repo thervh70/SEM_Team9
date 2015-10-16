@@ -1,9 +1,12 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
-import nl.tudelft.ti2206.group9.gui.Style;
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
+import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.util.GameObserver;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 
 /**
  * This utility class stores the State of the game,
@@ -36,14 +39,22 @@ public final class State {
      */
     private static String defaultSaveDir = "sav/";
 
-    /** Boolean to determine whether sound is enabled. */
-    private static boolean soundEnabled;
+    /**
+     * Boolean to determine whether soundtracks are enabled.
+     */
+    private static boolean soundtrackEnabled;
+    /**
+     * Boolean to determine whether sound effects are enabled.
+     */
+    private static boolean soundEffectsEnabled;
 
     /** List of the names of all the saved games. */
     private static ObservableList<String> saveGames =
             FXCollections.observableArrayList();
     /** Standard modulus number for both modulo calculation. */
     public static final int MOD = 50;
+    /** Records the distance from the previous distance update. */
+    private static int previousDistance;
 
     /** Cannot be constructed. */
     private State() { }
@@ -53,16 +64,20 @@ public final class State {
         reset();
         setCoins(0);
         highscore = 0;
-        skin = Style.getNoob();
-        soundEnabled = true;
+        previousDistance = 0;
+        skin = Skin.getNoob();
+        soundtrackEnabled = true;
+        soundEffectsEnabled = true;
     }
 
     /** Reset data that should be reset every run. */
     public static void reset() {
         setTrack(new Track());
         setScore(0);
+        previousDistance = 0;
         Track.setDistance(0);
         track.getPlayer().respawn();
+        PowerupInvulnerable.resetCounter();
     }
 
     /**
@@ -112,6 +127,19 @@ public final class State {
      */
     public static double getDistance() {
         return Track.getDistance();
+    }
+
+    /**
+     * Check whether the distance has been increased by 50 (or more).
+     * This check is used for soundtrack speed increasing.
+     */
+    public static void distanceCheck() {
+        final int currentDistance = State.modulo(State.getDistance());
+        if (currentDistance > previousDistance) {
+            previousDistance = currentDistance;
+            OBSERVABLE.notify(Category.PLAYER,
+                    GameObserver.Player.DISTANCE_INCREASE, (int) getDistance());
+        }
     }
 
     /**
@@ -177,18 +205,33 @@ public final class State {
     }
 
     /**
-     * @return whether sound is enabled
+     * @return whether soundtracks are enabled.
      */
-    public static boolean isSoundEnabled() {
-        return soundEnabled;
+    public static boolean isSoundtrackEnabled() {
+        return soundtrackEnabled;
     }
 
     /**
-     * Change whether the sound is enabled.
-     * @param newSoundEnabled true/false
+     * @return whether sound effects are enabled.
      */
-    public static void setSoundEnabled(final boolean newSoundEnabled) {
-        State.soundEnabled = newSoundEnabled;
+    public static boolean isSoundEffectsEnabled() {
+        return soundEffectsEnabled;
+    }
+
+    /**
+     * Change whether the soundtrack is enabled.
+     * @param newSoundEnabled true/false soundtrack.
+     */
+    public static void setSoundtrackEnabled(final boolean newSoundEnabled) {
+        State.soundtrackEnabled = newSoundEnabled;
+    }
+
+    /**
+     * Change whether the soundtrack is enabled.
+     * @param newSoundEnabled true/false sound effects.
+     */
+    public static void setSoundEffectsEnabled(final boolean newSoundEnabled) {
+        State.soundEffectsEnabled = newSoundEnabled;
     }
 
     /**

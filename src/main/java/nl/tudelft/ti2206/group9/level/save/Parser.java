@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -36,8 +37,16 @@ public final class Parser {
     private static long coins;
     /** Players highscore. */
     private static long highScore;
-    /** Boolean to indicate whether the sound is enabled. */
-    private static boolean soundEnabled;
+    /** Boolean to indicate if skins are unlocked. */
+    private static boolean andy, captain, boy, plank, iron;
+    /**
+     * Boolean for sound track enabled.
+     */
+    private static boolean soundtrackEnabled;
+    /**
+     * Boolean to indicate whether the sound is enabled.
+     */
+    private static boolean soundEffectsEnabled;
 
     /**
      * Private constructor.
@@ -59,16 +68,15 @@ public final class Parser {
             while (reader.ready()) {
                 lines.add(reader.readLine());
             }
-
             final String mainString = createString(lines);
             final String decryptedMain = decrypt(mainString);
-
             final JSONParser parser = new JSONParser();
             final JSONObject mainObject =
                     (JSONObject) parser.parse(decryptedMain);
 
             parseJSON(mainObject);
             writeToState();
+            writeToSkins();
             reader.close();
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
@@ -105,11 +113,25 @@ public final class Parser {
         playername = (String) mainObject.get("playername");
         coins = (Long) mainObject.get("coins");
 
-        final JSONObject settingsObj = (JSONObject) mainObject.get("settings");
-        soundEnabled = (Boolean) settingsObj.get("soundEnabled");
+        final JSONObject settingsObj =
+                (JSONObject) mainObject.get("settings");
+
+        final JSONObject soundtrObj =
+                (JSONObject) settingsObj.get("soundtracksettings");
+        soundtrackEnabled = (Boolean) soundtrObj.get("soundtrackEnabled");
+
+        final JSONObject soundEfObj =
+                (JSONObject) settingsObj.get("soundEffectssettings");
+        soundEffectsEnabled = (Boolean) soundEfObj.get("soundEffectsEnabled");
 
         final JSONObject highObj = (JSONObject) mainObject.get("highscore");
         highScore = (Long) highObj.get("score");
+
+        andy = (boolean) mainObject.get("andy");
+        boy = (boolean) mainObject.get("boy");
+        captain = (boolean) mainObject.get("captain");
+        iron = (boolean) mainObject.get("iron");
+        plank = (boolean) mainObject.get("plank");
     }
 
     /**
@@ -118,8 +140,20 @@ public final class Parser {
     private static void writeToState() {
         State.setPlayerName(playername);
         State.setCoins((int) coins);
-        State.setSoundEnabled(soundEnabled);
+        State.setSoundtrackEnabled(soundtrackEnabled);
+        State.setSoundEffectsEnabled(soundEffectsEnabled);
         State.setHighscore(highScore);
+    }
+
+    /**
+     * Write states of skins to Style.
+     */
+    private static void writeToSkins() {
+        Skin.setUnlocked("Andy", andy);
+        Skin.setUnlocked("B-man", boy);
+        Skin.setUnlocked("Captain", captain);
+        Skin.setUnlocked("Iron Man", iron);
+        Skin.setUnlocked("Plank", plank);
     }
 
     /**
