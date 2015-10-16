@@ -92,7 +92,11 @@ public interface GameObserver extends Observer {
         /** Load button in AccountScene has been pressed. */
         ACC_LOAD,
         /** New button in AccountScene has been pressed. */
-        ACC_NEW
+        ACC_NEW,
+        /** Highscores button. */
+        HIGHSCORES,
+        /** Back button in highscores menu. */
+        HIGHSCORES_BACK
     }
 
     /**
