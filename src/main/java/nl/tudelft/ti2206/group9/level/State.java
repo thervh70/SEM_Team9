@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.group9.level;
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.util.GameObserver;
@@ -40,9 +39,13 @@ public final class State {
      */
     private static String defaultSaveDir = "sav/";
 
-    /** Boolean to determine whether soundtracks are enabled. */
+    /**
+     * Boolean to determine whether soundtracks are enabled.
+     */
     private static boolean soundtrackEnabled;
-    /** Boolean to determine whether sound effects are enabled. */
+    /**
+     * Boolean to determine whether sound effects are enabled.
+     */
     private static boolean soundEffectsEnabled;
 
     /** List of the names of all the saved games. */
@@ -62,7 +65,7 @@ public final class State {
         setCoins(0);
         highscore = 0;
         previousDistance = 0;
-        skin = Style.getNoob();
+        skin = Skin.getNoob();
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
     }

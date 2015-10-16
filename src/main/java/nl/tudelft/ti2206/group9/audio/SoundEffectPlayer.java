@@ -14,18 +14,24 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 /**
  * Creates a SoundEffectPlayer which you can initialize, start and stop.
  * The purpose of a SoundEffectPlayer is to play only sound effects.
+ *
  * @author Mitchell
  */
 @SuppressWarnings("restriction")
 public class SoundEffectPlayer extends AbstractAudioPlayer {
 
-    /** The AudioClip of a SoundEffectPlayer. */
+    /**
+     * The AudioClip of a SoundEffectPlayer.
+     */
     private AudioClip audioClip;
-    /** Path of the AudioClip. */
+    /**
+     * Path of the AudioClip.
+     */
     private String path;
 
     /**
      * Creates a SoundEffectPlayer with as input a specific path.
+     *
      * @param soundPath given path to the sound effect.
      */
     public SoundEffectPlayer(final String soundPath) {
@@ -43,10 +49,10 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
                     .toString());
         } catch (MalformedURLException mue) {
             OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
-            "SoundEffectPlayer.initializeAudio(String)", mue.getMessage());
+                "SoundEffectPlayer.initializeAudio(String)", mue.getMessage());
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
-            "SoundEffectPlayer.initializeAudio(String)", me.getMessage());
+                "SoundEffectPlayer.initializeAudio(String)", me.getMessage());
         }
     }
 

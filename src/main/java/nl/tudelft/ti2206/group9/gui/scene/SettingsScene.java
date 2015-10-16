@@ -23,19 +23,29 @@ public final class SettingsScene extends AbstractMenuScene {
     enum BType {
         /** Back button. */
         SETTINGS_BACK,
-        /** Sound Effects toggle. */
+        /**
+         * Sound Effects toggle.
+         */
         SETTING_SOUNDEFFECTS,
-        /** Soundtrack toggle. */
+        /**
+         * Soundtrack toggle.
+         */
         SETTING_SOUNDTRACK
-     }
+    }
 
-    /** Toggle width. */
+    /**
+     * Toggle width.
+     */
     private static final int TOGGLE_WIDTH = 270;
     /** Toggle text size. */
     private static final int TOGGLE_TEXT_SIZE = 16;
-    /** Initially the toggles are set to off. */
+    /**
+     * Initially the toggles are set to off.
+     */
     private static final String INIT_TOGGLE = "OFF";
-    /** Standard string for toggles that are set to on. */
+    /**
+     * Standard string for toggles that are set to on.
+     */
     private static final String ACTIVE_TOGGLE = "ON";
 
     /**
@@ -51,7 +61,7 @@ public final class SettingsScene extends AbstractMenuScene {
             soundtrToggle = ACTIVE_TOGGLE;
         }
         final Button soundtrButton = createButton("Soundtrack: "
-            + soundtrToggle, 5, 14);
+                + soundtrToggle, 5, 14);
         soundtrButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
         soundtrButton.setPrefWidth(TOGGLE_WIDTH);
         String soundEfToggle = INIT_TOGGLE;
@@ -59,7 +69,7 @@ public final class SettingsScene extends AbstractMenuScene {
             soundEfToggle = ACTIVE_TOGGLE;
         }
         final Button soundEfButton = createButton("Sound effects: "
-            + soundEfToggle, 5, 17);
+                + soundEfToggle, 5, 17);
         soundEfButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
         soundEfButton.setPrefWidth(TOGGLE_WIDTH);
 
@@ -80,7 +90,7 @@ public final class SettingsScene extends AbstractMenuScene {
      * @param type Type of button
      */
     protected static void setButtonFunction(final Button button,
-            final BType type) {
+                                            final BType type) {
         button.setOnAction(event -> {
             ShaftEscape.getButtonAudioPlayer().play();
             String s;
