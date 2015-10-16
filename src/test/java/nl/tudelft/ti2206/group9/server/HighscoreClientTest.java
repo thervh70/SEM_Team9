@@ -55,24 +55,28 @@ public class HighscoreClientTest {
     @Test
     public final void testGoodWeather() throws InterruptedException {
         final int[] scores = {42, 21, 84, 63};
-        int i = -1;
-        client.add("Kees", scores[++i], callback);
-        haltTestUntilServerResponds();
-        assertEquals("SUCCESS", actualResponse); // NOPMD - 4 * SUCCESS
+        final String[] names = {"Kees", "Piet", "Jaap", "Piet"};
 
-        client.add("Piet", scores[++i], callback); // NOPMD - 5 * Piet
-        haltTestUntilServerResponds();
-        assertEquals("SUCCESS", actualResponse);
+        sendScoresToServer(scores, names);
+        getListsNegativeAmounts(names);
+        getListsPositiveAmounts(names);
+    }
 
-        client.add("Jaap", scores[++i], callback);
+    private void getListsNegativeAmounts(final String... names)
+            throws InterruptedException {
+        client.getGlobal(-1, callback);
         haltTestUntilServerResponds();
-        assertEquals("SUCCESS", actualResponse);
+        assertEquals("", actualResponse);
 
-        client.add("Piet", scores[++i], callback);
+        client.getUser(names[0], -1, callback);
         haltTestUntilServerResponds();
-        assertEquals("SUCCESS", actualResponse);
+        assertEquals("", actualResponse);
+    }
 
-        client.getGlobal(scores.length + 1, callback);
+    private void getListsPositiveAmounts(final String... names)
+            throws InterruptedException {
+        final int listSize = 5;
+        client.getGlobal(listSize, callback);
         haltTestUntilServerResponds();
         assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]\n"
                 + "Highscore[Kees, 42]\n\n", actualResponse);
@@ -82,32 +86,50 @@ public class HighscoreClientTest {
         assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]",
                 actualResponse);
 
-        client.getGlobal(-1, callback);
-        haltTestUntilServerResponds();
-        assertEquals("", actualResponse);
-
-        client.getUser("Kees", -1, callback);
-        haltTestUntilServerResponds();
-        assertEquals("", actualResponse);
-
-        client.getUser("Piet", 1, callback);
+        client.getUser(names[1], 1, callback);
         haltTestUntilServerResponds();
         assertEquals("Highscore[Piet, 63]",
                 actualResponse);
 
-        client.getUser("Piet", 2, callback);
+        client.getUser(names[1], 2, callback);
         haltTestUntilServerResponds();
         assertEquals("Highscore[Piet, 63]\nHighscore[Piet, 21]",
                 actualResponse);
 
-        client.getUser("Piet", 2 + 1, callback);
+        client.getUser(names[1], 2 + 1, callback);
         haltTestUntilServerResponds();
         assertEquals("Highscore[Piet, 63]\nHighscore[Piet, 21]\n",
                 actualResponse);
     }
 
+    private void sendScoresToServer(final int[] scores, final String... names)
+            throws InterruptedException {
+        int i = -1;
+        client.add(names[++i], scores[i], callback);
+        haltTestUntilServerResponds();
+        assertEquals("SUCCESS", actualResponse); // NOPMD - 4 * SUCCESS
+
+        client.add(names[++i], scores[i], callback);
+        haltTestUntilServerResponds();
+        assertEquals("SUCCESS", actualResponse);
+
+        client.add(names[++i], scores[i], callback);
+        haltTestUntilServerResponds();
+        assertEquals("SUCCESS", actualResponse);
+
+        client.add(names[++i], scores[i], callback);
+        haltTestUntilServerResponds();
+        assertEquals("SUCCESS", actualResponse);
+    }
+
     @Test
     public void testBadWeather() throws InterruptedException {
+        testIllegalQuery();
+        testIllegalGetQuery();
+        testIllegalAddQuery();
+    }
+
+    private void testIllegalQuery() throws InterruptedException {
         client.query("", 1, callback);
         haltTestUntilServerResponds();
         assertEquals("USAGE get|add <args>", actualResponse);
@@ -115,7 +137,9 @@ public class HighscoreClientTest {
         client.query("doNothingOrSomething", 1, callback);
         haltTestUntilServerResponds();
         assertEquals("USAGE get|add <args>", actualResponse);
+    }
 
+    private void testIllegalGetQuery() throws InterruptedException {
         client.query("get", 1, callback);
         haltTestUntilServerResponds();
         assertEquals("USAGE get user|global <args>", actualResponse);
@@ -137,7 +161,9 @@ public class HighscoreClientTest {
         haltTestUntilServerResponds();
         assertEquals("USAGE get user Kees <amount:int>",
                 actualResponse);
+    }
 
+    private void testIllegalAddQuery() throws InterruptedException {
         client.query("add", 1, callback);
         haltTestUntilServerResponds();
         assertEquals("USAGE add <name:string> <score:int>", actualResponse);

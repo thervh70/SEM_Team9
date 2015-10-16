@@ -78,23 +78,8 @@ public final class HighscoreDatabase {
         if (amount < 0) {
             return "";
         }
-        int entries = 0;
-        for (final Highscore h : database) {
-            if (entries == amount) {
-                break;
-            }
-            if (h.getUser().equals(user)) {
-                if (entries > 0) {
-                    theOutput.append('\n');
-                }
-                theOutput.append(h.toString());
-                entries++;
-            }
-        }
-        for (; entries < amount; entries++) {
-            theOutput.append('\n');
-        }
         sc.close();
+        createList(amount, theOutput, h -> h.getUser().equals(user));
         return theOutput.toString();
     }
 
@@ -112,27 +97,37 @@ public final class HighscoreDatabase {
         final int amount = sc.nextInt();
         if (amount < 0) {
             return "";
-        }
-        int i = 0;
+        } //!theOutput.toString().contains("[" + h.getUser() + ",")
+        sc.close();
+        createList(amount, theOutput,
+                h -> !theOutput.toString().contains("[" + h.getUser() + ","));
+        return theOutput.toString();
+    }
+
+    /**
+     * Creates the list of highscores, querying according to a condition.
+     * @param amount the size of the query result list.
+     * @param theOutput the StringBuffer containing the result.
+     * @param condition condition whether to add the Highscore to the result.
+     */
+    private static void createList(final int amount,
+            final StringBuffer theOutput, final QueryCondition condition) {
         int entries = 0;
         for (final Highscore h : database) {
-            if (i == amount) {
+            if (entries == amount) {
                 break;
             }
-            if (!theOutput.toString().contains("[" + h.getUser() + ",")) {
+            if (condition.condition(h)) {
                 if (entries > 0) {
                     theOutput.append('\n');
                 }
                 theOutput.append(h.toString());
                 entries++;
             }
-            i++;
         }
         for (; entries < amount; entries++) {
             theOutput.append('\n');
         }
-        sc.close();
-        return theOutput.toString();
     }
 
     /**
@@ -159,6 +154,18 @@ public final class HighscoreDatabase {
         }
         database.add(h);
         return "SUCCESS";
+    }
+
+    /**
+     * Interface to define a condition in a query.
+     * @author Maarten
+     */
+    private interface QueryCondition {
+        /**
+         * @param h the Highscore the condition should check for.
+         * @return true or false according to the condition.
+         */
+        boolean condition(Highscore h);
     }
 
 }
