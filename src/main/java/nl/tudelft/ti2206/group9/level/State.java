@@ -135,7 +135,7 @@ public final class State {
         if (currentDistance > previousDistance) {
             previousDistance = currentDistance;
             OBSERVABLE.notify(Category.PLAYER,
-                    GameObserver.Player.DISTANCE_INCREASE);
+                    GameObserver.Player.DISTANCE_INCREASE, (int) getDistance());
         }
     }
 

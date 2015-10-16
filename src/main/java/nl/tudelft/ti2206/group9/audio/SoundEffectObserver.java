@@ -17,22 +17,22 @@ public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
 
     /** The path for any audio file. */
     private static String audioPath = "src/main/"
-    + "resources/nl/tudelft/ti2206/group9/audio/";
+            + "resources/nl/tudelft/ti2206/group9/audio/";
     /** The SoundEffectPlayer to be used for the coin sound effect. */
     private static SoundEffectPlayer apCoin =
-        new SoundEffectPlayer(audioPath + "coin.wav");
+            new SoundEffectPlayer(audioPath + "coin.wav");
     /** The SoundEffectPlayer to be used for the death sound effect. */
     private static SoundEffectPlayer apDie =
-        new SoundEffectPlayer(audioPath + "death.wav");
+            new SoundEffectPlayer(audioPath + "death.wav");
     /** The SoundEffectPlayer to be used for the jump sound effect. */
     private static SoundEffectPlayer apJump =
-        new SoundEffectPlayer(audioPath + "jump.wav");
+            new SoundEffectPlayer(audioPath + "jump.wav");
     /** The SoundEffectPlayer to be used for the move sound effect. */
     private static SoundEffectPlayer apMove =
-        new SoundEffectPlayer(audioPath + "move.wav");
+            new SoundEffectPlayer(audioPath + "move.wav");
     /** The SoundEffectPlayer to be used for the slide sound effect. */
     private static SoundEffectPlayer apSlide =
-        new SoundEffectPlayer(audioPath + "slide.wav");
+            new SoundEffectPlayer(audioPath + "slide.wav");
 
     @Override
     public void update(final Observable o, final Object arg) {
@@ -59,9 +59,11 @@ public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
 
     /** Sets the new speed of the soundtrack, based on a constant. */
     private void newSpeed() {
-        GameScene.getSoundtrackPlayer().
-            setSpeed(GameScene.getSoundtrackPlayer().
-                getSpeed() + SPEED_INCREASE);
+        new Thread(
+                () -> GameScene.getSoundtrackPlayer().setSpeed(
+                        GameScene.getSoundtrackPlayer().getSpeed()
+                        + SPEED_INCREASE)
+                ).start();
     }
 
 }
