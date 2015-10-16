@@ -80,11 +80,9 @@ public class HighscoreServerThread extends Thread {
         String to = query(from);
         toClient.println(to);
         if (to.contains("\n")) {
-            to = "{\n    " + PAD_STRING
-                    + to.replaceAll("\n", "\n    " + PAD_STRING)
-                    + "\n" + PAD_STRING + "}";
+            to = to.replaceAll("\n", "\n  " + PAD_STRING);
         }
-        log(clientIP + " " + from + " -> " + to);
+        log(clientIP + " " + from + " ->\n  " + PAD_STRING + to);
         return true;
     }
 

@@ -12,6 +12,7 @@ import org.junit.Test;
 
 public class HighscoreClientTest {
 
+    private static final int SERVER_SETUP_WAIT = 500;
     private static final Object LOCK = new Object();
     private HighscoreClient client;
     private String actualResponse; // NOPMD - field cannot be local field
@@ -33,7 +34,7 @@ public class HighscoreClientTest {
         }, "ServerThread").start();
         /* If we don't sleep, the client will try to connect before the *
          * server is set up.                                            */
-        Thread.sleep(2 + 2 + 2);
+        Thread.sleep(SERVER_SETUP_WAIT);
     }
 
     @AfterClass
