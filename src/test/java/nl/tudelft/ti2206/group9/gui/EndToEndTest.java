@@ -1,4 +1,17 @@
-package nl.tudelft.ti2206.group9.gui;
+package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -21,13 +34,6 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.*;
 
 
 @SuppressWarnings("restriction")
@@ -112,7 +118,7 @@ public class EndToEndTest extends ApplicationTest {
      *      - Let player die; click back to main
      *  - Close application
      *  - Output Log
-     * @throws IOException
+     * @throws IOException if outputEventLog fails.
      */
     @Test
     public void test() throws IOException { //NOPMD - assert is done in subs.
@@ -345,7 +351,7 @@ public class EndToEndTest extends ApplicationTest {
         ObservableList<Node> children;
         children = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
-        TextField text = (TextField) children.get(ACCOUNT_TEXTFIELD);
+        final TextField text = (TextField) children.get(ACCOUNT_TEXTFIELD);
         text.clear();
     }
 }

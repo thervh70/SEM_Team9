@@ -15,12 +15,12 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * @author Mathias
  */
+@SuppressWarnings("restriction")
 public class AccountScene extends AbstractMenuScene {
 
     /** Row in Grid of list. */

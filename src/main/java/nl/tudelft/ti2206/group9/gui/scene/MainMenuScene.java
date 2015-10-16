@@ -1,18 +1,15 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
-import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
-import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * A Main Menu with different options/buttons like a options menu, start button
@@ -85,8 +82,7 @@ public final class MainMenuScene extends AbstractMenuScene {
      * @param button Button to be set.
      * @param type Type of button
      */
-    private void setButtonFunction(final Button button,
-            final BType type) {
+    private void setButtonFunction(final Button button, final BType type) {
         button.setOnAction(event -> {
             ShaftEscape.getButtonAudioPlayer().play();
             if (type == BType.EXIT) {
@@ -95,15 +91,7 @@ public final class MainMenuScene extends AbstractMenuScene {
                 ShaftEscape.exit();
             } else if (type == BType.START) {
                 apMainMenu.stop();
-                if (State.getPlayerName() == null) {
-                    setPopup(new WarningPopup(event1 -> {
-                        setPopup(null);
-                        ShaftEscape.setScene(new AccountScene());
-                    }, "Please load or create an account first"));
-                    ShaftEscape.showPopup(getPopup());
-                } else {
-                    ShaftEscape.setScene(new GameScene());
-                }
+                ShaftEscape.setScene(new GameScene());
             } else if (type == BType.ACCOUNT) {
                 OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
                 SaveGame.saveGame();
