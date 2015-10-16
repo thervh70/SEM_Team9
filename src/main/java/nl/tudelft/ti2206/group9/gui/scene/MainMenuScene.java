@@ -11,6 +11,7 @@ import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
+
 /**
  * A Main Menu with different options/buttons like a options menu, start button
  * and exit button.
@@ -57,6 +58,7 @@ public final class MainMenuScene extends AbstractMenuScene {
         final Button shopButton = createButton("SHOP", 4, 22);
         final Button highScoreButton = createButton("HIGHSCORES", 2, 24);
         final Label playerName = getPlayerLabelContent();
+
         exitButton.setMaxWidth(EXIT_BUTTON_WIDTH);
         /** Set functions of buttons.*/
         setButtonFunction(exitButton, BType.EXIT);
@@ -99,9 +101,12 @@ public final class MainMenuScene extends AbstractMenuScene {
             } else if (type == BType.SHOP) {
                 OBSERVABLE.notify(Category.MENU, Menu.SHOP);
                 ShaftEscape.setScene(new ShopScene());
+            } else if (type == BType.SETTINGS) {
+                    OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
+                    ShaftEscape.setScene(new SettingsScene());
             } else {
-                OBSERVABLE.notify(Category.MENU, Menu.SETTINGS);
-                ShaftEscape.setScene(new SettingsScene());
+                OBSERVABLE.notify(Category.MENU, Menu.HIGHSCORES);
+                ShaftEscape.setScene(new HighScoreScene());
             }
         });
     }

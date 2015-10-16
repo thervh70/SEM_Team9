@@ -1,6 +1,9 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+
+import java.util.Observable;
+
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -21,6 +24,7 @@ import nl.tudelft.ti2206.group9.gui.popup.PausePopup;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
@@ -40,6 +44,8 @@ public final class GameScene extends AbstractScene {
     private static final double CAMERA_NEAR = 0.1;
     /** The far end of the camera. */
     private static final double CAMERA_FAR = 1000;
+    /** Default countdown amount after resuming the game. */
+    private static final int COUNTDOWN = 3;
 
     /** The KeyMap to be used. */
     private static KeyMap keyMap = new KeyMap();
@@ -58,12 +64,16 @@ public final class GameScene extends AbstractScene {
     private static boolean running;
 
     /** The AudioPlayer to be used for background music. */
-    private static SoundtrackPlayer soundtrackPlayer = new SoundtrackPlayer(
-        "src/main/resources/nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
+    private static SoundtrackPlayer soundtrackPlayer =
+            new SoundtrackPlayer("src/main/resources/"
+                    + "nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
 
     /** The Sound-effects player. */
     private static SoundEffectObserver soundEffectObserver =
             new SoundEffectObserver();
+    /** The Player Death observer. */
+    private static PlayerDeathObserver playerDeathObserver =
+            new PlayerDeathObserver();
 
     /**
      * Default constructor, Scene of default {@link ShaftEscape#WIDTH} and
@@ -146,19 +156,17 @@ public final class GameScene extends AbstractScene {
 
     /** Start the tickers. */
     public static void startTickers() {
-        final int countdown = 3;
         extTicker = new ExternalTicker();
-        extTicker.start();
-        extTicker.countdown(countdown);
-        OBSERVABLE.addObserver(soundEffectObserver);
-        OBSERVABLE.notify(Category.GAME, Game.STARTED);
+        extTicker.handle(System.currentTimeMillis()); // Render first frame
+        extTicker.countdown(COUNTDOWN); // Countdown will call resumeTickers()
     }
 
     /** Resumes the tickers. */
     public static void resumeTickers() {
-        final int countdown = 3;
+        running = true;
+        InternalTicker.start();
         extTicker.start();
-        extTicker.countdown(countdown);
+        OBSERVABLE.addObserver(playerDeathObserver);
         OBSERVABLE.addObserver(soundEffectObserver);
         OBSERVABLE.notify(Category.GAME, Game.RESUMED);
     }
@@ -168,6 +176,7 @@ public final class GameScene extends AbstractScene {
         running = false;
         extTicker.stop();
         InternalTicker.stop();
+        OBSERVABLE.deleteObserver(playerDeathObserver);
         OBSERVABLE.deleteObserver(soundEffectObserver);
         OBSERVABLE.notify(Category.GAME, Game.STOPPED);
     }
@@ -177,7 +186,7 @@ public final class GameScene extends AbstractScene {
         stopTickers();
         OBSERVABLE.notify(Category.GAME, Game.PAUSED);
         setPopup(new PausePopup(e -> {
-            resumeTickers();
+            extTicker.countdown(COUNTDOWN);
             setPopup(null);
         }, e -> {
             OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
@@ -255,6 +264,21 @@ public final class GameScene extends AbstractScene {
     /** @return the ExternalTicker of the GameScene. */
     public static ExternalTicker getExternalTicker() {
         return extTicker;
+    }
+
+    /** Stops the game when the Player dies. */
+    private static class PlayerDeathObserver implements GameObserver {
+        @Override
+        public void update(final Observable o, final Object arg) {
+            final GameUpdate update = (GameUpdate) arg;
+            if (update.getCat().equals(Category.PLAYER)
+                    && update.getSpec().equals(Player.COLLISION)
+                    && update.getArgs()[0].equals("AbstractObstacle")) {
+                State.checkHighscore();
+                stopTickers();
+                showDeathMenu();
+            }
+        }
     }
 
 }

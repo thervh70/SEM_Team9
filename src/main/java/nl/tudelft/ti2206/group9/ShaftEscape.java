@@ -32,8 +32,6 @@ public class ShaftEscape extends Application {
     public static final int WIDTH = 480 - 16;
     /** Height of the Window. */
     public static final int HEIGHT = 640;
-    /** Lock used so that the tickers won't use the Track concurrently. */
-    public static final Object TICKER_LOCK = new Object();
     /** GameObservable that is used to log actions in the game. */
     public static final GameObservable OBSERVABLE = new GameObservable();
     /** The logger that logs all events in the game. */

@@ -63,6 +63,8 @@ public class Logger implements GameObserver {
         STRINGS.put(Menu.LOAD_BACK, lbl + "Back to main menu.");
         STRINGS.put(Menu.LOAD, lbl + "Pressed \"Start load game\".");
         STRINGS.put(Menu.SHOP, lbl + "Pressed \"Shop\"");
+        STRINGS.put(Menu.HIGHSCORES, lbl + "Pressed \"Highscores\".");
+        STRINGS.put(Menu.HIGHSCORES_BACK, lbl + "Back to main.");
         STRINGS.put(Menu.SHOP_BACK, lbl + "Back to main menu");
         STRINGS.put(Menu.ACC_LOAD, lbl + "Pressed \"Load\"");
         STRINGS.put(Menu.ACC_NEW, lbl + "Pressed \"New\"");
