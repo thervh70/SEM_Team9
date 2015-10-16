@@ -170,7 +170,9 @@ public abstract class AbstractMenuScene extends AbstractScene {
         } else {
             name = State.getPlayerName();
         }
-        return createLabel(name, 0, 0);
+        final Label res = createLabel(name, 0, 0);
+        GridPane.setRowSpan(res, 2);
+        return res;
     }
 
 }

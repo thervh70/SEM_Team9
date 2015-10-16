@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.level.State;
@@ -17,6 +18,9 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  */
 @SuppressWarnings("restriction")
 public final class SettingsScene extends AbstractMenuScene {
+
+    /** Column span of the buttons. */
+    private static final int BUTTON_COL_SPAN = 3;
 
     /**
      * Type of buttons that exist.
@@ -45,14 +49,13 @@ public final class SettingsScene extends AbstractMenuScene {
      */
     @Override
     public Node[] createContent() {
-        final Button backButton = createButton("BACK", 5, 24);
-
+        final Button backButton = createButton("BACK", 2, 24);
         String soundtrToggle = INIT_TOGGLE;
         if (State.isSoundtrackEnabled()) {
             soundtrToggle = ACTIVE_TOGGLE;
         }
         final Button soundtrButton = createButton("Soundtrack: "
-            + soundtrToggle, 5, 14);
+            + soundtrToggle, 1, 14);
         soundtrButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
         soundtrButton.setPrefWidth(TOGGLE_WIDTH);
         String soundEfToggle = INIT_TOGGLE;
@@ -60,11 +63,12 @@ public final class SettingsScene extends AbstractMenuScene {
             soundEfToggle = ACTIVE_TOGGLE;
         }
         final Button soundEfButton = createButton("Sound effects: "
-            + soundEfToggle, 5, 17);
+            + soundEfToggle, 1, 17);
         final Label playerName = getPlayerLabelContent();
         soundEfButton.setFont(Style.getFont(TOGGLE_TEXT_SIZE));
         soundEfButton.setPrefWidth(TOGGLE_WIDTH);
-
+        GridPane.setColumnSpan(soundtrButton, BUTTON_COL_SPAN);
+        GridPane.setColumnSpan(soundEfButton, BUTTON_COL_SPAN);
         setButtonFunction(backButton, BType.SETTINGS_BACK);
         setButtonFunction(soundtrButton, BType.SETTING_SOUNDTRACK);
         setButtonFunction(soundEfButton, BType.SETTING_SOUNDEFFECTS);
