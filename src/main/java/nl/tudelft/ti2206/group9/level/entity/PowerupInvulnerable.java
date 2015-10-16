@@ -40,7 +40,9 @@ public class PowerupInvulnerable extends AbstractPickup {
         this(cent, null);
     }
 
-    /** Is called every step in Track. */
+    /**
+     * Is called every step in Track.
+     */
     public static void step() {
         if (!cheat && countdown > 0) {
             countdown--;

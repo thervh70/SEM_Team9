@@ -133,21 +133,6 @@ public class AccountScene extends AbstractMenuScene {
     }
 
     /**
-     * Create the playername text.
-     * @return a String containing the playername status messages
-     */
-    private static String setTextLabel() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("");
-        if (State.getPlayerName() == null) {
-            builder.append("Guest");
-        } else {
-            builder.append(State.getPlayerName());
-        }
-        return builder.toString();
-    }
-
-    /**
      * Create a new account with the given name.
      * @param name the name of the new account
      */

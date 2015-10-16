@@ -12,15 +12,19 @@ import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * Add all the collision handlers to a CollisionMap.
+ *
  * @author Mathias
  */
 public class CollisionHandler {
 
-    /** The CollisionMap were the collions will be stored. */
+    /**
+     * The CollisionMap were the collions will be stored.
+     */
     private final CollisionMap collisions = defaultCollisions();
 
     /**
      * Delegate the collision method to CollisionMap.collide(collider,collidee).
+     *
      * @param collider The collider
      * @param collidee The collidee the collider collides with
      */
@@ -31,6 +35,7 @@ public class CollisionHandler {
 
     /**
      * Add all collisions to the CollisionMap.
+     *
      * @return CollisionMap that contains all the collisions
      */
     public CollisionMap defaultCollisions() {

@@ -2,7 +2,6 @@ package nl.tudelft.ti2206.group9.level;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 
@@ -37,9 +36,13 @@ public final class State {
      */
     private static String defaultSaveDir = "sav/";
 
-    /** Boolean to determine whether soundtracks are enabled. */
+    /**
+     * Boolean to determine whether soundtracks are enabled.
+     */
     private static boolean soundtrackEnabled;
-    /** Boolean to determine whether sound effects are enabled. */
+    /**
+     * Boolean to determine whether sound effects are enabled.
+     */
     private static boolean soundEffectsEnabled;
 
     /** List of the names of all the saved games. */
@@ -56,7 +59,7 @@ public final class State {
         reset();
         setCoins(0);
         highscore = 0;
-        skin = Style.getNoob();
+        skin = Skin.getNoob();
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
     }
@@ -197,6 +200,7 @@ public final class State {
 
     /**
      * Change whether the soundtrack is enabled.
+     *
      * @param newSoundEnabled true/false soundtrack.
      */
     public static void setSoundtrackEnabled(final boolean newSoundEnabled) {
@@ -205,6 +209,7 @@ public final class State {
 
     /**
      * Change whether the soundtrack is enabled.
+     *
      * @param newSoundEnabled true/false sound effects.
      */
     public static void setSoundEffectsEnabled(final boolean newSoundEnabled) {

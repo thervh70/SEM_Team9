@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -106,7 +107,14 @@ public final class Writer {
         highscore.put("score", State.getHighscore());
         mainObject.put("highscore", highscore);
 
+        mainObject.put("andy", Skin.getUnlocked("Andy"));
+        mainObject.put("boy", Skin.getUnlocked("B-man"));
+        mainObject.put("captain", Skin.getUnlocked("Captain"));
+        mainObject.put("iron", Skin.getUnlocked("Iron Man"));
+        mainObject.put("plank", Skin.getUnlocked("Plank"));
+
         mainObject.put("settings", settings);
+
         return mainObject.toJSONString();
     }
 }
