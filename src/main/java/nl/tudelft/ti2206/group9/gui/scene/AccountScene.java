@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.group9.gui.scene;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -15,6 +14,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
+
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
@@ -61,16 +61,13 @@ public class AccountScene extends AbstractMenuScene {
         newButton.disableProperty().bind(
                 Bindings.isEmpty(INPUT.textProperty()));
         loadButton.disableProperty().bind(Bindings.isEmpty(list.getItems()));
-        final String text = setTextLabel();
-        final Label textLabel = createLabel(text, 0, 16);
         /** Set tooltips. */
         loadButton.setTooltip(new Tooltip("Load an existing game"));
         newButton.setTooltip(new Tooltip("Create a new game"));
         list.setTooltip(new Tooltip("Select player"));
         INPUT.setTooltip(new Tooltip("Enter your name"));
         INPUT.setFont(Style.getFont(FONT_SIZE));
-        return new Node[]{loadButton, newButton, textLabel,
-                INPUT, list};
+        return new Node[]{loadButton, newButton, INPUT, list};
     }
 
     /**
