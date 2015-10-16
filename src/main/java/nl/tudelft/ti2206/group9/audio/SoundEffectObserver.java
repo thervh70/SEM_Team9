@@ -43,38 +43,25 @@ public class SoundEffectObserver implements GameObserver { //NOPMD - complexity
     private static SoundEffectPlayer apSlide =
             new SoundEffectPlayer(audioPath + "slide.wav");
 
-    @Override //Method is 33 lines but can't be made any shorter
+    @Override
     public void update(final Observable o, final Object arg) {
         final GameUpdate update = (GameUpdate) arg;
         if (update.getCat() != Category.PLAYER) {
             return;
         }
         switch ((Player) update.getSpec()) {
-            case JUMP:
-                apJump.play();
-                break;
-            case SLIDE:
-                apSlide.play();
-                break;
-            case START_MOVE:
-                apMove.play();
-                break;
-            case STOP_MOVE:
-                break;
+            case JUMP:       apJump.play(); break;
+            case SLIDE:      apSlide.play(); break;
+            case START_MOVE: apMove.play(); break;
+            case STOP_MOVE:  break;
             case COLLISION:
                 switch ((String) update.getArgs()[0]) {
-                    case "AbstractObstacle":
-                        apDie.play();
-                        break;
-                    case "Coin":
-                        apCoin.play();
-                        break;
-                    default:
-                        break;
+                    case "AbstractObstacle": apDie.play(); break;
+                    case "Coin":             apCoin.play(); break;
+                    default:                 break;
                 }
                 break;
-            default:
-                break;
+            default: break;
         }
     }
 }
