@@ -35,7 +35,7 @@ public final class HighscoreServer {
      * @throws IOException when something unexpected happens.
      */
     public static void main(final String... args) throws IOException {
-        new Thread(new CLIThread()).start();
+        new Thread(new CLIThread(), "CLIThread").start();
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             ss = serverSocket;
             log("Server is now accepting clients.");
@@ -74,7 +74,7 @@ public final class HighscoreServer {
     static class CLIThread implements Runnable {
         @Override
         public void run() {
-            final Scanner sc = new Scanner(System.in);
+            final Scanner sc = new Scanner(System.in, "UTF-8");
             String command;
             log("Type \"stop\" to exit.");
             while (running) {

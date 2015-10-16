@@ -40,7 +40,7 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
 
     /**
      * Call this method to check if this entity is colliding to another one.
-     * The method {@link #collision(AbstractEntity)} is called when entities
+     * The method CollisionHandler.collide is called when entities
      * collide.
      * @param other AbstractEntity to check collision with.
      */
@@ -62,8 +62,7 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
          >= otherCenter.getZ() - otherSize.getZ() / 2
          && thisCenter.getZ() - thisSize.getZ() / 2
          <= otherCenter.getZ() + otherSize.getZ() / 2) {
-            collision(other);
-            other.collision(this);
+            State.getTrack().getCollisions().collide(this, other);
         }
     }
 
@@ -78,13 +77,6 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
             }
         }).start();
     }
-
-    /**
-     * Called when this entity collides with <code>collidee</code>.
-     * (Called by {@link #checkCollision(AbstractEntity)}.
-     * @param collidee Entity that this entity collides with.
-     */
-    public abstract void collision(final AbstractEntity collidee);
 
     /**
      * Creates a new renderer that encapsulates this entity.

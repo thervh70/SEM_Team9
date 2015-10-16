@@ -53,7 +53,10 @@ public class Logger implements GameObserver {
         STRINGS.put(Menu.ANY_KEY, lbl + "Any key pressed.");
         STRINGS.put(Menu.EXIT, lbl + "Pressed \"Exit\".");
         STRINGS.put(Menu.SETTINGS, lbl + "Pressed \"Settings\".");
-        STRINGS.put(Menu.SETTING_SOUND, lbl + "  Toggled sound, is now %s.");
+        STRINGS.put(Menu.SETTING_SOUNDTRACK, lbl
+                + "  Toggled soundtrack, is now %s.");
+        STRINGS.put(Menu.SETTING_SOUNDEFFECTS, lbl
+                + "  Toggled sound effects, is now %s.");
         STRINGS.put(Menu.SETTINGS_BACK, lbl + "  Back to Main Menu.");
         STRINGS.put(Menu.START, lbl + "Pressed \"Start game\".");
         STRINGS.put(Menu.LOAD_MENU, lbl + "Pressed \"Load game\".");
@@ -61,9 +64,13 @@ public class Logger implements GameObserver {
         STRINGS.put(Menu.LOAD, lbl + "Pressed \"Start load game\".");
         STRINGS.put(Menu.SHOP, lbl + "Pressed \"Shop\"");
         STRINGS.put(Menu.SHOP_BACK, lbl + "Back to main menu");
+        STRINGS.put(Menu.ACC_LOAD, lbl + "Pressed \"Load\"");
+        STRINGS.put(Menu.ACC_NEW, lbl + "Pressed \"New\"");
+        STRINGS.put(Menu.ACC_BACK, lbl + "Back to main menu");
 
         lbl = " [PLAYER] ";
         STRINGS.put(Player.COLLISION, lbl + "Collided with %s.");
+        STRINGS.put(Player.DISTANCE_INCREASE, lbl + "Distance is now %d.");
         STRINGS.put(Player.JUMP, lbl + "Jumping.");
         STRINGS.put(Player.SLIDE, lbl + "Sliding.");
         STRINGS.put(Player.START_MOVE, lbl + "Started moving from lane %d.");

@@ -1,14 +1,6 @@
 package nl.tudelft.ti2206.group9.gui;    // NOPMD - too many imports
 // because don't want to use .*
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -27,14 +19,17 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.skin.AndySkin;
-import nl.tudelft.ti2206.group9.gui.skin.BoySkin;
-import nl.tudelft.ti2206.group9.gui.skin.CaptainSkin;
-import nl.tudelft.ti2206.group9.gui.skin.IronManSkin;
-import nl.tudelft.ti2206.group9.gui.skin.NoobSkin;
-import nl.tudelft.ti2206.group9.gui.skin.PlankSkin;
+
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * Class containing the styling for the GUI.
@@ -45,12 +40,6 @@ public final class Style {
 
     /** BRICK material for walls, brick wall texture. */
     public static final PhongMaterial BRICK = new PhongMaterial();
-
-    /** MOSS material for walls, mossy brick wall texture. */
-    public static final PhongMaterial MOSS = new PhongMaterial();
-
-    /** CRACK material used for walls, cracked brick wall texture. */
-    public static final PhongMaterial CRACK = new PhongMaterial();
 
     /** FLOOR material used for floors, mossy cobblestone floor texture. */
     public static final PhongMaterial FLOOR = new PhongMaterial();
@@ -70,23 +59,6 @@ public final class Style {
     /** FENCE material used for fences, mossy brick stone texture.*/
     public static final PhongMaterial FENCE = new PhongMaterial();
 
-    /** IRON MAN skin for player. */
-    private static IronManSkin ironMan;
-
-    /** NOOB skin for player, this is the starting skin. */
-    private static NoobSkin noob;
-
-    /** CAPTAIN skin for the player. */
-    private static CaptainSkin captain;
-
-    /** PLANK skin for the player. */
-    private static PlankSkin plank;
-
-    /** BOY skin for the player. */
-    private static BoySkin boy;
-
-    /** ANDY skin for the player. */
-    private static AndySkin andy;
 
     /** Size of a button while hovering (relative to 1). */
     private static final double BUTTON_HOVER_SCALE = 1.2;
@@ -110,8 +82,6 @@ public final class Style {
         final String path = "nl/tudelft/ti2206/group9/gui/texture_";
 
         BRICK .setDiffuseMap(new Image(path +       "brick.png"));
-        MOSS  .setDiffuseMap(new Image(path +        "moss.png"));
-        CRACK .setDiffuseMap(new Image(path +       "crack.png"));
         FLOOR .setDiffuseMap(new Image(path + "cobblestone.png"));
         COIN  .setDiffuseMap(new Image(path +        "coin.png"));
         PICKUP.setDiffuseMap(new Image(path +      "pickup.png"));
@@ -135,17 +105,7 @@ public final class Style {
         return material;
     }
 
-    /**
-     * Method that creates all the skins.
-     */
-    public static void loadSkins() {
-        ironMan = new IronManSkin();
-        captain = new CaptainSkin();
-        andy = new AndySkin();
-        noob = new NoobSkin();
-        boy = new BoySkin();
-        plank = new PlankSkin();
-    }
+
 
     /**
      * Alters the looks and behaviour of a button.
@@ -160,7 +120,7 @@ public final class Style {
         final Insets inset = new Insets(0);
         final BackgroundFill fill = new BackgroundFill(color, corner, inset);
         final Background buttonBack = new Background(fill);
-        final Font font = getFont(14);
+        final Font font = getFont(13);
         b.setTextFill(Color.WHITE);
         b.setBackground(buttonBack);
         b.setFont(font);
@@ -212,7 +172,7 @@ public final class Style {
         final Insets inset = new Insets(-4);
         final BackgroundFill fill = new BackgroundFill(color, corner, inset);
         final Background buttonBack = new Background(fill);
-        final Font font = getFont(14);
+        final Font font = getFont(13);
         l.setAlignment(Pos.CENTER);
         l.setBackground(buttonBack);
         l.setTextFill(Color.WHITE);
@@ -260,53 +220,4 @@ public final class Style {
         }
         return globalFont.get(size);
     }
-
-    /**
-     * Simple getter for IronManSkin.
-     * @return Skin
-     */
-    public static IronManSkin getIronMan() {
-        return ironMan;
-    }
-
-    /**
-     * Simple getter for NoobSkin.
-     * @return Skin
-     */
-    public static NoobSkin getNoob() {
-        return noob;
-    }
-
-    /**
-     * Simple getter for CaptainSkin.
-     * @return Skin
-     */
-    public static CaptainSkin getCaptain() {
-        return captain;
-    }
-
-    /**
-     * Simple getter for PlankSkin.
-     * @return Skin
-     */
-    public static PlankSkin getPlank() {
-        return plank;
-    }
-
-    /**
-     * Simple getter for BoySkin.
-     * @return Skin
-     */
-    public static BoySkin getBoy() {
-        return boy;
-    }
-
-    /**
-     * Simple getter for AndySkin.
-     * @return Skin
-     */
-    public static AndySkin getAndy() {
-        return andy;
-    }
-
 }

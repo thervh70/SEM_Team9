@@ -5,6 +5,7 @@ import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -27,17 +28,19 @@ public class HighscoreClient {
     /** Socket used for communication. */
     private Socket socket;
 
-    /** Default constructor. */
-    public HighscoreClient() {
+    /**
+     * Default constructor.
+     * @param hostName the host name of the server.
+     */
+    public HighscoreClient(final String hostName) {
         super();
-
-        final String hostName = "localhost";
 
         try {
             socket = new Socket(hostName, HighscoreServer.PORT);
-            toServer = new PrintWriter(socket.getOutputStream(), true);
-            fromServer = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
+            toServer = new PrintWriter(new OutputStreamWriter(
+                    socket.getOutputStream(), "UTF-8"), true);
+            fromServer = new BufferedReader(new InputStreamReader(
+                    socket.getInputStream(), "UTF-8"));
             connected = true;
         } catch (UnknownHostException e) {
             OBSERVABLE.notify(Category.ERROR, Error.CLIENTCOULDNOTCONNECT,
@@ -64,6 +67,7 @@ public class HighscoreClient {
                 final String response = fromServer.readLine();
                 if (response.equals("exit")) {
                     socket.close();
+                    connected = false;
                 }
             } catch (IOException e) {
                 OBSERVABLE.notify(Category.ERROR, Error.CLIENTCOULDNOTCONNECT,
@@ -77,8 +81,19 @@ public class HighscoreClient {
      * @param amount amount of highscores to get.
      * @param callback the action to be performed on return.
      */
-    public void get(final int amount, final QueryCallback callback) {
-        query("get " + amount, amount, callback);
+    public void getGlobal(final int amount, final QueryCallback callback) {
+        query("get global " + amount, Math.max(amount, 1), callback);
+    }
+
+    /**
+     * Query the server to get the user's top <pre>amount</pre> highscores.
+     * @param user the user to get the highscores for.
+     * @param amount amount of highscores to get.
+     * @param callback the action to be performed on return.
+     */
+    public void getUser(final String user, final int amount,
+            final QueryCallback callback) {
+        query("get user " + user + " " + amount, Math.max(amount, 1), callback);
     }
 
     /**
@@ -98,20 +113,26 @@ public class HighscoreClient {
      * @param responseLines the amount of lines expected from server.
      * @param callback the action to be performed on return.
      */
-    private void query(final String query, final int responseLines,
+    void query(final String query, final int responseLines,
                        final QueryCallback callback) {
         if (!connected) {
-            callback.callback("FAILED");
+            callback.callback("DISCONNECTED");
+            return;
         }
         new Thread(() -> {
             try {
                 toServer.println(query);
                 final StringBuilder response = new StringBuilder();
+                String from;
                 for (int i = 0; i < responseLines; i++) {
                     if (i > 0) {
                         response.append('\n');
                     }
-                    response.append(fromServer.readLine());
+                    from = fromServer.readLine();
+                    response.append(from);
+                    if (from.startsWith("USAGE")) {
+                        break;
+                    }
                 }
                 callback.callback(response.toString());
             } catch (IOException e) {

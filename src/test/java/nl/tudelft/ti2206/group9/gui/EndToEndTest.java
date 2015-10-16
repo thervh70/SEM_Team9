@@ -1,8 +1,10 @@
-package nl.tudelft.ti2206.group9.gui;
+package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -11,13 +13,13 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -26,12 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 
 @SuppressWarnings("restriction")
@@ -50,6 +47,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final long COUNTDOWN = 3500;
     /** Sleep factor playerDies. */
     private static final long SLEEP_FACTOR = 2;
+    /** Amount of coins for e2e. */
+    private static final int COINS = 9999;
 
     /** Delta for double equality. */
     private static final double DELTA = 0.000001;
@@ -57,18 +56,22 @@ public class EndToEndTest extends ApplicationTest {
     private static final int MAIN_START = 0;
     private static final int MAIN_SETTINGS = 1;
 //    private static final int MAIN_QUIT = 2;
-    private static final int MAIN_LOADGAME = 3;
-    private static final int MAIN_TEXTFIELD = 5;
-    private static final int MAIN_SHOP = 6;
+    private static final int MAIN_ACCOUNTS = 3;
+    private static final int MAIN_SHOP = 4;
+//    private static final int MAIN_HIGHSCORE = 5;
 
-    private static final int LOAD_BACK = 0;
-    private static final int LOAD_START = 1;
+    private static final int ACCOUNT_LOAD = 0;
+    private static final int ACCOUNT_NEW = 1;
+    private static final int ACCOUNT_TEXTFIELD = 2;
+    private static final int ACCOUNT_LIST = 3;
 
     private static final int SETTINGS_BACK = 0;
-    private static final int SETTINGS_SOUND = 1;
+    private static final int SETTINGS_SOUNDTRACK = 1;
+    private static final int SETTINGS_SOUNDEFFECTS = 2;
 
-    private static final int SHOP_BACK = 0;
-    private static final int SHOP_LIST = 3;
+    private static final int SHOP_BACK = 1;
+    private static final int SHOP_SKIN_IRONMAN = 0;
+    private static final int SHOP_SKIN_CAPTAIN = 1;
 
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
@@ -86,22 +89,53 @@ public class EndToEndTest extends ApplicationTest {
         State.resetAll();
     }
 
+    /**
+     * Overview of the EndToEndTest:
+     *
+     *  - Click on screen to get passed the SplashScreen
+     *  - Go through the accounts, testing the new game button
+     *      - First clicking whithout a name
+     *      - Then clicking with a faulty name
+     *      - Then clicking with a valid name
+     *      - You are in the main menu
+     *  - Go through the settings by clicking on settings button in the
+     *     main menu, toggle the settings
+     *  - Go through the shop, buy a skin and return
+     *  - Go through the gameplay
+     *      - Click the pause button and resume game
+     *      - Go through playermovement
+     *      - Click the pause button and return to main menu
+     *  - Go through account loading
+     *      - Click account button in main menu
+     *      - Select the account list
+     *      - Click load
+     *      - Return to main menu
+     *  - Go through diePopup
+     *      - Start game
+     *      - Let player die; click retry
+     *      - Let player die; click back to main
+     *  - Close application
+     *  - Output Log
+     * @throws IOException if outputEventLog fails.
+     */
     @Test
     public void test() throws IOException { //NOPMD - assert is done in subs.
         clickOn(stage, MouseButton.PRIMARY);
         sleep(SHORT);
 
+        goThroughNameTyping();
+
         goThroughSettings();
         goThroughShop();
 
-        goThroughNameTyping();
         goThroughGamePlay();
 
-        mainMenu(MAIN_LOADGAME);
-        loadMenu(LOAD_BACK);
-        mainMenu(MAIN_LOADGAME);
-        loadMenu(LOAD_START);
+        mainMenu(MAIN_ACCOUNTS);
+        accountScreen(ACCOUNT_LIST);
+        accountScreen(ACCOUNT_LOAD);
+        assertNotNull(State.getPlayerName());
 
+        mainMenu(MAIN_START);
         sleep(COUNTDOWN);
         playerDies();
         sleep(SHORT);
@@ -131,36 +165,59 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughSettings() {
         mainMenu(MAIN_SETTINGS);
 
-        assertTrue("Sound should enabled at startup.", State.isSoundEnabled());
-        settings(SETTINGS_SOUND);
-        assertFalse("Sound disabled. (1)", State.isSoundEnabled());
-        settings(SETTINGS_SOUND);
-        assertTrue("Sound enabled. (2)", State.isSoundEnabled());
-        settings(SETTINGS_SOUND);
-        assertFalse("Sound disabled. (3)", State.isSoundEnabled());
+        // Soundtrack toggle test.
+        assertTrue("Soundtrack should be enabled at startup.",
+                State.isSoundtrackEnabled());
+        settings(SETTINGS_SOUNDTRACK);
+        assertFalse("Soundtrack disabled. (1)", State.isSoundtrackEnabled());
+        settings(SETTINGS_SOUNDTRACK);
+        assertTrue("Soundtrack enabled. (2)", State.isSoundtrackEnabled());
+        settings(SETTINGS_SOUNDTRACK);
+        assertFalse("Soundtrack disabled. (3)", State.isSoundtrackEnabled());
+
+        // Sound effects toggle test.
+        assertTrue("Sound effects should be enabled at startup.",
+                State.isSoundEffectsEnabled());
+        settings(SETTINGS_SOUNDEFFECTS);
+        assertFalse("Sound effects disabled. (1)",
+                State.isSoundEffectsEnabled());
+        settings(SETTINGS_SOUNDEFFECTS);
+        assertTrue("Sound effects enabled. (2)", State.isSoundEffectsEnabled());
+        settings(SETTINGS_SOUNDEFFECTS);
+        assertFalse("Sound effects disabled. (3)",
+                State.isSoundEffectsEnabled());
 
         settings(SETTINGS_BACK);
     }
 
     private void goThroughShop() {
+        State.setCoins(COINS); //Make sure player has enough coins
         mainMenu(MAIN_SHOP);
-        assertEquals(State.getSkin(), Style.getNoob());
-        shopScreen(SHOP_LIST);
-        shopScreen(SHOP_LIST);
-        assertNotEquals(State.getSkin(), Style.getNoob());
+
+        assertEquals(State.getSkin(), Skin.getNoob());
+        shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
+        assertEquals(State.getSkin(), Skin.getNoob());
+        shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
+        assertEquals(State.getSkin(), Skin.getNoob());
+        shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
+        assertEquals(State.getSkin(), Skin.getAndy());
+        shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
+        assertEquals(State.getSkin(), Skin.getNoob());
+
         shopScreen(SHOP_BACK);
     }
 
     private void goThroughNameTyping() {
-        mainMenu(MAIN_START);
+        accountScreen(ACCOUNT_NEW);
         assertNull(AbstractScene.getPopup()); // Assert that Game does not start
-        mainMenu(MAIN_TEXTFIELD);
+        accountScreen(ACCOUNT_TEXTFIELD);
         typeFaultyName();
-        mainMenu(MAIN_START);
+        accountScreen(ACCOUNT_NEW);
         clickPopup(WARNING_OK);
-        mainMenu(MAIN_TEXTFIELD);
-        keyboard(KeyCode.BACK_SPACE);
+        accountScreen(ACCOUNT_TEXTFIELD);
+        clearTextField();
         typeName();
+        accountScreen(ACCOUNT_NEW);
     }
 
     private void goThroughGamePlay() {
@@ -244,7 +301,7 @@ public class EndToEndTest extends ApplicationTest {
         sleep(SHORT);
     }
 
-    private void loadMenu(final int buttonNo) {
+    private void accountScreen(final int buttonNo) {
         ObservableList<Node> buttons;
         buttons = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
@@ -256,7 +313,22 @@ public class EndToEndTest extends ApplicationTest {
         ObservableList<Node> buttons;
         buttons = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
+
         clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+        sleep(SHORT);
+    }
+
+    private void shopBuyEquipSkin(final int skinNo) {
+        ObservableList<Node> gridPaneNodes;
+        gridPaneNodes = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+
+        final ScrollPane pane = (ScrollPane) gridPaneNodes.get(0);
+        final HBox hbox = (HBox) pane.getContent();
+        final VBox vbox = (VBox) hbox.getChildren().get(skinNo);
+
+        final int buyEquip = 3; // Is the same for each skin
+        clickOn(vbox.getChildren().get(buyEquip), MouseButton.PRIMARY);
         sleep(SHORT);
     }
 
@@ -293,5 +365,13 @@ public class EndToEndTest extends ApplicationTest {
             }
             sleep(SHORT);
         }
+    }
+
+    private void clearTextField() {
+        ObservableList<Node> children;
+        children = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+        final TextField text = (TextField) children.get(ACCOUNT_TEXTFIELD);
+        text.clear();
     }
 }

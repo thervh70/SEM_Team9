@@ -5,11 +5,13 @@ import java.io.File;
 import javafx.application.Application;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.gui.scene.MainMenuScene;
 import nl.tudelft.ti2206.group9.gui.scene.SplashScene;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
@@ -37,6 +39,12 @@ public class ShaftEscape extends Application {
     /** The logger that logs all events in the game. */
     public static final Logger LOGGER = new Logger();
 
+    /**
+     * The AudioPlayer to be used for a button sound effect.
+     */
+    private static SoundEffectPlayer apButton = new SoundEffectPlayer(
+            "src/main/resources/nl/tudelft/ti2206/group9/audio/button.wav");
+
     /** Primary stage where the Scenes are shown in. */
     private static Stage stage;
 
@@ -49,7 +57,8 @@ public class ShaftEscape extends Application {
     public final void start(final Stage appStage) {
         //Loading textures
         Style.loadTextures();
-        Style.loadSkins();
+        Skin.loadSkins();
+        Skin.createUnlockedHashmap();
 
         State.resetAll();
         setStage(appStage);
@@ -128,8 +137,17 @@ public class ShaftEscape extends Application {
         stage.close();
         InternalTicker.stop();
         MainMenuScene.getAudioPlayer().stop();
-        GameScene.getAudioPlayer().resetSpeed();
-        GameScene.getAudioPlayer().stop();
+        GameScene.getSoundtrackPlayer().resetSpeed();
+        GameScene.getSoundtrackPlayer().stop();
+    }
+
+    /**
+     * Every Button has an AudioPlayer for a sound effect.
+     *
+     * @return the button AudioPlayer.
+     */
+    public static SoundEffectPlayer getButtonAudioPlayer() {
+        return apButton;
     }
 
     /**

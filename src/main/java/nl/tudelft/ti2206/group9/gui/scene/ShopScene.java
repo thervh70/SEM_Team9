@@ -1,20 +1,21 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver;
+
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
@@ -29,64 +30,119 @@ public class ShopScene extends AbstractMenuScene {
      */
     enum BType {
         /** Back button. */
-        SHOP_BACK
-    }
-
-    /** Row the list is put on. */
-    private static final int LIST_ROW = 16;
-
-    /** Creating a list. */
-    private static ObservableList<Skin> items =
-            FXCollections.observableArrayList();
-    /** Creating the listview used to display the list. */
-    private static TableView<Skin> itemTable =
-            createSkinTable(1, LIST_ROW);
-
-    @Override
-    public Node[] createContent() {
-        setUpTable();
-
-        final Button backButton = createButton("BACK", 0, 24);
-        final Label coinsLabel = createLabel("COINS:", 2, 24);
-        final Label amountLabel = createLabel(Integer
-                .toString(State.getCoins()), 4, 24);
-
-        setButtonFunction(backButton, BType.SHOP_BACK);
-        return new Node[]{backButton, coinsLabel, amountLabel, itemTable};
+        SHOP_BACK,
     }
 
     /**
-     * Method to fill the table with skins.
+     * Spacing between items in H/V-Boxes.
      */
-    private static void setUpTable() {
-        items.clear();
-        itemTable.getColumns().clear();
-        itemTable.setItems(items);
-        itemTable.setTooltip(new Tooltip("Double click to change appearance"));
-        items.addAll(Style.getAndy(), Style.getBoy(),
-                Style.getCaptain(), Style.getIronMan(),
-                Style.getNoob(), Style.getPlank());
+    private static final int BOX_SPACING = 10;
+    /**
+     * Row constraint for labels.
+     */
+    private static final int ROW_CONSTRAINT = 5;
+    /**
+     * Column constraint.
+     */
+    private static final int COLUMN_CONSTRAINT = 4;
+    /**
+     * Row constraint and column span.
+     */
+    private static final int ROW_CONSTRAINT_SPAN = 5;
+    /**
+     * CurrentSkin label width.
+     */
+    private static final int LABEL_WIDTH = 200;
+    /**
+     * Shop carousel height.
+     */
+    private static final int CAROUSEL_HEIGHT = 435;
+    /** Label for displaying current skin. */
+    private static Label currentSkin;
+    /** Box to contain all item vboxes. */
+    private static HBox itemBox = new HBox(BOX_SPACING);
+    /**
+     * Label with amount of coins.
+     */
+    private static Label amountLabel = createLabel("",
+            COLUMN_CONSTRAINT, ROW_CONSTRAINT);
+    @Override
+    public Node[] createContent() {
+        final ObservableList<Skin> items = Skin.loadSkinsToList();
+        currentSkin = createLabel("CURRENT SKIN: "
+                + State.getSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
+        currentSkin.setMinWidth(LABEL_WIDTH);
+        final Button backButton = createButton("BACK", 0, ROW_CONSTRAINT);
+        final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
+        amountLabel.setText(Integer.toString(State.getCoins()));
+        setButtonFunction(backButton, BType.SHOP_BACK);
+        final ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMinHeight(CAROUSEL_HEIGHT);
+        itemBox.setAlignment(Pos.CENTER);
+            itemBox.getChildren().clear();
+            for (final Skin s : items) {
+                itemBox.getChildren().add(createCarousel(s));
+            }
+        scrollPane.setContent(itemBox);
+        GridPane.setColumnSpan(scrollPane, ROW_CONSTRAINT_SPAN);
+        GridPane.setColumnSpan(currentSkin, ROW_CONSTRAINT_SPAN);
+        GridPane.setConstraints(scrollPane,
+                0, 2);
 
-        final TableColumn<Skin, String> name =
-                new TableColumn<>("Name");
-        name.setCellValueFactory(new PropertyValueFactory<>("skinName"));
-        name.setResizable(false);
+        return new Node[]{scrollPane, backButton,
+                coinsLabel, amountLabel, currentSkin};
+    }
 
-        final TableColumn<Skin, Integer> price =
-                new TableColumn<>("Price");
-        price.setCellValueFactory(new PropertyValueFactory<>("skinPrice"));
-        name.setResizable(false);
-        itemTable.getColumns().add(name);
-        itemTable.getColumns().add(price);
-        itemTable.setRowFactory(e -> {
-            final TableRow<Skin> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && !row.isEmpty()) {
-                    State.setSkin(row.getItem());
+    /**
+     * Method to fill the shop with skins.
+     * @param s Skin.
+     * @return VBox VBox containing an skin item.
+     */
+    private static VBox createCarousel(final Skin s) {
+        final Label price = createLabel("Price", 0, 0);
+        final Label name = createLabel("Name", 0, 0);
+        final Button buy = createButton("BUY", 0, 0);
+        setBuyButtonVisability(buy, s);
+        buy.setOnAction(event -> {
+            if (Skin.getUnlocked(s.getSkinName())) {
+                State.setSkin(s);
+                currentSkin.setText("CURRENT SKIN: "
+                        + State.getSkin().getSkinName());
+            } else {
+                if (State.getCoins() >= s.getSkinPrice()) {
+                    State.setCoins(State.getCoins() - s.getSkinPrice());
+                    Skin.setUnlocked(s.getSkinName(), true);
+                    amountLabel.setText(Integer.toString(State.getCoins()));
+                    buy.setText("EQUIP");
                 }
-            });
-            return row;
+            }
+            SaveGame.saveGame();
         });
+        final VBox vbox = new VBox(BOX_SPACING);
+        vbox.setAlignment(Pos.CENTER);
+        final ImageView imgview = new ImageView(
+                s.getSkinMaterial().getDiffuseMap());
+        price.setText(Integer.toString(s.getSkinPrice()));
+        name.setText(s.getSkinName());
+        vbox.getChildren().addAll(imgview, name, price, buy);
+        return vbox;
+    }
+
+    /**
+     * Change te button visability if skin is buyable/unlocked.
+     * @param buy Button to set.
+     * @param s Skin.
+     */
+    private static void setBuyButtonVisability(final Button buy, final Skin s) {
+        if (s.getSkinPrice() >= State.getCoins()
+                && !Skin.getUnlocked(s.getSkinName())) {
+            buy.setDisable(true);
+        } else {
+            buy.setDisable(false);
+        }
+        if (Skin.getUnlocked(s.getSkinName())) {
+            buy.setText("EQUIP");
+        }
     }
 
     /**
@@ -97,6 +153,7 @@ public class ShopScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
                                             final BType type) {
         button.setOnAction(event1 ->  {
+            ShaftEscape.getButtonAudioPlayer().play();
                 if (type == BType.SHOP_BACK) {
                     OBSERVABLE.notify(GameObserver.Category.MENU,
                             GameObserver.Menu.SHOP_BACK);

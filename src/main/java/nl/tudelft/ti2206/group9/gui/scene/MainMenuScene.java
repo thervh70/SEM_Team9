@@ -1,29 +1,16 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import javafx.beans.binding.Bindings;
-import javafx.scene.Node;
-import nl.tudelft.ti2206.group9.audio.AudioPlayer;
-import nl.tudelft.ti2206.group9.gui.Style;
-import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
-import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.level.save.Highscores;
+import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
-
-import java.util.List;
-
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
 /**
  * A Main Menu with different options/buttons like a options menu, start button
@@ -43,45 +30,19 @@ public final class MainMenuScene extends AbstractMenuScene {
         START,
         /** Settings button. */
         SETTINGS,
-        /** Load Game button. */
-        LOAD,
+        /** Accounts button. */
+        ACCOUNT,
         /** Shop button. */
-        SHOP
+        SHOP,
+        /** Highscores button. */
+        HIGHSCORES
     }
 
-    /** The input field for the name of the player. */
-    static final TextField INPUT = createTextField("PLAYER NAME", 2, 22);
     /** ExitButton width. */
     private static final int EXIT_BUTTON_WIDTH = 60;
-    /** Font size for input. */
-    private static final int FONT_SIZE = 12;
-    /**
-     * Label height.
-     */
-    private static final int LABEL_HEIGHT = 20;
-    /**
-     * ScoreTable heifht.
-     */
-    private static final int SCORETABLE_HEIGHT = 120;
-    /**
-     * Span for table.
-     */
-    private static final int TABLE_SPAN = 3;
-    /**
-     * Constraint for table.
-     */
-    private static final int TABLE_ROW = 16;
-    /**
-     * Amount of score to retrieve from server.
-     */
-    private static final int SCORE_COUNT = 5;
     /** The AudioPlayer to be used for background music. */
-    private static AudioPlayer apMainMenu = new AudioPlayer("src/main/"
-            + "resources/nl/tudelft/ti2206/group9/audio/intro.wav");
-    /**
-     * Table for highscores.
-     */
-    private static ListView<String> scoreTable = new ListView<>();
+    private static SoundtrackPlayer apMainMenu = new SoundtrackPlayer(
+            "src/main/resources/nl/tudelft/ti2206/group9/audio/intro.wav");
 
     /**
      * Create Start, Settings and Exit buttons.
@@ -89,60 +50,34 @@ public final class MainMenuScene extends AbstractMenuScene {
      */
     @Override
     public Node[] createContent() {
-        apMainMenu.play(true);
-        final Button startButton = createButton("START!", 4, 22);
-        startButton.disableProperty().bind(
-                Bindings.isEmpty(INPUT.textProperty()));
+        apMainMenu.play();
+        final Button startButton = createButton("START!", 2, 22);
         final Button settingsButton = createButton("SETTINGS", 0, 24);
-        final Button exitButton = createButton("EXIT", 0, 0);
-        final Button loadButton = createButton("LOAD GAME", 2, 24);
-        final Button shopButton = createButton("SHOP", 4, 24);
-        final Label nameLabel = createLabel("NEW PLAYER:", 0, 22);
-        final Label highscoreLabel = createLabel("HIGHSCORES", 2, 13);
-        highscoreLabel.setMinHeight(LABEL_HEIGHT);
+        final Button exitButton = createButton("EXIT", 4, 24);
+        final Button accountsButton = createButton("ACCOUNTS", 0, 22);
+        final Button shopButton = createButton("SHOP", 4, 22);
+        final Button highScoreButton = createButton("HIGHSCORES", 2, 24);
+        final Label playerName = getPlayerLabelContent();
+
         exitButton.setMaxWidth(EXIT_BUTTON_WIDTH);
         /** Set functions of buttons.*/
         setButtonFunction(exitButton, BType.EXIT);
         setButtonFunction(startButton, BType.START);
         setButtonFunction(settingsButton, BType.SETTINGS);
-        setButtonFunction(loadButton, BType.LOAD);
+        setButtonFunction(accountsButton, BType.ACCOUNT);
         setButtonFunction(shopButton, BType.SHOP);
+
+        setButtonFunction(highScoreButton, BType.HIGHSCORES);
+
+        /** Set tooltips. */
         startButton.setTooltip(new Tooltip("Start the game!"));
         exitButton.setTooltip(new Tooltip("Are you sure?"));
         settingsButton.setTooltip(new Tooltip("Change game settings"));
-        loadButton.setTooltip(new Tooltip("Continue a game"));
-        INPUT.setTooltip(new Tooltip("Enter your name"));
-        INPUT.setFont(Style.getFont(FONT_SIZE));
-        createScoreTable();
+        accountsButton.setTooltip(new Tooltip("Load an account"));
+        highScoreButton.setTooltip(new Tooltip("Check the highscores"));
+
         return new Node[]{startButton, settingsButton, exitButton,
-                loadButton, nameLabel, INPUT, shopButton,
-                scoreTable, highscoreLabel};
-    }
-
-    /**
-     * Create a table with highscores drawn from
-     * the gamejolt server.
-     */
-    public static void createScoreTable() {
-        GridPane.setRowSpan(scoreTable, 2);
-        GridPane.setColumnSpan(scoreTable, TABLE_SPAN);
-        GridPane.setConstraints(scoreTable, 1, TABLE_ROW);
-        scoreTable.setMinHeight(SCORETABLE_HEIGHT);
-        scoreTable.setFocusTraversable(false);
-
-        List<Highscores.Highscore> highscoreList = Highscores.get(SCORE_COUNT);
-
-        ObservableList<String> observableScoreList =
-                FXCollections.observableArrayList();
-
-        for (Highscores.Highscore hs : highscoreList) {
-
-            String score = hs.getUser() + "  -  "
-                    + Integer.toString(hs.getScore());
-            observableScoreList.add(score);
-        }
-
-        scoreTable.setItems(observableScoreList);
+                accountsButton, shopButton, highScoreButton, playerName};
     }
 
     /**
@@ -150,27 +85,20 @@ public final class MainMenuScene extends AbstractMenuScene {
      * @param button Button to be set.
      * @param type Type of button
      */
-    private void setButtonFunction(final Button button,
-            final BType type) {
+    private void setButtonFunction(final Button button, final BType type) {
         button.setOnAction(event -> {
-            SplashScene.getButtonAudioPlayer().play(false);
+            ShaftEscape.getButtonAudioPlayer().play();
             if (type == BType.EXIT) {
                 apMainMenu.stop();
                 OBSERVABLE.notify(Category.MENU, Menu.EXIT);
                 ShaftEscape.exit();
             } else if (type == BType.START) {
                 apMainMenu.stop();
-                if (checkPlayerName(INPUT.getText())) {
-                    createNewGame();
-                } else {
-                    setPopup(new WarningPopup(
-                            event1 -> setPopup(null),
-                            "The given name is invalid."));
-                    ShaftEscape.showPopup(getPopup());
-                }
-            } else if (type == BType.LOAD) {
+                ShaftEscape.setScene(new GameScene());
+            } else if (type == BType.ACCOUNT) {
                 OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
-                ShaftEscape.setScene(new LoadGameScene());
+                SaveGame.saveGame();
+                ShaftEscape.setScene(new AccountScene());
             } else if (type == BType.SHOP) {
                 OBSERVABLE.notify(Category.MENU, Menu.SHOP);
                 ShaftEscape.setScene(new ShopScene());
@@ -181,63 +109,10 @@ public final class MainMenuScene extends AbstractMenuScene {
         });
     }
 
-    /**
-     * Checks whether the playername is a valid name.
-     * Invalid options:
-     * <ul>
-     *     <li>Empty name</li>
-     *     <li>Name contains a '.'</li>
-     *     <li>Name contains a '/'</li>
-     *     <li>Name contains a '\'</li>
-     * </ul>
-     * @param name the name to be checked
-     * @return boolean to indicate whether the name is valid
-     */
-    private boolean checkPlayerName(final String name) {
-        return !(name.contains(".") || name.contains("/")
-                || name.contains("\\"));
-    }
-
-    /**
-     * Check whether the given input corresponds to
-     * an already existing savefile. If so, load
-     * that file, otherwise create a new game with that name.
-     */
-    private static void createNewGame() {
-        if (State.getPlayerName() != null) {
-            SaveGame.saveGame();
-        }
-        final boolean load = tryLoadPlayerName(INPUT.getText());
-        if (!load) {
-            State.resetAll();
-            State.setPlayerName(INPUT.getText());
-        }
-        INPUT.clear();
-        State.getSaveGames().clear();
-        OBSERVABLE.notify(Category.MENU, Menu.START);
-        ShaftEscape.setScene(new GameScene());
-    }
-
-    /**
-     * Check if the given name corresponds with an already existing
-     * file. If so, return true, otherwise, return false.
-     * @param name the given name to check against the savefiles
-     * @return boolean to indicate whether a savfile was found
-     */
-    private static boolean tryLoadPlayerName(final String name) {
-
-        SaveGame.readPlayerNames();
-        if (State.getSaveGames().contains(name)) {
-            SaveGame.loadGame(name);
-            return true;
-        }
-        return false;
-    }
-
     /** Every MainMenuScene has an AudioPlayer for the soundtrack.
      * @return the apMainMenu AudioPlayer.
      */
-    public static AudioPlayer getAudioPlayer() {
+    public static SoundtrackPlayer getAudioPlayer() {
         return apMainMenu;
     }
 }

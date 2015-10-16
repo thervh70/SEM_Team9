@@ -63,8 +63,16 @@ public interface GameObserver extends Observer {
         START,
         /** Settings button has been pressed. */
         SETTINGS,
-        /** Setting "sound" has been toggled. optionalArg: isSoundEnabled. */
-        SETTING_SOUND,
+        /**
+         * Setting "soundtrack" has been toggled.
+         * optionalArg: whether soundtrack is enabled ("ON"/"OFF").
+         */
+        SETTING_SOUNDTRACK,
+        /**
+         * Setting "sound effects" has been toggled.
+         * optionalArg: whether sound effect are enabled ("ON"/"OFF").
+         */
+        SETTING_SOUNDEFFECTS,
         /** Back from settings screen to main menu. */
         SETTINGS_BACK,
         /** Exit button has been pressed. */
@@ -78,7 +86,13 @@ public interface GameObserver extends Observer {
         /** Shop button in main menu has been pressed. */
         SHOP,
         /** Back button in ShopScene has been pressed. */
-        SHOP_BACK
+        SHOP_BACK,
+        /** Back button in AccountScene has been pressed. */
+        ACC_BACK,
+        /** Load button in AccountScene has been pressed. */
+        ACC_LOAD,
+        /** New button in AccountScene has been pressed. */
+        ACC_NEW
     }
 
     /**
@@ -94,7 +108,9 @@ public interface GameObserver extends Observer {
         /** Player slides. */
         SLIDE,
         /** Player collides. optionalArg: name of entity collided with. */
-        COLLISION
+        COLLISION,
+        /** The distance has increased a certain amount. optinalArg: newDist */
+        DISTANCE_INCREASE
     }
 
     /**
