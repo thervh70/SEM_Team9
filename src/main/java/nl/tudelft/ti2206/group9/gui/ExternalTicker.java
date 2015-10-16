@@ -18,7 +18,6 @@ import nl.tudelft.ti2206.group9.gui.renderer.GroupLightRenderer;
 import nl.tudelft.ti2206.group9.gui.renderer.GroupTrackRenderer;
 import nl.tudelft.ti2206.group9.gui.renderer.GroupWallRenderer;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
-import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 
@@ -164,8 +163,7 @@ public class ExternalTicker extends AnimationTimer {
             if (newIndex > 0) {
                 countdown(newIndex);
             } else {
-                InternalTicker.start();
-                GameScene.setRunning(true);
+                GameScene.resumeTickers();
             }
         });
     }

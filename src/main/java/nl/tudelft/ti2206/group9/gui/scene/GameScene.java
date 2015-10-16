@@ -44,6 +44,8 @@ public final class GameScene extends AbstractScene {
     private static final double CAMERA_NEAR = 0.1;
     /** The far end of the camera. */
     private static final double CAMERA_FAR = 1000;
+    /** Default countdown amount after resuming the game. */
+    private static final int COUNTDOWN = 3;
 
     /** The KeyMap to be used. */
     private static KeyMap keyMap = new KeyMap();
@@ -154,20 +156,16 @@ public final class GameScene extends AbstractScene {
 
     /** Start the tickers. */
     public static void startTickers() {
-        final int countdown = 3;
         extTicker = new ExternalTicker();
-        extTicker.start();
-        extTicker.countdown(countdown);
-        OBSERVABLE.addObserver(playerDeathObserver);
-        OBSERVABLE.addObserver(soundEffectObserver);
-        OBSERVABLE.notify(Category.GAME, Game.STARTED);
+        extTicker.handle(System.currentTimeMillis()); // Render first frame
+        extTicker.countdown(COUNTDOWN); // Countdown will call resumeTickers()
     }
 
     /** Resumes the tickers. */
     public static void resumeTickers() {
-        final int countdown = 3;
+        running = true;
+        InternalTicker.start();
         extTicker.start();
-        extTicker.countdown(countdown);
         OBSERVABLE.addObserver(playerDeathObserver);
         OBSERVABLE.addObserver(soundEffectObserver);
         OBSERVABLE.notify(Category.GAME, Game.RESUMED);
@@ -188,7 +186,7 @@ public final class GameScene extends AbstractScene {
         stopTickers();
         OBSERVABLE.notify(Category.GAME, Game.PAUSED);
         setPopup(new PausePopup(e -> {
-            resumeTickers();
+            extTicker.countdown(COUNTDOWN);
             setPopup(null);
         }, e -> {
             OBSERVABLE.notify(Category.GAME, Game.TO_MAIN_MENU);
