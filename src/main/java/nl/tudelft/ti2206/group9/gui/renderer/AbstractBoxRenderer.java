@@ -1,7 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.renderer;
 
 import javafx.scene.shape.Box;
-import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
