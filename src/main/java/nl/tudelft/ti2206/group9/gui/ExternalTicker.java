@@ -68,13 +68,16 @@ public class ExternalTicker extends AnimationTimer {
     @Override
     public final void handle(final long now) {
         synchronized (ShaftEscape.TICKER_LOCK) {
+            if (State.isSoundtrackEnabled()) {
+                State.distanceCheck();
+            }
             renderScene();
         }
     }
 
     /**
-     * This method renders the scene.
-     */
+    * This method renders the scene.
+    */
     private void renderScene() {
         GameScene.clearOverlay();
         GameScene.addOverlay(renderScore(), countdownLabel);

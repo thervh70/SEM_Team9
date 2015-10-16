@@ -1,9 +1,12 @@
 package nl.tudelft.ti2206.group9.level;
 
+import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.util.GameObserver;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 
 /**
  * This utility class stores the State of the game,
@@ -50,6 +53,8 @@ public final class State {
             FXCollections.observableArrayList();
     /** Standard modulus number for both modulo calculation. */
     public static final int MOD = 50;
+    /** Records the distance from the previous distance update. */
+    private static int previousDistance;
 
     /** Cannot be constructed. */
     private State() { }
@@ -59,6 +64,7 @@ public final class State {
         reset();
         setCoins(0);
         highscore = 0;
+        previousDistance = 0;
         skin = Skin.getNoob();
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
@@ -68,6 +74,7 @@ public final class State {
     public static void reset() {
         setTrack(new Track());
         setScore(0);
+        previousDistance = 0;
         Track.setDistance(0);
         track.getPlayer().respawn();
         PowerupInvulnerable.resetCounter();
@@ -120,6 +127,19 @@ public final class State {
      */
     public static double getDistance() {
         return Track.getDistance();
+    }
+
+    /**
+     * Check whether the distance has been increased by 50 (or more).
+     * This check is used for soundtrack speed increasing.
+     */
+    public static void distanceCheck() {
+        final int currentDistance = State.modulo(State.getDistance());
+        if (currentDistance > previousDistance) {
+            previousDistance = currentDistance;
+            OBSERVABLE.notify(Category.PLAYER,
+                    GameObserver.Player.DISTANCE_INCREASE, (int) getDistance());
+        }
     }
 
     /**
@@ -200,7 +220,6 @@ public final class State {
 
     /**
      * Change whether the soundtrack is enabled.
-     *
      * @param newSoundEnabled true/false soundtrack.
      */
     public static void setSoundtrackEnabled(final boolean newSoundEnabled) {
@@ -209,7 +228,6 @@ public final class State {
 
     /**
      * Change whether the soundtrack is enabled.
-     *
      * @param newSoundEnabled true/false sound effects.
      */
     public static void setSoundEffectsEnabled(final boolean newSoundEnabled) {

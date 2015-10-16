@@ -55,6 +55,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundEffectPlayer.initializeAudio(String)",
                    me.getMessage());
+
         }
     }
 

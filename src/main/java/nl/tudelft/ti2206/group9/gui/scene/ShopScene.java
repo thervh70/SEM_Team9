@@ -68,7 +68,7 @@ public class ShopScene extends AbstractMenuScene {
             COLUMN_CONSTRAINT, ROW_CONSTRAINT);
     @Override
     public Node[] createContent() {
-        ObservableList<Skin> items = Skin.loadSkinsToList();
+        final ObservableList<Skin> items = Skin.loadSkinsToList();
         currentSkin = createLabel("CURRENT SKIN: "
                 + State.getSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
         currentSkin.setMinWidth(LABEL_WIDTH);
@@ -80,7 +80,7 @@ public class ShopScene extends AbstractMenuScene {
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
             itemBox.getChildren().clear();
-            for (Skin s : items) {
+            for (final Skin s : items) {
                 itemBox.getChildren().add(createCarousel(s));
             }
         scrollPane.setContent(itemBox);
@@ -99,11 +99,11 @@ public class ShopScene extends AbstractMenuScene {
      * @return VBox VBox containing an skin item.
      */
     private static VBox createCarousel(final Skin s) {
-        Label price = createLabel("Price", 0, 0);
-        Label name = createLabel("Name", 0, 0);
-        Button buy = createButton("BUY", 0, 0);
+        final Label price = createLabel("Price", 0, 0);
+        final Label name = createLabel("Name", 0, 0);
+        final Button buy = createButton("BUY", 0, 0);
         setBuyButtonVisability(buy, s);
-        buy.setOnAction((event -> {
+        buy.setOnAction(event -> {
             if (Skin.getUnlocked(s.getSkinName())) {
                 State.setSkin(s);
                 currentSkin.setText("CURRENT SKIN: "
@@ -117,10 +117,11 @@ public class ShopScene extends AbstractMenuScene {
                 }
             }
             SaveGame.saveGame();
-        }));
-        VBox vbox = new VBox(BOX_SPACING);
+        });
+        final VBox vbox = new VBox(BOX_SPACING);
         vbox.setAlignment(Pos.CENTER);
-        ImageView imgview = new ImageView(s.getSkinMaterial().getDiffuseMap());
+        final ImageView imgview = new ImageView(
+                s.getSkinMaterial().getDiffuseMap());
         price.setText(Integer.toString(s.getSkinPrice()));
         name.setText(s.getSkinName());
         vbox.getChildren().addAll(imgview, name, price, buy);

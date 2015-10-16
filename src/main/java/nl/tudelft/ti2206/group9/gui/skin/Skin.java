@@ -156,7 +156,7 @@ public class Skin {
      * @return ObservableList<Skin> Returns list with skins.
      */
     public static ObservableList<Skin> loadSkinsToList() {
-        ObservableList<Skin> list = FXCollections.observableArrayList();
+        final ObservableList<Skin> list = FXCollections.observableArrayList();
         list.addAll(noob, andy, boy, iron, captain, plank);
         return list;
     }

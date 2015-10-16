@@ -70,6 +70,7 @@ public class Logger implements GameObserver {
 
         lbl = " [PLAYER] ";
         STRINGS.put(Player.COLLISION, lbl + "Collided with %s.");
+        STRINGS.put(Player.DISTANCE_INCREASE, lbl + "Distance is now %d.");
         STRINGS.put(Player.JUMP, lbl + "Jumping.");
         STRINGS.put(Player.SLIDE, lbl + "Sliding.");
         STRINGS.put(Player.START_MOVE, lbl + "Started moving from lane %d.");
@@ -91,6 +92,8 @@ public class Logger implements GameObserver {
                 lbl + "Exception while decoding JSON!" + info);
         STRINGS.put(Error.NULLPOINTEREXCEPTION,
                 lbl + "Something is pointing to void space!" + info);
+        STRINGS.put(Error.CLIENTCOULDNOTCONNECT,
+                lbl + "Could not connect to a HighscoreServer!" + info);
     }
 
     /**

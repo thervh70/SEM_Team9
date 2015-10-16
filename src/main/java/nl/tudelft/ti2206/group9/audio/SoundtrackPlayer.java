@@ -150,7 +150,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         if (mediaPlayer == null) {
             return false;
         } else {
-            return mediaPlayer.getStatus().equals("PLAYING");
+            return mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING);
         }
     }
 
