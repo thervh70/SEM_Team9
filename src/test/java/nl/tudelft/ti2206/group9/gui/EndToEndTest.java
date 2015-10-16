@@ -1,5 +1,17 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -20,15 +32,9 @@ import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.*;
 
 
 @SuppressWarnings("restriction")
@@ -92,7 +98,7 @@ public class EndToEndTest extends ApplicationTest {
     /**
      * Overview of the EndToEndTest:
      *
-     *  - Click on screen to get passed the SplashScreen
+     *  - Click on screen to get passed the SplashScreen.
      *  - Go through the accounts, testing the new game button
      *      - First clicking whithout a name
      *      - Then clicking with a faulty name

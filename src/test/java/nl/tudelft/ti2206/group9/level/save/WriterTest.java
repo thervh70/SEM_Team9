@@ -1,9 +1,7 @@
 package nl.tudelft.ti2206.group9.level.save;
 
 import static org.junit.Assert.assertEquals;
-
-import nl.tudelft.ti2206.group9.gui.Style;
-import nl.tudelft.ti2206.group9.gui.skin.*;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 
 import org.junit.Test;
@@ -37,7 +35,6 @@ public final class WriterTest {
         State.setSoundtrackEnabled(soundEnabled);
         State.setSoundEffectsEnabled(soundEnabled);
 
-
         Writer.saveGame(fileFolder + "saveGameWriterTest.ses");
         Parser.loadGame(fileFolder + "saveGameWriterTest.ses");
 
@@ -49,7 +46,6 @@ public final class WriterTest {
         assertEquals(true, Skin.getUnlocked("Noob"));
         assertEquals(iron, Skin.getUnlocked("Iron Man"));
         assertEquals(plank, Skin.getUnlocked("Plank"));
-
 
         assertEquals(soundEnabled, State.isSoundtrackEnabled());
         assertEquals(soundEnabled, State.isSoundEffectsEnabled());
