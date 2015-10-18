@@ -86,7 +86,7 @@ public final class MainMenuScene extends AbstractMenuScene {
      */
     private void setButtonFunction(final Button button, final BType type) {
         button.setOnAction(event -> {
-            ShaftEscape.getButtonAudioPlayer().play();
+            playButtonSound();
             if (type == BType.EXIT) {
                 apMainMenu.stop();
                 OBSERVABLE.notify(Category.MENU, Menu.EXIT);

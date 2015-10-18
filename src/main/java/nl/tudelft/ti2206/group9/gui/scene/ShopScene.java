@@ -67,10 +67,10 @@ public class ShopScene extends AbstractMenuScene {
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
-            itemBox.getChildren().clear();
-            for (final Skin s : items) {
-                itemBox.getChildren().add(createCarousel(s));
-            }
+        itemBox.getChildren().clear();
+        for (final Skin s : items) {
+            itemBox.getChildren().add(createCarousel(s));
+        }
         scrollPane.setContent(itemBox);
         GridPane.setColumnSpan(scrollPane, ROW_CONSTRAINT_SPAN);
         GridPane.setColumnSpan(currentSkin, ROW_CONSTRAINT_SPAN);
@@ -139,14 +139,14 @@ public class ShopScene extends AbstractMenuScene {
      * @param type Type of button
      */
     protected void setButtonFunction(final Button button,
-                                     final BType type) {
+            final BType type) {
         button.setOnAction(event1 ->  {
-            ShaftEscape.getButtonAudioPlayer().play();
-                if (type == BType.SHOP_BACK) {
-                    OBSERVABLE.notify(GameObserver.Category.MENU,
-                            GameObserver.Menu.SHOP_BACK);
-                    ShaftEscape.setScene(new MainMenuScene());
-                }
+            playButtonSound();
+            if (type == BType.SHOP_BACK) {
+                OBSERVABLE.notify(GameObserver.Category.MENU,
+                        GameObserver.Menu.SHOP_BACK);
+                ShaftEscape.setScene(new MainMenuScene());
+            }
         });
     }
 }

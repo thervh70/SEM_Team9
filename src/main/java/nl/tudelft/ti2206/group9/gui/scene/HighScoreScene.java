@@ -109,7 +109,7 @@ public class HighScoreScene extends AbstractMenuScene {
     public Node[] createContent() {
         final Button backButton = createButton("BACK", 0, BACKB_ROW);
         final Button sendButton = createButton("SEND", 0, SEND_ROW);
-        final Button fetchButton = createButton("FETCH SCORES", 0 , FETCH_ROW);
+        final Button fetchButton = createButton("FETCH SCORES", 0, FETCH_ROW);
         final Label highLabel = createLabel("You: " + State.getHighscore(),
                 0, YOURS_ROW);
 
@@ -134,7 +134,7 @@ public class HighScoreScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
             final BType type) {
         button.setOnAction(event -> {
-            ShaftEscape.getButtonAudioPlayer().play();
+            playButtonSound();
             if (type == BType.HIGHSCORES_BACK) {
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.HIGHSCORES_BACK);
