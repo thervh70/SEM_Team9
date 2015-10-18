@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.group9.util;
+package nl.tudelft.ti2206.group9.level;
 
 import java.util.ArrayList;
 import java.util.HashMap;
