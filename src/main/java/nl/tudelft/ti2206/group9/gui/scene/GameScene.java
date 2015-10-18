@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.group9.gui.scene;
+package nl.tudelft.ti2206.group9.gui.scene; // NOPMD - many imports are needed
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
@@ -25,7 +25,9 @@ import nl.tudelft.ti2206.group9.gui.popup.DeathPopup;
 import nl.tudelft.ti2206.group9.gui.popup.PausePopup;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.util.Direction;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
@@ -133,15 +135,10 @@ public final class GameScene extends AbstractScene {
 
     /** Make sure KeyEvents are handled in {@link KeyMap}. */
     private void keyBindings() {
-        KeyMap.defaultKeys();
+        setupKeyMap();
         setOnKeyPressed(keyEvent -> {
             if (running) {
                 keyMap.keyPressed(keyEvent.getCode());
-                if (keyEvent.getCode().equals(KeyCode.ESCAPE)
-                        && getPopup() == null) {
-                    soundtrackPlayer.pause();
-                    showPauseMenu();
-                }
             }
         });
         setOnKeyReleased(keyEvent -> {
@@ -152,6 +149,28 @@ public final class GameScene extends AbstractScene {
         setOnKeyTyped(keyEvent -> {
             if (running) {
                 keyMap.keyTyped(keyEvent.getCode());
+            }
+        });
+    }
+
+    /** Sets up the KeyMap with the actions used in the game. */
+    private void setupKeyMap() {
+        final Player player = State.getTrack().getPlayer();
+        keyMap.addKey(KeyCode.UP,    () -> player.move(Direction.JUMP));
+        keyMap.addKey(KeyCode.DOWN,  () -> player.move(Direction.SLIDE));
+        keyMap.addKey(KeyCode.LEFT,  () -> player.move(Direction.LEFT));
+        keyMap.addKey(KeyCode.RIGHT, () -> player.move(Direction.RIGHT));
+
+        keyMap.addKey(KeyCode.W,     () -> player.move(Direction.JUMP));
+        keyMap.addKey(KeyCode.S,     () -> player.move(Direction.SLIDE));
+        keyMap.addKey(KeyCode.A,     () -> player.move(Direction.LEFT));
+        keyMap.addKey(KeyCode.D,     () -> player.move(Direction.RIGHT));
+
+        keyMap.addKey(KeyCode.ESCAPE, () -> {
+            keyMap.releaseAll();   // The popup blocks released keys propagating
+            if (getPopup() == null) {   // If we have no popup already
+                soundtrackPlayer.pause();
+                showPauseMenu();
             }
         });
     }

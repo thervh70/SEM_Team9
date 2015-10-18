@@ -78,11 +78,11 @@ public class AccountScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
                                             final BType type) {
         button.setOnAction(event -> {
+            playButtonSound();
             if (type == BType.ACC_LOAD) {
                 if (list.getSelectionModel().getSelectedItem() == null) {
-                    setPopup(new WarningPopup(event1 -> {
-                        setPopup(null);
-                    }, "Select an account to load"));
+                    setPopup(new WarningPopup(event1 -> setPopup(null),
+                            "Select an account to load"));
                     ShaftEscape.showPopup(getPopup());
                 } else {
                     OBSERVABLE.notify(Category.MENU, Menu.ACC_LOAD);

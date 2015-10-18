@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -93,6 +94,7 @@ public class EndToEndTest extends ApplicationTest {
         stage = primaryStage;
         new ShaftEscape().start(stage);
         State.resetAll();
+        new File("sav/Fred.ses").delete();
     }
 
     /**
@@ -231,12 +233,14 @@ public class EndToEndTest extends ApplicationTest {
         sleep(COUNTDOWN);
 
         keyboard(KeyCode.ESCAPE);
+        sleep(LONG);
         clickPopup(PAUSE_RESUME);
         sleep(COUNTDOWN);
 
         moveAround();
 
         keyboard(KeyCode.ESCAPE);
+        sleep(LONG);
         pausePopup(PAUSE_TOMAIN);
     }
 
@@ -339,7 +343,7 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void pausePopup(final int buttonNo) {
-        if (GameScene.getPopup() == null) {
+        if (AbstractScene.getPopup() == null) {
             fail("The Pause Popup is not available.");
         }
         ObservableList<Node> buttons;
