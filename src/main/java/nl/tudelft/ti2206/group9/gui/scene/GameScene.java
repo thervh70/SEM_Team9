@@ -2,7 +2,9 @@ package nl.tudelft.ti2206.group9.gui.scene;
 
 import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
 
+import java.util.Map;
 import java.util.Observable;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -16,7 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.audio.SoundEffectObserver;
+import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
 import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.gui.ExternalTicker;
 import nl.tudelft.ti2206.group9.gui.popup.DeathPopup;
@@ -279,6 +281,70 @@ public final class GameScene extends AbstractScene {
                 showDeathMenu();
             }
         }
+    }
+
+    /**
+     * The SoundEffectsPlayer plays the SoundEffects that accompany the player's
+     * movement.
+     * @author Maarten and Mitchell
+     */
+    private static class SoundEffectObserver implements GameObserver {
+
+        /** Constant which is used for increasing the soundtrack speed. */
+        private static final double SPEED_INCREASE = 0.01;
+
+        /** The Map that decides which sound to play for Player events. */
+        private final Map<Player, SoundEffectPlayer> soundMap =
+                new ConcurrentHashMap<>();
+        /** The Map that decides which sound to play for collisions. */
+        private final Map<String, SoundEffectPlayer> soundMapCollide =
+                new ConcurrentHashMap<>();
+
+        /** Default constructor. */
+        SoundEffectObserver() {
+            super();
+            soundMap.put(Player.JUMP, createPlayer("jump"));
+            soundMap.put(Player.SLIDE, createPlayer("slide"));
+            soundMap.put(Player.START_MOVE, createPlayer("move"));
+
+            soundMapCollide.put("AbstractObstacle", createPlayer("death"));
+            soundMapCollide.put("Coin", createPlayer("coin"));
+        }
+
+        @Override
+        public void update(final Observable o, final Object arg) {
+            final GameUpdate update = (GameUpdate) arg;
+            if (update.getCat() != Category.PLAYER) {
+                return;
+            }
+            if (update.getSpec() == Player.DISTANCE_INCREASE) {
+                new Thread(() -> {
+                    GameScene.getSoundtrackPlayer().setSpeed(
+                            GameScene.getSoundtrackPlayer().getSpeed()
+                            + SPEED_INCREASE
+                            );
+                }).start();
+            } else if (update.getSpec() == Player.COLLISION) {
+                if (soundMapCollide.get(update.getArgs()[0]) != null) {
+                    soundMapCollide.get(update.getArgs()[0]).play();
+                }
+            } else {
+                if (soundMap.get(update.getSpec()) != null) {
+                    soundMap.get(update.getSpec()).play();
+                }
+            }
+        }
+
+        /**
+         * @param effectName the effect to create a SoundEffectPlayer for.
+         * @return a new SoundEffectPlayer that plays the indicated effectName.
+         */
+        private SoundEffectPlayer createPlayer(final String effectName) {
+            final String audioPath = "src/main/resources/"
+                    + "nl/tudelft/ti2206/group9/audio/";
+            return new SoundEffectPlayer(audioPath + effectName + ".wav");
+        }
+
     }
 
 }
