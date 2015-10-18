@@ -10,8 +10,7 @@ import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * A screen for displaying a settings menu.

@@ -15,6 +15,14 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Specific;
  */
 public final class GameObservable extends Observable {
 
+    /** GameObservable that is used to log actions in the game (singleton). */
+    public static final GameObservable OBSERVABLE = new GameObservable();
+
+    /** Hiding public constructor; Singleton pattern. */
+    private GameObservable() {
+        super();
+    }
+
     /**
      * @throws UnsupportedOperationException
      *         because notifyObservers() must be called with argument.

@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.animation.FadeTransition;
 import javafx.scene.Node;
 import javafx.scene.control.Label;

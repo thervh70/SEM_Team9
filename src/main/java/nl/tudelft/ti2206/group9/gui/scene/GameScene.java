@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene; // NOPMD - many imports are needed
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.util.Map;
 import java.util.Observable;

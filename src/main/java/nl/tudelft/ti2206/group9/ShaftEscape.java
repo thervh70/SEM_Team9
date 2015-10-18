@@ -1,5 +1,7 @@
 package nl.tudelft.ti2206.group9;
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+
 import java.io.File;
 
 import javafx.application.Application;
@@ -14,7 +16,6 @@ import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Logger;
@@ -31,8 +32,6 @@ public class ShaftEscape extends Application {
     public static final int WIDTH = 480 - 16;
     /** Height of the Window. */
     public static final int HEIGHT = 640;
-    /** GameObservable that is used to log actions in the game. */
-    public static final GameObservable OBSERVABLE = new GameObservable();
     /** The logger that logs all events in the game. */
     public static final Logger LOGGER = new Logger();
 
