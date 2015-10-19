@@ -6,9 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import nl.tudelft.ti2206.group9.level.save.Highscores.Highscore;
-import nl.tudelft.ti2206.group9.level.save.Highscores.ResultCallback;
 import nl.tudelft.ti2206.group9.server.HighscoreClientTest;
+import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter;
+import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.Highscore;
+import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.ResultCallback;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -37,29 +38,29 @@ public class HighscoresTest {
 
     @Test
     public final void testConnect() {
-        assertFalse(Highscores.connect("www.kees.kaas"));
-        assertTrue(Highscores.connect("localhost"));
+        assertFalse(HighscoreClientAdapter.connect("www.kees.kaas"));
+        assertTrue(HighscoreClientAdapter.connect("localhost"));
     }
 
     @Test
     public final void testAdd() throws InterruptedException {
-        Highscores.add("Kees", 2, callback);
+        HighscoreClientAdapter.add("Kees", 2, callback);
         haltTestUntilServerResponds();
         assertTrue(actualResponse);
 
-        Highscores.add("", 2, callback);
+        HighscoreClientAdapter.add("", 2, callback);
         haltTestUntilServerResponds();
         assertFalse(actualResponse);
     }
 
     @Test
     public final void testGetGlobal() throws InterruptedException {
-        List<Highscore> list = Highscores.getGlobal(2, callback);
+        List<Highscore> list = HighscoreClientAdapter.getGlobal(2, callback);
         haltTestUntilServerResponds();
         assertTrue(actualResponse);
         assertEquals(2, list.size());
 
-        list = Highscores.getGlobal(-1, callback);
+        list = HighscoreClientAdapter.getGlobal(-1, callback);
         haltTestUntilServerResponds();
         assertFalse(actualResponse);
         assertEquals(0, list.size());
@@ -67,12 +68,12 @@ public class HighscoresTest {
 
     @Test
     public final void testGetUser() throws InterruptedException {
-        List<Highscore> list = Highscores.getUser("Kees", 2, callback);
+        List<Highscore> list = HighscoreClientAdapter.getUser("Kees", 2, callback);
         haltTestUntilServerResponds();
         assertTrue(actualResponse);
         assertEquals(2, list.size());
 
-        list = Highscores.getUser("", 2, callback);
+        list = HighscoreClientAdapter.getUser("", 2, callback);
         haltTestUntilServerResponds();
         assertFalse(actualResponse);
         assertEquals(0, list.size());

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import nl.tudelft.ti2206.group9.level.save.Highscores.Highscore;
+import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.Highscore;
 
 /**
  * The Database that the ServerThreads will communicate with before responding

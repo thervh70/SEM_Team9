@@ -1,23 +1,21 @@
-package nl.tudelft.ti2206.group9.level.save;
+package nl.tudelft.ti2206.group9.server;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import nl.tudelft.ti2206.group9.server.HighscoreClient;
-
 /**
  * Uploads the highscores get in the game to GameJolt.
  * @author Maarten
  */
-public final class Highscores {
+public final class HighscoreClientAdapter {
 
     /** HighscoreClient for communicating with the server. */
     private static HighscoreClient client = new HighscoreClient("localhost");
 
     /** Hide public constructor. */
-    private Highscores() { }
+    private HighscoreClientAdapter() { }
 
     /**
      * Connects to a highscore server. Disconnects from the previous server.
