@@ -1,15 +1,12 @@
 package nl.tudelft.ti2206.group9.audio;
 
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-
-import java.io.File;
-import java.net.MalformedURLException;
-
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaException;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import nl.tudelft.ti2206.group9.util.Resource;
 
 /**
  * Creates a SoundEffectPlayer which you can initialize, start and stop.
@@ -45,17 +42,11 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
     @Override
     protected final void initializeAudio(final String source) {
         try {
-            audioClip = new AudioClip(new File(source).toURI().toURL()
-                    .toString());
-        } catch (MalformedURLException mue) {
-            OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
-                    "SoundEffectPlayer.initializeAudio(String)",
-                    mue.getMessage());
+            audioClip = new AudioClip(Resource.getURIString(source));
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundEffectPlayer.initializeAudio(String)",
                    me.getMessage());
-
         }
     }
 

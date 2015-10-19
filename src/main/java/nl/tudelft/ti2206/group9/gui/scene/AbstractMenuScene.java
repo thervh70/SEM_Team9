@@ -46,7 +46,7 @@ public abstract class AbstractMenuScene extends AbstractScene {
 
     /** The AudioPlayer to be used for a button sound effect. */
     private static final SoundEffectPlayer BUTTON_SOUND = new SoundEffectPlayer(
-            "src/main/resources/nl/tudelft/ti2206/group9/audio/button.wav");
+            "nl/tudelft/ti2206/group9/audio/button.wav");
 
     /**
      * Creating the SettingsScene.

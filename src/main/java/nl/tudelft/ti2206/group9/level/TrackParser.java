@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +20,7 @@ import nl.tudelft.ti2206.group9.level.entity.Pillar;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Point3D;
+import nl.tudelft.ti2206.group9.util.Resource;
 
 
 /**
@@ -32,7 +33,7 @@ public class TrackParser {
 
     /** Folder where the levels are stored. */
     public static final String LEVELS_FOLDER =
-            "src/main/resources/nl/tudelft/ti2206/group9/level";
+            "nl/tudelft/ti2206/group9/level";
 
     /**
      * Parse all txt-files into TrackParts.
@@ -40,15 +41,17 @@ public class TrackParser {
      */
     public final List<TrackPart> parseTrack() {
         final List<TrackPart> partList = new ArrayList<TrackPart>();
-        final File folder = new File(LEVELS_FOLDER);
+        final File folder = new File(Resource.getURI(LEVELS_FOLDER));
         final File[] files = folder.listFiles();
         if (files == null) {
             return partList;
         }
 
         for (final File file : files) {
-            final TrackPart part = parseTrackPart(file.getPath());
-            partList.add(part);
+            if (file.toString().endsWith(".txt")) {
+                final TrackPart part = parseTrackPart(file.toURI());
+                partList.add(part);
+            }
         }
 
         return partList;
@@ -56,14 +59,12 @@ public class TrackParser {
 
     /**
      * Create a TrackPart by reading the trackpart textfile.
-     * @param infile path to the textfile
+     * @param uri path to the textfile
      * @return TrackPart the created TrackPart
      */
-    public final TrackPart parseTrackPart(final String infile) {
+    public final TrackPart parseTrackPart(final URI uri) {
         try {
-            final URL path = new File(infile).toURI().toURL();
-            final InputStream stream = path.openStream();
-            return parseTrackPart(stream);
+            return parseTrackPart(uri.toURL().openStream());
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
                     "TrackParser.parseTrackPart(String)", e.getMessage());

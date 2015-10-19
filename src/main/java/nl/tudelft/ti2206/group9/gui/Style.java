@@ -1,6 +1,12 @@
 package nl.tudelft.ti2206.group9.gui;    // NOPMD - too many imports
 // because don't want to use .*
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -21,14 +27,7 @@ import javafx.scene.text.FontWeight;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import nl.tudelft.ti2206.group9.util.Resource;
 
 /**
  * Class containing the styling for the GUI.
@@ -208,10 +207,9 @@ public final class Style {
             return globalFont.get(size);
         }
         try {
-            globalFont.put(size, Font.loadFont(new FileInputStream(new
-                    File("src/main/resources/nl/tudelft/"
-                            + "ti2206/group9/gui/Minecraftia.ttf")), size));
-        } catch (FileNotFoundException e) {
+            globalFont.put(size, Font.loadFont(Resource.getURL("nl/tudelft/"
+                    + "ti2206/group9/gui/Minecraftia.ttf").openStream(), size));
+        } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
                     "Style.getFont(int)",
                     e.getMessage() + " - Default globalFont used");
