@@ -180,6 +180,8 @@ public final class GameScene extends AbstractScene {
         extTicker = new ExternalTicker();
         extTicker.handle(System.currentTimeMillis()); // Render first frame
         extTicker.countdown(COUNTDOWN); // Countdown will call resumeTickers()
+        playerDeathObserver = new PlayerDeathObserver();
+        soundEffectObserver = new SoundEffectObserver();
     }
 
     /** Resumes the tickers. */
