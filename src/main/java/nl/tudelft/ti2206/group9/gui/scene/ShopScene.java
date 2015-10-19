@@ -33,41 +33,29 @@ public class ShopScene extends AbstractMenuScene {
         SHOP_BACK,
     }
 
-    /**
-     * Spacing between items in H/V-Boxes.
-     */
+    /** Spacing between items in H/V-Boxes. */
     private static final int BOX_SPACING = 10;
-    /**
-     * Row constraint for labels.
-     */
+    /** Row constraint for labels. */
     private static final int ROW_CONSTRAINT = 5;
-    /**
-     * Column constraint.
-     */
+    /** Column constraint. */
     private static final int COLUMN_CONSTRAINT = 4;
-    /**
-     * Row constraint and column span.
-     */
+    /** Row constraint and column span. */
     private static final int ROW_CONSTRAINT_SPAN = 5;
-    /**
-     * CurrentSkin label width.
-     */
+
+    /** CurrentSkin label width. */
     private static final int LABEL_WIDTH = 200;
-    /**
-     * Shop carousel height.
-     */
+    /** Shop carousel height. */
     private static final int CAROUSEL_HEIGHT = 435;
+
     /** Label for displaying current skin. */
-    private static Label currentSkin;
-    /** Box to contain all item vboxes. */
-    private static HBox itemBox = new HBox(BOX_SPACING);
-    /**
-     * Label with amount of coins.
-     */
-    private static Label amountLabel = createLabel("",
-            COLUMN_CONSTRAINT, ROW_CONSTRAINT);
+    private Label currentSkin;
+    /** Label with amount of coins. */
+    private Label amountLabel;
+
     @Override
     public Node[] createContent() {
+        final HBox itemBox = new HBox(BOX_SPACING);
+        amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
         final ObservableList<Skin> items = Skin.loadSkinsToList();
         currentSkin = createLabel("CURRENT SKIN: "
                 + State.getSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
@@ -98,7 +86,7 @@ public class ShopScene extends AbstractMenuScene {
      * @param s Skin.
      * @return VBox VBox containing an skin item.
      */
-    private static VBox createCarousel(final Skin s) {
+    private VBox createCarousel(final Skin s) {
         final Label price = createLabel("Price", 0, 0);
         final Label name = createLabel("Name", 0, 0);
         final Button buy = createButton("BUY", 0, 0);
@@ -133,7 +121,7 @@ public class ShopScene extends AbstractMenuScene {
      * @param buy Button to set.
      * @param s Skin.
      */
-    private static void setBuyButtonVisability(final Button buy, final Skin s) {
+    private void setBuyButtonVisability(final Button buy, final Skin s) {
         if (s.getSkinPrice() >= State.getCoins()
                 && !Skin.getUnlocked(s.getSkinName())) {
             buy.setDisable(true);
@@ -150,8 +138,8 @@ public class ShopScene extends AbstractMenuScene {
      * @param button Button to be set.
      * @param type Type of button
      */
-    protected static void setButtonFunction(final Button button,
-                                            final BType type) {
+    protected void setButtonFunction(final Button button,
+                                     final BType type) {
         button.setOnAction(event1 ->  {
             ShaftEscape.getButtonAudioPlayer().play();
                 if (type == BType.SHOP_BACK) {
