@@ -310,7 +310,7 @@ public final class GameScene extends AbstractScene {
     private static class SoundEffectObserver implements GameObserver {
 
         /** Constant which is used for increasing the soundtrack speed. */
-        private static final double SPEED_INCREASE = 0.01;
+        private static final double SPEED_INCREASE = Math.pow(2, 1. / 12.);
 
         /** The Map that decides which sound to play for Player events. */
         private final Map<Player, SoundEffectPlayer> soundMap =
@@ -318,6 +318,9 @@ public final class GameScene extends AbstractScene {
         /** The Map that decides which sound to play for collisions. */
         private final Map<String, SoundEffectPlayer> soundMapCollide =
                 new ConcurrentHashMap<>();
+
+        /** State that remembers the previous distance. */
+        private int prevDist;
 
         /** Default constructor. */
         SoundEffectObserver() {
@@ -337,12 +340,16 @@ public final class GameScene extends AbstractScene {
                 return;
             }
             if (update.getSpec() == Player.DISTANCE_INCREASE) {
-                new Thread(() -> {
-                    GameScene.getSoundtrackPlayer().setSpeed(
-                            GameScene.getSoundtrackPlayer().getSpeed()
-                            + SPEED_INCREASE
-                            );
-                }).start();
+                final int mod = 250;
+                if (State.getDistance() >= prevDist + mod) {
+                    prevDist += mod;
+                    new Thread(() -> {
+                        GameScene.getSoundtrackPlayer().setSpeed(
+                                GameScene.getSoundtrackPlayer().getSpeed()
+                                * SPEED_INCREASE
+                                );
+                    }).start();
+                }
             } else if (update.getSpec() == Player.COLLISION) {
                 if (soundMapCollide.get(update.getArgs()[0]) != null) {
                     soundMapCollide.get(update.getArgs()[0]).play();
