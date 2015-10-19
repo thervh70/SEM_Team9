@@ -17,8 +17,8 @@ import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.server.Highscore;
 import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter;
-import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.Highscore;
 import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.ResultCallback;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
@@ -141,15 +141,17 @@ public class HighScoreScene extends AbstractMenuScene {
                 ShaftEscape.setScene(new MainMenuScene());
             } else if (type == BType.FETCH) {
                 if (HighscoreClientAdapter.connect(input.getText())) {
-                    highscoreList = HighscoreClientAdapter.getGlobal(SCORE_COUNT, CALLBACK);
+                    highscoreList = HighscoreClientAdapter.getGlobal(
+                            SCORE_COUNT, CALLBACK);
                 } else {
                     FAIL_CALLBACK.callback(false);
                 }
             } else if (type == BType.SEND) {
                 if (HighscoreClientAdapter.connect(input.getText())) {
-                    HighscoreClientAdapter.add(State.getPlayerName(), State.getHighscore(),
-                            FAIL_CALLBACK);
-                    highscoreList = HighscoreClientAdapter.getGlobal(SCORE_COUNT, CALLBACK);
+                    HighscoreClientAdapter.add(State.getPlayerName(),
+                            State.getHighscore(), FAIL_CALLBACK);
+                    highscoreList = HighscoreClientAdapter.getGlobal(
+                            SCORE_COUNT, CALLBACK);
                 } else {
                     FAIL_CALLBACK.callback(false);
                 }
