@@ -6,16 +6,16 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import nl.tudelft.ti2206.group9.server.Highscore;
 import nl.tudelft.ti2206.group9.server.HighscoreClientTest;
 import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter;
-import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.Highscore;
 import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.ResultCallback;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class HighscoresTest {
+public class HighscoreClientAdapterTest {
 
     private static final Object LOCK = new Object();
     private boolean actualResponse; // NOPMD - field cannot be local field
@@ -68,7 +68,9 @@ public class HighscoresTest {
 
     @Test
     public final void testGetUser() throws InterruptedException {
-        List<Highscore> list = HighscoreClientAdapter.getUser("Kees", 2, callback);
+        List<Highscore> list;
+
+        list = HighscoreClientAdapter.getUser("Kees", 2, callback);
         haltTestUntilServerResponds();
         assertTrue(actualResponse);
         assertEquals(2, list.size());
