@@ -158,8 +158,8 @@ public final class SettingsScene extends AbstractMenuScene {
     private static Slider createVolumeSlider(
             final int column, final int row, final boolean enabled) {
         final Slider slider = new Slider();
-        final int ticks = 4;
-        final int tickcCount = 5;
+        final int majorTickUnit = 4;
+        final int minorTickCount = 5;
         final int width = 120;
         if (!enabled) {
             slider.setDisable(true);
@@ -172,8 +172,8 @@ public final class SettingsScene extends AbstractMenuScene {
         slider.setTooltip(new Tooltip("Adjust volume"));
         slider.setValue(MAX_VOLUME / 2);
         slider.setBlockIncrement(1);
-        slider.setMajorTickUnit(tickcCount);
-        slider.setMinorTickCount(ticks);
+        slider.setMajorTickUnit(majorTickUnit);
+        slider.setMinorTickCount(minorTickCount);
         GridPane.setConstraints(slider, column, row);
         final Color color = Color.BLACK;
         final CornerRadii corner = new CornerRadii(4);
