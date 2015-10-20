@@ -135,7 +135,7 @@ public class EndToEndTest extends ApplicationTest {
 
         goThroughSettings();
         goThroughShop();
-
+        outputEventLog();
         goThroughGamePlay();
 
         mainMenu(MAIN_ACCOUNTS);
