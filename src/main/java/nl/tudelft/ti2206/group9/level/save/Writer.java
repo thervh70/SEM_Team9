@@ -1,22 +1,17 @@
 package nl.tudelft.ti2206.group9.level.save;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.Base64Writer;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
-
 import org.json.simple.JSONObject;
+import sun.misc.BASE64Encoder;
 
-import sun.misc.BASE64Encoder; //NOPMD - I need this package
+import java.io.*;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * This class takes care of the writing of JSON
@@ -37,14 +32,15 @@ public final class Writer {
      */
     static void saveGame(final String path) {
         final String mainObject = writeToJSON();
-        final String encryptedMain = encrypt(mainObject);
 
-        BufferedWriter fw = null;
+        Base64Writer fw = null;
         try {
-            fw = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(path), "UTF-8"
-            ));
-            fw.write(encryptedMain);
+            fw = new Base64Writer(
+                    new BufferedWriter(
+                    new OutputStreamWriter(
+                    new FileOutputStream(path), "UTF-8"
+            )));
+            fw.write(mainObject);
             fw.flush();
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,

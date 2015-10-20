@@ -1,27 +1,21 @@
 package nl.tudelft.ti2206.group9.level.save;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.Base64Reader;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import sun.misc.BASE64Decoder;
 
-import sun.misc.BASE64Decoder; //NOPMD - I need this package
+import java.io.*;
+import java.net.URL;
+import java.util.List;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * This class takes care of the parsing of JSON objects
@@ -59,20 +53,23 @@ public final class Parser {
      */
     static void loadGame(final String path) {
         try {
-            final List<String> lines  = new ArrayList<>();
             final URL pathURL = new File(path).toURI().toURL();
             final InputStream stream = pathURL.openStream();
-            final BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(stream, "UTF-8"));
-
-            while (reader.ready()) {
-                lines.add(reader.readLine());
+            final Reader reader = new Base64Reader(new BufferedReader(
+                    new InputStreamReader(stream, "UTF-8")));
+            final StringBuilder builder = new StringBuilder();
+            while (true) {
+                int readBytes = reader.read();
+                if (readBytes == -1) {
+                    break;
+                }
+                builder.append((char) readBytes);
             }
-            final String mainString = createString(lines);
-            final String decryptedMain = decrypt(mainString);
+
+            String mainString = builder.toString();
             final JSONParser parser = new JSONParser();
             final JSONObject mainObject =
-                    (JSONObject) parser.parse(decryptedMain);
+                    (JSONObject) parser.parse(mainString);
 
             parseJSON(mainObject);
             writeToState();
