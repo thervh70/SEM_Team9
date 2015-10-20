@@ -55,4 +55,12 @@ public final class Resource {
         return getURI(packagePath).toString();
     }
 
+    /**
+     * @param packagePath The package path of the resource.
+     * @return the URL.toString() of this resource.
+     */
+    public static String getURLString(final String packagePath) {
+        return getURL(packagePath).toString();
+    }
+
 }

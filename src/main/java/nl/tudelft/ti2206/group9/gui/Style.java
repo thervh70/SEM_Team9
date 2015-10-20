@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.group9.gui;    // NOPMD - too many imports
 
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -206,15 +205,15 @@ public final class Style {
         if (globalFont.get(size) != null) {
             return globalFont.get(size);
         }
-        try {
-            globalFont.put(size, Font.loadFont(Resource.getURL("nl/tudelft/"
-                    + "ti2206/group9/gui/Minecraftia.ttf").openStream(), size));
-        } catch (IOException e) {
+        Font font = Font.loadFont(Resource.getURLString(
+                "nl/tudelft/ti2206/group9/gui/Minecraftia.ttf"), size);
+        if (font == null) {
+            font = Font.font("Roboto", FontWeight.BOLD, size);
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
                     "Style.getFont(int)",
-                    e.getMessage() + " - Default globalFont used");
-            globalFont.put(size, Font.font("Roboto", FontWeight.BOLD, size));
+                    "Loading Font returned null - Default globalFont used");
         }
-        return globalFont.get(size);
+        globalFont.put(size, font);
+        return font;
     }
 }
