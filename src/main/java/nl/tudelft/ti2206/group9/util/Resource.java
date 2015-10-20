@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.util;
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -145,10 +146,14 @@ public final class Resource {
      */
     public static InputStream getStream(final String packagePath) {
         try {
+            System.out.println("URL: " + getURL(packagePath));
+            System.out.println("URI: " + getURI(packagePath));
+            new FileInputStream(new File(getURI(packagePath)));
             return getURL(packagePath).openStream();
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.RESOURCEEXCEPTION,
                     "Resource.getStream(String)", e.getMessage(), packagePath);
+            e.printStackTrace();
             return null;
         }
     }
