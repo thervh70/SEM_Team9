@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.group9.util;
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
