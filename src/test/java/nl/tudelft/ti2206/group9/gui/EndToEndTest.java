@@ -17,6 +17,8 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -334,8 +336,9 @@ public class EndToEndTest extends ApplicationTest {
         gridPaneNodes = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
 
-        final ScrollPane pane = (ScrollPane) gridPaneNodes.get(0);
-        final HBox hbox = (HBox) pane.getContent();
+        final TabPane tabpane = (TabPane) gridPaneNodes.get(0);
+        final ScrollPane scrollpane = (ScrollPane) tabpane.getTabs().get(0).getContent();
+        final HBox hbox = (HBox) scrollpane.getContent();
         final VBox vbox = (VBox) hbox.getChildren().get(skinNo);
 
         final int buyEquip = 3; // Is the same for each skin
