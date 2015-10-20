@@ -70,7 +70,7 @@ public final class GameScene extends AbstractScene {
     /** The AudioPlayer to be used for background music. */
     private static SoundtrackPlayer soundtrackPlayer =
             new SoundtrackPlayer("src/main/resources/"
-                    + "nl/tudelft/ti2206/group9/audio/soundtrack.mp3");
+                    + "nl/tudelft/ti2206/group9/audio/soundtrack_Default.mp3");
 
     /** The Sound-effects player. */
     private static SoundEffectObserver soundEffectObserver =
