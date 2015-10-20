@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -48,6 +49,10 @@ public class ShopScene extends AbstractMenuScene {
     private Label currentSkin;
     /** Label with amount of coins. */
     private Label amountLabel;
+    /**
+     * Label to display current soundtrack.
+     */
+    private Label currentSoundtrack;
 
     @Override
     public Node[] createContent() {
@@ -174,11 +179,40 @@ public class ShopScene extends AbstractMenuScene {
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
         itemBox.getChildren().clear();
+
 //        for (final SoundTrack s : items) {
-//
+//            itemBox.getChildren().addAll(createSoundTrackCarousel(s));
 //        }
 
         return tab;
     }
+
+//    public HBox createSoundTrackCarousel(SoundTrack s) {
+//        HBox hbox = new HBox(BOX_SPACING);
+//        ImageView imageView = new ImageView(new Image("IMAGE OF SOUNDTRACK :D"));
+//        Label nameLabel = createLabel(SoundTrack.getName(), 0, 0);
+//        Label priceLabel = createLabel(SoundTrack.getPrice(), 0, 0);
+//        Button buyButton = createButton("BUY", 0, 0);
+//
+//        buyButton.setOnAction(event -> {
+//            if (SoundTrack.getUnlocked(s.getSoundTrackName())) {
+////                TODO: Set soundtrack here.
+//                currentSoundtrack.setText("CURRENT SOUNDTRACK: "
+//                        + "GET CURRENT SOUNDTRACK NAME");
+//            } else {
+//                if (State.getCoins() >= s.getPrice()) {
+//                    State.setCoins(State.getCoins() - s.getPrice());
+//                    SoundTrack.setUnlocked(s.getName(), true);
+//                    amountLabel.setText(Integer.toString(State.getCoins()));
+//                    buyButton.setText("ACTIVATE");
+//                }
+//            }
+//            SaveGame.saveGame();
+//        });
+//
+//        hbox.getChildren().addAll(imageView, nameLabel, priceLabel, buyButton);
+//
+//        return hbox;
+//    }
 
 }
