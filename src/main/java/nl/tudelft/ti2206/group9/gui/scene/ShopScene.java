@@ -168,7 +168,15 @@ public class ShopScene extends AbstractMenuScene {
     public Tab createSoundTab() {
         Tab tab = new Tab("Soundtracks");
 
-        // TODO Creating layout for buyable soundtracks connected to backend
+        final VBox itemBox = new VBox(BOX_SPACING);
+//        final ObservableList<SoundTrack> items = Soundtrack.load
+        final ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMinHeight(CAROUSEL_HEIGHT);
+        itemBox.setAlignment(Pos.CENTER);
+        itemBox.getChildren().clear();
+//        for (final SoundTrack s : items) {
+//
+//        }
 
         return tab;
     }
