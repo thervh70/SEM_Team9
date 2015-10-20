@@ -311,8 +311,10 @@ public final class GameScene extends AbstractScene {
      */
     private static class SoundEffectObserver implements GameObserver {
 
+        /** Twelve is the amount of chromatic steps in an octave. */
+        private static final double DUODECIM = 12.;
         /** Constant which is used for increasing the soundtrack speed. */
-        private static final double SPEED_INCREASE = Math.pow(2, 1. / 12.);
+        private static final double SPEED_INCREASE = Math.pow(2, 1. / DUODECIM);
 
         /** The Map that decides which sound to play for Player events. */
         private final Map<Player, SoundEffectPlayer> soundMap =
