@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.tudelft.ti2206.group9</groupId>
   <artifactId>ti2206-sem-group-9</artifactId>
-  <version>1.4</version>
+  <version>1.4.1</version>
   <repositories>
     <repository>
       <id>maven-central-repo</id>

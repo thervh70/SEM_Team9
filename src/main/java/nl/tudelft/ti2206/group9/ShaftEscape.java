@@ -29,7 +29,7 @@ import nl.tudelft.ti2206.group9.util.Logger;
 public class ShaftEscape extends Application {
 
     /** Width of the Window. */
-    public static final int WIDTH = 480 - 16;
+    public static final int WIDTH = 464; // 480 - 16
     /** Height of the Window. */
     public static final int HEIGHT = 640;
     /** The logger that logs all events in the game. */

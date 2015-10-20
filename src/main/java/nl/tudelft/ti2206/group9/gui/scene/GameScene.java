@@ -68,9 +68,8 @@ public final class GameScene extends AbstractScene {
     private static boolean running;
 
     /** The AudioPlayer to be used for background music. */
-    private static SoundtrackPlayer soundtrackPlayer =
-            new SoundtrackPlayer(
-                    "nl/tudelft/ti2206/group9/audio/soundtrack.aiff");
+    private static SoundtrackPlayer soundtrackPlayer = new SoundtrackPlayer(
+                    "nl/tudelft/ti2206/group9/audio/soundtrack.mp3");
 
     /** The Sound-effects player. */
     private static SoundEffectObserver soundEffectObserver =
@@ -311,8 +310,10 @@ public final class GameScene extends AbstractScene {
      */
     private static class SoundEffectObserver implements GameObserver {
 
+        /** Twelve is the amount of chromatic steps in an octave. */
+        private static final double DUODECIM = 12.;
         /** Constant which is used for increasing the soundtrack speed. */
-        private static final double SPEED_INCREASE = Math.pow(2, 1. / 12.);
+        private static final double SPEED_INCREASE = Math.pow(2, 1. / DUODECIM);
 
         /** The Map that decides which sound to play for Player events. */
         private final Map<Player, SoundEffectPlayer> soundMap =

@@ -155,6 +155,7 @@ public class EndToEndTest extends ApplicationTest {
 //        mainMenu(MAIN_QUIT);
         Platform.runLater(stage::close);
         outputEventLog();
+        new File("sav/Fred.ses").delete();
     }
 
     private void outputEventLog() throws IOException {
