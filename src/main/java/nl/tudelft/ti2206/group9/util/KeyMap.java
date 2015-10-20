@@ -1,13 +1,11 @@
 package nl.tudelft.ti2206.group9.util;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.scene.input.KeyCode;
-import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 
@@ -18,11 +16,11 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 public class KeyMap {
 
     /** Links KeyCodes to Actions. */
-    private static Map<KeyCode, Action> actionMap =
+    private final Map<KeyCode, Action> actionMap =
             new ConcurrentHashMap<KeyCode, Action>();
 
     /** Stores whether keys are pressed or not. */
-    private static Map<KeyCode, Boolean> pressed =
+    private final Map<KeyCode, Boolean> pressed =
             new ConcurrentHashMap<KeyCode, Boolean>();
 
     /**
@@ -39,8 +37,8 @@ public class KeyMap {
         final Action action = actionMap.get(e);
         if (action != null && !pressed.get(e)) {    // If key not pressed
             OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD, e);
-            action.doAction();                      // Do action
             pressed.put(e, true);                   // Mark as pressed
+            action.doAction();                      // Do action
         }
     }
 
@@ -63,7 +61,7 @@ public class KeyMap {
      * @param code KeyCode
      * @return corresponding Action
      */
-    public static Action getKey(final KeyCode code) {
+    public Action getKey(final KeyCode code) {
         return actionMap.get(code);
     }
 
@@ -72,7 +70,7 @@ public class KeyMap {
      * @param code KeyCode
      * @param action Action to perform at key press
      */
-    public static void addKey(final KeyCode code, final Action action) {
+    public void addKey(final KeyCode code, final Action action) {
         actionMap.put(code, action);
     }
 
@@ -80,50 +78,15 @@ public class KeyMap {
      * Remove a key from the KeyMap.
      * @param code KeyCode
      */
-    public static void removeKey(final KeyCode code) {
+    public void removeKey(final KeyCode code) {
         actionMap.remove(code);
     }
 
-    /**
-     * Set the game to use the default keys.
-     */
-    public static void defaultKeys() {
-        // NOPMD used for "private constructor" from MoveAction.
-        KeyMap.addKey(KeyCode.UP, new MoveAction(Direction.JUMP));     //NOPMD
-        KeyMap.addKey(KeyCode.W, getKey(KeyCode.UP));
-
-        KeyMap.addKey(KeyCode.DOWN, new MoveAction(Direction.SLIDE));  //NOPMD
-        KeyMap.addKey(KeyCode.S, getKey(KeyCode.DOWN));
-
-        KeyMap.addKey(KeyCode.LEFT, new MoveAction(Direction.LEFT));   //NOPMD
-        KeyMap.addKey(KeyCode.A, getKey(KeyCode.LEFT));
-
-        KeyMap.addKey(KeyCode.RIGHT, new MoveAction(Direction.RIGHT)); //NOPMD
-        KeyMap.addKey(KeyCode.D, getKey(KeyCode.RIGHT));
-    }
-
-    /**
-     * MoveAction implement Action.
-     * It's main reason of existence is getting rid of the
-     * need to implement Action over and over again.
-     */
-    private static final class MoveAction implements Action {
-
-        /** The direction. */
-        private final Direction dir;
-
-        /**
-         * Nice constructor.
-         * @param d direction
-         */
-        private MoveAction(final Direction d) {
-            dir = d;
-        }
-
-        /** Perform action. */
-        public void doAction() {
-            final Player player = State.getTrack().getPlayer();
-            player.move(dir);
+    /** Releases all keys in the KeyMap. */
+    public void releaseAll() {
+        for (final KeyCode kc : pressed.keySet()) {
+            pressed.put(kc, false);
         }
     }
+
 }

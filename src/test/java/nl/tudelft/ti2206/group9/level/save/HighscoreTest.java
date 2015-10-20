@@ -3,7 +3,7 @@ package nl.tudelft.ti2206.group9.level.save;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import nl.tudelft.ti2206.group9.level.save.Highscores.Highscore;
+import nl.tudelft.ti2206.group9.server.Highscore;
 
 import org.junit.Test;
 

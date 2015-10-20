@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.tudelft.ti2206.group9</groupId>
   <artifactId>ti2206-sem-group-9</artifactId>
-  <version>1.4</version>
+  <version>1.4.1</version>
   <repositories>
     <repository>
       <id>maven-central-repo</id>
@@ -113,13 +113,50 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.6</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>nl.tudelft.ti2206.group9.ShaftEscape</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
+        <executions>
+          <execution>
+            <id>default-jar</id>
+            <!-- put the default-jar in the none phase to skip it from being 
+              created -->
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>jar-shaft-escape</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <finalName>ShaftEscape-${project.version}</finalName>
+              <archive>
+                <manifest>
+                  <mainClass>nl.tudelft.ti2206.group9.ShaftEscape</mainClass>
+                </manifest>
+              </archive>
+            </configuration>
+          </execution>
+          <execution>
+            <id>jar-highscore-server</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <finalName>HighscoreServer-${project.version}</finalName>
+              <archive>
+                <manifest>
+                  <mainClass>nl.tudelft.ti2206.group9.server.HighscoreServer</mainClass>
+                </manifest>
+              </archive>
+              <excludes>
+                <exclude>*</exclude>
+              </excludes>
+              <includes>
+                <include>**/nl/tudelft/ti2206/group9/server/*</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

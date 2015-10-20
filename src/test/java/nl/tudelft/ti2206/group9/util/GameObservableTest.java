@@ -21,7 +21,7 @@ public class GameObservableTest implements GameObserver {
     /** GameObservers used for testing. */
     private GameObserver go1, go2;
 
-    private final GameObservable obs = new GameObservable();
+    private final GameObservable obs = GameObservable.OBSERVABLE;
 
     private static final GameUpdate TEST_UPDATE =
             new GameUpdate(Category.GAME, Game.STARTED, 0);

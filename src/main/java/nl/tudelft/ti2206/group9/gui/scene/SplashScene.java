@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.animation.FadeTransition;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -61,7 +61,7 @@ public final class SplashScene extends AbstractMenuScene {
      */
     private void addMouseClick() {
         setOnMouseClicked(me -> {
-            ShaftEscape.getButtonAudioPlayer().play();
+            playButtonSound();
             OBSERVABLE.notify(Category.INPUT, Input.MOUSE,
                     me.getButton());
             OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);
@@ -74,7 +74,7 @@ public final class SplashScene extends AbstractMenuScene {
      */
     private void addKeyPressed() {
         setOnKeyPressed(ke -> {
-            ShaftEscape.getButtonAudioPlayer().play();
+            playButtonSound();
             OBSERVABLE.notify(Category.INPUT, Input.KEYBOARD,
                     ke.getCode());
             OBSERVABLE.notify(Category.MENU, Menu.ANY_KEY);

@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.level.save.Highscores;
-import nl.tudelft.ti2206.group9.level.save.Highscores.Highscore;
-import nl.tudelft.ti2206.group9.level.save.Highscores.ResultCallback;
+import nl.tudelft.ti2206.group9.server.Highscore;
+import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter;
+import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.ResultCallback;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
 /**
@@ -109,7 +109,7 @@ public class HighScoreScene extends AbstractMenuScene {
     public Node[] createContent() {
         final Button backButton = createButton("BACK", 0, BACKB_ROW);
         final Button sendButton = createButton("SEND", 0, SEND_ROW);
-        final Button fetchButton = createButton("FETCH SCORES", 0 , FETCH_ROW);
+        final Button fetchButton = createButton("FETCH SCORES", 0, FETCH_ROW);
         final Label highLabel = createLabel("You: " + State.getHighscore(),
                 0, YOURS_ROW);
 
@@ -134,22 +134,24 @@ public class HighScoreScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
             final BType type) {
         button.setOnAction(event -> {
-            ShaftEscape.getButtonAudioPlayer().play();
+            playButtonSound();
             if (type == BType.HIGHSCORES_BACK) {
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.HIGHSCORES_BACK);
                 ShaftEscape.setScene(new MainMenuScene());
             } else if (type == BType.FETCH) {
-                if (Highscores.connect(input.getText())) {
-                    highscoreList = Highscores.getGlobal(SCORE_COUNT, CALLBACK);
+                if (HighscoreClientAdapter.connect(input.getText())) {
+                    highscoreList = HighscoreClientAdapter.getGlobal(
+                            SCORE_COUNT, CALLBACK);
                 } else {
                     FAIL_CALLBACK.callback(false);
                 }
             } else if (type == BType.SEND) {
-                if (Highscores.connect(input.getText())) {
-                    Highscores.add(State.getPlayerName(), State.getHighscore(),
-                            FAIL_CALLBACK);
-                    highscoreList = Highscores.getGlobal(SCORE_COUNT, CALLBACK);
+                if (HighscoreClientAdapter.connect(input.getText())) {
+                    HighscoreClientAdapter.add(State.getPlayerName(),
+                            State.getHighscore(), FAIL_CALLBACK);
+                    highscoreList = HighscoreClientAdapter.getGlobal(
+                            SCORE_COUNT, CALLBACK);
                 } else {
                     FAIL_CALLBACK.callback(false);
                 }

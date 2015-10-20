@@ -1,8 +1,10 @@
-package nl.tudelft.ti2206.group9.gui.scene;
+package nl.tudelft.ti2206.group9.gui.scene; // NOPMD - many imports are needed
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
+import java.util.Map;
 import java.util.Observable;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -16,14 +18,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.audio.SoundEffectObserver;
+import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
 import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.gui.ExternalTicker;
 import nl.tudelft.ti2206.group9.gui.popup.DeathPopup;
 import nl.tudelft.ti2206.group9.gui.popup.PausePopup;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.util.Direction;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
@@ -131,15 +135,10 @@ public final class GameScene extends AbstractScene {
 
     /** Make sure KeyEvents are handled in {@link KeyMap}. */
     private void keyBindings() {
-        KeyMap.defaultKeys();
+        setupKeyMap();
         setOnKeyPressed(keyEvent -> {
             if (running) {
                 keyMap.keyPressed(keyEvent.getCode());
-                if (keyEvent.getCode().equals(KeyCode.ESCAPE)
-                        && getPopup() == null) {
-                    soundtrackPlayer.pause();
-                    showPauseMenu();
-                }
             }
         });
         setOnKeyReleased(keyEvent -> {
@@ -154,11 +153,35 @@ public final class GameScene extends AbstractScene {
         });
     }
 
+    /** Sets up the KeyMap with the actions used in the game. */
+    private void setupKeyMap() {
+        final Player player = State.getTrack().getPlayer();
+        keyMap.addKey(KeyCode.UP,    () -> player.move(Direction.JUMP));
+        keyMap.addKey(KeyCode.DOWN,  () -> player.move(Direction.SLIDE));
+        keyMap.addKey(KeyCode.LEFT,  () -> player.move(Direction.LEFT));
+        keyMap.addKey(KeyCode.RIGHT, () -> player.move(Direction.RIGHT));
+
+        keyMap.addKey(KeyCode.W,     () -> player.move(Direction.JUMP));
+        keyMap.addKey(KeyCode.S,     () -> player.move(Direction.SLIDE));
+        keyMap.addKey(KeyCode.A,     () -> player.move(Direction.LEFT));
+        keyMap.addKey(KeyCode.D,     () -> player.move(Direction.RIGHT));
+
+        keyMap.addKey(KeyCode.ESCAPE, () -> {
+            keyMap.releaseAll();   // The popup blocks released keys propagating
+            if (getPopup() == null) {   // If we have no popup already
+                soundtrackPlayer.pause();
+                showPauseMenu();
+            }
+        });
+    }
+
     /** Start the tickers. */
     public static void startTickers() {
         extTicker = new ExternalTicker();
         extTicker.handle(System.currentTimeMillis()); // Render first frame
         extTicker.countdown(COUNTDOWN); // Countdown will call resumeTickers()
+        playerDeathObserver = new PlayerDeathObserver();
+        soundEffectObserver = new SoundEffectObserver();
     }
 
     /** Resumes the tickers. */
@@ -279,6 +302,79 @@ public final class GameScene extends AbstractScene {
                 showDeathMenu();
             }
         }
+    }
+
+    /**
+     * The SoundEffectsPlayer plays the SoundEffects that accompany the player's
+     * movement.
+     * @author Maarten and Mitchell
+     */
+    private static class SoundEffectObserver implements GameObserver {
+
+        /** Twelve is the amount of chromatic steps in an octave. */
+        private static final double DUODECIM = 12.;
+        /** Constant which is used for increasing the soundtrack speed. */
+        private static final double SPEED_INCREASE = Math.pow(2, 1. / DUODECIM);
+
+        /** The Map that decides which sound to play for Player events. */
+        private final Map<Player, SoundEffectPlayer> soundMap =
+                new ConcurrentHashMap<>();
+        /** The Map that decides which sound to play for collisions. */
+        private final Map<String, SoundEffectPlayer> soundMapCollide =
+                new ConcurrentHashMap<>();
+
+        /** State that remembers the previous distance. */
+        private int prevDist;
+
+        /** Default constructor. */
+        SoundEffectObserver() {
+            super();
+            soundMap.put(Player.JUMP, createPlayer("jump"));
+            soundMap.put(Player.SLIDE, createPlayer("slide"));
+            soundMap.put(Player.START_MOVE, createPlayer("move"));
+
+            soundMapCollide.put("AbstractObstacle", createPlayer("death"));
+            soundMapCollide.put("Coin", createPlayer("coin"));
+        }
+
+        @Override
+        public void update(final Observable o, final Object arg) {
+            final GameUpdate update = (GameUpdate) arg;
+            if (update.getCat() != Category.PLAYER) {
+                return;
+            }
+            if (update.getSpec() == Player.DISTANCE_INCREASE) {
+                final int mod = 250;
+                if (State.getDistance() >= prevDist + mod) {
+                    prevDist += mod;
+                    new Thread(() -> {
+                        GameScene.getSoundtrackPlayer().setSpeed(
+                                GameScene.getSoundtrackPlayer().getSpeed()
+                                * SPEED_INCREASE
+                                );
+                    }).start();
+                }
+            } else if (update.getSpec() == Player.COLLISION) {
+                if (soundMapCollide.get(update.getArgs()[0]) != null) {
+                    soundMapCollide.get(update.getArgs()[0]).play();
+                }
+            } else {
+                if (soundMap.get(update.getSpec()) != null) {
+                    soundMap.get(update.getSpec()).play();
+                }
+            }
+        }
+
+        /**
+         * @param effectName the effect to create a SoundEffectPlayer for.
+         * @return a new SoundEffectPlayer that plays the indicated effectName.
+         */
+        private SoundEffectPlayer createPlayer(final String effectName) {
+            final String audioPath = "src/main/resources/"
+                    + "nl/tudelft/ti2206/group9/audio/";
+            return new SoundEffectPlayer(audioPath + effectName + ".wav");
+        }
+
     }
 
 }

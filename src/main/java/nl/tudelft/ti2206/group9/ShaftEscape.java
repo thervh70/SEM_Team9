@@ -1,11 +1,12 @@
 package nl.tudelft.ti2206.group9;
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+
 import java.io.File;
 
 import javafx.application.Application;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
@@ -15,7 +16,6 @@ import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
-import nl.tudelft.ti2206.group9.util.GameObservable;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Logger;
@@ -29,19 +29,11 @@ import nl.tudelft.ti2206.group9.util.Logger;
 public class ShaftEscape extends Application {
 
     /** Width of the Window. */
-    public static final int WIDTH = 480 - 16;
+    public static final int WIDTH = 464; // 480 - 16
     /** Height of the Window. */
     public static final int HEIGHT = 640;
-    /** GameObservable that is used to log actions in the game. */
-    public static final GameObservable OBSERVABLE = new GameObservable();
     /** The logger that logs all events in the game. */
     public static final Logger LOGGER = new Logger();
-
-    /**
-     * The AudioPlayer to be used for a button sound effect.
-     */
-    private static SoundEffectPlayer apButton = new SoundEffectPlayer(
-            "src/main/resources/nl/tudelft/ti2206/group9/audio/button.wav");
 
     /** Primary stage where the Scenes are shown in. */
     private static Stage stage;
@@ -137,15 +129,6 @@ public class ShaftEscape extends Application {
         MainMenuScene.getAudioPlayer().stop();
         GameScene.getSoundtrackPlayer().resetSpeed();
         GameScene.getSoundtrackPlayer().stop();
-    }
-
-    /**
-     * Every Button has an AudioPlayer for a sound effect.
-     *
-     * @return the button AudioPlayer.
-     */
-    public static SoundEffectPlayer getButtonAudioPlayer() {
-        return apButton;
     }
 
     /**

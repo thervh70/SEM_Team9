@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.util;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
