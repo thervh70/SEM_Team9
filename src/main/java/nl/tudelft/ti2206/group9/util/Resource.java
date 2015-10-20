@@ -129,12 +129,14 @@ public final class Resource {
      *         (e.g. because it's inside a JAR), returns null.
      */
     private static List<String> getFolderIDE(final String packagePath) {
-        final File folder =  new File(getURI(packagePath));
+        System.out.println("FolderURI: " + getURI(packagePath));
+        final File folder = new File(getURI(packagePath));
         if (!folder.isDirectory()) {
             return null;
         }
         final ArrayList<String> res = new ArrayList<>();
         for (final File file : folder.listFiles()) {
+            System.out.println("FolderFile: " + file.getName());
             res.add(file.getName());
         }
         return res;
