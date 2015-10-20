@@ -129,14 +129,12 @@ public final class Resource {
      *         (e.g. because it's inside a JAR), returns null.
      */
     private static List<String> getFolderIDE(final String packagePath) {
-        System.out.println("FolderURI: " + getURI(packagePath));
         final File folder = new File(getURI(packagePath));
         if (!folder.isDirectory()) {
             return null;
         }
         final ArrayList<String> res = new ArrayList<>();
         for (final File file : folder.listFiles()) {
-            System.out.println("FolderFile: " + file.getName());
             res.add(file.getName());
         }
         return res;
@@ -148,14 +146,11 @@ public final class Resource {
      */
     public static InputStream getStream(final String packagePath) {
         try {
-            System.out.println("URL: " + getURL(packagePath));
-            System.out.println("URI: " + getURI(packagePath));
             new FileInputStream(new File(getURI(packagePath)));
             return getURL(packagePath).openStream();
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.RESOURCEEXCEPTION,
                     "Resource.getStream(String)", e.getMessage(), packagePath);
-            e.printStackTrace();
             return null;
         }
     }
