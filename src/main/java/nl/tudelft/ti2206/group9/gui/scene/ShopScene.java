@@ -3,9 +3,7 @@ package nl.tudelft.ti2206.group9.gui.scene;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -35,7 +33,7 @@ public class ShopScene extends AbstractMenuScene {
     /** Spacing between items in H/V-Boxes. */
     private static final int BOX_SPACING = 10;
     /** Row constraint for labels. */
-    private static final int ROW_CONSTRAINT = 5;
+    private static final int ROW_CONSTRAINT = 3;
     /** Column constraint. */
     private static final int COLUMN_CONSTRAINT = 4;
     /** Row constraint and column span. */
@@ -44,7 +42,7 @@ public class ShopScene extends AbstractMenuScene {
     /** CurrentSkin label width. */
     private static final int LABEL_WIDTH = 200;
     /** Shop carousel height. */
-    private static final int CAROUSEL_HEIGHT = 435;
+    private static final int CAROUSEL_HEIGHT = 325;
 
     /** Label for displaying current skin. */
     private Label currentSkin;
@@ -53,9 +51,13 @@ public class ShopScene extends AbstractMenuScene {
 
     @Override
     public Node[] createContent() {
-        final HBox itemBox = new HBox(BOX_SPACING);
+        final TabPane tabPane = new TabPane();
+        tabPane.setMinHeight(460);
+
+        tabPane.getTabs().addAll(createSkinTab(), createSoundTab());
+
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
-        final ObservableList<Skin> items = Skin.loadSkinsToList();
+
         currentSkin = createLabel("CURRENT SKIN: "
                 + State.getSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
         currentSkin.setMinWidth(LABEL_WIDTH);
@@ -63,20 +65,14 @@ public class ShopScene extends AbstractMenuScene {
         final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
         amountLabel.setText(Integer.toString(State.getCoins()));
         setButtonFunction(backButton, BType.SHOP_BACK);
-        final ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setMinHeight(CAROUSEL_HEIGHT);
-        itemBox.setAlignment(Pos.CENTER);
-        itemBox.getChildren().clear();
-        for (final Skin s : items) {
-            itemBox.getChildren().add(createCarousel(s));
-        }
-        scrollPane.setContent(itemBox);
-        GridPane.setColumnSpan(scrollPane, ROW_CONSTRAINT_SPAN);
-        GridPane.setColumnSpan(currentSkin, ROW_CONSTRAINT_SPAN);
-        GridPane.setConstraints(scrollPane,
-                0, 2);
 
-        return new Node[]{scrollPane, backButton,
+
+        GridPane.setColumnSpan(tabPane, ROW_CONSTRAINT_SPAN);
+        GridPane.setColumnSpan(currentSkin, ROW_CONSTRAINT_SPAN);
+        GridPane.setConstraints(tabPane,
+                0, 0);
+
+        return new Node[]{tabPane, backButton,
                 coinsLabel, amountLabel, currentSkin};
     }
 
@@ -148,4 +144,33 @@ public class ShopScene extends AbstractMenuScene {
             }
         });
     }
+
+    public Tab createSkinTab() {
+        Tab tab = new Tab("Skins");
+
+        final HBox itemBox = new HBox(BOX_SPACING);
+        final ObservableList<Skin> items = Skin.loadSkinsToList();
+        final ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMinHeight(CAROUSEL_HEIGHT);
+        itemBox.setAlignment(Pos.CENTER);
+        itemBox.getChildren().clear();
+        for (final Skin s : items) {
+            itemBox.getChildren().add(createCarousel(s));
+        }
+        scrollPane.setContent(itemBox);
+
+        tab.setContent(scrollPane);
+
+
+        return tab;
+    }
+
+    public Tab createSoundTab() {
+        Tab tab = new Tab("Soundtracks");
+
+        // TODO Creating layout for buyable soundtracks connected to backend
+
+        return tab;
+    }
+
 }
