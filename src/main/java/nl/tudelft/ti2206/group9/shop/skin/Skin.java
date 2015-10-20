@@ -1,64 +1,50 @@
 package nl.tudelft.ti2206.group9.shop.skin;
 
+import java.util.HashMap;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.PhongMaterial;
 import nl.tudelft.ti2206.group9.gui.Style;
-
-import java.util.HashMap;
+import nl.tudelft.ti2206.group9.shop.AbstractShopItem;
 
 /**
- * @author Maikel on 08/10/2015.
+ * The shop item class for skins, based on the requirements from the
+ * AbstractShopItem class.
+ * Besides, every skin item has it's own texture.
+ * @author Maikel and Mitchell.
  */
 @SuppressWarnings("restriction")
-public class Skin {
-    /**
-     * IRON MAN skin for player.
-     */
+public class Skin extends AbstractShopItem {
+
+    /** IRON MAN skin for player. */
     private static IronManSkin iron;
 
-    /**
-     * NOOB skin for player, this is the starting skin.
-     */
+    /** NOOB skin for player, this is the starting skin. */
     private static NoobSkin noob;
 
-    /**
-     * CAPTAIN skin for the player.
-     */
+    /** CAPTAIN skin for the player. */
     private static CaptainSkin captain;
 
-    /**
-     * PLANK skin for the player.
-     */
+    /** PLANK skin for the player. */
     private static PlankSkin plank;
 
-    /**
-     * BOY skin for the player.
-     */
+    /** BOY skin for the player. */
     private static BoySkin boy;
 
-    /**
-     * ANDY skin for the player.
-     */
+    /** ANDY skin for the player. */
     private static AndySkin andy;
-    /**
-     * The price of this skin in the shop.
-     */
+
+    /** The price of this skin in the shop. */
     private final int skinPrice;
 
-    /**
-     * The name to display in the shop.
-     */
+    /** The name to display in the shop. */
     private final String skinName;
 
-    /**
-     * The real material used by this skin.
-     */
+    /** The real material used by this skin. */
     private final PhongMaterial skinMaterial;
 
-    /**
-     * HashMap used to store which skins are unlocked.
-     */
+    /** HashMap used to store which skins are unlocked. */
     private static HashMap<String, Boolean> unlockedMap = new HashMap<>();
 
     /**
@@ -73,32 +59,24 @@ public class Skin {
      */
     public Skin(final int price,
                 final String name, final String textureName) {
+        super();
         skinPrice = price;
         skinName = name;
         skinMaterial = Style.loadPlayerTexture(textureName);
     }
 
-    /**
-     * Getter for the price.
-     *
-     * @return price
-     */
-    public int getSkinPrice() {
+    @Override
+    public int getItemPrice() {
         return skinPrice;
     }
 
-    /**
-     * Getter for the name.
-     *
-     * @return name
-     */
-    public String getSkinName() {
+    @Override
+    public String getItemName() {
         return skinName;
     }
 
     /**
      * Getter for the PhongMaterial.
-     *
      * @return material
      */
     public PhongMaterial getSkinMaterial() {
@@ -106,7 +84,7 @@ public class Skin {
     }
 
     /**
-     * Creating the HashMap for the skin's unlocked values.
+     * Creates a HashMap for the skins that are unlocked.
      */
     public static void createUnlockedHashmap() {
         unlockedMap.put("Andy", false);
@@ -118,27 +96,27 @@ public class Skin {
     }
 
     /**
-     * Get the unlocked value for a skin.
-     * @param skinName Name of skin.
+     * Gets the unlocked value of skin, based on the name.
+     * @param name the Name of the skin.
      * @return boolean unlocked or not.
      */
-    public static boolean getUnlocked(final String skinName) {
-        return unlockedMap.get(skinName);
+    public static boolean getUnlocked(final String name) {
+        return unlockedMap.get(name);
     }
 
     /**
-     * Set the unlocked value for a skin.
-     *
-     * @param skinName Skin to change value for.
+     * Sets the unlocked value for a skin of the shop.
+     * @param name the Name of the skin to change the value for.
      * @param unlocked new unlocked value.
      */
-    public static void setUnlocked(final String skinName,
+    public static void setUnlocked(final String name,
                                    final boolean unlocked) {
-        unlockedMap.replace(skinName, unlocked);
+        unlockedMap.replace(name, unlocked);
     }
 
     /**
-     * Method that creates all the skins.
+     * Method that creates all the skins with default values,
+     * so that they can be loaded at once at the starting of the application.
      */
     public static void loadSkins() {
         iron = new IronManSkin();
@@ -150,8 +128,9 @@ public class Skin {
     }
 
     /**
-     * Method that creates all the skins.
-     * @return ObservableList<Skin> Returns list with skins.
+     * Method that creates all the skins based on current values,
+     * so that they can be loaded in the shop scene.
+     * @return ObservableList<Skin> the list with all skins.
      */
     public static ObservableList<Skin> loadSkinsToList() {
         final ObservableList<Skin> list = FXCollections.observableArrayList();
