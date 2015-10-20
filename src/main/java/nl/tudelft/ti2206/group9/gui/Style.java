@@ -205,7 +205,7 @@ public final class Style {
         if (globalFont.get(size) != null) {
             return globalFont.get(size);
         }
-        Font font = Font.loadFont(Resource.getURLString(
+        Font font = Font.loadFont(Resource.getStream(
                 "nl/tudelft/ti2206/group9/gui/Minecraftia.ttf"), size);
         if (font == null) {
             font = Font.font("Roboto", FontWeight.BOLD, size);

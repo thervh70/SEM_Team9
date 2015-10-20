@@ -382,6 +382,6 @@ public class EndToEndTest extends ApplicationTest {
         children = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
         final TextField text = (TextField) children.get(ACCOUNT_TEXTFIELD);
-        text.clear();
+        Platform.runLater(text::clear);
     }
 }

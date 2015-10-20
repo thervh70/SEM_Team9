@@ -3,11 +3,9 @@ package nl.tudelft.ti2206.group9.level;
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,15 +39,12 @@ public class TrackParser {
      */
     public final List<TrackPart> parseTrack() {
         final List<TrackPart> partList = new ArrayList<TrackPart>();
-        final File folder = new File(Resource.getURI(LEVELS_FOLDER));
-        final File[] files = folder.listFiles();
-        if (files == null) {
-            return partList;
-        }
+        final List<String> files = Resource.getFolder(LEVELS_FOLDER);
 
-        for (final File file : files) {
-            if (file.toString().endsWith(".txt")) {
-                final TrackPart part = parseTrackPart(file.toURI());
+        for (final String file : files) {
+            if (file.endsWith(".txt")) {
+                final TrackPart part = parseTrackPart(LEVELS_FOLDER + "/"
+                        + file);
                 partList.add(part);
             }
         }
@@ -59,12 +54,12 @@ public class TrackParser {
 
     /**
      * Create a TrackPart by reading the trackpart textfile.
-     * @param uri path to the textfile
+     * @param packagePath path to the textfile.
      * @return TrackPart the created TrackPart
      */
-    public final TrackPart parseTrackPart(final URI uri) {
+    public final TrackPart parseTrackPart(final String packagePath) {
         try {
-            return parseTrackPart(uri.toURL().openStream());
+            return parseTrackPart(Resource.getStream(packagePath));
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
                     "TrackParser.parseTrackPart(String)", e.getMessage());
