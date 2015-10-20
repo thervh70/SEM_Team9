@@ -133,10 +133,17 @@ public final class Resource {
         if (!folder.isDirectory()) {
             return null;
         }
+
+        final File[] files = folder.listFiles();
+        if (files == null) {
+            return null;
+        }
+
         final ArrayList<String> res = new ArrayList<>();
-        for (final File file : folder.listFiles()) {
+        for (final File file : files) {
             res.add(file.getName());
         }
+
         return res;
     }
 
@@ -146,7 +153,6 @@ public final class Resource {
      */
     public static InputStream getStream(final String packagePath) {
         try {
-            new FileInputStream(new File(getURI(packagePath)));
             return getURL(packagePath).openStream();
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.RESOURCEEXCEPTION,
