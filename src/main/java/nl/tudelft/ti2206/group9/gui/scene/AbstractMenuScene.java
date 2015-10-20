@@ -11,8 +11,8 @@ import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.shop.skin.Skin;
 
 /**
  * Ancestor for all MenuScenes. Subclasses should define an array of Nodes in

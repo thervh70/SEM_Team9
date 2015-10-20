@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.group9.gui.skin;
+package nl.tudelft.ti2206.group9.shop.skin;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -149,10 +149,8 @@ public class Skin {
         plank = new PlankSkin();
     }
 
-
     /**
      * Method that creates all the skins.
-     *
      * @return ObservableList<Skin> Returns list with skins.
      */
     public static ObservableList<Skin> loadSkinsToList() {

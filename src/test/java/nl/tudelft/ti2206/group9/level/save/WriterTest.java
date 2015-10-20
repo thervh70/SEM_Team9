@@ -1,8 +1,8 @@
 package nl.tudelft.ti2206.group9.level.save;
 
 import static org.junit.Assert.assertEquals;
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.shop.skin.Skin;
 
 import org.junit.Test;
 

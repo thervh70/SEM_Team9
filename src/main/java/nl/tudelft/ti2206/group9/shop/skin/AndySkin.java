@@ -1,4 +1,4 @@
-package nl.tudelft.ti2206.group9.gui.skin;
+package nl.tudelft.ti2206.group9.shop.skin;
 
 /**
  * @author Maikel on 08/10/2015.
