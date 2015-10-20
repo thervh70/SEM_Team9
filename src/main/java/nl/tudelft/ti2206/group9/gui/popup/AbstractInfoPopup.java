@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.gui.popup;
 
 import java.util.Arrays;
 
+import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -27,6 +28,10 @@ public abstract class AbstractInfoPopup extends Popup {
     protected static final double HBOX_SPACING = 10;
     /** Size of the VBox. */
     protected static final double VBOX_SPACING = 50;
+
+    /** The AudioPlayer to be used for a button sound effect. */
+    private static final SoundEffectPlayer BUTTON_SOUND = new SoundEffectPlayer(
+            "src/main/resources/nl/tudelft/ti2206/group9/audio/button.wav");
 
     /** The left button in the Popup. */
     private final Button left;
@@ -85,6 +90,11 @@ public abstract class AbstractInfoPopup extends Popup {
      */
     public Button getRightButton() {
         return right;
+    }
+
+    /** Plays the button sound once. */
+    protected static void playButtonSound() {
+        BUTTON_SOUND.play();
     }
 
 }

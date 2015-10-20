@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 
 /**
@@ -28,14 +27,14 @@ public class PausePopup extends AbstractInfoPopup {
         super(new Button("Resume"), new Button("Return to Main Menu"));
 
         getLeftButton().setOnMouseClicked(mouseEvent -> {
-            ShaftEscape.getButtonAudioPlayer().play();
+            playButtonSound();
             hide();
             resumeEvent.handle(mouseEvent);
             GameScene.getSoundtrackPlayer().play();
         });
 
         getRightButton().setOnMouseClicked(mouseEvent -> {
-            ShaftEscape.getButtonAudioPlayer().play();
+            playButtonSound();
             hide();
             menuEvent.handle(mouseEvent);
             GameScene.getSoundtrackPlayer().resetSpeed();

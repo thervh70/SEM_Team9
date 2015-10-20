@@ -14,8 +14,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * @author Mathias
@@ -78,11 +77,11 @@ public class AccountScene extends AbstractMenuScene {
     protected static void setButtonFunction(final Button button,
                                             final BType type) {
         button.setOnAction(event -> {
+            playButtonSound();
             if (type == BType.ACC_LOAD) {
                 if (list.getSelectionModel().getSelectedItem() == null) {
-                    setPopup(new WarningPopup(event1 -> {
-                        setPopup(null);
-                    }, "Select an account to load"));
+                    setPopup(new WarningPopup(event1 -> setPopup(null),
+                            "Select an account to load"));
                     ShaftEscape.showPopup(getPopup());
                 } else {
                     OBSERVABLE.notify(Category.MENU, Menu.ACC_LOAD);

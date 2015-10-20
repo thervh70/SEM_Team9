@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.server;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 

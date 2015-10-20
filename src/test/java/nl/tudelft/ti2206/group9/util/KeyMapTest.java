@@ -17,42 +17,42 @@ import org.junit.Test;
 public class KeyMapTest {
 
     private Action action;
-    private KeyMap keyMapObject;
+    private KeyMap keyMap;
 
     @Before
     public void setUp() {
         action = mock(Action.class);
-        keyMapObject = new KeyMap();
+        keyMap = new KeyMap();
     }
 
     @Test
     public void addKeyTest() {
-        assertEquals(null, KeyMap.getKey(KeyCode.UP));
-        KeyMap.addKey(KeyCode.UP, action);
-        assertEquals(action, KeyMap.getKey(KeyCode.UP));
-        KeyMap.removeKey(KeyCode.UP);
+        assertEquals(null, keyMap.getKey(KeyCode.UP));
+        keyMap.addKey(KeyCode.UP, action);
+        assertEquals(action, keyMap.getKey(KeyCode.UP));
+        keyMap.removeKey(KeyCode.UP);
     }
 
     @Test
     public void removeKeyTest() {
         addKeyTest();
-        KeyMap.removeKey(KeyCode.UP);
-        assertEquals(null, KeyMap.getKey(KeyCode.UP));
+        keyMap.removeKey(KeyCode.UP);
+        assertEquals(null, keyMap.getKey(KeyCode.UP));
     }
 
     @Test
     public void pressKey42Test() {
-        KeyMap.addKey(KeyCode.UP, action);
+        keyMap.addKey(KeyCode.UP, action);
         pressKey(KeyCode.UP);
         releaseKey(KeyCode.UP);
         verify(action).doAction();
-        KeyMap.removeKey(KeyCode.UP);
+        keyMap.removeKey(KeyCode.UP);
     }
 
     @Test
     public void pressKeyNullTest() {
-        KeyMap.addKey(KeyCode.UP, action);
-        KeyMap.removeKey(KeyCode.UP);
+        keyMap.addKey(KeyCode.UP, action);
+        keyMap.removeKey(KeyCode.UP);
         pressKey(KeyCode.UP);
         releaseKey(KeyCode.UP);
         verify(action, never()).doAction();
@@ -60,30 +60,30 @@ public class KeyMapTest {
 
     @Test
     public void pressReleasePressTest() {
-        KeyMap.addKey(KeyCode.UP, action);
+        keyMap.addKey(KeyCode.UP, action);
         pressKey(KeyCode.UP);
         releaseKey(KeyCode.UP);
         pressKey(KeyCode.UP);
         releaseKey(KeyCode.UP);
         verify(action, times(2)).doAction();
-        KeyMap.removeKey(KeyCode.UP);
+        keyMap.removeKey(KeyCode.UP);
     }
 
     @Test
     public void pressPressReleaseTest() {
-        KeyMap.addKey(KeyCode.UP, action);
+        keyMap.addKey(KeyCode.UP, action);
         pressKey(KeyCode.UP);
         pressKey(KeyCode.UP);
         releaseKey(KeyCode.UP);
         verify(action, times(1)).doAction();
-        KeyMap.removeKey(KeyCode.UP);
+        keyMap.removeKey(KeyCode.UP);
     }
 
     private void pressKey(final KeyCode code) {
-        keyMapObject.keyPressed(code);
+        keyMap.keyPressed(code);
     }
 
     private void releaseKey(final KeyCode code) {
-        keyMapObject.keyReleased(code);
+        keyMap.keyReleased(code);
     }
 }

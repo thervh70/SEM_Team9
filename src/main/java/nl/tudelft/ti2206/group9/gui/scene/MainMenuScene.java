@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.ShaftEscape.OBSERVABLE;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -86,7 +86,7 @@ public final class MainMenuScene extends AbstractMenuScene {
      */
     private void setButtonFunction(final Button button, final BType type) {
         button.setOnAction(event -> {
-            ShaftEscape.getButtonAudioPlayer().play();
+            playButtonSound();
             if (type == BType.EXIT) {
                 apMainMenu.stop();
                 OBSERVABLE.notify(Category.MENU, Menu.EXIT);
