@@ -28,11 +28,7 @@ public class HighscoreClientAdapterTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        try {
-            HighscoreClientTest.setUpBeforeClass();
-        } catch (InterruptedException e) {
-            fail();
-        }
+        HighscoreClientTest.setUpBeforeClass();
     }
 
     @AfterClass
