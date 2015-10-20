@@ -158,7 +158,7 @@ public final class SettingsScene extends AbstractMenuScene {
      */
     private static Slider createVolumeSlider(
             final int column, final int row, final boolean enabled) {
-        Slider slider = new Slider();
+        final Slider slider = new Slider();
         final int ticks = 5;
         final int width = 120;
         if (!enabled) {
