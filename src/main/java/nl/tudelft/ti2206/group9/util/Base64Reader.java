@@ -3,7 +3,6 @@ package nl.tudelft.ti2206.group9.util;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 /**
@@ -23,13 +22,24 @@ public class Base64Reader extends Reader {
         reader = rdr;
     }
 
-    public String readString(String input) {
-        byte[] bytes = decoder.decode(input);
+    public String readString() {
+        StringBuilder builder = new StringBuilder();
         try {
-            return new String(bytes, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+            while(true) {
+                int readBytes = reader.read();
+                if (readBytes == -1) {
+                    break;
+                }
+                builder.append((char) readBytes);
+            }
+            String encryptedString = builder.toString();
+            byte[] bytes = decoder.decode(encryptedString);
+            String result = new String(bytes, "UTF-8");
+            System.out.println(result);
+            return result;
+        } catch (IOException e) {
             GameObservable.OBSERVABLE.notify(GameObserver.Category.ERROR,
-                    GameObserver.Error.UNSUPPORTEDENCODINGEXCEPTION,
+                    GameObserver.Error.IOEXCEPTION,
                     "Base64Reader.readString(String)", e.getMessage());
         }
         return "";

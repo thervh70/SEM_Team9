@@ -57,16 +57,7 @@ public final class Parser {
             final InputStream stream = pathURL.openStream();
             final Base64Reader reader = new Base64Reader(new BufferedReader(
                     new InputStreamReader(stream, "UTF-8")));
-            final StringBuilder builder = new StringBuilder();
-            while (true) {
-                int readBytes = reader.read();
-                if (readBytes == -1) {
-                    break;
-                }
-                builder.append((char) readBytes);
-            }
-
-            String mainString = builder.toString();
+            final String mainString = reader.readString();
             final JSONParser parser = new JSONParser();
             final JSONObject mainObject =
                     (JSONObject) parser.parse(mainString);
