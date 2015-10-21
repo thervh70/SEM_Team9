@@ -67,7 +67,7 @@ public final class State {
         setCoins(0);
         highscore = 0;
         previousDistance = 0;
-        skin = Skin.getNoob();
+        skin = Skin.getNoobSkin();
         GameScene.setSoundtrackPlayer(
                 new SoundtrackPlayer("src/main/resources/"
                 + "nl/tudelft/ti2206/group9/audio/soundtrack_Default.mp3"));

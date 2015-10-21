@@ -2,8 +2,6 @@ package nl.tudelft.ti2206.group9.shop.soundtrack;
 
 import java.util.HashMap;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.shop.ShopItem;
 
@@ -14,8 +12,6 @@ import nl.tudelft.ti2206.group9.shop.ShopItem;
  * Furthermore, a map of all unlocked soundtracks is maintained.
  * @author Mitchell.
  */
-@SuppressWarnings("restriction") // SuppresWarnings, because
-// javafx collections is needed for storing soundtracks.
 public class Soundtrack implements ShopItem {
 
     /** The Animals Soundtrack that can be bought. */
@@ -99,33 +95,6 @@ public class Soundtrack implements ShopItem {
     }
 
     /**
-     * Method that creates all soundtrack items with default values,
-     * so that they can be loaded at once at the starting of the application.
-     */
-    public static void loadSoundtracks() {
-        animalsSoundtrack = new AnimalsSoundtrack();
-        ducktalesSoundtrack = new DuckTalesSoundtrack();
-        defaultSoundtrack = new DefaultSoundtrack();
-        marioSoundtrack = new MarioSoundtrack();
-        nyancatSoundtrack = new NyanCatSoundtrack();
-        shakeitoffSoundtrack = new ShakeItOffSoundtrack();
-    }
-
-    /**
-     * Method that creates all soundtracks based on current values,
-     * so that they can be loaded in the shop scene.
-     * @return ObservableList<Soundtrack> the list with all soundtracks.
-     */
-    public static ObservableList<Soundtrack> loadSoundtracksToList() {
-        final ObservableList<Soundtrack> list = FXCollections.
-                observableArrayList();
-        list.addAll(animalsSoundtrack, ducktalesSoundtrack,
-                defaultSoundtrack, marioSoundtrack,
-                nyancatSoundtrack, shakeitoffSoundtrack);
-        return list;
-    }
-
-    /**
      * Creating the HashMap for the soundtrack's unlocked values.
      * Only the default soundtrack is unlocked by default.
      */
@@ -166,11 +135,29 @@ public class Soundtrack implements ShopItem {
     }
 
     /**
+     * Sets the Animals soundtrack that can be bought.
+     * @param soundtrack a given AnimalsSoundtrack to set.
+     */
+    public static void setAnimalsSoundtrack(
+            final AnimalsSoundtrack soundtrack) {
+        animalsSoundtrack = soundtrack;
+    }
+
+    /**
      * Gets the Default Soundtrack that can be bought.
      * @return defaultSoundtrack item (DefaultSoundtrack)
      */
     public static DefaultSoundtrack getDefaultSoundtrack() {
         return defaultSoundtrack;
+    }
+
+    /**
+     * Sets the Default soundtrack that can be bought.
+     * @param soundtrack a given DefaultSoundtrack to set.
+     */
+    public static void setDefaultSoundtrack(
+            final DefaultSoundtrack soundtrack) {
+        defaultSoundtrack = soundtrack;
     }
 
     /**
@@ -182,11 +169,28 @@ public class Soundtrack implements ShopItem {
     }
 
     /**
+     * Sets the Duck Tales soundtrack that can be bought.
+     * @param soundtrack a given DuckTalesSoundtrack to set.
+     */
+    public static void setDuckTalesSoundtrack(
+            final DuckTalesSoundtrack soundtrack) {
+        ducktalesSoundtrack = soundtrack;
+    }
+
+    /**
      * Gets the Mario soundtrack that can be bought.
      * @return marioSoundtrack item (MarioSoundtrack)
      */
     public static MarioSoundtrack getMarioSoundtrack() {
         return marioSoundtrack;
+    }
+
+    /**
+     * Sets the Mario soundtrack that can be bought.
+     * @param soundtrack a given MarioSoundtrack to set.
+     */
+    public static void setMarioSoundtrack(final MarioSoundtrack soundtrack) {
+        marioSoundtrack = soundtrack;
     }
 
     /**
@@ -198,11 +202,29 @@ public class Soundtrack implements ShopItem {
     }
 
     /**
+     * Sets the Nyan Cat soundtrack that can be bought.
+     * @param soundtrack a given NyanCatSoundtrack to set.
+     */
+    public static void setNyanCatSoundtrack(
+            final NyanCatSoundtrack soundtrack) {
+        nyancatSoundtrack = soundtrack;
+    }
+
+    /**
      * Gets the Shake It Off soundtrack that can be bought.
      * @return shakeitoffSoundtrack item (ShakeItOffSoundtrack)
      */
     public static ShakeItOffSoundtrack getShakeItOffSoundtrack() {
         return shakeitoffSoundtrack;
+    }
+
+    /**
+     * Sets the Shake It Off soundtrack that can be bought.
+     * @param soundtrack a given ShakeItOffSoundtrack to set.
+     */
+    public static void setShakeItOffSoundtrack(
+            final ShakeItOffSoundtrack soundtrack) {
+        shakeitoffSoundtrack = soundtrack;
     }
 
 }

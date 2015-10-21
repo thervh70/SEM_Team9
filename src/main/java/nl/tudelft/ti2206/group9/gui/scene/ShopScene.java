@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.skin.Skin;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
@@ -55,7 +56,7 @@ public class ShopScene extends AbstractMenuScene {
     public Node[] createContent() {
         final HBox itemBox = new HBox(BOX_SPACING);
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
-        final ObservableList<Skin> items = Skin.loadSkinsToList();
+        final ObservableList<Skin> items = ShopItemLoader.loadSkinsToList();
         currentSkin = createLabel("CURRENT SKIN: "
                 + State.getSkin().getItemName(), 1, COLUMN_CONSTRAINT);
         currentSkin.setMinWidth(LABEL_WIDTH);

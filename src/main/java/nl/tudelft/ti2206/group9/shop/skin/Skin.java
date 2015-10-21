@@ -2,8 +2,6 @@ package nl.tudelft.ti2206.group9.shop.skin;
 
 import java.util.HashMap;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.paint.PhongMaterial;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.shop.ShopItem;
@@ -14,8 +12,8 @@ import nl.tudelft.ti2206.group9.shop.ShopItem;
  * Furthermore, a map of all unlocked skins is maintained.
  * @author Maikel and Mitchell.
  */
-@SuppressWarnings("restriction")// SuppresWarnings, because
-//javafx collections is needed for storing skins.
+@SuppressWarnings("restriction") // SuppresWarnings, because
+// PhongMaterials are needed for the textures.
 public class Skin implements ShopItem {
 
     /** IRON MAN skin for player. */
@@ -119,75 +117,99 @@ public class Skin implements ShopItem {
     }
 
     /**
-     * Method that creates all the skins with default values,
-     * so that they can be loaded at once at the starting of the application.
-     */
-    public static void loadSkins() {
-        iron = new IronManSkin();
-        captain = new CaptainSkin();
-        andy = new AndySkin();
-        noob = new NoobSkin();
-        boy = new BoySkin();
-        plank = new PlankSkin();
-    }
-
-    /**
-     * Method that creates all the skins based on current values,
-     * so that they can be loaded in the shop scene.
-     * @return ObservableList<Skin> the list with all skins.
-     */
-    public static ObservableList<Skin> loadSkinsToList() {
-        final ObservableList<Skin> list = FXCollections.observableArrayList();
-        list.addAll(noob, andy, boy, iron, captain, plank);
-        return list;
-    }
-
-    /**
      * Simple getter for IronManSkin.
-     * @return Skin
+     * @return Skin of Iron Man.
      */
-    public static IronManSkin getIronMan() {
+    public static IronManSkin getIronManSkin() {
         return iron;
     }
 
     /**
-     * Simple getter for NoobSkin.
-     * @return Skin
+     * Simple setter for IronManSkin.
+     * @param skin a given IronManSkin to set.
      */
-    public static NoobSkin getNoob() {
+    public static void setIronManSkin(final IronManSkin skin) {
+        iron = skin;
+    }
+
+    /**
+     * Simple getter for NoobSkin.
+     * @return Skin of Noob.
+     */
+    public static NoobSkin getNoobSkin() {
         return noob;
     }
 
     /**
-     * Simple getter for CaptainSkin.
-     * @return Skin
+     * Simple setter for NoobSkin.
+     * @param skin a given NoobSkin to set.
      */
-    public static CaptainSkin getCaptain() {
+    public static void setNoobSkin(final NoobSkin skin) {
+        noob = skin;
+    }
+
+    /**
+     * Simple getter for CaptainSkin.
+     * @return Skin of Captain.
+     */
+    public static CaptainSkin getCaptainSkin() {
         return captain;
     }
 
     /**
-     * Simple getter for PlankSkin.
-     * @return Skin
+     * Simple setter for CaptainSkin.
+     * @param skin a given CaptainSkin to set.
      */
-    public static PlankSkin getPlank() {
+    public static void setCaptainSkin(final CaptainSkin skin) {
+        captain = skin;
+    }
+
+    /**
+     * Simple getter for PlankSkin.
+     * @return Skin of Plank.
+     */
+    public static PlankSkin getPlankSkin() {
         return plank;
     }
 
     /**
-     * Simple getter for BoySkin.
-     * @return Skin
+     * Simple setter for PlankSkin.
+     * @param skin a given PlankSkin to set.
      */
-    public static BoySkin getBoy() {
+    public static void setPlankSkin(final PlankSkin skin) {
+        plank = skin;
+    }
+
+    /**
+     * Simple getter for BoySkin.
+     * @return Skin of Boy.
+     */
+    public static BoySkin getBoySkin() {
         return boy;
     }
 
     /**
-     * Simple getter for AndySkin.
-     * @return Skin
+     * Simple setter for BoySkin.
+     * @param skin a given BoySkin to set.
      */
-    public static AndySkin getAndy() {
+    public static void setBoySkin(final BoySkin skin) {
+        boy = skin;
+    }
+
+    /**
+     * Simple getter for AndySkin.
+     * @return Skin of Andy.
+     */
+    public static AndySkin getAndySkin() {
         return andy;
+    }
+
+    /**
+     * Simple setter for AndySkin.
+     * @param skin a given AndySkin to set.
+     */
+    public static void setAndySkin(final AndySkin skin) {
+        andy = skin;
     }
 
 }

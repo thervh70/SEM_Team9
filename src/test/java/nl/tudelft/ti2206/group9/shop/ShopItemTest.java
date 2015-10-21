@@ -29,7 +29,7 @@ public class ShopItemTest {
 
 
     @Test
-    public void testConstructor_Name() {
+    public void testConstructorName() {
         assertEquals(animals.getItemName(), "Animals");
         assertEquals(radioactive.getItemName(), "Default");
         assertEquals(duckTales.getItemName(), "Duck Tales");
@@ -39,7 +39,7 @@ public class ShopItemTest {
     }
 
     @Test
-    public void testConstructor_Price() {
+    public void testConstructorPrice() {
         assertEquals(animals.getItemPrice(), 30);
         assertEquals(radioactive.getItemPrice(), 0);
         assertEquals(duckTales.getItemPrice(), 20);
