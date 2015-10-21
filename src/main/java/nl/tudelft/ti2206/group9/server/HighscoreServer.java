@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Scanner;
 
 /**
@@ -43,8 +44,11 @@ public final class HighscoreServer {
         try (ServerSocket sock = new ServerSocket(PORT)) {
             serverSocket = sock;
             log("Server is now accepting clients.");
+            Socket socket;
             while (running) {
-                new HighscoreServerThread(serverSocket.accept()).start();
+                socket = serverSocket.accept();
+                new Thread(new HighscoreServerThread(socket), "HsServerThread"
+                        + socket.getRemoteSocketAddress().toString()).start();
             }
         } catch (IOException e) {
             if (running) { // Only log if running
