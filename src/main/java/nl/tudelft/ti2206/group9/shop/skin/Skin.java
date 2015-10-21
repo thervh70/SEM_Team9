@@ -10,11 +10,12 @@ import nl.tudelft.ti2206.group9.shop.ShopItem;
 
 /**
  * The shop item class for skins, based on the requirements from the
- * AbstractShopItem class.
- * Besides, every skin item has it's own texture.
+ * ShopItem interface. Besides, every skin item has it's own texture.
+ * Furthermore, a map of all unlocked skins is maintained.
  * @author Maikel and Mitchell.
  */
-@SuppressWarnings("restriction")
+@SuppressWarnings("restriction")// SuppresWarnings, because
+//javafx collections is needed for storing skins.
 public class Skin implements ShopItem {
 
     /** IRON MAN skin for player. */
@@ -86,7 +87,7 @@ public class Skin implements ShopItem {
     /**
      * Creates a HashMap for the skins that are unlocked.
      */
-    public static void createUnlockedHashmap() {
+    public static void createUnlockedSkinHashmap() {
         unlockedMap.put("Andy", false);
         unlockedMap.put("B-man", false);
         unlockedMap.put("Captain", false);
@@ -100,7 +101,7 @@ public class Skin implements ShopItem {
      * @param name the Name of the skin.
      * @return boolean unlocked or not.
      */
-    public static boolean getUnlocked(final String name) {
+    public static boolean getUnlockedSkin(final String name) {
         return unlockedMap.get(name);
     }
 
@@ -109,8 +110,8 @@ public class Skin implements ShopItem {
      * @param name the Name of the skin to change the value for.
      * @param unlocked new unlocked value.
      */
-    public static void setUnlocked(final String name,
-                                   final boolean unlocked) {
+    public static void setUnlockedSkin(final String name,
+            final boolean unlocked) {
         unlockedMap.replace(name, unlocked);
     }
 
@@ -140,7 +141,6 @@ public class Skin implements ShopItem {
 
     /**
      * Simple getter for IronManSkin.
-     *
      * @return Skin
      */
     public static IronManSkin getIronMan() {
@@ -149,7 +149,6 @@ public class Skin implements ShopItem {
 
     /**
      * Simple getter for NoobSkin.
-     *
      * @return Skin
      */
     public static NoobSkin getNoob() {
@@ -158,7 +157,6 @@ public class Skin implements ShopItem {
 
     /**
      * Simple getter for CaptainSkin.
-     *
      * @return Skin
      */
     public static CaptainSkin getCaptain() {
@@ -167,7 +165,6 @@ public class Skin implements ShopItem {
 
     /**
      * Simple getter for PlankSkin.
-     *
      * @return Skin
      */
     public static PlankSkin getPlank() {
@@ -176,7 +173,6 @@ public class Skin implements ShopItem {
 
     /**
      * Simple getter for BoySkin.
-     *
      * @return Skin
      */
     public static BoySkin getBoy() {
@@ -185,7 +181,6 @@ public class Skin implements ShopItem {
 
     /**
      * Simple getter for AndySkin.
-     *
      * @return Skin
      */
     public static AndySkin getAndy() {

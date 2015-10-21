@@ -104,11 +104,11 @@ public final class Writer {
         highscore.put("score", State.getHighscore());
         mainObject.put("highscore", highscore);
 
-        mainObject.put("andy", Skin.getUnlocked("Andy"));
-        mainObject.put("boy", Skin.getUnlocked("B-man"));
-        mainObject.put("captain", Skin.getUnlocked("Captain"));
-        mainObject.put("iron", Skin.getUnlocked("Iron Man"));
-        mainObject.put("plank", Skin.getUnlocked("Plank"));
+        mainObject.put("andy", Skin.getUnlockedSkin("Andy"));
+        mainObject.put("boy", Skin.getUnlockedSkin("B-man"));
+        mainObject.put("captain", Skin.getUnlockedSkin("Captain"));
+        mainObject.put("iron", Skin.getUnlockedSkin("Iron Man"));
+        mainObject.put("plank", Skin.getUnlockedSkin("Plank"));
 
         mainObject.put("settings", settings);
 

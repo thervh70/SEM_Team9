@@ -17,7 +17,7 @@ public final class WriterTest {
 
     @Test
     public void testSaveGame() {
-        Skin.createUnlockedHashmap();
+        Skin.createUnlockedSkinHashmap();
 
         final String playerName = "Henk";
         State.setPlayerName(playerName);
@@ -26,8 +26,8 @@ public final class WriterTest {
         final int score = 3560;
         State.setHighscore(score);
 
-        Skin.setUnlocked("Iron Man", true);
-        Skin.setUnlocked("Plank", true);
+        Skin.setUnlockedSkin("Iron Man", true);
+        Skin.setUnlockedSkin("Plank", true);
         State.setSoundtrackEnabled(false);
         State.setSoundEffectsEnabled(false);
 
@@ -38,10 +38,10 @@ public final class WriterTest {
         assertEquals(coins, State.getCoins());
         assertEquals(score, State.getHighscore());
 
-        assertEquals(false, Skin.getUnlocked("Andy"));
-        assertEquals(true, Skin.getUnlocked("Noob"));
-        assertEquals(true, Skin.getUnlocked("Iron Man"));
-        assertEquals(true, Skin.getUnlocked("Plank"));
+        assertEquals(false, Skin.getUnlockedSkin("Andy"));
+        assertEquals(true, Skin.getUnlockedSkin("Noob"));
+        assertEquals(true, Skin.getUnlockedSkin("Iron Man"));
+        assertEquals(true, Skin.getUnlockedSkin("Plank"));
         assertEquals(false, State.isSoundtrackEnabled());
         assertEquals(false, State.isSoundEffectsEnabled());
 

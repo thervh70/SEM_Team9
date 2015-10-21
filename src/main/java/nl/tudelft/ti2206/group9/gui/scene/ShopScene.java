@@ -91,14 +91,14 @@ public class ShopScene extends AbstractMenuScene {
         final Button buy = createButton("BUY", 0, 0);
         setBuyButtonVisability(buy, s);
         buy.setOnAction(event -> {
-            if (Skin.getUnlocked(s.getItemName())) {
+            if (Skin.getUnlockedSkin(s.getItemName())) {
                 State.setSkin(s);
                 currentSkin.setText("CURRENT SKIN: "
                         + State.getSkin().getItemName());
             } else {
                 if (State.getCoins() >= s.getItemPrice()) {
                     State.setCoins(State.getCoins() - s.getItemPrice());
-                    Skin.setUnlocked(s.getItemName(), true);
+                    Skin.setUnlockedSkin(s.getItemName(), true);
                     amountLabel.setText(Integer.toString(State.getCoins()));
                     buy.setText("EQUIP");
                 }
@@ -122,12 +122,12 @@ public class ShopScene extends AbstractMenuScene {
      */
     private void setBuyButtonVisability(final Button buy, final Skin s) {
         if (s.getItemPrice() >= State.getCoins()
-                && !Skin.getUnlocked(s.getItemName())) {
+                && !Skin.getUnlockedSkin(s.getItemName())) {
             buy.setDisable(true);
         } else {
             buy.setDisable(false);
         }
-        if (Skin.getUnlocked(s.getItemName())) {
+        if (Skin.getUnlockedSkin(s.getItemName())) {
             buy.setText("EQUIP");
         }
     }

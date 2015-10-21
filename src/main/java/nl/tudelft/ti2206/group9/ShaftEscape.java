@@ -48,7 +48,7 @@ public class ShaftEscape extends Application {
         //Loading textures
         Style.loadTextures();
         Skin.loadSkins();
-        Skin.createUnlockedHashmap();
+        Skin.createUnlockedSkinHashmap();
 
         State.resetAll();
         setStage(appStage);

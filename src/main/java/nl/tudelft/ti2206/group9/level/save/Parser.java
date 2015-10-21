@@ -149,11 +149,11 @@ public final class Parser {
      * Write states of skins to Style.
      */
     private static void writeToSkins() {
-        Skin.setUnlocked("Andy", andy);
-        Skin.setUnlocked("B-man", boy);
-        Skin.setUnlocked("Captain", captain);
-        Skin.setUnlocked("Iron Man", iron);
-        Skin.setUnlocked("Plank", plank);
+        Skin.setUnlockedSkin("Andy", andy);
+        Skin.setUnlockedSkin("B-man", boy);
+        Skin.setUnlockedSkin("Captain", captain);
+        Skin.setUnlockedSkin("Iron Man", iron);
+        Skin.setUnlockedSkin("Plank", plank);
     }
 
     /**
