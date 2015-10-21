@@ -12,7 +12,7 @@ import nl.tudelft.ti2206.group9.shop.ShopItem;
  * ShopItem interface.
  * Besides, every soundtrack item has it's own SoundtrackPlayer.
  * Furthermore, a map of all unlocked soundtracks is maintained.
- * @author Maikel and Mitchell.
+ * @author Mitchell.
  */
 @SuppressWarnings("restriction") // SuppresWarnings, because
 // javafx collections is needed for storing soundtracks.
