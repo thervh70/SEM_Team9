@@ -114,6 +114,9 @@ public final class Parser {
      * Parse all json data from the file.
      * @param mainObject the main JSON object
      */
+    @SuppressWarnings("rawtypes")
+    // SuppressWarnings is needed for casting the mainObject when
+    // getting the shopItems.
     private static void parseJSON(final JSONObject mainObject) {
         playername = (String) mainObject.get("playername");
         coins = (Long) mainObject.get("coins");
@@ -132,27 +135,28 @@ public final class Parser {
         final JSONObject highObj = (JSONObject) mainObject.get("highscore");
         highScore = (Long) highObj.get("score");
 
-        parseJSONShopItems(mainObject);
+        final JSONObject shopItems =
+                (JSONObject) ((HashMap) mainObject).get("shopItems");
+        parseJSONShopItems(shopItems);
     }
 
     /**
      * Parses the JSON data with respect to shopItems.
-     * @param mainObject the main JSON object.
+     * @param shopItems the JSON object for shop items.
      */
     @SuppressWarnings("rawtypes")
-    // SuppressWarnings is needed for casting the mainObject when
-    // getting the shopItems.
-    private static void parseJSONShopItems(final Object mainObject) {
-        final JSONObject shopItems =
-                (JSONObject) ((HashMap) mainObject).get("shopItems");
-        final JSONObject skins = (JSONObject) shopItems.get("skins");
+    // SuppressWarnings is needed for casting the shopItems object when
+    // getting the skins and soundtracks.
+    private static void parseJSONShopItems(final Object shopItems) {
+        final JSONObject skins =
+                (JSONObject) ((HashMap) shopItems).get("skins");
         andy = (Boolean) skins.get("andy");
         boy = (Boolean) skins.get("boy");
         captain = (Boolean) skins.get("captain");
         iron = (Boolean) skins.get("iron");
         plank = (Boolean) skins.get("plank");
 
-        final JSONObject soundtracks = (JSONObject) shopItems.
+        final JSONObject soundtracks = (JSONObject) ((HashMap) shopItems).
                 get("soundtracks");
         animals = (Boolean) soundtracks.get("animals");
         duckTales = (Boolean) soundtracks.get("duckTales");
