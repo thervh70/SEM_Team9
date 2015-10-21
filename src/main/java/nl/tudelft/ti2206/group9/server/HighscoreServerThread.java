@@ -62,7 +62,7 @@ public class HighscoreServerThread implements Runnable {
             log(clientIP + " disconnected.");
         } catch (IOException e) {
             logError("The socket connected to " + clientIP
-                    + " had an IOException: " + e.getMessage());
+                    + " had an IOException", e);
         }
     }
 

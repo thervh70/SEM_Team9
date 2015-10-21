@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
 
 /**
  * Server that stores all highscores. Is a Command-Line application.
@@ -21,6 +26,9 @@ public final class HighscoreServer {
      *                                           service-names-port-numbers.txt
      */
     public static final int PORT = 42042;
+    /** The Logger of this server, sends output to the console. */
+    private static final Logger LOGGER = Logger.getLogger(
+            HighscoreServer.class.getName());
     /** Whether the server is (should be) running. */
     private static boolean running = true;
 
@@ -38,6 +46,9 @@ public final class HighscoreServer {
      * @throws IOException when something unexpected happens.
      */
     public static void main(final String... args) throws IOException {
+        final Logger global = Logger.getLogger("");
+        global.removeHandler(global.getHandlers()[0]);
+        global.addHandler(new StdOutConsoleHandler());
         cliThread = new CLIThread();
         new Thread(cliThread, "CLIThread").start();
         log("Type \"stop\" or \"q\" to exit.");
@@ -70,19 +81,28 @@ public final class HighscoreServer {
     }
 
     /**
-     * Logs the string <pre>message</pre> to the System.err stream.
-     * @param message message to be printed to System.err.
+     * Logs the string <pre>message</pre> to the logger.
+     * @param message message to be printed to the logger.
      */
     static void logError(final String message) {
-        System.err.println(message); // NOPMD - Command-line Interface
+        LOGGER.log(Level.WARNING, message);
     }
 
     /**
-     * Logs the string <pre>message</pre> to the System.out stream.
-     * @param message message to be printed to System.out.
+     * Logs the string <pre>message</pre> to the logger.
+     * @param message message to be printed to the logger.
+     * @param e Throwable to be printed.
+     */
+    static void logError(final String message, final Throwable e) {
+        LOGGER.log(Level.SEVERE, message, e);
+    }
+
+    /**
+     * Logs the string <pre>message</pre> to the logger.
+     * @param message message to be printed to the logger.
      */
     static void log(final String message) {
-        System.out.println(message); // NOPMD - Command-line Interface
+        LOGGER.log(Level.INFO, message);
     }
 
     /** Thread that handles the console input on the server. */
@@ -110,6 +130,12 @@ public final class HighscoreServer {
                 break;
             default: break;
             }
+        }
+    }
+
+    private static class StdOutConsoleHandler extends ConsoleHandler {
+        public StdOutConsoleHandler() {
+            setOutputStream(System.out);
         }
     }
 
