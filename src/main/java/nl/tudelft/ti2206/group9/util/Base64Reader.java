@@ -13,30 +13,40 @@ import java.util.Base64;
 public class Base64Reader extends Reader {
 
     /** The Reader you decorate with this Base64Reader. */
-    private Reader reader;
+    private final Reader reader;
     /** The Base64 decoder. */
-    private Base64.Decoder decoder = Base64.getDecoder();
+    private final Base64.Decoder decoder = Base64.getDecoder();
 
-    /** Constructor which sets the Reader to be decorated. */
-    public Base64Reader(Reader rdr) {
+    /** Constructor which sets the Reader to be decorated.
+     * @param rdr the Reader to be decorated.
+     */
+    public Base64Reader(final Reader rdr) {
+        super();
         reader = rdr;
     }
 
+    /**
+     * Read a String from a given file.
+     *
+     * The file to be read is passed through the internal reader. The String
+     * that is read contains the entire content of the file and is decoded
+     * before it is returned by this method.
+     *
+     * @return the decoded content of a file
+     */
     public String readString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         try {
-            while(true) {
-                int readBytes = reader.read();
+            while (true) {
+                final int readBytes = reader.read();
                 if (readBytes == -1) {
                     break;
                 }
                 builder.append((char) readBytes);
             }
-            String encryptedString = builder.toString();
-            byte[] bytes = decoder.decode(encryptedString);
-            String result = new String(bytes, "UTF-8");
-            System.out.println(result);
-            return result;
+            final String encryptedString = builder.toString();
+            final byte[] bytes = decoder.decode(encryptedString);
+            return new String(bytes, "UTF-8");
         } catch (IOException e) {
             GameObservable.OBSERVABLE.notify(GameObserver.Category.ERROR,
                     GameObserver.Error.IOEXCEPTION,
@@ -46,10 +56,12 @@ public class Base64Reader extends Reader {
     }
 
     @Override
-    public int read(char[] cbuf, int off, int len) throws IOException {
-        byte[] bytes = new String(cbuf).getBytes("UTF-8");
-        byte[] decodedBytes = decoder.decode(bytes);
-        char[] decodedCbuf = new String(decodedBytes, "UTF-8").toCharArray();
+    public int read(final char[] cbuf, final int off,
+                    final int len) throws IOException {
+        final byte[] bytes = new String(cbuf).getBytes("UTF-8");
+        final byte[] decodedBytes = decoder.decode(bytes);
+        final char[] decodedCbuf = new String(decodedBytes, "UTF-8")
+                .toCharArray();
         return reader.read(decodedCbuf, off, len);
     }
 

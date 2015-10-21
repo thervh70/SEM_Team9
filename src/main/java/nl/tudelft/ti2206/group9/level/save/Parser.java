@@ -3,17 +3,18 @@ package nl.tudelft.ti2206.group9.level.save;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Base64Reader;
-import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import sun.misc.BASE64Decoder;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.List;
 
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
@@ -76,24 +77,6 @@ public final class Parser {
     }
 
     /**
-     * Decrypt a given String.
-     * @param input the String to be decrypted
-     * @return the decrypted version of the input
-     */
-    static String decrypt(final String input) {
-        final BASE64Decoder decoder = new BASE64Decoder();
-        try {
-            final byte[] decodedBytes = decoder.decodeBuffer(input);
-            return new String(decodedBytes, "UTF8");
-        } catch (IOException e) {
-            OBSERVABLE.notify(GameObserver.Category.ERROR,
-                    GameObserver.Error.IOEXCEPTION,
-                    "Parser.decode()", e.getMessage());
-            return null;
-        }
-    }
-
-    /**
      * Parse all json data from the file.
      * @param mainObject the main JSON object
      */
@@ -142,17 +125,6 @@ public final class Parser {
         Skin.setUnlocked("Captain", captain);
         Skin.setUnlocked("Iron Man", iron);
         Skin.setUnlocked("Plank", plank);
-    }
-
-    /**
-     * Create a single String from a list of Strings.
-     * @param lines the list of Strings
-     * @return a single String
-     */
-    private static String createString(final List<String> lines) {
-        final StringBuilder builder = new StringBuilder();
-        lines.forEach(builder::append);
-        return builder.toString();
     }
 
 }

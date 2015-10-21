@@ -13,22 +13,30 @@ import java.util.Base64;
 public class Base64Writer extends Writer {
 
     /** The Writer to be decorated with this Base64Writer. */
-    private Writer writer;
+    private final Writer writer;
     /** The Base64 encoder. */
-    private Base64.Encoder encoder = Base64.getEncoder();
+    private final Base64.Encoder encoder = Base64.getEncoder();
 
-    /** Constructor which sets the Writer to be decorated. */
-    public Base64Writer(Writer wrtr) {
+    /** Constructor which sets the Writer to be decorated.
+     * @param wrtr the Writer to be decorated
+     */
+    public Base64Writer(final Writer wrtr) {
+        super();
         writer = wrtr;
     }
 
     /**
      * Write an entire encoded String.
+     *
+     * The given input String is first encoded and then written to a file.
+     * The file is given by the internal Writer.
+     *
      * @param input the String to be encoded and written
      */
-    public void writeString(String input) {
+    public void writeString(final String input) {
         try {
-            String encodedInput = encoder.encodeToString(input.getBytes("UTF-8"));
+            final String encodedInput =
+                    encoder.encodeToString(input.getBytes("UTF-8"));
             writer.write(encodedInput);
         } catch (UnsupportedEncodingException e) {
             GameObservable.OBSERVABLE.notify(GameObserver.Category.ERROR,
@@ -42,9 +50,10 @@ public class Base64Writer extends Writer {
     }
 
     @Override
-    public void write(char[] cbuf, int off, int len) throws IOException {
-        byte[] bytes = new String(cbuf).getBytes("UTF-8");
-        String encodedCbuf = encoder.encodeToString(bytes);
+    public void write(final char[] cbuf, final int off,
+                      final int len) throws IOException {
+        final byte[] bytes = new String(cbuf).getBytes("UTF-8");
+        final String encodedCbuf = encoder.encodeToString(bytes);
         writer.write(encodedCbuf, off, len);
     }
 

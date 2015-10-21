@@ -5,7 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.PhongMaterial;
 import nl.tudelft.ti2206.group9.gui.Style;
 
-import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Maikel on 08/10/2015.
@@ -59,7 +60,7 @@ public class Skin {
     /**
      * HashMap used to store which skins are unlocked.
      */
-    private static HashMap<String, Boolean> unlockedMap = new HashMap<>();
+    private static Map<String, Boolean> unlockedMap = new ConcurrentHashMap<>();
 
     /**
      * Constructor for the skin.

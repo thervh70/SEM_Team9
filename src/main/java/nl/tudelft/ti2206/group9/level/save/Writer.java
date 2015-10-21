@@ -3,13 +3,14 @@ package nl.tudelft.ti2206.group9.level.save;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Base64Writer;
-import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import org.json.simple.JSONObject;
-import sun.misc.BASE64Encoder;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
@@ -54,24 +55,6 @@ public final class Writer {
                 OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
                         "Writer.saveGame(String) (2)", e.getMessage());
             }
-        }
-    }
-
-    /**
-     * Encrypt a given String.
-     * @param input the String to be encrypted
-     * @return the encrypted version of the input
-     */
-    static String encrypt(final String input) {
-        final BASE64Encoder encoder = new BASE64Encoder();
-        try {
-            final byte[] utf8 = input.getBytes("UTF8");
-            return encoder.encode(utf8);
-        } catch (UnsupportedEncodingException e) {
-            OBSERVABLE.notify(GameObserver.Category.ERROR,
-                    GameObserver.Error.UNSUPPORTEDENCODINGEXCEPTION,
-                    "Writer.encrypt()", e.getMessage());
-            return null;
         }
     }
 
