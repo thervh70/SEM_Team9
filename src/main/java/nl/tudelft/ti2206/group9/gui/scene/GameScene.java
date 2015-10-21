@@ -68,9 +68,9 @@ public final class GameScene extends AbstractScene {
     private static boolean running;
 
     /** The AudioPlayer to be used for background music. */
-    private static SoundtrackPlayer soundtrackPlayer =
+    private static SoundtrackPlayer currentSoundtrackPlayer =
             new SoundtrackPlayer("src/main/resources/"
-                    + "nl/tudelft/ti2206/group9/audio/soundtrack.mp3");
+                    + "nl/tudelft/ti2206/group9/audio/soundtrack_Default.mp3");
 
     /** The Sound-effects player. */
     private static SoundEffectObserver soundEffectObserver =
@@ -103,7 +103,7 @@ public final class GameScene extends AbstractScene {
         setupCamera();
         keyBindings();
 
-        soundtrackPlayer.play();
+        currentSoundtrackPlayer.play();
         startTickers();
         return root;
     }
@@ -169,7 +169,7 @@ public final class GameScene extends AbstractScene {
         keyMap.addKey(KeyCode.ESCAPE, () -> {
             keyMap.releaseAll();   // The popup blocks released keys propagating
             if (getPopup() == null) {   // If we have no popup already
-                soundtrackPlayer.pause();
+                currentSoundtrackPlayer.pause();
                 showPauseMenu();
             }
         });
@@ -223,8 +223,8 @@ public final class GameScene extends AbstractScene {
 
     /** Show a death menu. */
     public static void showDeathMenu() {
-        soundtrackPlayer.resetSpeed();
-        soundtrackPlayer.stop();
+        currentSoundtrackPlayer.resetSpeed();
+        currentSoundtrackPlayer.stop();
         setPopup(new DeathPopup(e -> {
             OBSERVABLE.notify(Category.GAME, Game.RETRY);
             State.reset();
@@ -281,7 +281,17 @@ public final class GameScene extends AbstractScene {
      * @return the soundtrack AudioPlayer.
      */
     public static SoundtrackPlayer getSoundtrackPlayer() {
-        return soundtrackPlayer;
+        return currentSoundtrackPlayer;
+    }
+
+    /**
+     * Every GameScene has an AudioPlayer for the soundtrack.
+     * @param soundtrackPlayer an initialized soundtrackPlayer
+     * with a new soundtrack.
+     */
+    public static void setSoundtrackPlayer(
+            final SoundtrackPlayer soundtrackPlayer) {
+        currentSoundtrackPlayer = soundtrackPlayer;
     }
 
     /** @return the ExternalTicker of the GameScene. */

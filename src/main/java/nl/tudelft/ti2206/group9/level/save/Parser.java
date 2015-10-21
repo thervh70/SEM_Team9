@@ -9,10 +9,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.shop.skin.Skin;
+import nl.tudelft.ti2206.group9.shop.soundtrack.Soundtrack;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
@@ -39,6 +41,8 @@ public final class Parser {
     private static long highScore;
     /** Boolean to indicate if skins are unlocked. */
     private static boolean andy, captain, boy, plank, iron;
+    /** Boolean to indicate if soundtracks are unlocked. */
+    private static boolean animals, duckTales, mario, nyanCat, shakeItOff;
     /**
      * Boolean for sound track enabled.
      */
@@ -77,6 +81,7 @@ public final class Parser {
             parseJSON(mainObject);
             writeToState();
             writeToSkins();
+            writeToSoundtracks();
             reader.close();
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
@@ -127,11 +132,33 @@ public final class Parser {
         final JSONObject highObj = (JSONObject) mainObject.get("highscore");
         highScore = (Long) highObj.get("score");
 
-        andy = (boolean) mainObject.get("andy");
-        boy = (boolean) mainObject.get("boy");
-        captain = (boolean) mainObject.get("captain");
-        iron = (boolean) mainObject.get("iron");
-        plank = (boolean) mainObject.get("plank");
+        parseJSONShopItems(mainObject);
+    }
+
+    /**
+     * Parses the JSON data with respect to shopItems.
+     * @param mainObject the main JSON object.
+     */
+    @SuppressWarnings("rawtypes")
+    // SuppressWarnings is needed for casting the mainObject when
+    // getting the shopItems.
+    private static void parseJSONShopItems(final Object mainObject) {
+        final JSONObject shopItems =
+                (JSONObject) ((HashMap) mainObject).get("shopItems");
+        final JSONObject skins = (JSONObject) shopItems.get("skins");
+        andy = (Boolean) skins.get("andy");
+        boy = (Boolean) skins.get("boy");
+        captain = (Boolean) skins.get("captain");
+        iron = (Boolean) skins.get("iron");
+        plank = (Boolean) skins.get("plank");
+
+        final JSONObject soundtracks = (JSONObject) shopItems.
+                get("soundtracks");
+        animals = (Boolean) soundtracks.get("animals");
+        duckTales = (Boolean) soundtracks.get("duckTales");
+        mario = (Boolean) soundtracks.get("mario");
+        nyanCat = (Boolean) soundtracks.get("nyanCat");
+        shakeItOff = (Boolean) soundtracks.get("shakeItOff");
     }
 
     /**
@@ -149,11 +176,22 @@ public final class Parser {
      * Write states of skins to Style.
      */
     private static void writeToSkins() {
-        Skin.setUnlocked("Andy", andy);
-        Skin.setUnlocked("B-man", boy);
-        Skin.setUnlocked("Captain", captain);
-        Skin.setUnlocked("Iron Man", iron);
-        Skin.setUnlocked("Plank", plank);
+        Skin.setUnlockedSkin("Andy", andy);
+        Skin.setUnlockedSkin("B-man", boy);
+        Skin.setUnlockedSkin("Captain", captain);
+        Skin.setUnlockedSkin("Iron Man", iron);
+        Skin.setUnlockedSkin("Plank", plank);
+    }
+
+    /**
+     * Write states of soundtracks to Soundtrack.
+     */
+    private static void writeToSoundtracks() {
+        Soundtrack.setUnlockedSoundtrack("Animals", animals);
+        Soundtrack.setUnlockedSoundtrack("Duck Tales", duckTales);
+        Soundtrack.setUnlockedSoundtrack("Mario", mario);
+        Soundtrack.setUnlockedSoundtrack("Nyan Cat", nyanCat);
+        Soundtrack.setUnlockedSoundtrack("Shake It Off", shakeItOff);
     }
 
     /**

@@ -28,11 +28,11 @@ import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.shop.skin.Skin;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
 

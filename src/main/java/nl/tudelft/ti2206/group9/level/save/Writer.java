@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.shop.skin.Skin;
+import nl.tudelft.ti2206.group9.shop.soundtrack.Soundtrack;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
@@ -104,14 +105,43 @@ public final class Writer {
         highscore.put("score", State.getHighscore());
         mainObject.put("highscore", highscore);
 
-        mainObject.put("andy", Skin.getUnlocked("Andy"));
-        mainObject.put("boy", Skin.getUnlocked("B-man"));
-        mainObject.put("captain", Skin.getUnlocked("Captain"));
-        mainObject.put("iron", Skin.getUnlocked("Iron Man"));
-        mainObject.put("plank", Skin.getUnlocked("Plank"));
+        final JSONObject shopItems = createShopItemsObject();
 
         mainObject.put("settings", settings);
+        mainObject.put("shopItems", shopItems);
 
         return mainObject.toJSONString();
+    }
+
+    /**
+     * Creates all objects needed for saving information about
+     * shop items that have been bought.
+     * @return shopItems object containing all data about bought items.
+     */
+    @SuppressWarnings("unchecked")
+    // JSONObject.put uses HashMap, that gives unchecked warnings.
+    private static JSONObject createShopItemsObject() {
+        final JSONObject shopItems = new JSONObject();
+
+        final JSONObject skins = new JSONObject();
+        skins.put("andy", Skin.getUnlockedSkin("Andy"));
+        skins.put("boy", Skin.getUnlockedSkin("B-man"));
+        skins.put("captain", Skin.getUnlockedSkin("Captain"));
+        skins.put("iron", Skin.getUnlockedSkin("Iron Man"));
+        skins.put("plank", Skin.getUnlockedSkin("Plank"));
+        shopItems.put("skins", skins);
+
+        final JSONObject soundtracks = new JSONObject();
+        soundtracks.put("animals", Soundtrack.getUnlockedSoundtrack("Animals"));
+        soundtracks.put("duckTales", Soundtrack.
+                getUnlockedSoundtrack("Duck Tales"));
+        soundtracks.put("mario", Soundtrack.getUnlockedSoundtrack("Mario"));
+        soundtracks.put("nyanCat", Soundtrack.
+                getUnlockedSoundtrack("Nyan Cat"));
+        soundtracks.put("shakeItOff", Soundtrack.
+                getUnlockedSoundtrack("Shake It Off"));
+        shopItems.put("soundtracks", soundtracks);
+
+        return shopItems;
     }
 }

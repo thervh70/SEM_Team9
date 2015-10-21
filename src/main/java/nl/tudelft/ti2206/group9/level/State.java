@@ -3,8 +3,10 @@ package nl.tudelft.ti2206.group9.level;
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
+import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
+import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.shop.skin.Skin;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 
@@ -66,6 +68,9 @@ public final class State {
         highscore = 0;
         previousDistance = 0;
         skin = Skin.getNoob();
+        GameScene.setSoundtrackPlayer(
+                new SoundtrackPlayer("src/main/resources/"
+                + "nl/tudelft/ti2206/group9/audio/soundtrack_Default.mp3"));
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
     }
