@@ -86,6 +86,9 @@ public class Skin implements ShopItem {
 
     /**
      * Creates a HashMap for the skins that are unlocked.
+     * This HashMap is created for keeping the textures separated
+     * from the constructor. Else the textures have to be loaded
+     * every time the shop is started. During the tests as well.
      */
     public static void createUnlockedSkinHashmap() {
         unlockedMap.put("Andy", false);
