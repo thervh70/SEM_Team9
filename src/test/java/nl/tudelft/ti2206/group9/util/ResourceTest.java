@@ -28,7 +28,7 @@ public class ResourceTest {
 
     private static final String FAKE_PATH = "com/com/com";
 
-    private GameObserver obs = mock(GameObserver.class);
+    private final GameObserver obs = mock(GameObserver.class);
 
     @Before
     public final void before() {
