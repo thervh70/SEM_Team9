@@ -60,6 +60,13 @@ public final class HighscoreServer {
     /** Used in the test and in the CLI to quit the server. */
     static void quit() {
         running = false;
+        try {
+            if (serverSocket != null) {
+                serverSocket.close();
+            }
+        } catch (IOException e) {
+            logError("IOException while stopping the server, exiting anyway.");
+        }
     }
 
     /**
@@ -99,14 +106,6 @@ public final class HighscoreServer {
             case "q":
             case "stop":
                 quit();
-                try {
-                    if (serverSocket != null) {
-                        serverSocket.close();
-                    }
-                } catch (IOException e) {
-                    logError("IOException while stopping the server, "
-                            + "exiting anyway.");
-                }
                 log("Server has been stopped.");
                 break;
             default: break;
