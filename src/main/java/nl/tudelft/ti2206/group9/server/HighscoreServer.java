@@ -44,9 +44,8 @@ public final class HighscoreServer {
         try (ServerSocket sock = new ServerSocket(PORT)) {
             serverSocket = sock;
             log("Server is now accepting clients.");
-            Socket socket;
             while (running) {
-                socket = serverSocket.accept();
+                final Socket socket = serverSocket.accept();
                 new Thread(new HighscoreServerThread(socket), "HsServerThread"
                         + socket.getRemoteSocketAddress().toString()).start();
             }
