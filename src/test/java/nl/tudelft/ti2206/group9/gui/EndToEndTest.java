@@ -205,15 +205,17 @@ public class EndToEndTest extends ApplicationTest {
         State.setCoins(COINS); //Make sure player has enough coins
         mainMenu(MAIN_SHOP);
 
-        assertEquals(State.getSkin(), Skin.getNoob());
+        final ObservableList<Skin> skinList = Skin.loadSkinsToList();
+
+        assertEquals(State.getSkin(), skinList.get(0));
         shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), Skin.getNoob());
+        assertEquals(State.getSkin(), skinList.get(0));
         shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), Skin.getNoob());
+        assertEquals(State.getSkin(), skinList.get(0));
         shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), Skin.getAndy());
+        assertEquals(State.getSkin(), skinList.get(1));
         shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), Skin.getNoob());
+        assertEquals(State.getSkin(), skinList.get(0));
 
         shopScreen(SHOP_BACK);
     }

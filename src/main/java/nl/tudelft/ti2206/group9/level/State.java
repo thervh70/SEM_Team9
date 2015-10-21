@@ -1,12 +1,13 @@
 package nl.tudelft.ti2206.group9.level;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * This utility class stores the State of the game,
@@ -65,7 +66,7 @@ public final class State {
         setCoins(0);
         highscore = 0;
         previousDistance = 0;
-        skin = Skin.getNoob();
+        skin = Skin.loadSkinsToList().get(0);
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
     }
