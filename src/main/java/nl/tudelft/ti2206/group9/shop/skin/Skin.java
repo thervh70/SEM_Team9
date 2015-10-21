@@ -6,7 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.PhongMaterial;
 import nl.tudelft.ti2206.group9.gui.Style;
-import nl.tudelft.ti2206.group9.shop.AbstractShopItem;
+import nl.tudelft.ti2206.group9.shop.ShopItem;
 
 /**
  * The shop item class for skins, based on the requirements from the
@@ -15,7 +15,7 @@ import nl.tudelft.ti2206.group9.shop.AbstractShopItem;
  * @author Maikel and Mitchell.
  */
 @SuppressWarnings("restriction")
-public class Skin extends AbstractShopItem {
+public class Skin implements ShopItem {
 
     /** IRON MAN skin for player. */
     private static IronManSkin iron;
