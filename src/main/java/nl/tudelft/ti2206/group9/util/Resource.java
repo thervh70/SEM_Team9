@@ -43,9 +43,12 @@ public final class Resource {
 
     /**
      * @param packagePath The package path of the resource.
-     * @return the URI of this resource.
+     * @return the URI of this resource, or null if it doesn't exist.
      */
     public static URI getURI(final String packagePath) {
+        if (getURL(packagePath) == null) {
+            return null;
+        }
         try {
             return getURL(packagePath).toURI();
         } catch (URISyntaxException e) {
@@ -57,9 +60,12 @@ public final class Resource {
 
     /**
      * @param packagePath The package path of the resource.
-     * @return the URI.toString() of this resource.
+     * @return the URI.toString() of this resource, or null if it doesn't exist.
      */
     public static String getURIString(final String packagePath) {
+        if (getURI(packagePath) == null) {
+            return null;
+        }
         return getURI(packagePath).toString();
     }
 
@@ -120,6 +126,9 @@ public final class Resource {
      *         (e.g. because it's inside a JAR), returns null.
      */
     private static List<String> getFolderIDE(final String packagePath) {
+        if (getURI(packagePath) == null) {
+            return null;
+        }
         final File folder = new File(getURI(packagePath));
         if (!folder.isDirectory()) {
             return null;
@@ -143,6 +152,9 @@ public final class Resource {
      * @return an opened stream if all succeeded, else null.
      */
     public static InputStream getStream(final String packagePath) {
+        if (getURL(packagePath) == null) {
+            return null;
+        }
         try {
             return getURL(packagePath).openStream();
         } catch (IOException e) {
