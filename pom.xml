@@ -84,15 +84,17 @@
     <resources>
       <resource>
         <directory>src/main/resources</directory>
-        <filtering>true</filtering>
+        <filtering>false</filtering> <!-- Filtering means ${variable} in text will be replaced -->
       </resource>
     </resources>
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>
+        <filtering>false</filtering> <!-- As we do not need filtering, it can be turned off -->
       </testResource>
       <testResource>
         <directory>src/main/resources</directory>
+        <filtering>false</filtering> <!-- Especially because binaries (mp3) become corrupted if turned on -->
       </testResource>
     </testResources>
     <plugins>
