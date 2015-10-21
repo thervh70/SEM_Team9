@@ -55,7 +55,7 @@ public final class Parser {
         try {
             final URL pathURL = new File(path).toURI().toURL();
             final InputStream stream = pathURL.openStream();
-            final Reader reader = new Base64Reader(new BufferedReader(
+            final Base64Reader reader = new Base64Reader(new BufferedReader(
                     new InputStreamReader(stream, "UTF-8")));
             final StringBuilder builder = new StringBuilder();
             while (true) {

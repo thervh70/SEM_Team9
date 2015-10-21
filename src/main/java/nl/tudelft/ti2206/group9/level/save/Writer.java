@@ -40,7 +40,7 @@ public final class Writer {
                     new OutputStreamWriter(
                     new FileOutputStream(path), "UTF-8"
             )));
-            fw.write(mainObject);
+            fw.writeString(mainObject);
             fw.flush();
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
