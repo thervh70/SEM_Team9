@@ -64,14 +64,6 @@ public final class Resource {
     }
 
     /**
-     * @param packagePath The package path of the resource.
-     * @return the URL.toString() of this resource.
-     */
-    public static String getURLString(final String packagePath) {
-        return getURL(packagePath).toString();
-    }
-
-    /**
      * @param packagePath The package path of the folder.
      * @return A list of the filenames (+ extension) of the files in the folder.
      *         Returns null if folder is not found.
