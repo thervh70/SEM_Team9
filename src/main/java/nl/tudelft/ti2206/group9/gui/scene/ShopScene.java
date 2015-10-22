@@ -11,11 +11,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
-import nl.tudelft.ti2206.group9.shop.skin.Skin;
-import nl.tudelft.ti2206.group9.shop.soundtrack.Soundtrack;
+import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
+import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
+import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
+import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
 /**
@@ -75,9 +76,14 @@ public class ShopScene extends AbstractMenuScene {
 //        }
 
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
+
         currentSoundtrack = createLabel("CURRENT SOUNDTRACK: "
                 + GameScene.getSoundtrackPlayer().getPath(), 1, COLUMN_CONSTRAINT);
         currentSoundtrack.setMinWidth(LABEL_WIDTH);
+
+
+        final ObservableList<AbstractSkin> items =
+                ShopItemLoader.loadSkinsToList();
 
         currentSkin = createLabel("CURRENT SKIN: "
                 + State.getSkin().getItemName(), 1, COLUMN_CONSTRAINT);
@@ -87,8 +93,8 @@ public class ShopScene extends AbstractMenuScene {
         amountLabel.setText(Integer.toString(State.getCoins()));
         setButtonFunction(backButton, BType.SHOP_BACK);
 
-
         GridPane.setColumnSpan(tabPane, ROW_CONSTRAINT_SPAN);
+
         GridPane.setColumnSpan(currentSkin, ROW_CONSTRAINT_SPAN);
         GridPane.setColumnSpan(currentSoundtrack, ROW_CONSTRAINT_SPAN);
         GridPane.setConstraints(tabPane,
@@ -103,20 +109,20 @@ public class ShopScene extends AbstractMenuScene {
      * @param s Skin.
      * @return VBox VBox containing an skin item.
      */
-    private VBox createCarousel(final Skin s) {
+    private VBox createCarousel(final AbstractSkin s) {
         final Label price = createLabel("Price", 0, 0);
         final Label name = createLabel("Name", 0, 0);
         final Button buy = createButton("BUY", 0, 0);
         setBuyButtonVisability(buy, s);
         buy.setOnAction(event -> {
-            if (Skin.getUnlockedSkin(s.getItemName())) {
+            if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
                 State.setSkin(s);
                 currentSkin.setText("CURRENT SKIN: "
                         + State.getSkin().getItemName());
             } else {
                 if (State.getCoins() >= s.getItemPrice()) {
                     State.setCoins(State.getCoins() - s.getItemPrice());
-                    Skin.setUnlockedSkin(s.getItemName(), true);
+                    ShopItemUnlocker.setUnlockedShopItem(s.getItemName(), true);
                     amountLabel.setText(Integer.toString(State.getCoins()));
                     buy.setText("EQUIP");
                 }
@@ -138,14 +144,15 @@ public class ShopScene extends AbstractMenuScene {
      * @param buy Button to set.
      * @param s Skin.
      */
-    private void setBuyButtonVisability(final Button buy, final Skin s) {
+    private void setBuyButtonVisability(final Button buy,
+            final AbstractSkin s) {
         if (s.getItemPrice() >= State.getCoins()
-                && !Skin.getUnlockedSkin(s.getItemName())) {
+                && !ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setDisable(true);
         } else {
             buy.setDisable(false);
         }
-        if (Skin.getUnlockedSkin(s.getItemName())) {
+        if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setText("EQUIP");
         }
     }
@@ -171,12 +178,12 @@ public class ShopScene extends AbstractMenuScene {
         Tab tab = new Tab("Skins");
 
         final HBox itemBox = new HBox(BOX_SPACING);
-        final ObservableList<Skin> items = Skin.loadSkinsToList();
+        final ObservableList<AbstractSkin> items = ShopItemLoader.loadSkinsToList();
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
         itemBox.getChildren().clear();
-        for (final Skin s : items) {
+        for (final AbstractSkin s : items) {
             itemBox.getChildren().add(createCarousel(s));
         }
         scrollPane.setContent(itemBox);
@@ -191,13 +198,13 @@ public class ShopScene extends AbstractMenuScene {
         Tab tab = new Tab("Soundtracks");
 
         final VBox itemBox = new VBox(BOX_SPACING);
-        final ObservableList<Soundtrack> items = Soundtrack.loadSoundtracksToList();
+        final ObservableList<AbstractSoundtrack> items = ShopItemLoader.loadSoundtracksToList();
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
         itemBox.getChildren().clear();
 
-        for (final Soundtrack s : items) {
+        for (final AbstractSoundtrack s : items) {
             itemBox.getChildren().addAll(createSoundTrackCarousel(s));
         }
 
@@ -208,7 +215,7 @@ public class ShopScene extends AbstractMenuScene {
         return tab;
     }
 
-    public HBox createSoundTrackCarousel(Soundtrack s) {
+    public HBox createSoundTrackCarousel(AbstractSoundtrack s) {
         HBox hbox = new HBox(BOX_SPACING);
         ImageView imageView = new ImageView(new Image("nl/tudelft/ti2206/group9/gui/scene/music_notes.png"));
         Label nameLabel = createLabel(s.getItemName(), 0, 0);
@@ -218,14 +225,14 @@ public class ShopScene extends AbstractMenuScene {
         setSoundBuyButtonVisability(buyButton, s);
 
         buyButton.setOnAction(event -> {
-            if (Soundtrack.getUnlockedSoundtrack(s.getItemName())) {
+            if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
                 currentSoundtrack.setText("CURRENT SOUNDTRACK: "
                         + s.getItemName());
                 GameScene.setSoundtrackPlayer(s.getSoundtrackPlayer());
             } else {
                 if (State.getCoins() >= s.getItemPrice()) {
                     State.setCoins(State.getCoins() - s.getItemPrice());
-                    Soundtrack.setUnlockedSoundtrack(s.getItemName(), true);
+                    ShopItemUnlocker.setUnlockedShopItem(s.getItemName(), true);
                     amountLabel.setText(Integer.toString(State.getCoins()));
                     buyButton.setText("ACTIVATE");
                 }
@@ -239,14 +246,14 @@ public class ShopScene extends AbstractMenuScene {
         return hbox;
     }
 
-    private void setSoundBuyButtonVisability(final Button buy, final Soundtrack s) {
+    private void setSoundBuyButtonVisability(final Button buy, final AbstractSoundtrack s) {
         if (s.getItemPrice() >= State.getCoins()
-                && !Soundtrack.getUnlockedSoundtrack(s.getItemName())) {
+                && !ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setDisable(true);
         } else {
             buy.setDisable(false);
         }
-        if (Soundtrack.getUnlockedSoundtrack(s.getItemName())) {
+        if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setText("ACTIVATE");
         }
     }

@@ -32,7 +32,7 @@ import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
-import nl.tudelft.ti2206.group9.shop.skin.Skin;
+import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -205,15 +205,15 @@ public class EndToEndTest extends ApplicationTest {
         State.setCoins(COINS); //Make sure player has enough coins
         mainMenu(MAIN_SHOP);
 
-        assertEquals(State.getSkin(), Skin.getNoob());
+        assertEquals(State.getSkin(), ShopItemLoader.getNoobSkin());
         shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), Skin.getNoob());
+        assertEquals(State.getSkin(), ShopItemLoader.getNoobSkin());
         shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), Skin.getNoob());
+        assertEquals(State.getSkin(), ShopItemLoader.getNoobSkin());
         shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), Skin.getAndy());
+        assertEquals(State.getSkin(), ShopItemLoader.getAndySkin());
         shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), Skin.getNoob());
+        assertEquals(State.getSkin(), ShopItemLoader.getNoobSkin());
 
         shopScreen(SHOP_BACK);
     }

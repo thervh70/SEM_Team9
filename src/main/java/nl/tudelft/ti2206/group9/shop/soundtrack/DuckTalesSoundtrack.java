@@ -5,7 +5,7 @@ package nl.tudelft.ti2206.group9.shop.soundtrack;
  * soundtrack for in the shop.
  * @author Mitchell.
  */
-public class DuckTalesSoundtrack extends Soundtrack {
+public class DuckTalesSoundtrack extends AbstractSoundtrack {
     /** Price of the Duck Tales soundtrack in the shop. */
     private static final int PRICE = 20;
     /** Path to be used for soundtrack 'Duck Tales'. */

@@ -5,7 +5,7 @@ package nl.tudelft.ti2206.group9.shop.soundtrack;
  * soundtrack (8 bit) for in the shop.
  * @author Mitchell.
  */
-public class ShakeItOffSoundtrack extends Soundtrack {
+public class ShakeItOffSoundtrack extends AbstractSoundtrack {
     /** Price of the Shake It Off soundtrack in the shop. */
     private static final int PRICE = 70;
     /** Path to be used for the 'Shake It Off' soundtrack. */
