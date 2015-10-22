@@ -19,7 +19,7 @@ public final class SaveGame {
      * Default savegame directory.
      * Attention! Only use 1 subfolder!
      */
-    public static String defaultSaveDir = "sav/";
+    private static String defaultSaveDir = "sav/";
     /** List of the names of all the saved games. */
     private static ObservableList<String> saveGames =
             FXCollections.observableArrayList();

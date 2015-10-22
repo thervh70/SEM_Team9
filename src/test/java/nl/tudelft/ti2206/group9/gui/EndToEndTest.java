@@ -107,7 +107,7 @@ public class EndToEndTest extends ApplicationTest {
      *      - You are in the main menu
      *  - Go through the settings by clicking on settings button in the
      *     main menu, toggle the settings
-     *  - Go through the shop, buy a skin and return
+     *  - Go through the shop, buy a currentSkin and return
      *  - Go through the gameplay
      *      - Click the pause button and resume game
      *      - Go through playermovement
@@ -207,15 +207,15 @@ public class EndToEndTest extends ApplicationTest {
 
         final ObservableList<Skin> skinList = Skin.loadSkinsToList();
 
-        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        assertEquals(Skin.getCurrentSkin(), skinList.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        assertEquals(Skin.getCurrentSkin(), skinList.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        assertEquals(Skin.getCurrentSkin(), skinList.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_ANDY));
+        assertEquals(Skin.getCurrentSkin(), skinList.get(SHOP_SKIN_ANDY));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        assertEquals(Skin.getCurrentSkin(), skinList.get(SHOP_SKIN_NOOB));
 
         shopScreen(SHOP_BACK);
     }
@@ -342,7 +342,7 @@ public class EndToEndTest extends ApplicationTest {
         final HBox hbox = (HBox) pane.getContent();
         final VBox vbox = (VBox) hbox.getChildren().get(skinNo);
 
-        final int buyEquip = 3; // Is the same for each skin
+        final int buyEquip = 3; // Is the same for each currentSkin
         clickOn(vbox.getChildren().get(buyEquip), MouseButton.PRIMARY);
         sleep(SHORT);
     }

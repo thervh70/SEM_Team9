@@ -42,7 +42,7 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 
     @Override
     protected void setMaterial() {
-        setMaterial(Skin.getSkin().getSkinMaterial());
+        setMaterial(Skin.getCurrentSkin().getSkinMaterial());
     }
 
     @Override

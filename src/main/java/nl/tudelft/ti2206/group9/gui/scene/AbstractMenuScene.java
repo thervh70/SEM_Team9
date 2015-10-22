@@ -37,10 +37,6 @@ public abstract class AbstractMenuScene extends AbstractScene {
     private static final int LIST_WIDTH = 80;
     /** HEIGHT for list. */
     private static final int LIST_HEIGHT = 160;
-    /** Rowspan for the TableView. */
-    private static final int ROW_SPAN = 7;
-    /** Columnspan for the TableView. */
-    private static final int COLUMN_SPAN = 3;
 
     /** The AudioPlayer to be used for a button sound effect. */
     private static final SoundEffectPlayer BUTTON_SOUND = new SoundEffectPlayer(

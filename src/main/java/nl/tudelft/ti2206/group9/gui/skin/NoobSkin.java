@@ -6,7 +6,7 @@ package nl.tudelft.ti2206.group9.gui.skin;
 public class NoobSkin extends Skin {
 
     /**
-     * Constructor for a Noob skin.
+     * Constructor for a Noob currentSkin.
      */
     public NoobSkin() {
         super(0, "Noob", "noob");

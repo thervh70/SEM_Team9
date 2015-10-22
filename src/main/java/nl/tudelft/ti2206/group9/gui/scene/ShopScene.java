@@ -46,7 +46,7 @@ public class ShopScene extends AbstractMenuScene {
     /** Shop carousel height. */
     private static final int CAROUSEL_HEIGHT = 435;
 
-    /** Label for displaying current skin. */
+    /** Label for displaying current currentSkin. */
     private Label currentSkin;
     /** Label with amount of coins. */
     private Label amountLabel;
@@ -57,7 +57,7 @@ public class ShopScene extends AbstractMenuScene {
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
         final ObservableList<Skin> items = Skin.loadSkinsToList();
         currentSkin = createLabel("CURRENT SKIN: "
-                + Skin.getSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
+                + Skin.getCurrentSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
         currentSkin.setMinWidth(LABEL_WIDTH);
         final Button backButton = createButton("BACK", 0, ROW_CONSTRAINT);
         final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
@@ -83,7 +83,7 @@ public class ShopScene extends AbstractMenuScene {
     /**
      * Method to fill the shop with skins.
      * @param s Skin.
-     * @return VBox VBox containing an skin item.
+     * @return VBox VBox containing an currentSkin item.
      */
     private VBox createCarousel(final Skin s) {
         final Label price = createLabel("Price", 0, 0);
@@ -92,9 +92,9 @@ public class ShopScene extends AbstractMenuScene {
         setBuyButtonVisability(buy, s);
         buy.setOnAction(event -> {
             if (Skin.getUnlocked(s.getSkinName())) {
-                Skin.setSkin(s);
+                Skin.setCurrentSkin(s);
                 currentSkin.setText("CURRENT SKIN: "
-                        + Skin.getSkin().getSkinName());
+                        + Skin.getCurrentSkin().getSkinName());
             } else {
                 if (State.getCoins() >= s.getSkinPrice()) {
                     State.setCoins(State.getCoins() - s.getSkinPrice());
@@ -116,7 +116,7 @@ public class ShopScene extends AbstractMenuScene {
     }
 
     /**
-     * Change te button visability if skin is buyable/unlocked.
+     * Change te button visability if currentSkin is buyable/unlocked.
      * @param buy Button to set.
      * @param s Skin.
      */

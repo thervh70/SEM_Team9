@@ -42,8 +42,7 @@ public final class State {
         reset();
         setCoins(0);
         highscore = 0;
-        Track.previousDistance = 0;
-        Skin.skin = Skin.loadSkinsToList().get(0);
+        Skin.setCurrentSkin(Skin.loadSkinsToList().get(0));
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
     }
@@ -52,7 +51,7 @@ public final class State {
     public static void reset() {
         setTrack(Track.getInstance());
         setScore(0);
-        Track.previousDistance = 0;
+        Track.setPreviousDistance(0);
         Track.setDistance(0);
         track.getPlayer().respawn();
         PowerupInvulnerable.resetCounter();

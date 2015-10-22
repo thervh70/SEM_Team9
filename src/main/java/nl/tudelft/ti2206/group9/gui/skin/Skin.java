@@ -5,7 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.PhongMaterial;
 import nl.tudelft.ti2206.group9.gui.Style;
 
-import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Maikel on 08/10/2015.
@@ -13,38 +14,38 @@ import java.util.HashMap;
 @SuppressWarnings("restriction")
 public class Skin {
     /**
-     * IRON MAN skin for player.
+     * IRON MAN currentSkin for player.
      */
     private static IronManSkin iron;
 
     /**
-     * NOOB skin for player, this is the starting skin.
+     * NOOB currentSkin for player, this is the starting currentSkin.
      */
     private static NoobSkin noob;
 
     /**
-     * CAPTAIN skin for the player.
+     * CAPTAIN currentSkin for the player.
      */
     private static CaptainSkin captain;
 
     /**
-     * PLANK skin for the player.
+     * PLANK currentSkin for the player.
      */
     private static PlankSkin plank;
 
     /**
-     * BOY skin for the player.
+     * BOY currentSkin for the player.
      */
     private static BoySkin boy;
 
     /**
-     * ANDY skin for the player.
+     * ANDY currentSkin for the player.
      */
     private static AndySkin andy;
     /** Skin to be used. */
-    public static Skin skin;
+    private static Skin currentSkin;
     /**
-     * The price of this skin in the shop.
+     * The price of this currentSkin in the shop.
      */
     private final int skinPrice;
 
@@ -54,22 +55,22 @@ public class Skin {
     private final String skinName;
 
     /**
-     * The real material used by this skin.
+     * The real material used by this currentSkin.
      */
     private final PhongMaterial skinMaterial;
 
     /**
      * HashMap used to store which skins are unlocked.
      */
-    private static HashMap<String, Boolean> unlockedMap = new HashMap<>();
+    private static Map<String, Boolean> unlockedMap = new ConcurrentHashMap<>();
 
     /**
-     * Constructor for the skin.
+     * Constructor for the currentSkin.
      * It calls the Style.loadPlayerTexture
      * to load the image into the PhongMaterial
      * with the name "texture_[texture_name].png".
      *
-     * @param price       Price of this skin in shop.
+     * @param price       Price of this currentSkin in shop.
      * @param name        Name to display.
      * @param textureName Name of texture.
      */
@@ -81,19 +82,19 @@ public class Skin {
     }
 
     /**
-     * Getter for the current skin.
-     * @return The skin.
+     * Getter for the current currentSkin.
+     * @return The currentSkin.
      */
-    public static Skin getSkin() {
-        return skin;
+    public static Skin getCurrentSkin() {
+        return currentSkin;
     }
 
     /**
      * If new skins are bought and applied it can be done via this setter.
-     * @param newSkin The new skin.
+     * @param newSkin The new currentSkin.
      */
-    public static void setSkin(final Skin newSkin) {
-        skin = newSkin;
+    public static void setCurrentSkin(final Skin newSkin) {
+        currentSkin = newSkin;
     }
 
     /**
@@ -124,7 +125,7 @@ public class Skin {
     }
 
     /**
-     * Creating the HashMap for the skin's unlocked values.
+     * Creating the HashMap for the currentSkin's unlocked values.
      */
     public static void createUnlockedHashmap() {
         unlockedMap.put("Andy", false);
@@ -136,8 +137,8 @@ public class Skin {
     }
 
     /**
-     * Get the unlocked value for a skin.
-     * @param skinName Name of skin.
+     * Get the unlocked value for a currentSkin.
+     * @param skinName Name of currentSkin.
      * @return boolean unlocked or not.
      */
     public static boolean getUnlocked(final String skinName) {
@@ -145,7 +146,7 @@ public class Skin {
     }
 
     /**
-     * Set the unlocked value for a skin.
+     * Set the unlocked value for a currentSkin.
      *
      * @param skinName Skin to change value for.
      * @param unlocked new unlocked value.

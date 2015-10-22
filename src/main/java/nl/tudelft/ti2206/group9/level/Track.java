@@ -46,7 +46,7 @@ public class Track {
     /** Current distance moved by the track, reset every run. */
     private static double distance;
     /** Records the distance from the previous distance update. */
-    static int previousDistance;
+    private static int previousDistance;
 
     /** List of entities on the track. */
     private final ObservableLinkedList<AbstractEntity> entities;
@@ -69,7 +69,7 @@ public class Track {
     /**
      * The Single instance this class can have.
      */
-    private static Track track = new Track();
+    private static Track currentTrack = new Track();
 
     static {
         createEntityMap.put(Coin.class, Coin::new);
@@ -92,8 +92,12 @@ public class Track {
         this(new Random());
     }
 
+    /**
+     * Get the one true instance of Track.
+     * @return the only instance of Track
+     */
     public static Track getInstance() {
-        return track;
+        return currentTrack;
     }
 
     /**
@@ -245,6 +249,19 @@ public class Track {
         Track.distance = dist;
     }
 
+    /**
+     * @return the previousDistance
+     */
+    public static int getPreviousDistance() {
+        return previousDistance;
+    }
+
+    /**
+     * @param newPrevDist the previousDistance to set
+     */
+    public static void setPreviousDistance(final int newPrevDist) {
+        previousDistance = newPrevDist;
+    }
     /**
      * Get the number of Units that pass by per tick at this moment.
      * @return double Units per Tick
