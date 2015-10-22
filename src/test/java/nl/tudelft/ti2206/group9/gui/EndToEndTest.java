@@ -1,18 +1,5 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -33,9 +20,21 @@ import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 @SuppressWarnings("restriction")
@@ -77,8 +76,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SETTINGS_SOUNDEFFECTS = 2;
 
     private static final int SHOP_BACK = 1;
-    private static final int SHOP_SKIN_IRONMAN = 0;
-    private static final int SHOP_SKIN_CAPTAIN = 1;
+    private static final int SHOP_SKIN_NOOB = 0;
+    private static final int SHOP_SKIN_ANDY = 1;
 
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
@@ -124,10 +123,9 @@ public class EndToEndTest extends ApplicationTest {
      *      - Let player die; click back to main
      *  - Close application
      *  - Output Log
-     * @throws IOException if outputEventLog fails.
      */
     @Test
-    public void test() throws IOException { //NOPMD - assert is done in subs.
+    public void test() { //NOPMD - assert is done in subs.
         clickOn(stage, MouseButton.PRIMARY);
         sleep(SHORT);
 
@@ -152,19 +150,24 @@ public class EndToEndTest extends ApplicationTest {
         playerDies();
         clickPopup(DEATH_TOMAIN);
 
-//        mainMenu(MAIN_QUIT);
+        //        mainMenu(MAIN_QUIT);
         Platform.runLater(stage::close);
         outputEventLog();
         new File("sav/Fred.ses").delete();
     }
 
-    private void outputEventLog() throws IOException {
-        ShaftEscape.LOGGER.writeToFile();
-        final String log = new String(Files.readAllBytes(
-                Paths.get(Logger.OUTFILE)), StandardCharsets.UTF_8);
-        System.out.println("\n== EVENT_LOG ==");     //NOPMD - Intended use of
-        System.out.println(log);                     //NOPMD - System.out.print
-        System.out.println("== END_EVENT_LOG ==\n"); //NOPMD - for Travis log
+    private void outputEventLog() {
+        try {
+            ShaftEscape.LOGGER.writeToFile();
+            final String log = new String(Files.readAllBytes(
+                    Paths.get(Logger.OUTFILE)), StandardCharsets.UTF_8);
+            // Intended use of System.out.println for Travis log
+            System.out.println("\n== EVENT_LOG ==");     //NOPMD
+            System.out.println(log);                     //NOPMD
+            System.out.println("== END_EVENT_LOG ==\n"); //NOPMD
+        } catch (IOException e) {
+            fail("IOException thrown: " + e.getMessage());
+        }
     }
 
     private void letPlayerSurvive() {
@@ -203,15 +206,17 @@ public class EndToEndTest extends ApplicationTest {
         State.setCoins(COINS); //Make sure player has enough coins
         mainMenu(MAIN_SHOP);
 
-        assertEquals(State.getSkin(), Skin.getNoob());
-        shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), Skin.getNoob());
-        shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), Skin.getNoob());
-        shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), Skin.getAndy());
-        shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), Skin.getNoob());
+        final ObservableList<Skin> skinList = Skin.loadSkinsToList();
+
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        shopBuyEquipSkin(SHOP_SKIN_NOOB);
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        shopBuyEquipSkin(SHOP_SKIN_ANDY);
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        shopBuyEquipSkin(SHOP_SKIN_ANDY);
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_ANDY));
+        shopBuyEquipSkin(SHOP_SKIN_NOOB);
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
 
         shopScreen(SHOP_BACK);
     }

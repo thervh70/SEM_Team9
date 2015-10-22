@@ -1,19 +1,19 @@
 package nl.tudelft.ti2206.group9.level.save;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import nl.tudelft.ti2206.group9.server.Highscore;
-import nl.tudelft.ti2206.group9.server.HighscoreClientTest;
 import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter;
 import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.ResultCallback;
-
+import nl.tudelft.ti2206.group9.server.HighscoreClientTest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class HighscoreClientAdapterTest {
 
@@ -27,7 +27,7 @@ public class HighscoreClientAdapterTest {
     };
 
     @BeforeClass
-    public static void setUpBeforeClass() throws InterruptedException {
+    public static void setUpBeforeClass() {
         HighscoreClientTest.setUpBeforeClass();
     }
 
@@ -43,7 +43,7 @@ public class HighscoreClientAdapterTest {
     }
 
     @Test
-    public final void testAdd() throws InterruptedException {
+    public final void testAdd() {
         HighscoreClientAdapter.add("Kees", 2, callback);
         haltTestUntilServerResponds();
         assertTrue(actualResponse);
@@ -54,7 +54,7 @@ public class HighscoreClientAdapterTest {
     }
 
     @Test
-    public final void testGetGlobal() throws InterruptedException {
+    public final void testGetGlobal() {
         List<Highscore> list = HighscoreClientAdapter.getGlobal(2, callback);
         haltTestUntilServerResponds();
         assertTrue(actualResponse);
@@ -67,7 +67,7 @@ public class HighscoreClientAdapterTest {
     }
 
     @Test
-    public final void testGetUser() throws InterruptedException {
+    public final void testGetUser() {
         List<Highscore> list;
 
         list = HighscoreClientAdapter.getUser("Kees", 2, callback);
@@ -83,11 +83,14 @@ public class HighscoreClientAdapterTest {
 
     /**
      * Halts the test until resumed in callback.
-     * @throws InterruptedException when test gets killed.
      */
-    private void haltTestUntilServerResponds() throws InterruptedException {
-        synchronized (LOCK) {
-            LOCK.wait();
+    private void haltTestUntilServerResponds() {
+        try {
+            synchronized (LOCK) {
+                LOCK.wait();
+            }
+        } catch (InterruptedException e) {
+            fail("InterruptedException thrown: " + e.getMessage());
         }
     }
 

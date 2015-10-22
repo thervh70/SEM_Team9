@@ -1,14 +1,14 @@
 package nl.tudelft.ti2206.group9.server;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import nl.tudelft.ti2206.group9.server.HighscoreClient.QueryCallback;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class HighscoreClientTest {
 
@@ -24,17 +24,21 @@ public class HighscoreClientTest {
     };
 
     @BeforeClass
-    public static void setUpBeforeClass() throws InterruptedException {
-        new Thread(() -> {
-            try {
-                HighscoreServer.main("");
-            } catch (Exception e) { // NOPMD - we want to catch EVERYTHING :D
-                fail("Server has thrown an exception:\n" + e.getMessage());
-            }
-        }, "ServerThread").start();
-        /* If we don't sleep, the client will try to connect before the *
-         * server is set up.                                            */
-        Thread.sleep(SERVER_SETUP_WAIT);
+    public static void setUpBeforeClass() {
+        try {
+            new Thread(() -> {
+                try {
+                    HighscoreServer.main("");
+                } catch (Exception e) { // NOPMD - need to catch EVERYTHING :D
+                    fail("Server has thrown an exception:\n" + e.getMessage());
+                }
+            }, "ServerThread").start();
+            /* If we don't sleep, the client will try to connect before the *
+             * server is set up.                                            */
+            Thread.sleep(SERVER_SETUP_WAIT);
+        } catch (InterruptedException e) {
+            fail("InterruptedException thrown: " + e.getMessage());
+        }
     }
 
     @AfterClass
@@ -53,7 +57,7 @@ public class HighscoreClientTest {
     }
 
     @Test
-    public final void testGoodWeather() throws InterruptedException {
+    public final void testGoodWeather() {
         final int[] scores = {42, 21, 84, 63};
         final String[] names = {"Kees", "Piet", "Jaap", "Piet"};
 
@@ -62,8 +66,7 @@ public class HighscoreClientTest {
         getListsPositiveAmounts(names);
     }
 
-    private void getListsNegativeAmounts(final String... names)
-            throws InterruptedException {
+    private void getListsNegativeAmounts(final String... names) {
         client.getGlobal(-1, callback);
         haltTestUntilServerResponds();
         assertEquals("", actualResponse);
@@ -73,8 +76,7 @@ public class HighscoreClientTest {
         assertEquals("", actualResponse);
     }
 
-    private void getListsPositiveAmounts(final String... names)
-            throws InterruptedException {
+    private void getListsPositiveAmounts(final String... names) {
         final int listSize = 5;
         client.getGlobal(listSize, callback);
         haltTestUntilServerResponds();
@@ -102,8 +104,7 @@ public class HighscoreClientTest {
                 actualResponse);
     }
 
-    private void sendScoresToServer(final int[] scores, final String... names)
-            throws InterruptedException {
+    private void sendScoresToServer(final int[] scores, final String... names) {
         int i = -1;
         client.add(names[++i], scores[i], callback);
         haltTestUntilServerResponds();
@@ -120,16 +121,16 @@ public class HighscoreClientTest {
         client.add(names[++i], scores[i], callback);
         haltTestUntilServerResponds();
         assertEquals("SUCCESS", actualResponse);
-    }
+     }
 
     @Test
-    public void testBadWeather() throws InterruptedException {
+    public void testBadWeather() {
         testIllegalQuery();
         testIllegalGetQuery();
         testIllegalAddQuery();
     }
 
-    private void testIllegalQuery() throws InterruptedException {
+    private void testIllegalQuery() {
         client.query("", 1, callback);
         haltTestUntilServerResponds();
         assertEquals("USAGE get|add <args>", actualResponse);
@@ -139,7 +140,7 @@ public class HighscoreClientTest {
         assertEquals("USAGE get|add <args>", actualResponse);
     }
 
-    private void testIllegalGetQuery() throws InterruptedException {
+    private void testIllegalGetQuery() {
         client.query("get", 1, callback);
         haltTestUntilServerResponds();
         assertEquals("USAGE get user|global <args>", actualResponse);
@@ -163,7 +164,7 @@ public class HighscoreClientTest {
                 actualResponse);
     }
 
-    private void testIllegalAddQuery() throws InterruptedException {
+    private void testIllegalAddQuery() {
         client.query("add", 1, callback);
         haltTestUntilServerResponds();
         assertEquals("USAGE add <name:string> <score:int>", actualResponse);
@@ -174,24 +175,31 @@ public class HighscoreClientTest {
     }
 
     @Test
-    public void testDisconnect() throws InterruptedException {
-        client.disconnect();
-        while (client.isConnected()) {
-            Thread.sleep(2); // Do nothing until disconnected
-        }
+    public void testDisconnect() {
+        try {
+            client.disconnect();
+            while (client.isConnected()) {
+                Thread.sleep(2); // Do nothing until disconnected
+            }
 
-        client.getGlobal(1, callback);
-        // haltTestUntilServerResponds(); not needed, because connected = false.
-        assertEquals("DISCONNECTED", actualResponse);
+            client.getGlobal(1, callback);
+            // halt(); not needed, because connected = false.
+            assertEquals("DISCONNECTED", actualResponse);
+        } catch (InterruptedException e) {
+            fail("InterruptedException thrown: " + e.getMessage());
+        }
     }
 
     /**
      * Halts the test until resumed in callback.
-     * @throws InterruptedException when test gets killed.
      */
-    private void haltTestUntilServerResponds() throws InterruptedException {
-        synchronized (LOCK) {
-            LOCK.wait();
+    private void haltTestUntilServerResponds() {
+        try {
+            synchronized (LOCK) {
+                LOCK.wait();
+            }
+        } catch (InterruptedException e) {
+            fail("InterruptedException thrown: " + e.getMessage());
         }
     }
 
