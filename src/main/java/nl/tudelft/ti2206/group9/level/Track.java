@@ -101,6 +101,13 @@ public class Track {
     }
 
     /**
+     * Reset the instance of track by making it a new Track.
+     */
+    public static void reset() {
+        currentTrack = new Track();
+    }
+
+    /**
      * Constructor, in which one can specify the Random generator to use.
      * @param generator the Random generator to use for this Track.
      */

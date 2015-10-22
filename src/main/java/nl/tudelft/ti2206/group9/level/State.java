@@ -49,6 +49,7 @@ public final class State {
 
     /** Reset data that should be reset every run. */
     public static void reset() {
+        Track.reset();
         setTrack(Track.getInstance());
         setScore(0);
         Track.setPreviousDistance(0);
