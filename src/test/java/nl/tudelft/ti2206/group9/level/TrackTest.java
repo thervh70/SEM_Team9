@@ -17,7 +17,7 @@ public class TrackTest {
 
     @Before
     public void setUp() {
-        track = new Track();
+        track = Track.getInstance();
         Track.setDistance(0);
     }
 

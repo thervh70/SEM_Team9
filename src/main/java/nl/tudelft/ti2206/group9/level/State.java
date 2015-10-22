@@ -20,7 +20,7 @@ public final class State {
     private static double highscore;
 
     /** Current track, contains all entities. */
-    private static Track track = new Track();
+    private static Track track;
 
     /** Name of the player. */
     private static String playerName;
@@ -50,7 +50,7 @@ public final class State {
 
     /** Reset data that should be reset every run. */
     public static void reset() {
-        setTrack(new Track());
+        setTrack(Track.getInstance());
         setScore(0);
         Track.previousDistance = 0;
         Track.setDistance(0);

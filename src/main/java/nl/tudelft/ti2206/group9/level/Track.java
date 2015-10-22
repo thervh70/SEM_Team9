@@ -66,6 +66,10 @@ public class Track {
      */
     private static Map<Class<? extends AbstractEntity>, CreateEntityCommand>
             createEntityMap = new ConcurrentHashMap<>();
+    /**
+     * The Single instance this class can have.
+     */
+    private static Track track = new Track();
 
     static {
         createEntityMap.put(Coin.class, Coin::new);
@@ -84,8 +88,12 @@ public class Track {
     private double trackLeft;
 
     /** Default constructor, new Random() is created as generator. */
-    public Track() {
+    private Track() {
         this(new Random());
+    }
+
+    public static Track getInstance() {
+        return track;
     }
 
     /**
@@ -219,21 +227,21 @@ public class Track {
     /**
      * @param amount the amount to be added
      */
-    static void addDistance(final double amount) {
+    public static void addDistance(final double amount) {
         distance += amount;
     }
 
     /**
      * @return the distance
      */
-    static double getDistance() {
+    public static double getDistance() {
         return distance;
     }
 
     /**
      * @param dist the distance to set
      */
-    static void setDistance(final double dist) {
+    public static void setDistance(final double dist) {
         Track.distance = dist;
     }
 
