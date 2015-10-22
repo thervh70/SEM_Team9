@@ -2,7 +2,7 @@ package nl.tudelft.ti2206.group9.level.entity;
 
 import nl.tudelft.ti2206.group9.gui.renderer.AbstractBoxRenderer;
 import nl.tudelft.ti2206.group9.level.CollisionHandler;
-import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Point3D;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class AbstractEntityTest {
 
         entity = new TestEntity(Point3D.ZERO, Point3D.UNITCUBE);
         collisionHandler = mock(CollisionHandler.class);
-        State.getTrack().setCollisions(collisionHandler);
+        Track.getInstance().setCollisions(collisionHandler);
     }
 
     @Test
