@@ -58,7 +58,7 @@ public class HighscoreClientAdapterTest {
         List<Highscore> list = HighscoreClientAdapter.getGlobal(2, callback);
         haltTestUntilServerResponds();
         assertTrue(actualResponse);
-        assertEquals(2, list.size());
+        assertEquals(1, list.size());
 
         list = HighscoreClientAdapter.getGlobal(-1, callback);
         haltTestUntilServerResponds();
@@ -73,7 +73,7 @@ public class HighscoreClientAdapterTest {
         list = HighscoreClientAdapter.getUser("Kees", 2, callback);
         haltTestUntilServerResponds();
         assertTrue(actualResponse);
-        assertEquals(2, list.size());
+        assertEquals(1, list.size());
 
         list = HighscoreClientAdapter.getUser("", 2, callback);
         haltTestUntilServerResponds();

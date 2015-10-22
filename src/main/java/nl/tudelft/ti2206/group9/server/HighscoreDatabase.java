@@ -2,7 +2,9 @@ package nl.tudelft.ti2206.group9.server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The Database that the ServerThreads will communicate with before responding
@@ -28,9 +30,8 @@ public final class HighscoreDatabase {
             sc.close();
             return "USAGE get|add <args>";
         }
-        final StringBuffer theOutput = new StringBuffer();
         switch (sc.next()) {
-        case "get": return queryGet(sc, theOutput);
+        case "get": return queryGet(sc);
         case "add": return queryAdd(sc);
         default:
             sc.close();
@@ -40,29 +41,25 @@ public final class HighscoreDatabase {
 
     /**
      * @param sc Scanner that contains the arguments for the query.
-     * @param theOutput Pointer to the StringBuffer that will be filled.
      * @return the result of the query.
      */
-    private static String queryGet(final Scanner sc,
-            final StringBuffer theOutput) {
+    private static String queryGet(final Scanner sc) {
         if (!sc.hasNext()) {
             sc.close();
             return "USAGE get user|global <args>";
         }
         switch (sc.next()) {
-        case "user":   return queryGetUser(sc, theOutput);
-        case "global": return queryGetGlobal(sc, theOutput);
+        case "user":   return queryGetUser(sc);
+        case "global": return queryGetGlobal(sc);
         default:       return "USAGE get user|global <args>";
         }
     }
 
     /**
      * @param sc Scanner that contains the arguments for the query.
-     * @param theOutput Pointer to the StringBuffer that will be filled.
      * @return the result of the query.
      */
-    private static String queryGetUser(final Scanner sc,
-            final StringBuffer theOutput) {
+    private static String queryGetUser(final Scanner sc) {
         if (!sc.hasNext()) {
             sc.close();
             return "USAGE get user <name:string> <amount:int>";
@@ -73,33 +70,24 @@ public final class HighscoreDatabase {
             return "USAGE get user " + user + " <amount:int>";
         }
         final int amount = sc.nextInt();
-        if (amount < 0) {
-            return "";
-        }
         sc.close();
-        createList(amount, theOutput, h -> h.getUser().equals(user));
-        return theOutput.toString();
+        return QueryParser.supported.get("get user <name:string> <amount:int>")
+                .query(user, amount);
     }
 
     /**
      * @param sc Scanner that contains the arguments for the query.
-     * @param theOutput Pointer to the StringBuffer that will be filled.
      * @return the result of the query.
      */
-    private static String queryGetGlobal(final Scanner sc,
-            final StringBuffer theOutput) {
+    private static String queryGetGlobal(final Scanner sc) {
         if (!sc.hasNextInt()) {
             sc.close();
             return "USAGE get global <amount:int>";
         }
         final int amount = sc.nextInt();
-        if (amount < 0) {
-            return "";
-        } //!theOutput.toString().contains("[" + h.getUser() + ",")
         sc.close();
-        createList(amount, theOutput,
-                h -> !theOutput.toString().contains("[" + h.getUser() + ","));
-        return theOutput.toString();
+        return QueryParser.supported.get("get global <amount:int>")
+                .query(amount);
     }
 
     /**
@@ -141,15 +129,65 @@ public final class HighscoreDatabase {
             return "USAGE add " + name + " <score:int>";
         }
         final int score = sc.nextInt();
-        final Highscore h = new Highscore(name, score);
-        for (int i = 0; i < database.size(); i++) {
-            if (database.get(i).getScore() < score) {
-                database.add(i, h);
-                return "SUCCESS";
-            }
+        return QueryParser.supported.get("add <name:string> <score:int>")
+                .query(name, score);
+    }
+
+    /** Has the responsibility to parse Queries and return correct results. */
+    private static class QueryParser {
+        /** The map that stores the supported Queries. */
+        private static Map<String, Query> supported = new ConcurrentHashMap<>();
+        static {
+            supported.put("add <name:string> <score:int>",
+                    args -> {
+                        final String name = (String) args[0];
+                        final int score = (int) args[1];
+                        final Highscore h = new Highscore(name, score);
+                        for (int i = 0; i < database.size(); i++) {
+                            if (database.get(i).getScore() < score) {
+                                database.add(i, h);
+                                return "SUCCESS";
+                            }
+                        }
+                        database.add(h);
+                        return "SUCCESS";
+                    });
+            supported.put("get user <name:string> <amount:int>",
+                    args -> {
+                        final int amount = (int) args[1];
+                        if (amount < 0) {
+                            return "";
+                        }
+                        final String name = (String) args[0];
+                        final StringBuffer theOutput = new StringBuffer();
+                        createList(amount, theOutput,
+                                h -> h.getUser().equals(name));
+                        return theOutput.toString();
+                    });
+            supported.put("get global <amount:int>",
+                    args -> {
+                        final int amount = (int) args[0];
+                        if (amount < 0) {
+                            return "";
+                        }
+                        final StringBuffer theOutput = new StringBuffer();
+                        createList(amount, theOutput, h -> !theOutput.toString()
+                                .contains("[" + h.getUser() + ","));
+                        return theOutput.toString();
+                    });
         }
-        database.add(h);
-        return "SUCCESS";
+    }
+
+    /**
+     * A Query interface (used mostly anonymously).
+     * Used for: "global", "get user", "get global".
+     */
+    private interface Query {
+        /**
+         * @param args The arguments for the query.
+         * @return The result of the query.
+         */
+        String query(Object... args);
     }
 
     /**
