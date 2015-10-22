@@ -76,8 +76,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SETTINGS_SOUNDEFFECTS = 2;
 
     private static final int SHOP_BACK = 1;
-    private static final int SHOP_SKIN_IRONMAN = 0;
-    private static final int SHOP_SKIN_CAPTAIN = 1;
+    private static final int SHOP_SKIN_NOOB = 0;
+    private static final int SHOP_SKIN_ANDY = 1;
 
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
@@ -207,15 +207,15 @@ public class EndToEndTest extends ApplicationTest {
 
         final ObservableList<Skin> skinList = Skin.loadSkinsToList();
 
-        assertEquals(State.getSkin(), skinList.get(0));
-        shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), skinList.get(0));
-        shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), skinList.get(0));
-        shopBuyEquipSkin(SHOP_SKIN_CAPTAIN);
-        assertEquals(State.getSkin(), skinList.get(1));
-        shopBuyEquipSkin(SHOP_SKIN_IRONMAN);
-        assertEquals(State.getSkin(), skinList.get(0));
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        shopBuyEquipSkin(SHOP_SKIN_NOOB);
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        shopBuyEquipSkin(SHOP_SKIN_ANDY);
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        shopBuyEquipSkin(SHOP_SKIN_ANDY);
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_ANDY));
+        shopBuyEquipSkin(SHOP_SKIN_NOOB);
+        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
 
         shopScreen(SHOP_BACK);
     }
