@@ -165,7 +165,7 @@ public class EndToEndTest extends ApplicationTest {
             System.out.println(log);                     //NOPMD - System.out.print
             System.out.println("== END_EVENT_LOG ==\n"); //NOPMD - for Travis log
         } catch (IOException e) {
-            fail();
+            fail("IOException thrown: " + e.getMessage());
         }
     }
 

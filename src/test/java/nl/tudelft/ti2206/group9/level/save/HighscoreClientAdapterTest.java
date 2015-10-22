@@ -90,7 +90,7 @@ public class HighscoreClientAdapterTest {
                 LOCK.wait();
             }
         } catch (InterruptedException e) {
-            fail();
+            fail("InterruptedException thrown: " + e.getMessage());
         }
     }
 

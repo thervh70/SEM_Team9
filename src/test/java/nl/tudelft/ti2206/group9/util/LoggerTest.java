@@ -51,7 +51,7 @@ public class LoggerTest {
                     StandardCharsets.UTF_8).substring(Logger.FORMAT.length() - 1);
             assertEquals(testUpdateString, log);
         } catch (IOException e) {
-            fail();
+            fail("IOException thrown: " + e.getMessage());
         }
     }
 

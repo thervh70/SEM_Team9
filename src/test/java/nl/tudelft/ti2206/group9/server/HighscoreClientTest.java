@@ -37,7 +37,7 @@ public class HighscoreClientTest {
              * server is set up.                                            */
             Thread.sleep(SERVER_SETUP_WAIT);
         } catch (InterruptedException e) {
-            fail();
+            fail("InterruptedException thrown: " + e.getMessage());
         }
     }
 
@@ -186,7 +186,7 @@ public class HighscoreClientTest {
             // haltTestUntilServerResponds(); not needed, because connected = false.
             assertEquals("DISCONNECTED", actualResponse);
         } catch (InterruptedException e) {
-            fail();
+            fail("InterruptedException thrown: " + e.getMessage());
         }
     }
 
@@ -199,7 +199,7 @@ public class HighscoreClientTest {
                 LOCK.wait();
             }
         } catch (InterruptedException e) {
-            fail();
+            fail("InterruptedException thrown: " + e.getMessage());
         }
     }
 
