@@ -36,6 +36,7 @@ public class Base64Reader extends Reader {
      */
     public String readString() {
         final StringBuilder builder = new StringBuilder();
+        String result = "";
         try {
             while (true) {
                 final int readBytes = reader.read();
@@ -46,13 +47,13 @@ public class Base64Reader extends Reader {
             }
             final String encryptedString = builder.toString();
             final byte[] bytes = decoder.decode(encryptedString);
-            return new String(bytes, "UTF-8");
+            result = new String(bytes, "UTF-8");
         } catch (IOException e) {
             GameObservable.OBSERVABLE.notify(GameObserver.Category.ERROR,
                     GameObserver.Error.IOEXCEPTION,
                     "Base64Reader.readString(String)", e.getMessage());
         }
-        return "";
+        return result;
     }
 
     @Override
