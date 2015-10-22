@@ -58,8 +58,12 @@ public class TrackParser {
      * @return TrackPart the created TrackPart
      */
     public final TrackPart parseTrackPart(final String packagePath) {
+        final InputStream stream = Resource.getStream(packagePath);
+        if (stream == null) {
+            return new TrackPart();
+        }
         try {
-            return parseTrackPart(Resource.getStream(packagePath));
+            return parseTrackPart(stream);
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
                     "TrackParser.parseTrackPart(String)", e.getMessage());

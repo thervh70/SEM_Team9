@@ -41,8 +41,12 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
 
     @Override
     protected final void initializeAudio(final String source) {
+        final String uri = Resource.getURIString(source);
+        if (uri == null) {
+            return;
+        }
         try {
-            audioClip = new AudioClip(Resource.getURIString(source));
+            audioClip = new AudioClip(uri);
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundEffectPlayer.initializeAudio(String)",

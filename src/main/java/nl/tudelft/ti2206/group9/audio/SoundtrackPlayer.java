@@ -59,9 +59,12 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
 
     @Override
     protected void initializeAudio(final String source) {
+        final String uri = Resource.getURIString(source);
+        if (uri == null) {
+            return;
+        }
         try {
-            mediaPlayer = new MediaPlayer(new Media(
-                    Resource.getURIString(source)));
+            mediaPlayer = new MediaPlayer(new Media(uri));
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundtrackPlayer.initializeTune(String)",

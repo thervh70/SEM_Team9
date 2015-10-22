@@ -209,7 +209,7 @@ public class AbstractEntityTest {
          * @param center center of the bounding box
          * @param size size of the bounding box
          */
-        public TestEntity(final Point3D center, final Point3D size) {
+        TestEntity(final Point3D center, final Point3D size) {
             super(center, size);
         }
 
