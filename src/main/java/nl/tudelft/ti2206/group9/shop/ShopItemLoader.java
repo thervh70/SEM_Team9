@@ -139,23 +139,11 @@ public final class ShopItemLoader {
     }
 
     /**
-     * Simple getter for IronManSkin.
-     * @return Skin of Iron Man.
-     */
-    public static IronManSkin getIronManSkin() {
-        return ironmanSkin;
-    }
-
-    /**
-     * Simple setter for IronManSkin.
-     * @param skin a given IronManSkin to set.
-     */
-    public static void setIronManSkin(final IronManSkin skin) {
-        ironmanSkin = skin;
-    }
-
-    /**
-     * Simple getter for NoobSkin.
+     * Simple getter for NoobSkin for the hard reset in State.
+     * This is the only getter that is needed, because of the reason above.
+     * More getters and setters aren't needed as the shop items don't
+     * need to be changed on runtime anymore and the loading of skins is done
+     * by the loadShopItemToList() method.
      * @return Skin of Noob.
      */
     public static NoobSkin getNoobSkin() {
@@ -163,177 +151,12 @@ public final class ShopItemLoader {
     }
 
     /**
-     * Simple setter for NoobSkin.
-     * @param skin a given NoobSkin to set.
-     */
-    public static void setNoobSkin(final NoobSkin skin) {
-        noobSkin = skin;
-    }
-
-    /**
-     * Simple getter for CaptainSkin.
-     * @return Skin of Captain.
-     */
-    public static CaptainSkin getCaptainSkin() {
-        return captainSkin;
-    }
-
-    /**
-     * Simple setter for CaptainSkin.
-     * @param skin a given CaptainSkin to set.
-     */
-    public static void setCaptainSkin(final CaptainSkin skin) {
-        captainSkin = skin;
-    }
-
-    /**
-     * Simple getter for PlankSkin.
-     * @return Skin of Plank.
-     */
-    public static PlankSkin getPlankSkin() {
-        return plankSkin;
-    }
-
-    /**
-     * Simple setter for PlankSkin.
-     * @param skin a given PlankSkin to set.
-     */
-    public static void setPlankSkin(final PlankSkin skin) {
-        plankSkin = skin;
-    }
-
-    /**
-     * Simple getter for BoySkin.
-     * @return Skin of Boy.
-     */
-    public static BoySkin getBoySkin() {
-        return boySkin;
-    }
-
-    /**
-     * Simple setter for BoySkin.
-     * @param skin a given BoySkin to set.
-     */
-    public static void setBoySkin(final BoySkin skin) {
-        boySkin = skin;
-    }
-
-    /**
-     * Simple getter for AndySkin.
+     * Gets the Andy skin for testing purposes.
+     * (E2E test)
      * @return Skin of Andy.
      */
     public static AndySkin getAndySkin() {
         return andySkin;
     }
-
-    /**
-     * Simple setter for AndySkin.
-     * @param skin a given AndySkin to set.
-     */
-    public static void setAndySkin(final AndySkin skin) {
-       andySkin = skin;
-    }
-
-    /**
-     * Gets the Animals soundtrack that can be bought.
-     * @return animalSoundtrack item (AnimalsSoundtrack)
-     */
-    public static AnimalsSoundtrack getAnimalsSoundtrack() {
-        return animalsSoundtrack;
-    }
-
-    /**
-     * Sets the Animals soundtrack that can be bought.
-     * @param soundtrack a given AnimalsSoundtrack to set.
-     */
-    public static void setAnimalsSoundtrack(
-            final AnimalsSoundtrack soundtrack) {
-        animalsSoundtrack = soundtrack;
-    }
-
-    /**
-     * Gets the Default Soundtrack that can be bought.
-     * @return defaultSoundtrack item (DefaultSoundtrack)
-     */
-    public static DefaultSoundtrack getDefaultSoundtrack() {
-        return defaultSoundtrack;
-    }
-
-    /**
-     * Sets the Default soundtrack that can be bought.
-     * @param soundtrack a given DefaultSoundtrack to set.
-     */
-    public static void setDefaultSoundtrack(
-            final DefaultSoundtrack soundtrack) {
-        defaultSoundtrack = soundtrack;
-    }
-
-    /**
-     * Gets the Duck Tales soundtrack that can be bought.
-     * @return ducktalesSoundtrack item (DuckTalesSoundtrack)
-     */
-    public static DuckTalesSoundtrack getDuckTalesSoundtrack() {
-        return ducktalesSoundtrack;
-    }
-
-    /**
-     * Sets the Duck Tales soundtrack that can be bought.
-     * @param soundtrack a given DuckTalesSoundtrack to set.
-     */
-    public static void setDuckTalesSoundtrack(
-            final DuckTalesSoundtrack soundtrack) {
-        ducktalesSoundtrack = soundtrack;
-    }
-
-    /**
-     * Gets the Mario soundtrack that can be bought.
-     * @return marioSoundtrack item (MarioSoundtrack)
-     */
-    public static MarioSoundtrack getMarioSoundtrack() {
-        return marioSoundtrack;
-    }
-
-    /**
-     * Sets the Mario soundtrack that can be bought.
-     * @param soundtrack a given MarioSoundtrack to set.
-     */
-    public static void setMarioSoundtrack(final MarioSoundtrack soundtrack) {
-        marioSoundtrack = soundtrack;
-    }
-
-    /**
-     * Gets the Nyan Cat soundtrack that can be bought.
-     * @return nyancatSoundtrack item (NyanCatSoundtrack)
-     */
-    public static NyanCatSoundtrack getNyanCatSoundtrack() {
-        return nyancatSoundtrack;
-    }
-
-    /**
-     * Sets the Nyan Cat soundtrack that can be bought.
-     * @param soundtrack a given NyanCatSoundtrack to set.
-     */
-    public static void setNyanCatSoundtrack(
-            final NyanCatSoundtrack soundtrack) {
-        nyancatSoundtrack = soundtrack;
-    }
-
-    /**
-     * Gets the Shake It Off soundtrack that can be bought.
-     * @return shakeitoffSoundtrack item (ShakeItOffSoundtrack)
-     */
-    public static ShakeItOffSoundtrack getShakeItOffSoundtrack() {
-        return shakeitoffSoundtrack;
-    }
-
-    /**
-     * Sets the Shake It Off soundtrack that can be bought.
-     * @param soundtrack a given ShakeItOffSoundtrack to set.
-     */
-    public static void setShakeItOffSoundtrack(
-            final ShakeItOffSoundtrack soundtrack) {
-        shakeitoffSoundtrack = soundtrack;
-    }
-
 
 }
