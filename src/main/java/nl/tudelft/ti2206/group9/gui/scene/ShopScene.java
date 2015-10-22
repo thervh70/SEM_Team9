@@ -57,7 +57,7 @@ public class ShopScene extends AbstractMenuScene {
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
         final ObservableList<Skin> items = Skin.loadSkinsToList();
         currentSkin = createLabel("CURRENT SKIN: "
-                + State.getSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
+                + Skin.getSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
         currentSkin.setMinWidth(LABEL_WIDTH);
         final Button backButton = createButton("BACK", 0, ROW_CONSTRAINT);
         final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
@@ -92,9 +92,9 @@ public class ShopScene extends AbstractMenuScene {
         setBuyButtonVisability(buy, s);
         buy.setOnAction(event -> {
             if (Skin.getUnlocked(s.getSkinName())) {
-                State.setSkin(s);
+                Skin.setSkin(s);
                 currentSkin.setText("CURRENT SKIN: "
-                        + State.getSkin().getSkinName());
+                        + Skin.getSkin().getSkinName());
             } else {
                 if (State.getCoins() >= s.getSkinPrice()) {
                     State.setCoins(State.getCoins() - s.getSkinPrice());

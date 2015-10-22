@@ -41,6 +41,8 @@ public class Skin {
      * ANDY skin for the player.
      */
     private static AndySkin andy;
+    /** Skin to be used. */
+    public static Skin skin;
     /**
      * The price of this skin in the shop.
      */
@@ -76,6 +78,22 @@ public class Skin {
         skinPrice = price;
         skinName = name;
         skinMaterial = Style.loadPlayerTexture(textureName);
+    }
+
+    /**
+     * Getter for the current skin.
+     * @return The skin.
+     */
+    public static Skin getSkin() {
+        return skin;
+    }
+
+    /**
+     * If new skins are bought and applied it can be done via this setter.
+     * @param newSkin The new skin.
+     */
+    public static void setSkin(final Skin newSkin) {
+        skin = newSkin;
     }
 
     /**

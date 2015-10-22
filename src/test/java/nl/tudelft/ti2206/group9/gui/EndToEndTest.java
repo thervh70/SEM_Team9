@@ -207,15 +207,15 @@ public class EndToEndTest extends ApplicationTest {
 
         final ObservableList<Skin> skinList = Skin.loadSkinsToList();
 
-        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_ANDY));
+        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_ANDY));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(State.getSkin(), skinList.get(SHOP_SKIN_NOOB));
+        assertEquals(Skin.getSkin(), skinList.get(SHOP_SKIN_NOOB));
 
         shopScreen(SHOP_BACK);
     }
