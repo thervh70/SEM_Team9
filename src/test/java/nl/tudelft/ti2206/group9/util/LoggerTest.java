@@ -37,18 +37,19 @@ public class LoggerTest {
             final GameUpdate testUpdate =
                     new GameUpdate(Category.PLAYER, Player.JUMP);
             final String testUpdateString = "[PLAYER] Jumping.\n";
+            final int updateIndex = Logger.FORMAT.length() - 1;
 
             logger.update(null, testUpdate);
             logger.writeToFile();
             String log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
-                    StandardCharsets.UTF_8).substring(Logger.FORMAT.length() - 1);
+                    StandardCharsets.UTF_8).substring(updateIndex);
             assertEquals(testUpdateString, log);
 
             // append = false, thus a new file should be created
             logger.update(null, testUpdate);
             logger.writeToFile(false);
             log = new String(Files.readAllBytes(Paths.get(TESTLOG)),
-                    StandardCharsets.UTF_8).substring(Logger.FORMAT.length() - 1);
+                    StandardCharsets.UTF_8).substring(updateIndex);
             assertEquals(testUpdateString, log);
         } catch (IOException e) {
             fail("IOException thrown: " + e.getMessage());

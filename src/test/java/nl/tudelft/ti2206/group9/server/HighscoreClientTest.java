@@ -29,7 +29,7 @@ public class HighscoreClientTest {
             new Thread(() -> {
                 try {
                     HighscoreServer.main("");
-                } catch (Exception e) { // NOPMD - we want to catch EVERYTHING :D
+                } catch (Exception e) { // NOPMD - need to catch EVERYTHING :D
                     fail("Server has thrown an exception:\n" + e.getMessage());
                 }
             }, "ServerThread").start();
@@ -183,7 +183,7 @@ public class HighscoreClientTest {
             }
 
             client.getGlobal(1, callback);
-            // haltTestUntilServerResponds(); not needed, because connected = false.
+            // halt(); not needed, because connected = false.
             assertEquals("DISCONNECTED", actualResponse);
         } catch (InterruptedException e) {
             fail("InterruptedException thrown: " + e.getMessage());

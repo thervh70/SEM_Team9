@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Scanner;
 
 /**
@@ -25,7 +26,9 @@ public final class HighscoreServer {
 
     /** The ServerSocket of this server. This is a private field, because it
      *  is accessed in two separate threads. */
-    private static ServerSocket ss;
+    private static ServerSocket serverSocket;
+    /** The CLIThread of this server, handles console input. */
+    private static CLIThread cliThread;
 
     /** Hiding public constructor. */
     private HighscoreServer() { }
@@ -35,16 +38,21 @@ public final class HighscoreServer {
      * @throws IOException when something unexpected happens.
      */
     public static void main(final String... args) throws IOException {
-        new Thread(new CLIThread(), "CLIThread").start();
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            ss = serverSocket;
+        cliThread = new CLIThread();
+        new Thread(cliThread, "CLIThread").start();
+        log("Type \"stop\" or \"q\" to exit.");
+        try (ServerSocket sock = new ServerSocket(PORT)) {
+            serverSocket = sock;
             log("Server is now accepting clients.");
             while (running) {
-                new HighscoreServerThread(serverSocket.accept()).start();
+                final Socket socket = serverSocket.accept();
+                new Thread(new HighscoreServerThread(socket), "HsServerThread"
+                        + socket.getRemoteSocketAddress().toString()).start();
             }
         } catch (IOException e) {
             if (running) { // Only log if running
                 logError("Could not listen on port " + PORT + ", exiting!");
+                cliThread.handleCommand("stop");
             }
         }
     }
@@ -76,27 +84,33 @@ public final class HighscoreServer {
         public void run() {
             final Scanner sc = new Scanner(System.in, "UTF-8");
             String command;
-            log("Type \"stop\" to exit.");
             while (running) {
                 command = sc.nextLine();
-                switch (command) {
-                case "q":
-                case "stop":
-                case "exit":
-                case "evacuate":
-                case "implode":
-                    quit();
-                    try {
-                        ss.close();
-                        log("Stopping the server.");
-                    } catch (IOException e) {
-                        logError("Could not stop server? Exiting anyway :D");
-                    }
-                    break;
-                default: break;
-                }
+                handleCommand(command);
             }
             sc.close();
+        }
+
+        /**
+         * @param command the command that is entered by the user.
+         */
+        private void handleCommand(final String command) {
+            switch (command) {
+            case "q":
+            case "stop":
+                quit();
+                try {
+                    if (serverSocket != null) {
+                        serverSocket.close();
+                    }
+                } catch (IOException e) {
+                    logError("IOException while stopping the server, "
+                            + "exiting anyway.");
+                }
+                log("Server has been stopped.");
+                break;
+            default: break;
+            }
         }
     }
 

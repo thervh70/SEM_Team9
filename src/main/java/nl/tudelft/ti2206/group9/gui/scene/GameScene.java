@@ -69,9 +69,8 @@ public final class GameScene extends AbstractScene {
     private static boolean running;
 
     /** The AudioPlayer to be used for background music. */
-    private static SoundtrackPlayer soundtrackPlayer =
-            new SoundtrackPlayer("src/main/resources/"
-                    + "nl/tudelft/ti2206/group9/audio/soundtrack.mp3");
+    private static SoundtrackPlayer soundtrackPlayer = new SoundtrackPlayer(
+                    "nl/tudelft/ti2206/group9/audio/soundtrack.mp3");
 
     /** The Sound-effects player. */
     private static SoundEffectObserver soundEffectObserver =
@@ -353,8 +352,7 @@ public final class GameScene extends AbstractScene {
          * @return a new SoundEffectPlayer that plays the indicated effectName.
          */
         private SoundEffectPlayer createPlayer(final String effectName) {
-            final String audioPath = "src/main/resources/"
-                    + "nl/tudelft/ti2206/group9/audio/";
+            final String audioPath = "nl/tudelft/ti2206/group9/audio/";
             return new SoundEffectPlayer(audioPath + effectName + ".wav");
         }
 

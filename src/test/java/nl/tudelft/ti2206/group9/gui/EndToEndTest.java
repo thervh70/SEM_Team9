@@ -161,9 +161,10 @@ public class EndToEndTest extends ApplicationTest {
             ShaftEscape.LOGGER.writeToFile();
             final String log = new String(Files.readAllBytes(
                     Paths.get(Logger.OUTFILE)), StandardCharsets.UTF_8);
-            System.out.println("\n== EVENT_LOG ==");     //NOPMD - Intended use of
-            System.out.println(log);                     //NOPMD - System.out.print
-            System.out.println("== END_EVENT_LOG ==\n"); //NOPMD - for Travis log
+            // Intended use of System.out.println for Travis log
+            System.out.println("\n== EVENT_LOG ==");     //NOPMD
+            System.out.println(log);                     //NOPMD
+            System.out.println("== END_EVENT_LOG ==\n"); //NOPMD
         } catch (IOException e) {
             fail("IOException thrown: " + e.getMessage());
         }
@@ -387,6 +388,6 @@ public class EndToEndTest extends ApplicationTest {
         children = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
         final TextField text = (TextField) children.get(ACCOUNT_TEXTFIELD);
-        text.clear();
+        Platform.runLater(text::clear);
     }
 }
