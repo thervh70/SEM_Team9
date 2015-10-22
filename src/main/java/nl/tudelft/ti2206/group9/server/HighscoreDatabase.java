@@ -123,9 +123,7 @@ public final class HighscoreDatabase {
                 entries++;
             }
         }
-        for (; entries < amount; entries++) {
-            theOutput.append('\n');
-        }
+        theOutput.append('\4');
     }
 
     /**

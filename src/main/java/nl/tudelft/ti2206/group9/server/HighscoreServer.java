@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
@@ -177,8 +178,8 @@ public final class HighscoreServer {
          * @return A formatted string from the date, with milliseconds.
          */
         private String formatDate(final long millis) {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(
-                    new Date(millis));
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",
+                    Locale.getDefault()).format(new Date(millis));
         }
 
         /**

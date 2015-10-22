@@ -79,7 +79,7 @@ public class HighscoreClientTest {
         client.getGlobal(listSize, callback);
         haltTestUntilServerResponds();
         assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]\n"
-                + "Highscore[Kees, 42]\n\n", actualResponse);
+                + "Highscore[Kees, 42]", actualResponse);
 
         client.getGlobal(2, callback);
         haltTestUntilServerResponds();
@@ -98,7 +98,7 @@ public class HighscoreClientTest {
 
         client.getUser(names[1], 2 + 1, callback);
         haltTestUntilServerResponds();
-        assertEquals("Highscore[Piet, 63]\nHighscore[Piet, 21]\n",
+        assertEquals("Highscore[Piet, 63]\nHighscore[Piet, 21]",
                 actualResponse);
     }
 
