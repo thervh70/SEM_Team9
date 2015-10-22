@@ -31,7 +31,7 @@ public abstract class AbstractInfoPopup extends Popup {
 
     /** The AudioPlayer to be used for a button sound effect. */
     private static final SoundEffectPlayer BUTTON_SOUND = new SoundEffectPlayer(
-            "src/main/resources/nl/tudelft/ti2206/group9/audio/button.wav");
+            "nl/tudelft/ti2206/group9/audio/button.wav");
 
     /** The left button in the Popup. */
     private final Button left;
