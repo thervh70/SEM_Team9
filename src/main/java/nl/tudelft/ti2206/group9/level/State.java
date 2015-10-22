@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.group9.level;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.util.GameObserver;
@@ -35,12 +33,6 @@ public final class State {
     private static String playerName;
 
     /**
-     * Default savegame directory.
-     * Attention! Only use 1 subfolder!
-     */
-    private static String defaultSaveDir = "sav/";
-
-    /**
      * Boolean to determine whether soundtracks are enabled.
      */
     private static boolean soundtrackEnabled;
@@ -49,9 +41,6 @@ public final class State {
      */
     private static boolean soundEffectsEnabled;
 
-    /** List of the names of all the saved games. */
-    private static ObservableList<String> saveGames =
-            FXCollections.observableArrayList();
     /** Standard modulus number for both modulo calculation. */
     public static final int MOD = 50;
     /** Records the distance from the previous distance update. */
@@ -251,27 +240,4 @@ public final class State {
         skin = newSkin;
     }
 
-    /**
-     * Get the default savegame directory.
-     * @return defaultSaveDir
-     */
-    public static String getDefaultSaveDir() {
-        return defaultSaveDir;
-    }
-
-    /**
-     * Set a new default savegame directory.
-     * @param newSaveDir the new savegame directory
-     */
-    public static void setDefaultSaveDir(final String newSaveDir) {
-        State.defaultSaveDir = newSaveDir;
-    }
-
-    /**
-     * Get the list of the names of all the saved games.
-     * @return ObservableList which contains all names of the saved games
-     */
-    public static ObservableList<String> getSaveGames() {
-        return saveGames;
-    }
 }

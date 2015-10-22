@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.level;
 
+import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -107,13 +108,13 @@ public class StateTest {
 
     @Test
     public void testGetDefaultSaveDir() {
-        assertEquals("sav/", State.getDefaultSaveDir());
+        assertEquals("sav/", SaveGame.getDefaultSaveDir());
 
-        State.setDefaultSaveDir("save/");
-        assertEquals("save/", State.getDefaultSaveDir());
+        SaveGame.setDefaultSaveDir("save/");
+        assertEquals("save/", SaveGame.getDefaultSaveDir());
 
         // Clean up after test
-        State.setDefaultSaveDir("sav/");
+        SaveGame.setDefaultSaveDir("sav/");
     }
 
 }

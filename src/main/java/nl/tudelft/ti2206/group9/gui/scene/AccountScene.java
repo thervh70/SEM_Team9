@@ -109,7 +109,7 @@ public class AccountScene extends AbstractMenuScene {
      * Refresh the content of the scene.
      */
     private static void refreshContent() {
-        State.getSaveGames().clear();
+        SaveGame.getSaveGames().clear();
         final AbstractScene scene = ShaftEscape.getScene();
         scene.setRoot(scene.createRoot());
     }
@@ -118,7 +118,7 @@ public class AccountScene extends AbstractMenuScene {
      * Clear all textfields and lists in AccountScene.
      */
     private static void clearAccountScene() {
-        State.getSaveGames().clear();
+        SaveGame.getSaveGames().clear();
         INPUT.clear();
     }
 
@@ -127,7 +127,7 @@ public class AccountScene extends AbstractMenuScene {
      */
     private static void setListContent() {
         SaveGame.readPlayerNames();
-        list.setItems(State.getSaveGames());
+        list.setItems(SaveGame.getSaveGames());
         list.getSelectionModel().selectFirst();
     }
 
@@ -167,6 +167,6 @@ public class AccountScene extends AbstractMenuScene {
      * @return a boolean to indicate whether the name already exists
      */
     private static boolean alreadyExists(final String name) {
-        return State.getSaveGames().contains(name);
+        return SaveGame.getSaveGames().contains(name);
     }
 }

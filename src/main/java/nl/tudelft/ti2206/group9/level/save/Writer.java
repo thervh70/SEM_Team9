@@ -1,6 +1,12 @@
 package nl.tudelft.ti2206.group9.level.save;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import nl.tudelft.ti2206.group9.gui.skin.Skin;
+import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObserver;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import org.json.simple.JSONObject;
+import sun.misc.BASE64Encoder;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -8,15 +14,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
-import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObserver;
-import nl.tudelft.ti2206.group9.util.GameObserver.Category;
-import nl.tudelft.ti2206.group9.util.GameObserver.Error;
-
-import org.json.simple.JSONObject;
-
-import sun.misc.BASE64Encoder; //NOPMD - I need this package
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * This class takes care of the writing of JSON

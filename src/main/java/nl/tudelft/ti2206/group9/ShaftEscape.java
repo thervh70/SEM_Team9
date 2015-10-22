@@ -70,7 +70,7 @@ public class ShaftEscape extends Application {
 
     /** Creates the savefile directory. */
     private static void createSaveDirectory() {
-        final File saveDir = new File(State.getDefaultSaveDir());
+        final File saveDir = new File(SaveGame.getDefaultSaveDir());
 
         // if the directory does not exist, create it
         if (!saveDir.exists()) {
