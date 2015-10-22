@@ -7,7 +7,7 @@ import nl.tudelft.ti2206.group9.shop.soundtrack.DuckTalesSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.MarioSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.NyanCatSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.ShakeItOffSoundtrack;
-import nl.tudelft.ti2206.group9.shop.soundtrack.Soundtrack;
+import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 
 import org.junit.Test;
 
@@ -19,12 +19,12 @@ import org.junit.Test;
  */
 public class ShopItemTest {
 
-    private static Soundtrack animals = new AnimalsSoundtrack();
-    private static Soundtrack radioactive = new DefaultSoundtrack();
-    private static Soundtrack duckTales = new DuckTalesSoundtrack();
-    private static Soundtrack mario = new MarioSoundtrack();
-    private static Soundtrack nyanCat = new NyanCatSoundtrack();
-    private static Soundtrack shakeItOff = new ShakeItOffSoundtrack();
+    private static AbstractSoundtrack animals = new AnimalsSoundtrack();
+    private static AbstractSoundtrack radioactive = new DefaultSoundtrack();
+    private static AbstractSoundtrack duckTales = new DuckTalesSoundtrack();
+    private static AbstractSoundtrack mario = new MarioSoundtrack();
+    private static AbstractSoundtrack nyanCat = new NyanCatSoundtrack();
+    private static AbstractSoundtrack shakeItOff = new ShakeItOffSoundtrack();
     // Skins can't be tested, as they require graphics for their texture.
 
 
@@ -50,13 +50,13 @@ public class ShopItemTest {
 
     @Test
     public void testUnlockedHashMap() {
-        Soundtrack.createUnlockedSoundtrackHashmap();
-        assertEquals(Soundtrack.getUnlockedSoundtrack("Animals"), false);
-        assertEquals(Soundtrack.getUnlockedSoundtrack("Default"), true);
-        assertEquals(Soundtrack.getUnlockedSoundtrack("Duck Tales"), false);
-        assertEquals(Soundtrack.getUnlockedSoundtrack("Mario"), false);
-        assertEquals(Soundtrack.getUnlockedSoundtrack("Nyan Cat"), false);
-        assertEquals(Soundtrack.getUnlockedSoundtrack("Shake It Off"), false);
+        ShopItemUnlocker.createUnlockedShopItemsHashMap();
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Animals"), false);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Default"), true);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Duck Tales"), false);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Mario"), false);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Nyan Cat"), false);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Shake It Off"), false);
     }
 
 }

@@ -16,8 +16,7 @@ import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
-import nl.tudelft.ti2206.group9.shop.skin.Skin;
-import nl.tudelft.ti2206.group9.shop.soundtrack.Soundtrack;
+import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Logger;
@@ -50,8 +49,7 @@ public class ShaftEscape extends Application {
         //Loading textures
         Style.loadTextures();
         ShopItemLoader.loadShopItems();
-        Skin.createUnlockedSkinHashmap();
-        Soundtrack.createUnlockedSoundtrackHashmap();
+        ShopItemUnlocker.createUnlockedShopItemsHashMap();
 
         State.resetAll();
         setStage(appStage);

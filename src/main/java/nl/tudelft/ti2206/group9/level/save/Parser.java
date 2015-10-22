@@ -13,8 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.shop.skin.Skin;
-import nl.tudelft.ti2206.group9.shop.soundtrack.Soundtrack;
+import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
@@ -180,22 +179,22 @@ public final class Parser {
      * Write states of skins to Style.
      */
     private static void writeToSkins() {
-        Skin.setUnlockedSkin("Andy", andy);
-        Skin.setUnlockedSkin("B-man", boy);
-        Skin.setUnlockedSkin("Captain", captain);
-        Skin.setUnlockedSkin("Iron Man", iron);
-        Skin.setUnlockedSkin("Plank", plank);
+        ShopItemUnlocker.setUnlockedShopItem("Andy", andy);
+        ShopItemUnlocker.setUnlockedShopItem("B-man", boy);
+        ShopItemUnlocker.setUnlockedShopItem("Captain", captain);
+        ShopItemUnlocker.setUnlockedShopItem("Iron Man", iron);
+        ShopItemUnlocker.setUnlockedShopItem("Plank", plank);
     }
 
     /**
      * Write states of soundtracks to Soundtrack.
      */
     private static void writeToSoundtracks() {
-        Soundtrack.setUnlockedSoundtrack("Animals", animals);
-        Soundtrack.setUnlockedSoundtrack("Duck Tales", duckTales);
-        Soundtrack.setUnlockedSoundtrack("Mario", mario);
-        Soundtrack.setUnlockedSoundtrack("Nyan Cat", nyanCat);
-        Soundtrack.setUnlockedSoundtrack("Shake It Off", shakeItOff);
+        ShopItemUnlocker.setUnlockedShopItem("Animals", animals);
+        ShopItemUnlocker.setUnlockedShopItem("Duck Tales", duckTales);
+        ShopItemUnlocker.setUnlockedShopItem("Mario", mario);
+        ShopItemUnlocker.setUnlockedShopItem("Nyan Cat", nyanCat);
+        ShopItemUnlocker.setUnlockedShopItem("Shake It Off", shakeItOff);
     }
 
     /**

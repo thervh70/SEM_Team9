@@ -9,8 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.shop.skin.Skin;
-import nl.tudelft.ti2206.group9.shop.soundtrack.Soundtrack;
+import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
@@ -124,22 +123,23 @@ public final class Writer {
         final JSONObject shopItems = new JSONObject();
 
         final JSONObject skins = new JSONObject();
-        skins.put("andy", Skin.getUnlockedSkin("Andy"));
-        skins.put("boy", Skin.getUnlockedSkin("B-man"));
-        skins.put("captain", Skin.getUnlockedSkin("Captain"));
-        skins.put("iron", Skin.getUnlockedSkin("Iron Man"));
-        skins.put("plank", Skin.getUnlockedSkin("Plank"));
+        skins.put("andy", ShopItemUnlocker.getUnlockedShopItem("Andy"));
+        skins.put("boy", ShopItemUnlocker.getUnlockedShopItem("B-man"));
+        skins.put("captain", ShopItemUnlocker.getUnlockedShopItem("Captain"));
+        skins.put("iron", ShopItemUnlocker.getUnlockedShopItem("Iron Man"));
+        skins.put("plank", ShopItemUnlocker.getUnlockedShopItem("Plank"));
         shopItems.put("skins", skins);
 
         final JSONObject soundtracks = new JSONObject();
-        soundtracks.put("animals", Soundtrack.getUnlockedSoundtrack("Animals"));
-        soundtracks.put("duckTales", Soundtrack.
-                getUnlockedSoundtrack("Duck Tales"));
-        soundtracks.put("mario", Soundtrack.getUnlockedSoundtrack("Mario"));
-        soundtracks.put("nyanCat", Soundtrack.
-                getUnlockedSoundtrack("Nyan Cat"));
-        soundtracks.put("shakeItOff", Soundtrack.
-                getUnlockedSoundtrack("Shake It Off"));
+        soundtracks.put("animals", ShopItemUnlocker.
+                getUnlockedShopItem("Animals"));
+        soundtracks.put("duckTales", ShopItemUnlocker.
+                getUnlockedShopItem("Duck Tales"));
+        soundtracks.put("mario", ShopItemUnlocker.getUnlockedShopItem("Mario"));
+        soundtracks.put("nyanCat", ShopItemUnlocker.
+                getUnlockedShopItem("Nyan Cat"));
+        soundtracks.put("shakeItOff", ShopItemUnlocker.
+                getUnlockedShopItem("Shake It Off"));
         shopItems.put("soundtracks", soundtracks);
 
         return shopItems;

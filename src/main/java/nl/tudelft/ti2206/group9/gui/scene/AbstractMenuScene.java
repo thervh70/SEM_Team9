@@ -12,7 +12,7 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.shop.skin.Skin;
+import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 
 /**
  * Ancestor for all MenuScenes. Subclasses should define an array of Nodes in
@@ -151,9 +151,9 @@ public abstract class AbstractMenuScene extends AbstractScene {
      * @param column Column index on Gridpane.
      * @param row Row index on Gridpane.
      * @return Returns the listview. */
-    protected static TableView<Skin> createSkinTable(final int column,
+    protected static TableView<AbstractSkin> createSkinTable(final int column,
                                                  final int row) {
-        final TableView<Skin> table = new TableView<>();
+        final TableView<AbstractSkin> table = new TableView<>();
         table.setEditable(true);
         GridPane.setConstraints(table, column, row);
         GridPane.setColumnSpan(table, COLUMN_SPAN);
