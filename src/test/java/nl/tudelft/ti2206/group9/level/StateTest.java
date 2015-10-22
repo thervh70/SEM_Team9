@@ -14,7 +14,7 @@ public class StateTest {
     public void setUp() {
         State.resetAll();
         assertEquals(0, State.getCoins());
-        assertEquals(0, State.getDistance(), DELTA);
+        assertEquals(0, Track.getDistance(), DELTA);
         assertEquals(0, State.getScore(), DELTA);
     }
 
@@ -23,7 +23,7 @@ public class StateTest {
         State.addScore(2);
         Track.addDistance(1);
         State.reset();
-        assertEquals(0, State.getDistance(), DELTA);
+        assertEquals(0, Track.getDistance(), DELTA);
         assertEquals(0, State.getScore(), DELTA);
     }
 
@@ -44,25 +44,25 @@ public class StateTest {
     @Test
     public void testModuloDistance() {
         Track.setDistance(2);
-        assertEquals(0, State.modulo(State.getDistance()));
-        Track.setDistance(State.MOD + 1);
-        assertEquals(State.MOD, State.modulo(State.getDistance()));
+        assertEquals(0, Track.modulo(Track.getDistance()));
+        Track.setDistance(Track.MOD + 1);
+        assertEquals(Track.MOD, Track.modulo(Track.getDistance()));
     }
 
     @Test
     public void testModuloScore() {
         State.setScore(2.0);
-        assertEquals(0, State.modulo(State.getDistance()));
-        State.setScore(State.MOD + 1.0);
-        assertEquals(State.MOD, State.modulo(State.getScore()));
+        assertEquals(0, Track.modulo(Track.getDistance()));
+        State.setScore(Track.MOD + 1.0);
+        assertEquals(Track.MOD, Track.modulo(State.getScore()));
     }
 
     @Test
     public void tesSGetDistance() {
         Track.setDistance(2);
-        assertEquals(2, State.getDistance(), DELTA);
+        assertEquals(2, Track.getDistance(), DELTA);
         Track.setDistance(1);
-        assertEquals(1, State.getDistance(), DELTA);
+        assertEquals(1, Track.getDistance(), DELTA);
     }
 
     @Test

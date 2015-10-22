@@ -19,6 +19,7 @@ import nl.tudelft.ti2206.group9.gui.popup.DeathPopup;
 import nl.tudelft.ti2206.group9.gui.popup.PausePopup;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.Direction;
@@ -327,7 +328,7 @@ public final class GameScene extends AbstractScene {
             }
             if (update.getSpec() == Player.DISTANCE_INCREASE) {
                 final int mod = 250;
-                if (State.getDistance() >= prevDist + mod) {
+                if (Track.getDistance() >= prevDist + mod) {
                     prevDist += mod;
                     new Thread(() -> {
                         GameScene.getSoundtrackPlayer().setSpeed(

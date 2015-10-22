@@ -2,10 +2,6 @@ package nl.tudelft.ti2206.group9.level;
 
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
-import nl.tudelft.ti2206.group9.util.GameObserver;
-import nl.tudelft.ti2206.group9.util.GameObserver.Category;
-
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * This utility class stores the State of the game,
@@ -38,11 +34,6 @@ public final class State {
      */
     private static boolean soundEffectsEnabled;
 
-    /** Standard modulus number for both modulo calculation. */
-    public static final int MOD = 50;
-    /** Records the distance from the previous distance update. */
-    private static int previousDistance;
-
     /** Cannot be constructed. */
     private State() { }
 
@@ -51,7 +42,7 @@ public final class State {
         reset();
         setCoins(0);
         highscore = 0;
-        previousDistance = 0;
+        Track.previousDistance = 0;
         Skin.skin = Skin.loadSkinsToList().get(0);
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
@@ -61,7 +52,7 @@ public final class State {
     public static void reset() {
         setTrack(new Track());
         setScore(0);
-        previousDistance = 0;
+        Track.previousDistance = 0;
         Track.setDistance(0);
         track.getPlayer().respawn();
         PowerupInvulnerable.resetCounter();
@@ -107,35 +98,6 @@ public final class State {
      */
     public static void setCoins(final int newCoins) {
         coins = newCoins;
-    }
-
-    /**
-     * @return the distance of the track
-     */
-    public static double getDistance() {
-        return Track.getDistance();
-    }
-
-    /**
-     * Check whether the distance has been increased by 50 (or more).
-     * This check is used for soundtrack speed increasing.
-     */
-    public static void distanceCheck() {
-        final int currentDistance = State.modulo(State.getDistance());
-        if (currentDistance > previousDistance) {
-            previousDistance = currentDistance;
-            OBSERVABLE.notify(Category.PLAYER,
-                    GameObserver.Player.DISTANCE_INCREASE, (int) getDistance());
-        }
-    }
-
-    /**
-     * Update the current distance every {@link #MOD} moves or points increase.
-     * @param amount number of (distance or points)
-     * @return updated amount
-     */
-    public static int modulo(final double amount) {
-        return (int) (Math.floor(amount / MOD) * MOD);
     }
 
     /**
