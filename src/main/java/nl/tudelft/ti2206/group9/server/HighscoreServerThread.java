@@ -17,7 +17,7 @@ import java.util.Scanner;
  * Thread spawned by HighscoreServer every time a client connects.
  * @author Maarten
  */
-public class HighscoreServerThread extends Thread {
+public class HighscoreServerThread implements Runnable {
 
     /** Amount of spaces needed to pad a console log. */
     private static final int PADDING_SPACES = 23;
@@ -39,7 +39,6 @@ public class HighscoreServerThread extends Thread {
      * @param connection Socket to connect to.
      */
     public HighscoreServerThread(final Socket connection) {
-        super("HighscoreServerThread");
         socket = connection;
     }
 

@@ -1,11 +1,5 @@
 package nl.tudelft.ti2206.group9.gui.scene; // NOPMD - many imports are needed
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-
-import java.util.Map;
-import java.util.Observable;
-import java.util.concurrent.ConcurrentHashMap;
-
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -32,6 +26,12 @@ import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
+
+import java.util.Map;
+import java.util.Observable;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * This scene shows the 3D Game world and the 2D score overlay.
@@ -68,9 +68,8 @@ public final class GameScene extends AbstractScene {
     private static boolean running;
 
     /** The AudioPlayer to be used for background music. */
-    private static SoundtrackPlayer soundtrackPlayer =
-            new SoundtrackPlayer("src/main/resources/"
-                    + "nl/tudelft/ti2206/group9/audio/soundtrack.mp3");
+    private static SoundtrackPlayer soundtrackPlayer = new SoundtrackPlayer(
+                    "nl/tudelft/ti2206/group9/audio/soundtrack.mp3");
 
     /** The Sound-effects player. */
     private static SoundEffectObserver soundEffectObserver =
@@ -249,11 +248,6 @@ public final class GameScene extends AbstractScene {
         return world.getChildren().addAll(node);
     }
 
-    /** Clears the world. */
-    public static void clearWorld() {
-        world.getChildren().clear();
-    }
-
     /**
      * Adds node to the overlay.
      * @param node the Node
@@ -269,24 +263,11 @@ public final class GameScene extends AbstractScene {
     }
 
     /**
-     * Set the running attribute of this class.
-     * @param b New value for running.
-     */
-    public static void setRunning(final boolean b) {
-        running = b;
-    }
-
-    /**
      * Every GameScene has an AudioPlayer for the soundtrack.
      * @return the soundtrack AudioPlayer.
      */
     public static SoundtrackPlayer getSoundtrackPlayer() {
         return soundtrackPlayer;
-    }
-
-    /** @return the ExternalTicker of the GameScene. */
-    public static ExternalTicker getExternalTicker() {
-        return extTicker;
     }
 
     /** Stops the game when the Player dies. */
@@ -370,8 +351,7 @@ public final class GameScene extends AbstractScene {
          * @return a new SoundEffectPlayer that plays the indicated effectName.
          */
         private SoundEffectPlayer createPlayer(final String effectName) {
-            final String audioPath = "src/main/resources/"
-                    + "nl/tudelft/ti2206/group9/audio/";
+            final String audioPath = "nl/tudelft/ti2206/group9/audio/";
             return new SoundEffectPlayer(audioPath + effectName + ".wav");
         }
 

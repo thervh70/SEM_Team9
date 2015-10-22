@@ -167,11 +167,5 @@ public class ExternalTicker extends AnimationTimer {
             }
         });
     }
-
-    /** @return the entities renderer */
-    public AbstractGroupRenderer getEntitiesRenderer() {
-        return entities;
-    }
-
 }
 

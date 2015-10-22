@@ -42,7 +42,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     private static final int EXIT_BUTTON_WIDTH = 60;
     /** The AudioPlayer to be used for background music. */
     private static SoundtrackPlayer apMainMenu = new SoundtrackPlayer(
-            "src/main/resources/nl/tudelft/ti2206/group9/audio/intro.mp3");
+            "nl/tudelft/ti2206/group9/audio/intro.mp3");
 
     /**
      * Create Start, Settings and Exit buttons.
