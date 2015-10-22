@@ -1,16 +1,16 @@
 package nl.tudelft.ti2206.group9.level;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class StateTest {
 
     public static final double DELTA = 0.0000001;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         State.resetAll();
         assertEquals(0, State.getCoins());
         assertEquals(0, State.getDistance(), DELTA);
