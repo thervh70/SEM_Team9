@@ -19,14 +19,21 @@ import org.junit.Test;
  */
 public class ShopItemTest {
 
+    // Soundtrack items
     private static AbstractSoundtrack animals = new AnimalsSoundtrack();
     private static AbstractSoundtrack radioactive = new DefaultSoundtrack();
     private static AbstractSoundtrack duckTales = new DuckTalesSoundtrack();
     private static AbstractSoundtrack mario = new MarioSoundtrack();
     private static AbstractSoundtrack nyanCat = new NyanCatSoundtrack();
     private static AbstractSoundtrack shakeItOff = new ShakeItOffSoundtrack();
+    // Soundtrack prices
+    private static final int ANIMALS_PRCICE = 30;
+    private static final int RADIOACTIVE_PRICE = 0;
+    private static final int DUCKTALES_PRICE = 20;
+    private static final int MARIO_PRICE = 100;
+    private static final int NYANCAT_PRICE = 90;
+    private static final int SHAKEITOFF_PRICE = 70;
     // Skins can't be tested, as they require graphics for their texture.
-
 
     @Test
     public void testConstructorName() {
@@ -40,23 +47,24 @@ public class ShopItemTest {
 
     @Test
     public void testConstructorPrice() {
-        assertEquals(animals.getItemPrice(), 30);
-        assertEquals(radioactive.getItemPrice(), 0);
-        assertEquals(duckTales.getItemPrice(), 20);
-        assertEquals(mario.getItemPrice(), 100);
-        assertEquals(nyanCat.getItemPrice(), 90);
-        assertEquals(shakeItOff.getItemPrice(), 70);
+        assertEquals(animals.getItemPrice(), ANIMALS_PRCICE);
+        assertEquals(radioactive.getItemPrice(), RADIOACTIVE_PRICE);
+        assertEquals(duckTales.getItemPrice(), DUCKTALES_PRICE);
+        assertEquals(mario.getItemPrice(), MARIO_PRICE);
+        assertEquals(nyanCat.getItemPrice(), NYANCAT_PRICE);
+        assertEquals(shakeItOff.getItemPrice(), SHAKEITOFF_PRICE);
     }
 
     @Test
     public void testUnlockedHashMap() {
-        ShopItemUnlocker.createUnlockedShopItemsHashMap();
+        ShopItemUnlocker.createUnlockedShopItemsMap();
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Animals"), false);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Default"), true);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Duck Tales"), false);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Mario"), false);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Nyan Cat"), false);
-        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Shake It Off"), false);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem(
+                "Shake It Off"), false);
     }
 
 }

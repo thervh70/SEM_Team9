@@ -49,7 +49,7 @@ public class ShaftEscape extends Application {
         //Loading textures
         Style.loadTextures();
         ShopItemLoader.loadShopItems();
-        ShopItemUnlocker.createUnlockedShopItemsHashMap();
+        ShopItemUnlocker.createUnlockedShopItemsMap();
 
         State.resetAll();
         setStage(appStage);
