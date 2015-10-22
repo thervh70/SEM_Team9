@@ -11,9 +11,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.shop.skin.Skin;
+import nl.tudelft.ti2206.group9.shop.soundtrack.Soundtrack;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
 /**
@@ -34,7 +36,7 @@ public class ShopScene extends AbstractMenuScene {
     /** Spacing between items in H/V-Boxes. */
     private static final int BOX_SPACING = 10;
     /** Row constraint for labels. */
-    private static final int ROW_CONSTRAINT = 3;
+    private static final int ROW_CONSTRAINT = 2;
     /** Column constraint. */
     private static final int COLUMN_CONSTRAINT = 4;
     /** Row constraint and column span. */
@@ -58,10 +60,24 @@ public class ShopScene extends AbstractMenuScene {
     public Node[] createContent() {
         final TabPane tabPane = new TabPane();
         tabPane.setMinHeight(460);
+        Tab skinTab = createSkinTab();
+        Tab soundTab = createSoundTab();
 
-        tabPane.getTabs().addAll(createSkinTab(), createSoundTab());
+        tabPane.getTabs().addAll(skinTab, soundTab);
+        tabPane.setFocusTraversable(true);
+
+//        if (tabPane.getSelectionModel().getSelectedItem().equals(skinTab)) {
+//            currentSkin.setVisible(true);
+//            currentSoundtrack.setVisible(false);
+//        } else if (tabPane.getSelectionModel().getSelectedItem().equals(soundTab)) {
+//            currentSkin.setVisible(false);
+//            currentSoundtrack.setVisible(true);
+//        }
 
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
+        currentSoundtrack = createLabel("CURRENT SOUNDTRACK: "
+                + GameScene.getSoundtrackPlayer().getPath(), 1, COLUMN_CONSTRAINT);
+        currentSoundtrack.setMinWidth(LABEL_WIDTH);
 
         currentSkin = createLabel("CURRENT SKIN: "
                 + State.getSkin().getItemName(), 1, COLUMN_CONSTRAINT);
@@ -74,11 +90,12 @@ public class ShopScene extends AbstractMenuScene {
 
         GridPane.setColumnSpan(tabPane, ROW_CONSTRAINT_SPAN);
         GridPane.setColumnSpan(currentSkin, ROW_CONSTRAINT_SPAN);
+        GridPane.setColumnSpan(currentSoundtrack, ROW_CONSTRAINT_SPAN);
         GridPane.setConstraints(tabPane,
                 0, 0);
 
         return new Node[]{tabPane, backButton,
-                coinsLabel, amountLabel, currentSkin};
+                coinsLabel, amountLabel, currentSkin, currentSoundtrack};
     }
 
     /**
@@ -165,7 +182,7 @@ public class ShopScene extends AbstractMenuScene {
         scrollPane.setContent(itemBox);
 
         tab.setContent(scrollPane);
-
+        tab.setClosable(false);
 
         return tab;
     }
@@ -174,45 +191,65 @@ public class ShopScene extends AbstractMenuScene {
         Tab tab = new Tab("Soundtracks");
 
         final VBox itemBox = new VBox(BOX_SPACING);
-//        final ObservableList<SoundTrack> items = Soundtrack.load
+        final ObservableList<Soundtrack> items = Soundtrack.loadSoundtracksToList();
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
         itemBox.getChildren().clear();
 
-//        for (final SoundTrack s : items) {
-//            itemBox.getChildren().addAll(createSoundTrackCarousel(s));
-//        }
+        for (final Soundtrack s : items) {
+            itemBox.getChildren().addAll(createSoundTrackCarousel(s));
+        }
+
+        scrollPane.setContent(itemBox);
+        tab.setContent(scrollPane);
+        tab.setClosable(false);
 
         return tab;
     }
 
-//    public HBox createSoundTrackCarousel(SoundTrack s) {
-//        HBox hbox = new HBox(BOX_SPACING);
-//        ImageView imageView = new ImageView(new Image("IMAGE OF SOUNDTRACK :D"));
-//        Label nameLabel = createLabel(SoundTrack.getName(), 0, 0);
-//        Label priceLabel = createLabel(SoundTrack.getPrice(), 0, 0);
-//        Button buyButton = createButton("BUY", 0, 0);
-//
-//        buyButton.setOnAction(event -> {
-//            if (SoundTrack.getUnlocked(s.getSoundTrackName())) {
-////                TODO: Set soundtrack here.
-//                currentSoundtrack.setText("CURRENT SOUNDTRACK: "
-//                        + "GET CURRENT SOUNDTRACK NAME");
-//            } else {
-//                if (State.getCoins() >= s.getPrice()) {
-//                    State.setCoins(State.getCoins() - s.getPrice());
-//                    SoundTrack.setUnlocked(s.getName(), true);
-//                    amountLabel.setText(Integer.toString(State.getCoins()));
-//                    buyButton.setText("ACTIVATE");
-//                }
-//            }
-//            SaveGame.saveGame();
-//        });
-//
-//        hbox.getChildren().addAll(imageView, nameLabel, priceLabel, buyButton);
-//
-//        return hbox;
-//    }
+    public HBox createSoundTrackCarousel(Soundtrack s) {
+        HBox hbox = new HBox(BOX_SPACING);
+        ImageView imageView = new ImageView(new Image("nl/tudelft/ti2206/group9/gui/scene/music_notes.png"));
+        Label nameLabel = createLabel(s.getItemName(), 0, 0);
+        Label priceLabel = createLabel(Integer.toString(s.getItemPrice()), 0, 0);
+        Button buyButton = createButton("BUY", 0, 0);
+
+        setSoundBuyButtonVisability(buyButton, s);
+
+        buyButton.setOnAction(event -> {
+            if (Soundtrack.getUnlockedSoundtrack(s.getItemName())) {
+                currentSoundtrack.setText("CURRENT SOUNDTRACK: "
+                        + s.getItemName());
+                GameScene.setSoundtrackPlayer(s.getSoundtrackPlayer());
+            } else {
+                if (State.getCoins() >= s.getItemPrice()) {
+                    State.setCoins(State.getCoins() - s.getItemPrice());
+                    Soundtrack.setUnlockedSoundtrack(s.getItemName(), true);
+                    amountLabel.setText(Integer.toString(State.getCoins()));
+                    buyButton.setText("ACTIVATE");
+                }
+            }
+            SaveGame.saveGame();
+        });
+
+        hbox.getChildren().addAll(imageView, nameLabel, priceLabel, buyButton);
+        hbox.setAlignment(Pos.CENTER);
+
+        return hbox;
+    }
+
+    private void setSoundBuyButtonVisability(final Button buy, final Soundtrack s) {
+        if (s.getItemPrice() >= State.getCoins()
+                && !Soundtrack.getUnlockedSoundtrack(s.getItemName())) {
+            buy.setDisable(true);
+        } else {
+            buy.setDisable(false);
+        }
+        if (Soundtrack.getUnlockedSoundtrack(s.getItemName())) {
+            buy.setText("ACTIVATE");
+        }
+    }
+
 
 }
