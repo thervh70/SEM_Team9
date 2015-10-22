@@ -3,12 +3,14 @@ package nl.tudelft.ti2206.group9.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 
 /**
  * Server that stores all highscores. Is a Command-Line application.
@@ -46,9 +48,10 @@ public final class HighscoreServer {
      * @throws IOException when something unexpected happens.
      */
     public static void main(final String... args) throws IOException {
-        final Logger global = Logger.getLogger("");
-        global.removeHandler(global.getHandlers()[0]);
-        global.addHandler(new StdOutConsoleHandler());
+        // Configure logger to use own logging style
+        LOGGER.setUseParentHandlers(false);
+        LOGGER.addHandler(new StdOutConsoleHandler());
+
         cliThread = new CLIThread();
         new Thread(cliThread, "CLIThread").start();
         log("Type \"stop\" or \"q\" to exit.");
@@ -133,10 +136,61 @@ public final class HighscoreServer {
         }
     }
 
+    /** ConsoleHandler that makes sure that the log gets printed to stdout. */
     private static class StdOutConsoleHandler extends ConsoleHandler {
-        public StdOutConsoleHandler() {
+        /** Default constructor, sets output stream to System.out. */
+        StdOutConsoleHandler() {
+            super();
             setOutputStream(System.out);
+            setFormatter(new TextFormatter());
         }
+    }
+
+    /** Creates simple formatting for log messages. */
+    private static class TextFormatter extends Formatter {
+        /** Maximum level length. */
+        private static final int MAX_LEVEL_LENGTH =
+                Level.WARNING.toString().length();
+
+        @Override
+        public String format(final LogRecord record) {
+            final StringBuffer out = new StringBuffer();
+            out
+            .append('[').append(formatDate(record.getMillis()))
+            .append("] [").append(padLevel(record.getLevel())).append("] ")
+            .append(record.getMessage())
+            .append('\n');
+            final Throwable e = record.getThrown();
+            if (e != null) {
+                out.append("    ").append(e.getClass().getName()).append(": ")
+                .append(e.getMessage()).append('\n');
+                for (final StackTraceElement el : e.getStackTrace()) {
+                    out.append("        at ").append(el.toString())
+                    .append('\n');
+                }
+            }
+            return out.toString();
+        }
+
+        /**
+         * @param millis amount of milliseconds after UTC epoch (1970).
+         * @return A formatted string from the date, with milliseconds.
+         */
+        private String formatDate(final long millis) {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(
+                    new Date(millis));
+        }
+
+        /**
+         * @param level The record for which the level gets padded.
+         * @return a Level string, padded to fit the longest Level length.
+         */
+        private String padLevel(final Level level) {
+            final String str = level.toString();
+            final int padding = MAX_LEVEL_LENGTH - str.length();
+            return str + new String(new char[padding]).replace("\0", " ");
+        }
+
     }
 
 }

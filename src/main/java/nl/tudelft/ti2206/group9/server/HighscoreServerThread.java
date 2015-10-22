@@ -20,10 +20,10 @@ import java.util.Scanner;
 public class HighscoreServerThread implements Runnable {
 
     /** Amount of spaces needed to pad a console log. */
-    private static final int PADDING_SPACES = 23;
+    // private static final int PADDING_SPACES = 23;
     /** The actual spaces that pad console logs. */
-    private static final String PAD_STRING =
-            new String(new char[PADDING_SPACES]).replace("\0", " ");
+    private static final String PAD_STRING = "    ";
+            // new String(new char[PADDING_SPACES]).replace("\0", " ");
 
     /** Socket connected to. */
     private final Socket socket;
