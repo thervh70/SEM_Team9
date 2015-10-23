@@ -16,7 +16,8 @@ public final class CurrentItems {
     /** The AudioPlayer to be used for background music. */
     private static SoundtrackPlayer currentSoundtrackPlayer =
             new SoundtrackPlayer(
-                    "nl/tudelft/ti2206/group9/audio/soundtrack_Default.mp3");
+                    "nl/tudelft/ti2206/group9/audio/"
+                    + "soundtrack_Radioactive.mp3");
 
     /** Private constructor. */
     private CurrentItems() { }
@@ -28,7 +29,7 @@ public final class CurrentItems {
     public static void reset() {
         setSkin(ShopItemLoader.getNoobSkin());
         setSoundtrackPlayer(new SoundtrackPlayer("nl/tudelft/ti2206/"
-                + "group9/audio/soundtrack_Default.mp3"));
+                + "group9/audio/soundtrack_Radioactive.mp3"));
     }
 
     /**
