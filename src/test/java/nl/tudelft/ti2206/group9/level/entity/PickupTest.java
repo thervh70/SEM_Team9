@@ -41,7 +41,7 @@ public class PickupTest {
 
     class TestPickup extends AbstractPickup {
 
-        public TestPickup(final AbstractPickup decorating) {
+        TestPickup(final AbstractPickup decorating) {
             super(Point3D.ZERO, Point3D.UNITCUBE, decorating);
         }
 
