@@ -17,7 +17,8 @@ public class Base64Writer extends Writer {
     /** The Base64 encoder. */
     private final Base64.Encoder encoder = Base64.getEncoder();
 
-    /** Constructor which sets the Writer to be decorated.
+    /**
+     * Constructor which sets the Writer to be decorated.
      * @param wrtr the Writer to be decorated
      */
     public Base64Writer(final Writer wrtr) {

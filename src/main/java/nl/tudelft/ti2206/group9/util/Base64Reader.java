@@ -17,7 +17,8 @@ public class Base64Reader extends Reader {
     /** The Base64 decoder. */
     private final Base64.Decoder decoder = Base64.getDecoder();
 
-    /** Constructor which sets the Reader to be decorated.
+    /**
+     * Constructor which sets the Reader to be decorated.
      * @param rdr the Reader to be decorated.
      */
     public Base64Reader(final Reader rdr) {
