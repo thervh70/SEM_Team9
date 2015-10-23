@@ -9,11 +9,14 @@ import java.util.HashMap;
  * the HashMap can be altered during the tests which involve unlocking
  * shop items. (If also the textures are loaded during the tests,
  * (graphics) errors will occur.)
+ *
  * @author Mitchell
  */
 public final class ShopItemUnlocker {
 
-    /** HashMap used to store which shop items are unlocked. */
+    /**
+     * HashMap used to store which shop items are unlocked.
+     */
     private static HashMap<String, Boolean> unlockedShopItemsMap =
             new HashMap<>();
 
@@ -22,7 +25,8 @@ public final class ShopItemUnlocker {
      * This so that this class can't be instantiated,
      * as it is a util class full of static methods.
      */
-    private ShopItemUnlocker() { }
+    private ShopItemUnlocker() {
+    }
 
     /**
      * Creates a HashMap for all shop items that are unlocked.
@@ -63,6 +67,7 @@ public final class ShopItemUnlocker {
 
     /**
      * Gets the unlocked value of shop item, based on the name.
+     *
      * @param name the Name of the shop item.
      * @return boolean unlocked or not.
      */
@@ -72,11 +77,12 @@ public final class ShopItemUnlocker {
 
     /**
      * Sets the unlocked value for a shop item of the shop.
-     * @param name the Name of the shop item to change the value for.
+     *
+     * @param name     the Name of the shop item to change the value for.
      * @param unlocked new unlocked value.
      */
     public static void setUnlockedShopItem(final String name,
-            final boolean unlocked) {
+                                           final boolean unlocked) {
         unlockedShopItemsMap.replace(name, unlocked);
     }
 

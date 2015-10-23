@@ -24,6 +24,7 @@ import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
  * Because of this class, a responsibility is taken away from the ShopItems.
  * Because all methods are static, it isn't or shouldn't be possible to create
  * a super class or inherit from this class (thus final).
+ *
  * @author Mitchell
  */
 
@@ -32,41 +33,65 @@ import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 public final class ShopItemLoader {
 
     // Skin items
-    /** ANDY skin for the player. */
+    /**
+     * ANDY skin for the player.
+     */
     private static AndySkin andySkin;
 
-    /** BOY skin for the player. */
+    /**
+     * BOY skin for the player.
+     */
     private static BoySkin boySkin;
 
-    /** CAPTAIN skin for the player. */
+    /**
+     * CAPTAIN skin for the player.
+     */
     private static CaptainSkin captainSkin;
 
-    /** IRON MAN skin for player. */
+    /**
+     * IRON MAN skin for player.
+     */
     private static IronManSkin ironmanSkin;
 
-    /** NOOB skin for player, this is the starting skin. */
+    /**
+     * NOOB skin for player, this is the starting skin.
+     */
     private static NoobSkin noobSkin;
 
-    /** PLANK skin for the player. */
+    /**
+     * PLANK skin for the player.
+     */
     private static PlankSkin plankSkin;
 
     //Soundtrack items
-    /** The Animals Soundtrack that can be bought. */
+    /**
+     * The Animals Soundtrack that can be bought.
+     */
     private static AnimalsSoundtrack animalsSoundtrack;
 
-    /** The Default Soundtrack that has been bought. */
+    /**
+     * The Default Soundtrack that has been bought.
+     */
     private static DefaultSoundtrack defaultSoundtrack;
 
-    /** The Duck Tales Soundtrack that can be bought. */
+    /**
+     * The Duck Tales Soundtrack that can be bought.
+     */
     private static DuckTalesSoundtrack ducktalesSoundtrack;
 
-    /** The Mario Soundtrack that can be bought. */
+    /**
+     * The Mario Soundtrack that can be bought.
+     */
     private static MarioSoundtrack marioSoundtrack;
 
-    /** The Nyan Cat Soundtrack that can be bought. */
+    /**
+     * The Nyan Cat Soundtrack that can be bought.
+     */
     private static NyanCatSoundtrack nyancatSoundtrack;
 
-    /** The Shake It Off Soundtrack that can be bought. */
+    /**
+     * The Shake It Off Soundtrack that can be bought.
+     */
     private static ShakeItOffSoundtrack shakeitoffSoundtrack;
 
     /**
@@ -74,7 +99,8 @@ public final class ShopItemLoader {
      * This so that this class can't be instantiated,
      * as it is a util class full of static methods.
      */
-    private ShopItemLoader() { }
+    private ShopItemLoader() {
+    }
 
     /**
      * Method that creates all the shop items with default values,
@@ -114,6 +140,7 @@ public final class ShopItemLoader {
     /**
      * Method that creates all the skins based on current values,
      * so that they can be loaded in the shop scene.
+     *
      * @return ObservableList<Skin> the list with all skins.
      */
     public static ObservableList<AbstractSkin> loadSkinsToList() {
@@ -127,6 +154,7 @@ public final class ShopItemLoader {
     /**
      * Method that creates all soundtracks based on current values,
      * so that they can be loaded in the shop scene.
+     *
      * @return ObservableList<Soundtrack> the list with all soundtracks.
      */
     public static ObservableList<AbstractSoundtrack> loadSoundtracksToList() {
@@ -144,6 +172,7 @@ public final class ShopItemLoader {
      * More getters and setters aren't needed as the shop items don't
      * need to be changed on runtime anymore and the loading of skins is done
      * by the loadShopItemToList() method.
+     *
      * @return Skin of Noob.
      */
     public static NoobSkin getNoobSkin() {
@@ -153,6 +182,7 @@ public final class ShopItemLoader {
     /**
      * Gets the Andy skin for testing purposes.
      * (E2E test)
+     *
      * @return Skin of Andy.
      */
     public static AndySkin getAndySkin() {

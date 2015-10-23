@@ -42,9 +42,13 @@ public class ShopScene extends AbstractMenuScene {
     private static final int COLUMN_CONSTRAINT = 4;
     /** Row constraint and column span. */
     private static final int ROW_CONSTRAINT_SPAN = 5;
+    /**
+     * Label span.
+     */
+    private static final int LABEL_SPAN = 2;
 
     /** CurrentSkin label width. */
-    private static final int LABEL_WIDTH = 200;
+    private static final int LABEL_WIDTH = 230;
     /** Shop carousel height. */
     private static final int CAROUSEL_HEIGHT = 325;
 
@@ -57,37 +61,26 @@ public class ShopScene extends AbstractMenuScene {
      */
     private Label currentSoundtrack;
 
+
     @Override
     public Node[] createContent() {
         final TabPane tabPane = new TabPane();
         tabPane.setMinHeight(460);
+        currentSkin = createLabel("SKIN: "
+                + State.getSkin().getItemName(), 0, COLUMN_CONSTRAINT);
+        currentSoundtrack = createLabel("SOUNDTRACK: "
+                + "Radioactive", 2, COLUMN_CONSTRAINT);
         Tab skinTab = createSkinTab();
         Tab soundTab = createSoundTab();
 
         tabPane.getTabs().addAll(skinTab, soundTab);
         tabPane.setFocusTraversable(true);
 
-//        if (tabPane.getSelectionModel().getSelectedItem().equals(skinTab)) {
-//            currentSkin.setVisible(true);
-//            currentSoundtrack.setVisible(false);
-//        } else if (tabPane.getSelectionModel().getSelectedItem().equals(soundTab)) {
-//            currentSkin.setVisible(false);
-//            currentSoundtrack.setVisible(true);
-//        }
-
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
 
-        currentSoundtrack = createLabel("CURRENT SOUNDTRACK: "
-                + GameScene.getSoundtrackPlayer().getPath(), 1, COLUMN_CONSTRAINT);
+
         currentSoundtrack.setMinWidth(LABEL_WIDTH);
 
-
-        final ObservableList<AbstractSkin> items =
-                ShopItemLoader.loadSkinsToList();
-
-        currentSkin = createLabel("CURRENT SKIN: "
-                + State.getSkin().getItemName(), 1, COLUMN_CONSTRAINT);
-        currentSkin.setMinWidth(LABEL_WIDTH);
         final Button backButton = createButton("BACK", 0, ROW_CONSTRAINT);
         final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
         amountLabel.setText(Integer.toString(State.getCoins()));
@@ -95,8 +88,8 @@ public class ShopScene extends AbstractMenuScene {
 
         GridPane.setColumnSpan(tabPane, ROW_CONSTRAINT_SPAN);
 
-        GridPane.setColumnSpan(currentSkin, ROW_CONSTRAINT_SPAN);
-        GridPane.setColumnSpan(currentSoundtrack, ROW_CONSTRAINT_SPAN);
+        GridPane.setColumnSpan(currentSkin, LABEL_SPAN);
+        GridPane.setColumnSpan(currentSoundtrack, LABEL_SPAN);
         GridPane.setConstraints(tabPane,
                 0, 0);
 
@@ -145,7 +138,7 @@ public class ShopScene extends AbstractMenuScene {
      * @param s Skin.
      */
     private void setBuyButtonVisability(final Button buy,
-            final AbstractSkin s) {
+                                        final AbstractSkin s) {
         if (s.getItemPrice() >= State.getCoins()
                 && !ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setDisable(true);
@@ -176,7 +169,6 @@ public class ShopScene extends AbstractMenuScene {
 
     public Tab createSkinTab() {
         Tab tab = new Tab("Skins");
-
         final HBox itemBox = new HBox(BOX_SPACING);
         final ObservableList<AbstractSkin> items = ShopItemLoader.loadSkinsToList();
         final ScrollPane scrollPane = new ScrollPane();

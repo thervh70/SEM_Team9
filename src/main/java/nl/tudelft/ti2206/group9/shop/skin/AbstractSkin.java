@@ -7,19 +7,26 @@ import nl.tudelft.ti2206.group9.shop.ShopItem;
 /**
  * The abstract shop item class for skins, based on the requirements from the
  * ShopItem interface. Besides, every skin item has it's own texture.
+ *
  * @author Maikel and Mitchell.
  */
 @SuppressWarnings("restriction") // SuppresWarnings, because
 // PhongMaterials are needed for the textures.
 public abstract class AbstractSkin implements ShopItem {
 
-    /** The price of this skin in the shop. */
+    /**
+     * The price of this skin in the shop.
+     */
     private final int skinPrice;
 
-    /** The name to display in the shop. */
+    /**
+     * The name to display in the shop.
+     */
     private final String skinName;
 
-    /** The real material used by this skin. */
+    /**
+     * The real material used by this skin.
+     */
     private final PhongMaterial skinMaterial;
 
     /**
@@ -33,7 +40,7 @@ public abstract class AbstractSkin implements ShopItem {
      * @param textureName Name of texture.
      */
     public AbstractSkin(final int price,
-                final String name, final String textureName) {
+                        final String name, final String textureName) {
         super();
         skinPrice = price;
         skinName = name;
@@ -52,6 +59,7 @@ public abstract class AbstractSkin implements ShopItem {
 
     /**
      * Getter for the PhongMaterial.
+     *
      * @return material
      */
     public PhongMaterial getSkinMaterial() {
