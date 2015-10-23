@@ -72,7 +72,7 @@ public final class SettingsScene extends AbstractMenuScene {
         final int columnSpan = 5;
         final Label soundEfLabel = createLabel("Soundtrack", 4, 13);
         final Label sounfTrLabel = createLabel("Sound effects", 6, 13);
-        final Button backButton = createButton("BACK", 0, 24);
+        final Button backButton = createButton("BACK", 0, 22);
         final Label playerName = getPlayerLabelContent();
         GridPane.setColumnSpan(soundEfLabel, columnSpan);
         GridPane.setColumnSpan(backButton, columnSpan);
@@ -158,8 +158,8 @@ public final class SettingsScene extends AbstractMenuScene {
     private static Slider createVolumeSlider(
             final int column, final int row, final boolean enabled) {
         final Slider slider = new Slider();
-        final int majorTickUnit = 4;
-        final int minorTickCount = 5;
+        final int majorTickUnit = 5;
+        final int minorTickCount = 4;
         final int width = 120;
         if (!enabled) {
             slider.setDisable(true);
