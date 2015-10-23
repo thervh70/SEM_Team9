@@ -30,8 +30,7 @@ public abstract class AbstractSoundtrack implements ShopItem {
     /**
      * The beginning part of the path to every audio file.
      */
-    private static final String AUDIOPATH = "src/main/resources/"
-            + "nl/tudelft/ti2206/group9/audio/";
+    private static final String AUDIOPATH = "nl/tudelft/ti2206/group9/audio/";
 
     /**
      * Constructor for a soundtrack that can be bought or is default.

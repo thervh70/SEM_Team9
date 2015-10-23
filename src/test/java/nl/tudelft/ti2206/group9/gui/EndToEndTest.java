@@ -342,7 +342,8 @@ public class EndToEndTest extends ApplicationTest {
                 .getChildrenUnmodifiable();
 
         final TabPane tabpane = (TabPane) gridPaneNodes.get(0);
-        final ScrollPane scrollpane = (ScrollPane) tabpane.getTabs().get(0).getContent();
+        final ScrollPane scrollpane =
+                (ScrollPane) tabpane.getTabs().get(0).getContent();
         final HBox hbox = (HBox) scrollpane.getContent();
         final VBox vbox = (VBox) hbox.getChildren().get(skinNo);
 
