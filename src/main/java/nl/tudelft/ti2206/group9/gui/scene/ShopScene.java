@@ -11,10 +11,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
+import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
+import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
+import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver;
+
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
@@ -55,9 +59,10 @@ public class ShopScene extends AbstractMenuScene {
     public Node[] createContent() {
         final HBox itemBox = new HBox(BOX_SPACING);
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
-        final ObservableList<Skin> items = Skin.loadSkinsToList();
+        final ObservableList<AbstractSkin> items =
+                ShopItemLoader.loadSkinsToList();
         currentSkin = createLabel("CURRENT SKIN: "
-                + Skin.getCurrentSkin().getSkinName(), 1, COLUMN_CONSTRAINT);
+                + CurrentItems.getSkin().getItemName(), 1, COLUMN_CONSTRAINT);
         currentSkin.setMinWidth(LABEL_WIDTH);
         final Button backButton = createButton("BACK", 0, ROW_CONSTRAINT);
         final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
@@ -67,7 +72,7 @@ public class ShopScene extends AbstractMenuScene {
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
         itemBox.getChildren().clear();
-        for (final Skin s : items) {
+        for (final AbstractSkin s : items) {
             itemBox.getChildren().add(createCarousel(s));
         }
         scrollPane.setContent(itemBox);
@@ -85,20 +90,20 @@ public class ShopScene extends AbstractMenuScene {
      * @param s Skin.
      * @return VBox VBox containing an currentSkin item.
      */
-    private VBox createCarousel(final Skin s) {
+    private VBox createCarousel(final AbstractSkin s) {
         final Label price = createLabel("Price", 0, 0);
         final Label name = createLabel("Name", 0, 0);
         final Button buy = createButton("BUY", 0, 0);
         setBuyButtonVisability(buy, s);
         buy.setOnAction(event -> {
-            if (Skin.getUnlocked(s.getSkinName())) {
-                Skin.setCurrentSkin(s);
+            if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
+                CurrentItems.setSkin(s);
                 currentSkin.setText("CURRENT SKIN: "
-                        + Skin.getCurrentSkin().getSkinName());
+                        + CurrentItems.getSkin().getItemName());
             } else {
-                if (State.getCoins() >= s.getSkinPrice()) {
-                    State.setCoins(State.getCoins() - s.getSkinPrice());
-                    Skin.setUnlocked(s.getSkinName(), true);
+                if (State.getCoins() >= s.getItemPrice()) {
+                    State.setCoins(State.getCoins() - s.getItemPrice());
+                    ShopItemUnlocker.setUnlockedShopItem(s.getItemName(), true);
                     amountLabel.setText(Integer.toString(State.getCoins()));
                     buy.setText("EQUIP");
                 }
@@ -109,8 +114,8 @@ public class ShopScene extends AbstractMenuScene {
         vbox.setAlignment(Pos.CENTER);
         final ImageView imgview = new ImageView(
                 s.getSkinMaterial().getDiffuseMap());
-        price.setText(Integer.toString(s.getSkinPrice()));
-        name.setText(s.getSkinName());
+        price.setText(Integer.toString(s.getItemPrice()));
+        name.setText(s.getItemName());
         vbox.getChildren().addAll(imgview, name, price, buy);
         return vbox;
     }
@@ -120,14 +125,15 @@ public class ShopScene extends AbstractMenuScene {
      * @param buy Button to set.
      * @param s Skin.
      */
-    private void setBuyButtonVisability(final Button buy, final Skin s) {
-        if (s.getSkinPrice() >= State.getCoins()
-                && !Skin.getUnlocked(s.getSkinName())) {
+    private void setBuyButtonVisability(final Button buy,
+            final AbstractSkin s) {
+        if (s.getItemPrice() >= State.getCoins()
+                && !ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setDisable(true);
         } else {
             buy.setDisable(false);
         }
-        if (Skin.getUnlocked(s.getSkinName())) {
+        if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setText("EQUIP");
         }
     }

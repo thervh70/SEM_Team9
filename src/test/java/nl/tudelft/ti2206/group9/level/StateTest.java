@@ -11,7 +11,8 @@ public class StateTest {
 
     @Before
     public void setUp() {
-        State.resetAll();
+        State.reset();
+        State.setCoins(0);
         assertEquals(0, State.getCoins());
         assertEquals(0, Track.getDistance(), DELTA);
         assertEquals(0, State.getScore(), DELTA);

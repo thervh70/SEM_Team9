@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
@@ -104,14 +104,44 @@ public final class Writer {
         highscore.put("score", State.getHighscore());
         mainObject.put("highscore", highscore);
 
-        mainObject.put("andy", Skin.getUnlocked("Andy"));
-        mainObject.put("boy", Skin.getUnlocked("B-man"));
-        mainObject.put("captain", Skin.getUnlocked("Captain"));
-        mainObject.put("iron", Skin.getUnlocked("Iron Man"));
-        mainObject.put("plank", Skin.getUnlocked("Plank"));
+        final JSONObject shopItems = createShopItemsObject();
 
         mainObject.put("settings", settings);
+        mainObject.put("shopItems", shopItems);
 
         return mainObject.toJSONString();
+    }
+
+    /**
+     * Creates all objects needed for saving information about
+     * shop items that have been bought.
+     * @return shopItems object containing all data about bought items.
+     */
+    @SuppressWarnings("unchecked")
+    // JSONObject.put uses HashMap, that gives unchecked warnings.
+    private static JSONObject createShopItemsObject() {
+        final JSONObject shopItems = new JSONObject();
+
+        final JSONObject skins = new JSONObject();
+        skins.put("andy", ShopItemUnlocker.getUnlockedShopItem("Andy"));
+        skins.put("boy", ShopItemUnlocker.getUnlockedShopItem("B-man"));
+        skins.put("captain", ShopItemUnlocker.getUnlockedShopItem("Captain"));
+        skins.put("iron", ShopItemUnlocker.getUnlockedShopItem("Iron Man"));
+        skins.put("plank", ShopItemUnlocker.getUnlockedShopItem("Plank"));
+        shopItems.put("skins", skins);
+
+        final JSONObject soundtracks = new JSONObject();
+        soundtracks.put("animals", ShopItemUnlocker.
+                getUnlockedShopItem("Animals"));
+        soundtracks.put("duckTales", ShopItemUnlocker.
+                getUnlockedShopItem("Duck Tales"));
+        soundtracks.put("mario", ShopItemUnlocker.getUnlockedShopItem("Mario"));
+        soundtracks.put("nyanCat", ShopItemUnlocker.
+                getUnlockedShopItem("Nyan Cat"));
+        soundtracks.put("shakeItOff", ShopItemUnlocker.
+                getUnlockedShopItem("Shake It Off"));
+        shopItems.put("soundtracks", soundtracks);
+
+        return shopItems;
     }
 }
