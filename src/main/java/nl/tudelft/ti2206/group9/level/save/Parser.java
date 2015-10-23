@@ -23,7 +23,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * into the game. This way already saved games can be loaded.
  * @author Mathias
  */
-@SuppressWarnings("restriction")
 public final class Parser {
 
     /** Playername. */

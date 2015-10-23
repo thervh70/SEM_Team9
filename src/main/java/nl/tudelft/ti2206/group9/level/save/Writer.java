@@ -19,7 +19,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * into external files. This way games can be saved.
  * @author Mathias
  */
-@SuppressWarnings("restriction")
 public final class Writer {
 
     /**
