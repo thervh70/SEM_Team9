@@ -7,7 +7,7 @@ import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
  * This class is dedicated to save all current items the player is using
  * (e.g. currentSkin). In this class you can get and set these items.
  *
- * @author Mathias
+ * @author Mathias and Mitchell
  */
 public final class CurrentItems {
 
@@ -20,6 +20,16 @@ public final class CurrentItems {
 
     /** Private constructor. */
     private CurrentItems() { }
+
+    /**
+     * Resets the shop items that are currently equipped/activated,
+     * by setting these items to the default skin and soundtrack.
+     */
+    public static void reset() {
+        setSkin(ShopItemLoader.getNoobSkin());
+        setSoundtrackPlayer(new SoundtrackPlayer("nl/tudelft/ti2206/"
+                + "group9/audio/soundtrack_Default.mp3"));
+    }
 
     /**
      * Getter for the current skin.

@@ -1,9 +1,7 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
-import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 
 /**
  * This utility class stores the State of the game,
@@ -40,10 +38,7 @@ public final class State {
         reset();
         setCoins(0);
         highscore = 0;
-        CurrentItems.setSkin(ShopItemLoader.getNoobSkin());
-        CurrentItems.setSoundtrackPlayer(
-                new SoundtrackPlayer("nl/tudelft/ti2206/group9/audio/"
-                        + "soundtrack_Default.mp3"));
+        CurrentItems.reset();
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
     }

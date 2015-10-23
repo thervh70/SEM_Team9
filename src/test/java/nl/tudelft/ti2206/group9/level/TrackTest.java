@@ -117,7 +117,7 @@ public class TrackTest {
     }
 
     @Test
-    public void tesSGetDistance() {
+    public void testGetDistance() {
         Track.setDistance(2);
         assertEquals(2, Track.getDistance(), DELTA);
         Track.setDistance(1);
