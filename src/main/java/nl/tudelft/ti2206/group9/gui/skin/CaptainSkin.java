@@ -7,7 +7,7 @@ public class CaptainSkin extends Skin {
     /** Price of currentSkin in shop. */
     private static final int PRICE = 1000;
     /**
-     * Constructor for a Captain currentSkin.
+     * Constructor for a Captain skin.
      */
     public CaptainSkin() {
         super(PRICE, "Captain", "captain");

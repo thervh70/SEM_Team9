@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,30 +41,6 @@ public class StateTest {
     }
 
     @Test
-    public void testModuloDistance() {
-        Track.setDistance(2);
-        assertEquals(0, Track.modulo(Track.getDistance()));
-        Track.setDistance(Track.MOD + 1);
-        assertEquals(Track.MOD, Track.modulo(Track.getDistance()));
-    }
-
-    @Test
-    public void testModuloScore() {
-        State.setScore(2.0);
-        assertEquals(0, Track.modulo(Track.getDistance()));
-        State.setScore(Track.MOD + 1.0);
-        assertEquals(Track.MOD, Track.modulo(State.getScore()));
-    }
-
-    @Test
-    public void tesSGetDistance() {
-        Track.setDistance(2);
-        assertEquals(2, Track.getDistance(), DELTA);
-        Track.setDistance(1);
-        assertEquals(1, Track.getDistance(), DELTA);
-    }
-
-    @Test
     public void testSetScore() {
         State.setScore(2);
         assertEquals(2, State.getScore(), DELTA);
@@ -104,17 +79,6 @@ public class StateTest {
         assertEquals("Jan", State.getPlayerName());
         State.setPlayerName("Piet");
         assertEquals("Piet", State.getPlayerName());
-    }
-
-    @Test
-    public void testGetDefaultSaveDir() {
-        assertEquals("sav/", SaveGame.getDefaultSaveDir());
-
-        SaveGame.setDefaultSaveDir("save/");
-        assertEquals("save/", SaveGame.getDefaultSaveDir());
-
-        // Clean up after test
-        SaveGame.setDefaultSaveDir("sav/");
     }
 
 }

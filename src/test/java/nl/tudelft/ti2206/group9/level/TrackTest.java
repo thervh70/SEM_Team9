@@ -17,6 +17,7 @@ public class TrackTest {
 
     @Before
     public void setUp() {
+        Track.reset();
         track = Track.getInstance();
         Track.setDistance(0);
     }
@@ -46,7 +47,7 @@ public class TrackTest {
         track.addEntity(new Coin(new Point3D(0, 0, 2)));
         track.moveTrack(1.0 / 2);
         assertEquals(track.getEntities().get(0).getCenter().getZ(), 0, DELTA);
-        assertEquals(- 1.0 / 2, track.getEntities().get(1).getCenter().getZ(),
+        assertEquals(1 + 1.0 / 2, track.getEntities().get(1).getCenter().getZ(),
                 DELTA);
     }
 
@@ -99,4 +100,28 @@ public class TrackTest {
         Track.setDistance(1);
         assertEquals(1, Track.getDistance(), DELTA);
     }
+    @Test
+    public void testModuloDistance() {
+        Track.setDistance(2);
+        assertEquals(0, Track.modulo(Track.getDistance()));
+        Track.setDistance(Track.MOD + 1);
+        assertEquals(Track.MOD, Track.modulo(Track.getDistance()));
+    }
+
+    @Test
+    public void testModuloScore() {
+        State.setScore(2.0);
+        assertEquals(0, Track.modulo(Track.getDistance()));
+        State.setScore(Track.MOD + 1.0);
+        assertEquals(Track.MOD, Track.modulo(State.getScore()));
+    }
+
+    @Test
+    public void tesSGetDistance() {
+        Track.setDistance(2);
+        assertEquals(2, Track.getDistance(), DELTA);
+        Track.setDistance(1);
+        assertEquals(1, Track.getDistance(), DELTA);
+    }
+
 }

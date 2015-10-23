@@ -7,7 +7,7 @@ public class PlankSkin extends Skin {
     /** Price of currentSkin in shop. */
     private static final int PRICE = 1250;
     /**
-     * Constructor for a Plank currentSkin.
+     * Constructor for a Plank skin.
      */
     public PlankSkin() {
         super(PRICE, "Plank", "plank");

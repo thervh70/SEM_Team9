@@ -15,38 +15,38 @@ import java.util.concurrent.ConcurrentHashMap;
 @SuppressWarnings("restriction")
 public class Skin {
     /**
-     * IRON MAN currentSkin for player.
+     * IRON MAN skin for player.
      */
     private static IronManSkin iron;
 
     /**
-     * NOOB currentSkin for player, this is the starting currentSkin.
+     * NOOB skin for player, this is the starting skin.
      */
     private static NoobSkin noob;
 
     /**
-     * CAPTAIN currentSkin for the player.
+     * CAPTAIN skin for the player.
      */
     private static CaptainSkin captain;
 
     /**
-     * PLANK currentSkin for the player.
+     * PLANK skin for the player.
      */
     private static PlankSkin plank;
 
     /**
-     * BOY currentSkin for the player.
+     * BOY skin for the player.
      */
     private static BoySkin boy;
 
     /**
-     * ANDY currentSkin for the player.
+     * ANDY skin for the player.
      */
     private static AndySkin andy;
     /** Skin to be used. */
     private static Skin currentSkin;
     /**
-     * The price of this currentSkin in the shop.
+     * The price of this skin in the shop.
      */
     private final int skinPrice;
 
@@ -56,7 +56,7 @@ public class Skin {
     private final String skinName;
 
     /**
-     * The real material used by this currentSkin.
+     * The real material used by this skin.
      */
     private final PhongMaterial skinMaterial;
 
@@ -66,12 +66,12 @@ public class Skin {
     private static Map<String, Boolean> unlockedMap = new ConcurrentHashMap<>();
 
     /**
-     * Constructor for the currentSkin.
+     * Constructor for the skin.
      * It calls the Style.loadPlayerTexture
      * to load the image into the PhongMaterial
      * with the name "texture_[texture_name].png".
      *
-     * @param price       Price of this currentSkin in shop.
+     * @param price       Price of this skin in shop.
      * @param name        Name to display.
      * @param textureName Name of texture.
      */
@@ -83,7 +83,7 @@ public class Skin {
     }
 
     /**
-     * Getter for the current currentSkin.
+     * Getter for the current skin.
      * @return The currentSkin.
      */
     public static Skin getCurrentSkin() {
@@ -126,7 +126,7 @@ public class Skin {
     }
 
     /**
-     * Creating the HashMap for the currentSkin's unlocked values.
+     * Creating the HashMap for the skin's unlocked values.
      */
     public static void createUnlockedHashmap() {
         unlockedMap.put("Andy", false);
@@ -138,8 +138,8 @@ public class Skin {
     }
 
     /**
-     * Get the unlocked value for a currentSkin.
-     * @param skinName Name of currentSkin.
+     * Get the unlocked value for a skin.
+     * @param skinName Name of skin.
      * @return boolean unlocked or not.
      */
     public static boolean getUnlocked(final String skinName) {
@@ -147,7 +147,7 @@ public class Skin {
     }
 
     /**
-     * Set the unlocked value for a currentSkin.
+     * Set the unlocked value for a skin.
      *
      * @param skinName Skin to change value for.
      * @param unlocked new unlocked value.

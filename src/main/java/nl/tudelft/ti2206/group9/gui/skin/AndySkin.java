@@ -7,7 +7,7 @@ public class AndySkin extends Skin {
     /** Price of currentSkin in shop. */
     private static final int PRICE = 15;
     /**
-     * Constructor for a Andy currentSkin.
+     * Constructor for a Andy skin.
      *
      */
     public AndySkin() {

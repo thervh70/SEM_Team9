@@ -18,9 +18,6 @@ public final class State {
     /** Highest score ever obtained. */
     private static double highscore;
 
-    /** Current track, contains all entities. */
-    private static Track track;
-
     /** Name of the player. */
     private static String playerName;
 
@@ -49,11 +46,10 @@ public final class State {
     /** Reset data that should be reset every run. */
     public static void reset() {
         Track.reset();
-        track = Track.getInstance();
         setScore(0);
         Track.setPreviousDistance(0);
         Track.setDistance(0);
-        track.getPlayer().respawn();
+        Track.getInstance().getPlayer().respawn();
         PowerupInvulnerable.resetCounter();
     }
 
