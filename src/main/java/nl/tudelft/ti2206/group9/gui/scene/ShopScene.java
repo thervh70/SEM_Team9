@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -14,10 +13,13 @@ import javafx.scene.layout.VBox;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * Class that creates the content for a shop screen.
@@ -48,7 +50,7 @@ public class ShopScene extends AbstractMenuScene {
     /** Shop carousel height. */
     private static final int CAROUSEL_HEIGHT = 435;
 
-    /** Label for displaying current skin. */
+    /** Label for displaying current currentSkin. */
     private Label currentSkin;
     /** Label with amount of coins. */
     private Label amountLabel;
@@ -60,7 +62,7 @@ public class ShopScene extends AbstractMenuScene {
         final ObservableList<AbstractSkin> items =
                 ShopItemLoader.loadSkinsToList();
         currentSkin = createLabel("CURRENT SKIN: "
-                + State.getSkin().getItemName(), 1, COLUMN_CONSTRAINT);
+                + CurrentItems.getSkin().getItemName(), 1, COLUMN_CONSTRAINT);
         currentSkin.setMinWidth(LABEL_WIDTH);
         final Button backButton = createButton("BACK", 0, ROW_CONSTRAINT);
         final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
@@ -86,7 +88,7 @@ public class ShopScene extends AbstractMenuScene {
     /**
      * Method to fill the shop with skins.
      * @param s Skin.
-     * @return VBox VBox containing an skin item.
+     * @return VBox VBox containing an currentSkin item.
      */
     private VBox createCarousel(final AbstractSkin s) {
         final Label price = createLabel("Price", 0, 0);
@@ -95,9 +97,9 @@ public class ShopScene extends AbstractMenuScene {
         setBuyButtonVisability(buy, s);
         buy.setOnAction(event -> {
             if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
-                State.setSkin(s);
+                CurrentItems.setSkin(s);
                 currentSkin.setText("CURRENT SKIN: "
-                        + State.getSkin().getItemName());
+                        + CurrentItems.getSkin().getItemName());
             } else {
                 if (State.getCoins() >= s.getItemPrice()) {
                     State.setCoins(State.getCoins() - s.getItemPrice());
@@ -119,7 +121,7 @@ public class ShopScene extends AbstractMenuScene {
     }
 
     /**
-     * Change te button visability if skin is buyable/unlocked.
+     * Change te button visability if currentSkin is buyable/unlocked.
      * @param buy Button to set.
      * @param s Skin.
      */

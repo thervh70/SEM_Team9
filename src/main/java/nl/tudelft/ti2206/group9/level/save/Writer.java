@@ -16,7 +16,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 import org.json.simple.JSONObject;
 
-import sun.misc.BASE64Encoder; //NOPMD - I need this package
+import sun.misc.BASE64Encoder;
 
 /**
  * This class takes care of the writing of JSON

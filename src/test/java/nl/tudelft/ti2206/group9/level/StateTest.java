@@ -11,9 +11,10 @@ public class StateTest {
 
     @Before
     public void setUp() {
-        State.resetAll();
+        State.reset();
+        State.setCoins(0);
         assertEquals(0, State.getCoins());
-        assertEquals(0, State.getDistance(), DELTA);
+        assertEquals(0, Track.getDistance(), DELTA);
         assertEquals(0, State.getScore(), DELTA);
     }
 
@@ -22,7 +23,7 @@ public class StateTest {
         State.addScore(2);
         Track.addDistance(1);
         State.reset();
-        assertEquals(0, State.getDistance(), DELTA);
+        assertEquals(0, Track.getDistance(), DELTA);
         assertEquals(0, State.getScore(), DELTA);
     }
 
@@ -38,30 +39,6 @@ public class StateTest {
         State.addCoins(2);
         State.addCoins(1);
         assertEquals(2 + 1, State.getCoins());
-    }
-
-    @Test
-    public void testModuloDistance() {
-        Track.setDistance(2);
-        assertEquals(0, State.modulo(State.getDistance()));
-        Track.setDistance(State.MOD + 1);
-        assertEquals(State.MOD, State.modulo(State.getDistance()));
-    }
-
-    @Test
-    public void testModuloScore() {
-        State.setScore(2.0);
-        assertEquals(0, State.modulo(State.getDistance()));
-        State.setScore(State.MOD + 1.0);
-        assertEquals(State.MOD, State.modulo(State.getScore()));
-    }
-
-    @Test
-    public void tesSGetDistance() {
-        Track.setDistance(2);
-        assertEquals(2, State.getDistance(), DELTA);
-        Track.setDistance(1);
-        assertEquals(1, State.getDistance(), DELTA);
     }
 
     @Test
@@ -103,17 +80,6 @@ public class StateTest {
         assertEquals("Jan", State.getPlayerName());
         State.setPlayerName("Piet");
         assertEquals("Piet", State.getPlayerName());
-    }
-
-    @Test
-    public void testGetDefaultSaveDir() {
-        assertEquals("sav/", State.getDefaultSaveDir());
-
-        State.setDefaultSaveDir("save/");
-        assertEquals("save/", State.getDefaultSaveDir());
-
-        // Clean up after test
-        State.setDefaultSaveDir("sav/");
     }
 
 }

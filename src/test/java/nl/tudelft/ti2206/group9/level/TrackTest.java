@@ -17,7 +17,8 @@ public class TrackTest {
 
     @Before
     public void setUp() {
-        track = new Track();
+        Track.reset();
+        track = Track.getInstance();
         Track.setDistance(0);
     }
 
@@ -99,4 +100,28 @@ public class TrackTest {
         Track.setDistance(1);
         assertEquals(1, Track.getDistance(), DELTA);
     }
+    @Test
+    public void testModuloDistance() {
+        Track.setDistance(2);
+        assertEquals(0, Track.modulo(Track.getDistance()));
+        Track.setDistance(Track.MOD + 1);
+        assertEquals(Track.MOD, Track.modulo(Track.getDistance()));
+    }
+
+    @Test
+    public void testModuloScore() {
+        State.setScore(2.0);
+        assertEquals(0, Track.modulo(Track.getDistance()));
+        State.setScore(Track.MOD + 1.0);
+        assertEquals(Track.MOD, Track.modulo(State.getScore()));
+    }
+
+    @Test
+    public void testGetDistance() {
+        Track.setDistance(2);
+        assertEquals(2, Track.getDistance(), DELTA);
+        Track.setDistance(1);
+        assertEquals(1, Track.getDistance(), DELTA);
+    }
+
 }

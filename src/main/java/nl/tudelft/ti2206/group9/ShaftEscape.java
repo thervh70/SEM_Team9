@@ -1,25 +1,25 @@
 package nl.tudelft.ti2206.group9;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-
-import java.io.File;
-
 import javafx.application.Application;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
-import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.gui.scene.MainMenuScene;
 import nl.tudelft.ti2206.group9.gui.scene.SplashScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Logger;
+
+import java.io.File;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * Starting point of the Application.
@@ -71,7 +71,7 @@ public class ShaftEscape extends Application {
 
     /** Creates the savefile directory. */
     private static void createSaveDirectory() {
-        final File saveDir = new File(State.getDefaultSaveDir());
+        final File saveDir = new File(SaveGame.getDefaultSaveDir());
 
         // if the directory does not exist, create it
         if (!saveDir.exists()) {
@@ -128,8 +128,8 @@ public class ShaftEscape extends Application {
         stage.close();
         InternalTicker.stop();
         MainMenuScene.getAudioPlayer().stop();
-        GameScene.getSoundtrackPlayer().resetSpeed();
-        GameScene.getSoundtrackPlayer().stop();
+        CurrentItems.getSoundtrackPlayer().resetSpeed();
+        CurrentItems.getSoundtrackPlayer().stop();
     }
 
     /**
