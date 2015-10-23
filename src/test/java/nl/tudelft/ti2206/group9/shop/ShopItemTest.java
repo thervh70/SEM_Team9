@@ -38,7 +38,7 @@ public class ShopItemTest {
     @Test
     public void testConstructorName() {
         assertEquals(animals.getItemName(), "Animals");
-        assertEquals(radioactive.getItemName(), "Default");
+        assertEquals(radioactive.getItemName(), "Radioactive");
         assertEquals(duckTales.getItemName(), "Duck Tales");
         assertEquals(mario.getItemName(), "Mario");
         assertEquals(nyanCat.getItemName(), "Nyan Cat");
@@ -59,7 +59,7 @@ public class ShopItemTest {
     public void testUnlockedHashMap() {
         ShopItemUnlocker.createUnlockedShopItemsMap();
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Animals"), false);
-        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Default"), true);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Radioactive"), true);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Duck Tales"), false);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Mario"), false);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Nyan Cat"), false);
