@@ -55,7 +55,7 @@ public class ShopScene extends AbstractMenuScene {
     private static final int LABEL_SPAN = 2;
 
     /** CurrentSkin label width. */
-    private static final int LABEL_WIDTH = 230;
+    private static final int LABEL_WIDTH = 250;
     /** Shop carousel height. */
     private static final int CAROUSEL_HEIGHT = 325;
     /**
@@ -80,7 +80,7 @@ public class ShopScene extends AbstractMenuScene {
         currentSkin = createLabel("SKIN: "
                 + CurrentItems.getSkin().getItemName(), 0, COLUMN_CONSTRAINT);
         currentSoundtrack = createLabel("SOUNDTRACK: "
-                + "Radioactive", 2, COLUMN_CONSTRAINT);
+                + "Default", 2, COLUMN_CONSTRAINT);
         final Tab skinTab = createSkinTab();
         final Tab soundTab = createSoundTab();
 
@@ -117,7 +117,7 @@ public class ShopScene extends AbstractMenuScene {
         buy.setOnAction(event -> {
             if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
                 CurrentItems.setSkin(s);
-                currentSkin.setText("CURRENT SKIN: "
+                currentSkin.setText("SKIN: "
                         + CurrentItems.getSkin().getItemName());
             } else {
                 if (State.getCoins() >= s.getItemPrice()) {
@@ -243,7 +243,7 @@ public class ShopScene extends AbstractMenuScene {
         setSoundBuyButtonVisability(buyButton, s);
         buyButton.setOnAction(event -> {
             if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
-                currentSoundtrack.setText("CURRENT SOUNDTRACK: "
+                currentSoundtrack.setText("SOUNDTRACK: "
                         + s.getItemName());
                 CurrentItems.setSoundtrackPlayer(s.getSoundtrackPlayer());
             } else {
