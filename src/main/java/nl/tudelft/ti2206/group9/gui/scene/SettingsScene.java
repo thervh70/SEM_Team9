@@ -24,20 +24,32 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 @SuppressWarnings("restriction")
 public final class SettingsScene extends AbstractMenuScene {
 
-    /** Max volume. */
+    /**
+     * Max volume.
+     */
     private static final double MAX_VOLUME = 10;
-    /** Effect slider row. */
+    /**
+     * Effect slider row.
+     */
     private static final int EFFECT_SLIDER_COLUMN = 6;
-    /** Soundtrack slider row. */
+    /**
+     * Soundtrack slider row.
+     */
     private static final int TRACK_SLIDER_COLUMN = 4;
-    /** Sliders row. */
+    /**
+     * Sliders row.
+     */
     private static final int SLIDER_ROW = 16;
 
-    /** Create a slider for the sound effects volume. */
+    /**
+     * Create a slider for the sound effects volume.
+     */
     private static Slider effectVolumeSlider =
             createVolumeSlider(EFFECT_SLIDER_COLUMN, SLIDER_ROW,
-            State.isSoundEffectsEnabled());
-    /** Create a slider for the soundtrack volume. */
+                    State.isSoundEffectsEnabled());
+    /**
+     * Create a slider for the soundtrack volume.
+     */
     private static Slider sountrackVolumeSlider =
             createVolumeSlider(TRACK_SLIDER_COLUMN, SLIDER_ROW,
                     State.isSoundtrackEnabled());
@@ -54,6 +66,7 @@ public final class SettingsScene extends AbstractMenuScene {
          */
         SETTING_SOUNDTRACK
     }
+
     /**
      * Initially the toggles are set to off.
      */
@@ -132,26 +145,28 @@ public final class SettingsScene extends AbstractMenuScene {
                 }
                 button.setText(s);
                 OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDEFFECTS, s);
-            }
+             }
         });
     }
 
     /**
      * Set backbutton function.
+     *
      * @param b Button to be set.
      */
     private static void setBackButtonFunction(final Button b) {
-            b.setOnAction(event -> {
-                        OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
-                        ShaftEscape.setScene(new MainMenuScene());
-                    }
-            );
+        b.setOnAction(event -> {
+                    OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
+                    ShaftEscape.setScene(new MainMenuScene());
+                }
+        );
     }
 
     /**
      * Creating a slider for volumes.
-     * @param column Columnconstraint.
-     * @param row Rowconstraint.
+     *
+     * @param column  Columnconstraint.
+     * @param row     Rowconstraint.
      * @param enabled Slider enabled?
      * @return Return created slider.
      */

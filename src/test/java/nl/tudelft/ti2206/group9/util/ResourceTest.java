@@ -46,9 +46,9 @@ public class ResourceTest {
         assertNull(Resource.getURL(FAKE_PATH));
         verify(obs).update(Matchers.refEq(OBSERVABLE), Matchers.refEq(
                 new GameObserver.GameUpdate(
-                Category.ERROR, Error.RESOURCEEXCEPTION,
-                new Object[]{"Resource.getURL(String)", "getResource() == null",
-                        FAKE_PATH})));
+                        Category.ERROR, Error.RESOURCEEXCEPTION,
+                        new Object[]{"Resource.getURL(String)", "getResource() == null",
+                                FAKE_PATH})));
     }
 
     @Test

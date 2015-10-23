@@ -19,12 +19,16 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 /**
  * Helper class to quickly load resource URLs, URI strings, etc.
+ *
  * @author Maarten
  */
 public final class Resource {
 
-    /** Hiding public constructor. */
-    private Resource() { }
+    /**
+     * Hiding public constructor.
+     */
+    private Resource() {
+    }
 
     /**
      * @param packagePath The package path of the resource.
@@ -72,7 +76,7 @@ public final class Resource {
     /**
      * @param packagePath The package path of the folder.
      * @return A list of the filenames (+ extension) of the files in the folder.
-     *         Returns null if folder is not found.
+     * Returns null if folder is not found.
      */
     public static List<String> getFolder(final String packagePath) {
         List<String> res = getFolderJAR(packagePath);
@@ -85,8 +89,8 @@ public final class Resource {
     /**
      * @param packagePath The package path of the folder.
      * @return If the folder exists, a list of the filenames (+ extension)
-     *         of the files in the folder. If the folder does not exist
-     *         (e.g. because you're not running from a JAR), returns null.
+     * of the files in the folder. If the folder does not exist
+     * (e.g. because you're not running from a JAR), returns null.
      */
     private static List<String> getFolderJAR(final String packagePath) {
         final File jarFile = new File(Resource.class.getProtectionDomain()
@@ -122,8 +126,8 @@ public final class Resource {
     /**
      * @param packagePath The package path of the folder.
      * @return If the folder exists, a list of the filenames (+ extension)
-     *         of the files in the folder. If the folder does not exist
-     *         (e.g. because it's inside a JAR), returns null.
+     * of the files in the folder. If the folder does not exist
+     * (e.g. because it's inside a JAR), returns null.
      */
     private static List<String> getFolderIDE(final String packagePath) {
         if (getURI(packagePath) == null) {

@@ -121,7 +121,7 @@ public class HighscoreClientTest {
         client.add(names[++i], scores[i], callback);
         haltTestUntilServerResponds();
         assertEquals("SUCCESS", actualResponse);
-     }
+    }
 
     @Test
     public void testBadWeather() {

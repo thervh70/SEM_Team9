@@ -16,7 +16,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class ShopItemUnlocker {
 
 
-    /** Map used to store which shop items are unlocked. */
+    /**
+     * Map used to store which shop items are unlocked.
+     */
     private static Map<String, Boolean> unlockedShopItemsMap =
             new ConcurrentHashMap<>();
 
