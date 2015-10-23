@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.shop;
 
 import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
+import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 
 /**
  * This class is dedicated to save all current items the player is using
@@ -18,6 +19,8 @@ public final class CurrentItems {
             new SoundtrackPlayer(
                     "nl/tudelft/ti2206/group9/audio/"
                     + "soundtrack_Radioactive.mp3");
+    /** Stores the name of the current Soundtrack. */
+    private static String currentSoundtrackName;
 
     /** Private constructor. */
     private CurrentItems() { }
@@ -28,8 +31,9 @@ public final class CurrentItems {
      */
     public static void reset() {
         setSkin(ShopItemLoader.getNoobSkin());
-        setSoundtrackPlayer(new SoundtrackPlayer("nl/tudelft/ti2206/"
-                + "group9/audio/soundtrack_Radioactive.mp3"));
+        currentSoundtrackPlayer = new SoundtrackPlayer("nl/tudelft/ti2206/"
+                + "group9/audio/soundtrack_Radioactive.mp3");
+        currentSoundtrackName = "Radioactive";
     }
 
     /**
@@ -57,12 +61,19 @@ public final class CurrentItems {
     }
 
     /**
+     * @return the name of the current soundtrack.
+     */
+    public static String getSoundtrackName() {
+        return currentSoundtrackName;
+    }
+
+    /**
      * Every GameScene has an AudioPlayer for the soundtrack.
-     * @param soundtrackPlayer an initialized soundtrackPlayer
-     * with a new soundtrack.
+     * @param track an initialized AbstractSoundtrack with a new soundtrack.
      */
     public static void setSoundtrackPlayer(
-            final SoundtrackPlayer soundtrackPlayer) {
-        currentSoundtrackPlayer = soundtrackPlayer;
+            final AbstractSoundtrack track) {
+        currentSoundtrackPlayer = track.getSoundtrackPlayer();
+        currentSoundtrackName = track.getItemName();
     }
 }
