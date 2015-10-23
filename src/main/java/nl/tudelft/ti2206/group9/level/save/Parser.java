@@ -8,13 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
-import nl.tudelft.ti2206.group9.util.GameObserver;
+import nl.tudelft.ti2206.group9.util.Base64Reader;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
@@ -22,14 +20,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import sun.misc.BASE64Decoder; //NOPMD - I need this package
-
 /**
  * This class takes care of the parsing of JSON objects
  * into the game. This way already saved games can be loaded.
  * @author Mathias
  */
-@SuppressWarnings("restriction")
 public final class Parser {
 
     /** Playername. */
@@ -62,20 +57,14 @@ public final class Parser {
      */
     static void loadGame(final String path) {
         try {
-            final List<String> lines  = new ArrayList<>();
             final URL pathURL = new File(path).toURI().toURL();
             final InputStream stream = pathURL.openStream();
-            final BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(stream, "UTF-8"));
-
-            while (reader.ready()) {
-                lines.add(reader.readLine());
-            }
-            final String mainString = createString(lines);
-            final String decryptedMain = decrypt(mainString);
+            final Base64Reader reader = new Base64Reader(new BufferedReader(
+                    new InputStreamReader(stream, "UTF-8")));
+            final String mainString = reader.readString();
             final JSONParser parser = new JSONParser();
             final JSONObject mainObject =
-                    (JSONObject) parser.parse(decryptedMain);
+                    (JSONObject) parser.parse(mainString);
 
             parseJSON(mainObject);
             writeToState();
@@ -92,30 +81,9 @@ public final class Parser {
     }
 
     /**
-     * Decrypt a given String.
-     * @param input the String to be decrypted
-     * @return the decrypted version of the input
-     */
-    static String decrypt(final String input) {
-        final BASE64Decoder decoder = new BASE64Decoder();
-        try {
-            final byte[] decodedBytes = decoder.decodeBuffer(input);
-            return new String(decodedBytes, "UTF8");
-        } catch (IOException e) {
-            OBSERVABLE.notify(GameObserver.Category.ERROR,
-                    GameObserver.Error.IOEXCEPTION,
-                    "Parser.decode()", e.getMessage());
-            return null;
-        }
-    }
-
-    /**
      * Parse all json data from the file.
      * @param mainObject the main JSON object
      */
-    @SuppressWarnings("rawtypes")
-    // SuppressWarnings is needed for casting the mainObject when
-    // getting the shopItems.
     private static void parseJSON(final JSONObject mainObject) {
         playername = (String) mainObject.get("playername");
         coins = (Long) mainObject.get("coins");
@@ -135,7 +103,7 @@ public final class Parser {
         highScore = (Long) highObj.get("score");
 
         final JSONObject shopItems =
-                (JSONObject) ((HashMap) mainObject).get("shopItems");
+                (JSONObject) ((HashMap<?, ?>) mainObject).get("shopItems");
         parseJSONShopItems(shopItems);
     }
 
@@ -195,17 +163,6 @@ public final class Parser {
         ShopItemUnlocker.setUnlockedShopItem("Mario", mario);
         ShopItemUnlocker.setUnlockedShopItem("Nyan Cat", nyanCat);
         ShopItemUnlocker.setUnlockedShopItem("Shake It Off", shakeItOff);
-    }
-
-    /**
-     * Create a single String from a list of Strings.
-     * @param lines the list of Strings
-     * @return a single String
-     */
-    private static String createString(final List<String> lines) {
-        final StringBuilder builder = new StringBuilder();
-        lines.forEach(builder::append);
-        return builder.toString();
     }
 
 }
