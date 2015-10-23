@@ -1,12 +1,13 @@
 package nl.tudelft.ti2206.group9.shop;
 
-import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * This class is responsible for maintaining a HashMap containing
+ * This class is responsible for maintaining a Map containing
  * all data about which shop items are unlocked and which aren't.
- * The HashMap is kept separated from the Shop Items so that
- * the HashMap can be altered during the tests which involve unlocking
+ * The Map is kept separated from the Shop Items so that
+ * the Map can be altered during the tests which involve unlocking
  * shop items. (If also the textures are loaded during the tests,
  * (graphics) errors will occur.)
  *
@@ -14,11 +15,10 @@ import java.util.HashMap;
  */
 public final class ShopItemUnlocker {
 
-    /**
-     * HashMap used to store which shop items are unlocked.
-     */
-    private static HashMap<String, Boolean> unlockedShopItemsMap =
-            new HashMap<>();
+
+    /** Map used to store which shop items are unlocked. */
+    private static Map<String, Boolean> unlockedShopItemsMap =
+            new ConcurrentHashMap<>();
 
     /**
      * Private constructor.
@@ -29,21 +29,21 @@ public final class ShopItemUnlocker {
     }
 
     /**
-     * Creates a HashMap for all shop items that are unlocked.
+     * Creates a Map for all shop items that are unlocked.
      * This method can be used at the starting of the application.
      */
-    public static void createUnlockedShopItemsHashMap() {
-        createUnlockedSkinHashMap();
-        createUnlockedSoundtrackHashMap();
+    public static void createUnlockedShopItemsMap() {
+        createUnlockedSkinMap();
+        createUnlockedSoundtrackMap();
     }
 
     /**
-     * Alters a HashMap for the skins that are unlocked.
-     * This HashMap is created for keeping the textures separated
+     * Alters the Map for the skins that are unlocked.
+     * This Map is created for keeping the textures separated
      * from the constructor. Else the textures have to be loaded
      * every time the shop is started. During the tests as well.
      */
-    private static void createUnlockedSkinHashMap() {
+    private static void createUnlockedSkinMap() {
         unlockedShopItemsMap.put("Andy", false);
         unlockedShopItemsMap.put("B-man", false);
         unlockedShopItemsMap.put("Captain", false);
@@ -53,10 +53,10 @@ public final class ShopItemUnlocker {
     }
 
     /**
-     * Alters the HashMap for the soundtrack's unlocked values.
+     * Alters the Map for the soundtrack's unlocked values.
      * Only the default soundtrack is unlocked by default.
      */
-    public static void createUnlockedSoundtrackHashMap() {
+    public static void createUnlockedSoundtrackMap() {
         unlockedShopItemsMap.put("Animals", false);
         unlockedShopItemsMap.put("Default", true);
         unlockedShopItemsMap.put("Duck Tales", false);

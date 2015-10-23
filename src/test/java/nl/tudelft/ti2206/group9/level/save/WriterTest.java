@@ -17,7 +17,7 @@ public final class WriterTest {
 
     @Test
     public void testSaveGame() {
-        ShopItemUnlocker.createUnlockedShopItemsHashMap();
+        ShopItemUnlocker.createUnlockedShopItemsMap();
 
         final String playerName = "Henk";
         State.setPlayerName(playerName);

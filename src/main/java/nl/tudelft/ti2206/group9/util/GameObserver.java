@@ -126,8 +126,8 @@ public interface GameObserver extends Observer {
          *  optionalArgs: exception location, exception message. */
         IOEXCEPTION,
         /** There has been an exception with parsing an URL.
-         *  optionalArgs: exception location, exception message. */
-        MALFORMEDURLEXCEPTION,
+         *  optionalArgs: exception location, exception message, resource. */
+        RESOURCEEXCEPTION,
         /** There has been an exception with the audio player.
          *  optionalArgs: exception location, exception message. */
         MEDIAEXCEPTION,

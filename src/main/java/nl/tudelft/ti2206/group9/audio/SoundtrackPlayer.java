@@ -1,10 +1,6 @@
 package nl.tudelft.ti2206.group9.audio;
 
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-
-import java.io.File;
-import java.net.MalformedURLException;
-
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
@@ -12,6 +8,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import nl.tudelft.ti2206.group9.util.Resource;
 
 /**
  * Creates a SoundTrackPlayer which you can initialize, start, pause and stop.
@@ -62,13 +59,12 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
 
     @Override
     protected void initializeAudio(final String source) {
+        final String uri = Resource.getURIString(source);
+        if (uri == null) {
+            return;
+        }
         try {
-            mediaPlayer = new MediaPlayer(new Media(new File(source).toURI()
-                    .toURL().toString()));
-        } catch (MalformedURLException mue) {
-            OBSERVABLE.notify(Category.ERROR, Error.MALFORMEDURLEXCEPTION,
-                    "SoundtrackPlayer.initializeTune(String)",
-                    mue.getMessage());
+            mediaPlayer = new MediaPlayer(new Media(uri));
         } catch (MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundtrackPlayer.initializeTune(String)",

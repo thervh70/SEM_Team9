@@ -1,13 +1,16 @@
 package nl.tudelft.ti2206.group9.level;
 
-import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.group9.level.entity.Coin;
 import nl.tudelft.ti2206.group9.level.entity.Fence;
 import nl.tudelft.ti2206.group9.level.entity.Log;
 import nl.tudelft.ti2206.group9.level.entity.Pillar;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Mathias
@@ -50,5 +53,24 @@ public class TrackParserTest {
     public void testParseNullCharMap() {
         final char[][] nullMap = null;
         part = parser.parseTrackPart(nullMap);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testExceptionCheckFormat() {
+        parser.checkFormat(null);
+    }
+
+    @Test
+    public void testCheckFormat() {
+        final List<String> list = new LinkedList<>();
+        list.add("alpha");
+        list.add("beta");
+        parser.checkFormat(list);
+    }
+
+    @Test
+    public void testExceptionParseTrackPart() {
+        final String nullString = "fail.txt";
+        parser.parseTrackPart(nullString);
     }
 }

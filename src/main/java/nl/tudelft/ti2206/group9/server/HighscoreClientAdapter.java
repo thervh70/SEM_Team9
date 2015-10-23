@@ -42,11 +42,7 @@ public final class HighscoreClientAdapter {
     public static void add(final String name, final double score,
             final ResultCallback callback) {
         client.add(name, (int) score, response -> {
-            if (response.equals("SUCCESS")) {
-                callback.callback(true);
-            } else {
-                callback.callback(false);
-            }
+            callback.callback(response.equals("SUCCESS"));
         });
     }
 
