@@ -1,15 +1,14 @@
 package nl.tudelft.ti2206.group9.level.entity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
 import nl.tudelft.ti2206.group9.level.CollisionHandler;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.StateTest;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class CollisionTest {
 
@@ -19,7 +18,7 @@ public class CollisionTest {
     private CollisionHandler collisionHandler;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         State.resetAll();
         player = new Player();
         coin = new Coin(Point3D.ZERO);

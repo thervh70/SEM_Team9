@@ -1,9 +1,9 @@
 package nl.tudelft.ti2206.group9.audio;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
 
 /**
  * SoundEffectPlayerTest tests the SoundEffectPlayer class.
@@ -13,8 +13,7 @@ public class SoundEffectPlayerTest {
 
     @Test
     public void testStop() {
-        final String testPath = "src/main/resources/"
-                + "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
+        final String testPath = "nl/tudelft/ti2206/group9/audio/soundtrack.mp3";
         final SoundEffectPlayer test = new SoundEffectPlayer(testPath);
         test.play();
         test.stop();
@@ -23,13 +22,21 @@ public class SoundEffectPlayerTest {
 
     @Test
     public void testSetPath() {
-        final String testPath = "src/main/resources/"
-                + "nl/tudelft/ti2206/group9/audio/soundtrack.aiff";
+        final String testPath = "nl/tudelft/ti2206/group9/audio/soundtrack.mp3";
         final SoundEffectPlayer test = new SoundEffectPlayer(testPath);
-        final String testDifferentPath = "src/main/resources/"
-                + "nl/tudelft/ti2206/group9/audio/coin.wav";
+        final String testDifferentPath =
+                "nl/tudelft/ti2206/group9/audio/coin.wav";
         test.setPath(testDifferentPath);
         assertTrue(testDifferentPath.equals(test.getPath()));
+    }
+
+    @Test
+    public void testExceptionInitialize() {
+        final String testPath = "fileNotFound.aiff";
+        final SoundEffectPlayer test = new SoundEffectPlayer(testPath);
+        test.initializeAudio(testPath);
+        test.play();
+        assertFalse(test.isRunning());
     }
 
 }

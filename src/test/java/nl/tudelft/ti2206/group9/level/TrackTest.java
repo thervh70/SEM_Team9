@@ -1,13 +1,13 @@
 package nl.tudelft.ti2206.group9.level;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import nl.tudelft.ti2206.group9.level.entity.Coin;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class TrackTest {
 
@@ -16,7 +16,7 @@ public class TrackTest {
     private transient Track track;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         track = new Track();
         Track.setDistance(0);
     }
