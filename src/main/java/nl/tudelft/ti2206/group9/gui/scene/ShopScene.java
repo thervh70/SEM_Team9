@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,10 +18,13 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * Class that creates the content for a shop screen.
@@ -61,7 +63,7 @@ public class ShopScene extends AbstractMenuScene {
      */
     private static final int TABPANE_HEIGHT = 460;
 
-    /** Label for displaying current skin. */
+    /** Label for displaying current currentSkin. */
     private Label currentSkin;
     /** Label with amount of coins. */
     private Label amountLabel;
@@ -76,7 +78,7 @@ public class ShopScene extends AbstractMenuScene {
         final TabPane tabPane = new TabPane();
         tabPane.setMinHeight(TABPANE_HEIGHT);
         currentSkin = createLabel("SKIN: "
-                + State.getSkin().getItemName(), 0, COLUMN_CONSTRAINT);
+                + CurrentItems.getSkin().getItemName(), 0, COLUMN_CONSTRAINT);
         currentSoundtrack = createLabel("SOUNDTRACK: "
                 + "Radioactive", 2, COLUMN_CONSTRAINT);
         final Tab skinTab = createSkinTab();
@@ -105,7 +107,7 @@ public class ShopScene extends AbstractMenuScene {
     /**
      * Method to fill the shop with skins.
      * @param s Skin.
-     * @return VBox VBox containing an skin item.
+     * @return VBox VBox containing an currentSkin item.
      */
     private VBox createCarousel(final AbstractSkin s) {
         final Label price = createLabel("Price", 0, 0);
@@ -114,9 +116,9 @@ public class ShopScene extends AbstractMenuScene {
         setBuyButtonVisability(buy, s);
         buy.setOnAction(event -> {
             if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
-                State.setSkin(s);
+                CurrentItems.setSkin(s);
                 currentSkin.setText("CURRENT SKIN: "
-                        + State.getSkin().getItemName());
+                        + CurrentItems.getSkin().getItemName());
             } else {
                 if (State.getCoins() >= s.getItemPrice()) {
                     State.setCoins(State.getCoins() - s.getItemPrice());
@@ -138,7 +140,7 @@ public class ShopScene extends AbstractMenuScene {
     }
 
     /**
-     * Change te button visability if skin is buyable/unlocked.
+     * Change te button visability if currentSkin is buyable/unlocked.
      * @param buy Button to set.
      * @param s Skin.
      */
@@ -243,7 +245,7 @@ public class ShopScene extends AbstractMenuScene {
             if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
                 currentSoundtrack.setText("CURRENT SOUNDTRACK: "
                         + s.getItemName());
-                GameScene.setSoundtrackPlayer(s.getSoundtrackPlayer());
+                CurrentItems.setSoundtrackPlayer(s.getSoundtrackPlayer());
             } else {
                 if (State.getCoins() >= s.getItemPrice()) {
                     State.setCoins(State.getCoins() - s.getItemPrice());

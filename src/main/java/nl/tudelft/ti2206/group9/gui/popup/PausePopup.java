@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import nl.tudelft.ti2206.group9.gui.scene.GameScene;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
 
 /**
  * PausePopup, to be shown when the Game is paused.
@@ -30,15 +30,15 @@ public class PausePopup extends AbstractInfoPopup {
             playButtonSound();
             hide();
             resumeEvent.handle(mouseEvent);
-            GameScene.getSoundtrackPlayer().play();
+            CurrentItems.getSoundtrackPlayer().play();
         });
 
         getRightButton().setOnMouseClicked(mouseEvent -> {
             playButtonSound();
             hide();
             menuEvent.handle(mouseEvent);
-            GameScene.getSoundtrackPlayer().resetSpeed();
-            GameScene.getSoundtrackPlayer().stop();
+            CurrentItems.getSoundtrackPlayer().resetSpeed();
+            CurrentItems.getSoundtrackPlayer().stop();
         });
     }
 

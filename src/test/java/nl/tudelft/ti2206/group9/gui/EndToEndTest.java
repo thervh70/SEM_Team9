@@ -1,10 +1,22 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -17,26 +29,16 @@ import nl.tudelft.ti2206.group9.gui.scene.AbstractScene;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 
 @SuppressWarnings("restriction")
@@ -109,7 +111,7 @@ public class EndToEndTest extends ApplicationTest {
      *      - You are in the main menu
      *  - Go through the settings by clicking on settings button in the
      *     main menu, toggle the settings
-     *  - Go through the shop, buy a skin and return
+     *  - Go through the shop, buy a currentSkin and return
      *  - Go through the gameplay
      *      - Click the pause button and resume game
      *      - Go through playermovement
@@ -208,15 +210,15 @@ public class EndToEndTest extends ApplicationTest {
         State.setCoins(COINS); //Make sure player has enough coins
         mainMenu(MAIN_SHOP);
 
-        assertEquals(State.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(State.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
         shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(State.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
         shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(State.getSkin(), ShopItemLoader.getAndySkin());
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getAndySkin());
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(State.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
 
         shopScreen(SHOP_BACK);
     }
@@ -266,8 +268,8 @@ public class EndToEndTest extends ApplicationTest {
     private void moveAround() {
         final int s1 = 5 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
         final int s2 = 75 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
-        final Point3D center = State.getTrack().getPlayer().getCenter();
-        final Point3D size = State.getTrack().getPlayer().getSize();
+        final Point3D center = Track.getInstance().getPlayer().getCenter();
+        final Point3D size = Track.getInstance().getPlayer().getSize();
 
         keyboard(KeyCode.LEFT);
         sleep(s1);
@@ -344,7 +346,7 @@ public class EndToEndTest extends ApplicationTest {
         final HBox hbox = (HBox) scrollpane.getContent();
         final VBox vbox = (VBox) hbox.getChildren().get(skinNo);
 
-        final int buyEquip = 3; // Is the same for each skin
+        final int buyEquip = 3; // Is the same for each currentSkin
         clickOn(vbox.getChildren().get(buyEquip), MouseButton.PRIMARY);
         sleep(SHORT);
     }
@@ -362,7 +364,7 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void playerDies() {
-        State.getTrack().getPlayer().die();
+        Track.getInstance().getPlayer().die();
         sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
         letPlayerSurvive();            // Make sure there are no obstacles
         sleep(LONG);

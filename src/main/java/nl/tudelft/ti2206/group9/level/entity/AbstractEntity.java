@@ -1,7 +1,7 @@
 package nl.tudelft.ti2206.group9.level.entity;
 
 import nl.tudelft.ti2206.group9.gui.renderer.AbstractBoxRenderer;
-import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -62,7 +62,7 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
          >= otherCenter.getZ() - otherSize.getZ() / 2
          && thisCenter.getZ() - thisSize.getZ() / 2
          <= otherCenter.getZ() + otherSize.getZ() / 2) {
-            State.getTrack().getCollisions().collide(this, other);
+            Track.getInstance().getCollisions().collide(this, other);
         }
     }
 
@@ -73,7 +73,7 @@ public abstract class AbstractEntity {  // NOPMD - states complexity is too high
             /** Method run in Thread,
              * removes entity after track is done */
             public void run() {
-                State.getTrack().removeEntity(self);
+                Track.getInstance().removeEntity(self);
             }
         }).start();
     }

@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.level.entity;
 import nl.tudelft.ti2206.group9.level.CollisionHandler;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.StateTest;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.util.Point3D;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class CollisionTest {
         player = new Player();
         coin = new Coin(Point3D.ZERO);
         obstacle = new Log(Point3D.ZERO, Point3D.UNITCUBE);
-        collisionHandler = State.getTrack().getCollisions();
+        collisionHandler = Track.getInstance().getCollisions();
     }
 
     @Test
