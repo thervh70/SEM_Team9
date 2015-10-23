@@ -2,8 +2,12 @@ package nl.tudelft.ti2206.group9.level.save;
 
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 
 import nl.tudelft.ti2206.group9.level.State;
@@ -11,7 +15,6 @@ import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.Base64Reader;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
-import nl.tudelft.ti2206.group9.util.Resource;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -54,8 +57,10 @@ public final class Parser {
      */
     static void loadGame(final String path) {
         try {
-            final InputStream stream = Resource.getStream(path);
-            final Base64Reader reader = new Base64Reader(stream);
+            final URL pathURL = new File(path).toURI().toURL();
+            final InputStream stream = pathURL.openStream();
+            final Base64Reader reader = new Base64Reader(new BufferedReader(
+                    new InputStreamReader(stream, "UTF-8")));
             final String mainString = reader.readString();
             final JSONParser parser = new JSONParser();
             final JSONObject mainObject =

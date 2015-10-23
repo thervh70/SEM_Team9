@@ -3,11 +3,13 @@ package nl.tudelft.ti2206.group9.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
@@ -56,7 +58,9 @@ public class Base64WriterTest {
             writer.flush();
             writer.close();
             final InputStream stream = Resource.getStream(PATH);
-            final Base64Reader reader = new Base64Reader(stream);
+            final Base64Reader reader = new Base64Reader(new BufferedReader(
+                    new InputStreamReader(stream, "UTF-8")
+                    ));
             final String actualOut = reader.readString();
             reader.close();
             assertEquals(input, actualOut);
