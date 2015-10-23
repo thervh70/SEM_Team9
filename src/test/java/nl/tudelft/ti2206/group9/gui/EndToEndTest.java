@@ -16,6 +16,7 @@ import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.util.Logger;
@@ -266,8 +267,8 @@ public class EndToEndTest extends ApplicationTest {
     private void moveAround() {
         final int s1 = 5 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
         final int s2 = 75 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
-        final Point3D center = State.getTrack().getPlayer().getCenter();
-        final Point3D size = State.getTrack().getPlayer().getSize();
+        final Point3D center = Track.getInstance().getPlayer().getCenter();
+        final Point3D size = Track.getInstance().getPlayer().getSize();
 
         keyboard(KeyCode.LEFT);
         sleep(s1);
@@ -361,7 +362,7 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void playerDies() {
-        State.getTrack().getPlayer().die();
+        Track.getInstance().getPlayer().die();
         sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
         letPlayerSurvive();            // Make sure there are no obstacles
         sleep(LONG);

@@ -155,7 +155,7 @@ public final class GameScene extends AbstractScene {
 
     /** Sets up the KeyMap with the actions used in the game. */
     private void setupKeyMap() {
-        final Player player = State.getTrack().getPlayer();
+        final Player player = Track.getInstance().getPlayer();
         keyMap.addKey(KeyCode.UP,    () -> player.move(Direction.JUMP));
         keyMap.addKey(KeyCode.DOWN,  () -> player.move(Direction.SLIDE));
         keyMap.addKey(KeyCode.LEFT,  () -> player.move(Direction.LEFT));

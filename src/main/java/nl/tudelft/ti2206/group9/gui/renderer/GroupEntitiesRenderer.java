@@ -2,7 +2,7 @@ package nl.tudelft.ti2206.group9.gui.renderer;
 
 import javafx.scene.Node;
 import javafx.scene.shape.Box;
-import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
 
@@ -17,11 +17,11 @@ public class GroupEntitiesRenderer extends AbstractGroupRenderer
     /** Default constructor. */
     public GroupEntitiesRenderer() {
         super();
-        State.getTrack().addEntitiesListener(this);
+        Track.getInstance().addEntitiesListener(this);
 
         final Box playerOverlay = new Box();
 
-        for (final AbstractEntity e : State.getTrack().getEntities()) {
+        for (final AbstractEntity e : Track.getInstance().getEntities()) {
             final AbstractBoxRenderer<?> r = e.createRenderer();
             getChildren().add(r);
             if (r instanceof PlayerRenderer) {
@@ -57,7 +57,8 @@ public class GroupEntitiesRenderer extends AbstractGroupRenderer
             // It is not possible to call remove(entity) on the children of this
             // BoxRenderer. Track.children contains Entities,
             // this.children contains BoxRenderers.
-            final int indexOf = State.getTrack().getEntities().indexOf(entity);
+            final int indexOf = Track.getInstance()
+                    .getEntities().indexOf(entity);
             getChildren().remove(indexOf);
             break;
         default: break;

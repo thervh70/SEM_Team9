@@ -50,7 +50,7 @@ public final class State {
     /** Reset data that should be reset every run. */
     public static void reset() {
         Track.reset();
-        setTrack(Track.getInstance());
+        track = Track.getInstance();
         setScore(0);
         Track.setPreviousDistance(0);
         Track.setDistance(0);
@@ -98,20 +98,6 @@ public final class State {
      */
     public static void setCoins(final int newCoins) {
         coins = newCoins;
-    }
-
-    /**
-     * @return the track
-     */
-    public static Track getTrack() {
-        return track;
-    }
-
-    /**
-     * @param trck the track to set
-     */
-    public static void setTrack(final Track trck) {
-        State.track = trck;
     }
 
     /**
