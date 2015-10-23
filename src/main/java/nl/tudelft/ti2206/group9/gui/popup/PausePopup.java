@@ -101,13 +101,13 @@ public class PausePopup extends AbstractInfoPopup {
         soundtrButton.setTooltip(new Tooltip("Enable/disable soundtrack"));
         soundEfButton.setTooltip(new Tooltip("Enable/disable sound effects"));
 
-        VBox vBoxLeft = new VBox(VBOX_SPACING_SETTINGS,
+        final VBox vBoxLeft = new VBox(VBOX_SPACING_SETTINGS,
                 soundTrLabel, soundtrButton);
         vBoxLeft.setAlignment(Pos.CENTER);
-        VBox vBoxRight = new VBox(VBOX_SPACING_SETTINGS,
+        final VBox vBoxRight = new VBox(VBOX_SPACING_SETTINGS,
                 soundEfLabel, soundEfButton);
         vBoxRight.setAlignment(Pos.CENTER);
-        HBox hBox = new HBox(HBOX_SPACING, vBoxLeft, vBoxRight);
+        final HBox hBox = new HBox(HBOX_SPACING, vBoxLeft, vBoxRight);
         return new Node[]{pauseTitle, hBox};
     }
 
