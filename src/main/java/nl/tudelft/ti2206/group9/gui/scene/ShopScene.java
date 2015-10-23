@@ -79,8 +79,8 @@ public class ShopScene extends AbstractMenuScene {
                 + State.getSkin().getItemName(), 0, COLUMN_CONSTRAINT);
         currentSoundtrack = createLabel("SOUNDTRACK: "
                 + "Radioactive", 2, COLUMN_CONSTRAINT);
-        Tab skinTab = createSkinTab();
-        Tab soundTab = createSoundTab();
+        final Tab skinTab = createSkinTab();
+        final Tab soundTab = createSoundTab();
 
         tabPane.getTabs().addAll(skinTab, soundTab);
         tabPane.setFocusTraversable(true);
@@ -177,7 +177,7 @@ public class ShopScene extends AbstractMenuScene {
      * @return Tab.
      */
     public Tab createSkinTab() {
-        Tab tab = new Tab("Skins");
+        final Tab tab = new Tab("Skins");
         final HBox itemBox = new HBox(BOX_SPACING);
         final ObservableList<AbstractSkin> items =
                 ShopItemLoader.loadSkinsToList();
@@ -201,7 +201,7 @@ public class ShopScene extends AbstractMenuScene {
      * @return Tab.
      */
     public Tab createSoundTab() {
-        Tab tab = new Tab("Soundtracks");
+        final Tab tab = new Tab("Soundtracks");
 
         final VBox itemBox = new VBox(BOX_SPACING);
         final ObservableList<AbstractSoundtrack> items =
@@ -230,14 +230,14 @@ public class ShopScene extends AbstractMenuScene {
      * @return HBox
      */
     public HBox createSoundTrackCarousel(final AbstractSoundtrack s) {
-        HBox hbox = new HBox(BOX_SPACING);
-        ImageView imageView =
+        final HBox hbox = new HBox(BOX_SPACING);
+        final ImageView imageView =
                 new ImageView(new Image("nl/tudelft/ti2206/"
                         + "group9/gui/scene/music_notes.png"));
-        Label nameLabel = createLabel(s.getItemName(), 0, 0);
-        Label priceLabel =
+        final Label nameLabel = createLabel(s.getItemName(), 0, 0);
+        final Label priceLabel =
                 createLabel(Integer.toString(s.getItemPrice()), 0, 0);
-        Button buyButton = createButton("BUY", 0, 0);
+        final Button buyButton = createButton("BUY", 0, 0);
         setSoundBuyButtonVisability(buyButton, s);
         buyButton.setOnAction(event -> {
             if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
