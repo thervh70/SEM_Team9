@@ -4,7 +4,12 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -51,6 +56,10 @@ public class ShopScene extends AbstractMenuScene {
     private static final int LABEL_WIDTH = 230;
     /** Shop carousel height. */
     private static final int CAROUSEL_HEIGHT = 325;
+    /**
+     * tabPane height.
+     */
+    private static final int TABPANE_HEIGHT = 460;
 
     /** Label for displaying current skin. */
     private Label currentSkin;
@@ -65,7 +74,7 @@ public class ShopScene extends AbstractMenuScene {
     @Override
     public Node[] createContent() {
         final TabPane tabPane = new TabPane();
-        tabPane.setMinHeight(460);
+        tabPane.setMinHeight(TABPANE_HEIGHT);
         currentSkin = createLabel("SKIN: "
                 + State.getSkin().getItemName(), 0, COLUMN_CONSTRAINT);
         currentSoundtrack = createLabel("SOUNDTRACK: "
@@ -75,12 +84,8 @@ public class ShopScene extends AbstractMenuScene {
 
         tabPane.getTabs().addAll(skinTab, soundTab);
         tabPane.setFocusTraversable(true);
-
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
-
-
         currentSoundtrack.setMinWidth(LABEL_WIDTH);
-
         final Button backButton = createButton("BACK", 0, ROW_CONSTRAINT);
         final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
         amountLabel.setText(Integer.toString(State.getCoins()));
@@ -167,10 +172,15 @@ public class ShopScene extends AbstractMenuScene {
         });
     }
 
+    /**
+     * Creating the skin tab.
+     * @return Tab.
+     */
     public Tab createSkinTab() {
         Tab tab = new Tab("Skins");
         final HBox itemBox = new HBox(BOX_SPACING);
-        final ObservableList<AbstractSkin> items = ShopItemLoader.loadSkinsToList();
+        final ObservableList<AbstractSkin> items =
+                ShopItemLoader.loadSkinsToList();
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
@@ -186,11 +196,16 @@ public class ShopScene extends AbstractMenuScene {
         return tab;
     }
 
+    /**
+     * Creating the sound tab.
+     * @return Tab.
+     */
     public Tab createSoundTab() {
         Tab tab = new Tab("Soundtracks");
 
         final VBox itemBox = new VBox(BOX_SPACING);
-        final ObservableList<AbstractSoundtrack> items = ShopItemLoader.loadSoundtracksToList();
+        final ObservableList<AbstractSoundtrack> items =
+                ShopItemLoader.loadSoundtracksToList();
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinHeight(CAROUSEL_HEIGHT);
         itemBox.setAlignment(Pos.CENTER);
@@ -207,15 +222,23 @@ public class ShopScene extends AbstractMenuScene {
         return tab;
     }
 
-    public HBox createSoundTrackCarousel(AbstractSoundtrack s) {
+    /**
+     * Creating the soundTrack carousel that
+     * displays all the available soundtracks.
+     *
+     * @param s Soundtrack to be used.
+     * @return HBox
+     */
+    public HBox createSoundTrackCarousel(final AbstractSoundtrack s) {
         HBox hbox = new HBox(BOX_SPACING);
-        ImageView imageView = new ImageView(new Image("nl/tudelft/ti2206/group9/gui/scene/music_notes.png"));
+        ImageView imageView =
+                new ImageView(new Image("nl/tudelft/ti2206/"
+                        + "group9/gui/scene/music_notes.png"));
         Label nameLabel = createLabel(s.getItemName(), 0, 0);
-        Label priceLabel = createLabel(Integer.toString(s.getItemPrice()), 0, 0);
+        Label priceLabel =
+                createLabel(Integer.toString(s.getItemPrice()), 0, 0);
         Button buyButton = createButton("BUY", 0, 0);
-
         setSoundBuyButtonVisability(buyButton, s);
-
         buyButton.setOnAction(event -> {
             if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
                 currentSoundtrack.setText("CURRENT SOUNDTRACK: "
@@ -231,14 +254,19 @@ public class ShopScene extends AbstractMenuScene {
             }
             SaveGame.saveGame();
         });
-
         hbox.getChildren().addAll(imageView, nameLabel, priceLabel, buyButton);
         hbox.setAlignment(Pos.CENTER);
-
         return hbox;
     }
 
-    private void setSoundBuyButtonVisability(final Button buy, final AbstractSoundtrack s) {
+    /**
+     * Setting the visibility of the buy buttons.
+     *
+     * @param buy Button
+     * @param s   Soundtrack
+     */
+    private void setSoundBuyButtonVisability(final Button buy,
+                                             final AbstractSoundtrack s) {
         if (s.getItemPrice() >= State.getCoins()
                 && !ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setDisable(true);
