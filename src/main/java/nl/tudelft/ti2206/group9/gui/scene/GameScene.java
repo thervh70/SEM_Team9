@@ -13,14 +13,15 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
-import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.gui.ExternalTicker;
 import nl.tudelft.ti2206.group9.gui.popup.DeathPopup;
 import nl.tudelft.ti2206.group9.gui.popup.PausePopup;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.util.Direction;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -67,10 +68,6 @@ public final class GameScene extends AbstractScene {
     /** Indicate whether the game is running. */
     private static boolean running;
 
-    /** The AudioPlayer to be used for background music. */
-    private static SoundtrackPlayer soundtrackPlayer = new SoundtrackPlayer(
-                    "nl/tudelft/ti2206/group9/audio/soundtrack.mp3");
-
     /** The Sound-effects player. */
     private static SoundEffectObserver soundEffectObserver =
             new SoundEffectObserver();
@@ -102,7 +99,7 @@ public final class GameScene extends AbstractScene {
         setupCamera();
         keyBindings();
 
-        soundtrackPlayer.play();
+        CurrentItems.getSoundtrackPlayer().play();
         startTickers();
         return root;
     }
@@ -154,21 +151,21 @@ public final class GameScene extends AbstractScene {
 
     /** Sets up the KeyMap with the actions used in the game. */
     private void setupKeyMap() {
-        final Player player = State.getTrack().getPlayer();
+        final Player player = Track.getInstance().getPlayer();
         keyMap.addKey(KeyCode.UP,    () -> player.move(Direction.JUMP));
         keyMap.addKey(KeyCode.DOWN,  () -> player.move(Direction.SLIDE));
         keyMap.addKey(KeyCode.LEFT,  () -> player.move(Direction.LEFT));
         keyMap.addKey(KeyCode.RIGHT, () -> player.move(Direction.RIGHT));
 
         keyMap.addKey(KeyCode.W,     () -> player.move(Direction.JUMP));
-        keyMap.addKey(KeyCode.S,     () -> player.move(Direction.SLIDE));
-        keyMap.addKey(KeyCode.A,     () -> player.move(Direction.LEFT));
-        keyMap.addKey(KeyCode.D,     () -> player.move(Direction.RIGHT));
+        keyMap.addKey(KeyCode.S, () -> player.move(Direction.SLIDE));
+        keyMap.addKey(KeyCode.A, () -> player.move(Direction.LEFT));
+        keyMap.addKey(KeyCode.D, () -> player.move(Direction.RIGHT));
 
         keyMap.addKey(KeyCode.ESCAPE, () -> {
             keyMap.releaseAll();   // The popup blocks released keys propagating
             if (getPopup() == null) {   // If we have no popup already
-                soundtrackPlayer.pause();
+                CurrentItems.getSoundtrackPlayer().pause();
                 showPauseMenu();
             }
         });
@@ -222,8 +219,8 @@ public final class GameScene extends AbstractScene {
 
     /** Show a death menu. */
     public static void showDeathMenu() {
-        soundtrackPlayer.resetSpeed();
-        soundtrackPlayer.stop();
+        CurrentItems.getSoundtrackPlayer().resetSpeed();
+        CurrentItems.getSoundtrackPlayer().stop();
         setPopup(new DeathPopup(e -> {
             OBSERVABLE.notify(Category.GAME, Game.RETRY);
             State.reset();
@@ -260,14 +257,6 @@ public final class GameScene extends AbstractScene {
     /** Clears the overlay. */
     public static void clearOverlay() {
         overlay.getChildren().clear();
-    }
-
-    /**
-     * Every GameScene has an AudioPlayer for the soundtrack.
-     * @return the soundtrack AudioPlayer.
-     */
-    public static SoundtrackPlayer getSoundtrackPlayer() {
-        return soundtrackPlayer;
     }
 
     /** Stops the game when the Player dies. */
@@ -326,11 +315,11 @@ public final class GameScene extends AbstractScene {
             }
             if (update.getSpec() == Player.DISTANCE_INCREASE) {
                 final int mod = 250;
-                if (State.getDistance() >= prevDist + mod) {
+                if (Track.getDistance() >= prevDist + mod) {
                     prevDist += mod;
                     new Thread(() -> {
-                        GameScene.getSoundtrackPlayer().setSpeed(
-                                GameScene.getSoundtrackPlayer().getSpeed()
+                        CurrentItems.getSoundtrackPlayer().setSpeed(
+                                CurrentItems.getSoundtrackPlayer().getSpeed()
                                 * SPEED_INCREASE
                                 );
                     }).start();

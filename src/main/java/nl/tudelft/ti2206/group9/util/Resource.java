@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.group9.util;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +15,7 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import nl.tudelft.ti2206.group9.util.GameObserver.Category;
-import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * Helper class to quickly load resource URLs, URI strings, etc.

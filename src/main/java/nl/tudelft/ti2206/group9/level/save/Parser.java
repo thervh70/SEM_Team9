@@ -4,9 +4,10 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.Base64Reader;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
@@ -31,6 +32,8 @@ public final class Parser {
     private static long highScore;
     /** Boolean to indicate if skins are unlocked. */
     private static boolean andy, captain, boy, plank, iron;
+    /** Boolean to indicate if soundtracks are unlocked. */
+    private static boolean animals, duckTales, mario, nyanCat, shakeItOff;
     /**
      * Boolean for sound track enabled.
      */
@@ -61,6 +64,7 @@ public final class Parser {
             parseJSON(mainObject);
             writeToState();
             writeToSkins();
+            writeToSoundtracks();
             reader.close();
         } catch (IOException e) {
             OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
@@ -76,7 +80,6 @@ public final class Parser {
      * @param mainObject the main JSON object
      */
     private static void parseJSON(final JSONObject mainObject) {
-        System.out.println(mainObject);
         playername = (String) mainObject.get("playername");
         coins = (Long) mainObject.get("coins");
 
@@ -94,11 +97,34 @@ public final class Parser {
         final JSONObject highObj = (JSONObject) mainObject.get("highscore");
         highScore = (Long) highObj.get("score");
 
-        andy = (boolean) mainObject.get("andy");
-        boy = (boolean) mainObject.get("boy");
-        captain = (boolean) mainObject.get("captain");
-        iron = (boolean) mainObject.get("iron");
-        plank = (boolean) mainObject.get("plank");
+        final JSONObject shopItems =
+                (JSONObject) ((HashMap<?, ?>) mainObject).get("shopItems");
+        parseJSONShopItems(shopItems);
+    }
+
+    /**
+     * Parses the JSON data with respect to shopItems.
+     * @param shopItems the JSON object for shop items.
+     */
+    @SuppressWarnings("rawtypes")
+    // SuppressWarnings is needed for casting the shopItems object when
+    // getting the skins and soundtracks.
+    private static void parseJSONShopItems(final Object shopItems) {
+        final JSONObject skins =
+                (JSONObject) ((HashMap) shopItems).get("skins");
+        andy = (Boolean) skins.get("andy");
+        boy = (Boolean) skins.get("boy");
+        captain = (Boolean) skins.get("captain");
+        iron = (Boolean) skins.get("iron");
+        plank = (Boolean) skins.get("plank");
+
+        final JSONObject soundtracks = (JSONObject) ((HashMap) shopItems).
+                get("soundtracks");
+        animals = (Boolean) soundtracks.get("animals");
+        duckTales = (Boolean) soundtracks.get("duckTales");
+        mario = (Boolean) soundtracks.get("mario");
+        nyanCat = (Boolean) soundtracks.get("nyanCat");
+        shakeItOff = (Boolean) soundtracks.get("shakeItOff");
     }
 
     /**
@@ -116,11 +142,22 @@ public final class Parser {
      * Write states of skins to Style.
      */
     private static void writeToSkins() {
-        Skin.setUnlocked("Andy", andy);
-        Skin.setUnlocked("B-man", boy);
-        Skin.setUnlocked("Captain", captain);
-        Skin.setUnlocked("Iron Man", iron);
-        Skin.setUnlocked("Plank", plank);
+        ShopItemUnlocker.setUnlockedShopItem("Andy", andy);
+        ShopItemUnlocker.setUnlockedShopItem("B-man", boy);
+        ShopItemUnlocker.setUnlockedShopItem("Captain", captain);
+        ShopItemUnlocker.setUnlockedShopItem("Iron Man", iron);
+        ShopItemUnlocker.setUnlockedShopItem("Plank", plank);
+    }
+
+    /**
+     * Write states of soundtracks to Soundtrack.
+     */
+    private static void writeToSoundtracks() {
+        ShopItemUnlocker.setUnlockedShopItem("Animals", animals);
+        ShopItemUnlocker.setUnlockedShopItem("Duck Tales", duckTales);
+        ShopItemUnlocker.setUnlockedShopItem("Mario", mario);
+        ShopItemUnlocker.setUnlockedShopItem("Nyan Cat", nyanCat);
+        ShopItemUnlocker.setUnlockedShopItem("Shake It Off", shakeItOff);
     }
 
 }
