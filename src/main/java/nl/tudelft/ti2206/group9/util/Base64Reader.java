@@ -1,8 +1,12 @@
 package nl.tudelft.ti2206.group9.util;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
@@ -17,12 +21,23 @@ public class Base64Reader extends Reader {
     /** The Base64 decoder. */
     private final Base64.Decoder decoder = Base64.getDecoder();
 
-    /** Constructor which sets the Reader to be decorated.
+    /**
+     * Constructor which sets the Reader to be decorated.
      * @param rdr the Reader to be decorated.
      */
     public Base64Reader(final Reader rdr) {
         super();
         reader = rdr;
+    }
+
+    /**
+     * Constructor which sets the Reader to be decorated.
+     * @param stream the InputStream to create a Reader for.
+     */
+    public Base64Reader(final InputStream stream) {
+        super();
+        reader = new BufferedReader(
+                new InputStreamReader(stream, StandardCharsets.UTF_8));
     }
 
     /**
@@ -58,11 +73,11 @@ public class Base64Reader extends Reader {
 
     @Override
     public int read(final char[] cbuf, final int off,
-                    final int len) throws IOException {
+            final int len) throws IOException {
         final byte[] bytes = new String(cbuf).getBytes("UTF-8");
         final byte[] decodedBytes = decoder.decode(bytes);
         final char[] decodedCbuf = new String(decodedBytes, "UTF-8")
-                .toCharArray();
+        .toCharArray();
         return reader.read(decodedCbuf, off, len);
     }
 

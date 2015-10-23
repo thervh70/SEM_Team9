@@ -20,7 +20,7 @@ public class Base64ReaderTest {
 
     private Base64Reader reader;
     private static final String PATH =
-            "nl/tudelft/ti2206/group9/util/saveGameParserTest.ses";
+            "nl/tudelft/ti2206/group9/util/base64ReaderTest.ses";
 
     private final String expectedResult =
             "{\"settings\":{\"soundtracksettings\":"

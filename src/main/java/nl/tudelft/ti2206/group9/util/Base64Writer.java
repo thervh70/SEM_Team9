@@ -1,8 +1,12 @@
 package nl.tudelft.ti2206.group9.util;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
@@ -17,12 +21,23 @@ public class Base64Writer extends Writer {
     /** The Base64 encoder. */
     private final Base64.Encoder encoder = Base64.getEncoder();
 
-    /** Constructor which sets the Writer to be decorated.
+    /**
+     * Constructor which sets the Writer to be decorated.
      * @param wrtr the Writer to be decorated
      */
     public Base64Writer(final Writer wrtr) {
         super();
         writer = wrtr;
+    }
+
+    /**
+     * Constructor which sets the Writer to be decorated.
+     * @param stream the Stream to create a Writer for
+     */
+    public Base64Writer(final OutputStream stream) {
+        super();
+        writer = new BufferedWriter(
+                new OutputStreamWriter(stream, StandardCharsets.UTF_8));
     }
 
     /**

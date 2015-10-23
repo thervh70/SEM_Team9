@@ -13,7 +13,7 @@ public final class WriterTest {
 
     /** Default folder to write JSON savefiles to. */
     private static String fileFolder =
-            "src/test/resources/nl/tudelft/ti2206/group9/level/save/";
+            "nl/tudelft/ti2206/group9/util/";
 
     @Test
     public void testSaveGame() {
