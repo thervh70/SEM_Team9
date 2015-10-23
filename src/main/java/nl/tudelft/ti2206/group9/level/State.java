@@ -9,7 +9,6 @@ import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
  *
  * @author Maarten, Mitchell
  */
-@SuppressWarnings("restriction")
 public final class State {
 
     /** Current score of the player, reset every run. */

@@ -13,6 +13,8 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * This class takes care of all the saving and loading of the game.
  * @author Mathias
  */
+@SuppressWarnings("restriction") // SuppressWarnings, because
+// the ObservableList is for maintaining a list of saved games.
 public final class SaveGame {
 
     /**
