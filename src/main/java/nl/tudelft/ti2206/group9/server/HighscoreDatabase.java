@@ -1,9 +1,11 @@
 package nl.tudelft.ti2206.group9.server;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -16,78 +18,139 @@ public final class HighscoreDatabase {
     /** List containing all highscores ever. */
     private static List<Highscore> database = new ArrayList<>();
 
+    /** This list stores all supported queries. */
+    private static List<String[]> supported = new ArrayList<>();
+    /** The map that stores the Queries. */
+    private static Map<String, Query> queries = new ConcurrentHashMap<>();
+    /** The map that stores the arguments per query. */
+    private static Map<String, String[]> args = new ConcurrentHashMap<>();
+    /** The map that stores the supported argument types. */
+    private static Map<Class<?>, String> types = new ConcurrentHashMap<>();
+
+    static {
+        types.put(String.class, "string");
+        types.put(Integer.class, "int");
+
+        args.put("add", new String[]{"<name:string>", "<score:int>"});
+        queries.put("add", arg -> {
+            final String name = (String) arg[0];
+            final int score = (int) arg[1];
+            final Highscore h = new Highscore(name, score);
+            for (int i = 0; i < database.size(); i++) {
+                if (database.get(i).getScore() < score) {
+                    database.add(i, h);
+                    return "SUCCESS";
+                }
+            }
+            database.add(h);
+            return "SUCCESS";
+        });
+        args.put("get global", new String[]{"<amount:int>"});
+        queries.put("get global",
+                arg -> {
+                    final int amount = (int) arg[0];
+                    if (amount < 0) {
+                        return "";
+                    }
+                    final StringBuffer theOutput = new StringBuffer();
+                    createList(amount, theOutput, h -> !theOutput.toString()
+                            .contains("[" + h.getUser() + ","));
+                    return theOutput.toString();
+                });
+        args.put("get user", new String[]{"<name:string>", "<amount:int>"});
+        queries.put("get user",
+                arg -> {
+                    final int amount = (int) arg[1];
+                    if (amount < 0) {
+                        return "";
+                    }
+                    final String name = (String) arg[0];
+                    final StringBuffer theOutput = new StringBuffer();
+                    createList(amount, theOutput,
+                            h -> h.getUser().equals(name));
+                    return theOutput.toString();
+                });
+
+        for (final String q : queries.keySet()) {
+            supported.add(q.split(" "));
+        }
+    }
+
     /** Hiding public constructor. */
     private HighscoreDatabase() { }
 
     /**
-     * Query the database.
-     * @param query the query to resolve.
-     * @return the result from the database.
+     * Parses the query and returns the correct result.
+     * @param query The query to parse.
+     * @return The result of the query on the database.
      */
     public static String query(final String query) {
-        final Scanner sc = new Scanner(query);
-        if (!sc.hasNext()) {
-            sc.close();
-            return "USAGE get|add <args>";
+        final String[] parts = query.split(" ");
+        final Set<String> usage = new HashSet<>();
+        boolean gotOne = false;
+        int i;
+        for (i = 0; i < parts.length; i++) {
+            gotOne = false;
+            for (final String[] q : supported) {
+                if (i < q.length && q[i].equals(parts[i])) {
+                    gotOne = true;
+                    usage.add(q[i]);
+                    if (q.length == usage.size()) {
+                        return parseArguments(String.join(" ", usage),
+                                Arrays.copyOfRange(parts, q.length,
+                                        parts.length));
+                    }
+                }
+            }
         }
-        switch (sc.next()) {
-        case "get": return queryGet(sc);
-        case "add": return queryAdd(sc);
-        default:
-            sc.close();
-            return "USAGE get|add <args>";
+        if (!gotOne || query.equals("")) {
+            i--;
         }
+        final Set<String> localUsage = new HashSet<>();
+        for (final String[] q : supported) {
+            if (i < q.length) {
+                localUsage.add(q[i]);
+            }
+        }
+        final StringBuffer usageString = new StringBuffer();
+        usageString.append("USAGE");
+        if (!usage.isEmpty()) {
+            usageString.append(' ');
+        }
+        usageString.append(String.join(" ", usage)).append(' ')
+        .append(String.join("|", localUsage)).append(" <args>");
+        return usageString.toString();
     }
 
     /**
-     * @param sc Scanner that contains the arguments for the query.
-     * @return the result of the query.
+     * @param query The verified query.
+     * @param arg The arguments of the verified query.
+     * @return The result of the query, or a USAGE String.
      */
-    private static String queryGet(final Scanner sc) {
-        if (!sc.hasNext()) {
-            sc.close();
-            return "USAGE get user|global <args>";
+    private static String parseArguments(final String query,
+            final String... arg) {
+        final String[] q = args.get(query);
+        if (arg.length > q.length) {
+            return "USAGE " + query + " " + String.join(" ", q);
         }
-        switch (sc.next()) {
-        case "user":   return queryGetUser(sc);
-        case "global": return queryGetGlobal(sc);
-        default:       return "USAGE get user|global <args>";
-        }
-    }
+        final StringBuffer usage = new StringBuffer();
+        final List<Object> parsedArgs = new ArrayList<>();
+        for (int i = 0; i < arg.length; i++) {
+            usage.append(' ').append(arg[i]);
 
-    /**
-     * @param sc Scanner that contains the arguments for the query.
-     * @return the result of the query.
-     */
-    private static String queryGetUser(final Scanner sc) {
-        if (!sc.hasNext()) {
-            sc.close();
-            return "USAGE get user <name:string> <amount:int>";
+            switch (q[i].split(":")[1].split(">")[0]) {
+            case "int": parsedArgs.add(Integer.parseInt(arg[i])); break;
+            case "string": parsedArgs.add((String) arg[i]); break;
+            default: break;
+            }
         }
-        final String user = sc.next();
-        if (!sc.hasNextInt()) {
-            sc.close();
-            return "USAGE get user " + user + " <amount:int>";
+        if (arg.length < q.length) {
+            for (int i = arg.length; i < q.length; i++) {
+                usage.append(' ').append(q[i]);
+            }
+            return "USAGE " + query + usage.toString();
         }
-        final int amount = sc.nextInt();
-        sc.close();
-        return QueryParser.supported.get("get user <name:string> <amount:int>")
-                .query(user, amount);
-    }
-
-    /**
-     * @param sc Scanner that contains the arguments for the query.
-     * @return the result of the query.
-     */
-    private static String queryGetGlobal(final Scanner sc) {
-        if (!sc.hasNextInt()) {
-            sc.close();
-            return "USAGE get global <amount:int>";
-        }
-        final int amount = sc.nextInt();
-        sc.close();
-        return QueryParser.supported.get("get global <amount:int>")
-                .query(amount);
+        return queries.get(query).query(parsedArgs.toArray());
     }
 
     /**
@@ -112,70 +175,6 @@ public final class HighscoreDatabase {
             }
         }
         theOutput.append('\4');
-    }
-
-    /**
-     * @param sc Scanner that contains the arguments for the query.
-     * @return the result of the query.
-     */
-    private static String queryAdd(final Scanner sc) {
-        if (!sc.hasNext()) {
-            sc.close();
-            return "USAGE add <name:string> <score:int>";
-        }
-        final String name = sc.next();
-        if (!sc.hasNextInt()) {
-            sc.close();
-            return "USAGE add " + name + " <score:int>";
-        }
-        final int score = sc.nextInt();
-        return QueryParser.supported.get("add <name:string> <score:int>")
-                .query(name, score);
-    }
-
-    /** Has the responsibility to parse Queries and return correct results. */
-    private static class QueryParser {
-        /** The map that stores the supported Queries. */
-        private static Map<String, Query> supported = new ConcurrentHashMap<>();
-        static {
-            supported.put("add <name:string> <score:int>",
-                    args -> {
-                        final String name = (String) args[0];
-                        final int score = (int) args[1];
-                        final Highscore h = new Highscore(name, score);
-                        for (int i = 0; i < database.size(); i++) {
-                            if (database.get(i).getScore() < score) {
-                                database.add(i, h);
-                                return "SUCCESS";
-                            }
-                        }
-                        database.add(h);
-                        return "SUCCESS";
-                    });
-            supported.put("get user <name:string> <amount:int>",
-                    args -> {
-                        final int amount = (int) args[1];
-                        if (amount < 0) {
-                            return "";
-                        }
-                        final String name = (String) args[0];
-                        final StringBuffer theOutput = new StringBuffer();
-                        createList(amount, theOutput,
-                                h -> h.getUser().equals(name));
-                        return theOutput.toString();
-                    });
-            supported.put("get global <amount:int>",
-                    args -> {
-                        final int amount = (int) args[0];
-                        if (amount < 0) {
-                            return "";
-                        }
-                        final StringBuffer theOutput = new StringBuffer();
-                        createList(amount, theOutput, h -> !theOutput.toString()
-                                .contains("[" + h.getUser() + ","));
-                        return theOutput.toString();
-                    });
-        }
     }
 
     /**

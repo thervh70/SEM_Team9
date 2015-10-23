@@ -133,21 +133,21 @@ public class HighscoreClientTest {
     private void testIllegalQuery() {
         client.query("", 1, callback);
         haltTestUntilServerResponds();
-        assertEquals("USAGE get|add <args>", actualResponse);
+        assertEquals("USAGE add|get <args>", actualResponse);
 
         client.query("doNothingOrSomething", 1, callback);
         haltTestUntilServerResponds();
-        assertEquals("USAGE get|add <args>", actualResponse);
+        assertEquals("USAGE add|get <args>", actualResponse);
     }
 
     private void testIllegalGetQuery() {
         client.query("get", 1, callback);
         haltTestUntilServerResponds();
-        assertEquals("USAGE get user|global <args>", actualResponse);
+        assertEquals("USAGE get global|user <args>", actualResponse);
 
         client.query("get nothing", 1, callback);
         haltTestUntilServerResponds();
-        assertEquals("USAGE get user|global <args>", actualResponse);
+        assertEquals("USAGE get global|user <args>", actualResponse);
 
         client.query("get global", 1, callback);
         haltTestUntilServerResponds();
