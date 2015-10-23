@@ -111,4 +111,9 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
         }
     }
 
+    @Override
+    public void setVolume(final double volumeLevel) {
+        audioClip.setVolume(volumeLevel);
+    }
+
 }
