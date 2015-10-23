@@ -2,8 +2,11 @@ package nl.tudelft.ti2206.group9.level;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
+import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
+import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
+import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 
@@ -26,7 +29,7 @@ public final class State {
     private static double highscore;
 
     /** Skin to be used. */
-    private static Skin skin;
+    private static AbstractSkin skin;
 
     /** Current track, contains all entities. */
     private static Track track = new Track();
@@ -66,7 +69,10 @@ public final class State {
         setCoins(0);
         highscore = 0;
         previousDistance = 0;
-        skin = Skin.loadSkinsToList().get(0);
+        skin = ShopItemLoader.getNoobSkin();
+        GameScene.setSoundtrackPlayer(
+                new SoundtrackPlayer("src/main/resources/"
+                + "nl/tudelft/ti2206/group9/audio/soundtrack_Default.mp3"));
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
     }
@@ -239,7 +245,7 @@ public final class State {
      * Getter for the current skin.
      * @return The skin.
      */
-    public static Skin getSkin() {
+    public static AbstractSkin getSkin() {
         return skin;
     }
 
@@ -247,7 +253,7 @@ public final class State {
      * If new skins are bought and applied it can be done via this setter.
      * @param newSkin The new skin.
      */
-    public static void setSkin(final Skin newSkin) {
+    public static void setSkin(final AbstractSkin newSkin) {
         skin = newSkin;
     }
 
