@@ -2,7 +2,7 @@ package nl.tudelft.ti2206.group9.shop;
 
 import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.group9.shop.soundtrack.AnimalsSoundtrack;
-import nl.tudelft.ti2206.group9.shop.soundtrack.DefaultSoundtrack;
+import nl.tudelft.ti2206.group9.shop.soundtrack.RadioactiveSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.DuckTalesSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.MarioSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.NyanCatSoundtrack;
@@ -21,7 +21,7 @@ public class ShopItemTest {
 
     // Soundtrack items
     private static AbstractSoundtrack animals = new AnimalsSoundtrack();
-    private static AbstractSoundtrack radioactive = new DefaultSoundtrack();
+    private static AbstractSoundtrack radioactive = new RadioactiveSoundtrack();
     private static AbstractSoundtrack duckTales = new DuckTalesSoundtrack();
     private static AbstractSoundtrack mario = new MarioSoundtrack();
     private static AbstractSoundtrack nyanCat = new NyanCatSoundtrack();

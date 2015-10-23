@@ -7,14 +7,14 @@ package nl.tudelft.ti2206.group9.shop.soundtrack;
  * as this shop item is already part of the player's property.
  * @author Mitchell.
  */
-public class DefaultSoundtrack extends AbstractSoundtrack {
+public class RadioactiveSoundtrack extends AbstractSoundtrack {
     /** Price of the default soundtrack in the shop. */
     private static final int PRICE = 0;
     /** Path to be used for soundtrack 'Default'. */
     private static final String PATH_DEFAULT = "soundtrack_Default";
 
     /** Constructor for the default soundtrack. */
-    public DefaultSoundtrack() {
-        super(PRICE, "Default", PATH_DEFAULT);
+    public RadioactiveSoundtrack() {
+        super(PRICE, "Radioactive", PATH_DEFAULT);
     }
 }

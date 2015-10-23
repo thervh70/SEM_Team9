@@ -10,7 +10,7 @@ import nl.tudelft.ti2206.group9.shop.skin.NoobSkin;
 import nl.tudelft.ti2206.group9.shop.skin.PlankSkin;
 import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.shop.soundtrack.AnimalsSoundtrack;
-import nl.tudelft.ti2206.group9.shop.soundtrack.DefaultSoundtrack;
+import nl.tudelft.ti2206.group9.shop.soundtrack.RadioactiveSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.DuckTalesSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.MarioSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.NyanCatSoundtrack;
@@ -72,7 +72,7 @@ public final class ShopItemLoader {
     /**
      * The Default Soundtrack that has been bought.
      */
-    private static DefaultSoundtrack defaultSoundtrack;
+    private static RadioactiveSoundtrack radioactiveSoundtrack;
 
     /**
      * The Duck Tales Soundtrack that can be bought.
@@ -131,7 +131,7 @@ public final class ShopItemLoader {
     public static void loadSoundtracks() {
         animalsSoundtrack = new AnimalsSoundtrack();
         ducktalesSoundtrack = new DuckTalesSoundtrack();
-        defaultSoundtrack = new DefaultSoundtrack();
+        radioactiveSoundtrack = new RadioactiveSoundtrack();
         marioSoundtrack = new MarioSoundtrack();
         nyancatSoundtrack = new NyanCatSoundtrack();
         shakeitoffSoundtrack = new ShakeItOffSoundtrack();
@@ -160,7 +160,7 @@ public final class ShopItemLoader {
     public static ObservableList<AbstractSoundtrack> loadSoundtracksToList() {
         final ObservableList<AbstractSoundtrack> list = FXCollections.
                 observableArrayList();
-        list.addAll(animalsSoundtrack, defaultSoundtrack,
+        list.addAll(animalsSoundtrack, radioactiveSoundtrack,
                 ducktalesSoundtrack, marioSoundtrack,
                 nyancatSoundtrack, shakeitoffSoundtrack);
         return list;

@@ -80,7 +80,7 @@ public class ShopScene extends AbstractMenuScene {
         currentSkin = createLabel("SKIN: "
                 + CurrentItems.getSkin().getItemName(), 0, COLUMN_CONSTRAINT);
         currentSoundtrack = createLabel("SOUNDTRACK: "
-                + "Default", 2, COLUMN_CONSTRAINT);
+                + "Radioactive", 2, COLUMN_CONSTRAINT);
         final Tab skinTab = createSkinTab();
         final Tab soundTab = createSoundTab();
 
