@@ -10,11 +10,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * the Map can be altered during the tests which involve unlocking
  * shop items. (If also the textures are loaded during the tests,
  * (graphics) errors will occur.)
+ *
  * @author Mitchell
  */
 public final class ShopItemUnlocker {
 
-    /** Map used to store which shop items are unlocked. */
+
+    /**
+     * Map used to store which shop items are unlocked.
+     */
     private static Map<String, Boolean> unlockedShopItemsMap =
             new ConcurrentHashMap<>();
 
@@ -23,7 +27,8 @@ public final class ShopItemUnlocker {
      * This so that this class can't be instantiated,
      * as it is a util class full of static methods.
      */
-    private ShopItemUnlocker() { }
+    private ShopItemUnlocker() {
+    }
 
     /**
      * Creates a Map for all shop items that are unlocked.
@@ -55,7 +60,7 @@ public final class ShopItemUnlocker {
      */
     public static void createUnlockedSoundtrackMap() {
         unlockedShopItemsMap.put("Animals", false);
-        unlockedShopItemsMap.put("Default", true);
+        unlockedShopItemsMap.put("Radioactive", true);
         unlockedShopItemsMap.put("Duck Tales", false);
         unlockedShopItemsMap.put("Mario", false);
         unlockedShopItemsMap.put("Nyan Cat", false);
@@ -64,6 +69,7 @@ public final class ShopItemUnlocker {
 
     /**
      * Gets the unlocked value of shop item, based on the name.
+     *
      * @param name the Name of the shop item.
      * @return boolean unlocked or not.
      */
@@ -73,11 +79,12 @@ public final class ShopItemUnlocker {
 
     /**
      * Sets the unlocked value for a shop item of the shop.
-     * @param name the Name of the shop item to change the value for.
+     *
+     * @param name     the Name of the shop item to change the value for.
      * @param unlocked new unlocked value.
      */
     public static void setUnlockedShopItem(final String name,
-            final boolean unlocked) {
+                                           final boolean unlocked) {
         unlockedShopItemsMap.replace(name, unlocked);
     }
 

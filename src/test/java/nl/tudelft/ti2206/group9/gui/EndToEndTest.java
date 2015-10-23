@@ -1,9 +1,23 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -22,21 +36,9 @@ import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 
 @SuppressWarnings("restriction")
@@ -339,8 +341,10 @@ public class EndToEndTest extends ApplicationTest {
         gridPaneNodes = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
 
-        final ScrollPane pane = (ScrollPane) gridPaneNodes.get(0);
-        final HBox hbox = (HBox) pane.getContent();
+        final TabPane tabpane = (TabPane) gridPaneNodes.get(0);
+        final ScrollPane scrollpane =
+                (ScrollPane) tabpane.getTabs().get(0).getContent();
+        final HBox hbox = (HBox) scrollpane.getContent();
         final VBox vbox = (VBox) hbox.getChildren().get(skinNo);
 
         final int buyEquip = 3; // Is the same for each currentSkin

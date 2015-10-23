@@ -27,7 +27,9 @@ public final class HighscoreServer {
     /** The ServerSocket of this server. This is a private field, because it
      *  is accessed in two separate threads. */
     private static ServerSocket serverSocket;
-    /** The CLIThread of this server, handles console input. */
+    /**
+     * The CLIThread of this server, handles console input.
+     */
     private static CLIThread cliThread;
 
     /** Hiding public constructor. */
@@ -96,20 +98,21 @@ public final class HighscoreServer {
          */
         private void handleCommand(final String command) {
             switch (command) {
-            case "q":
-            case "stop":
-                quit();
-                try {
-                    if (serverSocket != null) {
-                        serverSocket.close();
+                case "q":
+                case "stop":
+                    quit();
+                    try {
+                        if (serverSocket != null) {
+                            serverSocket.close();
+                        }
+                    } catch (IOException e) {
+                        logError("IOException while stopping the server, "
+                                + "exiting anyway.");
                     }
-                } catch (IOException e) {
-                    logError("IOException while stopping the server, "
-                            + "exiting anyway.");
-                }
-                log("Server has been stopped.");
-                break;
-            default: break;
+                    log("Server has been stopped.");
+                    break;
+                default:
+                    break;
             }
         }
     }
