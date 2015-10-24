@@ -177,11 +177,21 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
     }
 
     /**
-     * Resets the speed of the soundtrack played by the SoundtrackPlayer.
+     * Resets the speed of the soundtrack played by the SoundtrackPlayer,
+     * if the soundtrack is enabled.
      */
     public final void resetSpeed() {
-        if (State.isSoundtrackEnabled()) {
-            mediaPlayer.setRate(1.0);
+        try {
+            if (State.isSoundtrackEnabled()) {
+                mediaPlayer.setRate(1.0);
+            }
+        } catch (NullPointerException ne) { // NOPMD
+            // This try-catch block is just here for testing.
+            // The resetSpeed method can result in a NullPointer (according to
+            // JUnit), because JUnit can't really play audio neither can Travis.
+            OBSERVABLE.notify(GameObserver.Category.ERROR,
+                    GameObserver.Error.NULLPOINTEREXCEPTION,
+                    "SoundtrackPlayer.resetSpeed()", ne.getMessage());
         }
     }
 
