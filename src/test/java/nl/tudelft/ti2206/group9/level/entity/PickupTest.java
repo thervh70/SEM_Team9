@@ -1,13 +1,12 @@
 package nl.tudelft.ti2206.group9.level.entity;
 
-import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.Action;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class PickupTest {
 
@@ -18,13 +17,8 @@ public class PickupTest {
 
     @Before
     public void setUp() {
-        State.resetAll();
+        State.reset();
         testActions = 0;
-    }
-
-    @After
-    public void tearDown() {
-        State.resetAll();
     }
 
     @Test
@@ -47,7 +41,7 @@ public class PickupTest {
 
     class TestPickup extends AbstractPickup {
 
-        public TestPickup(final AbstractPickup decorating) {
+        TestPickup(final AbstractPickup decorating) {
             super(Point3D.ZERO, Point3D.UNITCUBE, decorating);
         }
 

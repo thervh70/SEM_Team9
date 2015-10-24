@@ -82,8 +82,8 @@ public class Logger implements GameObserver {
         final String info = "\n    in %s" + "\n    Message: %s";
         STRINGS.put(Error.IOEXCEPTION,
                 lbl + "Exception while reading or writing files!" + info);
-        STRINGS.put(Error.MALFORMEDURLEXCEPTION,
-                lbl + "Exception while parsing URL!" + info);
+        STRINGS.put(Error.RESOURCEEXCEPTION,
+                lbl + "Exception while getting resource %s." + info);
         STRINGS.put(Error.MEDIAEXCEPTION,
                 lbl + "Exception with audio player!" + info);
         STRINGS.put(Error.PARSEEXCEPTION,

@@ -1,12 +1,7 @@
 package nl.tudelft.ti2206.group9.level;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import nl.tudelft.ti2206.group9.gui.skin.Skin;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
-import nl.tudelft.ti2206.group9.util.GameObserver;
-import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
 
 /**
  * This utility class stores the State of the game,
@@ -14,7 +9,6 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Category;
  *
  * @author Maarten, Mitchell
  */
-@SuppressWarnings("restriction")
 public final class State {
 
     /** Current score of the player, reset every run. */
@@ -24,20 +18,8 @@ public final class State {
     /** Highest score ever obtained. */
     private static double highscore;
 
-    /** Skin to be used. */
-    private static Skin skin;
-
-    /** Current track, contains all entities. */
-    private static Track track = new Track();
-
     /** Name of the player. */
     private static String playerName;
-
-    /**
-     * Default savegame directory.
-     * Attention! Only use 1 subfolder!
-     */
-    private static String defaultSaveDir = "sav/";
 
     /**
      * Boolean to determine whether soundtracks are enabled.
@@ -48,14 +30,6 @@ public final class State {
      */
     private static boolean soundEffectsEnabled;
 
-    /** List of the names of all the saved games. */
-    private static ObservableList<String> saveGames =
-            FXCollections.observableArrayList();
-    /** Standard modulus number for both modulo calculation. */
-    public static final int MOD = 50;
-    /** Records the distance from the previous distance update. */
-    private static int previousDistance;
-
     /** Cannot be constructed. */
     private State() { }
 
@@ -64,19 +38,18 @@ public final class State {
         reset();
         setCoins(0);
         highscore = 0;
-        previousDistance = 0;
-        skin = Skin.getNoob();
+        CurrentItems.reset();
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
     }
 
     /** Reset data that should be reset every run. */
     public static void reset() {
-        setTrack(new Track());
+        Track.reset();
         setScore(0);
-        previousDistance = 0;
+        Track.setPreviousDistance(0);
         Track.setDistance(0);
-        track.getPlayer().respawn();
+        Track.getInstance().getPlayer().respawn();
         PowerupInvulnerable.resetCounter();
     }
 
@@ -120,49 +93,6 @@ public final class State {
      */
     public static void setCoins(final int newCoins) {
         coins = newCoins;
-    }
-
-    /**
-     * @return the distance of the track
-     */
-    public static double getDistance() {
-        return Track.getDistance();
-    }
-
-    /**
-     * Check whether the distance has been increased by 50 (or more).
-     * This check is used for soundtrack speed increasing.
-     */
-    public static void distanceCheck() {
-        final int currentDistance = State.modulo(State.getDistance());
-        if (currentDistance > previousDistance) {
-            previousDistance = currentDistance;
-            OBSERVABLE.notify(Category.PLAYER,
-                    GameObserver.Player.DISTANCE_INCREASE, (int) getDistance());
-        }
-    }
-
-    /**
-     * Update the current distance every {@link #MOD} moves or points increase.
-     * @param amount number of (distance or points)
-     * @return updated amount
-     */
-    public static int modulo(final double amount) {
-        return (int) (Math.floor(amount / MOD) * MOD);
-    }
-
-    /**
-     * @return the track
-     */
-    public static Track getTrack() {
-        return track;
-    }
-
-    /**
-     * @param trck the track to set
-     */
-    public static void setTrack(final Track trck) {
-        State.track = trck;
     }
 
     /**
@@ -234,43 +164,4 @@ public final class State {
         State.soundEffectsEnabled = newSoundEnabled;
     }
 
-    /**
-     * Getter for the current skin.
-     * @return The skin.
-     */
-    public static Skin getSkin() {
-        return skin;
-    }
-
-    /**
-     * If new skins are bought and applied it can be done via this setter.
-     * @param newSkin The new skin.
-     */
-    public static void setSkin(final Skin newSkin) {
-        skin = newSkin;
-    }
-
-    /**
-     * Get the default savegame directory.
-     * @return defaultSaveDir
-     */
-    public static String getDefaultSaveDir() {
-        return defaultSaveDir;
-    }
-
-    /**
-     * Set a new default savegame directory.
-     * @param newSaveDir the new savegame directory
-     */
-    public static void setDefaultSaveDir(final String newSaveDir) {
-        State.defaultSaveDir = newSaveDir;
-    }
-
-    /**
-     * Get the list of the names of all the saved games.
-     * @return ObservableList which contains all names of the saved games
-     */
-    public static ObservableList<String> getSaveGames() {
-        return saveGames;
-    }
 }

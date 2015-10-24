@@ -19,6 +19,7 @@ import nl.tudelft.ti2206.group9.gui.renderer.GroupTrackRenderer;
 import nl.tudelft.ti2206.group9.gui.renderer.GroupWallRenderer;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 
 /**
@@ -67,7 +68,7 @@ public class ExternalTicker extends AnimationTimer {
     @Override
     public final void handle(final long now) {
         if (State.isSoundtrackEnabled()) {
-            State.distanceCheck();
+            Track.distanceCheck();
         }
         renderScene();
     }
@@ -95,9 +96,9 @@ public class ExternalTicker extends AnimationTimer {
         final Label highLabel = new Label("Highscore: "
                 + State.getHighscore());
         final Label scoreLabel = new Label("Score: "
-                + State.modulo(State.getScore()));
+                + Track.modulo(State.getScore()));
         final Label distanceLabel = new Label("Distance: "
-                + State.modulo(State.getDistance()));
+                + Track.modulo(Track.getDistance()));
         final Label coinsLabel = new Label("Coins: "
                 + State.getCoins());
         final Label powerupLabel = new Label("Invulnerable: "
@@ -167,11 +168,5 @@ public class ExternalTicker extends AnimationTimer {
             }
         });
     }
-
-    /** @return the entities renderer */
-    public AbstractGroupRenderer getEntitiesRenderer() {
-        return entities;
-    }
-
 }
 

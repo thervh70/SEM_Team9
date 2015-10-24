@@ -55,6 +55,6 @@ public abstract class AbstractAudioPlayer {
      *
      * @param volumeLevel the new default volume level to set.
      */
-    public abstract void setVolume(double volumeLevel);
+    public abstract void setVolume(final double volumeLevel);
 
 }

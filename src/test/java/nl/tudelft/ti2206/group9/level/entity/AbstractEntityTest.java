@@ -1,5 +1,12 @@
 package nl.tudelft.ti2206.group9.level.entity;
 
+import nl.tudelft.ti2206.group9.gui.renderer.AbstractBoxRenderer;
+import nl.tudelft.ti2206.group9.level.CollisionHandler;
+import nl.tudelft.ti2206.group9.level.Track;
+import nl.tudelft.ti2206.group9.util.Point3D;
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,13 +14,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import nl.tudelft.ti2206.group9.gui.renderer.AbstractBoxRenderer;
-import nl.tudelft.ti2206.group9.level.CollisionHandler;
-import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.Point3D;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class AbstractEntityTest {
 
@@ -27,13 +27,13 @@ public class AbstractEntityTest {
     private CollisionHandler collisionHandler;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         first = mock(AbstractEntity.class);
         second = mock(AbstractEntity.class);
 
         entity = new TestEntity(Point3D.ZERO, Point3D.UNITCUBE);
         collisionHandler = mock(CollisionHandler.class);
-        State.getTrack().setCollisions(collisionHandler);
+        Track.getInstance().setCollisions(collisionHandler);
     }
 
     @Test
@@ -209,7 +209,7 @@ public class AbstractEntityTest {
          * @param center center of the bounding box
          * @param size size of the bounding box
          */
-        public TestEntity(final Point3D center, final Point3D size) {
+        TestEntity(final Point3D center, final Point3D size) {
             super(center, size);
         }
 

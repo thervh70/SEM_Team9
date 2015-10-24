@@ -1,17 +1,18 @@
 package nl.tudelft.ti2206.group9.gui.popup;
 
-import java.util.Arrays;
-
-import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
-import nl.tudelft.ti2206.group9.gui.Style;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
+import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
+import nl.tudelft.ti2206.group9.gui.Style;
+
+import java.util.Arrays;
 
 /**
  * Abstract Popup class as a template for all Popups in the game.
@@ -28,10 +29,14 @@ public abstract class AbstractInfoPopup extends Popup {
     protected static final double HBOX_SPACING = 10;
     /** Size of the VBox. */
     protected static final double VBOX_SPACING = 50;
+    /** Width for label and text input.*/
+    private static final int CELL_WIDTH = 120;
+    /** Height for label and text input.*/
+    private static final int CELL_HEIGHT = 20;
 
     /** The AudioPlayer to be used for a button sound effect. */
     private static final SoundEffectPlayer BUTTON_SOUND = new SoundEffectPlayer(
-            "src/main/resources/nl/tudelft/ti2206/group9/audio/button.wav");
+            "nl/tudelft/ti2206/group9/audio/button.wav");
 
     /** The left button in the Popup. */
     private final Button left;
@@ -97,4 +102,26 @@ public abstract class AbstractInfoPopup extends Popup {
         BUTTON_SOUND.play();
     }
 
+    /**
+     * This method adds text to buttons and gives them a location on the grid.
+     * @param name Name of the button.
+     * @return the created button.
+     */
+    protected static Button createButton(final String name) {
+        final Button button = new Button(name);
+        Style.setPopupButtonStyle(button);
+        return button;
+    }
+
+    /**
+     * This method creates labels and gives them a location on the grid.
+     * @param text Label text.
+     * @return the created Label.
+     */
+    protected static Label createLabel(final String text) {
+        final Label label = new Label(text);
+        Style.setLabelStyle(label);
+        label.setMinSize(CELL_WIDTH, CELL_HEIGHT);
+        return label;
+    }
 }

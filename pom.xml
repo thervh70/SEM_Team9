@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.tudelft.ti2206.group9</groupId>
   <artifactId>ti2206-sem-group-9</artifactId>
-  <version>1.4.1</version>
+  <version>1.5</version>
   <repositories>
     <repository>
       <id>maven-central-repo</id>
@@ -84,9 +84,19 @@
     <resources>
       <resource>
         <directory>src/main/resources</directory>
-        <filtering>true</filtering>
+        <filtering>false</filtering> <!-- Filtering means ${variable} in text will be replaced -->
       </resource>
     </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>false</filtering> <!-- As we do not need filtering, it can be turned off -->
+      </testResource>
+      <testResource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering> <!-- Especially because binaries (mp3) become corrupted if turned on -->
+      </testResource>
+    </testResources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -111,6 +121,25 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.6</version>
         <executions>
@@ -130,6 +159,8 @@
               <finalName>ShaftEscape-${project.version}</finalName>
               <archive>
                 <manifest>
+                  <addClasspath>true</addClasspath>
+                  <classpathPrefix>lib/</classpathPrefix> <!-- Know where to look for dependencies -->
                   <mainClass>nl.tudelft.ti2206.group9.ShaftEscape</mainClass>
                 </manifest>
               </archive>

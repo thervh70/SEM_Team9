@@ -1,13 +1,13 @@
 package nl.tudelft.ti2206.group9.level;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import nl.tudelft.ti2206.group9.level.entity.Coin;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class TrackTest {
 
@@ -16,8 +16,9 @@ public class TrackTest {
     private transient Track track;
 
     @Before
-    public void setUp() throws Exception {
-        track = new Track();
+    public void setUp() {
+        Track.reset();
+        track = Track.getInstance();
         Track.setDistance(0);
     }
 
@@ -99,4 +100,28 @@ public class TrackTest {
         Track.setDistance(1);
         assertEquals(1, Track.getDistance(), DELTA);
     }
+    @Test
+    public void testModuloDistance() {
+        Track.setDistance(2);
+        assertEquals(0, Track.modulo(Track.getDistance()));
+        Track.setDistance(Track.MOD + 1);
+        assertEquals(Track.MOD, Track.modulo(Track.getDistance()));
+    }
+
+    @Test
+    public void testModuloScore() {
+        State.setScore(2.0);
+        assertEquals(0, Track.modulo(Track.getDistance()));
+        State.setScore(Track.MOD + 1.0);
+        assertEquals(Track.MOD, Track.modulo(State.getScore()));
+    }
+
+    @Test
+    public void testGetDistance() {
+        Track.setDistance(2);
+        assertEquals(2, Track.getDistance(), DELTA);
+        Track.setDistance(1);
+        assertEquals(1, Track.getDistance(), DELTA);
+    }
+
 }

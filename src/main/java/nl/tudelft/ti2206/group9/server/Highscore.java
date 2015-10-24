@@ -35,9 +35,10 @@ public class Highscore {
     }
 
     /**
-     * Parses a toString() String to a Highscore.
+     * Parses a Highscore.toString() to a Highscore.
      * @param toString the String to parse.
      * @return a new Highscore, equal to the String.
+     *         If the String does not represent a Highscore, returns null.
      */
     public static Highscore parse(final String toString) {
         try {

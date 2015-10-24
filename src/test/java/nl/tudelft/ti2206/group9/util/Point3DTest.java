@@ -1,11 +1,11 @@
 package nl.tudelft.ti2206.group9.util;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class Point3DTest {
 
@@ -14,7 +14,7 @@ public class Point3DTest {
     private transient Point3D point;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         point = new Point3D(1.0, 2.0, 0.0);
     }
 
