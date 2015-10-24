@@ -33,7 +33,7 @@ public final class HighscoreServer {
     private static final Logger LOGGER = Logger.getLogger(
             HighscoreServer.class.getName());
     /** Whether the server is (should be) running. */
-    private static boolean running = true;
+    private static boolean running;
 
     /** The ServerSocket of this server. This is a private field, because it
      *  is accessed in two separate threads. */
@@ -49,6 +49,7 @@ public final class HighscoreServer {
      * @throws IOException when something unexpected happens.
      */
     public static void main(final String... args) throws IOException {
+        running = true;
         // Configure logger to use own logging style
         LOGGER.setUseParentHandlers(false);
         LOGGER.addHandler(new StdOutConsoleHandler());

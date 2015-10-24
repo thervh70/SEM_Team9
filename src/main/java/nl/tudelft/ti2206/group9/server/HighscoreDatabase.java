@@ -87,29 +87,31 @@ public final class HighscoreDatabase {
     public static String query(final String query) {
         final String[] parts = query.split(" ");
         final Set<String> usage = new HashSet<>();
-        boolean gotOne = false;
-        int i;
-        for (i = 0; i < parts.length; i++) {
-            gotOne = false;
+        for (int i = 0; i < parts.length; i++) {
             for (final String[] q : supported) {
                 if (i < q.length && q[i].equals(parts[i])) {
-                    gotOne = true;
                     usage.add(q[i]);
-                    if (q.length == usage.size()) {
-                        return parseArguments(String.join(" ", usage),
+                    if (q.length == i + 1) {
+                        return parseArguments(String.join(" ", q),
                                 Arrays.copyOfRange(parts, q.length,
                                         parts.length));
                     }
                 }
             }
         }
-        if (!gotOne || query.equals("")) {
-            i--;
-        }
+        return usageString(usage);
+    }
+
+    /**
+     * @param usage contains the supported part of the query.
+     * @return a USAGE string that tells how the client should query.
+     */
+    private static String usageString(final Set<String> usage) {
+        final int argc = usage.size();
         final Set<String> localUsage = new HashSet<>();
         for (final String[] q : supported) {
-            if (i < q.length) {
-                localUsage.add(q[i]);
+            if (argc < q.length) {
+                localUsage.add(q[argc]);
             }
         }
         final StringBuffer usageString = new StringBuffer();
