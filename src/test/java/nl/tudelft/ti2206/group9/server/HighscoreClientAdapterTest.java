@@ -1,19 +1,17 @@
-package nl.tudelft.ti2206.group9.level.save;
-
-import nl.tudelft.ti2206.group9.server.Highscore;
-import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter;
-import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.ResultCallback;
-import nl.tudelft.ti2206.group9.server.HighscoreClientTest;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import java.util.List;
+package nl.tudelft.ti2206.group9.server;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.util.List;
+
+import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.ResultCallback;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class HighscoreClientAdapterTest {
 
