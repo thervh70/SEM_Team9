@@ -136,6 +136,9 @@ public final class HighscoreDatabase {
         final StringBuffer usage = new StringBuffer();
         final List<Object> parsedArgs = new ArrayList<>();
         for (int i = 0; i < arg.length; i++) {
+            if (arg[i].equals("")) {
+                return "USAGE " + query + " " + String.join(" ", q);
+            }
             usage.append(' ').append(arg[i]);
 
             switch (q[i].split(":")[1].split(">")[0]) {
