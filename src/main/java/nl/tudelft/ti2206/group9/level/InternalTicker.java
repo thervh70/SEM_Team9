@@ -1,11 +1,11 @@
 package nl.tudelft.ti2206.group9.level;
 
+import javafx.application.Platform;
+
 import java.time.Instant;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javafx.application.Platform;
 
 /**
  * This thread handles the ticks of the internal system. On each tick, the track
@@ -75,7 +75,7 @@ public final class InternalTicker extends TimerTask {
      * dies.
      */
     private void step() {
-        State.getTrack().step();
+        Track.getInstance().step();
     }
 
     /**

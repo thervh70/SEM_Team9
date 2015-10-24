@@ -1,12 +1,5 @@
 package nl.tudelft.ti2206.group9.level;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
-
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.TrackPart.Node;
 import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
@@ -17,9 +10,19 @@ import nl.tudelft.ti2206.group9.level.entity.Log;
 import nl.tudelft.ti2206.group9.level.entity.Pillar;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
 import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
 import nl.tudelft.ti2206.group9.util.Point3D;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -33,6 +36,8 @@ public class Track {
     public static final int WIDTH = 3;
     /** Length of the track. */
     public static final double LENGTH = 75;
+    /** Standard modulus number for both modulo calculation. */
+    public static final int MOD = 50;
 
     /** Amount of units the track should move per tick, initially. */
     static final double UNITS_PER_TICK_BASE = 0.4;
@@ -40,6 +45,8 @@ public class Track {
     static final double UNITS_PER_TICK_ACCEL = 0.0001;
     /** Current distance moved by the track, reset every run. */
     private static double distance;
+    /** Records the distance from the previous distance update. */
+    private static int previousDistance;
 
     /** List of entities on the track. */
     private final ObservableLinkedList<AbstractEntity> entities;
@@ -59,6 +66,10 @@ public class Track {
      */
     private static Map<Class<? extends AbstractEntity>, CreateEntityCommand>
             createEntityMap = new ConcurrentHashMap<>();
+    /**
+     * The Single instance this class can have.
+     */
+    private static Track currentTrack = new Track();
 
     static {
         createEntityMap.put(Coin.class, Coin::new);
@@ -77,8 +88,23 @@ public class Track {
     private double trackLeft;
 
     /** Default constructor, new Random() is created as generator. */
-    public Track() {
+    private Track() {
         this(new Random());
+    }
+
+    /**
+     * Get the one true instance of Track.
+     * @return the only instance of Track
+     */
+    public static Track getInstance() {
+        return currentTrack;
+    }
+
+    /**
+     * Reset the instance of track by making it a new Track.
+     */
+    public static void reset() {
+        currentTrack = new Track();
     }
 
     /**
@@ -91,6 +117,28 @@ public class Track {
         entities.add(new Player());
         player = 0;
         random = generator;
+    }
+
+    /**
+     * Check whether the distance has been increased by 50 (or more).
+     * This check is used for soundtrack speed increasing.
+     */
+    public static void distanceCheck() {
+        final int currentDistance = modulo(Track.getDistance());
+        if (currentDistance > previousDistance) {
+            previousDistance = currentDistance;
+            OBSERVABLE.notify(GameObserver.Category.PLAYER,
+                    GameObserver.Player.DISTANCE_INCREASE, (int) getDistance());
+        }
+    }
+
+    /**
+     * Update the current distance every {@link #MOD} moves or points increase.
+     * @param amount number of (distance or points)
+     * @return updated amount
+     */
+    public static int modulo(final double amount) {
+        return (int) (Math.floor(amount / MOD) * MOD);
     }
 
     /**
@@ -190,24 +238,37 @@ public class Track {
     /**
      * @param amount the amount to be added
      */
-    static void addDistance(final double amount) {
+    public static void addDistance(final double amount) {
         distance += amount;
     }
 
     /**
      * @return the distance
      */
-    static double getDistance() {
+    public static double getDistance() {
         return distance;
     }
 
     /**
      * @param dist the distance to set
      */
-    static void setDistance(final double dist) {
+    public static void setDistance(final double dist) {
         Track.distance = dist;
     }
 
+    /**
+     * @return the previousDistance
+     */
+    public static int getPreviousDistance() {
+        return previousDistance;
+    }
+
+    /**
+     * @param newPrevDist the previousDistance to set
+     */
+    public static void setPreviousDistance(final int newPrevDist) {
+        previousDistance = newPrevDist;
+    }
     /**
      * Get the number of Units that pass by per tick at this moment.
      * @return double Units per Tick
@@ -216,7 +277,7 @@ public class Track {
         final double div = Math.pow(UNITS_PER_TICK_ACCEL, -1) / 2
                 * UNITS_PER_TICK_BASE * UNITS_PER_TICK_BASE;
         return UNITS_PER_TICK_BASE
-                * Math.sqrt(State.getDistance() / div + 1);
+                * Math.sqrt(getDistance() / div + 1);
     }
 
     /**

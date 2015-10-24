@@ -4,9 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
-import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
 
 /**
  * Renders a Coin in the World.
@@ -42,7 +42,7 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 
     @Override
     protected void setMaterial() {
-        setMaterial(State.getSkin().getSkinMaterial());
+        setMaterial(CurrentItems.getSkin().getSkinMaterial());
     }
 
     @Override

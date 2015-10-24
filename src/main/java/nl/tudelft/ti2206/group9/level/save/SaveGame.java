@@ -1,17 +1,30 @@
 package nl.tudelft.ti2206.group9.level.save;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.util.GameObserver;
 
 import java.io.File;
 
-import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.util.GameObserver;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * This class takes care of all the saving and loading of the game.
  * @author Mathias
  */
+@SuppressWarnings("restriction") // SuppressWarnings, because
+// the ObservableList is for maintaining a list of saved games.
 public final class SaveGame {
+
+    /**
+     * Default savegame directory.
+     * Attention! Only use 1 subfolder!
+     */
+    private static String defaultSaveDir = "sav/";
+    /** List of the names of all the saved games. */
+    private static ObservableList<String> saveGames =
+            FXCollections.observableArrayList();
 
     /** Private constructor. */
     private SaveGame() { }
@@ -21,7 +34,7 @@ public final class SaveGame {
      * @param fileName the file to be loaded
      */
     public static void loadGame(final String fileName) {
-        final String filePath = State.getDefaultSaveDir() + fileName + ".ses";
+        final String filePath = getDefaultSaveDir() + fileName + ".ses";
         Parser.loadGame(filePath);
     }
 
@@ -29,7 +42,7 @@ public final class SaveGame {
      * Delegate the saving of the game to Writer class.
      */
     public static void saveGame() {
-        final String filePath = State.getDefaultSaveDir()
+        final String filePath = getDefaultSaveDir()
                 + State.getPlayerName() + ".ses";
         Writer.saveGame(filePath);
     }
@@ -40,13 +53,13 @@ public final class SaveGame {
      */
     public static void readPlayerNames() {
         try {
-            final File folder = new File(State.getDefaultSaveDir());
+            final File folder = new File(getDefaultSaveDir());
             for (final File file : folder.listFiles()) {
                 if (file.isDirectory() || !checkExtention(file.getName())) {
                     continue;
                 }
                 final String fileName = removeExtension(file.getName());
-                State.getSaveGames().add(fileName);
+                getSaveGames().add(fileName);
             }
         } catch (NullPointerException e) { //NOPMD
             //This PMD check is to make FindBugs happy
@@ -76,5 +89,29 @@ public final class SaveGame {
             return file;
         }
         return file.substring(0, file.lastIndexOf('.'));
+    }
+
+    /**
+     * Get the default savegame directory.
+     * @return defaultSaveDir
+     */
+    public static String getDefaultSaveDir() {
+        return defaultSaveDir;
+    }
+
+    /**
+     * Set a new default savegame directory.
+     * @param newSaveDir the new savegame directory
+     */
+    public static void setDefaultSaveDir(final String newSaveDir) {
+        defaultSaveDir = newSaveDir;
+    }
+
+    /**
+     * Get the list of the names of all the saved games.
+     * @return ObservableList which contains all names of the saved games
+     */
+    public static ObservableList<String> getSaveGames() {
+        return saveGames;
     }
 }

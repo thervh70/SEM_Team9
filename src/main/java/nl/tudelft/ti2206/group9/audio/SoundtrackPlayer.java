@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.audio;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
@@ -9,6 +8,8 @@ import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.Resource;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * Creates a SoundTrackPlayer which you can initialize, start, pause and stop.
