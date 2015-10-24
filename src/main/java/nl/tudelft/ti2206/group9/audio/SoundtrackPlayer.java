@@ -214,4 +214,9 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         }
     }
 
+    @Override
+    public void setVolume(final double volumeLevel) {
+        mediaPlayer.setVolume(volumeLevel);
+    }
+
 }
