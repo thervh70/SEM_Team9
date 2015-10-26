@@ -14,8 +14,10 @@ public class HighscoreClientTest {
 
     private static final int SERVER_SETUP_WAIT = 500;
     private static final Object LOCK = new Object();
+    private static final long TEST_TIMEOUT = 5000;
     private HighscoreClient client;
-    private String actualResponse; // NOPMD - field cannot be local field
+    private String actualResponse;
+
     private final QueryCallback callback = response -> {
         actualResponse = response;
         synchronized (LOCK) {
@@ -68,59 +70,48 @@ public class HighscoreClientTest {
 
     private void getListsNegativeAmounts(final String... names) {
         client.getGlobal(-1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get global -1");
         assertEquals("", actualResponse);
 
         client.getUser(names[0], -1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get Kees -1");
         assertEquals("", actualResponse);
     }
 
     private void getListsPositiveAmounts(final String... names) {
         final int listSize = 5;
         client.getGlobal(listSize, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get global 5");
         assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]\n"
                 + "Highscore[Kees, 42]", actualResponse);
 
         client.getGlobal(2, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get global 2");
         assertEquals("Highscore[Jaap, 84]\nHighscore[Piet, 63]",
                 actualResponse);
 
         client.getUser(names[1], 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get user Piet 1");
         assertEquals("Highscore[Piet, 63]",
                 actualResponse);
 
         client.getUser(names[1], 2, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get user Piet 2");
         assertEquals("Highscore[Piet, 63]\nHighscore[Piet, 21]",
                 actualResponse);
 
         client.getUser(names[1], 2 + 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get user Piet 3");
         assertEquals("Highscore[Piet, 63]\nHighscore[Piet, 21]",
                 actualResponse);
     }
 
     private void sendScoresToServer(final int[] scores, final String... names) {
-        int i = -1;
-        client.add(names[++i], scores[i], callback);
-        haltTestUntilServerResponds();
-        assertEquals("SUCCESS", actualResponse); // NOPMD - 4 * SUCCESS
-
-        client.add(names[++i], scores[i], callback);
-        haltTestUntilServerResponds();
-        assertEquals("SUCCESS", actualResponse);
-
-        client.add(names[++i], scores[i], callback);
-        haltTestUntilServerResponds();
-        assertEquals("SUCCESS", actualResponse);
-
-        client.add(names[++i], scores[i], callback);
-        haltTestUntilServerResponds();
-        assertEquals("SUCCESS", actualResponse);
+        for (int i = 0; i < names.length; i++) {
+            client.add(names[i], scores[i], callback);
+            haltTestUntilServerResponds("add " + names[i] + " " + scores[i]);
+            assertEquals("SUCCESS", actualResponse);
+        }
     }
 
     @Test
@@ -132,45 +123,45 @@ public class HighscoreClientTest {
 
     private void testIllegalQuery() {
         client.query("", 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("<empty query>");
         assertEquals("USAGE add|get <args>", actualResponse);
 
         client.query("doNothingOrSomething", 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("doNothingOrSomething");
         assertEquals("USAGE add|get <args>", actualResponse);
     }
 
     private void testIllegalGetQuery() {
         client.query("get", 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get");
         assertEquals("USAGE get global|user <args>", actualResponse);
 
         client.query("get nothing", 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get nothing");
         assertEquals("USAGE get global|user <args>", actualResponse);
 
         client.query("get global", 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get global");
         assertEquals("USAGE get global <amount:int>", actualResponse);
 
         client.query("get user", 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get user");
         assertEquals("USAGE get user <name:string> <amount:int>",
                 actualResponse);
 
         client.query("get user Kees", 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("get user Kees");
         assertEquals("USAGE get user Kees <amount:int>",
                 actualResponse);
     }
 
     private void testIllegalAddQuery() {
         client.query("add", 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("add");
         assertEquals("USAGE add <name:string> <score:int>", actualResponse);
 
         client.query("add Kees", 1, callback);
-        haltTestUntilServerResponds();
+        haltTestUntilServerResponds("add Kees");
         assertEquals("USAGE add Kees <score:int>", actualResponse);
     }
 
@@ -193,13 +184,17 @@ public class HighscoreClientTest {
     /**
      * Halts the test until resumed in callback.
      */
-    private void haltTestUntilServerResponds() {
+    private void haltTestUntilServerResponds(final String failMessage) {
+        actualResponse = null;
         try {
             synchronized (LOCK) {
-                LOCK.wait();
+                LOCK.wait(TEST_TIMEOUT);
             }
         } catch (InterruptedException e) {
             fail("InterruptedException thrown: " + e.getMessage());
+        }
+        if (actualResponse == null) {
+            fail("Server in UnitTest took too long to respond: " + failMessage);
         }
     }
 
