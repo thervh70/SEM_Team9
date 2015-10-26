@@ -81,7 +81,7 @@ public class HighscoreClient {
      * @param callback the action to be performed on return.
      */
     public void getGlobal(final int amount, final QueryCallback callback) {
-        query("get global " + amount, Math.max(amount, 1), callback);
+        query("get global " + amount, callback);
     }
 
     /**
@@ -92,7 +92,7 @@ public class HighscoreClient {
      */
     public void getUser(final String user, final int amount,
             final QueryCallback callback) {
-        query("get user " + user + " " + amount, Math.max(amount, 1), callback);
+        query("get user " + user + " " + amount, callback);
     }
 
     /**
@@ -103,17 +103,15 @@ public class HighscoreClient {
      */
     public void add(final String name, final int score,
             final QueryCallback callback) {
-        query("add " + name + " " + score, 1, callback);
+        query("add " + name + " " + score, callback);
     }
 
     /**
      * Query the server for information.
      * @param query the query to be sent to the server.
-     * @param responseLines the amount of lines expected from server.
      * @param callback the action to be performed on return.
      */
-    void query(final String query, final int responseLines,
-            final QueryCallback callback) {
+    void query(final String query, final QueryCallback callback) {
         if (!connected) {
             callback.callback("DISCONNECTED");
             return;
@@ -123,8 +121,8 @@ public class HighscoreClient {
                 toServer.println(query);
                 final StringBuilder response = new StringBuilder();
                 String from;
-                for (int i = 0; i < responseLines; i++) {
-                    if (i > 0) {
+                while (true) {
+                    if (response.length() > 0) {
                         response.append('\n');
                     }
                     from = fromServer.readLine();
