@@ -54,12 +54,12 @@ public final class HighscoreServer {
         LOGGER.setUseParentHandlers(false);
         LOGGER.addHandler(new StdOutConsoleHandler());
 
-        cliThread = new CLIThread();
-        new Thread(cliThread, "CLIThread").start();
-        log("Type \"stop\" or \"q\" to exit.");
         try (ServerSocket sock = new ServerSocket(PORT)) {
             serverSocket = sock;
             log("Server is now accepting clients.");
+            cliThread = new CLIThread();
+            new Thread(cliThread, "CLIThread").start();
+            log("Type \"stop\" or \"q\" to exit.");
             while (running) {
                 final Socket socket = serverSocket.accept();
                 new Thread(new HighscoreServerThread(socket), "HsServerThread"
