@@ -11,14 +11,18 @@ import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.ResultCallback;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
-public class HighscoreClientAdapterTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class HighscoreServerIntegrationTest {
 
     private static final Object LOCK = new Object();
     private static final long TEST_TIMEOUT = 5000;
+    private static final long SERVER_SETUP_WAIT = 500;
     private boolean actualResponse;
-    private boolean hasResponded;
+    private boolean hasResponded; // NOPMD - this cannot be local variable
     private final ResultCallback callback = success -> {
         hasResponded = true;
         actualResponse = success;
@@ -29,22 +33,40 @@ public class HighscoreClientAdapterTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        HighscoreClientTest.setUpBeforeClass();
+        HighscoreDatabase.reset();
+        try {
+            new Thread(() -> {
+                try {
+                    HighscoreServer.main("");
+                } catch (Exception e) { // NOPMD - need to catch EVERYTHING :D
+                    fail("Server has thrown an exception:\n" + e.getMessage());
+                }
+            }, "ServerThread").start();
+            /* If we don't sleep, the client will try to connect before the *
+             * server is set up.                                            */
+            Thread.sleep(SERVER_SETUP_WAIT);
+        } catch (InterruptedException e) {
+            fail("InterruptedException thrown: " + e.getMessage());
+        }
     }
 
     @AfterClass
     public static void tearDownAfterClass() {
-        HighscoreClientTest.tearDownAfterClass();
+        HighscoreServer.quit();
     }
 
     @Test
-    public final void testConnect() {
+    public final void test1Connect() {
         assertFalse(HighscoreClientAdapter.connect("www.kees.kaas"));
         assertTrue(HighscoreClientAdapter.connect("localhost"));
     }
 
     @Test
-    public final void testAdd() {
+    public final void test2Add() {
+        HighscoreClientAdapter.add("Kees", 1, callback); //NOPMD - Kees multiple
+        haltTestUntilServerResponds("add Kees 1");
+        assertTrue(actualResponse);
+
         HighscoreClientAdapter.add("Kees", 2, callback);
         haltTestUntilServerResponds("add Kees 2");
         assertTrue(actualResponse);
@@ -55,7 +77,7 @@ public class HighscoreClientAdapterTest {
     }
 
     @Test
-    public final void testGetGlobal() {
+    public final void test3GetGlobal() {
         List<Highscore> list = HighscoreClientAdapter.getGlobal(2, callback);
         haltTestUntilServerResponds("get global 2");
         assertTrue(actualResponse);
@@ -68,18 +90,30 @@ public class HighscoreClientAdapterTest {
     }
 
     @Test
-    public final void testGetUser() {
+    public final void test4GetUser() {
         List<Highscore> list;
 
         list = HighscoreClientAdapter.getUser("Kees", 2, callback);
         haltTestUntilServerResponds("get user Kees 2");
         assertTrue(actualResponse);
-        assertEquals(1, list.size());
+        assertEquals(2, list.size());
 
         list = HighscoreClientAdapter.getUser("", 2, callback);
         haltTestUntilServerResponds("get user <noString> 2");
         assertFalse(actualResponse);
         assertEquals(0, list.size());
+    }
+
+    @Test
+    public final void test5Disconnect() {
+        HighscoreClientAdapter.disconnect();
+        try { // Wait until server has disconnected
+            Thread.sleep(SERVER_SETUP_WAIT);
+        } catch (InterruptedException e) {
+            fail("Test has been interrupted while waiting for disconnect.");
+        }
+        HighscoreClientAdapter.add("Kees", 1, callback);
+        assertFalse(actualResponse);
     }
 
     /**

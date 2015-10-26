@@ -77,7 +77,8 @@ public class HighscoreServerThread implements Runnable {
             return false;
         }
         String to = query(from);
-        toClient.println(to);
+        toClient.print(to);
+        toClient.println('\4');
         if (to.contains("\n")) {
             to = to.replaceAll("\n", "\n  " + PAD_STRING);
         }

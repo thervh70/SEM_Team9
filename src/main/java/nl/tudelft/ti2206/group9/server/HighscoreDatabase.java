@@ -179,7 +179,11 @@ public final class HighscoreDatabase {
                 entries++;
             }
         }
-        theOutput.append('\4');
+    }
+
+    /** Resets the database (only for use in testing). */
+    static void reset() {
+        database.clear();
     }
 
     /**
