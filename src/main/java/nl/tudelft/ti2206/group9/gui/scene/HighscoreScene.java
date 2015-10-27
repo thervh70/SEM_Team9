@@ -9,10 +9,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
@@ -65,12 +62,15 @@ public class HighscoreScene extends AbstractMenuScene {
         input.setText("localhost");
     }
 
-    /** List for displaying highscores. */
-    private static ListView<String> scoreList = new ListView<>();
-    /** List for getting highscores. */
-    private static List<Highscore> highscoreList;
-    /** ObservableList to edit when Highscores come in. */
-    private static final ObservableList<String> SCORE_LIST =
+    /** List for getting global highscores. */
+    private static List<Highscore> globalList;
+    /** List for getting local highscores. */
+    private static List<Highscore> localList;
+    /** ObservableList to edit when Global Highscores come in. */
+    private static final ObservableList<String> GLOBAL_LIST =
+            FXCollections.observableArrayList();
+    /** ObservableList to edit when Local Highscores come in. */
+    private static final ObservableList<String> LOCAL_LIST =
             FXCollections.observableArrayList();
 
     /** Callback for not being able to connect. */
@@ -81,18 +81,37 @@ public class HighscoreScene extends AbstractMenuScene {
             ShaftEscape.showPopup(getPopup());
         }
     };
-    /** Callback for getGlobal(10). */
-    private static final ResultCallback FETCH_CALLBACK = success -> {
+    /** Callback for getUser(10). */
+    private static final ResultCallback USER_CALLBACK = success -> {
         Platform.runLater(() -> {
-            SCORE_LIST.clear();
-            if (success && highscoreList != null) {
+            LOCAL_LIST.clear();
+            if (success && localList != null) {
                 /** Looping over each Highscore in the list. */
-                for (final Highscore hs : highscoreList) {
+                for (final Highscore hs : localList) {
                     if (hs == null) {
                         break;
                     }
-                    SCORE_LIST.add(hs.getUser() + "  -  " + hs.getScore());
+                    LOCAL_LIST.add(hs.getUser() + "  -  " + hs.getScore());
                 }
+            } else {
+                FAIL_CALLBACK.callback(success);
+            }
+        });
+    };
+    /** Callback for getGlobal(10). */
+    private static final ResultCallback GLOBAL_CALLBACK = success -> {
+        Platform.runLater(() -> {
+            GLOBAL_LIST.clear();
+            if (success && globalList != null) {
+                /** Looping over each Highscore in the list. */
+                for (final Highscore hs : globalList) {
+                    if (hs == null) {
+                        break;
+                    }
+                    GLOBAL_LIST.add(hs.getUser() + "  -  " + hs.getScore());
+                }
+                localList = HighscoreClientAdapter.getUser(
+                        State.getPlayerName(), SCORE_COUNT, USER_CALLBACK);
             } else {
                 FAIL_CALLBACK.callback(success);
             }
@@ -101,8 +120,8 @@ public class HighscoreScene extends AbstractMenuScene {
     /** Callback for add(Name, Highscore). */
     private static final ResultCallback SEND_CALLBACK = success -> {
         if (success) {
-            highscoreList = HighscoreClientAdapter.getGlobal(
-                    SCORE_COUNT, FETCH_CALLBACK);
+            globalList = HighscoreClientAdapter.getGlobal(
+                    SCORE_COUNT, GLOBAL_CALLBACK);
         }
         FAIL_CALLBACK.callback(success);
     };
@@ -124,7 +143,7 @@ public class HighscoreScene extends AbstractMenuScene {
 
         setButtonFunction(backButton, BType.HIGHSCORES_BACK);
         setButtonFunction(updateButton, BType.UPDATE);
-        return new Node[]{createScoreList(), backButton,
+        return new Node[]{createScorePane(), backButton,
                 updateButton, input, highLabel};
     }
 
@@ -155,16 +174,37 @@ public class HighscoreScene extends AbstractMenuScene {
     }
 
     /**
+     * @return a TabPane with two tabs: global list and user list.
+     */
+    public static TabPane createScorePane() {
+        final TabPane tabPane = new TabPane();
+        GridPane.setRowSpan(tabPane, LIST_ROW_SPAN);
+        GridPane.setConstraints(tabPane, LIST_COLUMN, TABLE_ROW);
+        GridPane.setColumnSpan(tabPane, TABLE_SPAN);
+        tabPane.setMinHeight(SCORELIST_HEIGHT);
+
+        final Tab globalTab = new Tab("Global");
+        globalTab.setClosable(false);
+        globalTab.setContent(createScoreList(GLOBAL_LIST));
+
+        final Tab localTab = new Tab("Local");
+        localTab.setClosable(false);
+        localTab.setContent(createScoreList(LOCAL_LIST));
+
+        tabPane.getTabs().addAll(globalTab, localTab);
+        return tabPane;
+    }
+
+    /**
      * Creating the score list.
+     * @param list list to put in the listView.
      * @return Listview with scores.
      */
-    public static ListView<String> createScoreList() {
-        GridPane.setRowSpan(scoreList, LIST_ROW_SPAN);
-        GridPane.setConstraints(scoreList, LIST_COLUMN, TABLE_ROW);
-        GridPane.setColumnSpan(scoreList, TABLE_SPAN);
-        scoreList.setMinHeight(SCORELIST_HEIGHT);
+    public static ListView<String> createScoreList(
+            final ObservableList<String> list) {
+        final ListView<String> scoreList = new ListView<>();
         scoreList.setFocusTraversable(false);
-        scoreList.setItems(SCORE_LIST);
+        scoreList.setItems(list);
         return scoreList;
     }
 }
