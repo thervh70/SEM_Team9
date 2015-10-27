@@ -32,10 +32,8 @@ public class HighScoreScene extends AbstractMenuScene {
     enum BType {
         /** Back to main. */
         HIGHSCORES_BACK,
-        /** Send local highscores to server. */
-        SEND,
-        /** Fetch highscores from server. */
-        FETCH
+        /** Send local highscores to server and retrieve list of highscores. */
+        UPDATE
     }
 
     /** Setting Table span for list. */
@@ -53,9 +51,7 @@ public class HighScoreScene extends AbstractMenuScene {
     /** Send button row. */
     private static final int YOURS_ROW = 17;
     /** Send button row. */
-    private static final int SEND_ROW = 16;
-    /** Fetch button row. */
-    private static final int FETCH_ROW = 15;
+    private static final int UPDATE_ROW = 16;
     /** Input row. */
     private static final int INPUT_ROW = 14;
 
@@ -83,7 +79,7 @@ public class HighScoreScene extends AbstractMenuScene {
         }
     };
     /** Callback for getGlobal(10). */
-    private static final ResultCallback CALLBACK = success -> {
+    private static final ResultCallback FETCH_CALLBACK = success -> {
         Platform.runLater(() -> {
             SCORE_LIST.clear();
             if (success && highscoreList != null) {
@@ -99,6 +95,14 @@ public class HighScoreScene extends AbstractMenuScene {
             }
         });
     };
+    /** Callback for add(Name, Highscore). */
+    private static final ResultCallback SEND_CALLBACK = success -> {
+        if (success) {
+            highscoreList = HighscoreClientAdapter.getGlobal(
+                    SCORE_COUNT, FETCH_CALLBACK);
+        }
+        FAIL_CALLBACK.callback(success);
+    };
 
     /**
      * Creates content for scene.
@@ -108,21 +112,17 @@ public class HighScoreScene extends AbstractMenuScene {
     @Override
     public Node[] createContent() {
         final Button backButton = createButton("BACK", 0, BACKB_ROW);
-        final Button sendButton = createButton("SEND", 0, SEND_ROW);
-        final Button fetchButton = createButton("FETCH SCORES", 0, FETCH_ROW);
+        final Button updateButton = createButton("UPDATE", 0, UPDATE_ROW);
         final Label highLabel = createLabel("You: " + State.getHighscore(),
                 0, YOURS_ROW);
 
-        sendButton.disableProperty().bind(
-                Bindings.isEmpty(input.textProperty()));
-        fetchButton.disableProperty().bind(
+        updateButton.disableProperty().bind(
                 Bindings.isEmpty(input.textProperty()));
 
         setButtonFunction(backButton, BType.HIGHSCORES_BACK);
-        setButtonFunction(sendButton, BType.SEND);
-        setButtonFunction(fetchButton, BType.FETCH);
+        setButtonFunction(updateButton, BType.UPDATE);
         return new Node[]{createScoreList(), backButton,
-                sendButton, fetchButton, input, highLabel};
+                updateButton, input, highLabel};
     }
 
     /**
@@ -140,19 +140,10 @@ public class HighScoreScene extends AbstractMenuScene {
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.HIGHSCORES_BACK);
                 ShaftEscape.setScene(new MainMenuScene());
-            } else if (type == BType.FETCH) {
-                if (HighscoreClientAdapter.connect(input.getText())) {
-                    highscoreList = HighscoreClientAdapter.getGlobal(
-                            SCORE_COUNT, CALLBACK);
-                } else {
-                    FAIL_CALLBACK.callback(false);
-                }
-            } else if (type == BType.SEND) {
+            } else if (type == BType.UPDATE) {
                 if (HighscoreClientAdapter.connect(input.getText())) {
                     HighscoreClientAdapter.add(State.getPlayerName(),
-                            State.getHighscore(), FAIL_CALLBACK);
-                    highscoreList = HighscoreClientAdapter.getGlobal(
-                            SCORE_COUNT, CALLBACK);
+                            State.getHighscore(), SEND_CALLBACK);
                 } else {
                     FAIL_CALLBACK.callback(false);
                 }
