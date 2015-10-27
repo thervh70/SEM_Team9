@@ -199,7 +199,6 @@ public final class SettingsScene extends AbstractMenuScene {
         return slider;
     }
 
-
     /** Override background, the Settings background shows "Settings". */
     @Override
     public String getBackgroundPath() {
