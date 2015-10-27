@@ -304,7 +304,8 @@ public class EndToEndTest extends ApplicationTest {
         clickPopup(WARNING_OK);
 
         clickButton(HIGHSCORES_INPUT);
-        typeOcalhost();
+        clearTextField(HIGHSCORES_INPUT);
+        typeLocalhost();
         clickButton(HIGHSCORES_UPDATE);
 
         final TabPane pane = (TabPane) rootNode(stage).getScene().getRoot()
@@ -326,7 +327,8 @@ public class EndToEndTest extends ApplicationTest {
         keyboard(KeyCode.D);
     }
 
-    private void typeOcalhost() {
+    private void typeLocalhost() {
+        keyboard(KeyCode.L);
         keyboard(KeyCode.O);
         keyboard(KeyCode.C);
         keyboard(KeyCode.A);
