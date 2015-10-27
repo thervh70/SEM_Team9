@@ -181,53 +181,53 @@ public class EndToEndTest extends ApplicationTest {
         goThroughAccounts2();
         goThroughDeathPopup();
 
-        mainMenu(MAIN_QUIT);
+        clickButton(MAIN_QUIT);
     }
 
     private void goThroughAccounts1() {
-        accountScreen(ACCOUNT_NEW);
+        clickButton(ACCOUNT_NEW);
         assertNull(AbstractScene.getPopup()); // Button disabled, so no popup
-        accountScreen(ACCOUNT_TEXTFIELD);
+        clickButton(ACCOUNT_TEXTFIELD);
         typeFaultyName();
-        accountScreen(ACCOUNT_NEW);
+        clickButton(ACCOUNT_NEW);
         clickPopup(WARNING_OK);
-        accountScreen(ACCOUNT_TEXTFIELD);
+        clickButton(ACCOUNT_TEXTFIELD);
         clearTextField();
         typeName();
-        accountScreen(ACCOUNT_NEW);
+        clickButton(ACCOUNT_NEW);
     }
 
     private void goThroughSettings() {
-        mainMenu(MAIN_SETTINGS);
+        clickButton(MAIN_SETTINGS);
 
         // Soundtrack toggle test.
         assertTrue("Soundtrack should be enabled at startup.",
                 State.isSoundtrackEnabled());
-        settings(SETTINGS_SOUNDTRACK);
+        clickButton(SETTINGS_SOUNDTRACK);
         assertFalse("Soundtrack disabled. (1)", State.isSoundtrackEnabled());
-        settings(SETTINGS_SOUNDTRACK);
+        clickButton(SETTINGS_SOUNDTRACK);
         assertTrue("Soundtrack enabled. (2)", State.isSoundtrackEnabled());
-        settings(SETTINGS_SOUNDTRACK);
+        clickButton(SETTINGS_SOUNDTRACK);
         assertFalse("Soundtrack disabled. (3)", State.isSoundtrackEnabled());
 
         // Sound effects toggle test.
         assertTrue("Sound effects should be enabled at startup.",
                 State.isSoundEffectsEnabled());
-        settings(SETTINGS_SOUNDEFFECTS);
+        clickButton(SETTINGS_SOUNDEFFECTS);
         assertFalse("Sound effects disabled. (1)",
                 State.isSoundEffectsEnabled());
-        settings(SETTINGS_SOUNDEFFECTS);
+        clickButton(SETTINGS_SOUNDEFFECTS);
         assertTrue("Sound effects enabled. (2)", State.isSoundEffectsEnabled());
-        settings(SETTINGS_SOUNDEFFECTS);
+        clickButton(SETTINGS_SOUNDEFFECTS);
         assertFalse("Sound effects disabled. (3)",
                 State.isSoundEffectsEnabled());
 
-        settings(SETTINGS_BACK);
+        clickButton(SETTINGS_BACK);
     }
 
     private void goThroughShop() {
         State.setCoins(COINS); //Make sure player has enough coins
-        mainMenu(MAIN_SHOP);
+        clickButton(MAIN_SHOP);
 
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
@@ -239,11 +239,12 @@ public class EndToEndTest extends ApplicationTest {
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
 
-        shopScreen(SHOP_BACK);
+        clickButton(SHOP_BACK);
     }
 
     private void goThroughGamePlay() {
-        mainMenu(MAIN_START);
+        clickButton(MAIN_START);
+        letPlayerSurvive();            // Stop E2E from failing by collision
         sleep(COUNTDOWN);
 
         keyboard(KeyCode.ESCAPE);
@@ -259,18 +260,20 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void goThroughAccounts2() {
-        mainMenu(MAIN_ACCOUNTS);
-        accountScreen(ACCOUNT_LIST);
-        accountScreen(ACCOUNT_LOAD);
+        clickButton(MAIN_ACCOUNTS);
+        clickButton(ACCOUNT_LIST);
+        clickButton(ACCOUNT_LOAD);
         assertNotNull(State.getPlayerName());
     }
 
     private void goThroughDeathPopup() {
-        mainMenu(MAIN_START);
+        clickButton(MAIN_START);
+        letPlayerSurvive();            // Stop E2E from failing by collision
         sleep(COUNTDOWN);
         playerDies();
         sleep(SHORT);
         clickPopup(DEATH_RETRY);
+        letPlayerSurvive();            // Stop E2E from failing by collision
         sleep(COUNTDOWN);
         playerDies();
         clickPopup(DEATH_TOMAIN);
@@ -341,36 +344,10 @@ public class EndToEndTest extends ApplicationTest {
         PowerupInvulnerable.setCheat(true);
     }
 
-    private void mainMenu(final int buttonNo) {
+    private void clickButton(final int buttonNo) {
         ObservableList<Node> buttons;
         buttons = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
-        clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-        letPlayerSurvive();            // Make sure there are no obstacles
-        sleep(LONG);
-    }
-
-    private void settings(final int buttonNo) {
-        ObservableList<Node> buttons;
-        buttons = rootNode(stage).getScene().getRoot()
-                .getChildrenUnmodifiable();
-        clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-        sleep(SHORT);
-    }
-
-    private void accountScreen(final int buttonNo) {
-        ObservableList<Node> buttons;
-        buttons = rootNode(stage).getScene().getRoot()
-                .getChildrenUnmodifiable();
-        clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-        sleep(SHORT);
-    }
-
-    private void shopScreen(final int buttonNo) {
-        ObservableList<Node> buttons;
-        buttons = rootNode(stage).getScene().getRoot()
-                .getChildrenUnmodifiable();
-
         clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
         sleep(SHORT);
     }
