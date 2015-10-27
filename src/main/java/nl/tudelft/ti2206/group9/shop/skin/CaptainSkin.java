@@ -5,7 +5,7 @@ package nl.tudelft.ti2206.group9.shop.skin;
  */
 public class CaptainSkin extends AbstractSkin {
     /** Price of skin in shop. */
-    private static final int PRICE = 1000;
+    private static final int PRICE = 150;
     /**
      * Constructor for a Captain skin.
      */

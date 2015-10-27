@@ -115,7 +115,7 @@ public class ShopScene extends AbstractMenuScene {
         final ObservableList<AbstractSkin> items =
                 ShopItemLoader.loadSkinsToList();
         final HBox hbox = new HBox(BOX_SPACING);
-        for (AbstractSkin s : items) {
+        for (final AbstractSkin s : items) {
             final VBox vbox = new VBox(BOX_SPACING);
             final Label price = createLabel("Price", 0, 0);
             final Label name = createLabel("Name", 0, 0);
@@ -245,7 +245,7 @@ public class ShopScene extends AbstractMenuScene {
                 ShopItemLoader.loadSoundtracksToList();
         final VBox itemBox = new VBox(BOX_SPACING);
 
-        for (AbstractSoundtrack s : items) {
+        for (final AbstractSoundtrack s : items) {
 
             final HBox hbox = new HBox(BOX_SPACING);
 

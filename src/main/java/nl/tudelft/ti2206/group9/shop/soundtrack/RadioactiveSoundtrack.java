@@ -9,7 +9,7 @@ package nl.tudelft.ti2206.group9.shop.soundtrack;
  */
 public class RadioactiveSoundtrack extends AbstractSoundtrack {
     /** Price of the Radioactive soundtrack in the shop. */
-    private static final int PRICE = 0;
+    private static final int PRICE = 50;
     /** Path to be used for soundtrack 'Radioactive'. */
     private static final String PATH_DEFAULT = "soundtrack_Radioactive";
 

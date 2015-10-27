@@ -129,12 +129,12 @@ public final class ShopItemLoader {
      * so that they can be loaded at once at the starting of the application.
      */
     public static void loadSoundtracks() {
-        animalsSoundtrack = new AnimalsSoundtrack();
-        ducktalesSoundtrack = new DuckTalesSoundtrack();
-        radioactiveSoundtrack = new RadioactiveSoundtrack();
         marioSoundtrack = new MarioSoundtrack();
+        radioactiveSoundtrack = new RadioactiveSoundtrack();
         nyancatSoundtrack = new NyanCatSoundtrack();
         shakeitoffSoundtrack = new ShakeItOffSoundtrack();
+        ducktalesSoundtrack = new DuckTalesSoundtrack();
+        animalsSoundtrack = new AnimalsSoundtrack();
     }
 
     /**
@@ -160,9 +160,9 @@ public final class ShopItemLoader {
     public static ObservableList<AbstractSoundtrack> loadSoundtracksToList() {
         final ObservableList<AbstractSoundtrack> list = FXCollections.
                 observableArrayList();
-        list.addAll(animalsSoundtrack, radioactiveSoundtrack,
-                ducktalesSoundtrack, marioSoundtrack,
-                nyancatSoundtrack, shakeitoffSoundtrack);
+        list.addAll(marioSoundtrack, radioactiveSoundtrack,
+                nyancatSoundtrack, shakeitoffSoundtrack, ducktalesSoundtrack,
+                animalsSoundtrack);
         return list;
     }
 

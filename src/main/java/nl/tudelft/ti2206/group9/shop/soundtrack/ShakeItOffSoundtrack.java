@@ -7,7 +7,7 @@ package nl.tudelft.ti2206.group9.shop.soundtrack;
  */
 public class ShakeItOffSoundtrack extends AbstractSoundtrack {
     /** Price of the Shake It Off soundtrack in the shop. */
-    private static final int PRICE = 70;
+    private static final int PRICE = 150;
     /** Path to be used for the 'Shake It Off' soundtrack. */
     private static final String PATH_SHAKEITOFF = "soundtrack_ShakeItOff";
 

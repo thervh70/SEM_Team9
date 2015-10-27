@@ -60,9 +60,9 @@ public final class ShopItemUnlocker {
      */
     public static void createUnlockedSoundtrackMap() {
         unlockedShopItemsMap.put("Animals", false);
-        unlockedShopItemsMap.put("Radioactive", true);
+        unlockedShopItemsMap.put("Radioactive", false);
         unlockedShopItemsMap.put("Duck Tales", false);
-        unlockedShopItemsMap.put("Mario", false);
+        unlockedShopItemsMap.put("Mario", true);
         unlockedShopItemsMap.put("Nyan Cat", false);
         unlockedShopItemsMap.put("Shake It Off", false);
     }

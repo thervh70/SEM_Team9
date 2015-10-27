@@ -7,7 +7,7 @@ package nl.tudelft.ti2206.group9.shop.soundtrack;
  */
 public class AnimalsSoundtrack extends AbstractSoundtrack {
     /** Price of the Animals soundtrack in shop. */
-    private static final int PRICE = 30;
+    private static final int PRICE = 250;
     /** Path to be used for soundtrack 'Animals'. */
     private static final String PATH_ANIMALS = "soundtrack_Animals";
 
