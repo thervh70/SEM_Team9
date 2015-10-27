@@ -163,4 +163,12 @@ public abstract class AbstractMenuScene extends AbstractScene {
         BUTTON_SOUND.play();
     }
 
+    /**
+     * Gets the SoundEffectPlayer of the buttons in the scenes.
+     * @return button SoundEffectPlayer used for all buttons.
+     */
+    protected static SoundEffectPlayer getButtonSoundEffectPlayer() {
+        return BUTTON_SOUND;
+    }
+
 }

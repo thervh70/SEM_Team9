@@ -99,6 +99,7 @@ public final class GameScene extends AbstractScene {
         setupCamera();
         keyBindings();
 
+        // TODO Volume check!
         CurrentItems.getSoundtrackPlayer().play();
         startTickers();
         return root;

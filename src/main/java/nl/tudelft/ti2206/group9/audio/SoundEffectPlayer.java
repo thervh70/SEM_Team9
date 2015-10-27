@@ -6,6 +6,7 @@ import javafx.scene.media.MediaException;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Error;
+import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Resource;
 
 /**
@@ -25,6 +26,10 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
      * Path of the AudioClip.
      */
     private String path;
+    /**
+     * Constant for the default volume level of a soundtrack.
+     */
+    private static final double DEFAULT_VOLUMELEVEL = 0.5;
 
     /**
      * Creates a SoundEffectPlayer with as input a specific path.
@@ -37,6 +42,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
         if (State.isSoundEffectsEnabled()) {
             initializeAudio(path);
         }
+        this.setVolume(DEFAULT_VOLUMELEVEL);
     }
 
     @Override
@@ -108,7 +114,17 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
 
     @Override
     public void setVolume(final double volumeLevel) {
+        try {
         audioClip.setVolume(volumeLevel);
+        } catch (NullPointerException ne) { // NOPMD
+            // This try-catch block is just here for testing.
+            // The setVolume method can result in a NullPointer (according to
+            // JUnit), because JUnit can't really play audio neither can Travis.
+            OBSERVABLE.notify(GameObserver.Category.ERROR,
+                    GameObserver.Error.NULLPOINTEREXCEPTION,
+                    "SoundEffectPlayer.setVolume()", ne.getMessage());
+        }
+
     }
 
 }
