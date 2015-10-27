@@ -45,7 +45,7 @@ public final class WriterTest {
         assertEquals(true, ShopItemUnlocker.getUnlockedShopItem("Plank"));
 
         assertEquals(false, ShopItemUnlocker.getUnlockedShopItem("Animals"));
-        assertEquals(true, ShopItemUnlocker.getUnlockedShopItem("Radioactive"));
+        assertEquals(false, ShopItemUnlocker.getUnlockedShopItem("Radioactive"));
         assertEquals(false, ShopItemUnlocker.getUnlockedShopItem("Duck Tales"));
         assertEquals(true, ShopItemUnlocker.getUnlockedShopItem("Mario"));
         assertEquals(false, ShopItemUnlocker.getUnlockedShopItem("Nyan Cat"));
