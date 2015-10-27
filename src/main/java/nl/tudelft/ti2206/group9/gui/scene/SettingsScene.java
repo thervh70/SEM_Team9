@@ -13,6 +13,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.gui.popup.AbstractInfoPopup;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
@@ -234,10 +235,12 @@ public final class SettingsScene extends AbstractMenuScene {
                 MainMenuScene.getAudioPlayer().
                         setVolume(State.getSoundtrackVolume());
             } else {
-                State.setSoundtrackVolume(soundEffectVolumeSlider.
+                State.setSoundEffectVolume(soundEffectVolumeSlider.
                         getValue() / VOLUME_CONVERTER);
                 AbstractMenuScene.getButtonSoundEffectPlayer().
                         setVolume(State.getSoundEffectVolume());
+                AbstractInfoPopup.getButtonSoundEffectPlayer().
+                setVolume(State.getSoundEffectVolume());
             }
         });
     }
