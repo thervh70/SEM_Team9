@@ -26,7 +26,7 @@ import nl.tudelft.ti2206.group9.util.GameObserver;
  * @author Maikel on 16/10/2015.
  */
 @SuppressWarnings("restriction")
-public class HighScoreScene extends AbstractMenuScene {
+public class HighscoreScene extends AbstractMenuScene {
 
     /** Types of buttons. */
     enum BType {
@@ -61,6 +61,9 @@ public class HighScoreScene extends AbstractMenuScene {
     /** Text field for input. */
     private static TextField input = createTextField("HighscoreServer IP",
             0, INPUT_ROW);
+    static {
+        input.setText("localhost");
+    }
 
     /** List for displaying highscores. */
     private static ListView<String> scoreList = new ListView<>();
