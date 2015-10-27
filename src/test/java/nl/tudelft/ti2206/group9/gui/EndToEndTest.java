@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -195,6 +196,7 @@ public class EndToEndTest extends ApplicationTest {
         // Soundtrack slider test.
         assertEquals(1.0 / 2.0, State.getSoundtrackVolume(), DELTA);
         settings(SETTINGS_SOUNDTRACK_VOLUME);
+        assertNotEquals(1.0 / 2.0, State.getSoundtrackVolume(), DELTA);
 
         // Sound effects toggle test.
         assertTrue("Sound effects should be enabled at startup.",
@@ -206,6 +208,7 @@ public class EndToEndTest extends ApplicationTest {
         assertTrue("Sound effects enabled. (2)", State.isSoundEffectsEnabled());
         assertEquals(1.0 / 2.0, State.getSoundEffectVolume(), DELTA);
         settings(SETTINGS_SOUNDEFFECT_VOLUME);
+        assertNotEquals(1.0 / 2.0, State.getSoundEffectVolume(), DELTA);
 
         settings(SETTINGS_BACK);
     }
