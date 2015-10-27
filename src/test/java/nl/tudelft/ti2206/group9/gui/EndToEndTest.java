@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -30,11 +31,13 @@ import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
+import nl.tudelft.ti2206.group9.level.entity.AbstractObstacle;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
+import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
@@ -384,6 +387,10 @@ public class EndToEndTest extends ApplicationTest {
 
     private void playerDies() {
         Track.getInstance().getPlayer().die();
+        OBSERVABLE.notify(
+                GameObserver.Category.PLAYER,
+                GameObserver.Player.COLLISION,
+                AbstractObstacle.class.getSimpleName());
         sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
         letPlayerSurvive();            // Make sure there are no obstacles
         sleep(LONG);
