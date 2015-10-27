@@ -112,18 +112,6 @@ public class EndToEndTest extends ApplicationTest {
 
     @After
     public void end() {
-        outputEventLog();
-        final String saveDir = SaveGame.getDefaultSaveDir();
-        final String savBackup = "old" + saveDir;
-        new File(saveDir + "Fred.ses").delete();
-        if (new File(savBackup).exists()) {
-            new File(saveDir).delete();
-            new File(savBackup).renameTo(new File(saveDir));
-            new File(savBackup).delete();
-        }
-    }
-
-    private void outputEventLog() {
         try {
             ShaftEscape.LOGGER.writeToFile();
             final String log = new String(Files.readAllBytes(
@@ -135,6 +123,15 @@ public class EndToEndTest extends ApplicationTest {
         } catch (IOException e) {
             fail("IOException thrown: " + e.getMessage());
         }
+
+        final String saveDir = SaveGame.getDefaultSaveDir();
+        final String savBackup = "old" + saveDir;
+        new File(saveDir + "Fred.ses").delete();
+        if (new File(savBackup).exists()) {
+            new File(saveDir).delete();
+            new File(savBackup).renameTo(new File(saveDir));
+            new File(savBackup).delete();
+        }
     }
 
     /**
@@ -142,61 +139,62 @@ public class EndToEndTest extends ApplicationTest {
      *
      *  - Click on screen to get passed the SplashScreen.
      *  - Go through the accounts, testing the new game button
-     *      - First clicking whithout a name
+     *      - First clicking without a name
      *      - Then clicking with a faulty name
      *      - Then clicking with a valid name
      *      - You are in the main menu
+     *  ! ! ! Every other goThrough method begins and ends in the main menu.
      *  - Go through the settings by clicking on settings button in the
      *     main menu, toggle the settings
-     *  - Go through the shop, buy a currentSkin and return
+     *  - Go through the shop
+     *      - Buy the first skin in the shop
+     *      - Buy the second skin in the shop
+     *      - Equip the second skin in the shop
+     *      - Equip the first skin in the shop
+     *      - Return to main menu
      *  - Go through the gameplay
      *      - Click the pause button and resume game
-     *      - Go through playermovement
+     *      - Go through Player movement
+     *          - Move Left, Right, Right, Left
+     *          - Jump, slide
      *      - Click the pause button and return to main menu
      *  - Go through account loading
      *      - Click account button in main menu
      *      - Select the account list
      *      - Click load
      *      - Return to main menu
-     *  - Go through diePopup
+     *  - Go through DeathPopup
      *      - Start game
      *      - Let player die; click retry
-     *      - Let player die; click back to main
-     *  - Close application
-     *  - Output Log
+     *      - Let player die; click back to main menu
+     *  - Click Quit
      */
     @Test
     public void test() { //NOPMD - assert is done in subs.
         clickOn(stage, MouseButton.PRIMARY);
         sleep(SHORT);
 
-        goThroughNameTyping();
-
+        goThroughAccounts1();
         goThroughSettings();
         goThroughShop();
-
         goThroughGamePlay();
-
-        mainMenu(MAIN_ACCOUNTS);
-        accountScreen(ACCOUNT_LIST);
-        accountScreen(ACCOUNT_LOAD);
-        assertNotNull(State.getPlayerName());
-
-        mainMenu(MAIN_START);
-        sleep(COUNTDOWN);
-        playerDies();
-        sleep(SHORT);
-        clickPopup(DEATH_RETRY);
-        sleep(COUNTDOWN);
-        playerDies();
-        clickPopup(DEATH_TOMAIN);
+        goThroughAccounts2();
+        goThroughDeathPopup();
 
         mainMenu(MAIN_QUIT);
-//        Platform.runLater(stage::close);
     }
 
-    private void letPlayerSurvive() {
-        PowerupInvulnerable.setCheat(true);
+    private void goThroughAccounts1() {
+        accountScreen(ACCOUNT_NEW);
+        assertNull(AbstractScene.getPopup()); // Button disabled, so no popup
+        accountScreen(ACCOUNT_TEXTFIELD);
+        typeFaultyName();
+        accountScreen(ACCOUNT_NEW);
+        clickPopup(WARNING_OK);
+        accountScreen(ACCOUNT_TEXTFIELD);
+        clearTextField();
+        typeName();
+        accountScreen(ACCOUNT_NEW);
     }
 
     private void goThroughSettings() {
@@ -244,19 +242,6 @@ public class EndToEndTest extends ApplicationTest {
         shopScreen(SHOP_BACK);
     }
 
-    private void goThroughNameTyping() {
-        accountScreen(ACCOUNT_NEW);
-        assertNull(AbstractScene.getPopup()); // Assert that Game does not start
-        accountScreen(ACCOUNT_TEXTFIELD);
-        typeFaultyName();
-        accountScreen(ACCOUNT_NEW);
-        clickPopup(WARNING_OK);
-        accountScreen(ACCOUNT_TEXTFIELD);
-        clearTextField();
-        typeName();
-        accountScreen(ACCOUNT_NEW);
-    }
-
     private void goThroughGamePlay() {
         mainMenu(MAIN_START);
         sleep(COUNTDOWN);
@@ -271,6 +256,24 @@ public class EndToEndTest extends ApplicationTest {
         keyboard(KeyCode.ESCAPE);
         sleep(LONG);
         pausePopup(PAUSE_TOMAIN);
+    }
+
+    private void goThroughAccounts2() {
+        mainMenu(MAIN_ACCOUNTS);
+        accountScreen(ACCOUNT_LIST);
+        accountScreen(ACCOUNT_LOAD);
+        assertNotNull(State.getPlayerName());
+    }
+
+    private void goThroughDeathPopup() {
+        mainMenu(MAIN_START);
+        sleep(COUNTDOWN);
+        playerDies();
+        sleep(SHORT);
+        clickPopup(DEATH_RETRY);
+        sleep(COUNTDOWN);
+        playerDies();
+        clickPopup(DEATH_TOMAIN);
     }
 
     private void typeName() {
@@ -321,6 +324,21 @@ public class EndToEndTest extends ApplicationTest {
         press(kc);
         release(kc);
         sleep(SHORT);
+    }
+
+    private void playerDies() {
+        Track.getInstance().getPlayer().die();
+        OBSERVABLE.notify(
+                GameObserver.Category.PLAYER,
+                GameObserver.Player.COLLISION,
+                AbstractObstacle.class.getSimpleName());
+        sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
+        letPlayerSurvive();            // Make sure there are no obstacles
+        sleep(LONG);
+    }
+
+    private void letPlayerSurvive() {
+        PowerupInvulnerable.setCheat(true);
     }
 
     private void mainMenu(final int buttonNo) {
@@ -382,17 +400,6 @@ public class EndToEndTest extends ApplicationTest {
                 .getChildren();
         buttons = ((HBox) buttons.get(buttons.size() - 1)).getChildren();
         clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-        sleep(LONG);
-    }
-
-    private void playerDies() {
-        Track.getInstance().getPlayer().die();
-        OBSERVABLE.notify(
-                GameObserver.Category.PLAYER,
-                GameObserver.Player.COLLISION,
-                AbstractObstacle.class.getSimpleName());
-        sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-        letPlayerSurvive();            // Make sure there are no obstacles
         sleep(LONG);
     }
 
