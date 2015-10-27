@@ -27,12 +27,12 @@ public class ShopItemTest {
     private static AbstractSoundtrack nyanCat = new NyanCatSoundtrack();
     private static AbstractSoundtrack shakeItOff = new ShakeItOffSoundtrack();
     // Soundtrack prices
-    private static final int ANIMALS_PRCICE = 30;
-    private static final int RADIOACTIVE_PRICE = 0;
-    private static final int DUCKTALES_PRICE = 20;
-    private static final int MARIO_PRICE = 100;
-    private static final int NYANCAT_PRICE = 90;
-    private static final int SHAKEITOFF_PRICE = 70;
+    private static final int ANIMALS_PRICE = 250;
+    private static final int RADIOACTIVE_PRICE = 50;
+    private static final int DUCKTALES_PRICE = 200;
+    private static final int MARIO_PRICE = 0;
+    private static final int NYANCAT_PRICE = 100;
+    private static final int SHAKEITOFF_PRICE = 150;
     // Skins can't be tested, as they require graphics for their texture.
 
     @Test
@@ -47,7 +47,7 @@ public class ShopItemTest {
 
     @Test
     public void testConstructorPrice() {
-        assertEquals(animals.getItemPrice(), ANIMALS_PRCICE);
+        assertEquals(animals.getItemPrice(), ANIMALS_PRICE);
         assertEquals(radioactive.getItemPrice(), RADIOACTIVE_PRICE);
         assertEquals(duckTales.getItemPrice(), DUCKTALES_PRICE);
         assertEquals(mario.getItemPrice(), MARIO_PRICE);
@@ -59,9 +59,9 @@ public class ShopItemTest {
     public void testUnlockedHashMap() {
         ShopItemUnlocker.createUnlockedShopItemsMap();
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Animals"), false);
-        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Radioactive"), true);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Radioactive"), false);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Duck Tales"), false);
-        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Mario"), false);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Mario"), true);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Nyan Cat"), false);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem(
                 "Shake It Off"), false);
