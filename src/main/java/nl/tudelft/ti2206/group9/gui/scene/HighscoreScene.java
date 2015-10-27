@@ -9,7 +9,12 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
@@ -143,8 +148,8 @@ public class HighscoreScene extends AbstractMenuScene {
 
         setButtonFunction(backButton, BType.HIGHSCORES_BACK);
         setButtonFunction(updateButton, BType.UPDATE);
-        return new Node[]{createScorePane(), backButton,
-                updateButton, input, highLabel};
+        return new Node[]{backButton, updateButton, input, createScorePane(),
+                highLabel};
     }
 
     /**

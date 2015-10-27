@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -35,6 +36,7 @@ import nl.tudelft.ti2206.group9.level.entity.AbstractObstacle;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.server.HighscoreServerIntegrationTest;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.util.GameObserver;
@@ -73,7 +75,7 @@ public class EndToEndTest extends ApplicationTest {
     private static final int MAIN_QUIT = 2;
     private static final int MAIN_ACCOUNTS = 3;
     private static final int MAIN_SHOP = 4;
-//    private static final int MAIN_HIGHSCORE = 5;
+    private static final int MAIN_HIGHSCORES = 5;
 
     private static final int ACCOUNT_LOAD = 0;
     private static final int ACCOUNT_NEW = 1;
@@ -83,6 +85,11 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SETTINGS_BACK = 0;
     private static final int SETTINGS_SOUNDTRACK = 1;
     private static final int SETTINGS_SOUNDEFFECTS = 2;
+
+    private static final int HIGHSCORES_BACK = 0;
+    private static final int HIGHSCORES_UPDATE = 1;
+    private static final int HIGHSCORES_INPUT = 2;
+    private static final int HIGHSCORES_TABPANE = 3;
 
     private static final int SHOP_BACK = 1;
     private static final int SHOP_SKIN_NOOB = 0;
@@ -108,6 +115,7 @@ public class EndToEndTest extends ApplicationTest {
             new File(saveDir).renameTo(new File(savBackup));
             new File(saveDir).mkdir();
         }
+        HighscoreServerIntegrationTest.setUpBeforeClass();
     }
 
     @After
@@ -132,6 +140,7 @@ public class EndToEndTest extends ApplicationTest {
             new File(savBackup).renameTo(new File(saveDir));
             new File(savBackup).delete();
         }
+        HighscoreServerIntegrationTest.tearDownAfterClass();
     }
 
     /**
@@ -167,6 +176,11 @@ public class EndToEndTest extends ApplicationTest {
      *      - Start game
      *      - Let player die; click retry
      *      - Let player die; click back to main menu
+     *  - Go through Highscores
+     *      - Try to connect to IP "l"
+     *      - Click OK in Warning
+     *      - Try to connect to IP "localhost"
+     *      - Return to main menu
      *  - Click Quit
      */
     @Test
@@ -180,6 +194,7 @@ public class EndToEndTest extends ApplicationTest {
         goThroughGamePlay();
         goThroughAccounts2();
         goThroughDeathPopup();
+        goThroughHighscores();
 
         clickButton(MAIN_QUIT);
     }
@@ -192,7 +207,7 @@ public class EndToEndTest extends ApplicationTest {
         clickButton(ACCOUNT_NEW);
         clickPopup(WARNING_OK);
         clickButton(ACCOUNT_TEXTFIELD);
-        clearTextField();
+        clearTextField(ACCOUNT_TEXTFIELD);
         typeName();
         clickButton(ACCOUNT_NEW);
     }
@@ -279,6 +294,29 @@ public class EndToEndTest extends ApplicationTest {
         clickPopup(DEATH_TOMAIN);
     }
 
+    private void goThroughHighscores() {
+        clickButton(MAIN_HIGHSCORES);
+
+        clickButton(HIGHSCORES_INPUT);
+        clearTextField(HIGHSCORES_INPUT);
+        keyboard(KeyCode.L);
+        clickButton(HIGHSCORES_UPDATE);
+        clickPopup(WARNING_OK);
+
+        clickButton(HIGHSCORES_INPUT);
+        typeOcalhost();
+        clickButton(HIGHSCORES_UPDATE);
+
+        final TabPane pane = (TabPane) rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable().get(HIGHSCORES_TABPANE);
+        final ListView<?> list =
+                (ListView<?>) pane.getTabs().get(0).getContent();
+        final String firstItem = (String) list.getItems().get(0);
+        assertEquals("Fred", firstItem.substring(0, "Fred".length()));
+
+        clickButton(HIGHSCORES_BACK);
+    }
+
     private void typeName() {
         keyboard(KeyCode.CAPS);
         keyboard(KeyCode.F);
@@ -286,6 +324,17 @@ public class EndToEndTest extends ApplicationTest {
         keyboard(KeyCode.R);
         keyboard(KeyCode.E);
         keyboard(KeyCode.D);
+    }
+
+    private void typeOcalhost() {
+        keyboard(KeyCode.O);
+        keyboard(KeyCode.C);
+        keyboard(KeyCode.A);
+        keyboard(KeyCode.L);
+        keyboard(KeyCode.H);
+        keyboard(KeyCode.O);
+        keyboard(KeyCode.S);
+        keyboard(KeyCode.T);
     }
 
     private void typeFaultyName() {
@@ -396,11 +445,11 @@ public class EndToEndTest extends ApplicationTest {
         }
     }
 
-    private void clearTextField() {
+    private void clearTextField(final int buttonNo) {
         ObservableList<Node> children;
         children = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
-        final TextField text = (TextField) children.get(ACCOUNT_TEXTFIELD);
+        final TextField text = (TextField) children.get(buttonNo);
         Platform.runLater(text::clear);
     }
 }
