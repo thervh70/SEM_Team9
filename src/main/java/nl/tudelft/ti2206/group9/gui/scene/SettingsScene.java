@@ -55,10 +55,12 @@ public final class SettingsScene extends AbstractMenuScene {
             createVolumeSlider(TRACK_SLIDER_COLUMN, SLIDER_ROW,
                     State.isSoundtrackEnabled());
 
-    /**
-     * Constant for converting the slider value to a setable volume level.
-     */
+    /** Constant for converting the slider value to a setable volume level. */
     private static final int VOLUME_CONVERTER = 10;
+    /** Records the sound effect volume. */
+    private static double soundEffectVolume = 1.0 / 2.0;
+    /** Records the soundtrack volume. */
+    private static double soundtrackVolume = 1.0 / 2.0;
 
     /**
      * Type of buttons that exist.
@@ -218,6 +220,7 @@ public final class SettingsScene extends AbstractMenuScene {
         final Background sliderBack = new Background(fill);
         slider.setBackground(sliderBack);
         setSliderFunction(slider, SType.VOLUME_SOUNDTRACK);
+        setSliderFunction(slider, SType.VOLUME_SOUNDEFFECTS);
         return slider;
     }
 
@@ -229,26 +232,32 @@ public final class SettingsScene extends AbstractMenuScene {
     protected static void setSliderFunction(final Slider slider,
             final SType type) {
         slider.setOnMouseReleased(event -> {
-            double volumeValue;
             if (type == SType.VOLUME_SOUNDTRACK) {
-                volumeValue = soundtrackVolumeSlider.
+                soundtrackVolume = soundtrackVolumeSlider.
                         getValue() / VOLUME_CONVERTER;
-                CurrentItems.getSoundtrackPlayer().setVolume(volumeValue);
-                MainMenuScene.getAudioPlayer().setVolume(volumeValue);
+                CurrentItems.getSoundtrackPlayer().setVolume(soundtrackVolume);
+                MainMenuScene.getAudioPlayer().setVolume(soundtrackVolume);
             } else {
-                volumeValue = soundEffectVolumeSlider.
+                soundEffectVolume = soundEffectVolumeSlider.
                         getValue() / VOLUME_CONVERTER;
-                setSoundEffectVolumes(volumeValue);
             }
         });
     }
 
     /**
-     * Sets the volumes of all sound effects.
-     * @param volumeValue the calculated volume value to set.
+     * Gets the current soundtrack volume.
+     * @return current soundtrackVolume (double).
      */
-    private static void setSoundEffectVolumes(final double volumeValue) {
-         getButtonSoundEffectPlayer().setVolume(volumeValue);
+    public static double getSoundtrackVolume() {
+         return soundtrackVolume;
+    }
+
+    /**
+     * Gets the current sound effect volume.
+     * @return current soundEffectVolume (double).
+     */
+    public static double getSoundEffectVolume() {
+        return soundEffectVolume;
     }
 
     /** Override background, the Settings background shows "Settings". */
