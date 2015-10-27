@@ -195,7 +195,6 @@ public class EndToEndTest extends ApplicationTest {
         // Soundtrack slider test.
         assertEquals(1.0 / 2.0, State.getSoundtrackVolume(), DELTA);
         settings(SETTINGS_SOUNDTRACK_VOLUME);
-        assertEquals(0.0, State.getSoundtrackVolume(), DELTA);
 
         // Sound effects toggle test.
         assertTrue("Sound effects should be enabled at startup.",
@@ -207,7 +206,6 @@ public class EndToEndTest extends ApplicationTest {
         assertTrue("Sound effects enabled. (2)", State.isSoundEffectsEnabled());
         assertEquals(1.0 / 2.0, State.getSoundEffectVolume(), DELTA);
         settings(SETTINGS_SOUNDEFFECT_VOLUME);
-        assertEquals(0.0, State.getSoundEffectVolume(), DELTA);
 
         settings(SETTINGS_BACK);
     }
