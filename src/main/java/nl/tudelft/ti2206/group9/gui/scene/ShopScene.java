@@ -3,8 +3,11 @@ package nl.tudelft.ti2206.group9.gui.scene;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -13,12 +16,11 @@ import javafx.scene.layout.VBox;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
-import nl.tudelft.ti2206.group9.shop.ShopItem;
-import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
+import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
@@ -68,11 +70,14 @@ public class ShopScene extends AbstractMenuScene {
      * Label to display current soundtrack.
      */
     private Label currentSoundtrack;
+    /** Tabpane for the shop. */
+    private TabPane tabPane;
+
 
 
     @Override
     public Node[] createContent() {
-        final TabPane tabPane = new TabPane();
+        tabPane = new TabPane();
         tabPane.setMinHeight(TABPANE_HEIGHT);
         currentSkin = createLabel("SKIN: "
                 + CurrentItems.getSkin().getItemName(), 0, COLUMN_CONSTRAINT);
@@ -107,37 +112,16 @@ public class ShopScene extends AbstractMenuScene {
      * @return VBox VBox containing an currentSkin item.
      */
     private HBox createCarousel() {
-
         final ObservableList<AbstractSkin> items =
                 ShopItemLoader.loadSkinsToList();
-
         final HBox hbox = new HBox(BOX_SPACING);
-
         for (AbstractSkin s : items) {
-
             final VBox vbox = new VBox(BOX_SPACING);
             final Label price = createLabel("Price", 0, 0);
             final Label name = createLabel("Name", 0, 0);
             final Button buy = createButton("BUY", 0, 0);
-
             setBuyButtonVisability(buy, s);
-
-            buy.setOnAction(event -> {
-                if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
-                    CurrentItems.setSkin(s);
-                    currentSkin.setText("SKIN: "
-                            + CurrentItems.getSkin().getItemName());
-                } else {
-                    if (State.getCoins() >= s.getItemPrice()) {
-                        State.setCoins(State.getCoins() - s.getItemPrice());
-                        ShopItemUnlocker.setUnlockedShopItem(s.getItemName(), true);
-                        amountLabel.setText(Integer.toString(State.getCoins()));
-                        buy.setText("EQUIP");
-                    }
-                }
-                SaveGame.saveGame();
-            });
-
+            setSkinBuyButton(buy, s);
             vbox.setAlignment(Pos.CENTER);
             final ImageView imgview = new ImageView(
                     s.getSkinMaterial().getDiffuseMap());
@@ -148,6 +132,33 @@ public class ShopScene extends AbstractMenuScene {
         }
         return hbox;
     }
+
+    /**
+     * Set buy button functionality.
+     *@param buy Button to set.
+     *@param s Skin.
+     */
+    private void setSkinBuyButton(final Button buy, final AbstractSkin s) {
+        buy.setOnAction(event -> {
+            if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
+                CurrentItems.setSkin(s);
+                currentSkin.setText("SKIN: "
+                        + CurrentItems.getSkin().getItemName());
+            } else {
+                if (State.getCoins() >= s.getItemPrice()) {
+                    State.setCoins(State.getCoins() - s.getItemPrice());
+                    ShopItemUnlocker.setUnlockedShopItem(s.getItemName(), true);
+                    amountLabel.setText(Integer.toString(State.getCoins()));
+                    buy.setText("EQUIP");
+                    SaveGame.saveGame();
+                    tabPane.getTabs().clear();
+                    tabPane.getTabs().addAll(createSkinTab(), createSoundTab());
+                    tabPane.getSelectionModel().select(0);
+                }
+            }
+        });
+    }
+
 
     /**
      * Change te button visability if currentSkin is buyable/unlocked.
@@ -246,26 +257,40 @@ public class ShopScene extends AbstractMenuScene {
                     createLabel(Integer.toString(s.getItemPrice()), 0, 0);
             final Button buyButton = createButton("BUY", 0, 0);
             setSoundBuyButtonVisability(buyButton, s);
-            buyButton.setOnAction(event -> {
-                if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
-                    CurrentItems.setSoundtrackPlayer(s);
-                    currentSoundtrack.setText("SOUNDTRACK: "
-                            + CurrentItems.getSoundtrackName());
-                } else {
-                    if (State.getCoins() >= s.getItemPrice()) {
-                        State.setCoins(State.getCoins() - s.getItemPrice());
-                        ShopItemUnlocker.setUnlockedShopItem(s.getItemName(), true);
-                        amountLabel.setText(Integer.toString(State.getCoins()));
-                        buyButton.setText("ACTIVATE");
-                    }
-                }
-                SaveGame.saveGame();
-            });
-            hbox.getChildren().addAll(imageView, nameLabel, priceLabel, buyButton);
+            setSoundBuyButtonFunction(buyButton, s);
+            hbox.getChildren().addAll(imageView,
+                    nameLabel, priceLabel, buyButton);
             hbox.setAlignment(Pos.CENTER);
             itemBox.getChildren().addAll(hbox);
         }
         return itemBox;
+    }
+
+    /**
+     * Set the function of the buy button in the soundtrack.
+     * @param buyButton Button to set.
+     * @param s Soundtrack.
+     */
+    private void setSoundBuyButtonFunction(final Button buyButton,
+                                           final AbstractSoundtrack s) {
+        buyButton.setOnAction(event -> {
+            if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
+                CurrentItems.setSoundtrackPlayer(s);
+                currentSoundtrack.setText("SOUNDTRACK: "
+                        + CurrentItems.getSoundtrackName());
+            } else {
+                if (State.getCoins() >= s.getItemPrice()) {
+                    State.setCoins(State.getCoins() - s.getItemPrice());
+                    ShopItemUnlocker.setUnlockedShopItem(s.getItemName(), true);
+                    amountLabel.setText(Integer.toString(State.getCoins()));
+                    buyButton.setText("ACTIVATE");
+                    tabPane.getTabs().clear();
+                    tabPane.getTabs().addAll(createSkinTab(), createSoundTab());
+                    tabPane.getSelectionModel().select(1);
+                }
+            }
+            SaveGame.saveGame();
+        });
     }
 
     /**
