@@ -70,7 +70,7 @@ public class EndToEndTest extends ApplicationTest {
 
     private static final int MAIN_START = 0;
     private static final int MAIN_SETTINGS = 1;
-//    private static final int MAIN_QUIT = 2;
+    private static final int MAIN_QUIT = 2;
     private static final int MAIN_ACCOUNTS = 3;
     private static final int MAIN_SHOP = 4;
 //    private static final int MAIN_HIGHSCORE = 5;
@@ -191,8 +191,8 @@ public class EndToEndTest extends ApplicationTest {
         playerDies();
         clickPopup(DEATH_TOMAIN);
 
-        //        mainMenu(MAIN_QUIT);
-        Platform.runLater(stage::close);
+        mainMenu(MAIN_QUIT);
+//        Platform.runLater(stage::close);
     }
 
     private void letPlayerSurvive() {
