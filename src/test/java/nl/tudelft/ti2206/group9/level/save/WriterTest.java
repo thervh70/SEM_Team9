@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.level.save;
 
 import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.StateTest;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 
 import org.junit.Test;
@@ -25,6 +26,10 @@ public final class WriterTest {
         State.setCoins(coins);
         final int score = 3560;
         State.setHighscore(score);
+        final double soundtrackVolume = 0.7;
+        State.setSoundtrackVolume(soundtrackVolume);
+        final double soundEffectVolume = 0.3;
+        State.setSoundEffectVolume(soundEffectVolume);
 
         ShopItemUnlocker.setUnlockedShopItem("Iron Man", true);
         ShopItemUnlocker.setUnlockedShopItem("Plank", true);
@@ -38,6 +43,10 @@ public final class WriterTest {
         assertEquals(playerName, State.getPlayerName());
         assertEquals(coins, State.getCoins());
         assertEquals(score, State.getHighscore());
+        assertEquals(soundtrackVolume, State.getSoundtrackVolume(),
+                StateTest.DELTA);
+        assertEquals(soundEffectVolume, State.getSoundEffectVolume(),
+                StateTest.DELTA);
 
         assertEquals(false, ShopItemUnlocker.getUnlockedShopItem("Andy"));
         assertEquals(true, ShopItemUnlocker.getUnlockedShopItem("Noob"));

@@ -101,7 +101,7 @@ public final class GameScene extends AbstractScene {
 
         CurrentItems.getSoundtrackPlayer().play();
         CurrentItems.getSoundtrackPlayer().
-                setVolume(SettingsScene.getSoundtrackVolume());
+                setVolume(State.getSoundtrackVolume());
         startTickers();
         return root;
     }
@@ -329,13 +329,13 @@ public final class GameScene extends AbstractScene {
             } else if (update.getSpec() == Player.COLLISION) {
                 if (soundMapCollide.get(update.getArgs()[0]) != null) {
                     soundMapCollide.get(update.getArgs()[0]).
-                            setVolume(SettingsScene.getSoundEffectVolume());
+                            setVolume(State.getSoundEffectVolume());
                     soundMapCollide.get(update.getArgs()[0]).play();
                 }
             } else {
                 if (soundMap.get(update.getSpec()) != null) {
                     soundMap.get(update.getSpec()).
-                            setVolume(SettingsScene.getSoundEffectVolume());
+                            setVolume(State.getSoundEffectVolume());
                     soundMap.get(update.getSpec()).play();
                 }
             }
