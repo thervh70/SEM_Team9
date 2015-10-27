@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -13,10 +14,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.level.State;
-import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * A screen for displaying a settings menu.
@@ -25,45 +24,39 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 @SuppressWarnings("restriction")
 public final class SettingsScene extends AbstractMenuScene {
 
-    /**
-     * Max volume.
-     */
+    /** Max volume. */
     private static final double MAX_VOLUME = 10;
-    /**
-     * Effect slider row.
-     */
+    /** Effect slider row. */
     private static final int EFFECT_SLIDER_COLUMN = 6;
-    /**
-     * Soundtrack slider row.
-     */
+    /** Soundtrack slider row. */
     private static final int TRACK_SLIDER_COLUMN = 4;
-    /**
-     * Sliders row.
-     */
+    /** Sliders row. */
     private static final int SLIDER_ROW = 16;
+    /** Constant for converting the slider value to a setable volume level. */
+    private static final int VOLUME_CONVERTER = 10;
+
+    /** Records the sound effect volume and is initially 0.5. */
+    private static double soundEffectVolume = 1.0 / 2.0;
+    /** Records the soundtrack volume and is initially 0.5. */
+    private static double soundtrackVolume = 1.0 / 2.0;
 
     /**
      * Create a slider for the sound effects volume.
      */
     private static Slider soundEffectVolumeSlider =
             createVolumeSlider(EFFECT_SLIDER_COLUMN, SLIDER_ROW,
-                    State.isSoundEffectsEnabled());
+                    State.isSoundEffectsEnabled(), SType.VOLUME_SOUNDEFFECTS,
+                    soundEffectVolume);
     /**
      * Create a slider for the soundtrack volume.
      */
     private static Slider soundtrackVolumeSlider =
             createVolumeSlider(TRACK_SLIDER_COLUMN, SLIDER_ROW,
-                    State.isSoundtrackEnabled());
-
-    /** Constant for converting the slider value to a setable volume level. */
-    private static final int VOLUME_CONVERTER = 10;
-    /** Records the sound effect volume. */
-    private static double soundEffectVolume = 1.0 / 2.0;
-    /** Records the soundtrack volume. */
-    private static double soundtrackVolume = 1.0 / 2.0;
+                    State.isSoundtrackEnabled(), SType.VOLUME_SOUNDTRACK,
+                    soundtrackVolume);
 
     /**
-     * Type of buttons that exist.
+     * Types of buttons that exist.
      */
     enum BType {
         /**
@@ -77,7 +70,7 @@ public final class SettingsScene extends AbstractMenuScene {
     }
 
     /**
-     * Type of sliders that exist.
+     * Types of sliders that exist.
      */
     enum SType {
         /**
@@ -186,15 +179,22 @@ public final class SettingsScene extends AbstractMenuScene {
     }
 
     /**
-     * Creating a slider for volumes.
-     *
+     * Creating a slider that can adapt the volume.
+     * Every slider has, besides it's place on the screen, it's own slider
+     * type and initial volume level. These two have been added so that the
+     * slider values can be saved and can be distinguished in functionality.
      * @param column  Columnconstraint.
      * @param row     Rowconstraint.
-     * @param enabled Slider enabled?
+     * @param enabled indicates whether the slider is enabled.
+     * @param sliderType (SType) indicates the type of slider.
+     * @param initialVolume (double) starts at the initial volume level,
+     * especially necessary for save games, where initial volume levels
+     * may be different.
      * @return Return created slider.
      */
-    private static Slider createVolumeSlider(
-            final int column, final int row, final boolean enabled) {
+    private static Slider createVolumeSlider(final int column,
+            final int row, final boolean enabled, final SType sliderType,
+            final double initialVolume) {
         final Slider slider = new Slider();
         final int majorTickUnit = 5;
         final int minorTickCount = 4;
@@ -208,7 +208,7 @@ public final class SettingsScene extends AbstractMenuScene {
         slider.setMax(MAX_VOLUME);
         slider.setMin(0);
         slider.setTooltip(new Tooltip("Adjust volume"));
-        slider.setValue(MAX_VOLUME / 2);
+        slider.setValue(initialVolume * VOLUME_CONVERTER);
         slider.setBlockIncrement(1);
         slider.setMajorTickUnit(majorTickUnit);
         slider.setMinorTickCount(minorTickCount);
@@ -219,13 +219,14 @@ public final class SettingsScene extends AbstractMenuScene {
         final BackgroundFill fill = new BackgroundFill(color, corner, inset);
         final Background sliderBack = new Background(fill);
         slider.setBackground(sliderBack);
-        setSliderFunction(slider, SType.VOLUME_SOUNDTRACK);
-        setSliderFunction(slider, SType.VOLUME_SOUNDEFFECTS);
+        setSliderFunction(slider, sliderType);
         return slider;
     }
 
     /**
      * Sets the volume of the the sounds that are used in the application.
+     * The audioplayer volumes of the 'non-GameScenes' are already set below.
+     * The others are set in the GameScene (SoundEffectObserver).
      * @param slider the given slider to set the function of.
      * @param type the given type of slider to set the volume of.
      */
@@ -235,11 +236,12 @@ public final class SettingsScene extends AbstractMenuScene {
             if (type == SType.VOLUME_SOUNDTRACK) {
                 soundtrackVolume = soundtrackVolumeSlider.
                         getValue() / VOLUME_CONVERTER;
-                CurrentItems.getSoundtrackPlayer().setVolume(soundtrackVolume);
                 MainMenuScene.getAudioPlayer().setVolume(soundtrackVolume);
             } else {
                 soundEffectVolume = soundEffectVolumeSlider.
                         getValue() / VOLUME_CONVERTER;
+                AbstractMenuScene.getButtonSoundEffectPlayer().
+                        setVolume(soundEffectVolume);
             }
         });
     }

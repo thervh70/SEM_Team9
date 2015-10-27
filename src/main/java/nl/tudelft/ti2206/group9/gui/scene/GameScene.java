@@ -99,9 +99,9 @@ public final class GameScene extends AbstractScene {
         setupCamera();
         keyBindings();
 
-        CurrentItems.getSoundtrackPlayer().
-                setVolume(SettingsScene.getSoundEffectVolume());
         CurrentItems.getSoundtrackPlayer().play();
+        CurrentItems.getSoundtrackPlayer().
+                setVolume(SettingsScene.getSoundtrackVolume());
         startTickers();
         return root;
     }
