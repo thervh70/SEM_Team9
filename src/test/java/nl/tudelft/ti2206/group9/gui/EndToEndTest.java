@@ -32,11 +32,13 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
+import org.junit.After;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -97,7 +99,39 @@ public class EndToEndTest extends ApplicationTest {
         stage = primaryStage;
         new ShaftEscape().start(stage);
         State.resetAll();
-        new File("sav/Fred.ses").delete();
+        final String saveDir = SaveGame.getDefaultSaveDir();
+        final String savBackup = "old" + saveDir;
+        if (new File(saveDir).exists()) {
+            new File(saveDir).renameTo(new File(savBackup));
+            new File(saveDir).mkdir();
+        }
+    }
+
+    @After
+    public void end() {
+        outputEventLog();
+        final String saveDir = SaveGame.getDefaultSaveDir();
+        final String savBackup = "old" + saveDir;
+        new File(saveDir + "Fred.ses").delete();
+        if (new File(savBackup).exists()) {
+            new File(saveDir).delete();
+            new File(savBackup).renameTo(new File(saveDir));
+            new File(savBackup).delete();
+        }
+    }
+
+    private void outputEventLog() {
+        try {
+            ShaftEscape.LOGGER.writeToFile();
+            final String log = new String(Files.readAllBytes(
+                    Paths.get(Logger.OUTFILE)), StandardCharsets.UTF_8);
+            // Intended use of System.out.println for Travis log
+            System.out.println("\n== EVENT_LOG ==");     //NOPMD
+            System.out.println(log);                     //NOPMD
+            System.out.println("== END_EVENT_LOG ==\n"); //NOPMD
+        } catch (IOException e) {
+            fail("IOException thrown: " + e.getMessage());
+        }
     }
 
     /**
@@ -156,22 +190,6 @@ public class EndToEndTest extends ApplicationTest {
 
         //        mainMenu(MAIN_QUIT);
         Platform.runLater(stage::close);
-        outputEventLog();
-        new File("sav/Fred.ses").delete();
-    }
-
-    private void outputEventLog() {
-        try {
-            ShaftEscape.LOGGER.writeToFile();
-            final String log = new String(Files.readAllBytes(
-                    Paths.get(Logger.OUTFILE)), StandardCharsets.UTF_8);
-            // Intended use of System.out.println for Travis log
-            System.out.println("\n== EVENT_LOG ==");     //NOPMD
-            System.out.println(log);                     //NOPMD
-            System.out.println("== END_EVENT_LOG ==\n"); //NOPMD
-        } catch (IOException e) {
-            fail("IOException thrown: " + e.getMessage());
-        }
     }
 
     private void letPlayerSurvive() {
