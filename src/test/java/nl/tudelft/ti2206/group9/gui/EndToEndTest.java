@@ -2,7 +2,6 @@ package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -81,8 +80,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SETTINGS_SOUNDEFFECTS = 2;
     private static final int SETTINGS_SOUNDEFFECT_VOLUME = 6;
     private static final int SETTINGS_SOUNDTRACK_VOLUME = 7;
-    private static final int MOVE_X_SLIDER = 750;
-    private static final int MOVE_Y_SLIDER = 500;
+    private static final int MOVE_X_SLIDER = -100;
+    private static final int MOVE_Y_SLIDER = 0;
 
     private static final int SHOP_BACK = 1;
     private static final int SHOP_SKIN_NOOB = 0;
@@ -196,7 +195,7 @@ public class EndToEndTest extends ApplicationTest {
         // Soundtrack slider test.
         assertEquals(1.0 / 2.0, State.getSoundtrackVolume(), DELTA);
         settings(SETTINGS_SOUNDTRACK_VOLUME);
-        assertNotEquals(1.0 / 2.0, State.getSoundtrackVolume(), DELTA);
+        assertEquals(0.0, State.getSoundtrackVolume(), DELTA);
 
         // Sound effects toggle test.
         assertTrue("Sound effects should be enabled at startup.",
@@ -206,15 +205,16 @@ public class EndToEndTest extends ApplicationTest {
                 State.isSoundEffectsEnabled());
         settings(SETTINGS_SOUNDEFFECTS);
         assertTrue("Sound effects enabled. (2)", State.isSoundEffectsEnabled());
+        // Sound effect slider test.
         assertEquals(1.0 / 2.0, State.getSoundEffectVolume(), DELTA);
         settings(SETTINGS_SOUNDEFFECT_VOLUME);
-        assertNotEquals(1.0 / 2.0, State.getSoundEffectVolume(), DELTA);
+        assertEquals(0.0, State.getSoundEffectVolume(), DELTA);
 
         settings(SETTINGS_BACK);
     }
 
     private void goThroughShop() {
-        State.setCoins(COINS); //Make sure player has enough coins
+        State.setCoins(COINS); //Make sure player has enough coins/
         mainMenu(MAIN_SHOP);
 
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
@@ -327,7 +327,7 @@ public class EndToEndTest extends ApplicationTest {
         } else {
             clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
             press(MouseButton.PRIMARY);
-            moveTo(MOVE_X_SLIDER, MOVE_Y_SLIDER);
+            moveBy(MOVE_X_SLIDER, MOVE_Y_SLIDER);
             release(MouseButton.PRIMARY);
         }
         sleep(SHORT);
