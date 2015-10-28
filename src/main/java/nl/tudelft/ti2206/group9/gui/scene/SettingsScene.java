@@ -132,6 +132,7 @@ public final class SettingsScene extends AbstractMenuScene {
                 if (State.isSoundtrackEnabled()) {
                     s = ACTIVE_TOGGLE;
                     soundtrackVolumeSlider.setDisable(false);
+                    MainMenuScene.getAudioPlayer().play();
                 } else {
                     s = INIT_TOGGLE;
                     soundtrackVolumeSlider.setDisable(true);
