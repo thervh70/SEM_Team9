@@ -105,14 +105,6 @@ public abstract class AbstractInfoPopup extends Popup {
     }
 
     /**
-     * Gets the SoundEffectPlayer of the buttons in the popups.
-     * @return button SoundEffectPlayer used for all popup buttons.
-     */
-    public static SoundEffectPlayer getButtonSoundEffectPlayer() {
-        return BUTTON_SOUND;
-    }
-
-    /**
      * This method adds text to buttons and gives them a location on the grid.
      * @param name Name of the button.
      * @return the created button.

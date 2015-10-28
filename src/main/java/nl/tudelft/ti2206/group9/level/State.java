@@ -30,6 +30,10 @@ public final class State {
     /** Records the soundtrack volume and is initially 0.5. */
     private static double soundtrackVolume = 1.0 / 2.0;
 
+    /**
+     * Constant for the default volume level of a soundtrack.
+     */
+    private static final double DEFAULT_VOLUMELEVEL = 0.5;
 
     /** Cannot be constructed. */
     private State() { }
@@ -42,6 +46,8 @@ public final class State {
         CurrentItems.reset();
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
+        soundEffectVolume = DEFAULT_VOLUMELEVEL;
+        soundtrackVolume = DEFAULT_VOLUMELEVEL;
     }
 
     /** Reset data that should be reset every run. */

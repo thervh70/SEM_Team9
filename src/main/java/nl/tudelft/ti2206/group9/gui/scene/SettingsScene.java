@@ -13,7 +13,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import nl.tudelft.ti2206.group9.ShaftEscape;
-import nl.tudelft.ti2206.group9.gui.popup.AbstractInfoPopup;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
@@ -39,17 +38,11 @@ public final class SettingsScene extends AbstractMenuScene {
     /**
      * Create a slider for the sound effects volume.
      */
-    private static Slider soundEffectVolumeSlider =
-            createVolumeSlider(EFFECT_SLIDER_COLUMN, SLIDER_ROW,
-                    State.isSoundEffectsEnabled(), SType.VOLUME_SOUNDEFFECTS,
-                    State.getSoundEffectVolume());
+    private static Slider soundEffectVolumeSlider;
     /**
      * Create a slider for the soundtrack volume.
      */
-    private static Slider soundtrackVolumeSlider =
-            createVolumeSlider(TRACK_SLIDER_COLUMN, SLIDER_ROW,
-                    State.isSoundtrackEnabled(), SType.VOLUME_SOUNDTRACK,
-                    State.getSoundtrackVolume());
+    private static Slider soundtrackVolumeSlider;
 
     /**
      * Types of buttons that exist.
@@ -111,14 +104,13 @@ public final class SettingsScene extends AbstractMenuScene {
         if (State.isSoundEffectsEnabled()) {
             soundEfToggle = ACTIVE_TOGGLE;
         }
+        createSliders();
         final Button soundEfButton = createButton(soundEfToggle, 6, 14);
         setBackButtonFunction(backButton);
         setToggleButtonFunction(soundtrButton, BType.SETTING_SOUNDTRACK);
         setToggleButtonFunction(soundEfButton, BType.SETTING_SOUNDEFFECTS);
         GridPane.setColumnSpan(soundEfButton, 2);
-        soundtrButton.setTooltip(new Tooltip("Enable/disable soundtrack"));
-        soundEfButton.setTooltip(new Tooltip("Enable/disable sound effects"));
-        backButton.setTooltip(new Tooltip("Back to main menu"));
+        setTooltips(soundtrButton, soundtrButton, backButton);
         return new Node[]{backButton, soundtrButton, soundEfButton, playerName,
                 soundEfLabel, sounfTrLabel, soundEffectVolumeSlider,
                 soundtrackVolumeSlider};
@@ -168,6 +160,7 @@ public final class SettingsScene extends AbstractMenuScene {
      */
     private static void setBackButtonFunction(final Button b) {
         b.setOnAction(event -> {
+                    playButtonSound();
                     OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
                     ShaftEscape.setScene(new MainMenuScene());
                 }
@@ -175,8 +168,33 @@ public final class SettingsScene extends AbstractMenuScene {
     }
 
     /**
+     * Sets the tooltips of the SettingsScene buttons.
+     * @param soundtrButton that needs a tooltip.
+     * @param soundEfButton that needs a tooltip.
+     * @param backButton that needs a tooltip.
+     */
+    private static void setTooltips(final Button soundtrButton,
+            final Button soundEfButton, final Button backButton) {
+        soundtrButton.setTooltip(new Tooltip("Enable/disable soundtrack"));
+        soundEfButton.setTooltip(new Tooltip("Enable/disable sound effects"));
+        backButton.setTooltip(new Tooltip("Back to main menu"));
+    }
+
+    /**
+     * Creates the sliders of the SettingsScene.
+     */
+    private static void createSliders() {
+        soundEffectVolumeSlider = createVolumeSlider(EFFECT_SLIDER_COLUMN,
+                SLIDER_ROW, State.isSoundEffectsEnabled(),
+                SType.VOLUME_SOUNDEFFECTS, State.getSoundEffectVolume());
+        soundtrackVolumeSlider = createVolumeSlider(TRACK_SLIDER_COLUMN,
+                SLIDER_ROW, State.isSoundtrackEnabled(),
+                SType.VOLUME_SOUNDTRACK, State.getSoundtrackVolume());
+    }
+
+    /**
      * Creating a slider that can adapt the volume.
-     * Every slider has, besides it's place on the screen, it's own slider
+     * Every slider has, besides its place on the screen, it's own slider
      * type and initial volume level. These two have been added so that the
      * slider values can be saved and can be distinguished in functionality.
      * @param column  Columnconstraint.
@@ -237,11 +255,8 @@ public final class SettingsScene extends AbstractMenuScene {
             } else {
                 State.setSoundEffectVolume(soundEffectVolumeSlider.
                         getValue() / VOLUME_CONVERTER);
-                AbstractMenuScene.getButtonSoundEffectPlayer().
-                        setVolume(State.getSoundEffectVolume());
-                AbstractInfoPopup.getButtonSoundEffectPlayer().
-                setVolume(State.getSoundEffectVolume());
             }
+            playButtonSound();
         });
     }
 

@@ -33,10 +33,6 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
      * Constant for making the SoundtrackPlayer loop forever.
      */
     private static final int INDEFINITE = -1;
-    /**
-     * Constant for the default volume level of a soundtrack.
-     */
-    private static final double DEFAULT_VOLUMELEVEL = 0.5;
 
     /**
      * The MediaPlayer of a SoundtrackPlayer.
@@ -60,7 +56,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         }
         // A soundtrackPlayer must always loop.
         this.loopAudio();
-        this.setVolume(DEFAULT_VOLUMELEVEL);
+        this.setVolume(State.getSoundtrackVolume());
     }
 
     @Override
@@ -231,16 +227,10 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
 
     @Override
     public void setVolume(final double volumeLevel) {
-        try {
-        mediaPlayer.setVolume(volumeLevel);
-        } catch (NullPointerException ne) { // NOPMD
-            // This try-catch block is just here for testing.
-            // The setVolume method can result in a NullPointer (according to
-            // JUnit), because JUnit can't really play audio neither can Travis.
-            OBSERVABLE.notify(GameObserver.Category.ERROR,
-                    GameObserver.Error.NULLPOINTEREXCEPTION,
-                    "SoundtrackPlayer.setVolume()", ne.getMessage());
+        if (mediaPlayer == null) {
+            return;
         }
+        mediaPlayer.setVolume(volumeLevel);
     }
 
 }

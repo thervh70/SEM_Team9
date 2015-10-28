@@ -51,8 +51,8 @@ public final class MainMenuScene extends AbstractMenuScene {
      */
     @Override
     public Node[] createContent() {
-        apMainMenu.setVolume(State.getSoundtrackVolume());
         apMainMenu.play();
+        apMainMenu.setVolume(State.getSoundtrackVolume());
         final Button startButton = createButton("START!", 2, 22);
         final Button settingsButton = createButton("SETTINGS", 0, 24);
         final Button exitButton = createButton("EXIT", 4, 24);
@@ -98,6 +98,7 @@ public final class MainMenuScene extends AbstractMenuScene {
                 ShaftEscape.setScene(new GameScene());
             } else if (type == BType.ACCOUNT) {
                 OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
+                apMainMenu.stop();
                 SaveGame.saveGame();
                 ShaftEscape.setScene(new AccountScene());
             } else if (type == BType.SHOP) {
