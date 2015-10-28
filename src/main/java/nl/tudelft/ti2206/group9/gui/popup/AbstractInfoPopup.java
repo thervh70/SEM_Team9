@@ -11,12 +11,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
 import nl.tudelft.ti2206.group9.audio.SoundEffectPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
+import nl.tudelft.ti2206.group9.level.State;
 
 import java.util.Arrays;
 
 /**
  * Abstract Popup class as a template for all Popups in the game.
- * @author Maarten, Robin
+ * @author Maarten, Robin, Mitchell
  */
 @SuppressWarnings("restriction")
 public abstract class AbstractInfoPopup extends Popup {
@@ -97,8 +98,9 @@ public abstract class AbstractInfoPopup extends Popup {
         return right;
     }
 
-    /** Plays the button sound once. */
+    /** Plays the button sound once, given a volumelevel. */
     protected static void playButtonSound() {
+        BUTTON_SOUND.setVolume(State.getSoundEffectVolume());
         BUTTON_SOUND.play();
     }
 

@@ -15,7 +15,7 @@ import nl.tudelft.ti2206.group9.level.State;
 /**
  * Ancestor for all MenuScenes. Subclasses should define an array of Nodes in
  * the abstract method {@link #createContent()}.
- * @author Maarten, Maikel
+ * @author Maarten, Maikel, Mitchell
  */
 @SuppressWarnings("restriction")
 public abstract class AbstractMenuScene extends AbstractScene {
@@ -158,8 +158,9 @@ public abstract class AbstractMenuScene extends AbstractScene {
         return res;
     }
 
-    /** Plays the button sound once. */
+    /** Plays the button sound once, given a volumelevel. */
     protected static void playButtonSound() {
+        BUTTON_SOUND.setVolume(State.getSoundEffectVolume());
         BUTTON_SOUND.play();
     }
 

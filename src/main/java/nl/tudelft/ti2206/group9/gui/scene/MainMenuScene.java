@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
+import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
@@ -52,6 +53,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     @Override
     public Node[] createContent() {
         apMainMenu.play();
+        apMainMenu.setVolume(State.getSoundtrackVolume());
         final Button startButton = createButton("START!", 2, 22);
         final Button settingsButton = createButton("SETTINGS", 0, 24);
         final Button exitButton = createButton("EXIT", 4, 24);
@@ -97,6 +99,7 @@ public final class MainMenuScene extends AbstractMenuScene {
                 ShaftEscape.setScene(new GameScene());
             } else if (type == BType.ACCOUNT) {
                 OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
+                apMainMenu.stop();
                 SaveGame.saveGame();
                 ShaftEscape.setScene(new AccountScene());
             } else if (type == BType.SHOP) {

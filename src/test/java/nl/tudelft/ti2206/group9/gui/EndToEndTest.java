@@ -85,6 +85,10 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SETTINGS_BACK = 0;
     private static final int SETTINGS_SOUNDTRACK = 1;
     private static final int SETTINGS_SOUNDEFFECTS = 2;
+    private static final int SETTINGS_SOUNDEFFECT_VOLUME = 6;
+    private static final int SETTINGS_SOUNDTRACK_VOLUME = 7;
+    private static final int MOVE_X_SLIDER = -100;
+    private static final int MOVE_Y_SLIDER = 0;
 
     private static final int HIGHSCORES_BACK = 0;
     private static final int HIGHSCORES_UPDATE = 1;
@@ -222,8 +226,10 @@ public class EndToEndTest extends ApplicationTest {
         assertFalse("Soundtrack disabled. (1)", State.isSoundtrackEnabled());
         clickButton(SETTINGS_SOUNDTRACK);
         assertTrue("Soundtrack enabled. (2)", State.isSoundtrackEnabled());
-        clickButton(SETTINGS_SOUNDTRACK);
-        assertFalse("Soundtrack disabled. (3)", State.isSoundtrackEnabled());
+        // Soundtrack slider test.
+        assertEquals(1.0 / 2.0, State.getSoundtrackVolume(), DELTA);
+        settings(SETTINGS_SOUNDTRACK_VOLUME);
+        assertEquals(0.0, State.getSoundtrackVolume(), DELTA);
 
         // Sound effects toggle test.
         assertTrue("Sound effects should be enabled at startup.",
@@ -233,9 +239,10 @@ public class EndToEndTest extends ApplicationTest {
                 State.isSoundEffectsEnabled());
         clickButton(SETTINGS_SOUNDEFFECTS);
         assertTrue("Sound effects enabled. (2)", State.isSoundEffectsEnabled());
-        clickButton(SETTINGS_SOUNDEFFECTS);
-        assertFalse("Sound effects disabled. (3)",
-                State.isSoundEffectsEnabled());
+        // Sound effect slider test.
+        assertEquals(1.0 / 2.0, State.getSoundEffectVolume(), DELTA);
+        settings(SETTINGS_SOUNDEFFECT_VOLUME);
+        assertEquals(0.0, State.getSoundEffectVolume(), DELTA);
 
         clickButton(SETTINGS_BACK);
     }
@@ -379,6 +386,21 @@ public class EndToEndTest extends ApplicationTest {
     private void keyboard(final KeyCode kc) {
         press(kc);
         release(kc);
+        sleep(SHORT);
+    }
+
+    private void settings(final int buttonNo) {
+        ObservableList<Node> buttons;
+        buttons = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+        if (buttonNo <= SETTINGS_SOUNDEFFECTS) {
+            clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+        } else {
+            clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
+            press(MouseButton.PRIMARY);
+            moveBy(MOVE_X_SLIDER, MOVE_Y_SLIDER);
+            release(MouseButton.PRIMARY);
+        }
         sleep(SHORT);
     }
 
