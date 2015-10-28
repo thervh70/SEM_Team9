@@ -379,7 +379,9 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void clickPopup(final int buttonNo) {
-        if (AbstractScene.getPopup() != null) {
+        if (AbstractScene.getPopup() == null) {
+            fail("There is no popup available in AbstractScene!");
+        } else {
             ObservableList<Node> buttons;
             sleep(1);
             buttons = ((VBox) AbstractScene.getPopup().getContent().get(1))
@@ -391,8 +393,6 @@ public class EndToEndTest extends ApplicationTest {
                 fail("ButtonNo " + buttonNo + " does not exist");
             }
             sleep(SHORT);
-        } else {
-            fail("There is no popup available in AbstractScene!");
         }
     }
 
