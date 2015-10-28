@@ -301,12 +301,14 @@ public class EndToEndTest extends ApplicationTest {
         clearTextField(HIGHSCORES_INPUT);
         keyboard(KeyCode.L);
         clickButton(HIGHSCORES_UPDATE);
+        sleep(LONG);
         clickPopup(WARNING_OK);
 
         clickButton(HIGHSCORES_INPUT);
         clearTextField(HIGHSCORES_INPUT);
         typeLocalhost();
         clickButton(HIGHSCORES_UPDATE);
+        sleep(LONG);
 
         final TabPane pane = (TabPane) rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable().get(HIGHSCORES_TABPANE);
