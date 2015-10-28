@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -30,13 +31,17 @@ import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
+import nl.tudelft.ti2206.group9.level.entity.AbstractObstacle;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
+import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
+import org.junit.After;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -65,7 +70,7 @@ public class EndToEndTest extends ApplicationTest {
 
     private static final int MAIN_START = 0;
     private static final int MAIN_SETTINGS = 1;
-//    private static final int MAIN_QUIT = 2;
+    private static final int MAIN_QUIT = 2;
     private static final int MAIN_ACCOUNTS = 3;
     private static final int MAIN_SHOP = 4;
 //    private static final int MAIN_HIGHSCORE = 5;
@@ -97,70 +102,16 @@ public class EndToEndTest extends ApplicationTest {
         stage = primaryStage;
         new ShaftEscape().start(stage);
         State.resetAll();
-        new File("sav/Fred.ses").delete();
+        final String saveDir = SaveGame.getDefaultSaveDir();
+        final String savBackup = "old" + saveDir;
+        if (new File(saveDir).exists()) {
+            new File(saveDir).renameTo(new File(savBackup));
+            new File(saveDir).mkdir();
+        }
     }
 
-    /**
-     * Overview of the EndToEndTest:
-     *
-     *  - Click on screen to get passed the SplashScreen.
-     *  - Go through the accounts, testing the new game button
-     *      - First clicking whithout a name
-     *      - Then clicking with a faulty name
-     *      - Then clicking with a valid name
-     *      - You are in the main menu
-     *  - Go through the settings by clicking on settings button in the
-     *     main menu, toggle the settings
-     *  - Go through the shop, buy a currentSkin and return
-     *  - Go through the gameplay
-     *      - Click the pause button and resume game
-     *      - Go through playermovement
-     *      - Click the pause button and return to main menu
-     *  - Go through account loading
-     *      - Click account button in main menu
-     *      - Select the account list
-     *      - Click load
-     *      - Return to main menu
-     *  - Go through diePopup
-     *      - Start game
-     *      - Let player die; click retry
-     *      - Let player die; click back to main
-     *  - Close application
-     *  - Output Log
-     */
-    @Test
-    public void test() { //NOPMD - assert is done in subs.
-        clickOn(stage, MouseButton.PRIMARY);
-        sleep(SHORT);
-
-        goThroughNameTyping();
-
-        goThroughSettings();
-        goThroughShop();
-
-        goThroughGamePlay();
-
-        mainMenu(MAIN_ACCOUNTS);
-        accountScreen(ACCOUNT_LIST);
-        accountScreen(ACCOUNT_LOAD);
-        assertNotNull(State.getPlayerName());
-
-        mainMenu(MAIN_START);
-        sleep(COUNTDOWN);
-        playerDies();
-        sleep(SHORT);
-        clickPopup(DEATH_RETRY);
-        sleep(COUNTDOWN);
-        playerDies();
-        clickPopup(DEATH_TOMAIN);
-
-        //        mainMenu(MAIN_QUIT);
-        Platform.runLater(stage::close);
-        outputEventLog();
-        new File("sav/Fred.ses").delete();
-    }
-
-    private void outputEventLog() {
+    @After
+    public void end() {
         try {
             ShaftEscape.LOGGER.writeToFile();
             final String log = new String(Files.readAllBytes(
@@ -172,43 +123,111 @@ public class EndToEndTest extends ApplicationTest {
         } catch (IOException e) {
             fail("IOException thrown: " + e.getMessage());
         }
+
+        final String saveDir = SaveGame.getDefaultSaveDir();
+        final String savBackup = "old" + saveDir;
+        new File(saveDir + "Fred.ses").delete();
+        if (new File(savBackup).exists()) {
+            new File(saveDir).delete();
+            new File(savBackup).renameTo(new File(saveDir));
+            new File(savBackup).delete();
+        }
     }
 
-    private void letPlayerSurvive() {
-        PowerupInvulnerable.setCheat(true);
+    /**
+     * Overview of the EndToEndTest:
+     *
+     *  - Click on screen to get passed the SplashScreen.
+     *  - Go through the accounts, testing the new game button
+     *      - First clicking without a name
+     *      - Then clicking with a faulty name
+     *      - Then clicking with a valid name
+     *      - You are in the main menu
+     *  ! ! ! Every other goThrough method begins and ends in the main menu.
+     *  - Go through the settings by clicking on settings button in the
+     *     main menu, toggle the settings
+     *  - Go through the shop
+     *      - Buy the first skin in the shop
+     *      - Buy the second skin in the shop
+     *      - Equip the second skin in the shop
+     *      - Equip the first skin in the shop
+     *      - Return to main menu
+     *  - Go through the gameplay
+     *      - Click the pause button and resume game
+     *      - Go through Player movement
+     *          - Move Left, Right, Right, Left
+     *          - Jump, slide
+     *      - Click the pause button and return to main menu
+     *  - Go through account loading
+     *      - Click account button in main menu
+     *      - Select the account list
+     *      - Click load
+     *      - Return to main menu
+     *  - Go through DeathPopup
+     *      - Start game
+     *      - Let player die; click retry
+     *      - Let player die; click back to main menu
+     *  - Click Quit
+     */
+    @Test
+    public void test() { //NOPMD - assert is done in subs.
+        clickOn(stage, MouseButton.PRIMARY);
+        sleep(SHORT);
+
+        goThroughAccounts1();
+        goThroughSettings();
+        goThroughShop();
+        goThroughGamePlay();
+        goThroughAccounts2();
+        goThroughDeathPopup();
+
+        clickButton(MAIN_QUIT);
+    }
+
+    private void goThroughAccounts1() {
+        clickButton(ACCOUNT_NEW);
+        assertNull(AbstractScene.getPopup()); // Button disabled, so no popup
+        clickButton(ACCOUNT_TEXTFIELD);
+        typeFaultyName();
+        clickButton(ACCOUNT_NEW);
+        clickPopup(WARNING_OK);
+        clickButton(ACCOUNT_TEXTFIELD);
+        clearTextField();
+        typeName();
+        clickButton(ACCOUNT_NEW);
     }
 
     private void goThroughSettings() {
-        mainMenu(MAIN_SETTINGS);
+        clickButton(MAIN_SETTINGS);
 
         // Soundtrack toggle test.
         assertTrue("Soundtrack should be enabled at startup.",
                 State.isSoundtrackEnabled());
-        settings(SETTINGS_SOUNDTRACK);
+        clickButton(SETTINGS_SOUNDTRACK);
         assertFalse("Soundtrack disabled. (1)", State.isSoundtrackEnabled());
-        settings(SETTINGS_SOUNDTRACK);
+        clickButton(SETTINGS_SOUNDTRACK);
         assertTrue("Soundtrack enabled. (2)", State.isSoundtrackEnabled());
-        settings(SETTINGS_SOUNDTRACK);
+        clickButton(SETTINGS_SOUNDTRACK);
         assertFalse("Soundtrack disabled. (3)", State.isSoundtrackEnabled());
 
         // Sound effects toggle test.
         assertTrue("Sound effects should be enabled at startup.",
                 State.isSoundEffectsEnabled());
-        settings(SETTINGS_SOUNDEFFECTS);
+        clickButton(SETTINGS_SOUNDEFFECTS);
         assertFalse("Sound effects disabled. (1)",
                 State.isSoundEffectsEnabled());
-        settings(SETTINGS_SOUNDEFFECTS);
+        clickButton(SETTINGS_SOUNDEFFECTS);
         assertTrue("Sound effects enabled. (2)", State.isSoundEffectsEnabled());
-        settings(SETTINGS_SOUNDEFFECTS);
+        clickButton(SETTINGS_SOUNDEFFECTS);
         assertFalse("Sound effects disabled. (3)",
                 State.isSoundEffectsEnabled());
 
-        settings(SETTINGS_BACK);
+        clickButton(SETTINGS_BACK);
     }
 
     private void goThroughShop() {
         State.setCoins(COINS); //Make sure player has enough coins
-        mainMenu(MAIN_SHOP);
+        clickButton(MAIN_SHOP);
 
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
@@ -220,24 +239,12 @@ public class EndToEndTest extends ApplicationTest {
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
 
-        shopScreen(SHOP_BACK);
-    }
-
-    private void goThroughNameTyping() {
-        accountScreen(ACCOUNT_NEW);
-        assertNull(AbstractScene.getPopup()); // Assert that Game does not start
-        accountScreen(ACCOUNT_TEXTFIELD);
-        typeFaultyName();
-        accountScreen(ACCOUNT_NEW);
-        clickPopup(WARNING_OK);
-        accountScreen(ACCOUNT_TEXTFIELD);
-        clearTextField();
-        typeName();
-        accountScreen(ACCOUNT_NEW);
+        clickButton(SHOP_BACK);
     }
 
     private void goThroughGamePlay() {
-        mainMenu(MAIN_START);
+        clickButton(MAIN_START);
+        letPlayerSurvive();            // Stop E2E from failing by collision
         sleep(COUNTDOWN);
 
         keyboard(KeyCode.ESCAPE);
@@ -250,6 +257,26 @@ public class EndToEndTest extends ApplicationTest {
         keyboard(KeyCode.ESCAPE);
         sleep(LONG);
         pausePopup(PAUSE_TOMAIN);
+    }
+
+    private void goThroughAccounts2() {
+        clickButton(MAIN_ACCOUNTS);
+        clickButton(ACCOUNT_LIST);
+        clickButton(ACCOUNT_LOAD);
+        assertNotNull(State.getPlayerName());
+    }
+
+    private void goThroughDeathPopup() {
+        clickButton(MAIN_START);
+        letPlayerSurvive();            // Stop E2E from failing by collision
+        sleep(COUNTDOWN);
+        playerDies();
+        sleep(SHORT);
+        clickPopup(DEATH_RETRY);
+        letPlayerSurvive();            // Stop E2E from failing by collision
+        sleep(COUNTDOWN);
+        playerDies();
+        clickPopup(DEATH_TOMAIN);
     }
 
     private void typeName() {
@@ -302,36 +329,23 @@ public class EndToEndTest extends ApplicationTest {
         sleep(SHORT);
     }
 
-    private void mainMenu(final int buttonNo) {
-        ObservableList<Node> buttons;
-        buttons = rootNode(stage).getScene().getRoot()
-                .getChildrenUnmodifiable();
-        clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-        letPlayerSurvive();            // Make sure there are no obstacles
-        sleep(LONG);
+    private void playerDies() {
+        Track.getInstance().getPlayer().die();
+        OBSERVABLE.notify(
+                GameObserver.Category.PLAYER,
+                GameObserver.Player.COLLISION,
+                AbstractObstacle.class.getSimpleName());
+        sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
     }
 
-    private void settings(final int buttonNo) {
-        ObservableList<Node> buttons;
-        buttons = rootNode(stage).getScene().getRoot()
-                .getChildrenUnmodifiable();
-        clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-        sleep(SHORT);
+    private void letPlayerSurvive() {
+        PowerupInvulnerable.setCheat(true);
     }
 
-    private void accountScreen(final int buttonNo) {
+    private void clickButton(final int buttonNo) {
         ObservableList<Node> buttons;
         buttons = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
-        clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
-        sleep(SHORT);
-    }
-
-    private void shopScreen(final int buttonNo) {
-        ObservableList<Node> buttons;
-        buttons = rootNode(stage).getScene().getRoot()
-                .getChildrenUnmodifiable();
-
         clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
         sleep(SHORT);
     }
@@ -364,15 +378,10 @@ public class EndToEndTest extends ApplicationTest {
         sleep(LONG);
     }
 
-    private void playerDies() {
-        Track.getInstance().getPlayer().die();
-        sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-        letPlayerSurvive();            // Make sure there are no obstacles
-        sleep(LONG);
-    }
-
     private void clickPopup(final int buttonNo) {
-        if (AbstractScene.getPopup() != null) {
+        if (AbstractScene.getPopup() == null) {
+            fail("There is no popup available in AbstractScene!");
+        } else {
             ObservableList<Node> buttons;
             sleep(1);
             buttons = ((VBox) AbstractScene.getPopup().getContent().get(1))

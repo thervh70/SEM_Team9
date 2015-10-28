@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.group9;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.gui.Style;
@@ -112,11 +113,13 @@ public class ShaftEscape extends Application {
      * @param popup the Popup that is to be shown.
      */
     public static void showPopup(final Popup popup) {
-        popup.show(stage);
-        popup.setAnchorX(stage.getX() + stage.getWidth() / 2
-                - popup.getWidth() / 2);
-        popup.setAnchorY(stage.getY() + stage.getHeight() / 2
-                - popup.getHeight() / 2);
+        Platform.runLater(() -> {
+            popup.show(stage);
+            popup.setAnchorX(stage.getX() + stage.getWidth() / 2
+                    - popup.getWidth() / 2);
+            popup.setAnchorY(stage.getY() + stage.getHeight() / 2
+                    - popup.getHeight() / 2);
+        });
     }
 
     /** Exits the Application. */
