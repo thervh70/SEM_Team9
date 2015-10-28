@@ -336,8 +336,6 @@ public class EndToEndTest extends ApplicationTest {
                 GameObserver.Player.COLLISION,
                 AbstractObstacle.class.getSimpleName());
         sleep(SLEEP_FACTOR * InternalTicker.NANOS_PER_TICK / InternalTicker.E6);
-        letPlayerSurvive();            // Make sure there are no obstacles
-        sleep(LONG);
     }
 
     private void letPlayerSurvive() {
@@ -393,6 +391,8 @@ public class EndToEndTest extends ApplicationTest {
                 fail("ButtonNo " + buttonNo + " does not exist");
             }
             sleep(SHORT);
+        } else {
+            fail("There is no popup available in AbstractScene!");
         }
     }
 
