@@ -3,7 +3,15 @@ package nl.tudelft.ti2206.group9.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 /**
  * Server that stores all highscores. Is a Command-Line application.
@@ -21,15 +29,16 @@ public final class HighscoreServer {
      *                                           service-names-port-numbers.txt
      */
     public static final int PORT = 42042;
+    /** The Logger of this server, sends output to the console. */
+    private static final Logger LOGGER = Logger.getLogger(
+            HighscoreServer.class.getName());
     /** Whether the server is (should be) running. */
-    private static boolean running = true;
+    private static boolean running;
 
     /** The ServerSocket of this server. This is a private field, because it
      *  is accessed in two separate threads. */
     private static ServerSocket serverSocket;
-    /**
-     * The CLIThread of this server, handles console input.
-     */
+    /** The CLIThread of this server, handles console input. */
     private static CLIThread cliThread;
 
     /** Hiding public constructor. */
@@ -40,12 +49,17 @@ public final class HighscoreServer {
      * @throws IOException when something unexpected happens.
      */
     public static void main(final String... args) throws IOException {
-        cliThread = new CLIThread();
-        new Thread(cliThread, "CLIThread").start();
-        log("Type \"stop\" or \"q\" to exit.");
+        running = true;
+        // Configure logger to use own logging style
+        LOGGER.setUseParentHandlers(false);
+        LOGGER.addHandler(new StdOutConsoleHandler());
+
         try (ServerSocket sock = new ServerSocket(PORT)) {
             serverSocket = sock;
             log("Server is now accepting clients.");
+            cliThread = new CLIThread();
+            new Thread(cliThread, "CLIThread").start();
+            log("Type \"stop\" or \"q\" to exit.");
             while (running) {
                 final Socket socket = serverSocket.accept();
                 new Thread(new HighscoreServerThread(socket), "HsServerThread"
@@ -62,22 +76,38 @@ public final class HighscoreServer {
     /** Used in the test and in the CLI to quit the server. */
     static void quit() {
         running = false;
+        try {
+            if (serverSocket != null) {
+                serverSocket.close();
+            }
+        } catch (IOException e) {
+            logError("IOException while stopping the server, exiting anyway.");
+        }
     }
 
     /**
-     * Logs the string <pre>message</pre> to the System.err stream.
-     * @param message message to be printed to System.err.
+     * Logs the string <pre>message</pre> to the logger.
+     * @param message message to be printed to the logger.
      */
     static void logError(final String message) {
-        System.err.println(message); // NOPMD - Command-line Interface
+        LOGGER.log(Level.WARNING, message);
     }
 
     /**
-     * Logs the string <pre>message</pre> to the System.out stream.
-     * @param message message to be printed to System.out.
+     * Logs the string <pre>message</pre> to the logger.
+     * @param message message to be printed to the logger.
+     * @param e Throwable to be printed.
+     */
+    static void logError(final String message, final Throwable e) {
+        LOGGER.log(Level.SEVERE, message, e);
+    }
+
+    /**
+     * Logs the string <pre>message</pre> to the logger.
+     * @param message message to be printed to the logger.
      */
     static void log(final String message) {
-        System.out.println(message); // NOPMD - Command-line Interface
+        LOGGER.log(Level.INFO, message);
     }
 
     /** Thread that handles the console input on the server. */
@@ -98,23 +128,71 @@ public final class HighscoreServer {
          */
         private void handleCommand(final String command) {
             switch (command) {
-                case "q":
-                case "stop":
-                    quit();
-                    try {
-                        if (serverSocket != null) {
-                            serverSocket.close();
-                        }
-                    } catch (IOException e) {
-                        logError("IOException while stopping the server, "
-                                + "exiting anyway.");
-                    }
-                    log("Server has been stopped.");
-                    break;
-                default:
-                    break;
+            case "q":
+            case "stop":
+                quit();
+                log("Server has been stopped.");
+                break;
+            default: break;
             }
         }
+    }
+
+    /** ConsoleHandler that makes sure that the log gets printed to stdout. */
+    private static class StdOutConsoleHandler extends ConsoleHandler {
+        /** Default constructor, sets output stream to System.out. */
+        StdOutConsoleHandler() {
+            super();
+            setOutputStream(System.out);
+            setFormatter(new TextFormatter());
+        }
+    }
+
+    /** Creates simple formatting for log messages. */
+    private static class TextFormatter extends Formatter {
+        /** Maximum level length. */
+        private static final int MAX_LEVEL_LENGTH =
+                Level.WARNING.toString().length();
+
+        @Override
+        public String format(final LogRecord record) {
+            final StringBuffer out = new StringBuffer();
+            out
+            .append('[').append(formatDate(record.getMillis()))
+            .append("] [").append(padLevel(record.getLevel())).append("] ")
+            .append(record.getMessage())
+            .append('\n');
+            final Throwable e = record.getThrown();
+            if (e != null) {
+                out.append("    ").append(e.getClass().getName()).append(": ")
+                .append(e.getMessage()).append('\n');
+                for (final StackTraceElement el : e.getStackTrace()) {
+                    out.append("        at ").append(el.toString())
+                    .append('\n');
+                }
+            }
+            return out.toString();
+        }
+
+        /**
+         * @param millis amount of milliseconds after UTC epoch (1970).
+         * @return A formatted string from the date, with milliseconds.
+         */
+        private String formatDate(final long millis) {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",
+                    Locale.getDefault()).format(new Date(millis));
+        }
+
+        /**
+         * @param level The record for which the level gets padded.
+         * @return a Level string, padded to fit the longest Level length.
+         */
+        private String padLevel(final Level level) {
+            final String str = level.toString();
+            final int padding = MAX_LEVEL_LENGTH - str.length();
+            return str + new String(new char[padding]).replace("\0", " ");
+        }
+
     }
 
 }

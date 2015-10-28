@@ -10,6 +10,7 @@ import nl.tudelft.ti2206.group9.gui.scene.SplashScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
@@ -127,6 +128,7 @@ public class ShaftEscape extends Application {
         LOGGER.writeToFile();
         stage.close();
         InternalTicker.stop();
+        HighscoreClientAdapter.disconnect();
         MainMenuScene.getAudioPlayer().stop();
         CurrentItems.getSoundtrackPlayer().resetSpeed();
         CurrentItems.getSoundtrackPlayer().stop();

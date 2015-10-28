@@ -136,6 +136,7 @@ public class HighScoreScene extends AbstractMenuScene {
         button.setOnAction(event -> {
             playButtonSound();
             if (type == BType.HIGHSCORES_BACK) {
+                HighscoreClientAdapter.disconnect();
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.HIGHSCORES_BACK);
                 ShaftEscape.setScene(new MainMenuScene());
