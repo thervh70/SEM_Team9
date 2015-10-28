@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene; // NOPMD - many imports are needed
 
+import javafx.application.Platform;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -271,7 +272,7 @@ public final class GameScene extends AbstractScene {
                     && update.getArgs()[0].equals("AbstractObstacle")) {
                 State.checkHighscore();
                 stopTickers();
-                showDeathMenu();
+                Platform.runLater(GameScene::showDeathMenu);
             }
         }
     }

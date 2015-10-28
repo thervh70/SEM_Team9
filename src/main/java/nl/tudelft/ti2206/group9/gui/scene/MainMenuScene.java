@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +10,8 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 
 /**
@@ -119,5 +120,11 @@ public final class MainMenuScene extends AbstractMenuScene {
      */
     public static SoundtrackPlayer getAudioPlayer() {
         return apMainMenu;
+    }
+
+    /** Override background, the Main menu background shows "Menu". */
+    @Override
+    public String getBackgroundPath() {
+        return "menuBackground.png";
     }
 }
