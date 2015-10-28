@@ -14,6 +14,9 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
+
+import java.io.File;
+
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
@@ -24,7 +27,7 @@ public class AccountScene extends AbstractMenuScene {
     /** Row in Grid of list. */
     private static final int LIST_ROW = 16;
     /** Colomn of the list position. */
-    private static final int LIST_COLOMN = 4;
+    private static final int LIST_COLOMN = 2;
     /** Font size for input. */
     private static final int FONT_SIZE = 12;
     /** Height of the ListView. */
@@ -33,7 +36,7 @@ public class AccountScene extends AbstractMenuScene {
     /** Creating the listview used to display the list. */
     private static ListView<String> list = createList(LIST_COLOMN, LIST_ROW);
     /** The input field for the name of the player. */
-    static final TextField INPUT = createTextField("PLAYER NAME", 2, 16);
+    static final TextField INPUT = createTextField("PLAYER NAME", 0, 16);
 
     /**
      * Type of buttons that exist.
@@ -42,30 +45,35 @@ public class AccountScene extends AbstractMenuScene {
         /** Load button. */
         ACC_LOAD,
         /** Newgame button. */
-        ACC_NEW
+        ACC_NEW,
+        /** Delete button. */
+        ACC_DEL
     }
 
     @Override
     public Node[] createContent() {
         setListContent();
         /** Create Buttons. */
-        final Button newButton = createButton("NEW", 2, 18);
-        final Button loadButton = createButton("LOAD", 4, 18);
+        final Button newButton = createButton("NEW", 0, 18);
+        final Button loadButton = createButton("LOAD", 2, 18);
+        final Button deleteButton = createButton("DELETE", 4, 18);
         list.setMinHeight(LIST_HEIGHT);
         list.setPlaceholder(new Text("No content"));
         /** Set Button Functions .*/
         setButtonFunction(loadButton, BType.ACC_LOAD);
         setButtonFunction(newButton, BType.ACC_NEW);
+        setButtonFunction(deleteButton, BType.ACC_DEL);
         newButton.disableProperty().bind(
                 Bindings.isEmpty(INPUT.textProperty()));
         loadButton.disableProperty().bind(Bindings.isEmpty(list.getItems()));
         /** Set tooltips. */
         loadButton.setTooltip(new Tooltip("Load an existing game"));
         newButton.setTooltip(new Tooltip("Create a new game"));
+        deleteButton.setTooltip(new Tooltip("Delete this account"));
         list.setTooltip(new Tooltip("Select player"));
         INPUT.setTooltip(new Tooltip("Enter your name"));
         INPUT.setFont(Style.getFont(FONT_SIZE));
-        return new Node[]{loadButton, newButton, INPUT, list};
+        return new Node[]{loadButton, newButton, deleteButton, INPUT, list};
     }
 
     /**
@@ -79,27 +87,27 @@ public class AccountScene extends AbstractMenuScene {
             playButtonSound();
             if (type == BType.ACC_LOAD) {
                 if (list.getSelectionModel().getSelectedItem() == null) {
-                    setPopup(new WarningPopup(event1 -> setPopup(null),
-                            "Select an account to load"));
-                    ShaftEscape.showPopup(getPopup());
+                    showWarningPopup("Select an account to load");
                 } else {
                     OBSERVABLE.notify(Category.MENU, Menu.ACC_LOAD);
                     SaveGame.loadGame(
                             list.getSelectionModel().getSelectedItem());
-                    clearAccountScene();
-                    ShaftEscape.setScene(new MainMenuScene());
+                    goToMainMenuScene();
                 }
             } else if (type == BType.ACC_NEW) {
                 if (checkPlayerName(INPUT.getText())) {
                     createNewAccount(INPUT.getText());
-                    clearAccountScene();
-                    ShaftEscape.setScene(new MainMenuScene());
+                    goToMainMenuScene();
                 } else {
-                    setPopup(new WarningPopup(event1 -> setPopup(null),
-                            "The given name is either invalid\n"
-                                    + "or already exists"));
-                    ShaftEscape.showPopup(getPopup());
+                    showWarningPopup("The given name is either invalid\n"
+                                    + "or already exists");
                 }
+            } else {
+                final String selected = list.getSelectionModel().
+                        getSelectedItem();
+                new File(SaveGame.getDefaultSaveDir() + selected + ".ses")
+                            .delete();
+                refreshContent();
             }
         });
     }
@@ -119,6 +127,14 @@ public class AccountScene extends AbstractMenuScene {
     private static void clearAccountScene() {
         SaveGame.getSaveGames().clear();
         INPUT.clear();
+    }
+
+    /**
+     * Clear the saved of the AccountScene and switch to the MainMenuScene.
+     */
+    private static void goToMainMenuScene() {
+        clearAccountScene();
+        ShaftEscape.setScene(new MainMenuScene());
     }
 
     /**
@@ -167,6 +183,16 @@ public class AccountScene extends AbstractMenuScene {
      */
     private static boolean alreadyExists(final String name) {
         return SaveGame.getSaveGames().contains(name);
+    }
+
+    /**
+     * Show a warningPopUp with a given message.
+     * Default event calls setPopup with parameter null, which hides the Popup.
+     * @param message the message to be displayed
+     */
+    private static void showWarningPopup(final String message) {
+        setPopup(new WarningPopup(event1 -> setPopup(null), message));
+        ShaftEscape.showPopup(getPopup());
     }
 
     /** Override background, the Account background shows "Accounts". */
