@@ -14,7 +14,6 @@ import nl.tudelft.ti2206.group9.util.Resource;
  *
  * @author Mitchell
  */
-@SuppressWarnings("restriction")
 public class SoundEffectPlayer extends AbstractAudioPlayer {
 
     /**

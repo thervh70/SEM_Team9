@@ -25,7 +25,6 @@ import nl.tudelft.ti2206.group9.util.GameObserver;
 /**
  * @author Maikel on 16/10/2015.
  */
-@SuppressWarnings("restriction")
 public class HighScoreScene extends AbstractMenuScene {
 
     /** Types of buttons. */

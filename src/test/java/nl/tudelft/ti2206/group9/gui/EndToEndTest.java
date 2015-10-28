@@ -40,8 +40,6 @@ import nl.tudelft.ti2206.group9.util.Point3D;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
-
-@SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
 
     /** Saved to use <pre>rootNode()</pre>. */

@@ -18,7 +18,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  *
  * @author Mitchell
  */
-@SuppressWarnings("restriction")
 public class SoundtrackPlayer extends AbstractAudioPlayer {
 
     /**

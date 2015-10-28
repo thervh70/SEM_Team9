@@ -7,7 +7,6 @@ import nl.tudelft.ti2206.group9.level.entity.AbstractPickup;
  * Renders a AbstractPickup in the World.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class PickupRenderer extends AbstractBoxRenderer<AbstractPickup> {
 
     /**

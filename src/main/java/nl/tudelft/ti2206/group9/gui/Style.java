@@ -32,7 +32,6 @@ import nl.tudelft.ti2206.group9.util.Resource;
  * Class containing the styling for the GUI.
  * @author Maikel
  */
-@SuppressWarnings("restriction")
 public final class Style {
 
     /** BRICK material for walls, brick wall texture. */

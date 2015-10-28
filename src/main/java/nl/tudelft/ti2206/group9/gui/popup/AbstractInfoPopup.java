@@ -18,7 +18,6 @@ import java.util.Arrays;
  * Abstract Popup class as a template for all Popups in the game.
  * @author Maarten, Robin
  */
-@SuppressWarnings("restriction")
 public abstract class AbstractInfoPopup extends Popup {
 
     /** Width of the PopUpMenu. */

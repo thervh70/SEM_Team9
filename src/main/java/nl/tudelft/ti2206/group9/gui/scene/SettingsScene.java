@@ -21,7 +21,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * A screen for displaying a settings menu.
  * @author Maikel, Maarten and Mitchell
  */
-@SuppressWarnings("restriction")
 public final class SettingsScene extends AbstractMenuScene {
 
     /**

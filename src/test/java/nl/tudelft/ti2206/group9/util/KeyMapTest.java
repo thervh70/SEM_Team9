@@ -13,7 +13,6 @@ import org.junit.Test;
 /**
  * @author Mathias
  */
-@SuppressWarnings("restriction")
 public class KeyMapTest {
 
     private Action action;
