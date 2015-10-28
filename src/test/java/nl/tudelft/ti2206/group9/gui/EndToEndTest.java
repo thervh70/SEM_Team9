@@ -308,7 +308,7 @@ public class EndToEndTest extends ApplicationTest {
         clearTextField(HIGHSCORES_INPUT);
         keyboard(KeyCode.L);
         clickButton(HIGHSCORES_UPDATE);
-        sleep(2 * LONG);
+        sleep(COUNTDOWN);
         clickPopup(WARNING_OK);
 
         clickButton(HIGHSCORES_INPUT);
