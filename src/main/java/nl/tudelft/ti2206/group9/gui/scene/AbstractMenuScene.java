@@ -76,7 +76,7 @@ public abstract class AbstractMenuScene extends AbstractScene {
      * @return the path to the background image (located in the gui package).
      */
     public String getBackgroundPath() {
-        return "menuBackground.png";
+        return "standardBackground.png";
     }
 
     /**
