@@ -281,5 +281,10 @@ public class ShopScene extends AbstractMenuScene {
         }
     }
 
+    /** Override background, the Shop background shows "Shop". */
+    @Override
+    public String getBackgroundPath() {
+        return "shopBackground.png";
+    }
 
 }

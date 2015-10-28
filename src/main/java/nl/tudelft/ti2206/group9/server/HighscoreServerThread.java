@@ -20,10 +20,10 @@ import java.util.Scanner;
 public class HighscoreServerThread implements Runnable {
 
     /** Amount of spaces needed to pad a console log. */
-    private static final int PADDING_SPACES = 23;
+    // private static final int PADDING_SPACES = 25; // Length of IP + 2
     /** The actual spaces that pad console logs. */
-    private static final String PAD_STRING =
-            new String(new char[PADDING_SPACES]).replace("\0", " ");
+    private static final String PAD_STRING = "    ";
+            // new String(new char[PADDING_SPACES]).replace("\0", " ");
 
     /** Socket connected to. */
     private final Socket socket;
@@ -62,7 +62,7 @@ public class HighscoreServerThread implements Runnable {
             log(clientIP + " disconnected.");
         } catch (IOException e) {
             logError("The socket connected to " + clientIP
-                    + " had an IOException: " + e.getMessage());
+                    + " had an IOException", e);
         }
     }
 
@@ -77,7 +77,8 @@ public class HighscoreServerThread implements Runnable {
             return false;
         }
         String to = query(from);
-        toClient.println(to);
+        toClient.print(to);
+        toClient.println('\4');
         if (to.contains("\n")) {
             to = to.replaceAll("\n", "\n  " + PAD_STRING);
         }
