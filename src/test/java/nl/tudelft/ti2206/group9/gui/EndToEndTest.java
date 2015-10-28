@@ -61,7 +61,9 @@ public class EndToEndTest extends ApplicationTest {
     /** Amount of milliseconds the Robot sleeps when sleeping "long". */
     private static final long LONG = 5 * TARDINESS;
     /** Sleep countdown. */
-    private static final long COUNTDOWN = 3500;
+    private static final long SLEEP_COUNTDOWN = 3500;
+    /** Sleep countdown. */
+    private static final long SLEEP_CONNECT_TIMEOUT = 6000;
     /** Sleep factor playerDies. */
     private static final long SLEEP_FACTOR = 10;
     /** Amount of coins for e2e. */
@@ -267,12 +269,12 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughGamePlay() {
         clickButton(MAIN_START);
         letPlayerSurvive();            // Stop E2E from failing by collision
-        sleep(COUNTDOWN);
+        sleep(SLEEP_COUNTDOWN);
 
         keyboard(KeyCode.ESCAPE);
         sleep(LONG);
         clickPopup(PAUSE_RESUME);
-        sleep(COUNTDOWN);
+        sleep(SLEEP_COUNTDOWN);
 
         moveAround();
 
@@ -291,12 +293,12 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughDeathPopup() {
         clickButton(MAIN_START);
         letPlayerSurvive();            // Stop E2E from failing by collision
-        sleep(COUNTDOWN);
+        sleep(SLEEP_COUNTDOWN);
         playerDies();
         sleep(SHORT);
         clickPopup(DEATH_RETRY);
         letPlayerSurvive();            // Stop E2E from failing by collision
-        sleep(COUNTDOWN);
+        sleep(SLEEP_COUNTDOWN);
         playerDies();
         clickPopup(DEATH_TOMAIN);
     }
@@ -308,7 +310,7 @@ public class EndToEndTest extends ApplicationTest {
         clearTextField(HIGHSCORES_INPUT);
         keyboard(KeyCode.L);
         clickButton(HIGHSCORES_UPDATE);
-        sleep(COUNTDOWN);
+        sleep(SLEEP_CONNECT_TIMEOUT);
         clickPopup(WARNING_OK);
 
         clickButton(HIGHSCORES_INPUT);
