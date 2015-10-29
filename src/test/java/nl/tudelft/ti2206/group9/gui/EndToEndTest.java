@@ -306,6 +306,7 @@ public class EndToEndTest extends ApplicationTest {
 
         clickButton(HIGHSCORES_INPUT);
         clearTextField(HIGHSCORES_INPUT);
+        sleep(LONG);
         keyboard(KeyCode.L);
         clickButton(HIGHSCORES_UPDATE);
         sleep(SLEEP_CONNECT_TIMEOUT);
@@ -313,6 +314,7 @@ public class EndToEndTest extends ApplicationTest {
 
         clickButton(HIGHSCORES_INPUT);
         clearTextField(HIGHSCORES_INPUT);
+        sleep(LONG);
         typeLocalhost();
         clickButton(HIGHSCORES_UPDATE);
         sleep(LONG);
