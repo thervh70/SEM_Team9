@@ -265,7 +265,7 @@ public class ShopScene extends AbstractMenuScene {
                     + "group9/gui/scene/music_notes.png");
             final BackgroundImage backImg = new BackgroundImage(playImg,
                     null, null, null, null);
-            Background back = new Background(backImg);
+            final Background back = new Background(backImg);
             previewButton.setBackground(back);
             previewButton.setMinWidth(PREVIEW_SIZE);
             previewButton.setMinHeight(PREVIEW_SIZE);
@@ -366,8 +366,10 @@ public class ShopScene extends AbstractMenuScene {
      */
     private void setPreviewFunction(final Button b,
                                     final AbstractSoundtrack s) {
+
         final int playTime = 7000;
         boolean soundEnabled = State.isSoundtrackEnabled();
+
         b.setOnAction(event -> {
             final Timer timer = new Timer();
             final TimerTask task = new TimerTask() {
