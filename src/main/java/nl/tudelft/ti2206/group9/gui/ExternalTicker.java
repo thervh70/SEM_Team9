@@ -27,6 +27,7 @@ import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
+import nl.tudelft.ti2206.group9.level.entity.PowerupDestroy;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.entity.PowerupSlowness;
 
@@ -130,9 +131,11 @@ public class ExternalTicker extends AnimationTimer {
                 new ArrayList<>();
         powerups.add(PowerupInvulnerable.class);
         powerups.add(PowerupSlowness.class);
+        powerups.add(PowerupDestroy.class);
         final ArrayList<String> icons = new ArrayList<>();
         icons.add("invulnerable");
         icons.add("slowness");
+        icons.add("destroy");
         for (int i = 0; i < powerups.size(); i++) {
             if (!AbstractPowerup.isActive(powerups.get(i))) {
                 continue;

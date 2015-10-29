@@ -11,6 +11,8 @@ public class Log extends AbstractObstacle {
 
     /** Standard bounding box size of a Log. */
     public static final Point3D SIZE = new Point3D(1, 1, 1);
+    /** The value of a block of a Log when it's broken by the Player. */
+    public static final int VALUE = 25;
 
     /**
      * Easy to use constructor for standard Log.

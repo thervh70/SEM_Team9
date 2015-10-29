@@ -6,9 +6,12 @@ import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
 import nl.tudelft.ti2206.group9.level.entity.AbstractObstacle;
 import nl.tudelft.ti2206.group9.level.entity.AbstractPickup;
 import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
+import nl.tudelft.ti2206.group9.level.entity.Log;
 import nl.tudelft.ti2206.group9.level.entity.Player;
+import nl.tudelft.ti2206.group9.level.entity.PowerupDestroy;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.util.GameObserver;
+import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 
 /**
  * Add all the collision handlers to a CollisionMap.
@@ -40,28 +43,40 @@ public class CollisionHandler {
      */
     public CollisionMap defaultCollisions() {
         final CollisionMap collisionMap = new CollisionMap();
-
         collisionMap.onCollision(Player.class, AbstractObstacle.class,
                 (collider, collidee) -> {
                     if (!AbstractPowerup.isActive(PowerupInvulnerable.class)) {
                         collider.die();
-                        OBSERVABLE.notify(
-                                GameObserver.Category.PLAYER,
-                                GameObserver.Player.COLLISION,
-                                AbstractObstacle.class.getSimpleName());
+                        notifyCollide(AbstractObstacle.class);
                     }
                 });
-
+        collisionMap.onCollision(Player.class, Log.class,
+                (collider, collidee) -> {
+                    if (AbstractPowerup.isActive(PowerupDestroy.class)) {
+                        collidee.selfDestruct();
+                        notifyCollide(Log.class);
+                        State.addScore(Log.VALUE);
+                        return;
+                    }
+                    if (!AbstractPowerup.isActive(PowerupInvulnerable.class)) {
+                        collider.die();
+                        notifyCollide(AbstractObstacle.class);
+                    }
+                });
         collisionMap.onCollision(Player.class, AbstractPickup.class,
                 (collider, collidee) -> {
                     collidee.doAction();
                     collidee.selfDestruct();
-                    OBSERVABLE.notify(GameObserver.Category.PLAYER,
-                            GameObserver.Player.COLLISION,
-                            collidee.getClass().getSimpleName());
+                    notifyCollide(collidee.getClass());
                 });
-
         return collisionMap;
+    }
+
+    /** Notifies the GameObservable of Collision.
+     *  @param c The class that the Player collided with. */
+    private void notifyCollide(final Class<? extends AbstractEntity> c) {
+        OBSERVABLE.notify(Category.PLAYER, GameObserver.Player.COLLISION,
+                c.getSimpleName());
     }
 
 }
