@@ -7,6 +7,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -28,12 +30,10 @@ public class IntroScene extends AbstractScene {
 
     /** Font size for lines. */
     private final int lineSize = 25;
-    /** Flag for eventhandler. */
+    /** Flag for EventHandler. */
     private boolean done = false;
     /** Index for the third item of the list. */
     private final int three = 3;
-    /** Index for the fourth item of the list. */
-    private final int four = 4;
 
     @Override
     public Parent createRoot() {
@@ -48,6 +48,40 @@ public class IntroScene extends AbstractScene {
     }
 
     /**
+     * Method that generates all the labels used in the intro.
+     * @return an array of labels.
+     */
+    private Label[] setupContent() {
+        final Label lineA = new Label("Once upon a time,");
+        final Label lineB = new Label("a miner was busy working.");
+        final Label lineC = new Label("But then ...");
+        final Label lineD = new Label("He had to ");
+        lineA.setVisible(false);
+        lineB.setVisible(false);
+        lineC.setVisible(false);
+        lineD.setVisible(false);
+        return new Label[]{lineA, lineB, lineC, lineD};
+    }
+
+    /**
+     * Get all the correct images from the resource folder.
+     * @return An array of all the images.
+     */
+    private ImageView[] setupImages() {
+        final ImageView escape = new ImageView(new Image(
+                "nl/tudelft/ti2206/group9/gui/intro/escape.png"));
+        final ImageView the = new ImageView(new Image(
+                "nl/tudelft/ti2206/group9/gui/intro/the.png"));
+        final ImageView shaft = new ImageView(new Image(
+                "nl/tudelft/ti2206/group9/gui/intro/shaft.png"));
+
+        escape.setVisible(false);
+        the.setVisible(false);
+        shaft.setVisible(false);
+        return new ImageView[]{escape, the, shaft};
+    }
+
+    /**
      * Method generates all the correct parameters and
      * starts the animation sequence.
      * It also contains the listener for exiting this scene.
@@ -56,23 +90,20 @@ public class IntroScene extends AbstractScene {
     private ArrayList<Node> showIntro() {
         final ArrayList<Node> nodeList = new ArrayList<>();
         final Label prologue = new Label("Prologue");
-        final Label lineA = new Label("Once upon a time,");
-        final Label lineB = new Label("a miner was busy working.");
-        final Label lineC = new Label("But then ...");
-        final Label lineD = new Label("He had to ");
         final Label key = new Label("Press a key to continue.");
-        lineA.setVisible(false);
-        lineB.setVisible(false);
-        lineC.setVisible(false);
-        lineD.setVisible(false);
         key.setVisible(false);
+
+        final Label[] labelList = setupContent();
+        final ImageView[] imageList = setupImages();
 
         final int spacing = 10;
         VBox box = new VBox(spacing);
         box.setAlignment(Pos.BASELINE_CENTER);
-        box.getChildren().addAll(lineA, lineB, lineC, lineD, key);
+        box.getChildren().addAll(labelList);
+        box.getChildren().addAll(imageList);
+        box.getChildren().add(key);
 
-        showStory(prologue, new Label[]{lineA, lineB, lineC, lineD, key});
+        showStory(prologue, labelList, imageList, key);
 
         this.setOnKeyPressed(e -> {
             if (done) {
@@ -87,27 +118,35 @@ public class IntroScene extends AbstractScene {
     /**
      * Method responsible for enabling all the transitions.
      * It makes the animations cascade correctly.
-     * @param prologue The label that says "Prologue".
-     * @param list The full list of Labels.
+     * @param prologue The label that says "Prologue", separate parameter
+     *                 because it has to show on its own, as the first "page".
+     * @param labelList The full list of Labels.
+     * @param imageList The list of all Images.
+     * @param key The label that gives the hint for the next scene.
+     *            In the VBox this is placed behind the images.
+     *            Therefore it is a single parameter.
      */
-    private void showStory(final Label prologue, final Label[] list) {
-        FadeTransition ft = showPrologue(prologue);
-        ft.setOnFinished(event -> {
-            FadeTransition ft0 = showLine(list[0]);
-            ft0.setOnFinished(event1 -> {
-                FadeTransition ft1 = showLine(list[1]);
-                ft1.setOnFinished(event2 -> {
-                    FadeTransition ft2 = showLine(list[2]);
-                    ft2.setOnFinished(event3 -> {
-                        FadeTransition ft3 = showLine(list[three]);
-                        ft3.setOnFinished(event4 -> {
-                            done = true;
-                            showHint(list[four]);
-                        });
-                    });
-                });
-            });
-        });
+    private void showStory(final Label prologue, final Label[] labelList,
+                           final ImageView[] imageList, final Label key) {
+        showPrologue(prologue).setOnFinished(event ->
+            showLine(labelList[0]).setOnFinished(event1 ->
+                showLine(labelList[1]).setOnFinished(event2 ->
+                    showLine(labelList[2]).setOnFinished(event3 ->
+                        showLine(labelList[three]).setOnFinished(event4 ->
+                            showImage(imageList[0]).setOnFinished(event5 ->
+                                showImage(imageList[1]).setOnFinished(event6 ->
+                                    showImage(imageList[2]).setOnFinished(
+                                            event7 -> {
+                                                done = true;
+                                                showHint(key);
+                                            })
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
     }
 
     /**
@@ -144,6 +183,24 @@ public class IntroScene extends AbstractScene {
         l.setFont(Style.getFont(lineSize));
         final FadeTransition ft = new FadeTransition(
                 Duration.millis(3000), l);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play();
+        return ft;
+    }
+
+    /**
+     * Method that shows a single image.
+     * It sets the visibility and enables a fade.
+     * @param view The ImageView to be shown.
+     * @return It returns the Transition to be able
+     *      to time correctly.
+     */
+    private FadeTransition showImage(final ImageView view) {
+        view.setOpacity(0);
+        view.setVisible(true);
+        final FadeTransition ft = new FadeTransition(
+                Duration.millis(500), view);
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.play();
