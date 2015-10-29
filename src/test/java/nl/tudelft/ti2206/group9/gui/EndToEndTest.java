@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -35,6 +36,7 @@ import nl.tudelft.ti2206.group9.level.entity.AbstractObstacle;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.server.HighscoreServerIntegrationTest;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.util.GameObserver;
@@ -57,9 +59,11 @@ public class EndToEndTest extends ApplicationTest {
     /** Amount of milliseconds the Robot sleeps when sleeping "long". */
     private static final long LONG = 5 * TARDINESS;
     /** Sleep countdown. */
-    private static final long COUNTDOWN = 3500;
+    private static final long SLEEP_COUNTDOWN = 3500;
+    /** Sleep countdown. */
+    private static final long SLEEP_CONNECT_TIMEOUT = 6000;
     /** Sleep factor playerDies. */
-    private static final long SLEEP_FACTOR = 2;
+    private static final long SLEEP_FACTOR = 10;
     /** Amount of coins for e2e. */
     private static final int COINS = 9999;
 
@@ -71,7 +75,7 @@ public class EndToEndTest extends ApplicationTest {
     private static final int MAIN_QUIT = 2;
     private static final int MAIN_ACCOUNTS = 3;
     private static final int MAIN_SHOP = 4;
-//    private static final int MAIN_HIGHSCORE = 5;
+    private static final int MAIN_HIGHSCORES = 5;
 
     private static final int ACCOUNT_LOAD = 0;
     private static final int ACCOUNT_NEW = 1;
@@ -85,6 +89,11 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SETTINGS_SOUNDTRACK_VOLUME = 7;
     private static final int MOVE_X_SLIDER = -100;
     private static final int MOVE_Y_SLIDER = 0;
+
+    private static final int HIGHSCORES_BACK = 0;
+    private static final int HIGHSCORES_UPDATE = 1;
+    private static final int HIGHSCORES_INPUT = 2;
+    private static final int HIGHSCORES_TABPANE = 3;
 
     private static final int SHOP_BACK = 1;
     private static final int SHOP_SKIN_NOOB = 0;
@@ -110,6 +119,7 @@ public class EndToEndTest extends ApplicationTest {
             new File(saveDir).renameTo(new File(savBackup));
             new File(saveDir).mkdir();
         }
+        HighscoreServerIntegrationTest.setUpBeforeClass();
     }
 
     @After
@@ -134,6 +144,7 @@ public class EndToEndTest extends ApplicationTest {
             new File(savBackup).renameTo(new File(saveDir));
             new File(savBackup).delete();
         }
+        HighscoreServerIntegrationTest.tearDownAfterClass();
     }
 
     /**
@@ -169,6 +180,11 @@ public class EndToEndTest extends ApplicationTest {
      *      - Start game
      *      - Let player die; click retry
      *      - Let player die; click back to main menu
+     *  - Go through Highscores
+     *      - Try to connect to IP "l"
+     *      - Click OK in Warning
+     *      - Try to connect to IP "localhost"
+     *      - Return to main menu
      *  - Click Quit
      */
     @Test
@@ -182,6 +198,7 @@ public class EndToEndTest extends ApplicationTest {
         goThroughGamePlay();
         goThroughAccounts2();
         goThroughDeathPopup();
+        goThroughHighscores();
 
         clickButton(MAIN_QUIT);
     }
@@ -194,7 +211,7 @@ public class EndToEndTest extends ApplicationTest {
         clickButton(ACCOUNT_NEW);
         clickPopup(WARNING_OK);
         clickButton(ACCOUNT_TEXTFIELD);
-        clearTextField();
+        clearTextField(ACCOUNT_TEXTFIELD);
         typeName();
         clickButton(ACCOUNT_NEW);
     }
@@ -250,12 +267,12 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughGamePlay() {
         clickButton(MAIN_START);
         letPlayerSurvive();            // Stop E2E from failing by collision
-        sleep(COUNTDOWN);
+        sleep(SLEEP_COUNTDOWN);
 
         keyboard(KeyCode.ESCAPE);
         sleep(LONG);
         clickPopup(PAUSE_RESUME);
-        sleep(COUNTDOWN);
+        sleep(SLEEP_COUNTDOWN);
 
         moveAround();
 
@@ -274,14 +291,42 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughDeathPopup() {
         clickButton(MAIN_START);
         letPlayerSurvive();            // Stop E2E from failing by collision
-        sleep(COUNTDOWN);
+        sleep(SLEEP_COUNTDOWN);
         playerDies();
         sleep(SHORT);
         clickPopup(DEATH_RETRY);
         letPlayerSurvive();            // Stop E2E from failing by collision
-        sleep(COUNTDOWN);
+        sleep(SLEEP_COUNTDOWN);
         playerDies();
         clickPopup(DEATH_TOMAIN);
+    }
+
+    private void goThroughHighscores() {
+        clickButton(MAIN_HIGHSCORES);
+
+        clickButton(HIGHSCORES_INPUT);
+        clearTextField(HIGHSCORES_INPUT);
+        sleep(LONG);
+        keyboard(KeyCode.L);
+        clickButton(HIGHSCORES_UPDATE);
+        sleep(SLEEP_CONNECT_TIMEOUT);
+        clickPopup(WARNING_OK);
+
+        clickButton(HIGHSCORES_INPUT);
+        clearTextField(HIGHSCORES_INPUT);
+        sleep(LONG);
+        typeLocalhost();
+        clickButton(HIGHSCORES_UPDATE);
+        sleep(LONG);
+
+        final TabPane pane = (TabPane) rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable().get(HIGHSCORES_TABPANE);
+        final ListView<?> list =
+                (ListView<?>) pane.getTabs().get(0).getContent();
+        final String firstItem = (String) list.getItems().get(0);
+        assertEquals("Fred", firstItem.substring(0, "Fred".length()));
+
+        clickButton(HIGHSCORES_BACK);
     }
 
     private void typeName() {
@@ -291,6 +336,18 @@ public class EndToEndTest extends ApplicationTest {
         keyboard(KeyCode.R);
         keyboard(KeyCode.E);
         keyboard(KeyCode.D);
+    }
+
+    private void typeLocalhost() {
+        keyboard(KeyCode.L);
+        keyboard(KeyCode.O);
+        keyboard(KeyCode.C);
+        keyboard(KeyCode.A);
+        keyboard(KeyCode.L);
+        keyboard(KeyCode.H);
+        keyboard(KeyCode.O);
+        keyboard(KeyCode.S);
+        keyboard(KeyCode.T);
     }
 
     private void typeFaultyName() {
@@ -416,11 +473,11 @@ public class EndToEndTest extends ApplicationTest {
         }
     }
 
-    private void clearTextField() {
+    private void clearTextField(final int buttonNo) {
         ObservableList<Node> children;
         children = rootNode(stage).getScene().getRoot()
                 .getChildrenUnmodifiable();
-        final TextField text = (TextField) children.get(ACCOUNT_TEXTFIELD);
+        final TextField text = (TextField) children.get(buttonNo);
         Platform.runLater(text::clear);
     }
 }

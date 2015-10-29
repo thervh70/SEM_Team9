@@ -1,6 +1,5 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -17,6 +16,8 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+
 /**
  * A screen for displaying a settings menu.
  * @author Maikel, Maarten and Mitchell
@@ -27,12 +28,12 @@ public final class SettingsScene extends AbstractMenuScene {
      * Max volume.
      */
     private static final double MAX_VOLUME = 10;
-    /**
-     * Effect slider row.
-     */
-    private static final int EFFECT_SLIDER_COLUMN = 6;
+
+    /** Effect slider row. */
+    private static final int EFFECT_SLIDER_COLUMN = 4;
+
     /** Soundtrack slider row. */
-    private static final int TRACK_SLIDER_COLUMN = 4;
+    private static final int TRACK_SLIDER_COLUMN = 6;
     /** Sliders row. */
     private static final int SLIDER_ROW = 16;
     /**
@@ -93,8 +94,8 @@ public final class SettingsScene extends AbstractMenuScene {
     @Override
     public Node[] createContent() {
         final int columnSpan = 5;
-        final Label soundEfLabel = createLabel("Soundtrack", 4, 13);
-        final Label sounfTrLabel = createLabel("Sound effects", 6, 13);
+        final Label soundEfLabel = createLabel("Sound Effects", 4, 13);
+        final Label sounfTrLabel = createLabel("Soundtrack", 6, 13);
         final Button backButton = createButton("BACK", 0, 22);
         final Label playerName = getPlayerLabelContent();
         GridPane.setColumnSpan(soundEfLabel, columnSpan);
@@ -104,18 +105,18 @@ public final class SettingsScene extends AbstractMenuScene {
         if (State.isSoundtrackEnabled()) {
             soundtrToggle = ACTIVE_TOGGLE;
         }
-        final Button soundtrButton = createButton(soundtrToggle, 4, 14);
+        final Button soundtrButton = createButton(soundtrToggle, 6, 14);
         String soundEfToggle = INIT_TOGGLE;
         if (State.isSoundEffectsEnabled()) {
             soundEfToggle = ACTIVE_TOGGLE;
         }
         createSliders();
-        final Button soundEfButton = createButton(soundEfToggle, 6, 14);
+        final Button soundEfButton = createButton(soundEfToggle, 4, 14);
         setBackButtonFunction(backButton);
         setToggleButtonFunction(soundtrButton, BType.SETTING_SOUNDTRACK);
         setToggleButtonFunction(soundEfButton, BType.SETTING_SOUNDEFFECTS);
         GridPane.setColumnSpan(soundEfButton, 2);
-        setTooltips(soundtrButton, soundtrButton, backButton);
+        setTooltips(soundtrButton, soundEfButton, backButton);
         return new Node[]{backButton, soundtrButton, soundEfButton, playerName,
                 soundEfLabel, sounfTrLabel, soundEffectVolumeSlider,
                 soundtrackVolumeSlider};
@@ -141,7 +142,6 @@ public final class SettingsScene extends AbstractMenuScene {
                     s = INIT_TOGGLE;
                     soundtrackVolumeSlider.setDisable(true);
                 }
-                button.setText(s);
                 OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDTRACK, s);
             } else {
                 State.setSoundEffectsEnabled(!State.isSoundEffectsEnabled());
@@ -152,9 +152,9 @@ public final class SettingsScene extends AbstractMenuScene {
                     s = INIT_TOGGLE;
                     soundEffectVolumeSlider.setDisable(true);
                 }
-                button.setText(s);
                 OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDEFFECTS, s);
-            }
+             }
+             button.setText(s);
         });
     }
 
