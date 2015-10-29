@@ -24,15 +24,23 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  */
 public final class SettingsScene extends AbstractMenuScene {
 
-    /** Max volume. */
+    /**
+     * Max volume.
+     */
     private static final double MAX_VOLUME = 10;
-    /** Effect slider row. */
+
+    /**
+     * Effect slider row.
+     */
     private static final int EFFECT_SLIDER_COLUMN = 4;
+
     /** Soundtrack slider row. */
     private static final int TRACK_SLIDER_COLUMN = 6;
     /** Sliders row. */
     private static final int SLIDER_ROW = 16;
-    /** Constant for converting the slider value to a setable volume level. */
+    /**
+     * Constant for converting the slider value to a setable volume level.
+     */
     private static final int VOLUME_CONVERTER = 10;
 
     /**
@@ -122,11 +130,10 @@ public final class SettingsScene extends AbstractMenuScene {
      * @param type Type of button
      */
     protected static void setToggleButtonFunction(final Button button,
-                                            final BType type) {
+            final BType type) {
         button.setOnAction(event -> {
-            playButtonSound();
             String s;
-             if (type == BType.SETTING_SOUNDTRACK) {
+            if (type == BType.SETTING_SOUNDTRACK) {
                 MainMenuScene.getAudioPlayer().stop();
                 State.setSoundtrackEnabled(!State.isSoundtrackEnabled());
                 if (State.isSoundtrackEnabled()) {
@@ -148,8 +155,8 @@ public final class SettingsScene extends AbstractMenuScene {
                     soundEffectVolumeSlider.setDisable(true);
                 }
                 OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDEFFECTS, s);
-             }
-             button.setText(s);
+            }
+            button.setText(s);
         });
     }
 
@@ -160,18 +167,19 @@ public final class SettingsScene extends AbstractMenuScene {
      */
     private static void setBackButtonFunction(final Button b) {
         b.setOnAction(event -> {
-                    playButtonSound();
-                    OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
-                    ShaftEscape.setScene(new MainMenuScene());
-                }
-        );
+            playButtonSound();
+            OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
+            ShaftEscape.setScene(new MainMenuScene());
+        }
+                );
     }
 
     /**
      * Sets the tooltips of the SettingsScene buttons.
+     *
      * @param soundtrButton that needs a tooltip.
      * @param soundEfButton that needs a tooltip.
-     * @param backButton that needs a tooltip.
+     * @param backButton    that needs a tooltip.
      */
     private static void setTooltips(final Button soundtrButton,
             final Button soundEfButton, final Button backButton) {
@@ -241,8 +249,9 @@ public final class SettingsScene extends AbstractMenuScene {
      * Sets the volume of the the sounds that are used in the application.
      * The audioplayer volumes of the 'non-GameScenes' are already set below.
      * The others are set in the GameScene (SoundEffectObserver).
+     *
      * @param slider the given slider to set the function of.
-     * @param type the given type of slider to set the volume of.
+     * @param type   the given type of slider to set the volume of.
      */
     protected static void setSliderFunction(final Slider slider,
             final SType type) {
@@ -251,7 +260,7 @@ public final class SettingsScene extends AbstractMenuScene {
                 State.setSoundtrackVolume(soundtrackVolumeSlider.
                         getValue() / VOLUME_CONVERTER);
                 MainMenuScene.getAudioPlayer().
-                        setVolume(State.getSoundtrackVolume());
+                setVolume(State.getSoundtrackVolume());
             } else {
                 State.setSoundEffectVolume(soundEffectVolumeSlider.
                         getValue() / VOLUME_CONVERTER);

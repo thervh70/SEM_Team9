@@ -169,7 +169,9 @@ public class AccountScene extends AbstractMenuScene {
         return SaveGame.getSaveGames().contains(name);
     }
 
-    /** Override background, the Account background shows "Accounts". */
+    /**
+     * Override background, the Account background shows "Accounts".
+     */
     @Override
     public String getBackgroundPath() {
         return "accountsBackground.png";

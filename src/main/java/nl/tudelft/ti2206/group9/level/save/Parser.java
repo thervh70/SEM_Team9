@@ -37,14 +37,22 @@ public final class Parser {
     private static boolean andy, captain, boy, plank, iron;
     /** Boolean to indicate if soundtracks are unlocked. */
     private static boolean animals, duckTales, mario, nyanCat, shakeItOff;
-    /** Boolean to indicate whether soundtrack is enabled. */
+    /**
+     * Boolean to indicate whether soundtrack is enabled.
+     */
 
     private static boolean soundtrackEnabled;
-    /** Boolean to indicate whether the sound effects are enabled. */
+    /**
+     * Boolean to indicate whether the sound effects are enabled.
+     */
     private static boolean soundEffectsEnabled;
-    /** Double to indicate the value of the soundEffectVolume. */
+    /**
+     * Double to indicate the value of the soundEffectVolume.
+     */
     private static double soundEffectVolume;
-    /** Double to indicate the value of the soundtrackVolume. */
+    /**
+     * Double to indicate the value of the soundtrackVolume.
+     */
     private static double soundtrackVolume;
 
     /**
