@@ -1,19 +1,5 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -42,10 +28,23 @@ import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.After;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class EndToEndTest extends ApplicationTest {
 
@@ -58,6 +57,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final long SHORT = 2 * TARDINESS;
     /** Amount of milliseconds the Robot sleeps when sleeping "long". */
     private static final long LONG = 5 * TARDINESS;
+    /** Prologe sleep time. */
+    private static final long PROLOGUE = 21000;
     /** Sleep countdown. */
     private static final long SLEEP_COUNTDOWN = 3500;
     /** Sleep countdown. */
@@ -193,9 +194,9 @@ public class EndToEndTest extends ApplicationTest {
         sleep(SHORT);
 
         goThroughAccounts1();
+        goThroughGamePlay();
         goThroughSettings();
         goThroughShop();
-        goThroughGamePlay();
         goThroughAccounts2();
         goThroughDeathPopup();
         goThroughHighscores();
@@ -214,6 +215,8 @@ public class EndToEndTest extends ApplicationTest {
         clearTextField(ACCOUNT_TEXTFIELD);
         typeName();
         clickButton(ACCOUNT_NEW);
+        sleep(PROLOGUE);
+        keyboard(KeyCode.ENTER); //Sleep during prologue and dismiss
     }
 
     private void goThroughSettings() {
