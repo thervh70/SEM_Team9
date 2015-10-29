@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
@@ -64,6 +65,8 @@ public class HighscoreScene extends AbstractMenuScene {
             0, INPUT_ROW);
     static {
         input.setText("localhost");
+        input.setTooltip(new Tooltip("Enter the IP of the HighscoreServer"
+                + " you want to connect to here."));
     }
 
     /** List for getting global highscores. */
@@ -142,6 +145,8 @@ public class HighscoreScene extends AbstractMenuScene {
         final Label highLabel = createLabel("You: " + State.getHighscore(),
                 0, YOURS_ROW);
 
+        updateButton.setTooltip(new Tooltip("Press this button to fetch the"
+                + " highscores from the server."));
         updateButton.disableProperty().bind(
                 Bindings.isEmpty(input.textProperty()));
 
@@ -190,10 +195,14 @@ public class HighscoreScene extends AbstractMenuScene {
         final Tab globalTab = new Tab("Global");
         globalTab.setClosable(false);
         globalTab.setContent(createScoreList(GLOBAL_LIST));
+        globalTab.setTooltip(new Tooltip("This tab displays the best highscores"
+                + " of everyone on the server."));
 
         final Tab localTab = new Tab("Local");
         localTab.setClosable(false);
         localTab.setContent(createScoreList(LOCAL_LIST));
+        localTab.setTooltip(new Tooltip("This tab displays the best scores"
+                + " that you have submitted to the server."));
 
         tabPane.getTabs().addAll(globalTab, localTab);
         return tabPane;
