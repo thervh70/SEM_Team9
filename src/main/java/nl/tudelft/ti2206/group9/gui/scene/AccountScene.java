@@ -125,9 +125,9 @@ public class AccountScene extends AbstractMenuScene {
         setFill(Color.BLACK);
         this.getRoot().setDisable(true);
 
-        Timeline timeline = new Timeline();
+        final Timeline timeline = new Timeline();
         final int duration = 2000;
-        KeyFrame key = new KeyFrame(Duration.millis(duration),
+        final KeyFrame key = new KeyFrame(Duration.millis(duration),
                 new KeyValue(this.getRoot().opacityProperty(), 0));
         timeline.getKeyFrames().add(key);
         timeline.setOnFinished((ae) -> {
