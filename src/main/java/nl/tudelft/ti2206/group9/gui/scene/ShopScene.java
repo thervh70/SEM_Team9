@@ -386,6 +386,7 @@ public class ShopScene extends AbstractMenuScene {
             b.setDisable(true);
             State.setSoundtrackEnabled(true);
             MainMenuScene.getAudioPlayer().pause();
+            s.getSoundtrackPlayer().setVolume(State.getSoundtrackVolume());
             s.getSoundtrackPlayer().play();
             timer.schedule(task, playTime);
         });
