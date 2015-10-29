@@ -14,7 +14,6 @@ import nl.tudelft.ti2206.group9.util.Resource;
  *
  * @author Mitchell
  */
-@SuppressWarnings("restriction")
 public class SoundEffectPlayer extends AbstractAudioPlayer {
 
     /**
@@ -37,6 +36,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
         if (State.isSoundEffectsEnabled()) {
             initializeAudio(path);
         }
+        this.setVolume(State.getSoundEffectVolume());
     }
 
     @Override
@@ -108,6 +108,9 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
 
     @Override
     public void setVolume(final double volumeLevel) {
+        if (audioClip == null) {
+            return;
+        }
         audioClip.setVolume(volumeLevel);
     }
 

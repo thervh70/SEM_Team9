@@ -1,8 +1,12 @@
 package nl.tudelft.ti2206.group9.server;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The Database that the ServerThreads will communicate with before responding
@@ -14,92 +18,145 @@ public final class HighscoreDatabase {
     /** List containing all highscores ever. */
     private static List<Highscore> database = new ArrayList<>();
 
+    /** This list stores all supported queries. */
+    private static List<String[]> supported = new ArrayList<>();
+    /** The map that stores the Queries. */
+    private static Map<String, Query> queries = new ConcurrentHashMap<>();
+    /** The map that stores the arguments per query. */
+    private static Map<String, String[]> args = new ConcurrentHashMap<>();
+    /** The map that stores the supported argument types. */
+    private static Map<Class<?>, String> types = new ConcurrentHashMap<>();
+
+    static {
+        types.put(String.class, "string");
+        types.put(Integer.class, "int");
+
+        args.put("add", new String[]{"<name:string>", "<score:int>"});
+        queries.put("add", arg -> {
+            final String name = (String) arg[0];
+            final int score = (int) arg[1];
+            final Highscore h = new Highscore(name, score);
+            if (database.contains(h)) {
+                return "SUCCESS";  // Do not add HS when it's already in the DB
+            }
+            for (int i = 0; i < database.size(); i++) {
+                if (database.get(i).getScore() < score) {
+                    database.add(i, h);
+                    return "SUCCESS";
+                }
+            }
+            database.add(h);
+            return "SUCCESS";
+        });
+        args.put("get global", new String[]{"<amount:int>"});
+        queries.put("get global", arg -> {
+            final int amount = (int) arg[0];
+            if (amount < 0) {
+                return "";
+            }
+            final StringBuffer theOutput = new StringBuffer();
+            createList(amount, theOutput, h -> !theOutput.toString()
+                    .contains("[" + h.getUser() + ","));
+            return theOutput.toString();
+        });
+        args.put("get user", new String[]{"<name:string>", "<amount:int>"});
+        queries.put("get user", arg -> {
+            final int amount = (int) arg[1];
+            if (amount < 0) {
+                return "";
+            }
+            final String name = (String) arg[0];
+            final StringBuffer theOutput = new StringBuffer();
+            createList(amount, theOutput,
+                    h -> h.getUser().equals(name));
+            return theOutput.toString();
+        });
+
+        for (final String q : queries.keySet()) {
+            supported.add(q.split(" "));
+        }
+    }
+
     /** Hiding public constructor. */
     private HighscoreDatabase() { }
 
     /**
-     * Query the database.
-     * @param query the query to resolve.
-     * @return the result from the database.
+     * Parses the query and returns the correct result.
+     * @param query The query to parse.
+     * @return The result of the query on the database.
      */
     public static String query(final String query) {
-        final Scanner sc = new Scanner(query);
-        if (!sc.hasNext()) {
-            sc.close();
-            return "USAGE get|add <args>";
+        final String[] parts = query.split(" ");
+        final Set<String> usage = new HashSet<>();
+        for (int i = 0; i < parts.length; i++) {
+            for (final String[] q : supported) {
+                if (i < q.length && q[i].equals(parts[i])) {
+                    usage.add(q[i]);
+                    if (q.length == i + 1) {
+                        return parseArguments(String.join(" ", q),
+                                Arrays.copyOfRange(parts, q.length,
+                                        parts.length));
+                    }
+                }
+            }
         }
-        final StringBuffer theOutput = new StringBuffer();
-        switch (sc.next()) {
-        case "get": return queryGet(sc, theOutput);
-        case "add": return queryAdd(sc);
-        default:
-            sc.close();
-            return "USAGE get|add <args>";
-        }
+        return usageString(usage);
     }
 
     /**
-     * @param sc Scanner that contains the arguments for the query.
-     * @param theOutput Pointer to the StringBuffer that will be filled.
-     * @return the result of the query.
+     * @param usage contains the supported part of the query.
+     * @return a USAGE string that tells how the client should query.
      */
-    private static String queryGet(final Scanner sc,
-            final StringBuffer theOutput) {
-        if (!sc.hasNext()) {
-            sc.close();
-            return "USAGE get user|global <args>";
+    private static String usageString(final Set<String> usage) {
+        final int argc = usage.size();
+        final Set<String> localUsage = new HashSet<>();
+        for (final String[] q : supported) {
+            if (argc < q.length) {
+                localUsage.add(q[argc]);
+            }
         }
-        switch (sc.next()) {
-        case "user":   return queryGetUser(sc, theOutput);
-        case "global": return queryGetGlobal(sc, theOutput);
-        default:       return "USAGE get user|global <args>";
+        final StringBuffer usageString = new StringBuffer();
+        usageString.append("USAGE");
+        if (!usage.isEmpty()) {
+            usageString.append(' ');
         }
+        usageString.append(String.join(" ", usage)).append(' ')
+        .append(String.join("|", localUsage)).append(" <args>");
+        return usageString.toString();
     }
 
     /**
-     * @param sc Scanner that contains the arguments for the query.
-     * @param theOutput Pointer to the StringBuffer that will be filled.
-     * @return the result of the query.
+     * @param query The verified query.
+     * @param arg The arguments of the verified query.
+     * @return The result of the query, or a USAGE String.
      */
-    private static String queryGetUser(final Scanner sc,
-            final StringBuffer theOutput) {
-        if (!sc.hasNext()) {
-            sc.close();
-            return "USAGE get user <name:string> <amount:int>";
+    private static String parseArguments(final String query,
+            final String... arg) {
+        final String[] q = args.get(query);
+        if (arg.length > q.length) {
+            return "USAGE " + query + " " + String.join(" ", q);
         }
-        final String user = sc.next();
-        if (!sc.hasNextInt()) {
-            sc.close();
-            return "USAGE get user " + user + " <amount:int>";
-        }
-        final int amount = sc.nextInt();
-        if (amount < 0) {
-            return "";
-        }
-        sc.close();
-        createList(amount, theOutput, h -> h.getUser().equals(user));
-        return theOutput.toString();
-    }
+        final StringBuffer usage = new StringBuffer();
+        final List<Object> parsedArgs = new ArrayList<>();
+        for (int i = 0; i < arg.length; i++) {
+            if (arg[i].equals("")) {
+                return "USAGE " + query + " " + String.join(" ", q);
+            }
+            usage.append(' ').append(arg[i]);
 
-    /**
-     * @param sc Scanner that contains the arguments for the query.
-     * @param theOutput Pointer to the StringBuffer that will be filled.
-     * @return the result of the query.
-     */
-    private static String queryGetGlobal(final Scanner sc,
-            final StringBuffer theOutput) {
-        if (!sc.hasNextInt()) {
-            sc.close();
-            return "USAGE get global <amount:int>";
+            switch (q[i].split(":")[1].split(">")[0]) {
+            case "int": parsedArgs.add(Integer.parseInt(arg[i])); break;
+            case "string": parsedArgs.add((String) arg[i]); break;
+            default: break;
+            }
         }
-        final int amount = sc.nextInt();
-        if (amount < 0) {
-            return "";
-        } //!theOutput.toString().contains("[" + h.getUser() + ",")
-        sc.close();
-        createList(amount, theOutput,
-                h -> !theOutput.toString().contains("[" + h.getUser() + ","));
-        return theOutput.toString();
+        if (arg.length < q.length) {
+            for (int i = arg.length; i < q.length; i++) {
+                usage.append(' ').append(q[i]);
+            }
+            return "USAGE " + query + usage.toString();
+        }
+        return queries.get(query).query(parsedArgs.toArray());
     }
 
     /**
@@ -123,35 +180,23 @@ public final class HighscoreDatabase {
                 entries++;
             }
         }
-        for (; entries < amount; entries++) {
-            theOutput.append('\n');
-        }
+    }
+
+    /** Resets the database (only for use in testing). */
+    static void reset() {
+        database.clear();
     }
 
     /**
-     * @param sc Scanner that contains the arguments for the query.
-     * @return the result of the query.
+     * A Query interface (used mostly anonymously).
+     * Used for: "global", "get user", "get global".
      */
-    private static String queryAdd(final Scanner sc) {
-        if (!sc.hasNext()) {
-            sc.close();
-            return "USAGE add <name:string> <score:int>";
-        }
-        final String name = sc.next();
-        if (!sc.hasNextInt()) {
-            sc.close();
-            return "USAGE add " + name + " <score:int>";
-        }
-        final int score = sc.nextInt();
-        final Highscore h = new Highscore(name, score);
-        for (int i = 0; i < database.size(); i++) {
-            if (database.get(i).getScore() < score) {
-                database.add(i, h);
-                return "SUCCESS";
-            }
-        }
-        database.add(h);
-        return "SUCCESS";
+    private interface Query {
+        /**
+         * @param args The arguments for the query.
+         * @return The result of the query.
+         */
+        String query(Object... args);
     }
 
     /**

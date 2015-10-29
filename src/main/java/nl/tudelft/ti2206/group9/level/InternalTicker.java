@@ -14,7 +14,6 @@ import java.util.TimerTask;
  * @author Maarten
  *
  */
-@SuppressWarnings("restriction")
 public final class InternalTicker extends TimerTask {
 
     /** Amount of nanoseconds in a second, 10<sup>9</sup>. */

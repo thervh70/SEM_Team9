@@ -19,7 +19,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 /**
  * @author Mathias
  */
-@SuppressWarnings("restriction")
 public class AccountScene extends AbstractMenuScene {
 
     /** Row in Grid of list. */
@@ -168,5 +167,11 @@ public class AccountScene extends AbstractMenuScene {
      */
     private static boolean alreadyExists(final String name) {
         return SaveGame.getSaveGames().contains(name);
+    }
+
+    /** Override background, the Account background shows "Accounts". */
+    @Override
+    public String getBackgroundPath() {
+        return "accountsBackground.png";
     }
 }

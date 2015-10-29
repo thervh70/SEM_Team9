@@ -5,13 +5,15 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.gui.scene.HighscoreScene;
+import nl.tudelft.ti2206.group9.gui.scene.MainMenuScene;
 import nl.tudelft.ti2206.group9.level.State;
 
 /**
  * DeathPopup, which is to be shown when the Player dies.
  * @author Maarten, Robin
  */
-@SuppressWarnings("restriction")
 public class DeathPopup extends AbstractInfoPopup {
 
     /**
@@ -42,16 +44,20 @@ public class DeathPopup extends AbstractInfoPopup {
     public Node[] createContent() {
         final Text text = new Text("Game Ended");
 
-        final String s = "Final Score: " + (int) State.getScore();
-        final Text finalScore = new Text(s);
+        final String s = "Final Score: " + (int) State.getScore()
+                + "\n\nHigh Score: " + State.getHighscore()
+                + "\n\nTotal amount of coins: " + State.getCoins();
+        final Text scoreText = new Text(s);
 
-        final String h = "High Score: " + State.getHighscore();
-        final Text finalHigh = new Text(h);
+        final Button toHighscores = createButton("Highscores");
+        toHighscores.setOnMouseClicked(e -> {
+            playButtonSound();
+            hide();
+            ShaftEscape.setScene(new MainMenuScene());
+            ShaftEscape.setScene(new HighscoreScene());
+        });
 
-        final String c = "Total amount of coins: " + State.getCoins();
-        final Text finalCoins = new Text(c);
-
-        return new Node[]{text, finalScore, finalHigh, finalCoins};
+        return new Node[]{text, scoreText, toHighscores};
     }
 
 }

@@ -9,7 +9,7 @@ public class AnimalsSoundtrack extends AbstractSoundtrack {
     /** Price of the Animals soundtrack in shop. */
     private static final int PRICE = 30;
     /** Path to be used for soundtrack 'Animals'. */
-    private static final String PATH_ANIMALS = "soundtrack_Animals";
+    private static final String PATH_ANIMALS = "soundtrack_animals";
 
     /** Constructor for the animals soundtrack. */
     public AnimalsSoundtrack() {

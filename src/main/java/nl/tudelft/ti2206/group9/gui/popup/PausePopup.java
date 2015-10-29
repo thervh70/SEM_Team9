@@ -21,7 +21,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * PausePopup, to be shown when the Game is paused.
  * @author Maarten, Robin
  */
-@SuppressWarnings("restriction")
 public class PausePopup extends AbstractInfoPopup {
 
     /**
@@ -83,8 +82,8 @@ public class PausePopup extends AbstractInfoPopup {
     public Node[] createContent() {
         final Label pauseTitle = createLabel("Paused");
 
-        final Label soundEfLabel = createLabel("Soundtrack");
-        final Label soundTrLabel = createLabel("Sound effects");
+        final Label soundEfLabel = createLabel("Sound Effects");
+        final Label soundtrLabel = createLabel("Soundtrack");
         String soundtrToggle = INIT_TOGGLE;
         if (State.isSoundtrackEnabled()) {
             soundtrToggle = ACTIVE_TOGGLE;
@@ -102,7 +101,7 @@ public class PausePopup extends AbstractInfoPopup {
         soundEfButton.setTooltip(new Tooltip("Enable/disable sound effects"));
 
         final VBox vBoxLeft = new VBox(VBOX_SPACING_SETTINGS,
-                soundTrLabel, soundtrButton);
+                soundtrLabel, soundtrButton);
         vBoxLeft.setAlignment(Pos.CENTER);
         final VBox vBoxRight = new VBox(VBOX_SPACING_SETTINGS,
                 soundEfLabel, soundEfButton);

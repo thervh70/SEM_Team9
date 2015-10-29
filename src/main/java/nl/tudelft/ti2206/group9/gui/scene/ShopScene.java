@@ -30,7 +30,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * Class that creates the content for a shop screen.
  * @author Maikel on 04/10/2015.
  */
-@SuppressWarnings("restriction")
 public class ShopScene extends AbstractMenuScene {
 
     /**
@@ -281,5 +280,10 @@ public class ShopScene extends AbstractMenuScene {
         }
     }
 
+    /** Override background, the Shop background shows "Shop". */
+    @Override
+    public String getBackgroundPath() {
+        return "shopBackground.png";
+    }
 
 }

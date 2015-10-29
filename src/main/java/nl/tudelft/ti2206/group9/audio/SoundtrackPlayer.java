@@ -18,7 +18,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  *
  * @author Mitchell
  */
-@SuppressWarnings("restriction")
 public class SoundtrackPlayer extends AbstractAudioPlayer {
 
     /**
@@ -56,6 +55,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         }
         // A soundtrackPlayer must always loop.
         this.loopAudio();
+        this.setVolume(State.getSoundtrackVolume());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         }
         try {
             mediaPlayer = new MediaPlayer(new Media(uri));
-        } catch (MediaException me) {
+        } catch (IllegalStateException | MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundtrackPlayer.initializeTune(String)",
                     me.getMessage());
@@ -177,11 +177,21 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
     }
 
     /**
-     * Resets the speed of the soundtrack played by the SoundtrackPlayer.
+     * Resets the speed of the soundtrack played by the SoundtrackPlayer,
+     * if the soundtrack is enabled.
      */
     public final void resetSpeed() {
-        if (State.isSoundtrackEnabled()) {
-            mediaPlayer.setRate(1.0);
+        try {
+            if (State.isSoundtrackEnabled()) {
+                mediaPlayer.setRate(1.0);
+            }
+        } catch (NullPointerException ne) { // NOPMD
+            // This try-catch block is just here for testing.
+            // The resetSpeed method can result in a NullPointer (according to
+            // JUnit), because JUnit can't really play audio neither can Travis.
+            OBSERVABLE.notify(GameObserver.Category.ERROR,
+                    GameObserver.Error.NULLPOINTEREXCEPTION,
+                    "SoundtrackPlayer.resetSpeed()", ne.getMessage());
         }
     }
 
@@ -216,6 +226,9 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
 
     @Override
     public void setVolume(final double volumeLevel) {
+        if (mediaPlayer == null) {
+            return;
+        }
         mediaPlayer.setVolume(volumeLevel);
     }
 
