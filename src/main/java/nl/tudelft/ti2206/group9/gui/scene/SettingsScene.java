@@ -137,7 +137,6 @@ public final class SettingsScene extends AbstractMenuScene {
                     s = INIT_TOGGLE;
                     soundtrackVolumeSlider.setDisable(true);
                 }
-                button.setText(s);
                 OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDTRACK, s);
             } else {
                 State.setSoundEffectsEnabled(!State.isSoundEffectsEnabled());
@@ -148,9 +147,9 @@ public final class SettingsScene extends AbstractMenuScene {
                     s = INIT_TOGGLE;
                     soundEffectVolumeSlider.setDisable(true);
                 }
-                button.setText(s);
                 OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDEFFECTS, s);
              }
+             button.setText(s);
         });
     }
 
