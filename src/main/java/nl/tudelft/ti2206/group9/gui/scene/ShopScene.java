@@ -368,7 +368,7 @@ public class ShopScene extends AbstractMenuScene {
                                     final AbstractSoundtrack s) {
 
         final int playTime = 7000;
-        boolean soundEnabled = State.isSoundtrackEnabled();
+        final boolean soundEnabled = State.isSoundtrackEnabled();
 
         b.setOnAction(event -> {
             final Timer timer = new Timer();
