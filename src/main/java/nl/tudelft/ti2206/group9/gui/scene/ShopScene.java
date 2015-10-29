@@ -10,6 +10,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -72,6 +74,11 @@ public class ShopScene extends AbstractMenuScene {
     private Label currentSoundtrack;
     /** Tabpane for the shop. */
     private TabPane tabPane;
+    /** Hover scale. */
+    private static final double BUTTON_HOVER_SCALE = 1.2;
+    /** Preview button size. */
+    private static final int PREVIEW_SIZE = 35;
+
 
 
 
@@ -244,21 +251,26 @@ public class ShopScene extends AbstractMenuScene {
         final ObservableList<AbstractSoundtrack> items =
                 ShopItemLoader.loadSoundtracksToList();
         final VBox itemBox = new VBox(BOX_SPACING);
-
         for (final AbstractSoundtrack s : items) {
-
             final HBox hbox = new HBox(BOX_SPACING);
-
-            final ImageView imageView =
-                    new ImageView(new Image("nl/tudelft/ti2206/"
-                            + "group9/gui/scene/music_notes.png"));
+            final Button previewButton = new Button();
+            final Image playImg = new Image("nl/tudelft/ti2206/"
+                    + "group9/gui/scene/music_notes.png");
+            final BackgroundImage backImg = new BackgroundImage(playImg,
+                    null, null, null, null);
+            Background back = new Background(backImg);
+            previewButton.setBackground(back);
+            previewButton.setMinWidth(PREVIEW_SIZE);
+            previewButton.setMinHeight(PREVIEW_SIZE);
+            setPreviewButtonHover(previewButton);
+            setPreviewFunction(previewButton, s);
             final Label nameLabel = createLabel(s.getItemName(), 0, 0);
             final Label priceLabel =
                     createLabel(Integer.toString(s.getItemPrice()), 0, 0);
             final Button buyButton = createButton("BUY", 0, 0);
             setSoundBuyButtonVisability(buyButton, s);
             setSoundBuyButtonFunction(buyButton, s);
-            hbox.getChildren().addAll(imageView,
+            hbox.getChildren().addAll(previewButton,
                     nameLabel, priceLabel, buyButton);
             hbox.setAlignment(Pos.CENTER);
             itemBox.getChildren().addAll(hbox);
@@ -310,5 +322,55 @@ public class ShopScene extends AbstractMenuScene {
         if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setText("ACTIVATE");
         }
+    }
+
+    /**
+     * Set hover animation on previewbutton.
+     * @param b Button to be set.
+     */
+    private void setPreviewButtonHover(final Button b) {
+        b.setOnMouseEntered(e -> {
+            b.setScaleX(BUTTON_HOVER_SCALE);
+            b.setScaleY(BUTTON_HOVER_SCALE);
+        });
+
+        /** Action to be taken on MouseExited Event. */
+        b.setOnMouseExited(e -> {
+            b.setScaleX(1);
+            b.setScaleY(1);
+        });
+    }
+
+    /**
+     * Set function of previewButton.
+     * @param b Button to be set.
+     * @param s Soundtrack.
+     */
+    private void setPreviewFunction(final Button b,
+                                    final AbstractSoundtrack s) {
+        final Image playImg = new Image("nl/tudelft/ti2206/"
+                + "group9/gui/scene/music_notes.png");
+        final Image pauseImg = new Image("nl/tudelft/ti2206/"
+                + "group9/gui/scene/pause.png");
+
+        boolean soundEnabled = State.isSoundtrackEnabled();
+
+
+        b.setOnAction(event -> {
+            State.setSoundtrackEnabled(true);
+            MainMenuScene.getAudioPlayer().pause();
+            s.getSoundtrackPlayer().play();
+            b.setBackground(new Background(new BackgroundImage(pauseImg,
+                    null, null, null, null)));
+            if (s.getSoundtrackPlayer().isRunning()) {
+                s.getSoundtrackPlayer().stop();
+                State.setSoundtrackEnabled(soundEnabled);
+                MainMenuScene.getAudioPlayer().play();
+                b.setBackground(new Background(new BackgroundImage(playImg,
+                        null, null, null, null)));
+
+            }
+
+        });
     }
 }
