@@ -26,7 +26,9 @@ public final class HighscoreClientAdapter {
         return client.isConnected();
     }
 
-    /** Disconnect from the server. */
+    /**
+     * Disconnect from the server.
+     */
     public static void disconnect() {
         client.disconnect();
     }

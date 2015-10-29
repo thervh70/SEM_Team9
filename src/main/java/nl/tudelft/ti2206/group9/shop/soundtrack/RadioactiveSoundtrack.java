@@ -12,7 +12,6 @@ public class RadioactiveSoundtrack extends AbstractSoundtrack {
     private static final int PRICE = 50;
     /** Path to be used for soundtrack 'Radioactive'. */
     private static final String PATH_DEFAULT = "soundtrack_Radioactive";
-
     /** Constructor for the 'radioactive' soundtrack. */
     public RadioactiveSoundtrack() {
         super(PRICE, "Radioactive", PATH_DEFAULT);

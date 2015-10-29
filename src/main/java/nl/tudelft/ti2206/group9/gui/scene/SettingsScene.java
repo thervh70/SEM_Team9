@@ -23,15 +23,21 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  */
 public final class SettingsScene extends AbstractMenuScene {
 
-    /** Max volume. */
+    /**
+     * Max volume.
+     */
     private static final double MAX_VOLUME = 10;
-    /** Effect slider row. */
+    /**
+     * Effect slider row.
+     */
     private static final int EFFECT_SLIDER_COLUMN = 6;
     /** Soundtrack slider row. */
     private static final int TRACK_SLIDER_COLUMN = 4;
     /** Sliders row. */
     private static final int SLIDER_ROW = 16;
-    /** Constant for converting the slider value to a setable volume level. */
+    /**
+     * Constant for converting the slider value to a setable volume level.
+     */
     private static final int VOLUME_CONVERTER = 10;
 
     /**
@@ -123,7 +129,6 @@ public final class SettingsScene extends AbstractMenuScene {
     protected static void setToggleButtonFunction(final Button button,
                                             final BType type) {
         button.setOnAction(event -> {
-            playButtonSound();
             String s;
              if (type == BType.SETTING_SOUNDTRACK) {
                 MainMenuScene.getAudioPlayer().stop();
@@ -169,12 +174,13 @@ public final class SettingsScene extends AbstractMenuScene {
 
     /**
      * Sets the tooltips of the SettingsScene buttons.
+     *
      * @param soundtrButton that needs a tooltip.
      * @param soundEfButton that needs a tooltip.
-     * @param backButton that needs a tooltip.
+     * @param backButton    that needs a tooltip.
      */
     private static void setTooltips(final Button soundtrButton,
-            final Button soundEfButton, final Button backButton) {
+                                    final Button soundEfButton, final Button backButton) {
         soundtrButton.setTooltip(new Tooltip("Enable/disable soundtrack"));
         soundEfButton.setTooltip(new Tooltip("Enable/disable sound effects"));
         backButton.setTooltip(new Tooltip("Back to main menu"));
@@ -207,8 +213,8 @@ public final class SettingsScene extends AbstractMenuScene {
      * @return Return created slider.
      */
     private static Slider createVolumeSlider(final int column,
-            final int row, final boolean enabled, final SType sliderType,
-            final double initialVolume) {
+                                             final int row, final boolean enabled, final SType sliderType,
+                                             final double initialVolume) {
         final Slider slider = new Slider();
         final int majorTickUnit = 5;
         final int minorTickCount = 4;
@@ -241,11 +247,12 @@ public final class SettingsScene extends AbstractMenuScene {
      * Sets the volume of the the sounds that are used in the application.
      * The audioplayer volumes of the 'non-GameScenes' are already set below.
      * The others are set in the GameScene (SoundEffectObserver).
+     *
      * @param slider the given slider to set the function of.
-     * @param type the given type of slider to set the volume of.
+     * @param type   the given type of slider to set the volume of.
      */
     protected static void setSliderFunction(final Slider slider,
-            final SType type) {
+                                            final SType type) {
         slider.setOnMouseReleased(event -> {
             if (type == SType.VOLUME_SOUNDTRACK) {
                 State.setSoundtrackVolume(soundtrackVolumeSlider.

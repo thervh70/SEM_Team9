@@ -102,7 +102,7 @@ public class HighscoreClient {
      * @param callback the action to be performed on return.
      */
     public void add(final String name, final int score,
-            final QueryCallback callback) {
+                    final QueryCallback callback) {
         query("add " + name + " " + score, callback);
     }
 
@@ -128,7 +128,8 @@ public class HighscoreClient {
                     from = fromServer.readLine();
                     response.append(from);
                     if (from.contains("\4")) {
-                        response.deleteCharAt(response.length() - 1); break;
+                        response.deleteCharAt(response.length() - 1);
+                        break;
                     }
                     if (from.startsWith("USAGE")) {
                         break;

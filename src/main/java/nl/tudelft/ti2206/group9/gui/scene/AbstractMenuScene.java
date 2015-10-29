@@ -157,7 +157,9 @@ public abstract class AbstractMenuScene extends AbstractScene {
         return res;
     }
 
-    /** Plays the button sound once, given a volumelevel. */
+    /**
+     * Plays the button sound once, given a volumelevel.
+     */
     protected static void playButtonSound() {
         BUTTON_SOUND.setVolume(State.getSoundEffectVolume());
         BUTTON_SOUND.play();

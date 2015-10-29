@@ -173,7 +173,9 @@ public class HighScoreScene extends AbstractMenuScene {
         return scoreList;
     }
 
-    /** Override background, the Highscore background shows "Highscore". */
+    /**
+     * Override background, the Highscore background shows "Highscore".
+     */
     @Override
     public String getBackgroundPath() {
         return "highscoreBackground.png";

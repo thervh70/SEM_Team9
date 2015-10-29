@@ -23,7 +23,7 @@ public class HighscoreServerThread implements Runnable {
     // private static final int PADDING_SPACES = 25; // Length of IP + 2
     /** The actual spaces that pad console logs. */
     private static final String PAD_STRING = "    ";
-            // new String(new char[PADDING_SPACES]).replace("\0", " ");
+    // new String(new char[PADDING_SPACES]).replace("\0", " ");
 
     /** Socket connected to. */
     private final Socket socket;

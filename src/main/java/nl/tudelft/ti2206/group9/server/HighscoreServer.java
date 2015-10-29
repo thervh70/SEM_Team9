@@ -29,7 +29,9 @@ public final class HighscoreServer {
      *                                           service-names-port-numbers.txt
      */
     public static final int PORT = 42042;
-    /** The Logger of this server, sends output to the console. */
+    /**
+     * The Logger of this server, sends output to the console.
+     */
     private static final Logger LOGGER = Logger.getLogger(
             HighscoreServer.class.getName());
     /** Whether the server is (should be) running. */
@@ -38,7 +40,9 @@ public final class HighscoreServer {
     /** The ServerSocket of this server. This is a private field, because it
      *  is accessed in two separate threads. */
     private static ServerSocket serverSocket;
-    /** The CLIThread of this server, handles console input. */
+    /**
+     * The CLIThread of this server, handles console input.
+     */
     private static CLIThread cliThread;
 
     /** Hiding public constructor. */
@@ -128,19 +132,24 @@ public final class HighscoreServer {
          */
         private void handleCommand(final String command) {
             switch (command) {
-            case "q":
-            case "stop":
-                quit();
-                log("Server has been stopped.");
-                break;
-            default: break;
+                case "q":
+                case "stop":
+                    quit();
+                    log("Server has been stopped.");
+                    break;
+                default:
+                    break;
             }
         }
     }
 
-    /** ConsoleHandler that makes sure that the log gets printed to stdout. */
+    /**
+     * ConsoleHandler that makes sure that the log gets printed to stdout.
+     */
     private static class StdOutConsoleHandler extends ConsoleHandler {
-        /** Default constructor, sets output stream to System.out. */
+        /**
+         * Default constructor, sets output stream to System.out.
+         */
         StdOutConsoleHandler() {
             super();
             setOutputStream(System.out);
@@ -148,9 +157,13 @@ public final class HighscoreServer {
         }
     }
 
-    /** Creates simple formatting for log messages. */
+    /**
+     * Creates simple formatting for log messages.
+     */
     private static class TextFormatter extends Formatter {
-        /** Maximum level length. */
+        /**
+         * Maximum level length.
+         */
         private static final int MAX_LEVEL_LENGTH =
                 Level.WARNING.toString().length();
 
@@ -158,17 +171,17 @@ public final class HighscoreServer {
         public String format(final LogRecord record) {
             final StringBuffer out = new StringBuffer();
             out
-            .append('[').append(formatDate(record.getMillis()))
-            .append("] [").append(padLevel(record.getLevel())).append("] ")
-            .append(record.getMessage())
-            .append('\n');
+                    .append('[').append(formatDate(record.getMillis()))
+                    .append("] [").append(padLevel(record.getLevel())).append("] ")
+                    .append(record.getMessage())
+                    .append('\n');
             final Throwable e = record.getThrown();
             if (e != null) {
                 out.append("    ").append(e.getClass().getName()).append(": ")
-                .append(e.getMessage()).append('\n');
+                        .append(e.getMessage()).append('\n');
                 for (final StackTraceElement el : e.getStackTrace()) {
                     out.append("        at ").append(el.toString())
-                    .append('\n');
+                            .append('\n');
                 }
             }
             return out.toString();

@@ -329,7 +329,6 @@ public class ShopScene extends AbstractMenuScene {
             buy.setText("ACTIVATE");
         }
     }
-
     /**
      * Set hover animation on previewbutton.
      * @param b Button to be set.
@@ -349,6 +348,14 @@ public class ShopScene extends AbstractMenuScene {
     }
 
     /**
+     * Override background, the Shop background shows "Shop".
+     */
+    @Override
+    public String getBackgroundPath() {
+        return "shopBackground.png";
+    }
+
+    /**
      * Set function of previewButton.
      * @param b Button to be set.
      * @param s Soundtrack.
@@ -359,13 +366,6 @@ public class ShopScene extends AbstractMenuScene {
                 + "group9/gui/scene/music_notes.png");
         final Image pauseImg = new Image("nl/tudelft/ti2206/"
                 + "group9/gui/scene/pause.png");
-
-    /** Override background, the Shop background shows "Shop". */
-    public String getBackGroundPath() {
-        return "shopBackground.png";
-    }
-
-
         boolean soundEnabled = State.isSoundtrackEnabled();
         b.setOnAction(event -> {
             b.setTooltip(new Tooltip("Stop soundtrack"));

@@ -18,13 +18,21 @@ public final class HighscoreDatabase {
     /** List containing all highscores ever. */
     private static List<Highscore> database = new ArrayList<>();
 
-    /** This list stores all supported queries. */
+    /**
+     * This list stores all supported queries.
+     */
     private static List<String[]> supported = new ArrayList<>();
-    /** The map that stores the Queries. */
+    /**
+     * The map that stores the Queries.
+     */
     private static Map<String, Query> queries = new ConcurrentHashMap<>();
-    /** The map that stores the arguments per query. */
+    /**
+     * The map that stores the arguments per query.
+     */
     private static Map<String, String[]> args = new ConcurrentHashMap<>();
-    /** The map that stores the supported argument types. */
+    /**
+     * The map that stores the supported argument types.
+     */
     private static Map<Class<?>, String> types = new ConcurrentHashMap<>();
 
     static {
@@ -77,7 +85,8 @@ public final class HighscoreDatabase {
     }
 
     /** Hiding public constructor. */
-    private HighscoreDatabase() { }
+    private HighscoreDatabase() {
+    }
 
     /**
      * Parses the query and returns the correct result.
@@ -120,7 +129,7 @@ public final class HighscoreDatabase {
             usageString.append(' ');
         }
         usageString.append(String.join(" ", usage)).append(' ')
-        .append(String.join("|", localUsage)).append(" <args>");
+                .append(String.join("|", localUsage)).append(" <args>");
         return usageString.toString();
     }
 
@@ -130,7 +139,7 @@ public final class HighscoreDatabase {
      * @return The result of the query, or a USAGE String.
      */
     private static String parseArguments(final String query,
-            final String... arg) {
+                                         final String... arg) {
         final String[] q = args.get(query);
         if (arg.length > q.length) {
             return "USAGE " + query + " " + String.join(" ", q);
@@ -144,9 +153,14 @@ public final class HighscoreDatabase {
             usage.append(' ').append(arg[i]);
 
             switch (q[i].split(":")[1].split(">")[0]) {
-            case "int": parsedArgs.add(Integer.parseInt(arg[i])); break;
-            case "string": parsedArgs.add((String) arg[i]); break;
-            default: break;
+                case "int":
+                    parsedArgs.add(Integer.parseInt(arg[i]));
+                    break;
+                case "string":
+                    parsedArgs.add((String) arg[i]);
+                    break;
+                default:
+                    break;
             }
         }
         if (arg.length < q.length) {
@@ -181,7 +195,9 @@ public final class HighscoreDatabase {
         }
     }
 
-    /** Resets the database (only for use in testing). */
+    /**
+     * Resets the database (only for use in testing).
+     */
     static void reset() {
         database.clear();
     }
