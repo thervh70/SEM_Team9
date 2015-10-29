@@ -103,8 +103,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SHOP_SKIN_NOOB = 0;
     private static final int SHOP_SKIN_ANDY = 1;
 
-    private static final int SHOP_SOUND_ANIMALS = 0;
-    private static final int SHOP_SOUND_RADIOACTIVE = 1;
+    private static final int SHOP_SOUND_RADIOACTIVE = 0;
+    private static final int SHOP_SOUND_MARIO = 1;
 
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
@@ -281,17 +281,17 @@ public class EndToEndTest extends ApplicationTest {
         final ObservableList<AbstractSoundtrack> soundList =
                 ShopItemLoader.loadSoundtracksToList();
         final String radioactive = soundList.get(SHOP_SOUND_RADIOACTIVE).getItemName();
-        final String animals = soundList.get(SHOP_SOUND_ANIMALS).getItemName();
+        final String animals = soundList.get(SHOP_SOUND_MARIO).getItemName();
 
-        shopPreviewSound(SHOP_SOUND_ANIMALS);
+        shopPreviewSound(SHOP_SOUND_MARIO);
         sleep(LONG);
 
         assertEquals(CurrentItems.getSoundtrackName(), radioactive);
         shopBuyActivateSound(SHOP_SOUND_RADIOACTIVE);
         assertEquals(CurrentItems.getSoundtrackName(), radioactive);
-        shopBuyActivateSound(SHOP_SOUND_ANIMALS);
+        shopBuyActivateSound(SHOP_SOUND_MARIO);
         assertEquals(CurrentItems.getSoundtrackName(), radioactive);
-        shopBuyActivateSound(SHOP_SOUND_ANIMALS);
+        shopBuyActivateSound(SHOP_SOUND_MARIO);
         assertEquals(CurrentItems.getSoundtrackName(), animals);
         shopBuyActivateSound(SHOP_SOUND_RADIOACTIVE);
         assertEquals(CurrentItems.getSoundtrackName(), radioactive);
