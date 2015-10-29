@@ -10,8 +10,6 @@ import nl.tudelft.ti2206.group9.shop.ShopItem;
  *
  * @author Maikel and Mitchell.
  */
-@SuppressWarnings("restriction") // SuppresWarnings, because
-// PhongMaterials are needed for the textures.
 public abstract class AbstractSkin implements ShopItem {
 
     /**

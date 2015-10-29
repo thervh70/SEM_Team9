@@ -21,7 +21,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * PausePopup, to be shown when the Game is paused.
  * @author Maarten, Robin
  */
-@SuppressWarnings("restriction")
 public class PausePopup extends AbstractInfoPopup {
 
     /**

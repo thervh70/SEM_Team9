@@ -45,7 +45,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 
-@SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
 
     /** Saved to use <pre>rootNode()</pre>. */
@@ -291,6 +290,7 @@ public class EndToEndTest extends ApplicationTest {
         clickButton(MAIN_ACCOUNTS);
         clickButton(ACCOUNT_LIST);
         clickButton(ACCOUNT_DEL);
+        clickButton(ACCOUNT_TEXTFIELD);
         typeName();
         clickButton(ACCOUNT_NEW);
     }

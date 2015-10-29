@@ -28,7 +28,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * Contains method to switch Scenes or show Popups.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class ShaftEscape extends Application {
 
     /** Width of the Window. */

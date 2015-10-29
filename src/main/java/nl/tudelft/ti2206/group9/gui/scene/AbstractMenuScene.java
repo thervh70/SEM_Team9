@@ -17,7 +17,6 @@ import nl.tudelft.ti2206.group9.level.State;
  * the abstract method {@link #createContent()}.
  * @author Maarten, Maikel, Mitchell
  */
-@SuppressWarnings("restriction")
 public abstract class AbstractMenuScene extends AbstractScene {
 
     /** Margin of grid cells. */
