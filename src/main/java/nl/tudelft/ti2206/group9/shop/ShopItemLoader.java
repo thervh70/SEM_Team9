@@ -157,7 +157,7 @@ public final class ShopItemLoader {
     public static ObservableList<AbstractSoundtrack> loadSoundtracksToList() {
         final ObservableList<AbstractSoundtrack> list = FXCollections.
                 observableArrayList();
-        list.addAll(marioSoundtrack, radioactiveSoundtrack,
+        list.addAll(radioactiveSoundtrack, marioSoundtrack,
                 nyancatSoundtrack, shakeitoffSoundtrack, ducktalesSoundtrack,
                 animalsSoundtrack);
         return list;

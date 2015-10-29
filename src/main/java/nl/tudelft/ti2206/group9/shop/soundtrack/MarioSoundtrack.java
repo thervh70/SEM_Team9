@@ -7,7 +7,7 @@ package nl.tudelft.ti2206.group9.shop.soundtrack;
  */
 public class MarioSoundtrack extends AbstractSoundtrack {
     /** Price of the Mario soundtrack in the shop. */
-    private static final int PRICE = 0;
+    private static final int PRICE = 50;
     /** Path to be used for the 'Mario' soundtrack. */
     private static final String PATH_MARIO = "soundtrack_mario";
 

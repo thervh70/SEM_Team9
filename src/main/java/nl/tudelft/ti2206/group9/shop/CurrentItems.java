@@ -32,8 +32,8 @@ public final class CurrentItems {
     public static void reset() {
         setSkin(ShopItemLoader.getNoobSkin());
         currentSoundtrackPlayer = new SoundtrackPlayer("nl/tudelft/ti2206/"
-                + "group9/audio/soundtrack_Mario.mp3");
-        currentSoundtrackName = "Mario";
+                + "group9/audio/soundtrack_Radioactive.mp3");
+        currentSoundtrackName = "Radioactive";
     }
 
     /**

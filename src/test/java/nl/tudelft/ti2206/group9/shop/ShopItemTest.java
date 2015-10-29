@@ -28,9 +28,9 @@ public class ShopItemTest {
     private static AbstractSoundtrack shakeItOff = new ShakeItOffSoundtrack();
     // Soundtrack prices
     private static final int ANIMALS_PRICE = 250;
-    private static final int RADIOACTIVE_PRICE = 50;
+    private static final int RADIOACTIVE_PRICE = 0;
     private static final int DUCKTALES_PRICE = 200;
-    private static final int MARIO_PRICE = 0;
+    private static final int MARIO_PRICE = 50;
     private static final int NYANCAT_PRICE = 100;
     private static final int SHAKEITOFF_PRICE = 150;
     // Skins can't be tested, as they require graphics for their texture.
@@ -59,9 +59,9 @@ public class ShopItemTest {
     public void testUnlockedHashMap() {
         ShopItemUnlocker.createUnlockedShopItemsMap();
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Animals"), false);
-        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Radioactive"), false);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Radioactive"), true);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Duck Tales"), false);
-        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Mario"), true);
+        assertEquals(ShopItemUnlocker.getUnlockedShopItem("Mario"), false);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem("Nyan Cat"), false);
         assertEquals(ShopItemUnlocker.getUnlockedShopItem(
                 "Shake It Off"), false);
