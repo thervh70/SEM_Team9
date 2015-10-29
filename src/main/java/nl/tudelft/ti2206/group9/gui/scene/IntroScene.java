@@ -69,11 +69,11 @@ public class IntroScene extends AbstractScene {
      */
     private ImageView[] setupImages() {
         final ImageView escape = new ImageView(new Image(
-                "nl/tudelft/ti2206/group9/gui/intro/escape.png"));
+                "nl/tudelft/ti2206/group9/gui/scene/intro/escape.png"));
         final ImageView the = new ImageView(new Image(
-                "nl/tudelft/ti2206/group9/gui/intro/the.png"));
+                "nl/tudelft/ti2206/group9/gui/scene/intro/the.png"));
         final ImageView shaft = new ImageView(new Image(
-                "nl/tudelft/ti2206/group9/gui/intro/shaft.png"));
+                "nl/tudelft/ti2206/group9/gui/scene/intro/shaft.png"));
 
         escape.setVisible(false);
         the.setVisible(false);
