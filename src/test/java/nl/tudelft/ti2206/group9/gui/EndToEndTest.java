@@ -59,7 +59,7 @@ public class EndToEndTest extends ApplicationTest {
     /** Sleep countdown. */
     private static final long COUNTDOWN = 3500;
     /** Sleep factor playerDies. */
-    private static final long SLEEP_FACTOR = 2;
+    private static final long SLEEP_FACTOR = 10;
     /** Amount of coins for e2e. */
     private static final int COINS = 9999;
 
