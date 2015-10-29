@@ -50,6 +50,9 @@ public final class Style {
     /** WOOD material used for logs, wooden planks obstacle texture. */
     public static final PhongMaterial WOOD = new PhongMaterial();
 
+    /** WOOD_DESTROY material used for logs, wooden planks obstacle texture. */
+    public static final PhongMaterial WOOD_D = new PhongMaterial();
+
     /** PILLAR mat. used for pillars. Stack of cracked stone bricks texture. */
     public static final PhongMaterial PILLAR = new PhongMaterial();
 
@@ -79,13 +82,14 @@ public final class Style {
      */
     public static void loadTextures() {
         String path = "nl/tudelft/ti2206/group9/gui/texture_";
-        BRICK .setDiffuseMap(new Image(path +       "brick.png"));
-        FLOOR .setDiffuseMap(new Image(path + "cobblestone.png"));
-        COIN  .setDiffuseMap(new Image(path +        "coin.png"));
-        PICKUP.setDiffuseMap(new Image(path +      "pickup.png"));
-        WOOD  .setDiffuseMap(new Image(path +        "wood.png"));
-        PILLAR.setDiffuseMap(new Image(path +      "pillar.png"));
-        FENCE .setDiffuseMap(new Image(path +       "fence.png"));
+        BRICK .setDiffuseMap(new Image(path +        "brick.png"));
+        FLOOR .setDiffuseMap(new Image(path +  "cobblestone.png"));
+        COIN  .setDiffuseMap(new Image(path +         "coin.png"));
+        PICKUP.setDiffuseMap(new Image(path +       "pickup.png"));
+        WOOD  .setDiffuseMap(new Image(path +         "wood.png"));
+        WOOD_D.setDiffuseMap(new Image(path + "wood_destroy.png"));
+        PILLAR.setDiffuseMap(new Image(path +       "pillar.png"));
+        FENCE .setDiffuseMap(new Image(path +        "fence.png"));
 
         path = "nl/tudelft/ti2206/group9/gui/icon_";
         icons.put("invulnerable", new Image(path + "invulnerable.png"));
