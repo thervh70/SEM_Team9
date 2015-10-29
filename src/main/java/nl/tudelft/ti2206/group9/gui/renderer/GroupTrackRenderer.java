@@ -13,7 +13,6 @@ import nl.tudelft.ti2206.group9.level.Track;
  * Renders the entire Track. The Track is a collection of tiles.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class GroupTrackRenderer extends AbstractGroupRenderer {
 
     /**

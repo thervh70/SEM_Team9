@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.level.save;
 
 import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.StateTest;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 
 import org.junit.Test;
@@ -15,29 +16,46 @@ public final class WriterTest {
     private static String fileFolder =
             "src/test/resources/nl/tudelft/ti2206/group9/level/save/";
 
+    private static final String NAME = "Henk";
+    private static final int COINS = 45;
+    private static final int SCORE = 3560;
+    private static final double SOUNDTRACK_VOLUME = 0.7;
+    private static final double SOUNDEFFECT_VOLUME = 0.3;
+
     @Test
     public void testSaveGame() {
+        initState();
+
+        Writer.saveGame(fileFolder + "saveGameWriterTest.ses");
+        Parser.loadGame(fileFolder + "saveGameWriterTest.ses");
+
+        assertState();
+    }
+
+    private void initState() {
         ShopItemUnlocker.createUnlockedShopItemsMap();
 
-        final String playerName = "Henk";
-        State.setPlayerName(playerName);
-        final int coins = 45;
-        State.setCoins(coins);
-        final int score = 3560;
-        State.setHighscore(score);
+        State.setPlayerName(NAME);
+        State.setCoins(COINS);
+        State.setHighscore(SCORE);
+        State.setSoundtrackVolume(SOUNDTRACK_VOLUME);
+        State.setSoundEffectVolume(SOUNDEFFECT_VOLUME);
 
         ShopItemUnlocker.setUnlockedShopItem("Iron Man", true);
         ShopItemUnlocker.setUnlockedShopItem("Plank", true);
         ShopItemUnlocker.setUnlockedShopItem("Mario", true);
         State.setSoundtrackEnabled(false);
         State.setSoundEffectsEnabled(false);
+    }
 
-        Writer.saveGame(fileFolder + "saveGameWriterTest.ses");
-        Parser.loadGame(fileFolder + "saveGameWriterTest.ses");
-
-        assertEquals(playerName, State.getPlayerName());
-        assertEquals(coins, State.getCoins());
-        assertEquals(score, State.getHighscore());
+    private void assertState() {
+        assertEquals(NAME, State.getPlayerName());
+        assertEquals(COINS, State.getCoins());
+        assertEquals(SCORE, State.getHighscore());
+        assertEquals(SOUNDTRACK_VOLUME, State.getSoundtrackVolume(),
+                StateTest.DELTA);
+        assertEquals(SOUNDEFFECT_VOLUME, State.getSoundEffectVolume(),
+                StateTest.DELTA);
 
         assertEquals(false, ShopItemUnlocker.getUnlockedShopItem("Andy"));
         assertEquals(true, ShopItemUnlocker.getUnlockedShopItem("Noob"));
@@ -54,6 +72,6 @@ public final class WriterTest {
 
         assertEquals(false, State.isSoundtrackEnabled());
         assertEquals(false, State.isSoundEffectsEnabled());
-
     }
+
 }

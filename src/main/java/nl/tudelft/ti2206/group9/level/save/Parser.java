@@ -37,14 +37,15 @@ public final class Parser {
     private static boolean andy, captain, boy, plank, iron;
     /** Boolean to indicate if soundtracks are unlocked. */
     private static boolean animals, duckTales, mario, nyanCat, shakeItOff;
-    /**
-     * Boolean for sound track enabled.
-     */
+    /** Boolean to indicate whether soundtrack is enabled. */
+
     private static boolean soundtrackEnabled;
-    /**
-     * Boolean to indicate whether the sound is enabled.
-     */
+    /** Boolean to indicate whether the sound effects are enabled. */
     private static boolean soundEffectsEnabled;
+    /** Double to indicate the value of the soundEffectVolume. */
+    private static double soundEffectVolume;
+    /** Double to indicate the value of the soundtrackVolume. */
+    private static double soundtrackVolume;
 
     /**
      * Private constructor.
@@ -94,10 +95,12 @@ public final class Parser {
         final JSONObject soundtrObj =
                 (JSONObject) settingsObj.get("soundtracksettings");
         soundtrackEnabled = (Boolean) soundtrObj.get("soundtrackEnabled");
+        soundtrackVolume = (Double) soundtrObj.get("soundtrackVolume");
 
         final JSONObject soundEfObj =
                 (JSONObject) settingsObj.get("soundEffectssettings");
         soundEffectsEnabled = (Boolean) soundEfObj.get("soundEffectsEnabled");
+        soundEffectVolume = (Double) soundEfObj.get("soundEffectVolume");
 
         final JSONObject highObj = (JSONObject) mainObject.get("highscore");
         highScore = (Long) highObj.get("score");
@@ -140,6 +143,8 @@ public final class Parser {
         State.setCoins((int) coins);
         State.setSoundtrackEnabled(soundtrackEnabled);
         State.setSoundEffectsEnabled(soundEffectsEnabled);
+        State.setSoundtrackVolume(soundtrackVolume);
+        State.setSoundEffectVolume(soundEffectVolume);
         State.setHighscore(highScore);
     }
 

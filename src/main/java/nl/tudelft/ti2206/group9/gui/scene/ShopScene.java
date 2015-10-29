@@ -32,7 +32,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * Class that creates the content for a shop screen.
  * @author Maikel on 04/10/2015.
  */
-@SuppressWarnings("restriction")
 public class ShopScene extends AbstractMenuScene {
 
     /**
@@ -360,6 +359,12 @@ public class ShopScene extends AbstractMenuScene {
                 + "group9/gui/scene/music_notes.png");
         final Image pauseImg = new Image("nl/tudelft/ti2206/"
                 + "group9/gui/scene/pause.png");
+
+    /** Override background, the Shop background shows "Shop". */
+    public String getBackGroundPath() {
+        return "shopBackground.png";
+    }
+
 
         boolean soundEnabled = State.isSoundtrackEnabled();
         b.setOnAction(event -> {

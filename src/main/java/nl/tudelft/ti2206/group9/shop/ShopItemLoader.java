@@ -27,9 +27,6 @@ import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
  *
  * @author Mitchell
  */
-
-@SuppressWarnings("restriction")// SuppressWarnings, because
-//javafx collections is needed for listing shop items.
 public final class ShopItemLoader {
 
     // Skin items

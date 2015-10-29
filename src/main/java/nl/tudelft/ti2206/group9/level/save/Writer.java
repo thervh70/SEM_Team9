@@ -66,19 +66,23 @@ public final class Writer {
     @SuppressWarnings("unchecked")
     private static String writeToJSON() {
         final JSONObject mainObject = new JSONObject();
-
         final JSONObject settings = new JSONObject();
-
         final JSONObject soundtracksettings = new JSONObject();
         soundtracksettings.put("soundtrackEnabled",
                 State.isSoundtrackEnabled());
+        soundtracksettings.put("soundtrackVolume",
+                State.getSoundtrackVolume());
         settings.put("soundtracksettings", soundtracksettings);
         final JSONObject soundeffectsettings = new JSONObject();
         soundeffectsettings.put("soundEffectsEnabled",
                 State.isSoundEffectsEnabled());
+        soundeffectsettings.put("soundEffectVolume",
+                State.getSoundEffectVolume());
         settings.put("soundEffectssettings", soundeffectsettings);
+
         mainObject.put("playername", State.getPlayerName());
         mainObject.put("coins", State.getCoins());
+
         final JSONObject highscore = new JSONObject();
         highscore.put("score", State.getHighscore());
         mainObject.put("highscore", highscore);

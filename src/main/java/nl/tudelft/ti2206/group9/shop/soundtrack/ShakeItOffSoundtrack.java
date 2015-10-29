@@ -9,7 +9,7 @@ public class ShakeItOffSoundtrack extends AbstractSoundtrack {
     /** Price of the Shake It Off soundtrack in the shop. */
     private static final int PRICE = 150;
     /** Path to be used for the 'Shake It Off' soundtrack. */
-    private static final String PATH_SHAKEITOFF = "soundtrack_ShakeItOff";
+    private static final String PATH_SHAKEITOFF = "soundtrack_shakeitoff";
 
     /** Constructor for the Shake It Off soundtrack. */
     public ShakeItOffSoundtrack() {

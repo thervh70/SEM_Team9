@@ -16,7 +16,6 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
  * A SplashScene that shows "Press any key to continue".
  * @author Maikel, Maarten and Mitchell
  */
-@SuppressWarnings("restriction")
 public final class SplashScene extends AbstractMenuScene {
 
     /** Duration of transition in ms. */

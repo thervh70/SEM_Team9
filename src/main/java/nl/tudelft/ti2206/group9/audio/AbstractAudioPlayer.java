@@ -49,4 +49,12 @@ public abstract class AbstractAudioPlayer {
      */
     public abstract void setPath(final String location);
 
+    /**
+     * Sets the volume of the AudioPlayer based on a given
+     * volume level.
+     *
+     * @param volumeLevel the new default volume level to set.
+     */
+    public abstract void setVolume(final double volumeLevel);
+
 }

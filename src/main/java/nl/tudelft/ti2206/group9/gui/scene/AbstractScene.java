@@ -13,7 +13,6 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
  * by subclasses, which will contain the root Node of the scene.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public abstract class AbstractScene extends Scene {
 
     /** Default root, is an empty StackPane. */

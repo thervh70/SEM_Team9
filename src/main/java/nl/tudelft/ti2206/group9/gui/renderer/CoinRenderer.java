@@ -8,7 +8,6 @@ import nl.tudelft.ti2206.group9.level.entity.Coin;
  * Renders a Coin in the World.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class CoinRenderer extends AbstractBoxRenderer<Coin> {
 
     /** The amount of degrees the coin should rotate per tick. */

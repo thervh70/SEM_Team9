@@ -12,7 +12,6 @@ import nl.tudelft.ti2206.group9.util.GameObserver.Input;
 /**
  * @author Mathias
  */
-@SuppressWarnings("restriction")
 public class KeyMap {
 
     /** Links KeyCodes to Actions. */

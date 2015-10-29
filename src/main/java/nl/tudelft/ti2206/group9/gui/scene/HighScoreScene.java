@@ -1,9 +1,5 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-
-import java.util.List;
-
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -22,10 +18,13 @@ import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter;
 import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter.ResultCallback;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
+import java.util.List;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+
 /**
  * @author Maikel on 16/10/2015.
  */
-@SuppressWarnings("restriction")
 public class HighScoreScene extends AbstractMenuScene {
 
     /** Types of buttons. */
@@ -136,6 +135,7 @@ public class HighScoreScene extends AbstractMenuScene {
         button.setOnAction(event -> {
             playButtonSound();
             if (type == BType.HIGHSCORES_BACK) {
+                HighscoreClientAdapter.disconnect();
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.HIGHSCORES_BACK);
                 ShaftEscape.setScene(new MainMenuScene());
@@ -171,5 +171,11 @@ public class HighScoreScene extends AbstractMenuScene {
         scoreList.setFocusTraversable(false);
         scoreList.setItems(SCORE_LIST);
         return scoreList;
+    }
+
+    /** Override background, the Highscore background shows "Highscore". */
+    @Override
+    public String getBackgroundPath() {
+        return "highscoreBackground.png";
     }
 }
