@@ -27,7 +27,6 @@ import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 
-import java.time.Instant;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -367,6 +366,7 @@ public class ShopScene extends AbstractMenuScene {
      */
     private void setPreviewFunction(final Button b,
                                     final AbstractSoundtrack s) {
+        final int playTime = 7000;
         boolean soundEnabled = State.isSoundtrackEnabled();
         b.setOnAction(event -> {
             final Timer timer = new Timer();
@@ -385,7 +385,7 @@ public class ShopScene extends AbstractMenuScene {
             State.setSoundtrackEnabled(true);
             MainMenuScene.getAudioPlayer().pause();
             s.getSoundtrackPlayer().play();
-            timer.schedule(task, 7000);
+            timer.schedule(task, playTime);
         });
 
     }
