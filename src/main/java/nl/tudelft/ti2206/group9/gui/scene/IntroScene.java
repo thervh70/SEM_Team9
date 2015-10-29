@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 
 import java.util.ArrayList;
@@ -34,6 +35,10 @@ public class IntroScene extends AbstractScene {
     private boolean done = false;
     /** Index for the third item of the list. */
     private final int three = 3;
+    /** Sound path for prologue soundtrack. */
+    private final String path = "nl/tudelft/ti2206/group9/audio/prologue.wav";
+    /** Soundtrack player. */
+    private final SoundtrackPlayer player = new SoundtrackPlayer(path);
 
     @Override
     public Parent createRoot() {
@@ -107,6 +112,7 @@ public class IntroScene extends AbstractScene {
 
         this.setOnKeyPressed(e -> {
             if (done) {
+                player.stop();
                 ShaftEscape.setScene(new GameScene());
             }
         });
@@ -128,7 +134,8 @@ public class IntroScene extends AbstractScene {
      */
     private void showStory(final Label prologue, final Label[] labelList,
                            final ImageView[] imageList, final Label key) {
-        showPrologue(prologue).setOnFinished(event ->
+        showPrologue(prologue).setOnFinished(event -> {
+            player.play();
             showLine(labelList[0]).setOnFinished(event1 ->
                 showLine(labelList[1]).setOnFinished(event2 ->
                     showLine(labelList[2]).setOnFinished(event3 ->
@@ -145,8 +152,8 @@ public class IntroScene extends AbstractScene {
                         )
                     )
                 )
-            )
-        );
+            );
+        });
     }
 
     /**
