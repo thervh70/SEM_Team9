@@ -29,7 +29,9 @@ public final class SettingsScene extends AbstractMenuScene {
      */
     private static final double MAX_VOLUME = 10;
 
-    /** Effect slider row. */
+    /**
+     * Effect slider row.
+     */
     private static final int EFFECT_SLIDER_COLUMN = 4;
 
     /** Soundtrack slider row. */
@@ -153,8 +155,8 @@ public final class SettingsScene extends AbstractMenuScene {
                     soundEffectVolumeSlider.setDisable(true);
                 }
                 OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDEFFECTS, s);
-             }
-             button.setText(s);
+            }
+            button.setText(s);
         });
     }
 

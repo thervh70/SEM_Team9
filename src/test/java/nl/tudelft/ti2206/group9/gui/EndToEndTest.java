@@ -60,7 +60,9 @@ public class EndToEndTest extends ApplicationTest {
     private static final long LONG = 5 * TARDINESS;
     /** Sleep countdown. */
     private static final long SLEEP_COUNTDOWN = 3500;
-    /** Sleep countdown. */
+    /**
+     * Sleep countdown.
+     */
     private static final long SLEEP_CONNECT_TIMEOUT = 6000;
     /** Sleep factor playerDies. */
     private static final long SLEEP_FACTOR = 10;
