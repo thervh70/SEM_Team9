@@ -61,6 +61,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final long SLEEP_COUNTDOWN = 3500;
     /** Sleep countdown. */
     private static final long SLEEP_CONNECT_TIMEOUT = 6000;
+    /** Prologe sleep time. */
+    private static final long PROLOGUE = 21000;
     /** Sleep factor playerDies. */
     private static final long SLEEP_FACTOR = 10;
     /** Amount of coins for e2e. */
@@ -193,9 +195,9 @@ public class EndToEndTest extends ApplicationTest {
         sleep(SHORT);
 
         goThroughAccounts1();
+        goThroughGamePlay();
         goThroughSettings();
         goThroughShop();
-        goThroughGamePlay();
         goThroughAccounts2();
         goThroughDeathPopup();
         goThroughHighscores();
@@ -215,6 +217,8 @@ public class EndToEndTest extends ApplicationTest {
         clearTextField(ACCOUNT_TEXTFIELD);
         typeName();
         clickButton(ACCOUNT_NEW);
+        sleep(PROLOGUE);
+        keyboard(KeyCode.ENTER); //Sleep during prologue and dismiss
     }
 
     private void goThroughSettings() {
