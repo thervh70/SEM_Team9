@@ -1,19 +1,5 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -40,10 +26,23 @@ import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.After;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 @SuppressWarnings("restriction")
@@ -77,8 +76,9 @@ public class EndToEndTest extends ApplicationTest {
 
     private static final int ACCOUNT_LOAD = 0;
     private static final int ACCOUNT_NEW = 1;
-    private static final int ACCOUNT_TEXTFIELD = 2;
-    private static final int ACCOUNT_LIST = 3;
+    private static final int ACCOUNT_DEL = 2;
+    private static final int ACCOUNT_TEXTFIELD = 3;
+    private static final int ACCOUNT_LIST = 4;
 
     private static final int SETTINGS_BACK = 0;
     private static final int SETTINGS_SOUNDTRACK = 1;
@@ -184,6 +184,7 @@ public class EndToEndTest extends ApplicationTest {
         goThroughGamePlay();
         goThroughAccounts2();
         goThroughDeathPopup();
+        goThroughAccounts3();
 
         clickButton(MAIN_QUIT);
     }
@@ -284,6 +285,14 @@ public class EndToEndTest extends ApplicationTest {
         sleep(COUNTDOWN);
         playerDies();
         clickPopup(DEATH_TOMAIN);
+    }
+
+    private void goThroughAccounts3() {
+        clickButton(MAIN_ACCOUNTS);
+        clickButton(ACCOUNT_LIST);
+        clickButton(ACCOUNT_DEL);
+        typeName();
+        clickButton(ACCOUNT_NEW);
     }
 
     private void typeName() {
