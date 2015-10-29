@@ -1,12 +1,17 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
@@ -81,8 +86,8 @@ public class AccountScene extends AbstractMenuScene {
      * @param button the button of which the function has to be set
      * @param type the type of the incoming button
      */
-    protected static void setButtonFunction(final Button button,
-                                            final BType type) {
+    protected void setButtonFunction(final Button button,
+                                     final BType type) {
         button.setOnAction(event -> {
             playButtonSound();
             if (type == BType.ACC_LOAD) {
@@ -97,7 +102,7 @@ public class AccountScene extends AbstractMenuScene {
             } else if (type == BType.ACC_NEW) {
                 if (checkPlayerName(INPUT.getText())) {
                     createNewAccount(INPUT.getText());
-                    goToMainMenuScene();
+                    fadeoutAnimation();
                 } else {
                     showWarningPopup("The given name is either invalid\n"
                                     + "or already exists");
@@ -110,6 +115,26 @@ public class AccountScene extends AbstractMenuScene {
                 refreshContent();
             }
         });
+    }
+
+    /**
+     * Generate a fade transition to the {@link IntroScene}.
+     * Only used in case of a new user.
+     */
+    private void fadeoutAnimation() {
+        setFill(Color.BLACK);
+        this.getRoot().setDisable(true);
+
+        Timeline timeline = new Timeline();
+        final int duration = 2000;
+        KeyFrame key = new KeyFrame(Duration.millis(duration),
+                new KeyValue(this.getRoot().opacityProperty(), 0));
+        timeline.getKeyFrames().add(key);
+        timeline.setOnFinished((ae) -> {
+            ShaftEscape.setScene(new IntroScene());
+            clearAccountScene();
+        });
+        timeline.play();
     }
 
     /**
