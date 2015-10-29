@@ -108,11 +108,7 @@ public class AccountScene extends AbstractMenuScene {
                                     + "or already exists");
                 }
             } else {
-                final String selected = list.getSelectionModel().
-                        getSelectedItem();
-                new File(SaveGame.getDefaultSaveDir() + selected + ".ses")
-                            .delete();
-                refreshContent();
+                deleteAccount();
             }
         });
     }
@@ -180,6 +176,18 @@ public class AccountScene extends AbstractMenuScene {
         State.resetAll();
         State.setPlayerName(name);
         SaveGame.saveGame();
+        refreshContent();
+    }
+
+    /**
+     * Delete a selected account.
+     */
+    private static void deleteAccount() {
+        final String selected = list.getSelectionModel().
+                getSelectedItem();
+        new File(SaveGame.getDefaultSaveDir() + selected + ".ses")
+                .delete();
+        OBSERVABLE.notify(Category.MENU, Menu.ACC_DEL);
         refreshContent();
     }
 
