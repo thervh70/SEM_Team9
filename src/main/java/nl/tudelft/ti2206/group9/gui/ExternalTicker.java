@@ -20,6 +20,7 @@ import nl.tudelft.ti2206.group9.gui.renderer.GroupWallRenderer;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 
 /**
@@ -101,7 +102,8 @@ public class ExternalTicker extends AnimationTimer {
         final Label coinsLabel = new Label("Coins: "
                 + State.getCoins());
         final Label powerupLabel = new Label("Invulnerable: "
-                + (int) Math.ceil(PowerupInvulnerable.getSecondsLeft()));
+                + (int) Math.ceil(AbstractPowerup.getSecondsLeft(
+                        PowerupInvulnerable.class)));
 
         Style.setLabelStyle(nameLabel);
         Style.setLabelStyle(highLabel);

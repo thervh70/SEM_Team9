@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
@@ -49,7 +50,7 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
         super.update();
         updatePosition();
         hue += HUE_PER_TICK;
-        if (PowerupInvulnerable.isActive()) {
+        if (AbstractPowerup.isActive(PowerupInvulnerable.class)) {
             invulMat.setDiffuseColor(
                     Color.hsb(hue, 1, OVERLAY_BRIGHT, OVERLAY_ALPHA));
             invulBox.setVisible(true);
