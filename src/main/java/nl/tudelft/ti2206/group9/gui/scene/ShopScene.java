@@ -261,7 +261,7 @@ public class ShopScene extends AbstractMenuScene {
                     + "group9/gui/scene/music_notes.png");
             final BackgroundImage backImg = new BackgroundImage(playImg,
                     null, null, null, null);
-            Background back = new Background(backImg);
+            final Background back = new Background(backImg);
             previewButton.setBackground(back);
             previewButton.setMinWidth(PREVIEW_SIZE);
             previewButton.setMinHeight(PREVIEW_SIZE);
@@ -366,7 +366,7 @@ public class ShopScene extends AbstractMenuScene {
                 + "group9/gui/scene/music_notes.png");
         final Image pauseImg = new Image("nl/tudelft/ti2206/"
                 + "group9/gui/scene/pause.png");
-        boolean soundEnabled = State.isSoundtrackEnabled();
+        final boolean soundEnabled = State.isSoundtrackEnabled();
         b.setOnAction(event -> {
             b.setTooltip(new Tooltip("Stop soundtrack"));
             State.setSoundtrackEnabled(true);

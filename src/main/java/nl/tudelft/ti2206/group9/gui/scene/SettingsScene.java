@@ -127,10 +127,10 @@ public final class SettingsScene extends AbstractMenuScene {
      * @param type Type of button
      */
     protected static void setToggleButtonFunction(final Button button,
-                                            final BType type) {
+            final BType type) {
         button.setOnAction(event -> {
             String s;
-             if (type == BType.SETTING_SOUNDTRACK) {
+            if (type == BType.SETTING_SOUNDTRACK) {
                 MainMenuScene.getAudioPlayer().stop();
                 State.setSoundtrackEnabled(!State.isSoundtrackEnabled());
                 if (State.isSoundtrackEnabled()) {
@@ -154,7 +154,7 @@ public final class SettingsScene extends AbstractMenuScene {
                 }
                 button.setText(s);
                 OBSERVABLE.notify(Category.MENU, Menu.SETTING_SOUNDEFFECTS, s);
-             }
+            }
         });
     }
 
@@ -165,11 +165,11 @@ public final class SettingsScene extends AbstractMenuScene {
      */
     private static void setBackButtonFunction(final Button b) {
         b.setOnAction(event -> {
-                    playButtonSound();
-                    OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
-                    ShaftEscape.setScene(new MainMenuScene());
-                }
-        );
+            playButtonSound();
+            OBSERVABLE.notify(Category.MENU, Menu.SETTINGS_BACK);
+            ShaftEscape.setScene(new MainMenuScene());
+        }
+                );
     }
 
     /**
@@ -180,7 +180,7 @@ public final class SettingsScene extends AbstractMenuScene {
      * @param backButton    that needs a tooltip.
      */
     private static void setTooltips(final Button soundtrButton,
-                                    final Button soundEfButton, final Button backButton) {
+            final Button soundEfButton, final Button backButton) {
         soundtrButton.setTooltip(new Tooltip("Enable/disable soundtrack"));
         soundEfButton.setTooltip(new Tooltip("Enable/disable sound effects"));
         backButton.setTooltip(new Tooltip("Back to main menu"));
@@ -213,8 +213,8 @@ public final class SettingsScene extends AbstractMenuScene {
      * @return Return created slider.
      */
     private static Slider createVolumeSlider(final int column,
-                                             final int row, final boolean enabled, final SType sliderType,
-                                             final double initialVolume) {
+            final int row, final boolean enabled, final SType sliderType,
+            final double initialVolume) {
         final Slider slider = new Slider();
         final int majorTickUnit = 5;
         final int minorTickCount = 4;
@@ -252,13 +252,13 @@ public final class SettingsScene extends AbstractMenuScene {
      * @param type   the given type of slider to set the volume of.
      */
     protected static void setSliderFunction(final Slider slider,
-                                            final SType type) {
+            final SType type) {
         slider.setOnMouseReleased(event -> {
             if (type == SType.VOLUME_SOUNDTRACK) {
                 State.setSoundtrackVolume(soundtrackVolumeSlider.
                         getValue() / VOLUME_CONVERTER);
                 MainMenuScene.getAudioPlayer().
-                        setVolume(State.getSoundtrackVolume());
+                setVolume(State.getSoundtrackVolume());
             } else {
                 State.setSoundEffectVolume(soundEffectVolumeSlider.
                         getValue() / VOLUME_CONVERTER);
