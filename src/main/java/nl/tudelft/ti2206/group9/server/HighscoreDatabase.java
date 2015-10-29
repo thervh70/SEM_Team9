@@ -36,6 +36,9 @@ public final class HighscoreDatabase {
             final String name = (String) arg[0];
             final int score = (int) arg[1];
             final Highscore h = new Highscore(name, score);
+            if (database.contains(h)) {
+                return "SUCCESS";  // Do not add HS when it's already in the DB
+            }
             for (int i = 0; i < database.size(); i++) {
                 if (database.get(i).getScore() < score) {
                     database.add(i, h);
@@ -46,30 +49,28 @@ public final class HighscoreDatabase {
             return "SUCCESS";
         });
         args.put("get global", new String[]{"<amount:int>"});
-        queries.put("get global",
-                arg -> {
-                    final int amount = (int) arg[0];
-                    if (amount < 0) {
-                        return "";
-                    }
-                    final StringBuffer theOutput = new StringBuffer();
-                    createList(amount, theOutput, h -> !theOutput.toString()
-                            .contains("[" + h.getUser() + ","));
-                    return theOutput.toString();
-                });
+        queries.put("get global", arg -> {
+            final int amount = (int) arg[0];
+            if (amount < 0) {
+                return "";
+            }
+            final StringBuffer theOutput = new StringBuffer();
+            createList(amount, theOutput, h -> !theOutput.toString()
+                    .contains("[" + h.getUser() + ","));
+            return theOutput.toString();
+        });
         args.put("get user", new String[]{"<name:string>", "<amount:int>"});
-        queries.put("get user",
-                arg -> {
-                    final int amount = (int) arg[1];
-                    if (amount < 0) {
-                        return "";
-                    }
-                    final String name = (String) arg[0];
-                    final StringBuffer theOutput = new StringBuffer();
-                    createList(amount, theOutput,
-                            h -> h.getUser().equals(name));
-                    return theOutput.toString();
-                });
+        queries.put("get user", arg -> {
+            final int amount = (int) arg[1];
+            if (amount < 0) {
+                return "";
+            }
+            final String name = (String) arg[0];
+            final StringBuffer theOutput = new StringBuffer();
+            createList(amount, theOutput,
+                    h -> h.getUser().equals(name));
+            return theOutput.toString();
+        });
 
         for (final String q : queries.keySet()) {
             supported.add(q.split(" "));

@@ -13,9 +13,11 @@ public class StateTest {
     public void setUp() {
         State.reset();
         State.setCoins(0);
+        State.setHighscore(0);
         assertEquals(0, State.getCoins());
         assertEquals(0, Track.getDistance(), DELTA);
         assertEquals(0, State.getScore(), DELTA);
+        assertEquals(0, State.getHighscore(), DELTA);
     }
 
     @Test
