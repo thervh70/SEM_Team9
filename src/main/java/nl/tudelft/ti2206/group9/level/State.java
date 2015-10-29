@@ -21,14 +21,19 @@ public final class State {
     /** Name of the player. */
     private static String playerName;
 
-    /**
-     * Boolean to determine whether soundtracks are enabled.
-     */
+    /** Boolean to determine whether soundtracks are enabled. */
     private static boolean soundtrackEnabled;
-    /**
-     * Boolean to determine whether sound effects are enabled.
-     */
+    /** Boolean to determine whether sound effects are enabled. */
     private static boolean soundEffectsEnabled;
+    /** Records the sound effect volume and is initially 0.5. */
+    private static double soundEffectVolume = 1.0 / 2.0;
+    /** Records the soundtrack volume and is initially 0.5. */
+    private static double soundtrackVolume = 1.0 / 2.0;
+
+    /**
+     * Constant for the default volume level of a soundtrack.
+     */
+    private static final double DEFAULT_VOLUMELEVEL = 0.5;
 
     /** Cannot be constructed. */
     private State() { }
@@ -41,6 +46,8 @@ public final class State {
         CurrentItems.reset();
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
+        soundEffectVolume = DEFAULT_VOLUMELEVEL;
+        soundtrackVolume = DEFAULT_VOLUMELEVEL;
     }
 
     /** Reset data that should be reset every run. */
@@ -162,6 +169,38 @@ public final class State {
      */
     public static void setSoundEffectsEnabled(final boolean newSoundEnabled) {
         State.soundEffectsEnabled = newSoundEnabled;
+    }
+
+    /**
+     * Gets the current soundtrack volume.
+     * @return current soundtrackVolume (double).
+     */
+    public static double getSoundtrackVolume() {
+         return soundtrackVolume;
+    }
+
+    /**
+     * Sets the current soundtrack volume.
+     * @param newVolume (double) new soundtrack volume to set.
+     */
+    public static void setSoundtrackVolume(final double newVolume) {
+        soundtrackVolume = newVolume;
+    }
+
+    /**
+     * Gets the current sound effect volume.
+     * @return current soundEffectVolume (double).
+     */
+    public static double getSoundEffectVolume() {
+        return soundEffectVolume;
+    }
+
+    /**
+     * Sets the current sound effects volume.
+     * @param newVolume (double) new sound effects volume to set.
+     */
+    public static void setSoundEffectVolume(final double newVolume) {
+        soundEffectVolume = newVolume;
     }
 
 }

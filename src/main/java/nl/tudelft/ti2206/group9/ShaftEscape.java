@@ -1,6 +1,7 @@
 package nl.tudelft.ti2206.group9;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.gui.Style;
@@ -10,6 +11,7 @@ import nl.tudelft.ti2206.group9.gui.scene.SplashScene;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
+import nl.tudelft.ti2206.group9.server.HighscoreClientAdapter;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
@@ -110,11 +112,13 @@ public class ShaftEscape extends Application {
      * @param popup the Popup that is to be shown.
      */
     public static void showPopup(final Popup popup) {
-        popup.show(stage);
-        popup.setAnchorX(stage.getX() + stage.getWidth() / 2
-                - popup.getWidth() / 2);
-        popup.setAnchorY(stage.getY() + stage.getHeight() / 2
-                - popup.getHeight() / 2);
+        Platform.runLater(() -> {
+            popup.show(stage);
+            popup.setAnchorX(stage.getX() + stage.getWidth() / 2
+                    - popup.getWidth() / 2);
+            popup.setAnchorY(stage.getY() + stage.getHeight() / 2
+                    - popup.getHeight() / 2);
+        });
     }
 
     /** Exits the Application. */
@@ -126,6 +130,7 @@ public class ShaftEscape extends Application {
         LOGGER.writeToFile();
         stage.close();
         InternalTicker.stop();
+        HighscoreClientAdapter.disconnect();
         MainMenuScene.getAudioPlayer().stop();
         CurrentItems.getSoundtrackPlayer().resetSpeed();
         CurrentItems.getSoundtrackPlayer().stop();

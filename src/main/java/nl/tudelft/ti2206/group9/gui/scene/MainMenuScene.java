@@ -1,15 +1,17 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
+import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 
 /**
@@ -50,6 +52,7 @@ public final class MainMenuScene extends AbstractMenuScene {
     @Override
     public Node[] createContent() {
         apMainMenu.play();
+        apMainMenu.setVolume(State.getSoundtrackVolume());
         final Button startButton = createButton("START!", 2, 22);
         final Button settingsButton = createButton("SETTINGS", 0, 24);
         final Button exitButton = createButton("EXIT", 4, 24);
@@ -95,6 +98,7 @@ public final class MainMenuScene extends AbstractMenuScene {
                 ShaftEscape.setScene(new GameScene());
             } else if (type == BType.ACCOUNT) {
                 OBSERVABLE.notify(Category.MENU, Menu.LOAD_MENU);
+                apMainMenu.stop();
                 SaveGame.saveGame();
                 ShaftEscape.setScene(new AccountScene());
             } else if (type == BType.SHOP) {
@@ -115,5 +119,11 @@ public final class MainMenuScene extends AbstractMenuScene {
      */
     public static SoundtrackPlayer getAudioPlayer() {
         return apMainMenu;
+    }
+
+    /** Override background, the Main menu background shows "Menu". */
+    @Override
+    public String getBackgroundPath() {
+        return "menuBackground.png";
     }
 }

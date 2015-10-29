@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.level.save;
 
 import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.level.StateTest;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 
 import org.junit.Test;
@@ -18,6 +19,8 @@ public final class WriterTest {
     private static final String NAME = "Henk";
     private static final int COINS = 45;
     private static final int SCORE = 3560;
+    private static final double SOUNDTRACK_VOLUME = 0.7;
+    private static final double SOUNDEFFECT_VOLUME = 0.3;
 
     @Test
     public void testSaveGame() {
@@ -35,6 +38,8 @@ public final class WriterTest {
         State.setPlayerName(NAME);
         State.setCoins(COINS);
         State.setHighscore(SCORE);
+        State.setSoundtrackVolume(SOUNDTRACK_VOLUME);
+        State.setSoundEffectVolume(SOUNDEFFECT_VOLUME);
 
         ShopItemUnlocker.setUnlockedShopItem("Iron Man", true);
         ShopItemUnlocker.setUnlockedShopItem("Plank", true);
@@ -47,6 +52,10 @@ public final class WriterTest {
         assertEquals(NAME, State.getPlayerName());
         assertEquals(COINS, State.getCoins());
         assertEquals(SCORE, State.getHighscore());
+        assertEquals(SOUNDTRACK_VOLUME, State.getSoundtrackVolume(),
+                StateTest.DELTA);
+        assertEquals(SOUNDEFFECT_VOLUME, State.getSoundEffectVolume(),
+                StateTest.DELTA);
 
         assertEquals(false, ShopItemUnlocker.getUnlockedShopItem("Andy"));
         assertEquals(true, ShopItemUnlocker.getUnlockedShopItem("Noob"));

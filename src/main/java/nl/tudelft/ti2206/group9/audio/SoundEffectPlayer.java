@@ -36,6 +36,7 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
         if (State.isSoundEffectsEnabled()) {
             initializeAudio(path);
         }
+        this.setVolume(State.getSoundEffectVolume());
     }
 
     @Override
@@ -103,6 +104,14 @@ public class SoundEffectPlayer extends AbstractAudioPlayer {
         if (State.isSoundEffectsEnabled()) {
             initializeAudio(path);
         }
+    }
+
+    @Override
+    public void setVolume(final double volumeLevel) {
+        if (audioClip == null) {
+            return;
+        }
+        audioClip.setVolume(volumeLevel);
     }
 
 }

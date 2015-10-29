@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene; // NOPMD - many imports are needed
 
+import javafx.application.Platform;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -99,6 +100,8 @@ public final class GameScene extends AbstractScene {
         keyBindings();
 
         CurrentItems.getSoundtrackPlayer().play();
+        CurrentItems.getSoundtrackPlayer().
+                setVolume(State.getSoundtrackVolume());
         startTickers();
         return root;
     }
@@ -268,7 +271,7 @@ public final class GameScene extends AbstractScene {
                     && update.getArgs()[0].equals("AbstractObstacle")) {
                 State.checkHighscore();
                 stopTickers();
-                showDeathMenu();
+                Platform.runLater(GameScene::showDeathMenu);
             }
         }
     }
@@ -325,10 +328,14 @@ public final class GameScene extends AbstractScene {
                 }
             } else if (update.getSpec() == Player.COLLISION) {
                 if (soundMapCollide.get(update.getArgs()[0]) != null) {
+                    soundMapCollide.get(update.getArgs()[0]).
+                            setVolume(State.getSoundEffectVolume());
                     soundMapCollide.get(update.getArgs()[0]).play();
                 }
             } else {
                 if (soundMap.get(update.getSpec()) != null) {
+                    soundMap.get(update.getSpec()).
+                            setVolume(State.getSoundEffectVolume());
                     soundMap.get(update.getSpec()).play();
                 }
             }
