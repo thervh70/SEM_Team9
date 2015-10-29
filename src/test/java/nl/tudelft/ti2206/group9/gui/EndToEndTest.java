@@ -109,6 +109,9 @@ public class EndToEndTest extends ApplicationTest {
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
 
+    private static final int PAUSE_TOGGLE_TRACK = 0;
+    private static final int PAUSE_TOGGLE_EFFECT = 1;
+
     private static final int DEATH_RETRY = 0;
     private static final int DEATH_TOMAIN = 1;
 
@@ -304,6 +307,10 @@ public class EndToEndTest extends ApplicationTest {
 
         keyboard(KeyCode.ESCAPE);
         sleep(LONG);
+
+        clickPopupToggle(PAUSE_TOGGLE_TRACK);
+        clickPopupToggle(PAUSE_TOGGLE_EFFECT);
+
         clickPopup(PAUSE_RESUME);
         sleep(SLEEP_COUNTDOWN);
 
@@ -548,6 +555,25 @@ public class EndToEndTest extends ApplicationTest {
                 clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
             } catch (ArrayIndexOutOfBoundsException e) {
                 fail("ButtonNo " + buttonNo + " does not exist");
+            }
+            sleep(SHORT);
+        }
+    }
+
+    private void clickPopupToggle(final int toggleNo) {
+        if (AbstractScene.getPopup() == null) {
+            fail("There is no popup available in AbstractScene!");
+        } else {
+            ObservableList<Node> buttons;
+            sleep(1);
+            buttons = ((VBox) AbstractScene.getPopup().getContent().get(1))
+                    .getChildren();
+            buttons = ((HBox) buttons.get(1)).getChildren();
+            buttons = ((VBox) buttons.get(toggleNo)).getChildren();
+            try {
+                clickOn(buttons.get(1), MouseButton.PRIMARY);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                fail("ToggleNo " + toggleNo + " does not exist");
             }
             sleep(SHORT);
         }
