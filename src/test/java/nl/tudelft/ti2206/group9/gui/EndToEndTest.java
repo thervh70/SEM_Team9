@@ -1,19 +1,5 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -24,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
@@ -39,13 +27,27 @@ import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.server.HighscoreServerIntegrationTest;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
+import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
-
 import org.junit.After;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class EndToEndTest extends ApplicationTest {
 
@@ -98,6 +100,9 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SHOP_BACK = 1;
     private static final int SHOP_SKIN_NOOB = 0;
     private static final int SHOP_SKIN_ANDY = 1;
+
+    private static final int SHOP_SOUND_ANIMALS = 0;
+    private static final int SHOP_SOUND_RADIOACTIVE = 1;
 
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
@@ -251,6 +256,14 @@ public class EndToEndTest extends ApplicationTest {
         State.setCoins(COINS); //Make sure player has enough coins
         clickButton(MAIN_SHOP);
 
+        buySkins();
+        goToShopSoundTrackTab();
+        buySoundtracks();
+
+        clickButton(SHOP_BACK);
+    }
+
+    private void buySkins() {
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
@@ -260,8 +273,26 @@ public class EndToEndTest extends ApplicationTest {
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getAndySkin());
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
+    }
 
-        clickButton(SHOP_BACK);
+    private void buySoundtracks() {
+        final ObservableList<AbstractSoundtrack> soundList =
+                ShopItemLoader.loadSoundtracksToList();
+        final String radioactive = soundList.get(SHOP_SOUND_RADIOACTIVE).getItemName();
+        final String animals = soundList.get(SHOP_SOUND_ANIMALS).getItemName();
+
+        shopPreviewSound(SHOP_SOUND_ANIMALS);
+        sleep(LONG);
+
+        assertEquals(CurrentItems.getSoundtrackName(), radioactive);
+        shopBuyActivateSound(SHOP_SOUND_RADIOACTIVE);
+        assertEquals(CurrentItems.getSoundtrackName(), radioactive);
+        shopBuyActivateSound(SHOP_SOUND_ANIMALS);
+        assertEquals(CurrentItems.getSoundtrackName(), radioactive);
+        shopBuyActivateSound(SHOP_SOUND_ANIMALS);
+        assertEquals(CurrentItems.getSoundtrackName(), animals);
+        shopBuyActivateSound(SHOP_SOUND_RADIOACTIVE);
+        assertEquals(CurrentItems.getSoundtrackName(), radioactive);
     }
 
     private void goThroughGamePlay() {
@@ -440,6 +471,53 @@ public class EndToEndTest extends ApplicationTest {
 
         final int buyEquip = 3; // Is the same for each currentSkin
         clickOn(vbox.getChildren().get(buyEquip), MouseButton.PRIMARY);
+        sleep(SHORT);
+    }
+
+    private void goToShopSoundTrackTab() {
+        ObservableList<Node> gridPaneNodes;
+        gridPaneNodes = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+
+        final TabPane pane = (TabPane) gridPaneNodes.get(0);
+        sleep(SHORT);
+
+        final StackPane header = (StackPane) pane.getChildrenUnmodifiable().get(2);
+        final StackPane buttons = (StackPane) header.getChildren().get(1);
+        final Pane soundTab = (Pane) buttons.getChildren().get(1);
+        clickOn(soundTab, MouseButton.PRIMARY);
+        sleep(SHORT);
+    }
+
+    private void shopPreviewSound(final int soundNo) {
+        ObservableList<Node> gridPaneNodes;
+        gridPaneNodes = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+
+        final TabPane tabpane = (TabPane) gridPaneNodes.get(0);
+        final ScrollPane scrollpane =
+                (ScrollPane) tabpane.getTabs().get(1).getContent();
+        final VBox vBox = (VBox) scrollpane.getContent();
+        final HBox hBox = (HBox) vBox.getChildren().get(soundNo);
+
+        final int button = 0;
+        clickOn(hBox.getChildren().get(button), MouseButton.PRIMARY);
+        sleep(SHORT);
+    }
+
+    private void shopBuyActivateSound(final int soundNo) {
+        ObservableList<Node> gridPaneNodes;
+        gridPaneNodes = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+
+        final TabPane tabpane = (TabPane) gridPaneNodes.get(0);
+        final ScrollPane scrollpane =
+                (ScrollPane) tabpane.getTabs().get(1).getContent();
+        final VBox vBox = (VBox) scrollpane.getContent();
+        final HBox hBox = (HBox) vBox.getChildren().get(soundNo);
+
+        final int button = 3;
+        clickOn(hBox.getChildren().get(button), MouseButton.PRIMARY);
         sleep(SHORT);
     }
 
