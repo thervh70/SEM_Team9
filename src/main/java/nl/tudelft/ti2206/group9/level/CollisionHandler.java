@@ -1,12 +1,14 @@
 package nl.tudelft.ti2206.group9.level;
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+
 import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
 import nl.tudelft.ti2206.group9.level.entity.AbstractObstacle;
 import nl.tudelft.ti2206.group9.level.entity.AbstractPickup;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.util.GameObserver;
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * Add all the collision handlers to a CollisionMap.
@@ -41,22 +43,22 @@ public class CollisionHandler {
 
         collisionMap.onCollision(Player.class, AbstractObstacle.class,
                 (collider, collidee) -> {
-                    if (!PowerupInvulnerable.isActive()) {
+                    if (!AbstractPowerup.isActive(PowerupInvulnerable.class)) {
+                        collider.die();
                         OBSERVABLE.notify(
                                 GameObserver.Category.PLAYER,
                                 GameObserver.Player.COLLISION,
                                 AbstractObstacle.class.getSimpleName());
-                        collider.die();
                     }
                 });
 
         collisionMap.onCollision(Player.class, AbstractPickup.class,
                 (collider, collidee) -> {
+                    collidee.doAction();
+                    collidee.selfDestruct();
                     OBSERVABLE.notify(GameObserver.Category.PLAYER,
                             GameObserver.Player.COLLISION,
                             collidee.getClass().getSimpleName());
-                    collidee.doAction();
-                    collidee.selfDestruct();
                 });
 
         return collisionMap;

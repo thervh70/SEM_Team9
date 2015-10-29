@@ -114,7 +114,9 @@ public interface GameObserver extends Observer {
         /** Player collides. optionalArg: name of entity collided with. */
         COLLISION,
         /** The distance has increased a certain amount. optinalArg: newDist */
-        DISTANCE_INCREASE
+        DISTANCE_INCREASE,
+        /** The powerup has ended having an effect. optionalArg: PowerupType */
+        POWERUPOVER
     }
 
     /**
