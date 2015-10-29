@@ -10,7 +10,6 @@ import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
  * Renders the entire group of entities, and keeps it up-to-date.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class GroupEntitiesRenderer extends AbstractGroupRenderer
         implements Listener {
 

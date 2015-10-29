@@ -39,7 +39,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * This scene shows the 3D Game world and the 2D score overlay.
  * @author Robin, Maarten
  */
-@SuppressWarnings("restriction")
 public final class GameScene extends AbstractScene {
 
     /** The translation of the camera. */

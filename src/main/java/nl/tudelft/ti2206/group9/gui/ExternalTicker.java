@@ -25,7 +25,6 @@ import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 /**
  * @author Maarten.
  */
-@SuppressWarnings("restriction")
 public class ExternalTicker extends AnimationTimer {
 
     /** Height of the box in-game where the score is displayed. */

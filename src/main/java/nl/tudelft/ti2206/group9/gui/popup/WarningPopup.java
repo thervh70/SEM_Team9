@@ -19,7 +19,6 @@ import nl.tudelft.ti2206.group9.gui.Style;
 /**
  * @author Mathias
  */
-@SuppressWarnings("restriction")
 public class WarningPopup extends Popup {
 
     /** Width of the PopUpMenu. */

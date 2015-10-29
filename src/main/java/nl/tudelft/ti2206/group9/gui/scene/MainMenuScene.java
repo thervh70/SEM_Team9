@@ -19,7 +19,6 @@ import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
  * and exit button.
  * @author Maikel, Maarten, Mitchell and Robin
  */
-@SuppressWarnings("restriction")
 public final class MainMenuScene extends AbstractMenuScene {
 
     /**

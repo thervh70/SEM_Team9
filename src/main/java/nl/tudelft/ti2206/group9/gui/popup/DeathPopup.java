@@ -14,7 +14,6 @@ import nl.tudelft.ti2206.group9.level.State;
  * DeathPopup, which is to be shown when the Player dies.
  * @author Maarten, Robin
  */
-@SuppressWarnings("restriction")
 public class DeathPopup extends AbstractInfoPopup {
 
     /**

@@ -10,7 +10,6 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * @param <T> the type of the entity traced.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public abstract class AbstractBoxRenderer<T extends AbstractEntity>
             extends Box implements Renderer {
 

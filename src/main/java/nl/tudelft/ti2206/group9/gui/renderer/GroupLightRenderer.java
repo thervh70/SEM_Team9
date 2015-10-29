@@ -11,7 +11,6 @@ import nl.tudelft.ti2206.group9.level.Track;
  * Renders the entire group of lights.
  * @author Robin
  */
-@SuppressWarnings("restriction")
 public class GroupLightRenderer extends AbstractGroupRenderer {
 
     /**
