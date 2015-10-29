@@ -2,13 +2,7 @@ package nl.tudelft.ti2206.group9.shop;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import nl.tudelft.ti2206.group9.shop.skin.AndySkin;
-import nl.tudelft.ti2206.group9.shop.skin.BoySkin;
-import nl.tudelft.ti2206.group9.shop.skin.CaptainSkin;
-import nl.tudelft.ti2206.group9.shop.skin.IronManSkin;
-import nl.tudelft.ti2206.group9.shop.skin.NoobSkin;
-import nl.tudelft.ti2206.group9.shop.skin.PlankSkin;
-import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
+import nl.tudelft.ti2206.group9.shop.skin.*;
 import nl.tudelft.ti2206.group9.shop.soundtrack.AnimalsSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.RadioactiveSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.DuckTalesSoundtrack;
@@ -59,6 +53,16 @@ public final class ShopItemLoader {
      * PLANK skin for the player.
      */
     private static PlankSkin plankSkin;
+
+
+    /**
+     * Skins for teacher skins.
+     */
+    private static ErikSkin erikSkin;
+    private static ArieSkin arieSkin;
+    private static GuidoSkin guidoSkin;
+    private static RiniSkin riniSkin;
+    private static AlbertoSkin albertoSkin;
 
     //Soundtrack items
     /**
@@ -119,6 +123,11 @@ public final class ShopItemLoader {
         ironmanSkin = new IronManSkin();
         noobSkin = new NoobSkin();
         plankSkin = new PlankSkin();
+        guidoSkin = new GuidoSkin();
+        erikSkin = new ErikSkin();
+        arieSkin = new ArieSkin();
+        albertoSkin = new AlbertoSkin();
+        riniSkin = new RiniSkin();
     }
 
     /**
@@ -144,7 +153,8 @@ public final class ShopItemLoader {
         final ObservableList<AbstractSkin> list =
                 FXCollections.observableArrayList();
         list.addAll(noobSkin, andySkin, boySkin,
-                ironmanSkin, captainSkin, plankSkin);
+                ironmanSkin, captainSkin, plankSkin, arieSkin,
+                riniSkin, guidoSkin, erikSkin, albertoSkin);
         return list;
     }
 
