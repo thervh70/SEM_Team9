@@ -19,6 +19,7 @@ import nl.tudelft.ti2206.group9.level.entity.Fence;
 import nl.tudelft.ti2206.group9.level.entity.Log;
 import nl.tudelft.ti2206.group9.level.entity.Pillar;
 import nl.tudelft.ti2206.group9.level.entity.Player;
+import nl.tudelft.ti2206.group9.level.entity.PowerupDestroy;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.entity.PowerupSlowness;
 import nl.tudelft.ti2206.group9.util.GameObserver;
@@ -83,6 +84,7 @@ public class Track {
             list.add(new Coin(p));
             list.add(new PowerupInvulnerable(p));
             list.add(new PowerupSlowness(p));
+            list.add(new PowerupDestroy(p));
             return list.get((int) (Math.random() * list.size()));
         });
     }
