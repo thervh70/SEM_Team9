@@ -1,5 +1,8 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
@@ -20,8 +23,6 @@ import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.audio.SoundtrackPlayer;
 import nl.tudelft.ti2206.group9.gui.Style;
 
-import java.util.ArrayList;
-
 /**
  * Small scene that contains the intro for our game.
  * It has several animations and a link to the GameScene.
@@ -30,19 +31,20 @@ import java.util.ArrayList;
 public class IntroScene extends AbstractScene {
 
     /** Font size for lines. */
-    private final int lineSize = 25;
+    private static final int LINE_SIZE = 25;
     /** Flag for EventHandler. */
-    private boolean done = false;
+    private boolean done;
     /** Index for the third item of the list. */
-    private final int three = 3;
+    private static final int THIRD_LABEL = 3;
     /** Sound path for prologue soundtrack. */
-    private final String path = "nl/tudelft/ti2206/group9/audio/prologue.wav";
+    private static final String PATH = "nl/tudelft/ti2206/group9/"
+            + "audio/prologue.wav";
     /** Soundtrack player. */
-    private final SoundtrackPlayer player = new SoundtrackPlayer(path);
+    private final SoundtrackPlayer player = new SoundtrackPlayer(PATH);
 
     @Override
     public Parent createRoot() {
-        StackPane pane = new StackPane();
+        final StackPane pane = new StackPane();
         final BackgroundFill fill = new BackgroundFill(Color.BLACK,
                 new CornerRadii(0), new Insets(0));
         final Background background = new Background(fill);
@@ -92,8 +94,8 @@ public class IntroScene extends AbstractScene {
      * It also contains the listener for exiting this scene.
      * @return A list of nodes used for filling the scene.
      */
-    private ArrayList<Node> showIntro() {
-        final ArrayList<Node> nodeList = new ArrayList<>();
+    private List<Node> showIntro() {
+        final List<Node> nodeList = new ArrayList<>();
         final Label prologue = new Label("Prologue");
         final Label key = new Label("Press a key to continue.");
         key.setVisible(false);
@@ -102,7 +104,7 @@ public class IntroScene extends AbstractScene {
         final ImageView[] imageList = setupImages();
 
         final int spacing = 10;
-        VBox box = new VBox(spacing);
+        final VBox box = new VBox(spacing);
         box.setAlignment(Pos.BASELINE_CENTER);
         box.getChildren().addAll(labelList);
         box.getChildren().addAll(imageList);
@@ -139,7 +141,7 @@ public class IntroScene extends AbstractScene {
             showLine(labelList[0]).setOnFinished(event1 ->
                 showLine(labelList[1]).setOnFinished(event2 ->
                     showLine(labelList[2]).setOnFinished(event3 ->
-                        showLine(labelList[three]).setOnFinished(event4 ->
+                        showLine(labelList[THIRD_LABEL]).setOnFinished(event4 ->
                             showImage(imageList[0]).setOnFinished(event5 ->
                                 showImage(imageList[1]).setOnFinished(event6 ->
                                     showImage(imageList[2]).setOnFinished(
@@ -187,7 +189,7 @@ public class IntroScene extends AbstractScene {
         l.setVisible(true);
         l.setOpacity(0);
         l.setTextFill(Color.WHITE);
-        l.setFont(Style.getFont(lineSize));
+        l.setFont(Style.getFont(LINE_SIZE));
         final FadeTransition ft = new FadeTransition(
                 Duration.millis(3000), l);
         ft.setFromValue(0);
@@ -222,7 +224,7 @@ public class IntroScene extends AbstractScene {
         l.setVisible(true);
         l.setOpacity(0);
         l.setTextFill(Color.WHITE);
-        l.setFont(Style.getFont(lineSize));
+        l.setFont(Style.getFont(LINE_SIZE));
         final FadeTransition ft = new FadeTransition(
                 Duration.millis(750), l);
         ft.setCycleCount(Animation.INDEFINITE);
