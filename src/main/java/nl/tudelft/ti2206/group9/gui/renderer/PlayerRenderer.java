@@ -12,7 +12,6 @@ import nl.tudelft.ti2206.group9.shop.CurrentItems;
  * Renders a Coin in the World.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 
     /** Thanks to this constant, the hue rotates once every second. */

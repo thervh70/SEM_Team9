@@ -7,7 +7,6 @@ import nl.tudelft.ti2206.group9.level.entity.Fence;
  * Renders a Fence in the World.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class FenceRenderer extends AbstractBoxRenderer<Fence> {
 
     /**

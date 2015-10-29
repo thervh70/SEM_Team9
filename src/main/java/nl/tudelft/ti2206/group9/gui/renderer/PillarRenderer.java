@@ -7,7 +7,6 @@ import nl.tudelft.ti2206.group9.level.entity.Pillar;
  * Renders a Coin in the World.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class PillarRenderer extends AbstractBoxRenderer<Pillar> {
 
     /**

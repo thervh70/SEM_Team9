@@ -12,7 +12,6 @@ import nl.tudelft.ti2206.group9.level.Track;
  * This class renders the two Walls in the scene.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class GroupWallRenderer extends AbstractGroupRenderer {
 
     /**

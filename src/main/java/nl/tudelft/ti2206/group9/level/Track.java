@@ -146,7 +146,6 @@ public class Track {
      * the track, like a treadmill).
      * @param dist amount of units to move the track
      */
-    @SuppressWarnings("restriction")
     public final void moveTrack(final double dist) {
         synchronized (this) {
             for (int i = 0; i < entities.size(); i++) {
@@ -208,7 +207,6 @@ public class Track {
      * @param entity entity to remove
      * @return this Track, allowing for chaining.
      */
-    @SuppressWarnings("restriction")
     public final Track removeEntity(final AbstractEntity entity) {
         synchronized (this) {
             entity.getCenter().setZ(GameScene.CAMERA_TRANS.getZ() - 1);

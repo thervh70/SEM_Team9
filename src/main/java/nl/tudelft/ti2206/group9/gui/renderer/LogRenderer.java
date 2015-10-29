@@ -7,7 +7,6 @@ import nl.tudelft.ti2206.group9.level.entity.Log;
  * Renders a Coin in the Log.
  * @author Maarten
  */
-@SuppressWarnings("restriction")
 public class LogRenderer extends AbstractBoxRenderer<Log> {
 
     /**

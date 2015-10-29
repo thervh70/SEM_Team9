@@ -45,8 +45,6 @@ import org.junit.After;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
-
-@SuppressWarnings("restriction")
 public class EndToEndTest extends ApplicationTest {
 
     /** Saved to use <pre>rootNode()</pre>. */
