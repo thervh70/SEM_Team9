@@ -1,5 +1,6 @@
 package nl.tudelft.ti2206.group9.gui.scene;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -25,6 +26,10 @@ import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 import nl.tudelft.ti2206.group9.util.GameObserver;
+
+import java.time.Instant;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
@@ -362,28 +367,26 @@ public class ShopScene extends AbstractMenuScene {
      */
     private void setPreviewFunction(final Button b,
                                     final AbstractSoundtrack s) {
-        final Image playImg = new Image("nl/tudelft/ti2206/"
-                + "group9/gui/scene/music_notes.png");
-        final Image pauseImg = new Image("nl/tudelft/ti2206/"
-                + "group9/gui/scene/pause.png");
         boolean soundEnabled = State.isSoundtrackEnabled();
         b.setOnAction(event -> {
-            b.setTooltip(new Tooltip("Stop soundtrack"));
+            final Timer timer = new Timer();
+            final TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        s.getSoundtrackPlayer().stop();
+                        b.setDisable(false);
+                        State.setSoundtrackEnabled(soundEnabled);
+                        MainMenuScene.getAudioPlayer().play();
+                    });
+                }
+            };
+            b.setDisable(true);
             State.setSoundtrackEnabled(true);
             MainMenuScene.getAudioPlayer().pause();
             s.getSoundtrackPlayer().play();
-            b.setBackground(new Background(new BackgroundImage(pauseImg,
-                    null, null, null, null)));
-            if (s.getSoundtrackPlayer().isRunning()) {
-                b.setTooltip(new Tooltip("Play soundtrack"));
-                s.getSoundtrackPlayer().stop();
-                State.setSoundtrackEnabled(soundEnabled);
-                MainMenuScene.getAudioPlayer().play();
-                b.setBackground(new Background(new BackgroundImage(playImg,
-                        null, null, null, null)));
-
-            }
-
+            timer.schedule(task, 7000);
         });
+
     }
 }
