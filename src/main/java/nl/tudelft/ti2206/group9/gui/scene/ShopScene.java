@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -177,11 +178,14 @@ public class ShopScene extends AbstractMenuScene {
         if (s.getItemPrice() >= State.getCoins()
                 && !ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setDisable(true);
+            buy.setTooltip(new Tooltip("Not enough coins :("));
         } else {
             buy.setDisable(false);
+            buy.setTooltip(new Tooltip("Buy skin!"));
         }
         if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setText("EQUIP");
+            buy.setTooltip(new Tooltip("Equip skin!"));
         }
     }
 
@@ -316,10 +320,13 @@ public class ShopScene extends AbstractMenuScene {
         if (s.getItemPrice() >= State.getCoins()
                 && !ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setDisable(true);
+            buy.setTooltip(new Tooltip("Not enough coins :("));
         } else {
             buy.setDisable(false);
+            buy.setTooltip(new Tooltip("Buy soundtrack!"));
         }
         if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
+            buy.setTooltip(new Tooltip("Activate soundtrack!"));
             buy.setText("ACTIVATE");
         }
     }
@@ -329,6 +336,7 @@ public class ShopScene extends AbstractMenuScene {
      * @param b Button to be set.
      */
     private void setPreviewButtonHover(final Button b) {
+        b.setTooltip(new Tooltip("Play soundtrack"));
         b.setOnMouseEntered(e -> {
             b.setScaleX(BUTTON_HOVER_SCALE);
             b.setScaleY(BUTTON_HOVER_SCALE);
@@ -354,15 +362,15 @@ public class ShopScene extends AbstractMenuScene {
                 + "group9/gui/scene/pause.png");
 
         boolean soundEnabled = State.isSoundtrackEnabled();
-
-
         b.setOnAction(event -> {
+            b.setTooltip(new Tooltip("Stop soundtrack"));
             State.setSoundtrackEnabled(true);
             MainMenuScene.getAudioPlayer().pause();
             s.getSoundtrackPlayer().play();
             b.setBackground(new Background(new BackgroundImage(pauseImg,
                     null, null, null, null)));
             if (s.getSoundtrackPlayer().isRunning()) {
+                b.setTooltip(new Tooltip("Play soundtrack"));
                 s.getSoundtrackPlayer().stop();
                 State.setSoundtrackEnabled(soundEnabled);
                 MainMenuScene.getAudioPlayer().play();
