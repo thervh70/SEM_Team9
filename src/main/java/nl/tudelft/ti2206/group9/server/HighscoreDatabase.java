@@ -85,7 +85,8 @@ public final class HighscoreDatabase {
     }
 
     /** Hiding public constructor. */
-    private HighscoreDatabase() { }
+    private HighscoreDatabase() {
+    }
 
     /**
      * Parses the query and returns the correct result.
@@ -152,9 +153,14 @@ public final class HighscoreDatabase {
             usage.append(' ').append(arg[i]);
 
             switch (q[i].split(":")[1].split(">")[0]) {
-                case "int":    parsedArgs.add(Integer.parseInt(arg[i])); break;
-                case "string": parsedArgs.add((String) arg[i]); break;
-                default: break;
+                case "int":
+                    parsedArgs.add(Integer.parseInt(arg[i]));
+                    break;
+                case "string":
+                    parsedArgs.add((String) arg[i]);
+                    break;
+                default:
+                    break;
             }
         }
         if (arg.length < q.length) {

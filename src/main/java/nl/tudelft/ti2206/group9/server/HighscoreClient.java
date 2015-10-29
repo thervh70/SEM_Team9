@@ -128,7 +128,8 @@ public class HighscoreClient {
                     from = fromServer.readLine();
                     response.append(from);
                     if (from.contains("\4")) {
-                        response.deleteCharAt(response.length() - 1); break;
+                        response.deleteCharAt(response.length() - 1);
+                        break;
                     }
                     if (from.startsWith("USAGE")) {
                         break;
