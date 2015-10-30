@@ -109,7 +109,7 @@ public final class MainMenuScene extends AbstractMenuScene {
                     ShaftEscape.setScene(new SettingsScene());
             } else {
                 OBSERVABLE.notify(Category.MENU, Menu.HIGHSCORES);
-                ShaftEscape.setScene(new HighScoreScene());
+                ShaftEscape.setScene(new HighscoreScene());
             }
         });
     }

@@ -66,7 +66,7 @@ public class SoundtrackPlayer extends AbstractAudioPlayer {
         }
         try {
             mediaPlayer = new MediaPlayer(new Media(uri));
-        } catch (MediaException me) {
+        } catch (IllegalStateException | MediaException me) {
             OBSERVABLE.notify(Category.ERROR, Error.MEDIAEXCEPTION,
                     "SoundtrackPlayer.initializeTune(String)",
                     me.getMessage());
