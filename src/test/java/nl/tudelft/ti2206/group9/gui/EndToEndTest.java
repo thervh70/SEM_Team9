@@ -308,8 +308,13 @@ public class EndToEndTest extends ApplicationTest {
         keyboard(KeyCode.ESCAPE);
         sleep(LONG);
 
+        assertTrue(State.isSoundtrackEnabled());
         clickPopupToggle(PAUSE_TOGGLE_TRACK);
+        assertFalse(State.isSoundtrackEnabled());
+
+        assertTrue(State.isSoundEffectsEnabled());
         clickPopupToggle(PAUSE_TOGGLE_EFFECT);
+        assertFalse(State.isSoundEffectsEnabled());
 
         clickPopup(PAUSE_RESUME);
         sleep(SLEEP_COUNTDOWN);
