@@ -343,7 +343,7 @@ public final class GameScene extends AbstractScene {
 
         /**
          * Handles Powerup updates.
-         * @param update
+         * @param update a given update to be handled.
          */
         private void powerupUpdate(final GameUpdate update) {
             if (update.getArgs().length > 0 && String.valueOf(
