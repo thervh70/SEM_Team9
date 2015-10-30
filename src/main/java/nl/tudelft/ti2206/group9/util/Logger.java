@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.group9.util;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * Add this Logger to GameObservable, and it will log every single action in
@@ -68,7 +68,7 @@ public class Logger implements GameObserver {
         STRINGS.put(Menu.SHOP_BACK, lbl + "Back to main menu");
         STRINGS.put(Menu.ACC_LOAD, lbl + "Pressed \"Load\"");
         STRINGS.put(Menu.ACC_NEW, lbl + "Pressed \"New\"");
-        STRINGS.put(Menu.ACC_BACK, lbl + "Back to main menu");
+        STRINGS.put(Menu.ACC_DEL, lbl + "Pressed \"Delete\"");
 
         lbl = " [PLAYER] ";
         STRINGS.put(Player.COLLISION, lbl + "Collided with %s.");

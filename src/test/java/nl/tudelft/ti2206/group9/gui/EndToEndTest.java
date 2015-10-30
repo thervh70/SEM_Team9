@@ -80,8 +80,9 @@ public class EndToEndTest extends ApplicationTest {
 
     private static final int ACCOUNT_LOAD = 0;
     private static final int ACCOUNT_NEW = 1;
-    private static final int ACCOUNT_TEXTFIELD = 2;
-    private static final int ACCOUNT_LIST = 3;
+    private static final int ACCOUNT_DEL = 2;
+    private static final int ACCOUNT_TEXTFIELD = 3;
+    private static final int ACCOUNT_LIST = 4;
 
     private static final int SETTINGS_BACK = 0;
     private static final int SETTINGS_SOUNDTRACK = 1;
@@ -200,6 +201,7 @@ public class EndToEndTest extends ApplicationTest {
         goThroughAccounts2();
         goThroughDeathPopup();
         goThroughHighscores();
+        goThroughAccounts3();
 
         clickButton(MAIN_QUIT);
     }
@@ -300,6 +302,21 @@ public class EndToEndTest extends ApplicationTest {
         clickPopup(DEATH_RETRY);
         letPlayerSurvive();            // Stop E2E from failing by collision
         sleep(SLEEP_COUNTDOWN);
+        playerDies();
+        clickPopup(DEATH_TOMAIN);
+    }
+
+    private void goThroughAccounts3() {
+        clickButton(MAIN_ACCOUNTS);
+        clickButton(ACCOUNT_LIST);
+        clickButton(ACCOUNT_DEL);
+        clickButton(ACCOUNT_TEXTFIELD);
+        typeName();
+        clickButton(ACCOUNT_NEW);
+        sleep(PROLOGUE);
+        keyboard(KeyCode.ENTER);
+        sleep(SLEEP_COUNTDOWN);
+        keyboard(KeyCode.ESCAPE);
         playerDies();
         clickPopup(DEATH_TOMAIN);
     }
