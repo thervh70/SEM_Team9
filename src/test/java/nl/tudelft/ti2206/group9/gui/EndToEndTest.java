@@ -308,13 +308,7 @@ public class EndToEndTest extends ApplicationTest {
         keyboard(KeyCode.ESCAPE);
         sleep(LONG);
 
-        assertTrue(State.isSoundtrackEnabled());
-        clickPopupToggle(PAUSE_TOGGLE_TRACK);
-        assertFalse(State.isSoundtrackEnabled());
-
-        assertTrue(State.isSoundEffectsEnabled());
-        clickPopupToggle(PAUSE_TOGGLE_EFFECT);
-        assertFalse(State.isSoundEffectsEnabled());
+        switchToggles();
 
         clickPopup(PAUSE_RESUME);
         sleep(SLEEP_COUNTDOWN);
@@ -397,6 +391,24 @@ public class EndToEndTest extends ApplicationTest {
 
     private void typeFaultyName() {
         keyboard(KeyCode.SLASH);
+    }
+
+    private void switchToggles() {
+        assertTrue(State.isSoundtrackEnabled());
+        clickPopupToggle(PAUSE_TOGGLE_TRACK);
+        sleep(SHORT);
+        assertFalse(State.isSoundtrackEnabled());
+        clickPopupToggle(PAUSE_TOGGLE_TRACK);
+        sleep(SHORT);
+        assertTrue(State.isSoundtrackEnabled());
+
+        assertTrue(State.isSoundEffectsEnabled());
+        clickPopupToggle(PAUSE_TOGGLE_EFFECT);
+        sleep(SHORT);
+        assertFalse(State.isSoundEffectsEnabled());
+        clickPopupToggle(PAUSE_TOGGLE_EFFECT);
+        sleep(SHORT);
+        assertTrue(State.isSoundEffectsEnabled());
     }
 
     private void moveAround() {
