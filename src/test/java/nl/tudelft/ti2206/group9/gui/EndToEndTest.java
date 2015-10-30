@@ -60,12 +60,12 @@ public class EndToEndTest extends ApplicationTest {
     private static final long SHORT = 2 * TARDINESS;
     /** Amount of milliseconds the Robot sleeps when sleeping "long". */
     private static final long LONG = 5 * TARDINESS;
-    /** Prologe sleep time. */
-    private static final long PROLOGUE = 21000;
     /** Sleep countdown. */
     private static final long SLEEP_COUNTDOWN = 3500;
-    /** Sleep countdown. */
+    /** Sleep until the client notices it gets no response. */
     private static final long SLEEP_CONNECT_TIMEOUT = 6000;
+    /** Prologe sleep time. */
+    private static final long PROLOGUE = 21000;
     /** Sleep factor playerDies. */
     private static final long SLEEP_FACTOR = 10;
     /** Amount of coins for e2e. */
@@ -102,7 +102,7 @@ public class EndToEndTest extends ApplicationTest {
 
     private static final int SHOP_BACK = 1;
     private static final int SHOP_SKIN_NOOB = 0;
-    private static final int SHOP_SKIN_ANDY = 1;
+    private static final int SHOP_SKIN_PLANK = 1;
 
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
@@ -263,10 +263,10 @@ public class EndToEndTest extends ApplicationTest {
         assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
         assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
-        shopBuyEquipSkin(SHOP_SKIN_ANDY);
+        shopBuyEquipSkin(SHOP_SKIN_PLANK);
         assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
-        shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_ANDY));
+        shopBuyEquipSkin(SHOP_SKIN_PLANK);
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_PLANK));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
         assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
 

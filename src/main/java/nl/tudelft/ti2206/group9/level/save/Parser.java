@@ -36,17 +36,26 @@ public final class Parser {
     /** Players highscore. */
     private static long highScore;
     /** Boolean to indicate if skins are unlocked. */
-    private static boolean andy, captain, boy, plank, iron;
+    private static boolean andy, captain, boy, plank, iron,
+            erik, arie, guido, rini, alberto;
     /** Boolean to indicate if soundtracks are unlocked. */
     private static boolean animals, duckTales, mario, nyanCat, shakeItOff;
-    /** Boolean to indicate whether soundtrack is enabled. */
+    /**
+     * Boolean to indicate whether soundtrack is enabled.
+     */
 
     private static boolean soundtrackEnabled;
-    /** Boolean to indicate whether the sound effects are enabled. */
+    /**
+     * Boolean to indicate whether the sound effects are enabled.
+     */
     private static boolean soundEffectsEnabled;
-    /** Double to indicate the value of the soundEffectVolume. */
+    /**
+     * Double to indicate the value of the soundEffectVolume.
+     */
     private static double soundEffectVolume;
-    /** Double to indicate the value of the soundtrackVolume. */
+    /**
+     * Double to indicate the value of the soundtrackVolume.
+     */
     private static double soundtrackVolume;
 
     /**
@@ -127,6 +136,12 @@ public final class Parser {
         captain = (Boolean) skins.get("captain");
         iron = (Boolean) skins.get("iron");
         plank = (Boolean) skins.get("plank");
+        arie = (Boolean) skins.get("arie");
+        rini = (Boolean) skins.get("rini");
+        guido = (Boolean) skins.get("guido");
+        erik = (Boolean) skins.get("erik");
+        alberto = (Boolean) skins.get("alberto");
+
 
         final JSONObject soundtracks = (JSONObject) ((HashMap) shopItems).
                 get("soundtracks");
@@ -166,6 +181,11 @@ public final class Parser {
         ShopItemUnlocker.setUnlockedShopItem("Captain", captain);
         ShopItemUnlocker.setUnlockedShopItem("Iron Man", iron);
         ShopItemUnlocker.setUnlockedShopItem("Plank", plank);
+        ShopItemUnlocker.setUnlockedShopItem("Erik", erik);
+        ShopItemUnlocker.setUnlockedShopItem("Arie", arie);
+        ShopItemUnlocker.setUnlockedShopItem("Rini", rini);
+        ShopItemUnlocker.setUnlockedShopItem("Guido", guido);
+        ShopItemUnlocker.setUnlockedShopItem("Alberto", alberto);
     }
 
     /**

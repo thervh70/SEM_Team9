@@ -105,12 +105,6 @@ public final class Writer {
     @SuppressWarnings("unchecked")
     // JSONObject.put uses HashMap, that gives unchecked warnings.
     private static JSONObject createShopItemsObject() {
-        final JSONObject skins = new JSONObject();
-        skins.put("andy", ShopItemUnlocker.getUnlockedShopItem("Andy"));
-        skins.put("boy", ShopItemUnlocker.getUnlockedShopItem("B-man"));
-        skins.put("captain", ShopItemUnlocker.getUnlockedShopItem("Captain"));
-        skins.put("iron", ShopItemUnlocker.getUnlockedShopItem("Iron Man"));
-        skins.put("plank", ShopItemUnlocker.getUnlockedShopItem("Plank"));
         final JSONObject soundtracks = new JSONObject();
         soundtracks.put("animals", ShopItemUnlocker.
                 getUnlockedShopItem("Animals"));
@@ -129,9 +123,29 @@ public final class Writer {
                 .indexOf(CurrentItems.getSoundtrack()));
 
         final JSONObject shopItems = new JSONObject();
-        shopItems.put("skins", skins);
+        shopItems.put("skins", createSkinsJSON());
         shopItems.put("soundtracks", soundtracks);
         shopItems.put("equipped", equipped);
         return shopItems;
+    }
+
+    /**
+     * @return a JSON object with the unlocked Skins.
+     */
+    @SuppressWarnings("unchecked")
+    // JSONObject.put uses HashMap, that gives unchecked warnings.
+    private static JSONObject createSkinsJSON() {
+        final JSONObject skins = new JSONObject();
+        skins.put("andy", ShopItemUnlocker.getUnlockedShopItem("Andy"));
+        skins.put("boy", ShopItemUnlocker.getUnlockedShopItem("B-man"));
+        skins.put("captain", ShopItemUnlocker.getUnlockedShopItem("Captain"));
+        skins.put("iron", ShopItemUnlocker.getUnlockedShopItem("Iron Man"));
+        skins.put("plank", ShopItemUnlocker.getUnlockedShopItem("Plank"));
+        skins.put("erik", ShopItemUnlocker.getUnlockedShopItem("Erik"));
+        skins.put("rini", ShopItemUnlocker.getUnlockedShopItem("Rini"));
+        skins.put("guido", ShopItemUnlocker.getUnlockedShopItem("Guido"));
+        skins.put("alberto", ShopItemUnlocker.getUnlockedShopItem("Alberto"));
+        skins.put("arie", ShopItemUnlocker.getUnlockedShopItem("Arie"));
+        return skins;
     }
 }

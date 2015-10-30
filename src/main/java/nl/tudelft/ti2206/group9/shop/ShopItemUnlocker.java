@@ -27,8 +27,7 @@ public final class ShopItemUnlocker {
      * This so that this class can't be instantiated,
      * as it is a util class full of static methods.
      */
-    private ShopItemUnlocker() {
-    }
+    private ShopItemUnlocker() { }
 
     /**
      * Creates a Map for all shop items that are unlocked.
@@ -52,6 +51,12 @@ public final class ShopItemUnlocker {
         unlockedShopItemsMap.put("Iron Man", false);
         unlockedShopItemsMap.put("Noob", true);
         unlockedShopItemsMap.put("Plank", false);
+        unlockedShopItemsMap.put("Erik", false);
+        unlockedShopItemsMap.put("Guido", false);
+        unlockedShopItemsMap.put("Rini", false);
+        unlockedShopItemsMap.put("Arie", false);
+        unlockedShopItemsMap.put("Alberto", false);
+
     }
 
     /**
@@ -86,6 +91,15 @@ public final class ShopItemUnlocker {
     public static void setUnlockedShopItem(final String name,
                                            final boolean unlocked) {
         unlockedShopItemsMap.replace(name, unlocked);
+    }
+
+    /** Reset all items to being locked. */
+    public static void reset() {
+        for (final String key : unlockedShopItemsMap.keySet()) {
+            unlockedShopItemsMap.put(key, false);
+        }
+        unlockedShopItemsMap.put("Noob", true);
+        unlockedShopItemsMap.put("Radioactive", true);
     }
 
 }
