@@ -57,6 +57,8 @@ public class EndToEndTest extends ApplicationTest {
     private static final long SHORT = 2 * TARDINESS;
     /** Amount of milliseconds the Robot sleeps when sleeping "long". */
     private static final long LONG = 5 * TARDINESS;
+    /** Prologe sleep time. */
+    private static final long PROLOGUE = 21000;
     /** Sleep countdown. */
     private static final long SLEEP_COUNTDOWN = 3500;
     /** Sleep countdown. */
@@ -302,6 +304,21 @@ public class EndToEndTest extends ApplicationTest {
         clickPopup(DEATH_RETRY);
         letPlayerSurvive();            // Stop E2E from failing by collision
         sleep(SLEEP_COUNTDOWN);
+        playerDies();
+        clickPopup(DEATH_TOMAIN);
+    }
+
+    private void goThroughAccounts3() {
+        clickButton(MAIN_ACCOUNTS);
+        clickButton(ACCOUNT_LIST);
+        clickButton(ACCOUNT_DEL);
+        clickButton(ACCOUNT_TEXTFIELD);
+        typeName();
+        clickButton(ACCOUNT_NEW);
+        sleep(PROLOGUE);
+        keyboard(KeyCode.ENTER);
+        sleep(SLEEP_COUNTDOWN);
+        keyboard(KeyCode.ESCAPE);
         playerDies();
         clickPopup(DEATH_TOMAIN);
     }
