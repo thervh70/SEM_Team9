@@ -1,24 +1,5 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -29,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.ti2206.group9.ShaftEscape;
@@ -45,9 +28,28 @@ import nl.tudelft.ti2206.group9.server.HighscoreServerIntegrationTest;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
+import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
+import org.junit.After;
+import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class EndToEndTest extends ApplicationTest {
 
@@ -104,8 +106,14 @@ public class EndToEndTest extends ApplicationTest {
     private static final int SHOP_SKIN_NOOB = 0;
     private static final int SHOP_SKIN_PLANK = 1;
 
+    private static final int SHOP_SOUND_RADIOACTIVE = 0;
+    private static final int SHOP_SOUND_MARIO = 1;
+
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
+
+    private static final int PAUSE_TOGGLE_TRACK = 0;
+    private static final int PAUSE_TOGGLE_EFFECT = 1;
 
     private static final int DEATH_RETRY = 0;
     private static final int DEATH_TOMAIN = 1;
@@ -258,6 +266,15 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughShop() {
         State.setCoins(COINS); //Make sure player has enough coins
         clickButton(MAIN_SHOP);
+
+        buySkins();
+        goToShopSoundTrackTab();
+        buySoundtracks();
+
+        clickButton(SHOP_BACK);
+    }
+
+    private void buySkins() {
         final List<AbstractSkin> list = ShopItemLoader.loadSkinsToList();
 
         assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
@@ -269,8 +286,27 @@ public class EndToEndTest extends ApplicationTest {
         assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_PLANK));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
         assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
+    }
 
-        clickButton(SHOP_BACK);
+    private void buySoundtracks() {
+        final ObservableList<AbstractSoundtrack> soundList =
+                ShopItemLoader.loadSoundtracksToList();
+        final String radioactive =
+                soundList.get(SHOP_SOUND_RADIOACTIVE).getItemName();
+        final String animals = soundList.get(SHOP_SOUND_MARIO).getItemName();
+
+        shopPreviewSound(SHOP_SOUND_MARIO);
+        sleep(LONG);
+
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), radioactive);
+        shopBuyActivateSound(SHOP_SOUND_RADIOACTIVE);
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), radioactive);
+        shopBuyActivateSound(SHOP_SOUND_MARIO);
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), radioactive);
+        shopBuyActivateSound(SHOP_SOUND_MARIO);
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), animals);
+        shopBuyActivateSound(SHOP_SOUND_RADIOACTIVE);
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), radioactive);
     }
 
     private void goThroughGamePlay() {
@@ -280,6 +316,9 @@ public class EndToEndTest extends ApplicationTest {
 
         keyboard(KeyCode.ESCAPE);
         sleep(LONG);
+
+        switchToggles();
+
         clickPopup(PAUSE_RESUME);
         sleep(SLEEP_COUNTDOWN);
 
@@ -378,6 +417,24 @@ public class EndToEndTest extends ApplicationTest {
         keyboard(KeyCode.SLASH);
     }
 
+    private void switchToggles() {
+        assertTrue(State.isSoundtrackEnabled());
+        clickPopupToggle(PAUSE_TOGGLE_TRACK);
+        sleep(SHORT);
+        assertFalse(State.isSoundtrackEnabled());
+        clickPopupToggle(PAUSE_TOGGLE_TRACK);
+        sleep(SHORT);
+        assertTrue(State.isSoundtrackEnabled());
+
+        assertTrue(State.isSoundEffectsEnabled());
+        clickPopupToggle(PAUSE_TOGGLE_EFFECT);
+        sleep(SHORT);
+        assertFalse(State.isSoundEffectsEnabled());
+        clickPopupToggle(PAUSE_TOGGLE_EFFECT);
+        sleep(SHORT);
+        assertTrue(State.isSoundEffectsEnabled());
+    }
+
     private void moveAround() {
         final int s1 = 5 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
         final int s2 = 75 * InternalTicker.NANOS_PER_TICK / InternalTicker.E6;
@@ -467,6 +524,54 @@ public class EndToEndTest extends ApplicationTest {
         sleep(SHORT);
     }
 
+    private void goToShopSoundTrackTab() {
+        ObservableList<Node> gridPaneNodes;
+        gridPaneNodes = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+
+        final TabPane pane = (TabPane) gridPaneNodes.get(0);
+        sleep(SHORT);
+
+        final StackPane header =
+                (StackPane) pane.getChildrenUnmodifiable().get(2);
+        final StackPane buttons = (StackPane) header.getChildren().get(1);
+        final Pane soundTab = (Pane) buttons.getChildren().get(1);
+        clickOn(soundTab, MouseButton.PRIMARY);
+        sleep(SHORT);
+    }
+
+    private void shopPreviewSound(final int soundNo) {
+        ObservableList<Node> gridPaneNodes;
+        gridPaneNodes = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+
+        final TabPane tabpane = (TabPane) gridPaneNodes.get(0);
+        final ScrollPane scrollpane =
+                (ScrollPane) tabpane.getTabs().get(1).getContent();
+        final VBox vBox = (VBox) scrollpane.getContent();
+        final HBox hBox = (HBox) vBox.getChildren().get(soundNo);
+
+        final int button = 0;
+        clickOn(hBox.getChildren().get(button), MouseButton.PRIMARY);
+        sleep(SHORT);
+    }
+
+    private void shopBuyActivateSound(final int soundNo) {
+        ObservableList<Node> gridPaneNodes;
+        gridPaneNodes = rootNode(stage).getScene().getRoot()
+                .getChildrenUnmodifiable();
+
+        final TabPane tabpane = (TabPane) gridPaneNodes.get(0);
+        final ScrollPane scrollpane =
+                (ScrollPane) tabpane.getTabs().get(1).getContent();
+        final VBox vBox = (VBox) scrollpane.getContent();
+        final HBox hBox = (HBox) vBox.getChildren().get(soundNo);
+
+        final int button = 3;
+        clickOn(hBox.getChildren().get(button), MouseButton.PRIMARY);
+        sleep(SHORT);
+    }
+
     private void pausePopup(final int buttonNo) {
         if (AbstractScene.getPopup() == null) {
             fail("The Pause Popup is not available.");
@@ -492,6 +597,25 @@ public class EndToEndTest extends ApplicationTest {
                 clickOn(buttons.get(buttonNo), MouseButton.PRIMARY);
             } catch (ArrayIndexOutOfBoundsException e) {
                 fail("ButtonNo " + buttonNo + " does not exist");
+            }
+            sleep(SHORT);
+        }
+    }
+
+    private void clickPopupToggle(final int toggleNo) {
+        if (AbstractScene.getPopup() == null) {
+            fail("There is no popup available in AbstractScene!");
+        } else {
+            ObservableList<Node> buttons;
+            sleep(1);
+            buttons = ((VBox) AbstractScene.getPopup().getContent().get(1))
+                    .getChildren();
+            buttons = ((HBox) buttons.get(1)).getChildren();
+            buttons = ((VBox) buttons.get(toggleNo)).getChildren();
+            try {
+                clickOn(buttons.get(1), MouseButton.PRIMARY);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                fail("ToggleNo " + toggleNo + " does not exist");
             }
             sleep(SHORT);
         }
