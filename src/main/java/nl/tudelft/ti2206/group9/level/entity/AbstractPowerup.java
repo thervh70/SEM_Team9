@@ -3,6 +3,7 @@ package nl.tudelft.ti2206.group9.level.entity;
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import nl.tudelft.ti2206.group9.level.InternalTicker;
@@ -53,14 +54,15 @@ public abstract class AbstractPowerup extends AbstractPickup {
      * Is called every step in Track.
      */
     public static void step() {
-        for (final Class<? extends AbstractPowerup> c : countdown.keySet()) {
-            if (!cheat.get(c) && countdown.get(c) > 0) {
-                countdown.put(c, countdown.get(c) - 1);
-                if (countdown.get(c) == 0) {
+        for (final Entry<Class<? extends AbstractPowerup>, Boolean> e
+                : cheat.entrySet()) {
+            if (!e.getValue() && countdown.get(e.getKey()) > 0) {
+                countdown.put(e.getKey(), countdown.get(e.getKey()) - 1);
+                if (countdown.get(e.getKey()) == 0) {
                     OBSERVABLE.notify(
                             GameObserver.Category.PLAYER,
                             GameObserver.Player.POWERUPOVER,
-                            c.getSimpleName());
+                            e.getKey().getSimpleName());
                 }
             }
         }
