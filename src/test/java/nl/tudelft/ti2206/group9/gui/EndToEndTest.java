@@ -57,8 +57,6 @@ public class EndToEndTest extends ApplicationTest {
     private static final long SHORT = 2 * TARDINESS;
     /** Amount of milliseconds the Robot sleeps when sleeping "long". */
     private static final long LONG = 5 * TARDINESS;
-    /** Prologe sleep time. */
-    private static final long PROLOGUE = 21000;
     /** Sleep countdown. */
     private static final long SLEEP_COUNTDOWN = 3500;
     /** Sleep countdown. */
@@ -349,14 +347,6 @@ public class EndToEndTest extends ApplicationTest {
         assertEquals("Fred", firstItem.substring(0, "Fred".length()));
 
         clickButton(HIGHSCORES_BACK);
-    }
-
-    private void goThroughAccounts3() {
-        clickButton(MAIN_ACCOUNTS);
-        clickButton(ACCOUNT_LIST);
-        clickButton(ACCOUNT_DEL);
-        typeName();
-        clickButton(ACCOUNT_NEW);
     }
 
     private void typeName() {
