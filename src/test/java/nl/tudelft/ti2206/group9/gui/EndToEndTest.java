@@ -1,5 +1,24 @@
 package nl.tudelft.ti2206.group9.gui; // NOPMD - many imports
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -25,26 +44,10 @@ import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.server.HighscoreServerIntegrationTest;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
+import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Logger;
 import nl.tudelft.ti2206.group9.util.Point3D;
-import org.junit.After;
-import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class EndToEndTest extends ApplicationTest {
 
@@ -255,16 +258,17 @@ public class EndToEndTest extends ApplicationTest {
     private void goThroughShop() {
         State.setCoins(COINS); //Make sure player has enough coins
         clickButton(MAIN_SHOP);
+        final List<AbstractSkin> list = ShopItemLoader.loadSkinsToList();
 
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getAndySkin());
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_ANDY));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
 
         clickButton(SHOP_BACK);
     }

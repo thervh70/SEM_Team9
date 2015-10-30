@@ -88,7 +88,7 @@ public class ShopScene extends AbstractMenuScene {
         amountLabel = createLabel("", COLUMN_CONSTRAINT, ROW_CONSTRAINT);
         currentSoundtrack.setMinWidth(LABEL_WIDTH);
         currentSoundtrack.setText("SOUNDTRACK: "
-                + CurrentItems.getSoundtrackName());
+                + CurrentItems.getSoundtrack().getItemName());
         final Button backButton = createButton("BACK", 0, ROW_CONSTRAINT);
         final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
         amountLabel.setText(Integer.toString(State.getCoins()));
@@ -243,9 +243,9 @@ public class ShopScene extends AbstractMenuScene {
         setSoundBuyButtonVisability(buyButton, s);
         buyButton.setOnAction(event -> {
             if (ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
-                CurrentItems.setSoundtrackPlayer(s);
+                CurrentItems.setSoundtrack(s);
                 currentSoundtrack.setText("SOUNDTRACK: "
-                        + CurrentItems.getSoundtrackName());
+                        + CurrentItems.getSoundtrack().getItemName());
             } else {
                 if (State.getCoins() >= s.getItemPrice()) {
                     State.setCoins(State.getCoins() - s.getItemPrice());

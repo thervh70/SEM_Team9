@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
+import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.Base64Writer;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -103,16 +105,12 @@ public final class Writer {
     @SuppressWarnings("unchecked")
     // JSONObject.put uses HashMap, that gives unchecked warnings.
     private static JSONObject createShopItemsObject() {
-        final JSONObject shopItems = new JSONObject();
-
         final JSONObject skins = new JSONObject();
         skins.put("andy", ShopItemUnlocker.getUnlockedShopItem("Andy"));
         skins.put("boy", ShopItemUnlocker.getUnlockedShopItem("B-man"));
         skins.put("captain", ShopItemUnlocker.getUnlockedShopItem("Captain"));
         skins.put("iron", ShopItemUnlocker.getUnlockedShopItem("Iron Man"));
         skins.put("plank", ShopItemUnlocker.getUnlockedShopItem("Plank"));
-        shopItems.put("skins", skins);
-
         final JSONObject soundtracks = new JSONObject();
         soundtracks.put("animals", ShopItemUnlocker.
                 getUnlockedShopItem("Animals"));
@@ -123,8 +121,17 @@ public final class Writer {
                 getUnlockedShopItem("Nyan Cat"));
         soundtracks.put("shakeItOff", ShopItemUnlocker.
                 getUnlockedShopItem("Shake It Off"));
-        shopItems.put("soundtracks", soundtracks);
 
+        final JSONObject equipped = new JSONObject();
+        equipped.put("skin", ShopItemLoader.loadSkinsToList()
+                .indexOf(CurrentItems.getSkin()));
+        equipped.put("soundtrack", ShopItemLoader.loadSoundtracksToList()
+                .indexOf(CurrentItems.getSoundtrack()));
+
+        final JSONObject shopItems = new JSONObject();
+        shopItems.put("skins", skins);
+        shopItems.put("soundtracks", soundtracks);
+        shopItems.put("equipped", equipped);
         return shopItems;
     }
 }

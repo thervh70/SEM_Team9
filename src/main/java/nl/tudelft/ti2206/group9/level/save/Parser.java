@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.HashMap;
 
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
+import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.Base64Reader;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -133,6 +135,13 @@ public final class Parser {
         mario = (Boolean) soundtracks.get("mario");
         nyanCat = (Boolean) soundtracks.get("nyanCat");
         shakeItOff = (Boolean) soundtracks.get("shakeItOff");
+
+        final JSONObject equipped = (JSONObject) ((HashMap) shopItems).
+                get("equipped");
+        CurrentItems.setSkin(ShopItemLoader.loadSkinsToList()
+                .get(((Long) equipped.get("skin")).intValue()));
+        CurrentItems.setSoundtrack(ShopItemLoader.loadSoundtracksToList()
+                .get(((Long) equipped.get("soundtrack")).intValue()));
     }
 
     /**
