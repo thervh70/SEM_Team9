@@ -211,7 +211,7 @@ public class ShopScene extends AbstractMenuScene {
             if (type == BType.SHOP_BACK) {
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.SHOP_BACK);
-                for (AbstractSoundtrack s
+                for (final AbstractSoundtrack s
                         : ShopItemLoader.loadSoundtracksToList()) {
                     s.getSoundtrackPlayer().stop();
                     State.setSoundtrackEnabled(soundtrackEnabled);
