@@ -4,9 +4,6 @@ package nl.tudelft.ti2206.group9.gui; // NOPMD - too many imports, but no way
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
