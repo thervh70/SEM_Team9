@@ -14,10 +14,8 @@ import nl.tudelft.ti2206.group9.shop.CurrentItems;
  */
 public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 
-    /** A given amount of degrees which is used for rotating. */
-    private static final int DEGREES = 360;
     /** Thanks to this constant, the hue rotates once every second. */
-    private static final double HUE_PER_TICK = DEGREES / InternalTicker.FPS;
+    private static final double HUE_PER_TICK = 360 / InternalTicker.FPS;
     /** Size of the invulnerability overlay, relative to 1. */
     private static final double OVERLAY_SCALE = 1.001;
     /** The alpha value (opacity) of the invulnerability overlay. */
