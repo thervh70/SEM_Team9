@@ -325,6 +325,10 @@ public final class GameScene extends AbstractScene {
                     update.getArgs()[0]).equals("PowerupSlowness")) {
                 updateSpeed();
             }
+            if (update.getArgs().length > 0 && String.valueOf(
+                    update.getArgs()[0]).equals("PowerupInvulnerable")) {
+                CurrentItems.getSoundtrackPlayer().setVolume(0.0);
+            }
             if (update.getSpec() == Player.DISTANCE_INCREASE) {
                 updateSpeed();
             } else if (update.getSpec() == Player.COLLISION) {

@@ -26,9 +26,6 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
     /** The brightness of the invulnerability overlay. */
     private static final double OVERLAY_BRIGHT = 0.4;
 
-    /** Value of the volume by default.  */
-    private static final double DEFAULT_VOLUME = 0.5;
-
     /** Material for the invulnerability overlay. */
     private final PhongMaterial invulMat = new PhongMaterial();
     /** Box for the invulnerability overlay. */
@@ -60,12 +57,10 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
                     Color.hsb(hue, 1, OVERLAY_BRIGHT, OVERLAY_ALPHA));
             invulBox.setVisible(true);
             invulBox.setManaged(true);
-            CurrentItems.getSoundtrackPlayer().setVolume(0.0);
         } else {
             invulMat.setDiffuseColor(Color.hsb(hue, 0, 0, 0));
             invulBox.setVisible(false);
             invulBox.setManaged(false);
-            CurrentItems.getSoundtrackPlayer().setVolume(DEFAULT_VOLUME);
         }
     }
 
