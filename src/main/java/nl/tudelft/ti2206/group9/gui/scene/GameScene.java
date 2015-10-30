@@ -28,6 +28,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
 import nl.tudelft.ti2206.group9.level.entity.Player;
+import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.entity.PowerupSlowness;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
@@ -321,14 +322,7 @@ public final class GameScene extends AbstractScene {
             if (update.getCat() != Category.PLAYER) {
                 return;
             }
-            if (update.getArgs().length > 0 && String.valueOf(
-                    update.getArgs()[0]).equals("PowerupSlowness")) {
-                updateSpeed();
-            }
-            if (update.getArgs().length > 0 && String.valueOf(
-                    update.getArgs()[0]).equals("PowerupInvulnerable")) {
-                CurrentItems.getSoundtrackPlayer().setVolume(0.0);
-            }
+            powerupUpdate(update);
             if (update.getSpec() == Player.DISTANCE_INCREASE) {
                 updateSpeed();
             } else if (update.getSpec() == Player.COLLISION) {
@@ -343,6 +337,26 @@ public final class GameScene extends AbstractScene {
                             State.getSoundEffectVolume());
                     soundMap.get(update.getSpec()).play();
                 }
+            }
+        }
+
+        /**
+         * Handles Powerup updates.
+         * @param update
+         */
+        private void powerupUpdate(final GameUpdate update) {
+            if (update.getArgs().length > 0 && String.valueOf(
+                    update.getArgs()[0]).equals("PowerupSlowness")) {
+                updateSpeed();
+            }
+            if (update.getArgs().length > 0 && String.valueOf(
+                    update.getArgs()[0]).equals("PowerupInvulnerable")) {
+                CurrentItems.getSoundtrackPlayer().setVolume(0.0);
+            }
+            if (update.getSpec() == Player.POWERUPOVER
+                    & !AbstractPowerup.isActive(PowerupInvulnerable.class)) {
+                CurrentItems.getSoundtrackPlayer().
+                    setVolume(State.getSoundtrackVolume());
             }
         }
 
