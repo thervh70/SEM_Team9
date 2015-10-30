@@ -1,8 +1,5 @@
 package nl.tudelft.ti2206.group9.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
@@ -14,8 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import nl.tudelft.ti2206.group9.ShaftEscape;
 import nl.tudelft.ti2206.group9.gui.renderer.AbstractGroupRenderer;
@@ -31,18 +26,21 @@ import nl.tudelft.ti2206.group9.level.entity.PowerupDestroy;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.entity.PowerupSlowness;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Maarten.
  */
 public class ExternalTicker extends AnimationTimer {
 
     /** Height of the box in-game where the score is displayed. */
-    private static final int SCORE_BOX_HEIGHT = 130;
+    private static final int SCORE_BOX_HEIGHT = 160;
     /** Width of the box in-game where the score is displayed. */
-    private static final int SCORE_BOX_WIDTH = 140;
+    private static final int SCORE_BOX_WIDTH = 160;
 
     /** Distance between labels in overlay. */
-    private static final int LABEL_DISTANCE = 16;
+    private static final int LABEL_DISTANCE = 10;
 
     /** Label for the countdownLabel animation. */
     private final Label countdownLabel = new Label();
@@ -163,7 +161,7 @@ public class ExternalTicker extends AnimationTimer {
         final int offsetY = 50;
 
         countdownLabel.setText(Integer.toString(index));
-        countdownLabel.setFont(Font.font("Roboto", FontWeight.BOLD, textSize));
+        countdownLabel.setFont(Style.getFont(textSize));
         countdownLabel.setTextFill(Color.WHITE);
         countdownLabel.setLayoutX(ShaftEscape.WIDTH / 2 - offsetX);
         countdownLabel.setLayoutY(ShaftEscape.HEIGHT / 2 - offsetY);

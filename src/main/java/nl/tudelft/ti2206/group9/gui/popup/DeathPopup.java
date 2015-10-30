@@ -5,7 +5,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.scene.HighscoreScene;
 import nl.tudelft.ti2206.group9.gui.scene.MainMenuScene;
 import nl.tudelft.ti2206.group9.level.State;
@@ -42,12 +44,18 @@ public class DeathPopup extends AbstractInfoPopup {
 
     @Override
     public Node[] createContent() {
-        final Text text = new Text("Game Ended");
+        final int headerSize = 18;
+        final int textSize = 14;
+        final Text header = new Text("Game Ended");
+        header.setFont(Style.getFont(headerSize));
+        header.setTextAlignment(TextAlignment.CENTER);
 
         final String s = "Final Score: " + (int) State.getScore()
                 + "\n\nHigh Score: " + State.getHighscore()
                 + "\n\nTotal amount of coins: " + State.getCoins();
         final Text scoreText = new Text(s);
+        scoreText.setFont(Style.getFont(textSize));
+        scoreText.setTextAlignment(TextAlignment.CENTER);
 
         final Button toHighscores = createButton("Highscores");
         toHighscores.setOnMouseClicked(e -> {
@@ -57,7 +65,7 @@ public class DeathPopup extends AbstractInfoPopup {
             ShaftEscape.setScene(new HighscoreScene());
         });
 
-        return new Node[]{text, scoreText, toHighscores};
+        return new Node[]{header, scoreText, toHighscores};
     }
 
 }

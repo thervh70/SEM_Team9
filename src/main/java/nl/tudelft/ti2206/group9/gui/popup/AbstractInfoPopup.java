@@ -28,7 +28,7 @@ public abstract class AbstractInfoPopup extends Popup {
     /** Size of the HBox. */
     protected static final double HBOX_SPACING = 10;
     /** Size of the VBox. */
-    protected static final double VBOX_SPACING = 50;
+    protected static final double VBOX_SPACING = 30;
     /** Width for label and text input.*/
     private static final int CELL_WIDTH = 120;
     /** Height for label and text input.*/
