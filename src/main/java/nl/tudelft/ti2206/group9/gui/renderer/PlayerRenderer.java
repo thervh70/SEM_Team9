@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
 import nl.tudelft.ti2206.group9.level.entity.Player;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
@@ -14,8 +15,10 @@ import nl.tudelft.ti2206.group9.shop.CurrentItems;
  */
 public class PlayerRenderer extends AbstractBoxRenderer<Player> {
 
+    /** A given amount of degrees which is used for rotating. */
+    private static final int DEGREES = 360;
     /** Thanks to this constant, the hue rotates once every second. */
-    private static final double HUE_PER_TICK = 360 / InternalTicker.FPS;
+    private static final double HUE_PER_TICK =  DEGREES / InternalTicker.FPS;
     /** Size of the invulnerability overlay, relative to 1. */
     private static final double OVERLAY_SCALE = 1.001;
     /** The alpha value (opacity) of the invulnerability overlay. */
@@ -49,7 +52,7 @@ public class PlayerRenderer extends AbstractBoxRenderer<Player> {
         super.update();
         updatePosition();
         hue += HUE_PER_TICK;
-        if (PowerupInvulnerable.isActive()) {
+        if (AbstractPowerup.isActive(PowerupInvulnerable.class)) {
             invulMat.setDiffuseColor(
                     Color.hsb(hue, 1, OVERLAY_BRIGHT, OVERLAY_ALPHA));
             invulBox.setVisible(true);
