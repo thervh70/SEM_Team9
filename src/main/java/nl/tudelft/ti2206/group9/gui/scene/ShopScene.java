@@ -275,7 +275,6 @@ public class ShopScene extends AbstractMenuScene {
         for (final AbstractSoundtrack s : items) {
             final HBox hbox = new HBox(BOX_SPACING);
             final Button previewButton = new Button();
-            setPreviewVisibility(visible, previewButton);
             setPreviewButtonHover(previewButton);
             setPreviewFunction(previewButton, s);
             final Label nameLabel = createLabel(s.getItemName(), 0, 0);
@@ -284,6 +283,7 @@ public class ShopScene extends AbstractMenuScene {
             final Button buyButton = createButton("BUY", 0, 0);
             setSoundBuyButtonVisability(buyButton, s);
             setSoundBuyButtonFunction(buyButton, s);
+            setPreviewVisibility(visible, previewButton);
             hbox.getChildren().addAll(previewButton, nameLabel, priceLabel,
                     buyButton);
             hbox.setAlignment(Pos.CENTER);
