@@ -2,6 +2,7 @@ package nl.tudelft.ti2206.group9.level;
 
 import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
+import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 
 /**
  * This utility class stores the State of the game,
@@ -52,6 +53,7 @@ public final class State {
         setCoins(0);
         highscore = 0;
         CurrentItems.reset();
+        ShopItemUnlocker.reset();
         soundtrackEnabled = true;
         soundEffectsEnabled = true;
         soundEffectVolume = DEFAULT_VOLUMELEVEL;
