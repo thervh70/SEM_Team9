@@ -35,7 +35,9 @@ public class HighscoreScene extends AbstractMenuScene {
     enum BType {
         /** Back to main. */
         HIGHSCORES_BACK,
-        /** Send local highscores to server and retrieve list of highscores. */
+        /**
+         * Send local highscores to server and retrieve list of highscores.
+         */
         UPDATE
     }
 
@@ -64,6 +66,7 @@ public class HighscoreScene extends AbstractMenuScene {
     /** Text field for input. */
     private static TextField input = createTextField("HighscoreServer IP",
             0, INPUT_ROW);
+
     static {
         final int fontSize = 12;
         input.setText("localhost");
@@ -72,14 +75,22 @@ public class HighscoreScene extends AbstractMenuScene {
                 + " you want to connect to here."));
     }
 
-    /** List for getting global highscores. */
+    /**
+     * List for getting global highscores.
+     */
     private static List<Highscore> globalList;
-    /** List for getting local highscores. */
+    /**
+     * List for getting local highscores.
+     */
     private static List<Highscore> localList;
-    /** ObservableList to edit when Global Highscores come in. */
+    /**
+     * ObservableList to edit when Global Highscores come in.
+     */
     private static final ObservableList<String> GLOBAL_LIST =
             FXCollections.observableArrayList();
-    /** ObservableList to edit when Local Highscores come in. */
+    /**
+     * ObservableList to edit when Local Highscores come in.
+     */
     private static final ObservableList<String> LOCAL_LIST =
             FXCollections.observableArrayList();
 
@@ -91,7 +102,9 @@ public class HighscoreScene extends AbstractMenuScene {
             ShaftEscape.showPopup(getPopup());
         }
     };
-    /** Callback for getUser(10). */
+    /**
+     * Callback for getUser(10).
+     */
     private static final ResultCallback USER_CALLBACK = success -> {
         Platform.runLater(() -> {
             LOCAL_LIST.clear();
@@ -127,7 +140,9 @@ public class HighscoreScene extends AbstractMenuScene {
             }
         });
     };
-    /** Callback for add(Name, Highscore). */
+    /**
+     * Callback for add(Name, Highscore).
+     */
     private static final ResultCallback SEND_CALLBACK = success -> {
         if (success) {
             globalList = HighscoreClientAdapter.getGlobal(
@@ -224,7 +239,9 @@ public class HighscoreScene extends AbstractMenuScene {
         return scoreList;
     }
 
-    /** Override background, the Highscore background shows "Highscore". */
+    /**
+     * Override background, the Highscore background shows "Highscore".
+     */
     @Override
     public String getBackgroundPath() {
         return "highscoreBackground.png";

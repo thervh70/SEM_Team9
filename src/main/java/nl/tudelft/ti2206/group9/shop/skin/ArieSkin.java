@@ -7,7 +7,7 @@ public class ArieSkin extends AbstractSkin {
     /**
      * Price of skin in shop.
      */
-    private static final int PRICE = 225;
+    private static final int PRICE = 1250;
 
     /**
      * Constructor for a Arie skin.

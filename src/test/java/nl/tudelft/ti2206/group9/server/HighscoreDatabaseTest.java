@@ -15,7 +15,7 @@ public class HighscoreDatabaseTest {
 
     @Test
     public final void testGoodWeather() {
-        final int[]   scores = { 42,     21,     84,     63,     21};
+        final int[] scores = {42, 21, 84, 63, 21};
         final String[] names = {"Kees", "Piet", "Jaap", "Piet", "Piet"};
 
         for (int i = 0; i < names.length; i++) {

@@ -121,7 +121,9 @@ public final class MainMenuScene extends AbstractMenuScene {
         return apMainMenu;
     }
 
-    /** Override background, the Main menu background shows "Menu". */
+    /**
+     * Override background, the Main menu background shows "Menu".
+     */
     @Override
     public String getBackgroundPath() {
         return "menuBackground.png";

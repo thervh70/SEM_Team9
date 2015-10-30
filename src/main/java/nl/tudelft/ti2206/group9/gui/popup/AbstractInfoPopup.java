@@ -97,7 +97,9 @@ public abstract class AbstractInfoPopup extends Popup {
         return right;
     }
 
-    /** Plays the button sound once, given a volumelevel. */
+    /**
+     * Plays the button sound once, given a volumelevel.
+     */
     protected static void playButtonSound() {
         BUTTON_SOUND.setVolume(State.getSoundEffectVolume());
         BUTTON_SOUND.play();

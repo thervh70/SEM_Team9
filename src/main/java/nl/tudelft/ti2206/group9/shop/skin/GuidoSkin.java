@@ -7,10 +7,10 @@ public class GuidoSkin extends AbstractSkin {
     /**
      * Price of skin in shop.
      */
-    private static final int PRICE = 250;
+    private static final int PRICE = 500;
 
     /**
-     * Constructor guido Skin
+     * Constructor guido Skin.
      */
     public GuidoSkin() {
         super(PRICE, "Guido", "guido");
