@@ -56,9 +56,8 @@ public class CollisionHandler {
                         collidee.selfDestruct();
                         notifyCollide(Log.class);
                         State.addScore(Log.VALUE);
-                        return;
-                    }
-                    if (!AbstractPowerup.isActive(PowerupInvulnerable.class)) {
+                    } else if (!AbstractPowerup.isActive(
+                            PowerupInvulnerable.class)) {
                         collider.die();
                         notifyCollide(AbstractObstacle.class);
                     }
