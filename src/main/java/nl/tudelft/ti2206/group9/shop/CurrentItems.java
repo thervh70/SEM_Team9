@@ -15,12 +15,7 @@ public final class CurrentItems {
     /** Skin to be used. */
     private static AbstractSkin skin;
     /** The AudioPlayer to be used for background music. */
-    private static SoundtrackPlayer currentSoundtrackPlayer =
-            new SoundtrackPlayer(
-                    "nl/tudelft/ti2206/group9/audio/"
-                    + "soundtrack_Radioactive.mp3");
-    /** Stores the name of the current Soundtrack. */
-    private static String currentSoundtrackName;
+    private static AbstractSoundtrack soundtrack;
 
     /** Private constructor. */
     private CurrentItems() { }
@@ -30,10 +25,8 @@ public final class CurrentItems {
      * by setting these items to the default skin and soundtrack.
      */
     public static void reset() {
-        setSkin(ShopItemLoader.getNoobSkin());
-        currentSoundtrackName = "Radioactive";
-        currentSoundtrackPlayer = new SoundtrackPlayer("nl/tudelft/ti2206/"
-                + "group9/audio/soundtrack_Radioactive.mp3");
+        setSkin(ShopItemLoader.getDefaultSkin());
+        setSoundtrack(ShopItemLoader.getDefaultSoundtrack());
     }
 
     /**
@@ -53,27 +46,24 @@ public final class CurrentItems {
     }
 
     /**
-     * Every GameScene has an AudioPlayer for the soundtrack.
-     * @return the soundtrack AudioPlayer.
+     * @return the current soundtrack.
      */
-    public static SoundtrackPlayer getSoundtrackPlayer() {
-        return currentSoundtrackPlayer;
+    public static AbstractSoundtrack getSoundtrack() {
+        return soundtrack;
     }
 
     /**
-     * @return the name of the current soundtrack.
+     * @return the current soundtrack.
      */
-    public static String getSoundtrackName() {
-        return currentSoundtrackName;
+    public static SoundtrackPlayer getSoundtrackPlayer() {
+        return soundtrack.getSoundtrackPlayer();
     }
 
     /**
      * Every GameScene has an AudioPlayer for the soundtrack.
      * @param track an initialized AbstractSoundtrack with a new soundtrack.
      */
-    public static void setSoundtrackPlayer(
-            final AbstractSoundtrack track) {
-        currentSoundtrackPlayer = track.getSoundtrackPlayer();
-        currentSoundtrackName = track.getItemName();
+    public static void setSoundtrack(final AbstractSoundtrack track) {
+        soundtrack = track;
     }
 }

@@ -3,6 +3,8 @@ package nl.tudelft.ti2206.group9.level.save;
 import static org.junit.Assert.assertEquals;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.StateTest;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
+import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 
 import org.junit.Test;
@@ -27,6 +29,7 @@ public final class WriterTest {
         initState();
 
         Writer.saveGame(fileFolder + "saveGameWriterTest.ses");
+        State.resetAll();
         Parser.loadGame(fileFolder + "saveGameWriterTest.ses");
 
         assertState();
@@ -44,6 +47,9 @@ public final class WriterTest {
         ShopItemUnlocker.setUnlockedShopItem("Iron Man", true);
         ShopItemUnlocker.setUnlockedShopItem("Plank", true);
         ShopItemUnlocker.setUnlockedShopItem("Mario", true);
+        CurrentItems.setSkin(ShopItemLoader.loadSkinsToList().get(1));
+        CurrentItems.setSoundtrack(
+                ShopItemLoader.loadSoundtracksToList().get(1));
         State.setSoundtrackEnabled(false);
         State.setSoundEffectsEnabled(false);
     }
@@ -69,6 +75,11 @@ public final class WriterTest {
         assertEquals(false, ShopItemUnlocker.getUnlockedShopItem("Nyan Cat"));
         assertEquals(false, ShopItemUnlocker.
                 getUnlockedShopItem("Shake It Off"));
+
+        assertEquals(ShopItemLoader.loadSkinsToList().get(1),
+                CurrentItems.getSkin());
+        assertEquals(ShopItemLoader.loadSoundtracksToList().get(1),
+                CurrentItems.getSoundtrack());
 
         assertEquals(false, State.isSoundtrackEnabled());
         assertEquals(false, State.isSoundEffectsEnabled());

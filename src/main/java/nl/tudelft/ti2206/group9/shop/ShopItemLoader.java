@@ -207,18 +207,21 @@ public final class ShopItemLoader { // NOPMD - too many fields, but all
      *
      * @return Skin of Noob.
      */
-    public static NoobSkin getNoobSkin() {
+    public static AbstractSkin getDefaultSkin() {
         return noobSkin;
     }
 
     /**
-     * Gets the Andy skin for testing purposes.
-     * (E2E test)
+     * Simple getter for RadioactiveSoundtrack for the hard reset in State.
+     * This is the only getter that is needed, because of the reason above.
+     * More getters and setters aren't needed as the shop items don't
+     * need to be changed on runtime anymore and the loading of skins is done
+     * by the loadShopItemToList() method.
      *
-     * @return Skin of Andy.
+     * @return Soundtrack of Radioactive.
      */
-    public static AndySkin getAndySkin() {
-        return andySkin;
+    public static AbstractSoundtrack getDefaultSoundtrack() {
+        return radioactiveSoundtrack;
     }
 
 }

@@ -64,9 +64,7 @@ public class EndToEndTest extends ApplicationTest {
     private static final long LONG = 5 * TARDINESS;
     /** Sleep countdown. */
     private static final long SLEEP_COUNTDOWN = 3500;
-    /**
-     * Sleep countdown.
-     */
+    /** Sleep until the client notices it gets no response. */
     private static final long SLEEP_CONNECT_TIMEOUT = 6000;
     /** Prologe sleep time. */
     private static final long PROLOGUE = 21000;
@@ -277,8 +275,8 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void buySkins() {
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
         final List<AbstractSkin> list = ShopItemLoader.loadSkinsToList();
+
         assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
         assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
@@ -300,15 +298,15 @@ public class EndToEndTest extends ApplicationTest {
         shopPreviewSound(SHOP_SOUND_MARIO);
         sleep(LONG);
 
-        assertEquals(CurrentItems.getSoundtrackName(), radioactive);
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), radioactive);
         shopBuyActivateSound(SHOP_SOUND_RADIOACTIVE);
-        assertEquals(CurrentItems.getSoundtrackName(), radioactive);
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), radioactive);
         shopBuyActivateSound(SHOP_SOUND_MARIO);
-        assertEquals(CurrentItems.getSoundtrackName(), radioactive);
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), radioactive);
         shopBuyActivateSound(SHOP_SOUND_MARIO);
-        assertEquals(CurrentItems.getSoundtrackName(), animals);
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), animals);
         shopBuyActivateSound(SHOP_SOUND_RADIOACTIVE);
-        assertEquals(CurrentItems.getSoundtrackName(), radioactive);
+        assertEquals(CurrentItems.getSoundtrack().getItemName(), radioactive);
     }
 
     private void goThroughGamePlay() {
