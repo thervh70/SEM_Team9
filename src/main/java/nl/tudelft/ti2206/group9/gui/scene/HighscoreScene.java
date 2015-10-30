@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.ti2206.group9.ShaftEscape;
+import nl.tudelft.ti2206.group9.gui.Style;
 import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.server.Highscore;
@@ -68,7 +69,9 @@ public class HighscoreScene extends AbstractMenuScene {
             0, INPUT_ROW);
 
     static {
+        final int fontSize = 12;
         input.setText("localhost");
+        input.setFont(Style.getFont(fontSize));
         input.setTooltip(new Tooltip("Enter the IP of the HighscoreServer"
                 + " you want to connect to here."));
     }

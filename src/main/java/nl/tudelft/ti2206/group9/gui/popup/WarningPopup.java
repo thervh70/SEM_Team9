@@ -10,11 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
+import nl.tudelft.ti2206.group9.gui.Style;
 
 import java.util.Arrays;
-
-import nl.tudelft.ti2206.group9.gui.Style;
 
 /**
  * @author Mathias
@@ -22,13 +22,13 @@ import nl.tudelft.ti2206.group9.gui.Style;
 public class WarningPopup extends Popup {
 
     /** Width of the PopUpMenu. */
-    public static final double WIDTH = 260;
+    public static final double WIDTH = 270;
     /** Height of the PopUpMenu. */
-    public static final double HEIGHT = 90;
+    public static final double HEIGHT = 100;
     /** Size of the HBox. */
     protected static final double HBOX_SPACING = 10;
     /** Size of the VBox. */
-    protected static final double VBOX_SPACING = 50;
+    protected static final double VBOX_SPACING = 30;
 
     /** The left button in the Popup. */
     private final Button button;
@@ -63,12 +63,9 @@ public class WarningPopup extends Popup {
 
         getContent().addAll(rect, vbox);
 
-        getButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(final MouseEvent y) {
-                hide();
-                okEvent.handle(y);
-            }
+        getButton().setOnMouseClicked(y -> {
+            hide();
+            okEvent.handle(y);
         });
     }
 
@@ -78,7 +75,10 @@ public class WarningPopup extends Popup {
      * @return A list of Nodes to be added to the VBox of the Popup.
      */
     public final Node[] createContent() {
+        final int textSize = 13;
         final Text messageText = new Text(message);
+        messageText.setFont(Style.getFont(textSize));
+        messageText.setTextAlignment(TextAlignment.CENTER);
         return new Node[]{messageText};
     }
 
