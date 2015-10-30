@@ -419,7 +419,7 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void letPlayerSurvive() {
-        PowerupInvulnerable.setCheat(true);
+        new PowerupInvulnerable(Point3D.ZERO).setCheat(true);
     }
 
     private void clickButton(final int buttonNo) {
