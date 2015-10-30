@@ -38,7 +38,7 @@ public class IntroScene extends AbstractScene {
     private static final int THIRD_LABEL = 3;
     /** Sound path for prologue soundtrack. */
     private static final String PATH = "nl/tudelft/ti2206/group9/"
-            + "audio/prologue.wav";
+            + "audio/prologue.mp3";
     /** Soundtrack player. */
     private final SoundtrackPlayer player = new SoundtrackPlayer(PATH);
 
