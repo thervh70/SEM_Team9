@@ -2,14 +2,25 @@ package nl.tudelft.ti2206.group9.shop;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import nl.tudelft.ti2206.group9.shop.skin.*;
+import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
+import nl.tudelft.ti2206.group9.shop.skin.AlbertoSkin;
+import nl.tudelft.ti2206.group9.shop.skin.AndySkin;
+import nl.tudelft.ti2206.group9.shop.skin.ArieSkin;
+import nl.tudelft.ti2206.group9.shop.skin.BoySkin;
+import nl.tudelft.ti2206.group9.shop.skin.CaptainSkin;
+import nl.tudelft.ti2206.group9.shop.skin.ErikSkin;
+import nl.tudelft.ti2206.group9.shop.skin.GuidoSkin;
+import nl.tudelft.ti2206.group9.shop.skin.IronManSkin;
+import nl.tudelft.ti2206.group9.shop.skin.NoobSkin;
+import nl.tudelft.ti2206.group9.shop.skin.PlankSkin;
+import nl.tudelft.ti2206.group9.shop.skin.RiniSkin;
+import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.AnimalsSoundtrack;
-import nl.tudelft.ti2206.group9.shop.soundtrack.RadioactiveSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.DuckTalesSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.MarioSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.NyanCatSoundtrack;
+import nl.tudelft.ti2206.group9.shop.soundtrack.RadioactiveSoundtrack;
 import nl.tudelft.ti2206.group9.shop.soundtrack.ShakeItOffSoundtrack;
-import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 
 /**
  * This purpose of this (util) class is loading all shop items for
@@ -59,9 +70,15 @@ public final class ShopItemLoader {
      * Skins for teacher skins.
      */
     private static ErikSkin erikSkin;
+    /**
+     * Arie skin.
+     */
     private static ArieSkin arieSkin;
+    /** Guido Skin. */
     private static GuidoSkin guidoSkin;
+    /** RiniSkin. */
     private static RiniSkin riniSkin;
+    /** AlbertoSkin. */
     private static AlbertoSkin albertoSkin;
 
     //Soundtrack items

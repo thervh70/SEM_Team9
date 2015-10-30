@@ -10,7 +10,7 @@ public class RiniSkin extends AbstractSkin {
     private static final int PRICE = 275;
 
     /**
-     * Constructor Rini Skin
+     * Constructor Rini Skin.
      */
     public RiniSkin() {
         super(PRICE, "Rini", "rini");
