@@ -95,6 +95,7 @@ public final class Style {
         icons.put("invulnerable", new Image(path + "invulnerable.png"));
         icons.put("slowness",     new Image(path +     "slowness.png"));
         icons.put("destroy",      new Image(path +      "destroy.png"));
+        icons.put("coinmagnet",   new Image(path +   "coinmagnet.png"));
     }
 
     /**

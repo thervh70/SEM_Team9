@@ -1,4 +1,5 @@
-package nl.tudelft.ti2206.group9.gui;
+package nl.tudelft.ti2206.group9.gui; // NOPMD - too many imports, but no way
+                                      // to reduce them, unfortunately.
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
+import nl.tudelft.ti2206.group9.level.entity.PowerupCoinMagnet;
 import nl.tudelft.ti2206.group9.level.entity.PowerupDestroy;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.entity.PowerupSlowness;
@@ -132,10 +134,12 @@ public class ExternalTicker extends AnimationTimer {
         powerups.add(PowerupInvulnerable.class);
         powerups.add(PowerupSlowness.class);
         powerups.add(PowerupDestroy.class);
+        powerups.add(PowerupCoinMagnet.class);
         final ArrayList<String> icons = new ArrayList<>();
         icons.add("invulnerable");
         icons.add("slowness");
         icons.add("destroy");
+        icons.add("coinmagnet");
         for (int i = 0; i < powerups.size(); i++) {
             if (!AbstractPowerup.isActive(powerups.get(i))) {
                 continue;
