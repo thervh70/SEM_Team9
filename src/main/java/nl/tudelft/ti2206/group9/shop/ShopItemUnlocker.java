@@ -52,6 +52,12 @@ public final class ShopItemUnlocker {
         unlockedShopItemsMap.put("Iron Man", false);
         unlockedShopItemsMap.put("Noob", true);
         unlockedShopItemsMap.put("Plank", false);
+        unlockedShopItemsMap.put("Erik", false);
+        unlockedShopItemsMap.put("Guido", false);
+        unlockedShopItemsMap.put("Rini", false);
+        unlockedShopItemsMap.put("Arie", false);
+        unlockedShopItemsMap.put("Alberto", false);
+
     }
 
     /**
