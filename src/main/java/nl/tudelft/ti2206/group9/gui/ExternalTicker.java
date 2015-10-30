@@ -1,13 +1,20 @@
-package nl.tudelft.ti2206.group9.gui;
+package nl.tudelft.ti2206.group9.gui; // NOPMD - too many imports, but no way
+                                      // to reduce them, unfortunately.
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
@@ -20,7 +27,11 @@ import nl.tudelft.ti2206.group9.gui.renderer.GroupWallRenderer;
 import nl.tudelft.ti2206.group9.gui.scene.GameScene;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
+import nl.tudelft.ti2206.group9.level.entity.PowerupCoinMagnet;
+import nl.tudelft.ti2206.group9.level.entity.PowerupDestroy;
 import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.level.entity.PowerupSlowness;
 
 /**
  * @author Maarten.
@@ -31,8 +42,10 @@ public class ExternalTicker extends AnimationTimer {
     private static final int SCORE_BOX_HEIGHT = 130;
     /** Width of the box in-game where the score is displayed. */
     private static final int SCORE_BOX_WIDTH = 140;
+
     /** Distance between labels in overlay. */
     private static final int LABEL_DISTANCE = 16;
+
     /** Label for the countdownLabel animation. */
     private final Label countdownLabel = new Label();
     /** List that stores the entities, to be held up-to-date with Track. */
@@ -91,31 +104,57 @@ public class ExternalTicker extends AnimationTimer {
      * @return VBox with score labels
      */
     private VBox renderScore() {
-        final Label nameLabel = new Label(State.getPlayerName());
-        final Label highLabel = new Label("Highscore: "
-                + State.getHighscore());
-        final Label scoreLabel = new Label("Score: "
-                + Track.modulo(State.getScore()));
-        final Label distanceLabel = new Label("Distance: "
-                + Track.modulo(Track.getDistance()));
-        final Label coinsLabel = new Label("Coins: "
-                + State.getCoins());
-        final Label powerupLabel = new Label("Invulnerable: "
-                + (int) Math.ceil(PowerupInvulnerable.getSecondsLeft()));
+        final ArrayList<Label> labels = new ArrayList<>();
+        final ArrayList<Node> nodes = new ArrayList<>();
+        labels.add(new Label(State.getPlayerName()));
+        labels.add(new Label("Highscore: " + State.getHighscore()));
+        labels.add(new Label("Score: " + Track.modulo(State.getScore())));
+        labels.add(new Label("Distance: " + Track.modulo(Track.getDistance())));
+        labels.add(new Label("Coins: " + State.getCoins()));
 
-        Style.setLabelStyle(nameLabel);
-        Style.setLabelStyle(highLabel);
-        Style.setLabelStyle(scoreLabel);
-        Style.setLabelStyle(distanceLabel);
-        Style.setLabelStyle(coinsLabel);
-        Style.setLabelStyle(powerupLabel);
+        Style.setLabelStyle(labels.toArray(new Label[]{}));
+        nodes.addAll(labels);
+        nodes.addAll(createPowerupTimers());
 
-        final VBox scoreBox = new VBox(LABEL_DISTANCE, nameLabel,
-                highLabel, scoreLabel,
-                distanceLabel, coinsLabel, powerupLabel);
+        final VBox scoreBox = new VBox(LABEL_DISTANCE,
+                nodes.toArray(new Node[]{}));
         scoreBox.setStyle(" -fx-background-color:BLACK;");
         scoreBox.setMinSize(SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
         return scoreBox;
+    }
+
+    /**
+     * @return a Group containing all PowerupTimers (could be none).
+     */
+    private List<Group> createPowerupTimers() {
+        final ArrayList<Group> bars = new ArrayList<>();
+        final double iconSize = 24;
+        final ArrayList<Class<? extends AbstractPowerup>> powerups =
+                new ArrayList<>();
+        powerups.add(PowerupInvulnerable.class);
+        powerups.add(PowerupSlowness.class);
+        powerups.add(PowerupDestroy.class);
+        powerups.add(PowerupCoinMagnet.class);
+        final ArrayList<String> icons = new ArrayList<>();
+        icons.add("invulnerable");
+        icons.add("slowness");
+        icons.add("destroy");
+        icons.add("coinmagnet");
+        for (int i = 0; i < powerups.size(); i++) {
+            if (!AbstractPowerup.isActive(powerups.get(i))) {
+                continue;
+            }
+            final Group bar = new Group();
+            final double sec = AbstractPowerup.getSecondsLeft(powerups.get(i));
+            final Rectangle rect = new Rectangle(iconSize, 0,
+                    (SCORE_BOX_WIDTH - iconSize) * sec
+                    / (double) AbstractPowerup.SECONDS, iconSize);
+            rect.setFill(Color.LIME);
+            bar.getChildren().add(Style.getIcon(icons.get(i)));
+            bar.getChildren().add(rect);
+            bars.add(bar);
+        }
+        return bars;
     }
 
     /**

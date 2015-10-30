@@ -27,6 +27,7 @@ import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.server.HighscoreServerIntegrationTest;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
+import nl.tudelft.ti2206.group9.shop.skin.AbstractSkin;
 import nl.tudelft.ti2206.group9.shop.soundtrack.AbstractSoundtrack;
 import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.Logger;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 import static org.junit.Assert.assertEquals;
@@ -66,6 +68,8 @@ public class EndToEndTest extends ApplicationTest {
      * Sleep countdown.
      */
     private static final long SLEEP_CONNECT_TIMEOUT = 6000;
+    /** Prologe sleep time. */
+    private static final long PROLOGUE = 21000;
     /** Sleep factor playerDies. */
     private static final long SLEEP_FACTOR = 10;
     /** Amount of coins for e2e. */
@@ -83,8 +87,9 @@ public class EndToEndTest extends ApplicationTest {
 
     private static final int ACCOUNT_LOAD = 0;
     private static final int ACCOUNT_NEW = 1;
-    private static final int ACCOUNT_TEXTFIELD = 2;
-    private static final int ACCOUNT_LIST = 3;
+    private static final int ACCOUNT_DEL = 2;
+    private static final int ACCOUNT_TEXTFIELD = 3;
+    private static final int ACCOUNT_LIST = 4;
 
     private static final int SETTINGS_BACK = 0;
     private static final int SETTINGS_SOUNDTRACK = 1;
@@ -101,7 +106,7 @@ public class EndToEndTest extends ApplicationTest {
 
     private static final int SHOP_BACK = 1;
     private static final int SHOP_SKIN_NOOB = 0;
-    private static final int SHOP_SKIN_ANDY = 1;
+    private static final int SHOP_SKIN_PLANK = 1;
 
     private static final int SHOP_SOUND_RADIOACTIVE = 0;
     private static final int SHOP_SOUND_MARIO = 1;
@@ -203,12 +208,13 @@ public class EndToEndTest extends ApplicationTest {
         sleep(SHORT);
 
         goThroughAccounts1();
+        goThroughGamePlay();
         goThroughSettings();
         goThroughShop();
-        goThroughGamePlay();
         goThroughAccounts2();
         goThroughDeathPopup();
         goThroughHighscores();
+        goThroughAccounts3();
 
         clickButton(MAIN_QUIT);
     }
@@ -224,6 +230,8 @@ public class EndToEndTest extends ApplicationTest {
         clearTextField(ACCOUNT_TEXTFIELD);
         typeName();
         clickButton(ACCOUNT_NEW);
+        sleep(PROLOGUE);
+        keyboard(KeyCode.ENTER); //Sleep during prologue and dismiss
     }
 
     private void goThroughSettings() {
@@ -270,14 +278,16 @@ public class EndToEndTest extends ApplicationTest {
 
     private void buySkins() {
         assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
+        final List<AbstractSkin> list = ShopItemLoader.loadSkinsToList();
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
-        shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
-        shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getAndySkin());
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
+        shopBuyEquipSkin(SHOP_SKIN_PLANK);
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
+        shopBuyEquipSkin(SHOP_SKIN_PLANK);
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_PLANK));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), list.get(SHOP_SKIN_NOOB));
     }
 
     private void buySoundtracks() {
@@ -336,6 +346,21 @@ public class EndToEndTest extends ApplicationTest {
         clickPopup(DEATH_RETRY);
         letPlayerSurvive();            // Stop E2E from failing by collision
         sleep(SLEEP_COUNTDOWN);
+        playerDies();
+        clickPopup(DEATH_TOMAIN);
+    }
+
+    private void goThroughAccounts3() {
+        clickButton(MAIN_ACCOUNTS);
+        clickButton(ACCOUNT_LIST);
+        clickButton(ACCOUNT_DEL);
+        clickButton(ACCOUNT_TEXTFIELD);
+        typeName();
+        clickButton(ACCOUNT_NEW);
+        sleep(PROLOGUE);
+        keyboard(KeyCode.ENTER);
+        sleep(SLEEP_COUNTDOWN);
+        keyboard(KeyCode.ESCAPE);
         playerDies();
         clickPopup(DEATH_TOMAIN);
     }
@@ -473,7 +498,7 @@ public class EndToEndTest extends ApplicationTest {
     }
 
     private void letPlayerSurvive() {
-        PowerupInvulnerable.setCheat(true);
+        new PowerupInvulnerable(Point3D.ZERO).setCheat(true);
     }
 
     private void clickButton(final int buttonNo) {

@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
@@ -49,6 +50,9 @@ public final class Style {
     /** WOOD material used for logs, wooden planks obstacle texture. */
     public static final PhongMaterial WOOD = new PhongMaterial();
 
+    /** WOOD_DESTROY material used for logs, wooden planks obstacle texture. */
+    public static final PhongMaterial WOOD_D = new PhongMaterial();
+
     /** PILLAR mat. used for pillars. Stack of cracked stone bricks texture. */
     public static final PhongMaterial PILLAR = new PhongMaterial();
 
@@ -66,6 +70,8 @@ public final class Style {
 
     /** Font used to render everything. */
     private static Map<Integer, Font> globalFont = new ConcurrentHashMap<>();
+    /** Map containing all icons. */
+    private static Map<String, Image> icons = new ConcurrentHashMap<>();
 
     /** Hide public constructor. */
     private Style() { }
@@ -75,15 +81,31 @@ public final class Style {
      * They are loaded into the public static final PhongMaterials.
      */
     public static void loadTextures() {
-        final String path = "nl/tudelft/ti2206/group9/gui/texture_";
+        String path = "nl/tudelft/ti2206/group9/gui/texture_";
+        BRICK .setDiffuseMap(new Image(path +        "brick.png"));
+        FLOOR .setDiffuseMap(new Image(path +  "cobblestone.png"));
+        COIN  .setDiffuseMap(new Image(path +         "coin.png"));
+        PICKUP.setDiffuseMap(new Image(path +       "pickup.png"));
+        WOOD  .setDiffuseMap(new Image(path +         "wood.png"));
+        WOOD_D.setDiffuseMap(new Image(path + "wood_destroy.png"));
+        PILLAR.setDiffuseMap(new Image(path +       "pillar.png"));
+        FENCE .setDiffuseMap(new Image(path +        "fence.png"));
 
-        BRICK .setDiffuseMap(new Image(path +       "brick.png"));
-        FLOOR .setDiffuseMap(new Image(path + "cobblestone.png"));
-        COIN  .setDiffuseMap(new Image(path +        "coin.png"));
-        PICKUP.setDiffuseMap(new Image(path +      "pickup.png"));
-        WOOD  .setDiffuseMap(new Image(path +        "wood.png"));
-        PILLAR.setDiffuseMap(new Image(path +      "pillar.png"));
-        FENCE .setDiffuseMap(new Image(path +       "fence.png"));
+        path = "nl/tudelft/ti2206/group9/gui/icon_";
+        icons.put("invulnerable", new Image(path + "invulnerable.png"));
+        icons.put("slowness",     new Image(path +     "slowness.png"));
+        icons.put("destroy",      new Image(path +      "destroy.png"));
+        icons.put("coinmagnet",   new Image(path +   "coinmagnet.png"));
+    }
+
+    /**
+     * @param name The name of the icon Image to get.
+     * @return a JavaFX Image containing the requested icon.
+     */
+    public static ImageView getIcon(final String name) {
+        final ImageView imageView = new ImageView();
+        imageView.setImage(icons.get(name));
+        return imageView;
     }
 
     /**
@@ -159,7 +181,6 @@ public final class Style {
 
     /**
      * Changes the styling of a label.
-     *
      * @param l Label to be changed.
      */
     public static void setLabelStyle(final Label l) {
@@ -173,6 +194,16 @@ public final class Style {
         l.setBackground(buttonBack);
         l.setTextFill(Color.WHITE);
         l.setFont(font);
+    }
+
+    /**
+     * Changes the styling of labels.
+     * @param labels Labels to be changed.
+     */
+    public static void setLabelStyle(final Label... labels) {
+        for (final Label l : labels) {
+            setLabelStyle(l);
+        }
     }
 
     /**

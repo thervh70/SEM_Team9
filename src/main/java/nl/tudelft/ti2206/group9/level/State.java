@@ -1,6 +1,6 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 
 /**
@@ -65,7 +65,7 @@ public final class State {
         Track.setPreviousDistance(0);
         Track.setDistance(0);
         Track.getInstance().getPlayer().respawn();
-        PowerupInvulnerable.resetCounter();
+        AbstractPowerup.resetCounters();
     }
 
     /**

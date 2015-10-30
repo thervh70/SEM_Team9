@@ -1,7 +1,5 @@
 package nl.tudelft.ti2206.group9.level.entity;
 
-import nl.tudelft.ti2206.group9.level.InternalTicker;
-import nl.tudelft.ti2206.group9.util.Action;
 import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
@@ -9,18 +7,10 @@ import nl.tudelft.ti2206.group9.util.Point3D;
  * while.
  * @author Maarten
  */
-public class PowerupInvulnerable extends AbstractPickup {
+public class PowerupInvulnerable extends AbstractPowerup {
 
-    /** The default size for this Powerup. */
-    public static final Point3D SIZE = new Point3D(0.5, 0.5, 0.5);
-    /** The default time this Powerup should last. */
-    public static final int SECONDS = 10;
-
-    /** The amount of ticks that this countdown still lasts. */
-    private static int countdown;
-
-    /** Cheat boolean. */
-    private static boolean cheat;
+    /** The value of this Powerup when picked up. */
+    private static final int VALUE = 200;
 
     /**
      * Default constructor.
@@ -29,7 +19,7 @@ public class PowerupInvulnerable extends AbstractPickup {
      */
     public PowerupInvulnerable(final Point3D cent,
             final AbstractPickup decorating) {
-        super(cent, SIZE, decorating);
+        super(cent, decorating);
     }
 
     /**
@@ -40,46 +30,9 @@ public class PowerupInvulnerable extends AbstractPickup {
         this(cent, null);
     }
 
-    /**
-     * Is called every step in Track.
-     */
-    public static void step() {
-        if (!cheat && countdown > 0) {
-            countdown--;
-        }
-    }
-
-    /** @return Whether this Powerup is active. */
-    public static boolean isActive() {
-        return countdown != 0 || cheat;
-    }
-
-    /** Activates this Powerup foreveerrrrr.
-     *  @param enable whether the cheat should be enabled */
-    public static void setCheat(final boolean enable) {
-        cheat = enable;
-    }
-
-    /**
-     * Reset the counter.
-     */
-    public static void resetCounter() {
-        countdown = 0;
-    }
-
     @Override
     protected double thisValue() {
-        return 0;
-    }
-
-    @Override
-    protected Action thisAction() {
-        return () -> countdown = SECONDS * InternalTicker.FPS;
-    }
-
-    /** @return the amount of seconds until this Powerup's effect stops. */
-    public static double getSecondsLeft() {
-        return (double) countdown / (double) InternalTicker.FPS;
+        return VALUE;
     }
 
 }

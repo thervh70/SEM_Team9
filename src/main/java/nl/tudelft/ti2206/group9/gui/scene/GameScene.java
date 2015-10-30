@@ -1,5 +1,11 @@
 package nl.tudelft.ti2206.group9.gui.scene; // NOPMD - many imports are needed
 
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+
+import java.util.Map;
+import java.util.Observable;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javafx.application.Platform;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -20,7 +26,9 @@ import nl.tudelft.ti2206.group9.gui.popup.PausePopup;
 import nl.tudelft.ti2206.group9.level.InternalTicker;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
 import nl.tudelft.ti2206.group9.level.entity.Player;
+import nl.tudelft.ti2206.group9.level.entity.PowerupSlowness;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
 import nl.tudelft.ti2206.group9.util.Direction;
@@ -28,12 +36,6 @@ import nl.tudelft.ti2206.group9.util.GameObserver;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
 import nl.tudelft.ti2206.group9.util.GameObserver.Game;
 import nl.tudelft.ti2206.group9.util.KeyMap;
-
-import java.util.Map;
-import java.util.Observable;
-import java.util.concurrent.ConcurrentHashMap;
-
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
  * This scene shows the 3D Game world and the 2D score overlay.
@@ -100,8 +102,8 @@ public final class GameScene extends AbstractScene {
         keyBindings();
 
         CurrentItems.getSoundtrackPlayer().play();
-        CurrentItems.getSoundtrackPlayer().
-                setVolume(State.getSoundtrackVolume());
+        CurrentItems.getSoundtrackPlayer().setVolume(
+                State.getSoundtrackVolume());
         startTickers();
         return root;
     }
@@ -285,8 +287,8 @@ public final class GameScene extends AbstractScene {
 
         /** Twelve is the amount of chromatic steps in an octave. */
         private static final double DUODECIM = 12.;
-        /** Constant which is used for increasing the soundtrack speed. */
-        private static final double SPEED_INCREASE = Math.pow(2, 1. / DUODECIM);
+        /** How many meters between each speed increase. */
+        private static final int MOD = 250;
 
         /** The Map that decides which sound to play for Player events. */
         private final Map<Player, SoundEffectPlayer> soundMap =
@@ -295,8 +297,10 @@ public final class GameScene extends AbstractScene {
         private final Map<String, SoundEffectPlayer> soundMapCollide =
                 new ConcurrentHashMap<>();
 
-        /** State that remembers the previous distance. */
-        private int prevDist;
+        /** State that remembers the previous amount of raw steps. */
+        private int prevSteps;
+        /** State that remembers the previous Slowness activeness. */
+        private boolean prevSlow;
 
         /** Default constructor. */
         SoundEffectObserver() {
@@ -315,30 +319,48 @@ public final class GameScene extends AbstractScene {
             if (update.getCat() != Category.PLAYER) {
                 return;
             }
+            if (update.getArgs().length > 0 && String.valueOf(
+                    update.getArgs()[0]).equals("PowerupSlowness")) {
+                updateSpeed();
+            }
             if (update.getSpec() == Player.DISTANCE_INCREASE) {
-                final int mod = 250;
-                if (Track.getDistance() >= prevDist + mod) {
-                    prevDist += mod;
-                    new Thread(() -> {
-                        CurrentItems.getSoundtrackPlayer().setSpeed(
-                                CurrentItems.getSoundtrackPlayer().getSpeed()
-                                * SPEED_INCREASE
-                                );
-                    }).start();
-                }
+                updateSpeed();
             } else if (update.getSpec() == Player.COLLISION) {
                 if (soundMapCollide.get(update.getArgs()[0]) != null) {
-                    soundMapCollide.get(update.getArgs()[0]).
-                            setVolume(State.getSoundEffectVolume());
+                    soundMapCollide.get(update.getArgs()[0]).setVolume(
+                            State.getSoundEffectVolume());
                     soundMapCollide.get(update.getArgs()[0]).play();
                 }
             } else {
                 if (soundMap.get(update.getSpec()) != null) {
-                    soundMap.get(update.getSpec()).
-                            setVolume(State.getSoundEffectVolume());
+                    soundMap.get(update.getSpec()).setVolume(
+                            State.getSoundEffectVolume());
                     soundMap.get(update.getSpec()).play();
                 }
             }
+        }
+
+        /** Updates the speed of the soundtrack. */
+        private void updateSpeed() {
+            final int steps = (int) Math.floor(Track.getDistance() / MOD);
+            final boolean slw = AbstractPowerup.isActive(PowerupSlowness.class);
+            if (steps > prevSteps || slw != prevSlow) {
+                prevSteps = steps;
+                prevSlow = slw;
+                new Thread(() -> {
+                    CurrentItems.getSoundtrackPlayer().setSpeed(getSpeed(slw));
+                }).start();
+            }
+        }
+
+        /** @param slow Whether the Slowness Powerup is active.
+         *  @return The current speed the soundtrack should have. */
+        private double getSpeed(final boolean slow) {
+            double steps = prevSteps;
+            if (slow) {
+                steps -= 2 + 2;
+            }
+            return Math.pow(2, steps / DUODECIM);
         }
 
         /**

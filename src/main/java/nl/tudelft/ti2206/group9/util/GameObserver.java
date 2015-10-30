@@ -87,12 +87,12 @@ public interface GameObserver extends Observer {
         SHOP,
         /** Back button in ShopScene has been pressed. */
         SHOP_BACK,
-        /** Back button in AccountScene has been pressed. */
-        ACC_BACK,
         /** Load button in AccountScene has been pressed. */
         ACC_LOAD,
         /** New button in AccountScene has been pressed. */
         ACC_NEW,
+        /** Delete buttin in AccountScene has been pressed. */
+        ACC_DEL,
         /** Highscores button. */
         HIGHSCORES,
         /** Back button in highscores menu. */
@@ -114,7 +114,9 @@ public interface GameObserver extends Observer {
         /** Player collides. optionalArg: name of entity collided with. */
         COLLISION,
         /** The distance has increased a certain amount. optinalArg: newDist */
-        DISTANCE_INCREASE
+        DISTANCE_INCREASE,
+        /** The powerup has ended having an effect. optionalArg: PowerupType */
+        POWERUPOVER
     }
 
     /**

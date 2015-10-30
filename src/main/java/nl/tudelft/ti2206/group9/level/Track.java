@@ -1,19 +1,6 @@
 package nl.tudelft.ti2206.group9.level;
 
-import nl.tudelft.ti2206.group9.gui.scene.GameScene;
-import nl.tudelft.ti2206.group9.level.TrackPart.Node;
-import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
-import nl.tudelft.ti2206.group9.level.entity.AbstractPickup;
-import nl.tudelft.ti2206.group9.level.entity.Coin;
-import nl.tudelft.ti2206.group9.level.entity.Fence;
-import nl.tudelft.ti2206.group9.level.entity.Log;
-import nl.tudelft.ti2206.group9.level.entity.Pillar;
-import nl.tudelft.ti2206.group9.level.entity.Player;
-import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
-import nl.tudelft.ti2206.group9.util.GameObserver;
-import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
-import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
-import nl.tudelft.ti2206.group9.util.Point3D;
+import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +9,24 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
+import nl.tudelft.ti2206.group9.gui.scene.GameScene;
+import nl.tudelft.ti2206.group9.level.TrackPart.Node;
+import nl.tudelft.ti2206.group9.level.entity.AbstractEntity;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPickup;
+import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
+import nl.tudelft.ti2206.group9.level.entity.Coin;
+import nl.tudelft.ti2206.group9.level.entity.Fence;
+import nl.tudelft.ti2206.group9.level.entity.Log;
+import nl.tudelft.ti2206.group9.level.entity.Pillar;
+import nl.tudelft.ti2206.group9.level.entity.Player;
+import nl.tudelft.ti2206.group9.level.entity.PowerupCoinMagnet;
+import nl.tudelft.ti2206.group9.level.entity.PowerupDestroy;
+import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
+import nl.tudelft.ti2206.group9.level.entity.PowerupSlowness;
+import nl.tudelft.ti2206.group9.util.GameObserver;
+import nl.tudelft.ti2206.group9.util.ObservableLinkedList;
+import nl.tudelft.ti2206.group9.util.ObservableLinkedList.Listener;
+import nl.tudelft.ti2206.group9.util.Point3D;
 
 /**
  * This class holds all entities present in the game, such as Coins, a Player
@@ -65,7 +69,7 @@ public class Track {
      * Map that contains all createEntityCommands.
      */
     private static Map<Class<? extends AbstractEntity>, CreateEntityCommand>
-            createEntityMap = new ConcurrentHashMap<>();
+    createEntityMap = new ConcurrentHashMap<>();
     /**
      * The Single instance this class can have.
      */
@@ -80,6 +84,9 @@ public class Track {
             final ArrayList<AbstractPickup> list = new ArrayList<>();
             list.add(new Coin(p));
             list.add(new PowerupInvulnerable(p));
+            list.add(new PowerupSlowness(p));
+            list.add(new PowerupDestroy(p));
+            list.add(new PowerupCoinMagnet(p));
             return list.get((int) (Math.random() * list.size()));
         });
     }
@@ -139,6 +146,27 @@ public class Track {
      */
     public static int modulo(final double amount) {
         return (int) (Math.floor(amount / MOD) * MOD);
+    }
+
+    /** Moves all coins, when CoinMagnet is active. */
+    private void moveCoinMagnet() {
+        if (!AbstractPowerup.isActive(PowerupCoinMagnet.class)) {
+            return;
+        }
+        final double dist = 10;
+        synchronized (this) {
+            for (final AbstractEntity e : entities) {
+                if (!(e instanceof Coin)) {
+                    continue;
+                }
+                final Point3D c = e.getCenter(); // reference, so addX works
+                if (c.getZ() > dist) {
+                    continue;
+                }
+                final double diffX = getPlayer().getCenter().getX() - c.getX();
+                c.addX((diffX - diffX * e.getCenter().getZ() / dist) / dist);
+            }
+        }
     }
 
     /**
@@ -274,8 +302,11 @@ public class Track {
     public static double getUnitsPerTick() {
         final double div = Math.pow(UNITS_PER_TICK_ACCEL, -1) / 2
                 * UNITS_PER_TICK_BASE * UNITS_PER_TICK_BASE;
-        return UNITS_PER_TICK_BASE
-                * Math.sqrt(getDistance() / div + 1);
+        double upt = UNITS_PER_TICK_BASE * Math.sqrt(getDistance() / div + 1);
+        if (AbstractPowerup.isActive(PowerupSlowness.class)) {
+            upt /= 2;
+        }
+        return upt;
     }
 
     /**
@@ -285,7 +316,7 @@ public class Track {
     public final void step() {
         synchronized (this) {
             if (trackLeft > 0) {
-                 trackLeft -= getUnitsPerTick();
+                trackLeft -= getUnitsPerTick();
             } else {
                 final int rand = random.nextInt(trackParts.size());
                 final TrackPart part = trackParts.get(rand);
@@ -298,6 +329,7 @@ public class Track {
         distance += getUnitsPerTick();
         State.addScore(getUnitsPerTick());
         moveTrack(getUnitsPerTick());
+        moveCoinMagnet();
     }
 
     /**
