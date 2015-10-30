@@ -312,6 +312,7 @@ public final class GameScene extends AbstractScene {
 
             soundMapCollide.put("AbstractObstacle", createPlayer("death"));
             soundMapCollide.put("Coin", createPlayer("coin"));
+            soundMapCollide.put("Log", createPlayer("chop"));
             soundMapCollide.put("PowerupInvulnerable",
                     createPlayer("invulnerable"));
         }
