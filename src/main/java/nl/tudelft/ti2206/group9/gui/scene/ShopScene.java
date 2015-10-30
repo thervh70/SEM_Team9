@@ -93,6 +93,10 @@ public class ShopScene extends AbstractMenuScene {
      * Timer used for stopping the previews.
      */
     private final Timer timer = new Timer();
+    /**
+     * preview visible?
+     */
+    private boolean visible = true;
 
     @Override
     public Node[] createContent() {
@@ -211,12 +215,9 @@ public class ShopScene extends AbstractMenuScene {
             if (type == BType.SHOP_BACK) {
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.SHOP_BACK);
-                for (AbstractSoundtrack s
-                        : ShopItemLoader.loadSoundtracksToList()) {
-                    s.getSoundtrackPlayer().stop();
-                    State.setSoundtrackEnabled(soundtrackEnabled);
-                    timer.cancel();
-                }
+                stopPreviews();
+                State.setSoundtrackEnabled(soundtrackEnabled);
+                timer.cancel();
                 ShaftEscape.setScene(new MainMenuScene());
             }
         });
@@ -274,14 +275,7 @@ public class ShopScene extends AbstractMenuScene {
         for (final AbstractSoundtrack s : items) {
             final HBox hbox = new HBox(BOX_SPACING);
             final Button previewButton = new Button();
-            final Image playImg = new Image("nl/tudelft/ti2206/"
-                    + "group9/gui/scene/music_notes.png");
-            final BackgroundImage backImg = new BackgroundImage(playImg,
-                    null, null, null, null);
-            final Background back = new Background(backImg);
-            previewButton.setBackground(back);
-            previewButton.setMinWidth(PREVIEW_SIZE);
-            previewButton.setMinHeight(PREVIEW_SIZE);
+            setPreviewVisibility(visible, previewButton);
             setPreviewButtonHover(previewButton);
             setPreviewFunction(previewButton, s);
             final Label nameLabel = createLabel(s.getItemName(), 0, 0);
@@ -290,8 +284,8 @@ public class ShopScene extends AbstractMenuScene {
             final Button buyButton = createButton("BUY", 0, 0);
             setSoundBuyButtonVisability(buyButton, s);
             setSoundBuyButtonFunction(buyButton, s);
-            hbox.getChildren().addAll(previewButton,
-                    nameLabel, priceLabel, buyButton);
+            hbox.getChildren().addAll(previewButton, nameLabel, priceLabel,
+                    buyButton);
             hbox.setAlignment(Pos.CENTER);
             itemBox.getChildren().addAll(hbox);
         }
@@ -379,29 +373,69 @@ public class ShopScene extends AbstractMenuScene {
      */
     private void setPreviewFunction(final Button b,
                                     final AbstractSoundtrack s) {
-
-        final int playTime = 7000;
-
-
+        final int playTime = 5000;
         b.setOnAction(event -> {
             final TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
                     Platform.runLater(() -> {
                         s.getSoundtrackPlayer().stop();
-                        b.setDisable(false);
                         State.setSoundtrackEnabled(soundtrackEnabled);
                         MainMenuScene.getAudioPlayer().play();
+                        visible = false;
+                        tabPane.getTabs().clear();
+                        tabPane.getTabs().addAll(createSkinTab(),
+                                createSoundTab());
+                        tabPane.getSelectionModel().select(1);
                     });
                 }
             };
-            b.setDisable(true);
+            visible = true;
+            tabPane.getTabs().clear();
+            tabPane.getTabs().addAll(createSkinTab(), createSoundTab());
+            tabPane.getSelectionModel().select(1);
             State.setSoundtrackEnabled(true);
             MainMenuScene.getAudioPlayer().pause();
             s.getSoundtrackPlayer().setVolume(State.getSoundtrackVolume());
             s.getSoundtrackPlayer().play();
             timer.schedule(task, playTime);
         });
+
+    }
+
+    /**
+     * Stopping all the preview players.
+     */
+    private void stopPreviews() {
+        final ObservableList<AbstractSoundtrack> items =
+                ShopItemLoader.loadSoundtracksToList();
+        for (AbstractSoundtrack s
+                : items) {
+            s.getSoundtrackPlayer().stop();
+        }
+    }
+
+    /**
+     * Set visibility of preview buttons.
+     *
+     * @param buttonVisible Visible?
+     * @param b             Button.
+     */
+    private void setPreviewVisibility(final boolean buttonVisible,
+                                      final Button b) {
+        final Image playImg = new Image("nl/tudelft/ti2206/"
+                + "group9/gui/scene/music_notes.png");
+        final BackgroundImage backImg = new BackgroundImage(playImg,
+                null, null, null, null);
+        final Background back = new Background(backImg);
+        b.setBackground(back);
+        b.setMinWidth(PREVIEW_SIZE);
+        b.setMinHeight(PREVIEW_SIZE);
+        if (!buttonVisible) {
+            b.setDisable(false);
+        } else {
+            b.setDisable(true);
+        }
 
     }
 }
