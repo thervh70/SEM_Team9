@@ -297,6 +297,8 @@ public final class GameScene extends AbstractScene {
         /** The Map that decides which sound to play for collisions. */
         private final Map<String, SoundEffectPlayer> soundMapCollide =
                 new ConcurrentHashMap<>();
+        /** The Player for Invulnerable sound effect. */
+        private final SoundEffectPlayer invul = createPlayer("invulnerable");
 
         /** State that remembers the previous amount of raw steps. */
         private int prevSteps;
@@ -313,8 +315,6 @@ public final class GameScene extends AbstractScene {
             soundMapCollide.put("AbstractObstacle", createPlayer("death"));
             soundMapCollide.put("Coin", createPlayer("coin"));
             soundMapCollide.put("Log", createPlayer("chop"));
-            soundMapCollide.put("PowerupInvulnerable",
-                    createPlayer("invulnerable"));
         }
 
         @Override
@@ -353,11 +353,15 @@ public final class GameScene extends AbstractScene {
             if (update.getArgs().length > 0 && String.valueOf(
                     update.getArgs()[0]).equals("PowerupInvulnerable")) {
                 CurrentItems.getSoundtrackPlayer().setVolume(0.0);
+                if (!invul.isRunning()) {
+                    invul.play();
+                }
             }
             if (update.getSpec() == Player.POWERUPOVER
                     & !AbstractPowerup.isActive(PowerupInvulnerable.class)) {
                 CurrentItems.getSoundtrackPlayer().
                     setVolume(State.getSoundtrackVolume());
+                invul.stop();
             }
         }
 
