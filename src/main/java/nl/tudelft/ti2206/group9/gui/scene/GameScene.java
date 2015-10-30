@@ -28,6 +28,7 @@ import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.Track;
 import nl.tudelft.ti2206.group9.level.entity.AbstractPowerup;
 import nl.tudelft.ti2206.group9.level.entity.Player;
+import nl.tudelft.ti2206.group9.level.entity.PowerupInvulnerable;
 import nl.tudelft.ti2206.group9.level.entity.PowerupSlowness;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.shop.CurrentItems;
@@ -296,6 +297,8 @@ public final class GameScene extends AbstractScene {
         /** The Map that decides which sound to play for collisions. */
         private final Map<String, SoundEffectPlayer> soundMapCollide =
                 new ConcurrentHashMap<>();
+        /** The Player for Invulnerable sound effect. */
+        private final SoundEffectPlayer invul = createPlayer("invulnerable");
 
         /** State that remembers the previous amount of raw steps. */
         private int prevSteps;
@@ -311,6 +314,7 @@ public final class GameScene extends AbstractScene {
 
             soundMapCollide.put("AbstractObstacle", createPlayer("death"));
             soundMapCollide.put("Coin", createPlayer("coin"));
+            soundMapCollide.put("Log", createPlayer("chop"));
         }
 
         @Override
@@ -319,10 +323,7 @@ public final class GameScene extends AbstractScene {
             if (update.getCat() != Category.PLAYER) {
                 return;
             }
-            if (update.getArgs().length > 0 && String.valueOf(
-                    update.getArgs()[0]).equals("PowerupSlowness")) {
-                updateSpeed();
-            }
+            powerupUpdate(update);
             if (update.getSpec() == Player.DISTANCE_INCREASE) {
                 updateSpeed();
             } else if (update.getSpec() == Player.COLLISION) {
@@ -337,6 +338,30 @@ public final class GameScene extends AbstractScene {
                             State.getSoundEffectVolume());
                     soundMap.get(update.getSpec()).play();
                 }
+            }
+        }
+
+        /**
+         * Handles Powerup updates.
+         * @param update a given update to be handled.
+         */
+        private void powerupUpdate(final GameUpdate update) {
+            if (update.getArgs().length > 0 && String.valueOf(
+                    update.getArgs()[0]).equals("PowerupSlowness")) {
+                updateSpeed();
+            }
+            if (update.getArgs().length > 0 && String.valueOf(
+                    update.getArgs()[0]).equals("PowerupInvulnerable")) {
+                CurrentItems.getSoundtrackPlayer().setVolume(0.0);
+                if (!invul.isRunning()) {
+                    invul.play();
+                }
+            }
+            if (update.getSpec() == Player.POWERUPOVER
+                    & !AbstractPowerup.isActive(PowerupInvulnerable.class)) {
+                CurrentItems.getSoundtrackPlayer().
+                    setVolume(State.getSoundtrackVolume());
+                invul.stop();
             }
         }
 

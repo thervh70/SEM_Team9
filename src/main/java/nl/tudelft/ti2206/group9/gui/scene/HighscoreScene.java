@@ -26,6 +26,7 @@ import java.util.List;
 import static nl.tudelft.ti2206.group9.util.GameObservable.OBSERVABLE;
 
 /**
+ * Scene that shows the Highscores of a game.
  * @author Maikel on 16/10/2015.
  */
 public class HighscoreScene extends AbstractMenuScene {
