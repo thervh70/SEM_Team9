@@ -99,7 +99,7 @@ public class EndToEndTest extends ApplicationTest {
 
     private static final int SHOP_BACK = 1;
     private static final int SHOP_SKIN_NOOB = 0;
-    private static final int SHOP_SKIN_ANDY = 1;
+    private static final int SHOP_SKIN_PLANK = 1;
 
     private static final int PAUSE_RESUME = 0;
     private static final int PAUSE_TOMAIN = 1;
@@ -256,15 +256,15 @@ public class EndToEndTest extends ApplicationTest {
         State.setCoins(COINS); //Make sure player has enough coins
         clickButton(MAIN_SHOP);
 
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.loadSkinsToList().get(0));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
-        shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
-        shopBuyEquipSkin(SHOP_SKIN_ANDY);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getAndySkin());
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.loadSkinsToList().get(0));
+        shopBuyEquipSkin(SHOP_SKIN_PLANK);
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.loadSkinsToList().get(0));
+        shopBuyEquipSkin(SHOP_SKIN_PLANK);
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.loadSkinsToList().get(1));
         shopBuyEquipSkin(SHOP_SKIN_NOOB);
-        assertEquals(CurrentItems.getSkin(), ShopItemLoader.getNoobSkin());
+        assertEquals(CurrentItems.getSkin(), ShopItemLoader.loadSkinsToList().get(0));
 
         clickButton(SHOP_BACK);
     }

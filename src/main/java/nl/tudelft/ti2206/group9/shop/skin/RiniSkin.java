@@ -7,7 +7,7 @@ public class RiniSkin extends AbstractSkin {
     /**
      * Price of skin in shop.
      */
-    private static final int PRICE = 275;
+    private static final int PRICE = 600;
 
     /**
      * Constructor Rini Skin.

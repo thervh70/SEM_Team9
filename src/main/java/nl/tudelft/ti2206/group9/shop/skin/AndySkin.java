@@ -5,7 +5,7 @@ package nl.tudelft.ti2206.group9.shop.skin;
  */
 public class AndySkin extends AbstractSkin {
     /** Price of skin in shop. */
-    private static final int PRICE = 15;
+    private static final int PRICE = 1000;
     /**
      * Constructor for a Andy skin.
      *

@@ -177,9 +177,9 @@ public final class ShopItemLoader { // NOPMD - too many fields, but all
     public static ObservableList<AbstractSkin> loadSkinsToList() {
         final ObservableList<AbstractSkin> list =
                 FXCollections.observableArrayList();
-        list.addAll(noobSkin, andySkin, boySkin,
-                ironmanSkin, captainSkin, plankSkin, arieSkin,
-                riniSkin, guidoSkin, erikSkin, albertoSkin);
+        list.addAll(noobSkin, plankSkin, boySkin,
+                ironmanSkin, captainSkin, guidoSkin, riniSkin,
+                erikSkin, andySkin, arieSkin, albertoSkin);
         return list;
     }
 

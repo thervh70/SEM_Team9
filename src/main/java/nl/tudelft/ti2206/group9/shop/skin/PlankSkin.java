@@ -5,7 +5,7 @@ package nl.tudelft.ti2206.group9.shop.skin;
  */
 public class PlankSkin extends AbstractSkin {
     /** Price of skin in shop. */
-    private static final int PRICE = 1250;
+    private static final int PRICE = 100;
     /**
      * Constructor for a Plank skin.
      */
