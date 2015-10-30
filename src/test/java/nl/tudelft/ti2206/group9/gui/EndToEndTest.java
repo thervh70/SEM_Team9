@@ -534,7 +534,8 @@ public class EndToEndTest extends ApplicationTest {
         final TabPane pane = (TabPane) gridPaneNodes.get(0);
         sleep(SHORT);
 
-        final StackPane header = (StackPane) pane.getChildrenUnmodifiable().get(2);
+        final StackPane header =
+                (StackPane) pane.getChildrenUnmodifiable().get(2);
         final StackPane buttons = (StackPane) header.getChildren().get(1);
         final Pane soundTab = (Pane) buttons.getChildren().get(1);
         clickOn(soundTab, MouseButton.PRIMARY);
