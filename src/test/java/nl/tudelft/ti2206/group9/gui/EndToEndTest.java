@@ -293,7 +293,8 @@ public class EndToEndTest extends ApplicationTest {
     private void buySoundtracks() {
         final ObservableList<AbstractSoundtrack> soundList =
                 ShopItemLoader.loadSoundtracksToList();
-        final String radioactive = soundList.get(SHOP_SOUND_RADIOACTIVE).getItemName();
+        final String radioactive =
+                soundList.get(SHOP_SOUND_RADIOACTIVE).getItemName();
         final String animals = soundList.get(SHOP_SOUND_MARIO).getItemName();
 
         shopPreviewSound(SHOP_SOUND_MARIO);
