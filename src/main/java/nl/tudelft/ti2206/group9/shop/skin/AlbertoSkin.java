@@ -7,7 +7,7 @@ public class AlbertoSkin extends AbstractSkin {
     /**
      * Price of skin in shop.
      */
-    private static final int PRICE = 100;
+    private static final int PRICE = 1337;
 
     /**
      * Constructor for a Alberto skin.
