@@ -178,7 +178,7 @@ public class ShopScene extends AbstractMenuScene {
      */
     private void setBuyButtonVisability(final Button buy,
             final AbstractSkin s) {
-        if (s.getItemPrice() >= State.getCoins()
+        if (s.getItemPrice() > State.getCoins()
                 && !ShopItemUnlocker.getUnlockedShopItem(s.getItemName())) {
             buy.setDisable(true);
             buy.setTooltip(new Tooltip("Not enough coins :("));
