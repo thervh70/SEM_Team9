@@ -94,7 +94,7 @@ public class ShopScene extends AbstractMenuScene {
      */
     private final Timer timer = new Timer();
     /**
-     * preview visible?
+     * Indicates whether the preview is visible.
      */
     private boolean visible = true;
 
@@ -409,7 +409,7 @@ public class ShopScene extends AbstractMenuScene {
     private void stopPreviews() {
         final ObservableList<AbstractSoundtrack> items =
                 ShopItemLoader.loadSoundtracksToList();
-        for (AbstractSoundtrack s
+        for (final AbstractSoundtrack s
                 : items) {
             s.getSoundtrackPlayer().stop();
         }
@@ -418,8 +418,8 @@ public class ShopScene extends AbstractMenuScene {
     /**
      * Set visibility of preview buttons.
      *
-     * @param buttonVisible Visible?
-     * @param b             Button.
+     * @param buttonVisible indicates whether the preview button is visible.
+     * @param b             A given button.
      */
     private void setPreviewVisibility(final boolean buttonVisible,
                                       final Button b) {
@@ -431,10 +431,10 @@ public class ShopScene extends AbstractMenuScene {
         b.setBackground(back);
         b.setMinWidth(PREVIEW_SIZE);
         b.setMinHeight(PREVIEW_SIZE);
-        if (!buttonVisible) {
-            b.setDisable(false);
-        } else {
+        if (buttonVisible) {
             b.setDisable(true);
+        } else {
+            b.setDisable(false);
         }
 
     }
