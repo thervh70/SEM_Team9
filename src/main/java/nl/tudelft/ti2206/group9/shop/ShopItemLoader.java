@@ -32,7 +32,8 @@ import nl.tudelft.ti2206.group9.shop.soundtrack.ShakeItOffSoundtrack;
  *
  * @author Mitchell
  */
-public final class ShopItemLoader {
+public final class ShopItemLoader { // NOPMD - too many fields, but all
+                                    // fields are needed for loading them.
 
     // Skin items
     /**
@@ -66,19 +67,26 @@ public final class ShopItemLoader {
     private static PlankSkin plankSkin;
 
 
+    //Skins for teacher skins.
     /**
-     * Skins for teacher skins.
+     * Erik skin.
      */
     private static ErikSkin erikSkin;
     /**
      * Arie skin.
      */
     private static ArieSkin arieSkin;
-    /** Guido Skin. */
+    /**
+     * Guido Skin.
+     * */
     private static GuidoSkin guidoSkin;
-    /** RiniSkin. */
+    /**
+     * RiniSkin.
+     */
     private static RiniSkin riniSkin;
-    /** AlbertoSkin. */
+    /**
+     * AlbertoSkin.
+     */
     private static AlbertoSkin albertoSkin;
 
     //Soundtrack items
