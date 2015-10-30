@@ -69,7 +69,7 @@ public class Track {
      * Map that contains all createEntityCommands.
      */
     private static Map<Class<? extends AbstractEntity>, CreateEntityCommand>
-            createEntityMap = new ConcurrentHashMap<>();
+    createEntityMap = new ConcurrentHashMap<>();
     /**
      * The Single instance this class can have.
      */
@@ -82,10 +82,10 @@ public class Track {
         createEntityMap.put(Fence.class, Fence::new);
         createEntityMap.put(AbstractPickup.class, p -> {
             final ArrayList<AbstractPickup> list = new ArrayList<>();
-//            list.add(new Coin(p));
-//            list.add(new PowerupInvulnerable(p));
-//            list.add(new PowerupSlowness(p));
-//            list.add(new PowerupDestroy(p));
+            list.add(new Coin(p));
+            list.add(new PowerupInvulnerable(p));
+            list.add(new PowerupSlowness(p));
+            list.add(new PowerupDestroy(p));
             list.add(new PowerupCoinMagnet(p));
             return list.get((int) (Math.random() * list.size()));
         });
@@ -150,15 +150,21 @@ public class Track {
 
     /** Moves all coins, when CoinMagnet is active. */
     private void moveCoinMagnet() {
-        if (AbstractPowerup.isActive(PowerupCoinMagnet.class)) {
-            synchronized (this) {
-                for (final AbstractEntity e : entities) {
-                    if (e instanceof Coin) {
-                        final double diffX = getPlayer().getCenter().getX()
-                                - e.getCenter().getX();
-                        e.getCenter().addX(diffX / e.getCenter().getZ() / 10);
-                    }
+        if (!AbstractPowerup.isActive(PowerupCoinMagnet.class)) {
+            return;
+        }
+        final double dist = 10;
+        synchronized (this) {
+            for (final AbstractEntity e : entities) {
+                if (!(e instanceof Coin)) {
+                    continue;
                 }
+                final Point3D c = e.getCenter(); // reference, so addX works
+                if (c.getZ() > dist) {
+                    continue;
+                }
+                final double diffX = getPlayer().getCenter().getX() - c.getX();
+                c.addX((diffX - diffX * e.getCenter().getZ() / dist) / dist);
             }
         }
     }
@@ -310,7 +316,7 @@ public class Track {
     public final void step() {
         synchronized (this) {
             if (trackLeft > 0) {
-                 trackLeft -= getUnitsPerTick();
+                trackLeft -= getUnitsPerTick();
             } else {
                 final int rand = random.nextInt(trackParts.size());
                 final TrackPart part = trackParts.get(rand);

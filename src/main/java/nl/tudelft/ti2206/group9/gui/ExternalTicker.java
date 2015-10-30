@@ -1,4 +1,5 @@
-package nl.tudelft.ti2206.group9.gui;
+package nl.tudelft.ti2206.group9.gui; // NOPMD - too many imports, but no way
+                                      // to reduce them, unfortunately.
 
 import java.util.ArrayList;
 import java.util.List;
