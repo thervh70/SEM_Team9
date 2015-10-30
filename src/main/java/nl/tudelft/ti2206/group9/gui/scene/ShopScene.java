@@ -85,10 +85,14 @@ public class ShopScene extends AbstractMenuScene {
     /** Back Button. */
     private static final Button BACK_BUTTON
             = createButton("BACK", 0, ROW_CONSTRAINT);
-
-
-
-
+    /**
+     * Sound enabled.
+     */
+    private final boolean soundtrackEnabled = State.isSoundtrackEnabled();
+    /**
+     * Timer used for stopping the previews.
+     */
+    private final Timer timer = new Timer();
 
     @Override
     public Node[] createContent() {
@@ -207,6 +211,12 @@ public class ShopScene extends AbstractMenuScene {
             if (type == BType.SHOP_BACK) {
                 OBSERVABLE.notify(GameObserver.Category.MENU,
                         GameObserver.Menu.SHOP_BACK);
+                for (AbstractSoundtrack s
+                        : ShopItemLoader.loadSoundtracksToList()) {
+                    s.getSoundtrackPlayer().stop();
+                    State.setSoundtrackEnabled(soundtrackEnabled);
+                    timer.cancel();
+                }
                 ShaftEscape.setScene(new MainMenuScene());
             }
         });
@@ -371,23 +381,20 @@ public class ShopScene extends AbstractMenuScene {
                                     final AbstractSoundtrack s) {
 
         final int playTime = 7000;
-        final boolean soundEnabled = State.isSoundtrackEnabled();
+
 
         b.setOnAction(event -> {
-            final Timer timer = new Timer();
             final TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
                     Platform.runLater(() -> {
                         s.getSoundtrackPlayer().stop();
                         b.setDisable(false);
-                        State.setSoundtrackEnabled(soundEnabled);
+                        State.setSoundtrackEnabled(soundtrackEnabled);
                         MainMenuScene.getAudioPlayer().play();
-                        BACK_BUTTON.setDisable(false);
                     });
                 }
             };
-            BACK_BUTTON.setDisable(true);
             b.setDisable(true);
             State.setSoundtrackEnabled(true);
             MainMenuScene.getAudioPlayer().pause();
