@@ -82,6 +82,10 @@ public class ShopScene extends AbstractMenuScene {
     private static final double BUTTON_HOVER_SCALE = 1.2;
     /** Preview button size. */
     private static final int PREVIEW_SIZE = 35;
+    /** Back Button. */
+    private static final Button BACK_BUTTON
+            = createButton("BACK", 0, ROW_CONSTRAINT);
+
 
 
 
@@ -103,10 +107,9 @@ public class ShopScene extends AbstractMenuScene {
         currentSoundtrack.setMinWidth(LABEL_WIDTH);
         currentSoundtrack.setText("SOUNDTRACK: "
                 + CurrentItems.getSoundtrackName());
-        final Button backButton = createButton("BACK", 0, ROW_CONSTRAINT);
         final Label coinsLabel = createLabel("COINS: ", 2, ROW_CONSTRAINT);
         amountLabel.setText(Integer.toString(State.getCoins()));
-        setButtonFunction(backButton, BType.SHOP_BACK);
+        setButtonFunction(BACK_BUTTON, BType.SHOP_BACK);
 
         GridPane.setColumnSpan(tabPane, ROW_CONSTRAINT_SPAN);
         GridPane.setColumnSpan(currentSkin, LABEL_SPAN);
@@ -114,7 +117,7 @@ public class ShopScene extends AbstractMenuScene {
         GridPane.setConstraints(tabPane,
                 0, 0);
 
-        return new Node[]{tabPane, backButton,
+        return new Node[]{tabPane, BACK_BUTTON,
                 coinsLabel, amountLabel, currentSkin, currentSoundtrack};
     }
 
@@ -380,9 +383,11 @@ public class ShopScene extends AbstractMenuScene {
                         b.setDisable(false);
                         State.setSoundtrackEnabled(soundEnabled);
                         MainMenuScene.getAudioPlayer().play();
+                        BACK_BUTTON.setDisable(false);
                     });
                 }
             };
+            BACK_BUTTON.setDisable(true);
             b.setDisable(true);
             State.setSoundtrackEnabled(true);
             MainMenuScene.getAudioPlayer().pause();
