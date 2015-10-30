@@ -18,6 +18,7 @@ import nl.tudelft.ti2206.group9.gui.popup.WarningPopup;
 import nl.tudelft.ti2206.group9.level.State;
 import nl.tudelft.ti2206.group9.level.save.SaveGame;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
+import nl.tudelft.ti2206.group9.util.GameObserver.Error;
 import nl.tudelft.ti2206.group9.util.GameObserver.Menu;
 
 import java.io.File;
@@ -185,9 +186,14 @@ public class AccountScene extends AbstractMenuScene {
     private static void deleteAccount() {
         final String selected = list.getSelectionModel().
                 getSelectedItem();
-        new File(SaveGame.getDefaultSaveDir() + selected + ".ses")
-                .delete();
-        OBSERVABLE.notify(Category.MENU, Menu.ACC_DEL);
+        if (new File(SaveGame.getDefaultSaveDir() + selected + ".ses")
+                .delete()) {
+            OBSERVABLE.notify(Category.MENU, Menu.ACC_DEL);
+        } else {
+            OBSERVABLE.notify(Category.ERROR, Error.IOEXCEPTION,
+                    "AccountScene.deleteAccount()",
+                    selected + ".ses could not be deleted!");
+        }
         refreshContent();
     }
 
