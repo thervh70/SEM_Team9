@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import nl.tudelft.ti2206.group9.level.State;
+import nl.tudelft.ti2206.group9.shop.CurrentItems;
+import nl.tudelft.ti2206.group9.shop.ShopItemLoader;
 import nl.tudelft.ti2206.group9.shop.ShopItemUnlocker;
 import nl.tudelft.ti2206.group9.util.Base64Writer;
 import nl.tudelft.ti2206.group9.util.GameObserver.Category;
@@ -103,8 +105,36 @@ public final class Writer {
     @SuppressWarnings("unchecked")
     // JSONObject.put uses HashMap, that gives unchecked warnings.
     private static JSONObject createShopItemsObject() {
-        final JSONObject shopItems = new JSONObject();
+        final JSONObject soundtracks = new JSONObject();
+        soundtracks.put("animals", ShopItemUnlocker.
+                getUnlockedShopItem("Animals"));
+        soundtracks.put("duckTales", ShopItemUnlocker.
+                getUnlockedShopItem("Duck Tales"));
+        soundtracks.put("mario", ShopItemUnlocker.getUnlockedShopItem("Mario"));
+        soundtracks.put("nyanCat", ShopItemUnlocker.
+                getUnlockedShopItem("Nyan Cat"));
+        soundtracks.put("shakeItOff", ShopItemUnlocker.
+                getUnlockedShopItem("Shake It Off"));
 
+        final JSONObject equipped = new JSONObject();
+        equipped.put("skin", ShopItemLoader.loadSkinsToList()
+                .indexOf(CurrentItems.getSkin()));
+        equipped.put("soundtrack", ShopItemLoader.loadSoundtracksToList()
+                .indexOf(CurrentItems.getSoundtrack()));
+
+        final JSONObject shopItems = new JSONObject();
+        shopItems.put("skins", createSkinsJSON());
+        shopItems.put("soundtracks", soundtracks);
+        shopItems.put("equipped", equipped);
+        return shopItems;
+    }
+
+    /**
+     * @return a JSON object with the unlocked Skins.
+     */
+    @SuppressWarnings("unchecked")
+    // JSONObject.put uses HashMap, that gives unchecked warnings.
+    private static JSONObject createSkinsJSON() {
         final JSONObject skins = new JSONObject();
         skins.put("andy", ShopItemUnlocker.getUnlockedShopItem("Andy"));
         skins.put("boy", ShopItemUnlocker.getUnlockedShopItem("B-man"));
@@ -116,20 +146,6 @@ public final class Writer {
         skins.put("guido", ShopItemUnlocker.getUnlockedShopItem("Guido"));
         skins.put("alberto", ShopItemUnlocker.getUnlockedShopItem("Alberto"));
         skins.put("arie", ShopItemUnlocker.getUnlockedShopItem("Arie"));
-        shopItems.put("skins", skins);
-
-        final JSONObject soundtracks = new JSONObject();
-        soundtracks.put("animals", ShopItemUnlocker.
-                getUnlockedShopItem("Animals"));
-        soundtracks.put("duckTales", ShopItemUnlocker.
-                getUnlockedShopItem("Duck Tales"));
-        soundtracks.put("mario", ShopItemUnlocker.getUnlockedShopItem("Mario"));
-        soundtracks.put("nyanCat", ShopItemUnlocker.
-                getUnlockedShopItem("Nyan Cat"));
-        soundtracks.put("shakeItOff", ShopItemUnlocker.
-                getUnlockedShopItem("Shake It Off"));
-        shopItems.put("soundtracks", soundtracks);
-
-        return shopItems;
+        return skins;
     }
 }
