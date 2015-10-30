@@ -96,10 +96,11 @@ public class ShopScene extends AbstractMenuScene {
     /**
      * Indicates whether the preview is visible.
      */
-    private boolean visible = true;
+    private boolean visible;
 
     @Override
     public Node[] createContent() {
+        visible = false;
         tabPane = new TabPane();
         tabPane.setMinHeight(TABPANE_HEIGHT);
         currentSkin = createLabel("SKIN: "
