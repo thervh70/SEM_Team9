@@ -111,6 +111,11 @@ public final class Writer {
         skins.put("captain", ShopItemUnlocker.getUnlockedShopItem("Captain"));
         skins.put("iron", ShopItemUnlocker.getUnlockedShopItem("Iron Man"));
         skins.put("plank", ShopItemUnlocker.getUnlockedShopItem("Plank"));
+        skins.put("erik", ShopItemUnlocker.getUnlockedShopItem("Erik"));
+        skins.put("rini", ShopItemUnlocker.getUnlockedShopItem("Rini"));
+        skins.put("guido", ShopItemUnlocker.getUnlockedShopItem("Guido"));
+        skins.put("alberto", ShopItemUnlocker.getUnlockedShopItem("Alberto"));
+        skins.put("arie", ShopItemUnlocker.getUnlockedShopItem("Arie"));
         shopItems.put("skins", skins);
 
         final JSONObject soundtracks = new JSONObject();
