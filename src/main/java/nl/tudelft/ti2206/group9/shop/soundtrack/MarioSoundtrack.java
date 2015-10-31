@@ -9,7 +9,7 @@ public class MarioSoundtrack extends AbstractSoundtrack {
     /** Price of the Mario soundtrack in the shop. */
     private static final int PRICE = 50;
     /** Path to be used for the 'Mario' soundtrack. */
-    private static final String PATH_MARIO = "soundtrack_mario";
+    private static final String PATH_MARIO = "soundtrack_Mario";
 
     /** Constructor for the Mario soundtrack. */
     public MarioSoundtrack() {

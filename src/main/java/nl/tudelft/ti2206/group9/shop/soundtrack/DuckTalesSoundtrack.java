@@ -9,7 +9,7 @@ public class DuckTalesSoundtrack extends AbstractSoundtrack {
     /** Price of the Duck Tales soundtrack in the shop. */
     private static final int PRICE = 200;
     /** Path to be used for soundtrack 'Duck Tales'. */
-    private static final String PATH_DUCKTALES = "soundtrack_ducktales";
+    private static final String PATH_DUCKTALES = "soundtrack_Ducktales";
 
     /** Constructor for the Duck Tales soundtrack. */
     public DuckTalesSoundtrack() {
